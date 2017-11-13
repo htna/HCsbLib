@@ -42,6 +42,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HTLib2\External.alglib381\src\alglibinternal.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\alglibmisc.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\ap.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\dataanalysis.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\diffequations.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\fasttransforms.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\integration.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\interpolation.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\linalg.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\optimization.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\solvers.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\specialfunctions.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\statistics.cs" />
+    <Compile Include="HTLib2\External.bungee.lbfgs\LBFGS.cs" />
+    <Compile Include="HTLib2\External.bungee.lbfgs\Mcsrch.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\daDenseMatrix.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\daDenseVector.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\daMatrix.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\daSparseMatrix.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\daSparseVector.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\daVector.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\dnAnalytics.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.Selftest.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.Static.cs" />
@@ -55,8 +77,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="HTLib2\External.alglib381\alglib-3.8.1.csharp.zip" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="HTLib2\External.alglib381\manual.csharp.html" />
+    <Content Include="HTLib2\External.bungee.lbfgs\Readme.txt" />
+    <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.dll" />
+    <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.fsharp.dll" />
+    <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.fsharp.xml" />
+    <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.xml" />
+    <Content Include="HTLib2\External.dnAnalytics\zlib.net.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
