@@ -42,12 +42,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HTLib2\HDebug\HDebug.cs" />
+    <Compile Include="HTLib2\HDebug\HDebug.Selftest.cs" />
+    <Compile Include="HTLib2\HDebug\HDebug.Static.cs" />
+    <Compile Include="HTLib2\HDebug\HDebug.Watch.cs" />
+    <Compile Include="HTLib2\HException\HException.cs" />
+    <Compile Include="HTLib2\Numerics\IMatrix.cs" />
+    <Compile Include="HTLib2\Numerics\IVector.cs" />
+    <Compile Include="HTLib2\Numerics\Vector.HDebug.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
