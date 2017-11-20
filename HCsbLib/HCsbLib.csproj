@@ -46,6 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\HPoint.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\HRect.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KDTree.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KeyDuplicateException.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KeyMissingException.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KeySizeException.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\NearestNeighborList.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\PriorityQueue.cs" />
     <Compile Include="HTLib2\External.alglib381\src\alglibinternal.cs" />
     <Compile Include="HTLib2\External.alglib381\src\alglibmisc.cs" />
     <Compile Include="HTLib2\External.alglib381\src\ap.cs" />
@@ -81,9 +89,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KDTreeDLL.zip" />
     <None Include="HTLib2\External.alglib381\alglib-3.8.1.csharp.zip" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="HTLib2\Algorithm.KDTree\KDTreeDLL\readme.txt" />
     <Content Include="HTLib2\External.alglib381\manual.csharp.html" />
     <Content Include="HTLib2\External.bungee.lbfgs\Readme.txt" />
     <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.dll" />
