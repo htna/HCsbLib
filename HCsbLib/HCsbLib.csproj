@@ -81,8 +81,8 @@
     <Compile Include="HTLib2\HDebug\HDebug.Static.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.Watch.cs" />
     <Compile Include="HTLib2\HException\HException.cs" />
-    <Compile Include="HTLib2\Numerics\IMatrix.cs" />
-    <Compile Include="HTLib2\Numerics\IVector.cs" />
+    <Compile Include="HTLib2\Interface\IMatrix.cs" />
+    <Compile Include="HTLib2\Interface\IVector.cs" />
     <Compile Include="HTLib2\Numerics\Vector.HDebug.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
