@@ -314,7 +314,7 @@ namespace HTLib2.Bioinfo
             {
                 char[] line = this.line.ToArray();
                 if     (name.Length == 3) name = " "+name;
-                else if(name.Length == 4) name =     name;
+                else if(name.Length == 4) { } // name =     name; // donothing
                 else HDebug.Assert(false);
                 
                 for(int i=0; i<(idxs_name[1]-idxs_name[0]+1); i++) line[i+idxs_name[0]-1] = name[i];
