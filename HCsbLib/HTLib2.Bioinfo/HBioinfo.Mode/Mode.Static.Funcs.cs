@@ -308,7 +308,7 @@ namespace HTLib2.Bioinfo
                 options = "";
             if(options.Contains("parallel"))
             {
-                throw new NotImplementedException("check");
+                HDebug.Exception(new NotImplementedException("check"));
                 int[] iter = new int[1] { 0 };
                 System.Threading.Tasks.Parallel.For(0, modes.Count, delegate(int i)
                 {
