@@ -239,7 +239,7 @@ namespace HTLib2
             }
         }
 
-        public double[,] ToArray()
+        public override double[,] ToArray()
         {
             double[,] arr = new double[_ColSize, _RowSize];
             foreach(var c_r_val in blkmatrix.EnumElements())
