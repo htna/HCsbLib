@@ -63,7 +63,7 @@ namespace HTLib2
 		public void Divide(double scalar)																				{ val.Divide(scalar); }
 		public void Divide(double scalar, _daMatrix result)																{ val.Divide(scalar, result); }
 		public bool Equals(_daMatrix other)																				{ return val.Equals(other); }
-		public bool Equals(object obj)																					{ return val.Equals(obj); }
+		public override bool Equals(object obj)																			{ return val.Equals(obj); }
 		public double FrobeniusNorm()																					{ return val.FrobeniusNorm(); }
 		public void Gemm(double alpha, double beta, bool transposeA, bool transposeB, _daMatrix a, _daMatrix b)			{ val.Gemm(alpha, beta, transposeA, transposeB, a, b); }
 		public daVector GetColumn(int index)																			{ return new daVector(val.GetColumn(index)); }
@@ -73,7 +73,7 @@ namespace HTLib2
 		public IEnumerable<KeyValuePair<int, daVector>> GetColumnEnumerator()											{ HDebug.Assert(false); return null; }
 		public IEnumerable<KeyValuePair<int, daVector>> GetColumnEnumerator(int index, int length)						{ HDebug.Assert(false); return null; }
 		public daVector GetDiagonal()																					{ return new daVector(val.GetDiagonal()); }
-		public int GetHashCode()																						{ return val.GetHashCode(); }
+		public override int GetHashCode()																				{ return val.GetHashCode(); }
 		public daMatrix GetLowerTriangle()																				{ return new daMatrix(val.GetLowerTriangle()); }
 		public void GetLowerTriangle(_daMatrix result)																	{ val.GetLowerTriangle(result); }
 		public daVector GetRow(int index)																				{ return new daVector(val.GetRow(index)); }
