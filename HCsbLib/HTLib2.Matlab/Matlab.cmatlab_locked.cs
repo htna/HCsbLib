@@ -132,7 +132,7 @@ namespace HTLib2
                 }
             }
 
-            static matlabimpl __matlab = null;
+            //static matlabimpl __matlab = null;
             static dynamic _matlab { get { return null; } } //static MLApp.MLApp _matlab { get { return GetMatlabInterface(); } }
             public static dynamic GetMatlabInterface() //public static MLApp.MLApp GetMatlabInterface()
             {
