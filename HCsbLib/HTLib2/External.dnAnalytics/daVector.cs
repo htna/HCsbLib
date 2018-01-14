@@ -60,7 +60,7 @@ namespace HTLib2
 		public void Divide(double scalar, _daVector result)												{ val.Divide(scalar, result); }
 		public double DotProduct()																		{ return val.DotProduct(); }
 		public double DotProduct(_daVector other)														{ return val.DotProduct(other); }
-		public bool Equals(object obj)																	{ return val.Equals(obj); }
+override public bool Equals(object obj)																	{ return val.Equals(obj); }
 		public bool Equals(_daVector other)																{ return val.Equals(other); }
 		public IEnumerator<double> GetEnumerator()														{ return val.GetEnumerator(); }
 		public IEnumerator<KeyValuePair<int, double>> GetEnumerator(int index, int length)				{ return val.GetEnumerator(index, length); }
