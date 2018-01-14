@@ -7,7 +7,7 @@ namespace HTLib2
 {
     public partial class Tree<NODE> : Tree
     {
-        public class Node : Tree.Node
+        public new class Node : Tree.Node
         {
             public new Node parent { get { return (base.parent as Node); } }
             public readonly NODE value;
