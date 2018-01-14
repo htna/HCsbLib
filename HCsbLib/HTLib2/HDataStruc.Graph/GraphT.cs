@@ -8,7 +8,7 @@ namespace HTLib2
     public partial class Graph<NODE,EDGE>
     {
         private Graph graph = new Graph();
-        public new class Node : Graph.Node
+        public class Node : Graph.Node
         {
             public readonly NODE value;
             public new Dictionary<Node, Edge> nexts { get { return base.nexts.HToType<Graph.Node, Graph.Edge, Node, Edge>(); } }
@@ -31,7 +31,7 @@ namespace HTLib2
                 return base.ToString() + " : " + value;
             }
         }
-        public new class Edge : Graph.Edge
+        public class Edge : Graph.Edge
         {
             public readonly EDGE value;
             public new Node[] nodes
