@@ -161,12 +161,25 @@ namespace HTLib2
             return ret;
         }
 
-
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        public override bool Equals(object obj)
+        {
+            if(obj is TVector<T>)
+                return Equals(this, obj as TVector<T>);
+            return base.Equals(obj);
+        }
         public static bool operator != (TVector<T> val1, TVector<T> val2)
         {
-            return ((val1 == val2) == false);
+            return (Equals(val1, val2) == false);
         }
         public static bool operator == (TVector<T> val1, TVector<T> val2)
+        {
+            return Equals(val1, val2);
+        }
+        public static bool Equals(TVector<T> val1, TVector<T> val2)
         {
             if(val1.SizeLong != val2.SizeLong)
                 return false;
