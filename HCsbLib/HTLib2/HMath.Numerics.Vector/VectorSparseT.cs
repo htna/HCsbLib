@@ -19,7 +19,7 @@ namespace HTLib2
             this.data = new Dictionary<int, T>();
             this.GetDefault = GetDefault;
         }
-        public string ToString()
+        public override string ToString()
         {
             string msg = "";
             msg += string.Format("size({0}), elements({1})", Size, NumElements);
