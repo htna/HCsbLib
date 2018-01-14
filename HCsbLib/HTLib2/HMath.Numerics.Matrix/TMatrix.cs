@@ -46,11 +46,25 @@ namespace HTLib2
             return ret;
         }
 
+        public override bool Equals(object obj)
+        {
+            if(obj is T[,])
+                return Equals(this, obj as T[,]);
+            return base.Equals(obj);
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         public static bool operator !=(TMatrix<T> val1, T[,] val2)
         {
-            return ((val1 == val2) == false);
+            return (Equals(val1, val2) == false);
         }
         public static bool operator ==(TMatrix<T> val1, T[,] val2)
+        {
+            return Equals(val1, val2);
+        }
+        public static bool Equals(TMatrix<T> val1, T[,] val2)
         {
             int colsize = val1.ColSize; if(colsize != val2.GetLength(0)) return false;
             int rowsize = val1.RowSize; if(rowsize != val2.GetLength(1)) return false;
