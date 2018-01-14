@@ -52,6 +52,10 @@ namespace HTLib2
             Assert(false);
             throw new HException(message);
         }
+        public static void Exception(Exception exception)
+        {
+            throw exception;
+        }
         //[System.Diagnostics.DebuggerHiddenAttribute()]
         public static void Exception(string message, params bool[] conds)
         {
