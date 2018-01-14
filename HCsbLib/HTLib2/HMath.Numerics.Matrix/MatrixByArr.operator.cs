@@ -24,8 +24,22 @@ namespace HTLib2
         {
             return new MatrixByArr(mat);
         }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+        public override bool Equals(object obj)
+        {
+            if(obj is MatrixByArr)
+                return Equals(this, obj as MatrixByArr);
+            return base.Equals(obj);
+        }
         static bool selftest_operator_equal = true;
         public static bool operator==(MatrixByArr lmat, MatrixByArr rmat)
+        {
+            return Equals(lmat, rmat);
+        }
+        public static bool Equals(MatrixByArr lmat, MatrixByArr rmat)
         {
             if(HDebug.IsDebuggerAttached && selftest_operator_equal)
             #region self test
