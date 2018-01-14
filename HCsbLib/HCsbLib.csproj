@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>HCsbLib.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="dnAnalytics, Version=2009.8.0.0, Culture=neutral, PublicKeyToken=47f8433cf19ffb12, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -46,6 +49,104 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HTLib2.Bioinfo\Anisou\Anisou.cs" />
+    <Compile Include="HTLib2.Bioinfo\Anisou\Anisou.From.cs" />
+    <Compile Include="HTLib2.Bioinfo\Anisou\Anisou.FromHessian.cs" />
+    <Compile Include="HTLib2.Bioinfo\Anisou\AnisouStatic.cs" />
+    <Compile Include="HTLib2.Bioinfo\HBioinfo.Mode\Mode.Static2.cs" />
+    <Compile Include="HTLib2.Bioinfo\HBioinfo.Mode\Mode.cs" />
+    <Compile Include="HTLib2.Bioinfo\HBioinfo.Mode\Mode.Static.cs" />
+    <Compile Include="HTLib2.Bioinfo\HBioinfo.Mode\Mode.Static.Funcs.cs" />
+    <Compile Include="HTLib2.Bioinfo\HBioinfo.Mode\Mode.Static.GetCorrMatrix.cs" />
+    <Compile Include="HTLib2.Bioinfo\HBioinfo.Mode\Mode.Static.GetDegeneracyOverlap.cs" />
+    <Compile Include="HTLib2.Bioinfo\HBioinfo.Mode\Mode.Validate.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Depreciated\Pdb.CollectBonds.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Depreciated\Struct.BuildBond\Pdb.Struct.Bonds.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Depreciated\Struct.BuildBond\Pdb.Struct.BuildBond.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Depreciated\Struct.BuildBond\Pdb.Struct.BuildBonds.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Depreciated\Struct.BuildBond\Pdb.Struct.Charmm27.%28empty%29.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Clone.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.CloneSelectType.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.CloneWithFix.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Collection\Pdb.Collection.Anisous.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Collection\Pdb.Collection.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Collection\Pdb.Collection.Etc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Collection\Pdb.Collection.Keywds.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.CollectResidues.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.CorrBFactor.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\BookkeepingSection\PDB.End.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\BookkeepingSection\PDB.Master.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\ConnectivitySection\Pdb.Conect.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Anisou.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Atom.Compare.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Atom.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Endmdl.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Hetatm.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.IAtom.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Model.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.SIGUIJ.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Ter.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CrystallographicAndCoordinateTransformationSection\Pdb.Cryst1.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\MiscellaneousFeaturesSection\Pdb.Site.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\MiscellaneousFeaturesSection\Pdb.Site.PdbStatic.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Pdb.Element.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Pdb.Element.UpdateElement.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Primary Structure Section\Pdb.Seqadv.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Primary Structure Section\Pdb.Seqres.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\SecondaryStructureSection\Pdb.Helix.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\SecondaryStructureSection\Pdb.Sheet.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Author.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Compnd.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Expdta.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Header.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Jrnl.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Keywds.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Nummdl.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Remark.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Revdat.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Source.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Title.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Etc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.FromAtoms.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.FromFile.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.FromPdbid.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.FromStream.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.GetAltloc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.GetEnsemblecs.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.GetTransformed.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Residue.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.SelfTest.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.ToFile.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.ToFileAnimated.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\PdbStatic\PdbStatic.Pdb.Atom.CloneByUpdate.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\PdbStatic\PdbStatic.Pdb.Atom.Common.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\PdbStatic\PdbStatic.Pdb.Atom.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\PdbStatic\PdbStatic.Pdb.Atom.ToIAtom.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\PdbStatic\PdbStatic.ToLines.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.cmatlab.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.cmatlab_locked.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Environment.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Etc.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Func.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.GetILinAlg.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.GetPutBool.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.GetPutChar.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.GetPutDouble.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.GetPutInt.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.GetPutSparse.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Interface.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Lock.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.NumericSolver.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Register.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.SaveLoad.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.SelfTest.cs" />
+    <Compile Include="HTLib2\Algorithm.ICP\ICP3.cs" />
+    <Compile Include="HTLib2\Algorithm.ICP\ICP3.temp.cs" />
+    <Compile Include="HTLib2\Algorithm.ICP\ICP3.Weighted.cs" />
+    <Compile Include="HTLib2\Algorithm.ICP\Trans3.cs" />
+    <Compile Include="HTLib2\Algorithm.ICP\Trans3.temp.cs" />
     <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\HPoint.cs" />
     <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\HRect.cs" />
     <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KDTree.cs" />
@@ -76,6 +177,18 @@
     <Compile Include="HTLib2\External.dnAnalytics\daSparseVector.cs" />
     <Compile Include="HTLib2\External.dnAnalytics\daVector.cs" />
     <Compile Include="HTLib2\External.dnAnalytics\dnAnalytics.cs" />
+    <Compile Include="HTLib2\External.KDTree\HPoint.cs" />
+    <Compile Include="HTLib2\External.KDTree\HRect.cs" />
+    <Compile Include="HTLib2\External.KDTree\HStaticKDTree.cs" />
+    <Compile Include="HTLib2\External.KDTree\KDTree.cs" />
+    <Compile Include="HTLib2\External.KDTree\KeyDuplicateException.cs" />
+    <Compile Include="HTLib2\External.KDTree\KeyMissingException.cs" />
+    <Compile Include="HTLib2\External.KDTree\KeySizeException.cs" />
+    <Compile Include="HTLib2\External.KDTree\NearestNeighborList.cs" />
+    <Compile Include="HTLib2\External.KDTree\PriorityQueue.cs" />
+    <Compile Include="HTLib2\External.NamedLock\NamedLock.cs" />
+    <Compile Include="HTLib2\External.NamedLock\NamedLock.LockedCall.cs" />
+    <Compile Include="HTLib2\External.NamedLock\NamedLock.SelfTest.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\EmptyList.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\HDictionary.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\HDictionary2.cs" />
@@ -84,6 +197,22 @@
     <Compile Include="HTLib2\HDataStruc.Collections\HPack.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\InfoPack.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\Pair.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\Algorithm\Graph.Dijkstra.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\Algorithm\Graph.Kruskal.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\Algorithm\Graph.TarjanCycleDetect.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\Graph.Build.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\Graph.BuildTree.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\Graph.BuildTree.MST.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\Graph.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\Graph.Etc.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\Graph.FindLoops.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\Graph.FindPath.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\GraphT.Algorithm.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\GraphT.BuildTree.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\GraphT.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\GraphT.Etc.cs" />
+    <Compile Include="HTLib2\HDataStruc.Tree\Tree.cs" />
+    <Compile Include="HTLib2\HDataStruc.Tree\TreeT.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.Selftest.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.Static.cs" />
@@ -141,6 +270,7 @@
     <Compile Include="HTLib2\HMath.Numerics\NumericSolver.cs" />
     <Compile Include="HTLib2\HMath.Numerics\NumericSolver.Derivative.cs" />
     <Compile Include="HTLib2\HMath.Numerics\Quaternion.cs" />
+    <Compile Include="HTLib2\HOption\HOptions.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumByGroup.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumCombination.cs" />
@@ -254,6 +384,15 @@
     <Compile Include="HTLib2\HStatic\HStatic.String.cs" />
     <Compile Include="HTLib2\HStatic\HStatic.String.HSubEndStringFromCount.cs" />
     <Compile Include="HTLib2\HStatic\HStatic.String.HSubstring.cs" />
+    <Compile Include="HTLib2\HSystem.HParallel\HParallel.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HDirectory.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HFile.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HGlobal.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HSerialize.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HSerialize.text.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HSerialize.text2d.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HStream.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HTempDictionary.cs" />
     <Compile Include="HTLib2\HSystem.System\HEnvironment.cs" />
     <Compile Include="HTLib2\HSystem.System\HEnvironment.Is64Bit.cs" />
     <Compile Include="HTLib2\HSystem.System\HGC.cs" />
@@ -269,8 +408,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="HTLib2.Bioinfo\Pdb\Depreciated\Struct.BuildBond\top_all27_prot_lipid.inp" />
+    <None Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Pdb.Format_v33_Letter.pdf" />
     <None Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KDTreeDLL.zip" />
     <None Include="HTLib2\External.alglib381\alglib-3.8.1.csharp.zip" />
+    <None Include="HTLib2\External.KDTree\KDTreeDLL.zip" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTLib2\Algorithm.KDTree\KDTreeDLL\readme.txt" />
@@ -281,6 +423,7 @@
     <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.fsharp.xml" />
     <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.xml" />
     <Content Include="HTLib2\External.dnAnalytics\zlib.net.dll" />
+    <Content Include="HTLib2\External.KDTree\readme.txt" />
     <Content Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Eigen_src.h" />
     <Content Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Inverse_src.h" />
     <Content Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.InvN_src.cpp" />
@@ -289,7 +432,6 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="HTLib2.Bioinfo\" />
     <Folder Include="HTLib2\Numerics\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
