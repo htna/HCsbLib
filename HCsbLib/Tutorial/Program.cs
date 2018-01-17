@@ -35,6 +35,26 @@ namespace Tutorial
             // save a new pdb file with the new coordinates
             Pdb npdb = pdb.CloneUpdateCoord(coords);
             npdb.ToFile("1l2y_moved.pdb");
+
+
+            // initialize matlab cache/temporary directory
+            Matlab.Register(@"C:\temp\");
+
+            // send a matrix to matlab
+            // console-mode matlab will be automatically launched
+            Matrix mat = new double[,] { { 1, 2 }, { 2, 1} };
+            Matlab.PutMatrix("mat", mat);
+
+            // calculate eigenvalues and eigenvectors
+            Matlab.Execute("[V,D] = eig(mat);");
+            Matlab.Execute("D = diag(D);");
+
+            // get eigenvalues and eigenvectors
+            Matrix eigvecs = Matlab.GetMatrix("V");
+            Vector eigvals = Matlab.GetVector("D");
+
+            // clear values in matlab
+            Matlab.Execute("clear;");
         }
     }
 }
