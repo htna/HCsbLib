@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,8 @@ namespace HTLib2
             if(HLayeredArray3_doselftest == false)
                 return;
             HLayeredArray3_doselftest = false;
+
+            HDebug.Todo("check this again");
 
             HDebug.Assert((new HLayeredArray3<int>(0, 1, 2)).ArrLength == 1);
             HDebug.Assert((new HLayeredArray3<int>(0, 2, 2)).ArrLength == 1);
@@ -158,3 +161,4 @@ namespace HTLib2
         }
     }
 }
+*/
