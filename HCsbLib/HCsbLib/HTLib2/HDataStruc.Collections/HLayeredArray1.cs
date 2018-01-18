@@ -15,6 +15,7 @@ namespace HTLib2
         T[]        arr;
         public HLayeredArray1(T def, long capacity1)
         {
+            HDebug.ToDo("check");
             this.capacity1 = capacity1;
             this.def       = def;
             this.count     = 0;

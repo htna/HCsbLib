@@ -16,6 +16,7 @@ namespace HTLib2
         Func<HLayeredArray2<T>> newarri;
         public HLayeredArray3(T def, long capacity3, long capacity2, long capacity1)
         {
+            HDebug.ToDo("check");
             this.capacity3  = capacity3;
             this.newarri    = delegate () { return new HLayeredArray2<T>(def, capacity2, capacity1); };
             this.def        = def;
