@@ -33,7 +33,7 @@ namespace HTLib2
         long                Size;
         long                blocksize, blocksize2;
         readonly T          def;
-        long                count;
+        long                arrcount;
         HLayeredArray2<T>[] arr;
         Func<long, HLayeredArray2<T>> newarri;
         public HLayeredArray3(T def, long size, long blocksize)
@@ -45,10 +45,10 @@ namespace HTLib2
             this.blocksize2 = blocksize*blocksize;
             this.newarri    = delegate (long lsize) { return new HLayeredArray2<T>(def, lsize, blocksize); };
             this.def        = def;
-            this.count      = 0;
+            this.arrcount   = 0;
             this.arr        = new HLayeredArray2<T>[(size-1)/blocksize2+1];
         }
-        public long ArrSize
+        public long ArrLength
         {
             get
             {
@@ -59,7 +59,7 @@ namespace HTLib2
         {
             get
             {
-                return count;
+                return arrcount;
             }
         }
         public long Count
@@ -108,8 +108,8 @@ namespace HTLib2
                     if(idx3 == arr.Length-1) arr[idx3] = newarri((Size-1) % blocksize2+1);
                     else                     arr[idx3] = newarri(blocksize2);
                     arr[idx3][idx2] = value;
-                    count++;
-                    HDebug.Assert(count <= ArrSize);
+                    arrcount++;
+                    HDebug.Assert(arrcount <= ArrLength);
                 }
             }
             else
@@ -122,8 +122,8 @@ namespace HTLib2
                     if(arr[idx3].Count == 0)
                     {
                         arr[idx3] = null;
-                        count--;
-                        HDebug.Assert(count >= 0);
+                        arrcount--;
+                        HDebug.Assert(arrcount >= 0);
                     }
                 }
                 else
