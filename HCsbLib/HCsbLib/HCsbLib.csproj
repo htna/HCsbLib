@@ -194,6 +194,9 @@
     <Compile Include="HTLib2\HDataStruc.Collections\HDictionary2.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\HDictionary2_v0.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\HDynamic.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HLayeredArray3.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HLayeredArray2.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HLayeredArray1.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\HPack.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\InfoPack.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\Pair.cs" />
