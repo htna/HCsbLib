@@ -9,30 +9,30 @@ namespace HTLib2
     public class HLayeredArray1<T>
         where T : IEquatable<T>
     {
-        int        capacity;
+        long       capacity1;
         readonly T def;
-        int        count;
+        long       count;
         T[]        arr;
-        public HLayeredArray1(int capacity, T def)
+        public HLayeredArray1(T def, long capacity1)
         {
-            this.capacity = capacity;
-            this.def      = def;
-            this.count    = 0;
-            this.arr      = new T[capacity];
-            for(int i = 0; i < capacity; i++)
+            this.capacity1 = capacity1;
+            this.def       = def;
+            this.count     = 0;
+            this.arr       = new T[capacity1];
+            for(long i = 0; i < capacity1; i++)
                 arr[i] = def;
         }
-        public int Count { get { return count; } }
-        public T this[int index]
+        public long Count { get { return count; } }
+        public T this[long index]
         {
             get { return GetAt(index); }
             set { SetAt(index, value); }
         }
-        public T GetAt(int index)
+        public T GetAt(long index)
         {
             return arr[index];
         }
-        public void SetAt(int index, T value)
+        public void SetAt(long index, T value)
         {
             bool idef = def.Equals(arr[index]);
             bool vdef = def.Equals(value);
@@ -50,6 +50,7 @@ namespace HTLib2
                     // value  != def
                     arr[index] = value;
                     count++;
+                    HDebug.Assert(count <= capacity1);
                 }
             }
             else
@@ -60,6 +61,7 @@ namespace HTLib2
                     // value  == def
                     arr[index] = def;
                     count--;
+                    HDebug.Assert(count >= 0);
                 }
                 else
                 {
