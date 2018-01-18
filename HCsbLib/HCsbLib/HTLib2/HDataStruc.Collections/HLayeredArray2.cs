@@ -119,7 +119,7 @@ namespace HTLib2
                     else                     arr[idx2] = newarri(blocksize);
                     arr[idx2][idx1] = value;
                     count++;
-                    HDebug.Assert(count <= capacity);
+                    HDebug.Assert(count <= BlockCapacity);
                 }
             }
             else
