@@ -15,12 +15,12 @@ namespace HTLib2
                 return;
             HLayeredArray2_doselftest = false;
 
-            HDebug.Assert((new HLayeredArray2<int>(0, 1, 2)).ArrSize == 1);
-            HDebug.Assert((new HLayeredArray2<int>(0, 2, 2)).ArrSize == 1);
-            HDebug.Assert((new HLayeredArray2<int>(0, 3, 2)).ArrSize == 2);
-            HDebug.Assert((new HLayeredArray2<int>(0, 4, 2)).ArrSize == 2);
-            HDebug.Assert((new HLayeredArray2<int>(0, 5, 2)).ArrSize == 3);
-            HDebug.Assert((new HLayeredArray2<int>(0, 6, 2)).ArrSize == 3);
+            HDebug.Assert((new HLayeredArray2<int>(0, 1, 2)).ArrLength == 1);
+            HDebug.Assert((new HLayeredArray2<int>(0, 2, 2)).ArrLength == 1);
+            HDebug.Assert((new HLayeredArray2<int>(0, 3, 2)).ArrLength == 2);
+            HDebug.Assert((new HLayeredArray2<int>(0, 4, 2)).ArrLength == 2);
+            HDebug.Assert((new HLayeredArray2<int>(0, 5, 2)).ArrLength == 3);
+            HDebug.Assert((new HLayeredArray2<int>(0, 6, 2)).ArrLength == 3);
 
             HLayeredArray2<int> arr = new HLayeredArray2<int>(0, 5, 3);
             HDebug.Assert(arr.Count == 0, arr[0] == 0, arr[1] == 0, arr[2] == 0, arr[3] == 0, arr[4] == 0);
@@ -44,7 +44,7 @@ namespace HTLib2
         public readonly long Size;
         long                 blocksize;
         readonly T           def;
-        long                 count;
+        long                 arrcount;
         HLayeredArray1<T>[]  arr;
         Func<long, HLayeredArray1<T>> newarri;
         public HLayeredArray2(T def, long size, long blocksize)
@@ -55,10 +55,10 @@ namespace HTLib2
             this.blocksize  = blocksize;
             this.newarri    = delegate (long lsize) { return new HLayeredArray1<T>(def, lsize); };
             this.def        = def;
-            this.count      = 0;
+            this.arrcount   = 0;
             this.arr        = new HLayeredArray1<T>[(size-1)/blocksize+1];
         }
-        public long ArrSize
+        public long ArrLength
         {
             get
             {
@@ -69,7 +69,7 @@ namespace HTLib2
         {
             get
             {
-                return count;
+                return arrcount;
             }
         }
         public long Count
@@ -118,8 +118,8 @@ namespace HTLib2
                     if(idx2 == arr.Length-1) arr[idx2] = newarri((Size-1) % blocksize+1);
                     else                     arr[idx2] = newarri(blocksize);
                     arr[idx2][idx1] = value;
-                    count++;
-                    HDebug.Assert(count <= ArrSize);
+                    arrcount++;
+                    HDebug.Assert(arrcount <= ArrLength);
                 }
             }
             else
@@ -132,8 +132,8 @@ namespace HTLib2
                     if(arr[idx2].Count == 0)
                     {
                         arr[idx2] = null;
-                        count--;
-                        HDebug.Assert(count >= 0);
+                        arrcount--;
+                        HDebug.Assert(arrcount >= 0);
                     }
                 }
                 else
