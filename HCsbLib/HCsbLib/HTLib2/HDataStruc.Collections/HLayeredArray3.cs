@@ -14,7 +14,7 @@ namespace HTLib2
             if(HLayeredArray3_doselftest == false)
                 return;
             HLayeredArray3_doselftest = false;
-            HLayeredArray3<int> arr = new HLayeredArray3<int>(0, 2, 2, 2);
+            HLayeredArray3<int> arr = new HLayeredArray3<int>(0, 8, 2);
             HDebug.Assert(arr.Count == 0, arr[0] == 0, arr[1] == 0, arr[2] == 0, arr[3] == 0);
 
             arr[0] = 1; HDebug.Assert(arr.Count == 1, arr[0] == 1, arr[1] == 0, arr[2] == 0, arr[3] == 0, arr[4] == 0, arr[5] == 0, arr[6] == 0, arr[7] == 0);
