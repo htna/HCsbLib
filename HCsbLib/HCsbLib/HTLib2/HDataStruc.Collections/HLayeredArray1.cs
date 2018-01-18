@@ -24,7 +24,8 @@ namespace HTLib2
         }
         public int Count { get { return count; } }
         public T this[int index]
-        {   get { return GetAt(index); }
+        {
+            get { return GetAt(index); }
             set { SetAt(index, value); }
         }
         public T GetAt(int index)
