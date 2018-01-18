@@ -30,32 +30,32 @@ namespace HTLib2
     public class HLayeredArray3<T>
         where T : IEquatable<T>
     {
-        long                capacity;
+        long                Size;
         long                blocksize, blocksize2;
         readonly T          def;
         long                count;
         HLayeredArray2<T>[] arr;
         Func<long, HLayeredArray2<T>> newarri;
-        public HLayeredArray3(T def, long capacity, long blocksize)
+        public HLayeredArray3(T def, long size, long blocksize)
         {
             if(HCsbLibStatic.HLayeredArray3_doselftest)
                 HCsbLibStatic.HLayeredArray3_selftest();
-            this.capacity   = capacity;
+            this.Size       = size;
             this.blocksize  = blocksize;
             this.blocksize2 = blocksize*blocksize;
-            this.newarri    = delegate (long size) { return new HLayeredArray2<T>(def, size, blocksize); };
+            this.newarri    = delegate (long lsize) { return new HLayeredArray2<T>(def, lsize, blocksize); };
             this.def        = def;
             this.count      = 0;
-            this.arr        = new HLayeredArray2<T>[(capacity-1)/blocksize2+1];
+            this.arr        = new HLayeredArray2<T>[(size-1)/blocksize2+1];
         }
-        public long BlockCapacity
+        public long ArrSize
         {
             get
             {
                 return arr.Length;
             }
         }
-        public long BlockCount
+        public long ArrCount
         {
             get
             {
@@ -105,11 +105,11 @@ namespace HTLib2
                 {
                     // arr[i] == null
                     // value  != def
-                    if(idx3 == arr.Length-1) arr[idx3] = newarri((capacity-1) % blocksize2+1);
+                    if(idx3 == arr.Length-1) arr[idx3] = newarri((Size-1) % blocksize2+1);
                     else                     arr[idx3] = newarri(blocksize2);
                     arr[idx3][idx2] = value;
                     count++;
-                    HDebug.Assert(count <= BlockCapacity);
+                    HDebug.Assert(count <= ArrSize);
                 }
             }
             else
