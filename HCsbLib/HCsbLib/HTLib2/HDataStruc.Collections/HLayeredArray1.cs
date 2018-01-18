@@ -6,16 +6,41 @@ using System.Runtime.Serialization;
 
 namespace HTLib2
 {
+    public partial class HCsbLibStatic
+    {
+        public static bool HLayeredArray1_doselftest = HDebug.IsDebuggerAttached;
+        public static void HLayeredArray1_selftest()
+        {
+            if(HLayeredArray1_doselftest == false)
+                return;
+            HLayeredArray1_doselftest = false;
+            HLayeredArray1<int> arr = new HLayeredArray1<int>(0, 2);
+            HDebug.Assert(arr.Count == 0);
+            arr[0] = 1;
+            HDebug.Assert(arr.Count == 1, arr[0] == 1, arr[1] == 0);
+            arr[0] = 2;
+            HDebug.Assert(arr.Count == 1, arr[0] == 2, arr[1] == 0);
+            arr[1] = 3;
+            HDebug.Assert(arr.Count == 2, arr[0] == 2, arr[1] == 3);
+            arr[1] = 4;
+            HDebug.Assert(arr.Count == 2, arr[0] == 2, arr[1] == 4);
+            arr[0] = 0;
+            HDebug.Assert(arr.Count == 1, arr[0] == 0, arr[1] == 4);
+            arr[1] = 0;
+            HDebug.Assert(arr.Count == 0, arr[0] == 0, arr[1] == 0);
+        }
+    }
     public class HLayeredArray1<T>
         where T : IEquatable<T>
     {
-        long       capacity1;
-        readonly T def;
-        long       count;
-        T[]        arr;
+        readonly long capacity1;
+        readonly T    def;
+        long          count;
+        T[]           arr;
         public HLayeredArray1(T def, long capacity1)
         {
-            HDebug.ToDo("check");
+            if(HCsbLibStatic.HLayeredArray1_doselftest)
+                HCsbLibStatic.HLayeredArray1_selftest();
             this.capacity1 = capacity1;
             this.def       = def;
             this.count     = 0;
