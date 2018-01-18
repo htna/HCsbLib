@@ -6,6 +6,28 @@ using System.Runtime.Serialization;
 
 namespace HTLib2
 {
+    public partial class HCsbLibStatic
+    {
+        public static bool HLayeredArray2_doselftest = HDebug.IsDebuggerAttached;
+        public static void HLayeredArray2_selftest()
+        {
+            if(HLayeredArray2_doselftest == false)
+                return;
+            HLayeredArray2_doselftest = false;
+            HLayeredArray2<int> arr = new HLayeredArray2<int>(0, 2, 2);
+            HDebug.Assert(arr.Count == 0, arr[0] == 0, arr[1] == 0, arr[2] == 0, arr[3] == 0);
+
+            arr[0] = 1; HDebug.Assert(arr.Count == 1, arr[0] == 1, arr[1] == 0, arr[2] == 0, arr[3] == 0);
+            arr[1] = 2; HDebug.Assert(arr.Count == 1, arr[0] == 1, arr[1] == 2, arr[2] == 0, arr[3] == 0);
+            arr[2] = 3; HDebug.Assert(arr.Count == 2, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 0);
+            arr[3] = 4; HDebug.Assert(arr.Count == 2, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 4);
+
+            arr[0] = 0; HDebug.Assert(arr.Count == 2, arr[0] == 0, arr[1] == 2, arr[2] == 3, arr[3] == 4);
+            arr[3] = 0; HDebug.Assert(arr.Count == 2, arr[0] == 0, arr[1] == 2, arr[2] == 3, arr[3] == 0);
+            arr[1] = 0; HDebug.Assert(arr.Count == 1, arr[0] == 0, arr[1] == 0, arr[2] == 3, arr[3] == 0);
+            arr[2] = 0; HDebug.Assert(arr.Count == 0, arr[0] == 0, arr[1] == 0, arr[2] == 0, arr[3] == 0);
+        }
+    }
     public class HLayeredArray2<T>
         where T : IEquatable<T>
     {
@@ -16,7 +38,8 @@ namespace HTLib2
         Func<HLayeredArray1<T>> newarri;
         public HLayeredArray2(T def, long capacity2, long capacity1)
         {
-            HDebug.ToDo("check");
+            if(HCsbLibStatic.HLayeredArray2_doselftest)
+                HCsbLibStatic.HLayeredArray2_selftest();
             this.capacity2  = capacity2;
             this.newarri    = delegate () { return new HLayeredArray1<T>(def, capacity1); };
             this.def        = def;
@@ -82,7 +105,7 @@ namespace HTLib2
                 {
                     // arr[i] != null
                     // value  != def
-                    arr[idx2][idx1] = def;
+                    arr[idx2][idx1] = value;
                 }
             }
         }
