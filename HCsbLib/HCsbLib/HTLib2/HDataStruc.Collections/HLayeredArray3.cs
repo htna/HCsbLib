@@ -14,17 +14,39 @@ namespace HTLib2
             if(HLayeredArray3_doselftest == false)
                 return;
             HLayeredArray3_doselftest = false;
-            HLayeredArray3<int> arr = new HLayeredArray3<int>(0, 8, 2);
-            HDebug.Assert(arr.Count == 0, arr[0] == 0, arr[1] == 0, arr[2] == 0, arr[3] == 0);
 
-            arr[0] = 1; HDebug.Assert(arr.Count == 1, arr[0] == 1, arr[1] == 0, arr[2] == 0, arr[3] == 0, arr[4] == 0, arr[5] == 0, arr[6] == 0, arr[7] == 0);
-            arr[1] = 2; HDebug.Assert(arr.Count == 1, arr[0] == 1, arr[1] == 2, arr[2] == 0, arr[3] == 0, arr[4] == 0, arr[5] == 0, arr[6] == 0, arr[7] == 0);
-            arr[2] = 3; HDebug.Assert(arr.Count == 1, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 0, arr[4] == 0, arr[5] == 0, arr[6] == 0, arr[7] == 0);
-            arr[3] = 4; HDebug.Assert(arr.Count == 1, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 0, arr[5] == 0, arr[6] == 0, arr[7] == 0);
-            arr[4] = 5; HDebug.Assert(arr.Count == 2, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 5, arr[5] == 0, arr[6] == 0, arr[7] == 0);
-            arr[5] = 6; HDebug.Assert(arr.Count == 2, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 5, arr[5] == 6, arr[6] == 0, arr[7] == 0);
-            arr[6] = 7; HDebug.Assert(arr.Count == 2, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 5, arr[5] == 6, arr[6] == 7, arr[7] == 0);
-            arr[7] = 8; HDebug.Assert(arr.Count == 2, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 5, arr[5] == 6, arr[6] == 7, arr[7] == 8);
+            HDebug.Assert((new HLayeredArray3<int>(0, 1, 2)).ArrLength == 1);
+            HDebug.Assert((new HLayeredArray3<int>(0, 2, 2)).ArrLength == 1);
+            HDebug.Assert((new HLayeredArray3<int>(0, 3, 2)).ArrLength == 1);
+            HDebug.Assert((new HLayeredArray3<int>(0, 4, 2)).ArrLength == 1);
+            HDebug.Assert((new HLayeredArray3<int>(0, 5, 2)).ArrLength == 2);
+            HDebug.Assert((new HLayeredArray3<int>(0, 6, 2)).ArrLength == 2);
+            HDebug.Assert((new HLayeredArray3<int>(0, 7, 2)).ArrLength == 2);
+            HDebug.Assert((new HLayeredArray3<int>(0, 8, 2)).ArrLength == 2);
+            HDebug.Assert((new HLayeredArray3<int>(0, 9, 2)).ArrLength == 3);
+
+            HLayeredArray3<int> arr = new HLayeredArray3<int>(0, 9, 2);
+            HDebug.Assert(arr.ArrCount == 0, arr[0] == 0, arr[1] == 0, arr[2] == 0, arr[3] == 0, arr[4] == 0, arr[5] == 0, arr[6] == 0, arr[7] == 0, arr[8] == 0);
+
+            arr[0] = 1; HDebug.Assert(arr.ArrCount == 1, arr[0] == 1, arr[1] == 0, arr[2] == 0, arr[3] == 0, arr[4] == 0, arr[5] == 0, arr[6] == 0, arr[7] == 0, arr[8] == 0);
+            arr[1] = 2; HDebug.Assert(arr.ArrCount == 1, arr[0] == 1, arr[1] == 2, arr[2] == 0, arr[3] == 0, arr[4] == 0, arr[5] == 0, arr[6] == 0, arr[7] == 0, arr[8] == 0);
+            arr[2] = 3; HDebug.Assert(arr.ArrCount == 1, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 0, arr[4] == 0, arr[5] == 0, arr[6] == 0, arr[7] == 0, arr[8] == 0);
+            arr[3] = 4; HDebug.Assert(arr.ArrCount == 1, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 0, arr[5] == 0, arr[6] == 0, arr[7] == 0, arr[8] == 0);
+            arr[4] = 5; HDebug.Assert(arr.ArrCount == 2, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 5, arr[5] == 0, arr[6] == 0, arr[7] == 0, arr[8] == 0);
+            arr[5] = 6; HDebug.Assert(arr.ArrCount == 2, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 5, arr[5] == 6, arr[6] == 0, arr[7] == 0, arr[8] == 0);
+            arr[6] = 7; HDebug.Assert(arr.ArrCount == 2, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 5, arr[5] == 6, arr[6] == 7, arr[7] == 0, arr[8] == 0);
+            arr[7] = 8; HDebug.Assert(arr.ArrCount == 2, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 5, arr[5] == 6, arr[6] == 7, arr[7] == 8, arr[8] == 0);
+            arr[8] = 9; HDebug.Assert(arr.ArrCount == 3, arr[0] == 1, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 5, arr[5] == 6, arr[6] == 7, arr[7] == 8, arr[8] == 9);
+
+            arr[0] = 0; HDebug.Assert(arr.ArrCount == 3, arr[0] == 0, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 5, arr[5] == 6, arr[6] == 7, arr[7] == 8, arr[8] == 9);
+            arr[4] = 0; HDebug.Assert(arr.ArrCount == 3, arr[0] == 0, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 0, arr[5] == 6, arr[6] == 7, arr[7] == 8, arr[8] == 9);
+            arr[5] = 0; HDebug.Assert(arr.ArrCount == 3, arr[0] == 0, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 0, arr[5] == 0, arr[6] == 7, arr[7] == 8, arr[8] == 9);
+            arr[7] = 0; HDebug.Assert(arr.ArrCount == 3, arr[0] == 0, arr[1] == 2, arr[2] == 3, arr[3] == 4, arr[4] == 0, arr[5] == 0, arr[6] == 7, arr[7] == 0, arr[8] == 9);
+            arr[2] = 0; HDebug.Assert(arr.ArrCount == 3, arr[0] == 0, arr[1] == 2, arr[2] == 0, arr[3] == 4, arr[4] == 0, arr[5] == 0, arr[6] == 7, arr[7] == 0, arr[8] == 9);
+            arr[3] = 0; HDebug.Assert(arr.ArrCount == 3, arr[0] == 0, arr[1] == 2, arr[2] == 0, arr[3] == 0, arr[4] == 0, arr[5] == 0, arr[6] == 7, arr[7] == 0, arr[8] == 9);
+            arr[8] = 0; HDebug.Assert(arr.ArrCount == 2, arr[0] == 0, arr[1] == 2, arr[2] == 0, arr[3] == 0, arr[4] == 0, arr[5] == 0, arr[6] == 7, arr[7] == 0, arr[8] == 0);
+            arr[1] = 0; HDebug.Assert(arr.ArrCount == 1, arr[0] == 0, arr[1] == 0, arr[2] == 0, arr[3] == 0, arr[4] == 0, arr[5] == 0, arr[6] == 7, arr[7] == 0, arr[8] == 0);
+            arr[6] = 0; HDebug.Assert(arr.ArrCount == 0, arr[0] == 0, arr[1] == 0, arr[2] == 0, arr[3] == 0, arr[4] == 0, arr[5] == 0, arr[6] == 0, arr[7] == 0, arr[8] == 0);
         }
     }
     public class HLayeredArray3<T>
@@ -107,7 +129,7 @@ namespace HTLib2
                     // value  != def
                     if(idx3 == arr.Length-1) arr[idx3] = newarri((Size-1) % blocksize2+1);
                     else                     arr[idx3] = newarri(blocksize2);
-                    arr[idx3][idx2] = value;
+                    arr[idx3].SetAt(idx2, value);
                     arrcount++;
                     HDebug.Assert(arrcount <= ArrLength);
                 }
@@ -118,7 +140,7 @@ namespace HTLib2
                 {
                     // arr[i] != null
                     // value  == def
-                    arr[idx3][idx2] = def;
+                    arr[idx3].SetAt(idx2, def);
                     if(arr[idx3].Count == 0)
                     {
                         arr[idx3] = null;
@@ -130,7 +152,7 @@ namespace HTLib2
                 {
                     // arr[i] != null
                     // value  != def
-                    arr[idx3][idx2] = value;
+                    arr[idx3].SetAt(idx2, value);
                 }
             }
         }

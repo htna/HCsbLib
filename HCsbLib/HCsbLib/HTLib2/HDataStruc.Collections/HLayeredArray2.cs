@@ -117,7 +117,7 @@ namespace HTLib2
                     // value  != def
                     if(idx2 == arr.Length-1) arr[idx2] = newarri((Size-1) % blocksize+1);
                     else                     arr[idx2] = newarri(blocksize);
-                    arr[idx2][idx1] = value;
+                    arr[idx2].SetAt(idx1, value);
                     arrcount++;
                     HDebug.Assert(arrcount <= ArrLength);
                 }
@@ -128,7 +128,7 @@ namespace HTLib2
                 {
                     // arr[i] != null
                     // value  == def
-                    arr[idx2][idx1] = def;
+                    arr[idx2].SetAt(idx1, def);
                     if(arr[idx2].Count == 0)
                     {
                         arr[idx2] = null;
@@ -140,7 +140,7 @@ namespace HTLib2
                 {
                     // arr[i] != null
                     // value  != def
-                    arr[idx2][idx1] = value;
+                    arr[idx2].SetAt(idx1, value);
                 }
             }
         }
