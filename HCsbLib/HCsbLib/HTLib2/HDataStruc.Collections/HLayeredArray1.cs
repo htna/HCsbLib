@@ -6,14 +6,14 @@ using System.Runtime.Serialization;
 
 namespace HTLib2
 {
-    public class HLayeredArray1C<T>
+    public class HLayeredArray1<T>
         where T : IEquatable<T>
     {
         int        capacity;
         readonly T def;
         int        count;
         T[]        arr;
-        public HLayeredArray1C(int capacity, T def)
+        public HLayeredArray1(int capacity, T def)
         {
             this.capacity = capacity;
             this.def      = def;
