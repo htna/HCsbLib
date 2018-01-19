@@ -11,8 +11,8 @@ namespace HTLib2
 // 		where T : IEquatable<T>
 // 		where U : IEquatable<U>
 	{
-		public T first;                     public T Item1 { get { return first;  } }
-        public U second;                    public U Item2 { get { return second; } }
+		private T first;                     public T Item1 { get { return first;  } }
+        public  U second;                    public U Item2 { get { return second; } }
 		public Pair(T first, U second)
 		{
             HDebug.Depreciated();

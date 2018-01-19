@@ -11,7 +11,7 @@ namespace HTLib2
         {
             Comparison<Pair<T,int>> mycomparison = delegate(Pair<T, int> x, Pair<T, int> y)
             {
-                return comparison(x.first, y.first);
+                return comparison(x.Item1, y.Item1);
             };
 
             List<Pair<T,int>> sorteds = new List<Pair<T, int>>(values.Count);

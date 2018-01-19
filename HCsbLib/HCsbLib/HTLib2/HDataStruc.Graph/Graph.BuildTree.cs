@@ -20,16 +20,16 @@ namespace HTLib2
         void BuildTreeRec(Pair<Node,Edge> parent, Pair<Node,Edge> node, HashSet<Node> within, Tree<Pair<Node, Edge>> tree)
         {
             if(parent != null)
-                HDebug.Assert(within.Contains(parent.first) == false);
-            HDebug.Assert(within.Contains(node.first));
+                HDebug.Assert(within.Contains(parent.Item1) == false);
+            HDebug.Assert(within.Contains(node.Item1));
 
             Tree.Node treenode = tree.AddChild(parent, node);
-            within.Remove(node.first);
-            foreach(Node childnode in node.first.nexts.Keys)
+            within.Remove(node.Item1);
+            foreach(Node childnode in node.Item1.nexts.Keys)
             {
                 if(within.Contains(childnode) == false)
                     continue;
-                Edge childedge = node.first.nexts[childnode];
+                Edge childedge = node.Item1.nexts[childnode];
                 Pair<Node,Edge> child = new Pair<Node,Edge>(childnode, childedge);
                 BuildTreeRec(node, child, within, tree);
             }
