@@ -9,14 +9,14 @@ namespace HTLib2
     {
         public static int[] HIdxSorted<T>(this IList<T> values, Comparison<T> comparison)
         {
-            Comparison<Pair<T,int>> mycomparison = delegate(Pair<T, int> x, Pair<T, int> y)
+            Comparison<Tuple<T,int>> mycomparison = delegate(Tuple<T, int> x, Tuple<T, int> y)
             {
                 return comparison(x.Item1, y.Item1);
             };
 
-            List<Pair<T,int>> sorteds = new List<Pair<T, int>>(values.Count);
+            List<Tuple<T,int>> sorteds = new List<Tuple<T, int>>(values.Count);
             for(int i=0; i<values.Count; i++)
-                sorteds.Add(new Pair<T, int>(values[i], i));
+                sorteds.Add(new Tuple<T, int>(values[i], i));
             sorteds.Sort(mycomparison);
             int[] idxs = new int[values.Count];
             for(int i=0; i<values.Count; i++)
