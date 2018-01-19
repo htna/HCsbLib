@@ -15,9 +15,9 @@ namespace HTLib2
         public Tree<Node> BuildTreeMST(Node root, Func<Node,Node,double> costfunc=null)
         {
             Tree<Node> tree = new Tree<Node>();
-            SortedList<double,List<Pair<Node,Node>>> probing = new SortedList<double, List<Pair<Node, Node>>>();
-            probing.Add(0, new List<Pair<Node,Node>>());
-            probing[0].Add(new Pair<Node, Node>(null, root));
+            SortedList<double,List<Tuple<Node,Node>>> probing = new SortedList<double, List<Tuple<Node, Node>>>();
+            probing.Add(0, new List<Tuple<Node,Node>>());
+            probing[0].Add(new Tuple<Node, Node>(null, root));
             double[] costs = new double[nodes.Count];
             for(int i=0; i<costs.Length; i++)
                 costs[i] = double.NaN;
@@ -44,8 +44,8 @@ namespace HTLib2
                 {
                     double nodecost = cost + costfunc(to, node);
                     if(probing.ContainsKey(nodecost) == false)
-                        probing.Add(nodecost, new List<Pair<Node, Node>>());
-                    probing[nodecost].Add(new Pair<Node, Node>(to, node));
+                        probing.Add(nodecost, new List<Tuple<Node, Node>>());
+                    probing[nodecost].Add(new Tuple<Node, Node>(to, node));
                 }
             }
 
