@@ -20,7 +20,7 @@ namespace HTLib2
             sorteds.Sort(mycomparison);
             int[] idxs = new int[values.Count];
             for(int i=0; i<values.Count; i++)
-                idxs[i] = sorteds[i].second;
+                idxs[i] = sorteds[i].Item2;
 
             string debug="false";
             if(debug == "true")

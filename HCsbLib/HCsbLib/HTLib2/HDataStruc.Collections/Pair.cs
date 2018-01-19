@@ -12,7 +12,7 @@ namespace HTLib2
 // 		where U : IEquatable<U>
 	{
 		private T first;                     public T Item1 { get { return first;  } }
-        public  U second;                    public U Item2 { get { return second; } }
+        private U second;                    public U Item2 { get { return second; } }
 		public Pair(T first, U second)
 		{
             HDebug.Depreciated();
