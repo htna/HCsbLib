@@ -8,18 +8,18 @@ namespace HTLib2
     [Serializable]
     public class MatrixByRowVec<T> : IMatrix<T>
     {
-        int IMatrix<T>.ColSize { get { return ColSize; } }
-        int IMatrix<T>.RowSize { get { return RowSize; } }
-        public readonly int ColSize;
-        public readonly int RowSize;
+        int IMatrix<T>.ColSize { get { return (int)ColSize; } }
+        int IMatrix<T>.RowSize { get { return (int)RowSize; } }
+        public readonly long ColSize;
+        public readonly long RowSize;
         public T[][] valColRow;
 
-        public MatrixByRowVec(int colsize, int rowsize)
+        public MatrixByRowVec(long colsize, long rowsize)
         {
             ColSize   = colsize;
             RowSize   = rowsize;
             valColRow = new T[ColSize][];
-            for(int c = 0; c < ColSize; c++)
+            for(long c = 0; c < ColSize; c++)
                 valColRow[c] = new T[RowSize];
         }
         public override string ToString()
@@ -39,7 +39,7 @@ namespace HTLib2
             get { return valColRow[c][r]; }
             set { valColRow[c][r] = value; }
         }
-        public T GetAtLock(int c, int r)
+        public T GetAtLock(long c, long r)
         {
             throw new NotImplementedException();
             //HDebug.Assert(0<=c, c<ColSize, 0<=r, r<RowSize);
@@ -61,7 +61,7 @@ namespace HTLib2
             //if(GetDefault != null) return GetDefault();
             //return default(T);
         }
-        public void SetAtLock(int c, int r, T value)
+        public void SetAtLock(long c, long r, T value)
         {
             throw new NotImplementedException();
             //HDebug.Assert(0<=c, c<ColSize, 0<=r, r<RowSize);
@@ -92,7 +92,7 @@ namespace HTLib2
             //    }
             //}
         }
-        public bool HasElementLock(int c, int r)
+        public bool HasElementLock(long c, long r)
         {
             throw new NotImplementedException();
             //HDebug.Assert(0 <= c, c < ColSize, 0 <= r, r < RowSize);
@@ -114,11 +114,11 @@ namespace HTLib2
             //return false;
         }
 
-        public T[] GetColVector(int row)
+        public T[] GetColVector(long row)
         {
             throw new NotImplementedException();
         }
-        public T[] GetRowVector(int col)
+        public T[] GetRowVector(long col)
         {
             return valColRow[col];
         }
