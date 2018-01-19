@@ -28,8 +28,8 @@ namespace HTLib2
             {
                 var first = probing.ElementAt(0);
                 double cost = first.Key;
-                Node   from = first.Value[0].first;
-                Node   to   = first.Value[0].second;
+                Node   from = first.Value[0].Item1;
+                Node   to   = first.Value[0].Item2;
                 first.Value.RemoveAt(0);
                 if(first.Value.Count == 0)
                     probing.Remove(cost);
