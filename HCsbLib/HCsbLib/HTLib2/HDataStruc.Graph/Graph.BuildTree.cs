@@ -7,17 +7,17 @@ namespace HTLib2
 {
     public partial class Graph
     {
-        public Tree<Pair<Node,Edge>> BuildTree(Node root)
+        public Tree<Tuple<Node,Edge>> BuildTree(Node root)
         {
             HashSet<Node> within = new HashSet<Node>(nodes);
             HDebug.Assert(within.Contains(root));
 
-            Tree<Pair<Node,Edge>> tree = new Tree<Pair<Node, Edge>>();
-            Pair<Node,Edge> rootval = new Pair<Node,Edge>(root,null);
+            Tree<Tuple<Node,Edge>> tree = new Tree<Tuple<Node, Edge>>();
+            Tuple<Node,Edge> rootval = new Tuple<Node,Edge>(root,null);
             BuildTreeRec(null, rootval, within, tree);
             return tree;
         }
-        void BuildTreeRec(Pair<Node,Edge> parent, Pair<Node,Edge> node, HashSet<Node> within, Tree<Pair<Node, Edge>> tree)
+        void BuildTreeRec(Tuple<Node,Edge> parent, Tuple<Node,Edge> node, HashSet<Node> within, Tree<Tuple<Node, Edge>> tree)
         {
             if(parent != null)
                 HDebug.Assert(within.Contains(parent.Item1) == false);
@@ -30,7 +30,7 @@ namespace HTLib2
                 if(within.Contains(childnode) == false)
                     continue;
                 Edge childedge = node.Item1.nexts[childnode];
-                Pair<Node,Edge> child = new Pair<Node,Edge>(childnode, childedge);
+                Tuple<Node,Edge> child = new Tuple<Node,Edge>(childnode, childedge);
                 BuildTreeRec(node, child, within, tree);
             }
         }
