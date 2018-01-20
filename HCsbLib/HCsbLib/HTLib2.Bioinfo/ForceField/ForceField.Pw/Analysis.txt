@@ -1,0 +1,28 @@
+﻿
+minimizing alanin
+
+Bond    Angle    Dihedral    Improper    Elec    Vdw        Iteration
+===================================================================
+Mindy   Mindy    Mindy       Mindy       Mindy   Mindy		 1447
+PW      Mindy    Mindy       Mindy       Mindy   Mindy		 1447
+Mindy   PW       Mindy       Mindy       Mindy   Mindy		 4567
+Mindy   Mindy    Mindy       Mindy       PW      Mindy		 1685
+Mindy   Mindy    Mindy       Mindy       Mindy   PW   		 2279
+Mindy   Mindy    Mindy       PW          Mindy   Mindy		 290982
+
+
+
+Mindy   Mindy                Mindy       Mindy   Mindy		 5335
+PW      PW                   Mindy       PW      PW   		44013
+
+
+
+
+
+
+
+
+	(MindyBond + MindyAngle + MindyImproper + MindyElec + MindyVdw + MindyDihedral) :  1447 - iteration
+	(MindyBond + MindyAngle + MindyImproper + MindyElec + MindyVdw) :  5335 - iteration
+	(MindyImproper) + (PwBond + PwAngle + PwElec + PwVdw)           : 44013 - iteration
+
