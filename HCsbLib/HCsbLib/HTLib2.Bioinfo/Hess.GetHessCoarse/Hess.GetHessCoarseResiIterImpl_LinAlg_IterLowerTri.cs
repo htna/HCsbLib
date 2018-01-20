@@ -128,7 +128,7 @@ namespace HTLib2.Bioinfo
                             //  DD ={ { d00,d01,d02},{ d10,d11,d12},{ d20,d21,d22} }; MatrixForm[DD]
                             //  BB ={ { b00,b01,b02},{ b10,b11,b12},{ b20,b21,b22} }; MatrixForm[BB]
                             //  CC ={ { c00,c01,c02},{ c10,c11,c12},{ c20,c21,c22} }; MatrixForm[CC]
-                            object[]    dbginfo = null; // new object[] { iremv, atoms, H, D, C_lstbr, C_lstbval };
+                            //  object[]    dbginfo = null; // new object[] { iremv, atoms, H, D, C_lstbr, C_lstbval };
 
                             Action<ValueTuple<int, int, MatrixByArr, MatrixByArr>> Update_A_B_invD_C = delegate(ValueTuple<int, int, MatrixByArr, MatrixByArr> info)
                             {
