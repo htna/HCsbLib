@@ -27,7 +27,7 @@ namespace HTLib3
                 return base.ToString() + " : " + value;
             }
         }
-        public new class Edge : Graph.Edge
+        public class Edge : Graph.Edge
         {
             public readonly EDGE value;
             public new Node[] nodes

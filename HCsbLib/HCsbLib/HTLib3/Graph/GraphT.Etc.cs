@@ -23,7 +23,7 @@ namespace HTLib3
                 return nullvalue;
             return edge.value;
         }
-        public new Edge AddEdge(NODE nodeval1, NODE nodeval2, EDGE edgeval)
+        public Edge AddEdge(NODE nodeval1, NODE nodeval2, EDGE edgeval)
         {
             Node node1 = AddNode(nodeval1);
             Node node2 = AddNode(nodeval2);

@@ -19,7 +19,7 @@ namespace HTLib2.Bioinfo
             {
                 static string tempbase = @"C:\temp\";
 
-                static ILinAlg la = null;
+                //static ILinAlg la = null;
                 static Dictionary<string, object> _global = new Dictionary<string, object>();
                 static Dictionary<string, object> locks = new Dictionary<string, object>();
 

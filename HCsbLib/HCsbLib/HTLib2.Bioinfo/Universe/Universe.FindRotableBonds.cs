@@ -524,7 +524,7 @@ namespace HTLib2.Bioinfo
         {
             HDebug.Depreciated("call BuildFlexibilityGraph(null), instead");
             IList<Bond> cutrotbonds = null;
-            return BuildFlexibilityGraph(null as IList<Bond>);
+            return BuildFlexibilityGraph(cutrotbonds);
         }
         public Graph<Atom[], Bond> BuildFlexibilityGraph(IList<Bond> cutrotbonds //=null
                                                         )
