@@ -18,6 +18,28 @@ namespace HTLib2.Bioinfo
     }
     public partial class Hess
     {
+        public static HessCoarseResiIter.HessInfoCoarseResiIter GetHessCoarseResiIter
+            ( Hess.HessInfo hessinfo
+            , Vector[] coords
+            , HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv
+            , ILinAlg ila
+            , double thres_zeroblk=0.001
+            , HessCoarseResiIter.IterOption iteropt = HessCoarseResiIter.IterOption.Matlab_experimental
+            , string[] options=null
+            )
+        {
+            return HessCoarseResiIter.GetHessCoarseResiIter
+            ( hessinfo          : hessinfo
+            , coords            : coords
+            , GetIdxKeepListRemv: GetIdxKeepListRemv
+            , ila               : ila
+            , thres_zeroblk     : thres_zeroblk
+            , iteropt           : iteropt 
+            , options           : options
+            );
+        }
+
+
         public static HessCoarseResiIter.HessInfoCoarseResiIter GetHessCoarseResiIter_BlockWise
             ( Hess.HessInfo hessinfo
             , Vector[] coords
