@@ -14,17 +14,19 @@ namespace HTLib2.Bioinfo
                 public HessMatrix hess;
                 public Xyz xyz;
                 public Prm prm;
-                public Hess.HessInfo GetHessInfo()
-                {
-                    Hess.HessInfo hessinfo = new Hess.HessInfo
-                    {
-                        coords = xyz.atoms.HListCoords(),
-                        hess   = hess,
-                        mass   = prm.atoms.SelectByXyzAtom(xyz.atoms).ListMass(),
-                        atoms  = xyz.atoms,
-                    };
-                    return hessinfo;
-                }
+
+                /// call Hess.HessInfo.FromTinker(...)
+                //public Hess.HessInfo GetHessInfo()
+                //{
+                //    Hess.HessInfo hessinfo = new Hess.HessInfo
+                //    {
+                //        coords = xyz.atoms.HListCoords(),
+                //        hess   = hess,
+                //        mass   = prm.atoms.SelectByXyzAtom(xyz.atoms).ListMass(),
+                //        atoms  = xyz.atoms,
+                //    };
+                //    return hessinfo;
+                //}
             };
 
             public static CTesthess Testhess(Tinker.Xyz xyz, Tinker.Prm prm

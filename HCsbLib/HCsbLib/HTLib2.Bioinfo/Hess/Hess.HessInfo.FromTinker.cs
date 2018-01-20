@@ -20,6 +20,14 @@ namespace HTLib2.Bioinfo
                 };
                 return hessinfo;
             }
+            public static HessInfo FromTinker(Tinker.Run.CTesthess ctesthess)
+            {
+                return FromTinker
+                    ( ctesthess.xyz
+                    , ctesthess.prm
+                    , ctesthess.hess
+                    );
+            }
         }
     }
 }
