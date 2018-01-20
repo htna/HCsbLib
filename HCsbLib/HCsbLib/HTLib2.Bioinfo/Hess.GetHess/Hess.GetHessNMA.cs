@@ -15,41 +15,49 @@ namespace HTLib2.Bioinfo
         }
         public static HessInfo GetHessNMA(Tinker.Xyz xyz, Tinker.Prm prm, string tempbase, int? digits, params string[] keys)
         {
-            var hess = Tinker.Run.Testhess
+            var ctesthess = Tinker.Run.Testhess
                 ( xyz, prm, tempbase
                 , digits: digits
                 , keys: keys
-                ).hess;
+                );
 
-            double[] masses = prm.atoms.SelectByXyzAtom(xyz.atoms).ListMass();
+            var hessinfo = HessInfo.FromTinker(ctesthess);
+            hessinfo.numZeroEigval = 6;
+            return hessinfo;
 
-            return new HessInfo
-            {
-                hess          = hess,
-                mass          = masses,
-                atoms         = xyz.atoms.HClone(),
-                coords        = xyz.atoms.HListCoords(),
-                numZeroEigval = 6,
-            };
+            //double[] masses = prm.atoms.SelectByXyzAtom(xyz.atoms).ListMass();
+            //
+            //return new HessInfo
+            //{
+            //    hess          = hess,
+            //    mass          = masses,
+            //    atoms         = xyz.atoms.HClone(),
+            //    coords        = xyz.atoms.HListCoords(),
+            //    numZeroEigval = 6,
+            //};
         }
         public static HessInfo GetHessNMA(Universe univ, IList<Vector> coords, string tempbase, int? digits, params string[] keys)
         {
             var xyz = univ.refs["xyz"].Get<Tinker.Xyz>().CloneByCoords(coords);
             var prm = univ.refs["prm"].Get<Tinker.Prm>();
-            var hess = Tinker.Run.Testhess
+            var ctesthess = Tinker.Run.Testhess
                 (xyz, prm, tempbase
                 , digits: digits
                 , keys: keys
-                ).hess;
+                );
 
-            return new HessInfo
-            {
-                hess          = hess,
-                mass          = univ.GetMasses(),
-                atoms         = univ.atoms.ToArray(),
-                coords        = coords.HCloneVectors().ToArray(),
-                numZeroEigval = 6,
-            };
+            var hessinfo = HessInfo.FromTinker(ctesthess);
+            hessinfo.numZeroEigval = 6;
+            return hessinfo;
+
+            //return new HessInfo
+            //{
+            //    hess          = hess,
+            //    mass          = univ.GetMasses(),
+            //    atoms         = univ.atoms.ToArray(),
+            //    coords        = coords.HCloneVectors().ToArray(),
+            //    numZeroEigval = 6,
+            //};
         }
-	}
+    }
 }
