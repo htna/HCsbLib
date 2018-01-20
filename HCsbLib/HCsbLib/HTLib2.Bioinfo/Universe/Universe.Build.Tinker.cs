@@ -619,18 +619,6 @@ namespace HTLib2.Bioinfo
                 }
                 return univ;
             }
-            static void BuildInter1toN(Atom from, int n, HashSet<Atom> Inter1toN)
-            {
-                if(n == 0)
-                    return;
-                Inter1toN.Add(from);
-                foreach(Atom bonded in from.Inter12)
-                    BuildInter1toN(bonded, n-1, Inter1toN);
-                //if(n == 1)
-                //	return new List<Atom>();
-                //from.Bonds.
-                //return null;
-            }
         }
     }
 }
