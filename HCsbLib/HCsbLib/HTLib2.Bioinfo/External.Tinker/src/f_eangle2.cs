@@ -74,7 +74,7 @@ public partial class Src
             ic = iang[3,k]                                                  ;//            ic = iang(3,k)
             id = iang[4,k]                                                  ;//            id = iang(4,k)
             proceed = (i == ia  ||  i == ib  ||  i == ic  ||  i == id)      ;//            proceed = (i.eq.ia .or. i.eq.ib .or. i.eq.ic .or. i.eq.id)
-            if (proceed  &&   use_group)                                    ;//            if (proceed .and. use_group)
+            if (proceed  &&   use_group)                                     //            if (proceed .and. use_group)
                groups(out proceed,out fgrp,ia,ib,ic,id,0,0)                 ;//     &         call groups (proceed,fgrp,ia,ib,ic,id,0,0)
          }                                                                  ;//         end if
          if (proceed) {                                                     ;//         if (proceed) then
