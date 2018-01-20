@@ -1,0 +1,46 @@
+﻿
+
+
+http://cib.cf.ocha.ac.jp/bitool/HBOND/
+Hydrogen Bond Calculation (ver. 1.1)
+
+http://www.jhu.edu/fleming/Modeling/HBPLUS.html
+hbplus
+* cannot find source and binary
+
+http://www.sciencedirect.com/science/article/pii/0079610784900075#
+* Baker, E.N., Hubbard, R.E. (1984) Hydrogen bonding in globular proteins.
+  Prog. Biophys. Molec. Biol. 44, 97-179
+
+http://onlinelibrary.wiley.com/doi/10.1029/2010JB008087/abstract
+http://onlinelibrary.wiley.com/doi/10.1029/2010JB008087/pdf
+* Hushur, A., M. H. Manghnani, J. R. Smyth, Q. Williams, E. Hellebrand, D. Lonappan, Y. Ye, P. Dera, 
+  and D. J. Frost (2011), Hydrogen bond symmetrization and equation of state of phase D, J. Geophys. 
+  Res., 116, B06203, doi:10.1029/2010JB008087.
+
+http://w3.iams.sinica.edu.tw/lab/jlli/thesis_andy/node5.html
+Hydrogen Bond
+* U_hb = A/r^14 - C/r^10                              (1)
+* U_hb = (A/r^12 - C/r^10) cos^2 ang1 cos^4 ang2      (2)
+* U_hb = (D/d^6 - D/d^4) cos^m theta                  (3)
+
+http://structure.usc.edu/stride/
+STRIDE: Protein secondary structure assignment from atomic coordinates
+* STRIDE [1] is a program to recognize secondary structural elements in proteins from their atomic coordinates.
+  It performs the same task as DSSP by Kabsch and Sander [2]
+  *but utilizes both hydrogen bond energy and mainchain dihedral angles rather than hydrogen bonds alone.*
+  STRIDE produces output that is easily readable both visually and with computer programs.
+* have only the 2nd structure information, and its related hydrogen-bondes
+
+http://en.wikipedia.org/wiki/DSSP_(protein)
+http://swift.cmbi.ru.nl/gv/dssp/
+DSSP 
+* have only the 2nd structure information, and its related hydrogen-bondes
+
+GRID
+* http://www.moldiscovery.com/soft_grid.php
+* HydroBond.Grid.David89.pdf: http://pubs.acs.org/doi/pdf/10.1021/jm00125a025
+* HydroBond.Grid.Carosati04.pdf: http://pubs.acs.org/doi/pdf/10.1021/jm0498349
+* Wade93: http://pubs.acs.org/doi/pdf/10.1021/jm00053a019
+* Wade93: http://pubs.acs.org/doi/pdf/10.1021/jm00053a018
+* Goodford85: http://pubs.acs.org/doi/pdf/10.1021/jm00145a002

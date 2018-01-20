@@ -98,6 +98,10 @@
     <Compile Include="HTLib2.Bioinfo\External.Gromacs\Top\Top.Element.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Gromacs\Top\Top.FromFile.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Gromacs\Top\Top.FromPdb.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.HydroBond\HydroBond.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.HydroBond\HydroBond.EnumHydroBondNHOC.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.HydroBond\HydroBond.Gavezzotti94.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.HydroBond\HydroBond.Irback09.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Namd\Namd.CopyPdbOccupancyForMergedPsf.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Namd\Namd.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Namd\Namd.GetResourcePaths.cs" />
@@ -222,8 +226,20 @@
     <Compile Include="HTLib2.Bioinfo\HBioinfo\HBioinfo.SimFluc.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessAnm.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessApproxAnm.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessEAnm.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessFixDiag.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessFSM.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessGnm.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessHydroBond.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessMixAnm.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessMixModel.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessNMA.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessRTB.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessSbNMA.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessSbNMA.Enum.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessSbNMA_SelfTest.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessSsNMA.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessStem.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrix.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrix.Oper.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrix.ReshapeByAtom.cs" />
@@ -1206,6 +1222,7 @@
     <None Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\xyzsybyl.f" />
     <None Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\zatom.f" />
     <None Include="HTLib2.Bioinfo\HBioinfo.BFactor\BFactor.ModeContribToBFactorCorr.one" />
+    <None Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessSbNMA_SelfTest.log" />
     <None Include="HTLib2.Bioinfo\Hess\Hess.GetSprScalar.one" />
     <None Include="HTLib2.Bioinfo\Pdb\Depreciated\Struct.BuildBond\top_all27_prot_lipid.inp" />
     <None Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Pdb.Format_v33_Letter.pdf" />
@@ -1216,6 +1233,7 @@
     <None Include="HTLib2\HMath.Geometry\Geometry.MaxCircleBetweenCircles.one" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="HTLib2.Bioinfo\External.HydroBond\HydroBond.reference.txt" />
     <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\action.i" />
     <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\align.i" />
     <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\analyz.i" />
