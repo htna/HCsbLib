@@ -274,6 +274,7 @@
     <Compile Include="HTLib2.Bioinfo\Hess\Hess.GetMassWeightedHess.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess\Hess.GetModes.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess\Hess.GetSprScalar.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess\Hess.HessInfo.FromTinker.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess\Hess.HessInfo.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess\Hess.HessSpr.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess\Hess.HessSpr.GetKijNbnd.cs" />

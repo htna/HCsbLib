@@ -33,7 +33,7 @@ namespace HTLib2.Bioinfo
                 return idxca.ToArray();
             }
         }
-        public class HessInfo : HessInfoBase
+        public partial class HessInfo : HessInfoBase
         {
             public HessMatrix  hess = null;
 
