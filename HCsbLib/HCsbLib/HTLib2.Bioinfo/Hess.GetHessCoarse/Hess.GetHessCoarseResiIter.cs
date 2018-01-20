@@ -214,7 +214,7 @@ namespace HTLib2.Bioinfo
                 public DateTime time1;
                 public TimeSpan compTime { get { return (time1 - time0); } }
                 public double   compSec  { get { return compTime.TotalSeconds; } }
-                public string ToString()
+                public override string ToString()
                 {
                     string str="";
                     str += string.Format("atoms({0,6})", sizeHessBlkMat);

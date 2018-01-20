@@ -280,7 +280,7 @@ namespace HTLib2.Bioinfo
                         Quality quality = GetQuality(pathcache, luniv, GetHessInfo, GetHessCoarseResiIter_thres_zeroblk);
                         return quality;
                     }
-                    catch(Exception e)
+                    catch(Exception)
                     {
                         return null;
                     }

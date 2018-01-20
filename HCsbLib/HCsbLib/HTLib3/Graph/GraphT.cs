@@ -8,7 +8,7 @@ namespace HTLib3
     public partial class Graph<NODE,EDGE>
     {
         private Graph graph = new Graph();
-        public new class Node : Graph.Node
+        public class Node : Graph.Node
         {
             public readonly NODE value;
             public new Dictionary<Node, Edge> nexts { get{ return base.nexts.HConvertType<Graph.Node,Graph.Edge,Node,Edge>(); } }

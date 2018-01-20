@@ -38,7 +38,7 @@ namespace HTLib2.Bioinfo
                 public string name;     // full name
                 public char   name1;    // 1 letter
                 public string name3;    // 3 letters
-                public string ToString()
+                public override string ToString()
                 {
                     return string.Format("{0} ({1}, {2})", name3, name1, name);
                 }
