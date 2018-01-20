@@ -1,3 +1,5 @@
+#pragma warning disable CS0649
+
 namespace HTLib2.Bioinfo
 {
 public partial class Tinker
