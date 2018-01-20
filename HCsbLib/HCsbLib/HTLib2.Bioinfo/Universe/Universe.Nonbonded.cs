@@ -114,6 +114,7 @@ namespace HTLib2.Bioinfo
         }
         public IEnumerable<Nonbonded> EnumNonbondedsInfCutoff()
         {
+#pragma warning disable CS0162
             for(int i=0; i<size; i++)
             {
                 Atom atom = atoms[i];
@@ -125,6 +126,7 @@ namespace HTLib2.Bioinfo
                     throw new Exception("univ has atoms with the same ID");
                 }
             }
+#pragma warning restore CS0162
         }
         public IEnumerable<Nonbonded> EnumNonbondeds(Vector[] coords, double cutoff, bool skip_nulls)
         {

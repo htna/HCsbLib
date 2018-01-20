@@ -67,7 +67,9 @@ namespace HTLib2.Bioinfo
                 //if(atoms[0] != other.atoms[0]) return false;
                 //if(atoms[1] != other.atoms[1]) return false;
                 throw new Exception("check AtomPack.Equals(AtomPack). If reference.equal == false, this should return false!!");
+#pragma warning disable CS0162
                 return true;
+#pragma warning restore CS0162
             }
 
             public override bool Equals(object obj)

@@ -46,7 +46,8 @@ namespace HTLib2
 		{
             throw new NotImplementedException();
 
-			Segment segment = new Segment(line.Base, line.Normal);
+#pragma warning disable CS0162
+            Segment segment = new Segment(line.Base, line.Normal);
 			double index = segment.IndexClosestFrom(point);
 			Vector closest = segment[index];
 			double dist = (closest-point).Dist;
@@ -63,15 +64,16 @@ namespace HTLib2
 			//    Debug.AssertSimilar(dist2, dist, 0.00000001);
 			//}
 			return dist;
-		}
-//		public static double DistancePointLineSegment(PointF point, PointF line1, PointF line2)
-//		{
-//			double distPointLine = DistancePointLine(point, line1, line2);
-//			double distPointLine1 = (line2 - point).Length;
-//			double distPointLine2 = (line1 - point).Length;
-//			return HMath.Mid(distPointLine, distPointLine1, distPointLine2);
-//		}
-		public static double DistancePointPlane(Vector pt, Plane plane)
+#pragma warning restore CS0162
+        }
+        //		public static double DistancePointLineSegment(PointF point, PointF line1, PointF line2)
+        //		{
+        //			double distPointLine = DistancePointLine(point, line1, line2);
+        //			double distPointLine1 = (line2 - point).Length;
+        //			double distPointLine2 = (line1 - point).Length;
+        //			return HMath.Mid(distPointLine, distPointLine1, distPointLine2);
+        //		}
+        public static double DistancePointPlane(Vector pt, Plane plane)
 		{
 			// Return the signed distance.
 			// If the point is in the normal direction, its sign will be plus

@@ -15,6 +15,7 @@ namespace HTLib2.Bioinfo
             {
                 throw new NotImplementedException("need to check!!!");
 
+#pragma warning disable CS0162
                 Prm prm = FromFile(parampath);
                 Dictionary<int, Atom >  id2atom  = prm.atoms .ToIdDictionary();
                 Dictionary<int, Vdw  > cls2vdw   = prm.vdws  .ToClassDictionary();
@@ -126,6 +127,7 @@ namespace HTLib2.Bioinfo
                 /// nuniv.nonbonded14s = nonbonded14s;
                 /// 
                 return null;
+#pragma warning restore CS0162
             }
 
             public string[]  lines    { get { return _lines   ; } } string[]  _lines   ;
