@@ -10,7 +10,6 @@ namespace HTLib2.Bioinfo
     {
         void Log(string message);
     }
-    [Obsolete]
     public class TextLogger : ITextLogger
     {
         object writter;
