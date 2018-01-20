@@ -98,22 +98,23 @@ namespace HTLib2.Bioinfo
                     return trans;
                 }
 
-                {
-                    trans = ICP3.OptimalTransformWeighted(C2, C1, weight);
-                    if(HDebug.IsDebuggerAttached)
-                    {
-                        Vector[] C2updated = trans.GetTransformed(C2).ToArray();
-                        double RMSD0 = 0;
-                        double RMSD1 = 0;
-                        for(int i=0; i<C1.Count; i++)
-                        {
-                            RMSD0 += (C1[i]-C2[i]).Dist2;
-                            RMSD1 += (C1[i]-C2updated[i]).Dist2;
-                        }
-                        HDebug.Assert(RMSD1 <= RMSD0);
-                    }
-                    return trans;
-                }
+                //  /// original source
+                //  {
+                //      trans = ICP3.OptimalTransformWeighted(C2, C1, weight);
+                //      if(HDebug.IsDebuggerAttached)
+                //      {
+                //          Vector[] C2updated = trans.GetTransformed(C2).ToArray();
+                //          double RMSD0 = 0;
+                //          double RMSD1 = 0;
+                //          for(int i=0; i<C1.Count; i++)
+                //          {
+                //              RMSD0 += (C1[i]-C2[i]).Dist2;
+                //              RMSD1 += (C1[i]-C2updated[i]).Dist2;
+                //          }
+                //          HDebug.Assert(RMSD1 <= RMSD0);
+                //      }
+                //      return trans;
+                //  }
             }
         }
     }
