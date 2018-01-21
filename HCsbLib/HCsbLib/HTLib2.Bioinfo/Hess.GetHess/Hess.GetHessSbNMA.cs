@@ -317,6 +317,7 @@ namespace HTLib2.Bioinfo
 
                 if(options.Contains("TIP3P: (vdW+elec) for OH,OO,HH")) nbnd_opt = "TIP3P: (vdW+elec) for OH,OO,HH";
                 if(options.Contains("TIP3P: (vdW+elec) for OH"      )) nbnd_opt = "TIP3P: (vdW+elec) for OH"      ;
+                if(options.Contains("vdW:L79"                       )) nbnd_opt = "L79";
 
                 HessMatrix hess = null;
                 if(b_bonds       )  hess = STeM.GetHessBond       (coords, univ.bonds          , null      ,hessian: hess,                                                                         collector: collectorBond       );
