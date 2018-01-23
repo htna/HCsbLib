@@ -257,6 +257,7 @@ namespace HTLib2.Bioinfo
                 public List<HessCoarseResiIterInfo> iterinfos = null;
                 public HessMatrix H = null;
             };
+            public delegate Tuple<int[], int[][]> FuncGetIdxKeepListRemvObject(object[] atoms, Vector[] coords);
             public delegate Tuple<int[], int[][]> FuncGetIdxKeepListRemv(Universe.Atom[] atoms, Vector[] coords);
         }
     }
