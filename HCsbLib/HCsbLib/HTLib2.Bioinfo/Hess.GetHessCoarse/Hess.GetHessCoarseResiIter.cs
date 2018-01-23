@@ -21,26 +21,6 @@ namespace HTLib2.Bioinfo
         public static HessCoarseResiIter.HessInfoCoarseResiIter GetHessCoarseResiIter
             ( Hess.HessInfo hessinfo
             , Vector[] coords
-            , HessCoarseResiIter.FuncGetIdxKeepListRemvObject GetIdxKeepListRemv
-            , ILinAlg ila
-            , double thres_zeroblk=0.001
-            , HessCoarseResiIter.IterOption iteropt = HessCoarseResiIter.IterOption.Matlab_experimental
-            , string[] options=null
-            )
-        {
-            return HessCoarseResiIter.GetHessCoarseResiIter
-            ( hessinfo          : hessinfo
-            , coords            : coords
-            , GetIdxKeepListRemv: GetIdxKeepListRemv
-            , ila               : ila
-            , thres_zeroblk     : thres_zeroblk
-            , iteropt           : iteropt 
-            , options           : options
-            );
-        }
-        public static HessCoarseResiIter.HessInfoCoarseResiIter GetHessCoarseResiIter
-            ( Hess.HessInfo hessinfo
-            , Vector[] coords
             , HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv
             , ILinAlg ila
             , double thres_zeroblk=0.001
@@ -94,9 +74,10 @@ namespace HTLib2.Bioinfo
             if(clus_width <= 0)
                 throw new Exception("clus_width should be > 0");
 
-            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(Universe.Atom[] latoms, Vector[] lcoords)
+            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(object[] latoms, Vector[] lcoords)
             {
-                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster2(latoms, lcoords, clus_width, num_atom_merge, keeps);
+                Universe.Atom[] lunivatoms = latoms.HToType(null as Universe.Atom[]);
+                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster2(lunivatoms, lcoords, clus_width, num_atom_merge, keeps);
             };
             return HessCoarseResiIter.GetHessCoarseResiIter
                 ( hessinfo, coords, GetIdxKeepListRemv, ila, thres_zeroblk
@@ -119,9 +100,10 @@ namespace HTLib2.Bioinfo
             if(clus_width <= 0)
                 throw new Exception("clus_width should be > 0");
 
-            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(Universe.Atom[] latoms, Vector[] lcoords)
+            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(object[] latoms, Vector[] lcoords)
             {
-                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster2(latoms, lcoords, clus_width, num_atom_merge, keeps);
+                Universe.Atom[] lunivatoms = latoms.HToType(null as Universe.Atom[]);
+                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster2(lunivatoms, lcoords, clus_width, num_atom_merge, keeps);
             };
             return HessCoarseResiIter.GetHessCoarseResiIter
                 ( hessinfo, coords, GetIdxKeepListRemv, ila, thres_zeroblk
@@ -143,9 +125,10 @@ namespace HTLib2.Bioinfo
             if(clus_width <= 0)
                 throw new Exception("clus_width should be > 0");
 
-            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(Universe.Atom[] latoms, Vector[] lcoords)
+            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(object[] latoms, Vector[] lcoords)
             {
-                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster2(latoms, lcoords, clus_width, num_atom_merge, nameToKeep);
+                Universe.Atom[] lunivatoms = latoms.HToType(null as Universe.Atom[]);
+                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster2(lunivatoms, lcoords, clus_width, num_atom_merge, nameToKeep);
             };
             return HessCoarseResiIter.GetHessCoarseResiIter
                 ( hessinfo, coords, GetIdxKeepListRemv, ila, thres_zeroblk
@@ -168,9 +151,10 @@ namespace HTLib2.Bioinfo
             if(clus_width <= 0)
                 throw new Exception("clus_width should be > 0");
 
-            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(Universe.Atom[] latoms, Vector[] lcoords)
+            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(object[] latoms, Vector[] lcoords)
             {
-                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster_SymrcmBlockWise(latoms, lcoords, hessinfo.hess, clus_width, num_atom_merge, symrcm_filter_blckwise_interact, keeps);
+                Universe.Atom[] lunivatoms = latoms.HToType(null as Universe.Atom[]);
+                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster_SymrcmBlockWise(lunivatoms, lcoords, hessinfo.hess, clus_width, num_atom_merge, symrcm_filter_blckwise_interact, keeps);
             };
             return HessCoarseResiIter.GetHessCoarseResiIter
                 ( hessinfo, coords, GetIdxKeepListRemv, ila, thres_zeroblk
@@ -192,9 +176,10 @@ namespace HTLib2.Bioinfo
             if(clus_width <= 0)
                 throw new Exception("clus_width should be > 0");
 
-            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(Universe.Atom[] latoms, Vector[] lcoords)
+            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(object[] latoms, Vector[] lcoords)
             {
-                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster_SymrcmBlockWise(latoms, lcoords, hessinfo.hess, clus_width, num_atom_merge, symrcm_filter_blckwise_interact, nameToKeep);
+                Universe.Atom[] lunivatoms = latoms.HToType(null as Universe.Atom[]);
+                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster_SymrcmBlockWise(lunivatoms, lcoords, hessinfo.hess, clus_width, num_atom_merge, symrcm_filter_blckwise_interact, nameToKeep);
             };
             return HessCoarseResiIter.GetHessCoarseResiIter
                 ( hessinfo, coords, GetIdxKeepListRemv, ila, thres_zeroblk
@@ -210,9 +195,10 @@ namespace HTLib2.Bioinfo
             , string[] nameToKeep
             )
         {
-            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(Universe.Atom[] latoms, Vector[] lcoords)
+            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(object[] latoms, Vector[] lcoords)
             {
-                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster_SymrcmResiWise(latoms, lcoords, hessinfo.hess, num_atom_merge, thres_zeroblk, nameToKeep);
+                Universe.Atom[] lunivatoms = latoms.HToType(null as Universe.Atom[]);
+                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster_SymrcmResiWise(lunivatoms, lcoords, hessinfo.hess, num_atom_merge, thres_zeroblk, nameToKeep);
             };
             return HessCoarseResiIter.GetHessCoarseResiIter
                 ( hessinfo, coords, GetIdxKeepListRemv, ila, thres_zeroblk
@@ -228,9 +214,10 @@ namespace HTLib2.Bioinfo
             , string[] nameToKeep
             )
         {
-            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(Universe.Atom[] latoms, Vector[] lcoords)
+            HessCoarseResiIter.FuncGetIdxKeepListRemv GetIdxKeepListRemv = delegate(object[] latoms, Vector[] lcoords)
             {
-                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster_SymrcmAtomWise(latoms, lcoords, hessinfo.hess, num_atom_merge, thres_zeroblk, nameToKeep);
+                Universe.Atom[] lunivatoms = latoms.HToType(null as Universe.Atom[]);
+                return HessCoarseResiIter.GetIdxKeepListRemv_ResiCluster_SymrcmAtomWise(lunivatoms, lcoords, hessinfo.hess, num_atom_merge, thres_zeroblk, nameToKeep);
             };
             return HessCoarseResiIter.GetHessCoarseResiIter
                 ( hessinfo, coords, GetIdxKeepListRemv, ila, thres_zeroblk
@@ -277,8 +264,7 @@ namespace HTLib2.Bioinfo
                 public List<HessCoarseResiIterInfo> iterinfos = null;
                 public HessMatrix H = null;
             };
-            public delegate Tuple<int[], int[][]> FuncGetIdxKeepListRemvObject(object[] atoms, Vector[] coords);
-            public delegate Tuple<int[], int[][]> FuncGetIdxKeepListRemv(Universe.Atom[] atoms, Vector[] coords);
+            public delegate Tuple<int[], int[][]> FuncGetIdxKeepListRemv(object[] atoms, Vector[] coords);
         }
     }
 }

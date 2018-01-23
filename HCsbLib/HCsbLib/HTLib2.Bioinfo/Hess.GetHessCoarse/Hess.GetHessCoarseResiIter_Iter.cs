@@ -31,32 +31,6 @@ namespace HTLib2.Bioinfo
                 , string[] options=null
                 )
             {
-                FuncGetIdxKeepListRemvObject GetIdxKeepListRemvObject = delegate(object[] atoms, Vector[] lcoords)
-                {
-                    Universe.Atom[] univatoms = atoms.HToType(null as Universe.Atom[]);
-                    return GetIdxKeepListRemv(univatoms, lcoords);
-                };
-
-                return GetHessCoarseResiIter
-                ( hessinfo          : hessinfo
-                , coords            : coords
-                , GetIdxKeepListRemv: GetIdxKeepListRemvObject
-                , ila               : ila
-                , thres_zeroblk     : thres_zeroblk
-                , iteropt           : iteropt
-                , options           : options
-                );
-            }
-            public static HessInfoCoarseResiIter GetHessCoarseResiIter
-                ( Hess.HessInfo hessinfo
-                , Vector[] coords
-                , FuncGetIdxKeepListRemvObject GetIdxKeepListRemv
-                , ILinAlg ila
-                , double thres_zeroblk=0.001
-                , IterOption iteropt = IterOption.Matlab_experimental
-                , string[] options=null
-                )
-            {
                 bool rediag=true;
 
                 HessMatrix H = null;
