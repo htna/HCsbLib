@@ -525,6 +525,7 @@
     <Compile Include="HTLib2\External.NamedLock\NamedLock.SelfTest.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\EmptyList.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\HDictionary.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HDictionary3.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\HDictionary2.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\HDictionary2_v0.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\HDynamic.cs" />
