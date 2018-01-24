@@ -63,6 +63,36 @@ namespace HTLib2
             return ForEach(idxs, body);
         }
 
+        //  string prefix = "prefix: ";
+        //  Action<int> body = delegate(int i, object lprefix) {
+        //      System.Console.WriteLine((string)base + i.ToString());
+        //  }
+        //  For<object>(0, 10, body, prefix);
+        public static ParallelLoopResult ForEach<TSource, TParam>(Partitioner<TSource> source, Action<TSource, TParam> body, TParam param)
+        {
+            Action<TSource> lbody = delegate(TSource src)
+            {
+                body(src, param);
+            };
+            return System.Threading.Tasks.Parallel.ForEach<TSource>(source, lbody);
+        }
+        public static ParallelLoopResult For<TParam>(int fromInclusive, int toExclusive, Action<int, TParam> body, TParam param)
+        {
+            Action<int> lbody = delegate(int src)
+            {
+                body(src, param);
+            };
+            return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, lbody);
+        }
+        public static ParallelLoopResult For<TParam>(long fromInclusive, long toExclusive, Action<long, TParam> body, TParam param)
+        {
+            Action<long> lbody = delegate(long src)
+            {
+                body(src, param);
+            };
+            return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, lbody);
+        }
+
         public static void Sleep(int millisecondsTimeout) { System.Threading.Thread.Sleep(millisecondsTimeout); }
         public static void Sleep(TimeSpan        timeout) { System.Threading.Thread.Sleep(            timeout); }
 
