@@ -89,7 +89,7 @@ namespace HTLib2.Bioinfo
                 };
             }
             public static CGetHessCoarseResiIterImpl GetHessCoarseResiIterImpl_Matlab
-                ( Universe.Atom[] atoms
+                ( object[] atoms
                 , HessMatrix H
                 , List<int>[] lstNewIdxRemv
                 , double thres_zeroblk

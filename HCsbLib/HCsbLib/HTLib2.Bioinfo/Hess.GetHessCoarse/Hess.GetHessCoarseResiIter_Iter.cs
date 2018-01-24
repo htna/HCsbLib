@@ -191,7 +191,7 @@ namespace HTLib2.Bioinfo
 
                 List<HessCoarseResiIterInfo> iterinfos = null;
                 {
-                    Universe.Atom[] atoms = reAtoms.HToType(null as Universe.Atom[]);
+                    object[] atoms = reAtoms; // reAtoms.HToType(null as Universe.Atom[]);
                     CGetHessCoarseResiIterImpl info = null;
                     switch(iteropt)
                     {

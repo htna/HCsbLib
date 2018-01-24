@@ -12,7 +12,7 @@ namespace HTLib2.Bioinfo
         public static partial class HessCoarseResiIter
         {
             public static CGetHessCoarseResiIterImpl GetHessCoarseResiIterImpl_Matlab_experimental
-                ( Universe.Atom[] atoms
+                ( object[] atoms
                 , HessMatrix H
                 , List<int>[] lstNewIdxRemv
                 , double thres_zeroblk
@@ -77,6 +77,7 @@ namespace HTLib2.Bioinfo
                             D = H.Zeros(idxremv.Length*3, idxremv.Length*3);
                             int iremv_min = iremv.Min();
                             int iremv_max = iremv.Max();
+
                             foreach(var bc_br_bval in H.EnumBlocks_dep(idxremv))
                             {
                                 int bc   = bc_br_bval.Item1;

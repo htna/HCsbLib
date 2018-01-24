@@ -13,7 +13,7 @@ namespace HTLib2.Bioinfo
         public static partial class HessCoarseResiIter
         {
             public static CGetHessCoarseResiIterImpl GetHessCoarseResiIterImpl_Matlab_IterLowerTri
-                ( Universe.Atom[] atoms
+                ( object[] atoms
                 , HessMatrix H
                 , List<int>[] lstNewIdxRemv
                 , double thres_zeroblk

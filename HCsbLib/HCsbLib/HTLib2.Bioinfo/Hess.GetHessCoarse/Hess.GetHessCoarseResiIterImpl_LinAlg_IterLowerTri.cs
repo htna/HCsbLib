@@ -15,7 +15,7 @@ namespace HTLib2.Bioinfo
             public static class GetHessCoarseResiIterImpl_LinAlg_IterLowerTri
             {
                 public static CGetHessCoarseResiIterImpl Do
-                    ( Universe.Atom[] atoms
+                    ( object[] atoms
                     , HessMatrix H
                     , List<int>[] lstNewIdxRemv
                     , double thres_zeroblk
