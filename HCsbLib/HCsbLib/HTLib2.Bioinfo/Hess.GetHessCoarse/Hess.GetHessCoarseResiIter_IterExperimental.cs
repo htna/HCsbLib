@@ -84,6 +84,7 @@ namespace HTLib2.Bioinfo
                                 int br   = bc_br_bval.Item2;
                                 var bval = bc_br_bval.Item3;
 
+
                                 if(bc > iremv_max) continue;
                                 if(br > iremv_max) continue;
                                 if(br < iremv_min)
@@ -145,7 +146,11 @@ namespace HTLib2.Bioinfo
                         iterinfo.numNonZeroBlock = C.NumUsedBlocks;
                         C_density1 = C.RatioUsedBlocks;
 
-                        HessMatrix B_invD_C = Get_BInvDC(A, C, D, process_disp_console, options, parallel:parallel);
+
+                        HessMatrix B_invD_C = Get_BInvDC(A, C, D, process_disp_console
+                            , options
+                            , parallel:parallel
+                            );
                         if(process_disp_console)
                         {
                             process_time[4] = DateTime.UtcNow;
