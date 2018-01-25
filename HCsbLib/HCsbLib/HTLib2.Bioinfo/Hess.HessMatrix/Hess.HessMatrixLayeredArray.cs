@@ -374,20 +374,20 @@ namespace HTLib2.Bioinfo
 
         public override HessMatrix Zeros(int colsize, int rowsize)
         {
-            return ZerosBlkMat(colsize, rowsize);
+            return ZerosHessMatrixLayeredArray(colsize, rowsize);
         }
         public static bool ZerosSparse_selftest = HDebug.IsDebuggerAttached;
-        public static HessMatrixLayeredArray ZerosBlkMat(int colsize, int rowsize)
+        public static HessMatrixLayeredArray ZerosHessMatrixLayeredArray(int colsize, int rowsize)
         {
             int layersize = 64;
-            return ZerosBlkMat(colsize, rowsize, layersize);
+            return ZerosHessMatrixLayeredArray(colsize, rowsize, layersize);
         }
-        public static HessMatrixLayeredArray ZerosBlkMat(int colsize, int rowsize, int layersize)
+        public static HessMatrixLayeredArray ZerosHessMatrixLayeredArray(int colsize, int rowsize, int layersize)
         {
             if(ZerosSparse_selftest)
             {
                 ZerosSparse_selftest = false;
-                HessMatrixLayeredArray tmat = ZerosBlkMat(300, 300, layersize);
+                HessMatrixLayeredArray tmat = ZerosHessMatrixLayeredArray(300, 300, layersize);
                 bool bzero = true;
                 for(int c=0; c<tmat.ColSize; c++)
                     for(int r=0; r<tmat.ColSize; r++)
