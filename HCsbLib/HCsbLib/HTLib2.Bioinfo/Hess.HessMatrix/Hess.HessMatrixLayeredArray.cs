@@ -194,7 +194,7 @@ namespace HTLib2.Bioinfo
                 if(offdiag_bc_br1 == null)
                 {
                     HDebug.Assert(offdiag_count[bc][br1] == 0);
-                    int br2_size = (RowSize/3) % layersize;
+                    int br2_size = layersize; // rowblksize % layersize+1;
                     offdiag_bc_br1 = new double[br2_size][,];
                     offdiag_bc[br1] = offdiag_bc_br1;
                     offdiag_count[bc][br1] = 0;
@@ -240,7 +240,7 @@ namespace HTLib2.Bioinfo
         }
         public static void SelfTest()
         {
-            Random rand = new Random();
+            Random rand = new Random(0);
             int colblksize = 3;
             int rowblksize = 10;
             int layersize = 3;
@@ -248,16 +248,24 @@ namespace HTLib2.Bioinfo
             var hess = new HessMatrixLayeredArray(colblksize*3,rowblksize*3,layersize);
             HDebug.Assert(mat.ColSize == hess.ColSize);
             HDebug.Assert(mat.RowSize == hess.RowSize);
-            for(int i=0; i<1000; i++)
+            int count = mat.ColSize*mat.RowSize*10;
+            for(int i=0; i<count; i++)
             {
                 int c = rand.NextInt(0, colblksize*3-1);
                 int r = rand.NextInt(0, rowblksize*3-1);
                 double v = rand.NextDouble();
-                if(rand.NextInt(0, 5) == 0)
-                    v = 0;
                 mat[c, r] = v;
                 hess[c, r] = v;
-                HDebug.Assert(mat == hess);
+                HDebug.AssertTolerance(double.Epsilon, (mat - hess).ToArray());
+            }
+            for(int i = 0; i < 700; i++)
+            {
+                int c = rand.NextInt(0, colblksize*3-1);
+                int r = rand.NextInt(0, rowblksize*3-1);
+                double v = 0;
+                mat[c, r] = v;
+                hess[c, r] = v;
+                HDebug.AssertTolerance(double.Epsilon, (mat - hess).ToArray());
             }
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -269,8 +277,8 @@ namespace HTLib2.Bioinfo
 
             HDebug.Assert(colsize % 3 == 0);
             HDebug.Assert(rowsize % 3 == 0);
-            this.colblksize = colsize % 3;
-            this.rowblksize = rowsize % 3;
+            this.colblksize = colsize / 3;
+            this.rowblksize = rowsize / 3;
             this.layersize  = layersize;
             this.numusedblocks_offdiag = 0;
 
