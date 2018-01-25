@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace HTLib2.Bioinfo
 {
     [Serializable]
-    public partial class HessMatrixLayeredArray : HessMatrix
+    public partial class HessMatrixLayeredArray : HessMatrix, ISerializable
     {
         List<double    [,]>     diag;
         List<double[][][,]>  offdiag;
@@ -448,5 +449,131 @@ namespace HTLib2.Bioinfo
         //
         //    return hess;
         //}
+        public HessMatrixLayeredArray(SerializationInfo info, StreamingContext ctxt)
+        {
+            //  List<double    [,]>     diag;
+            //  List<double[][][,]>  offdiag;
+            //  List<int   []     >  offdiag_count;
+            //  int colblksize;
+            //  int rowblksize;
+            //  int layersize;
+            //  int numusedblocks_offdiag;
+
+            
+            
+            
+            //  this.BlkSize = info.GetInt32("BlkSize");
+            //  this._ColSize = info.GetInt32("_ColSize");
+            //  this._RowSize = info.GetInt32("_RowSize");
+            //  
+            //  int colblksize = (ColSize % BlkSize == 0) ? (ColSize/BlkSize) : (ColSize/BlkSize+1);
+            //  int rowblksize = (RowSize % BlkSize == 0) ? (RowSize/BlkSize) : (RowSize/BlkSize+1);
+            //  this.blkmatrix = new MatrixSparse<MatrixByArr>(colblksize, rowblksize, GetZeroBlock);
+            //  
+            //  int         block_num   =              info.GetInt32("block_num");
+            //  int[]       block_Item1 = (int[]      )info.GetValue("block_Item1", typeof(int[]      ));
+            //  int[]       block_Item2 = (int[]      )info.GetValue("block_Item2", typeof(int[]      ));
+            //  double[,][] block_Item3 = (double[,][])info.GetValue("block_Item3", typeof(double[,][]));
+            //  block_num = block_Item1.Length;
+            //  HDebug.Assert(block_num == block_Item1.Length);
+            //  HDebug.Assert(block_num == block_Item2.Length);
+            //  HDebug.Assert(block_Item3.GetLength(0) == BlkSize);
+            //  HDebug.Assert(block_Item3.GetLength(1) == BlkSize);
+            //  for(int c = 0; c < BlkSize; c++)
+            //      for(int r = 0; r < BlkSize; r++)
+            //          HDebug.Assert(block_Item3[c, r].Length == block_num);
+            //  for(int i = 0; i < block_num; i++)
+            //  {
+            //      int bc = block_Item1[i];
+            //      int br = block_Item2[i];
+            //      MatrixByArr bval = new double[BlkSize, BlkSize];
+            //      for(int c = 0; c < BlkSize; c++)
+            //          for(int r = 0; r < BlkSize; r++)
+            //              bval[c, r] = block_Item3[c, r][i];
+            //      SetBlock(bc, br, bval);
+            //  }
+            //  
+            //  //throw new NotImplementedException();
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("colblksize"           , this.colblksize           );
+            info.AddValue("rowblksize"           , this.rowblksize           );
+            info.AddValue("layersize"            , this.layersize            );
+            info.AddValue("numusedblocks_offdiag", this.numusedblocks_offdiag);
+
+            List<int   > list_bc   = new List<int   >();
+            List<int   > list_br   = new List<int   >();
+            List<double> list_bv00 = new List<double>();
+            List<double> list_bv01 = new List<double>();
+            List<double> list_bv02 = new List<double>();
+            List<double> list_bv10 = new List<double>();
+            List<double> list_bv11 = new List<double>();
+            List<double> list_bv12 = new List<double>();
+            List<double> list_bv20 = new List<double>();
+            List<double> list_bv21 = new List<double>();
+            List<double> list_bv22 = new List<double>();
+            foreach(var bc_br_bval in _EnumBlocks())
+            {
+                list_bc  .Add(bc_br_bval.Item1);
+                list_br  .Add(bc_br_bval.Item2);
+                list_bv00.Add(bc_br_bval.Item3[0,0]);
+                list_bv01.Add(bc_br_bval.Item3[0,1]);
+                list_bv02.Add(bc_br_bval.Item3[0,2]);
+                list_bv10.Add(bc_br_bval.Item3[1,0]);
+                list_bv11.Add(bc_br_bval.Item3[1,1]);
+                list_bv12.Add(bc_br_bval.Item3[1,2]);
+                list_bv20.Add(bc_br_bval.Item3[2,0]);
+                list_bv21.Add(bc_br_bval.Item3[2,1]);
+                list_bv22.Add(bc_br_bval.Item3[2,2]);
+            }
+            HDebug.Assert(list_bc  .Count == this.NumUsedBlocks);
+            HDebug.Assert(list_br  .Count == this.NumUsedBlocks);
+            HDebug.Assert(list_bv00.Count == this.NumUsedBlocks);
+            HDebug.Assert(list_bv01.Count == this.NumUsedBlocks);
+            HDebug.Assert(list_bv02.Count == this.NumUsedBlocks);
+            HDebug.Assert(list_bv10.Count == this.NumUsedBlocks);
+            HDebug.Assert(list_bv11.Count == this.NumUsedBlocks);
+            HDebug.Assert(list_bv12.Count == this.NumUsedBlocks);
+            HDebug.Assert(list_bv20.Count == this.NumUsedBlocks);
+            HDebug.Assert(list_bv21.Count == this.NumUsedBlocks);
+            HDebug.Assert(list_bv22.Count == this.NumUsedBlocks);
+            info.AddValue("list_bc"  , list_bc  );
+            info.AddValue("list_br"  , list_br  );
+            info.AddValue("list_bv00", list_bv00);
+            info.AddValue("list_bv01", list_bv01);
+            info.AddValue("list_bv02", list_bv02);
+            info.AddValue("list_bv10", list_bv10);
+            info.AddValue("list_bv11", list_bv11);
+            info.AddValue("list_bv12", list_bv12);
+            info.AddValue("list_bv20", list_bv20);
+            info.AddValue("list_bv21", list_bv21);
+            info.AddValue("list_bv22", list_bv22);
+
+            //  info.AddValue("BlkSize", this.BlkSize);
+            //  info.AddValue("_ColSize", this._ColSize);
+            //  info.AddValue("_RowSize", this._RowSize);
+            //  //info.AddValue("block_num", block_num);
+            //  int         block_num  = blkmatrix.NumElements;
+            //  int[]       block_Item1 = new int[block_num];
+            //  int[]       block_Item2 = new int[block_num];
+            //  double[,][] block_Item3 = new double[BlkSize, BlkSize][]; for(int c = 0; c < BlkSize; c++) for(int r = 0; r < BlkSize; r++) block_Item3[c, r] = new double[block_num];
+            //  int i = 0;
+            //  foreach(Tuple<int, int, MatrixByArr> block in blkmatrix.EnumElements())
+            //  {
+            //      block_Item1[i] = block.Item1;
+            //      block_Item2[i] = block.Item2;
+            //      for(int c = 0; c < BlkSize; c++)
+            //          for(int r = 0; r < BlkSize; r++)
+            //              block_Item3[c, r][i] = block.Item3[c, r];
+            //      i++;
+            //  }
+            //  info.AddValue("block_num", block_num);
+            //  info.AddValue("block_Item1", block_Item1);
+            //  info.AddValue("block_Item2", block_Item2);
+            //  info.AddValue("block_Item3", block_Item3);
+            //  
+            //  //throw new NotImplementedException();
+        }
     }
 }
