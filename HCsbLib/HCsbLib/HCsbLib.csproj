@@ -258,6 +258,7 @@
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrix.ReshapeByAtom.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrix.Static.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrix.SubMatrixByAtoms.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixLayeredArray.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixBlkMat.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixDense.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixSparse.cs" />
