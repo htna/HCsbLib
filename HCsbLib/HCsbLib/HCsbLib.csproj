@@ -757,7 +757,7 @@
     <Compile Include="HTLib2\HStatic\HStatic.HWithin.cs" />
     <Compile Include="HTLib2\HStatic\HStatic.ListVector.cs" />
     <Compile Include="HTLib2\HStatic\HStatic.NewArray.cs" />
-    <Compile Include="HTLib2\HStatic\HStatic.ObjectAs.cs" />
+    <Compile Include="HTLib2\HStatic\Obsolete\HStatic.ObjectAs.cs" />
     <Compile Include="HTLib2\HStatic\HStatic.String.cs" />
     <Compile Include="HTLib2\HStatic\HStatic.String.HSubEndStringFromCount.cs" />
     <Compile Include="HTLib2\HStatic\HStatic.String.HSubstring.cs" />
