@@ -240,7 +240,25 @@ namespace HTLib2.Bioinfo
         }
         public static void SelfTest()
         {
-            HDebug.ToDo();
+            Random rand = new Random();
+            int colblksize = 3;
+            int rowblksize = 10;
+            int layersize = 3;
+            var  mat = Matrix.Zeros              (colblksize*3,rowblksize*3);
+            var hess = new HessMatrixLayeredArray(colblksize*3,rowblksize*3,layersize);
+            HDebug.Assert(mat.ColSize == hess.ColSize);
+            HDebug.Assert(mat.RowSize == hess.RowSize);
+            for(int i=0; i<1000; i++)
+            {
+                int c = rand.NextInt(0, colblksize*3-1);
+                int r = rand.NextInt(0, rowblksize*3-1);
+                double v = rand.NextDouble();
+                if(rand.NextInt(0, 5) == 0)
+                    v = 0;
+                mat[c, r] = v;
+                hess[c, r] = v;
+                HDebug.Assert(mat == hess);
+            }
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // HessMatrix
