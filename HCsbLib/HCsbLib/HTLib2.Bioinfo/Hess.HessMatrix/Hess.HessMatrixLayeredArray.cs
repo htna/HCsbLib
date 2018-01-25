@@ -350,7 +350,7 @@ namespace HTLib2.Bioinfo
                         if(offdiag_bc_br1br2 != null)
                         {
                             int br = br1 * layersize + br2;
-                            yield return new ValueTuple<int, int, double[,]>(bc, bc, offdiag_bc_br1br2);
+                            yield return new ValueTuple<int, int, double[,]>(bc, br, offdiag_bc_br1br2);
                         }
                     }
                 }
@@ -451,6 +451,79 @@ namespace HTLib2.Bioinfo
         //}
         public HessMatrixLayeredArray(SerializationInfo info, StreamingContext ctxt)
         {
+            this.colblksize            = info.GetInt32("colblksize"           );
+            this.rowblksize            = info.GetInt32("rowblksize"           );
+            this.layersize             = info.GetInt32("layersize"            );
+            this.numusedblocks_offdiag = info.GetInt32("numusedblocks_offdiag");
+
+            int br2_size =  rowblksize % layersize;
+            int br1_size = (rowblksize - br2_size) / layersize + 1;
+
+               diag       = new List<double    [,]>(colblksize);
+            offdiag       = new List<double[][][,]>(colblksize);
+            offdiag_count = new List<int   []     >(colblksize);
+            for(int bc=0; bc<colblksize; bc++)
+            {
+                   diag      .Add(new double          [3,3]);
+                offdiag      .Add(new double[br1_size][][,]);
+                offdiag_count.Add(new int   [br1_size]     );
+                for(int br1=0; br1<br1_size; br1++)
+                {
+                    offdiag      [bc][br1] = null;
+                    offdiag_count[bc][br1] = 0;
+                }
+            }
+
+            List<int   > list_bc   = (List<int   >)info.GetValue("list_bc"  , typeof(List<int   >));
+            List<int   > list_br   = (List<int   >)info.GetValue("list_br"  , typeof(List<int   >));
+            List<double> list_bv00 = (List<double>)info.GetValue("list_bv00", typeof(List<double>));
+            List<double> list_bv01 = (List<double>)info.GetValue("list_bv01", typeof(List<double>));
+            List<double> list_bv02 = (List<double>)info.GetValue("list_bv02", typeof(List<double>));
+            List<double> list_bv10 = (List<double>)info.GetValue("list_bv10", typeof(List<double>));
+            List<double> list_bv11 = (List<double>)info.GetValue("list_bv11", typeof(List<double>));
+            List<double> list_bv12 = (List<double>)info.GetValue("list_bv12", typeof(List<double>));
+            List<double> list_bv20 = (List<double>)info.GetValue("list_bv20", typeof(List<double>));
+            List<double> list_bv21 = (List<double>)info.GetValue("list_bv21", typeof(List<double>));
+            List<double> list_bv22 = (List<double>)info.GetValue("list_bv22", typeof(List<double>));
+            int count = list_bc  .Count;
+            HDebug.Assert(count == list_bc  .Count);
+            HDebug.Assert(count == list_br  .Count);
+            HDebug.Assert(count == list_bv00.Count);
+            HDebug.Assert(count == list_bv01.Count);
+            HDebug.Assert(count == list_bv02.Count);
+            HDebug.Assert(count == list_bv10.Count);
+            HDebug.Assert(count == list_bv11.Count);
+            HDebug.Assert(count == list_bv12.Count);
+            HDebug.Assert(count == list_bv20.Count);
+            HDebug.Assert(count == list_bv21.Count);
+            HDebug.Assert(count == list_bv22.Count);
+            for(int i=0; i<count; i++)
+            {
+                int bc = list_bc[i];
+                int br = list_br[i];
+                double[,] bval = new double[3,3];
+                bval[0, 0] = list_bv00[i];
+                bval[0, 1] = list_bv01[i];
+                bval[0, 2] = list_bv02[i];
+                bval[1, 0] = list_bv10[i];
+                bval[1, 1] = list_bv11[i];
+                bval[1, 2] = list_bv12[i];
+                bval[2, 0] = list_bv20[i];
+                bval[2, 1] = list_bv21[i];
+                bval[2, 2] = list_bv22[i];
+                SetBlock(bc, br, bval);
+            }
+            HDebug.Assert(count == this.NumUsedBlocks);
+
+
+
+
+
+
+
+
+
+
             //  List<double    [,]>     diag;
             //  List<double[][][,]>  offdiag;
             //  List<int   []     >  offdiag_count;
@@ -459,9 +532,9 @@ namespace HTLib2.Bioinfo
             //  int layersize;
             //  int numusedblocks_offdiag;
 
-            
-            
-            
+
+
+
             //  this.BlkSize = info.GetInt32("BlkSize");
             //  this._ColSize = info.GetInt32("_ColSize");
             //  this._RowSize = info.GetInt32("_RowSize");
