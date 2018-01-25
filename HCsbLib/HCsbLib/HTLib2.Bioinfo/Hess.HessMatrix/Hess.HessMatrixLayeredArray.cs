@@ -240,32 +240,35 @@ namespace HTLib2.Bioinfo
         }
         public static void SelfTest()
         {
-            Random rand = new Random(0);
-            int colblksize = 3;
-            int rowblksize = 10;
-            int layersize = 3;
-            var  mat = Matrix.Zeros              (colblksize*3,rowblksize*3);
-            var hess = new HessMatrixLayeredArray(colblksize*3,rowblksize*3,layersize);
-            HDebug.Assert(mat.ColSize == hess.ColSize);
-            HDebug.Assert(mat.RowSize == hess.RowSize);
-            int count = mat.ColSize*mat.RowSize*10;
-            for(int i=0; i<count; i++)
+            if(HDebug.Selftest())
             {
-                int c = rand.NextInt(0, colblksize*3-1);
-                int r = rand.NextInt(0, rowblksize*3-1);
-                double v = rand.NextDouble();
-                mat[c, r] = v;
-                hess[c, r] = v;
-                HDebug.AssertTolerance(double.Epsilon, (mat - hess).ToArray());
-            }
-            for(int i = 0; i < 700; i++)
-            {
-                int c = rand.NextInt(0, colblksize*3-1);
-                int r = rand.NextInt(0, rowblksize*3-1);
-                double v = 0;
-                mat[c, r] = v;
-                hess[c, r] = v;
-                HDebug.AssertTolerance(double.Epsilon, (mat - hess).ToArray());
+                Random rand = new Random(0);
+                int colblksize = 3;
+                int rowblksize = 10;
+                int layersize = 3;
+                var  mat = Matrix.Zeros              (colblksize*3,rowblksize*3);
+                var hess = new HessMatrixLayeredArray(colblksize*3,rowblksize*3,layersize);
+                HDebug.Assert(mat.ColSize == hess.ColSize);
+                HDebug.Assert(mat.RowSize == hess.RowSize);
+                int count = mat.ColSize*mat.RowSize*10;
+                for(int i=0; i<count; i++)
+                {
+                    int c = rand.NextInt(0, colblksize*3-1);
+                    int r = rand.NextInt(0, rowblksize*3-1);
+                    double v = rand.NextDouble();
+                    mat[c, r] = v;
+                    hess[c, r] = v;
+                    HDebug.AssertTolerance(double.Epsilon, (mat - hess).ToArray());
+                }
+                for(int i = 0; i < 700; i++)
+                {
+                    int c = rand.NextInt(0, colblksize*3-1);
+                    int r = rand.NextInt(0, rowblksize*3-1);
+                    double v = 0;
+                    mat[c, r] = v;
+                    hess[c, r] = v;
+                    HDebug.AssertTolerance(double.Epsilon, (mat - hess).ToArray());
+                }
             }
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////
