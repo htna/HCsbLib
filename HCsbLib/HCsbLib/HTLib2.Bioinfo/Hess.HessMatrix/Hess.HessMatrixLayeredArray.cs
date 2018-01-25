@@ -454,7 +454,7 @@ namespace HTLib2.Bioinfo
             this.colblksize            = info.GetInt32("colblksize"           );
             this.rowblksize            = info.GetInt32("rowblksize"           );
             this.layersize             = info.GetInt32("layersize"            );
-            this.numusedblocks_offdiag = info.GetInt32("numusedblocks_offdiag");
+            int numusedblocks_offdiag  = info.GetInt32("numusedblocks_offdiag");
 
             int br2_size =  rowblksize % layersize;
             int br1_size = (rowblksize - br2_size) / layersize + 1;
@@ -514,6 +514,7 @@ namespace HTLib2.Bioinfo
                 SetBlock(bc, br, bval);
             }
             HDebug.Assert(count == this.NumUsedBlocks);
+            HDebug.Assert(numusedblocks_offdiag == this.numusedblocks_offdiag);
 
 
 
