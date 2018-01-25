@@ -35,12 +35,12 @@ namespace HTLib2.Bioinfo
         public override double this[int c, int r]
         {
             get { return GetValue(c, r); }
-            set {        SetValue(c, r, value); }
+            set {        SetValue(c, r, value, true); }
         }
         public override double this[long c, long r]
         {
             get { return GetValue((int)c, (int)r); }
-            set {        SetValue((int)c, (int)r, value); }
+            set {        SetValue((int)c, (int)r, value, true); }
         }
         public double GetValue(int c, int r)
         {
@@ -53,6 +53,73 @@ namespace HTLib2.Bioinfo
             if(blk == null)
                 return 0;
             return blk[ic, ir];
+        }
+        public void SetValue(int c, int r, double value, bool dispose_zeroblock)
+        {
+            int ic = c % 3; int bc = c / 3;
+            int ir = r % 3; int br = r / 3;
+            int br2 =  br        % layersize;
+            int br1 = (br - br2) / layersize;
+
+            double[,] blk = _GetBlock(bc, br, br1, br2);
+            if(value == 0)
+            {
+                if(blk == null)
+                    return;
+                else if(bc == br)
+                    blk[ic, ir] = 0;
+                else
+                {
+                    blk[ic, ir] = 0;
+                    
+                    if(dispose_zeroblock)
+                    {
+                        bool zeros = (blk[0, 0] == 0 && blk[0, 1] == 0 && blk[0, 2] == 0 &&
+                                      blk[1, 0] == 0 && blk[1, 1] == 0 && blk[1, 2] == 0 &&
+                                      blk[2, 0] == 0 && blk[2, 1] == 0 && blk[2, 2] == 0);
+                        if(zeros)
+                            _SetBlockNull(bc, br, br1, br2);
+                    }
+                }
+            }
+            else
+            {
+                if(blk != null)
+                    blk[ic, ir] = value;
+                else
+                {
+                    blk = new double[3,3];
+                    blk[ic, ir] = value;
+                    _SetBlock(bc, br, br1, br2, blk);
+                }
+            }
+        }
+        public override MatrixByArr GetBlock(int bc, int br)
+        {
+            int br2 =  br        % layersize;
+            int br1 = (br - br2) / layersize;
+            double[,] blk = _GetBlock(bc, br, br1, br2);
+            if(blk == null)
+                return null;
+            return new MatrixByArr(blk);
+        }
+        public override MatrixByArr GetBlockLock(int bc, int br)
+        {
+            throw new NotImplementedException();
+            //return hess.GetBlockLock(bc, br);
+        }
+        public override void SetBlock(int bc, int br, MatrixByArr bval)
+        {
+            int br2 =  br        % layersize;
+            int br1 = (br - br2) / layersize;
+            _SetBlock(bc, br, br1, br2, bval.ToArray());
+        }
+        public override void SetBlockLock(int bc, int br, MatrixByArr bval)
+        {
+            throw new NotImplementedException();
+            //if(bval != null && bval.IsZero())
+            //    bval = null;
+            //hess.SetBlockLock(bc, br, bval);
         }
         public double[,] _GetBlock(int bc, int br, int br1, int br2)
         {
@@ -76,72 +143,6 @@ namespace HTLib2.Bioinfo
                     return null;
 
                 return offdiag_bc_br1br2;
-            }
-        }
-        public override MatrixByArr GetBlock(int bc, int br)
-        {
-            int br2 =  br        % layersize;
-            int br1 = (br - br2) / layersize;
-            double[,] blk = _GetBlock(bc, br, br1, br2);
-            if(blk == null)
-                return null;
-            return new MatrixByArr(blk);
-        }
-        public override MatrixByArr GetBlockLock(int bc, int br)
-        {
-            throw new NotImplementedException();
-            //return hess.GetBlockLock(bc, br);
-        }
-
-        public void DisposeBlock(int bc, int br, int br1, int br2)
-        {
-            HDebug.Assert(br2 == br % layersize        );
-            HDebug.Assert(br1 == (br - br2) / layersize);
-            double[][][,] offdiag_bc        = offdiag[bc];
-            double[][,]   offdiag_bc_br1    = offdiag_bc[br1];
-            double[,]     offdiag_bc_br1br2 = offdiag_bc_br1[br2];
-            if(offdiag_bc_br1br2[0, 0] == 0 && offdiag_bc_br1br2[0, 1] == 0 && offdiag_bc_br1br2[0, 2] == 0 &&
-               offdiag_bc_br1br2[1, 0] == 0 && offdiag_bc_br1br2[1, 1] == 0 && offdiag_bc_br1br2[1, 2] == 0 &&
-               offdiag_bc_br1br2[2, 0] == 0 && offdiag_bc_br1br2[2, 1] == 0 && offdiag_bc_br1br2[2, 2] == 0 )
-            {
-                offdiag_bc_br1[br2] = null;
-                int count = (offdiag_count[bc][br1] --);
-                if(count == 0)
-                {
-                    HDebug.Assert(offdiag_count[bc][br1] == 0);
-                    HDebug.Assert(offdiag      [bc][br1] != null);
-                    offdiag[bc][br1] = null;
-                    numusedblocks_offdiag--;
-                }
-            }
-        }
-        public void SetValue(int c, int r, double value)
-        {
-            int ic = c % 3; int bc = c / 3;
-            int ir = r % 3; int br = r / 3;
-            int br2 =  br        % layersize;
-            int br1 = (br - br2) / layersize;
-
-            double[,] blk = _GetBlock(bc, br, br1, br2);
-            if(value == 0)
-            {
-                if(blk == null)
-                    return;
-                else if(bc == br)
-                    blk[ic, ir] = 0;
-                else
-                    _SetBlockNull(bc, br, br1, br2);
-            }
-            else
-            {
-                if(blk != null)
-                    blk[ic, ir] = value;
-                else
-                {
-                    blk = new double[3,3];
-                    blk[ic, ir] = value;
-                    _SetBlock(bc, br, br1, br2, blk);
-                }
             }
         }
         public void _SetBlockNull(int bc, int br, int br1, int br2)
@@ -206,19 +207,6 @@ namespace HTLib2.Bioinfo
                 }
                 offdiag_bc_br1[br2] = blk;
             }
-        }
-        public override void SetBlock(int bc, int br, MatrixByArr bval)
-        {
-            int br2 =  br        % layersize;
-            int br1 = (br - br2) / layersize;
-            _SetBlock(bc, br, br1, br2, bval.ToArray());
-        }
-        public override void SetBlockLock(int bc, int br, MatrixByArr bval)
-        {
-            throw new NotImplementedException();
-            //if(bval != null && bval.IsZero())
-            //    bval = null;
-            //hess.SetBlockLock(bc, br, bval);
         }
 
         public override HessMatrix CloneHess()
