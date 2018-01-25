@@ -60,21 +60,23 @@ namespace HTLib2.Bioinfo
                     , optOutSource  : optOutSource
                     );
             }
-            public static CTesthess Testhess( string testhesspath
-                                            , Tinker.Xyz xyz, Tinker.Prm prm
-                                            , string tempbase //=null
-                                            // http://www-jmg.ch.cam.ac.uk/cil/tinker/c7.html
-                                            // http://dasher.wustl.edu/tinkerwiki/index.php/Main_Page
-                                            , int?   digits       = null // the number of digits of precision output by TINKER in reporting potential energies and atomic coordinates.
-                                            , string cutoff       = null // [""?or real, A] cutoff distance value for all nonbonded potential energy interactions
-                                            , string chg_cutoff   = null // ["" or real, A] cutoff distance value for charge-charge electrostatic potential energy interactions. (default: 9A)
-                                            , string vdw_cutoff   = null // ["" or real, A] cutoff distance value for van der Waals potential energy interactions                (default: 9A)
-                                            , string ewald_cutoff = null // ["" or real, A] cutoff for use during Ewald summation.                                               (default: 9A)
-                                            , string taper        = null // ["" or real, A] cutoff windows for nonbonded potential energy interactions.                          (default: ranges 0.65-0.9 depending on potential function)
-                                            , string solvate      = null // [ASP/SASA/ONION/STILL/HCT/ACE/GBSA] solvate options : GBSA or 
-                                            , IList<string> keys  = null // other keys
-                                            , Dictionary<string, string[]> optOutSource = null
-                                            )
+            public static CTesthess Testhess
+                ( string testhesspath
+                , Tinker.Xyz xyz, Tinker.Prm prm
+                , string tempbase //=null
+                // http://www-jmg.ch.cam.ac.uk/cil/tinker/c7.html
+                // http://dasher.wustl.edu/tinkerwiki/index.php/Main_Page
+                , int?   digits       = null // the number of digits of precision output by TINKER in reporting potential energies and atomic coordinates.
+                , string cutoff       = null // [""?or real, A] cutoff distance value for all nonbonded potential energy interactions
+                , string chg_cutoff   = null // ["" or real, A] cutoff distance value for charge-charge electrostatic potential energy interactions. (default: 9A)
+                , string vdw_cutoff   = null // ["" or real, A] cutoff distance value for van der Waals potential energy interactions                (default: 9A)
+                , string ewald_cutoff = null // ["" or real, A] cutoff for use during Ewald summation.                                               (default: 9A)
+                , string taper        = null // ["" or real, A] cutoff windows for nonbonded potential energy interactions.                          (default: ranges 0.65-0.9 depending on potential function)
+                , string solvate      = null // [ASP/SASA/ONION/STILL/HCT/ACE/GBSA] solvate options : GBSA or 
+                , IList<string> keys  = null // other keys
+                , Dictionary<string, string[]> optOutSource = null
+                , Func<int, int, HessMatrix> HessMatrixZeros =null
+                )
             {
                 /// cutoff and taper are better to be used together.
                 List<string> lkeys = new List<string>();
@@ -87,7 +89,7 @@ namespace HTLib2.Bioinfo
                 if(solvate      != null) lkeys.Add("SOLVATE                 "+solvate     );
                 if(keys         != null) lkeys.AddRange(keys);
 
-                var hess = Testhess(testhesspath, xyz, prm, tempbase, lkeys.ToArray(), optOutSource);
+                var hess = Testhess(testhesspath, xyz, prm, tempbase, lkeys.ToArray(), optOutSource, HessMatrixZeros);
                 return hess;
             }
             public static CTesthess Testhess(Tinker.Xyz xyz
@@ -104,13 +106,15 @@ namespace HTLib2.Bioinfo
                     , keys          : keys
                     );
             }
-            public static CTesthess Testhess( string testhesspath
-                                            , Tinker.Xyz xyz
-                                            , Tinker.Prm prm
-                                            , string tempbase //=null
-                                            , string[] keys
-                                            , Dictionary<string, string[]> optOutSource // =null
-                                            )
+            public static CTesthess Testhess
+                ( string testhesspath
+                , Tinker.Xyz xyz
+                , Tinker.Prm prm
+                , string tempbase //=null
+                , string[] keys
+                , Dictionary<string, string[]> optOutSource // =null
+                , Func<int, int, HessMatrix> HessMatrixZeros // =null
+                )
             {
                 var tmpdir = HDirectory.CreateTempDirectory(tempbase);
                 string currpath = HEnvironment.CurrentDirectory;
@@ -131,7 +135,7 @@ namespace HTLib2.Bioinfo
                         keypath = "test.key";
                         HFile.WriteAllLines(keypath, keys);
                     }
-                    testhess = Testhess(testhesspath, "test.xyz", "test.prm", keypath, optOutSource);
+                    testhess = Testhess(testhesspath, "test.xyz", "test.prm", keypath, optOutSource, HessMatrixZeros);
                     testhess.xyz = xyz;
                     testhess.prm = prm;
                 }
@@ -161,6 +165,7 @@ namespace HTLib2.Bioinfo
                 , string prmpath
                 , string keypath //=null
                 , Dictionary<string, string[]> optOutSource // =null
+                , Func<int, int, HessMatrix> HessMatrixZeros // =null
                 )
             {
                 int size;
@@ -181,7 +186,7 @@ namespace HTLib2.Bioinfo
                     //int exitcode = HProcess.StartAsBatchSilent(null, null, null, command);
                 }
 
-                var testhess = ReadHess(xyzpath, "output.txt", optOutSource);
+                var testhess = ReadHess(xyzpath, "output.txt", optOutSource, HessMatrixZeros);
                 testhess.prm = Prm.FromFile(prmpath);
                 if(optOutSource != null)
                 {
@@ -193,6 +198,7 @@ namespace HTLib2.Bioinfo
                 ( string xyzpath
                 , string outputpath
                 , Dictionary<string, string[]> optOutSource // =null
+                , Func<int, int, HessMatrix> HessMatrixZeros // =null
                 )
             {
                 var xyz = Tinker.Xyz.FromFile(xyzpath, false);
@@ -353,11 +359,18 @@ namespace HTLib2.Bioinfo
                 #endregion
                 HessMatrix hess;
                 {
-                    switch(outHessFormat)
+                    if(HessMatrixZeros != null)
                     {
-                        case "full matrix"  : hess = HessMatrixDense .ZerosDense (size * 3, size * 3); break;
-                        case "sparse matrix": hess = HessMatrixSparse.ZerosSparse(size * 3, size * 3); break;
-                        default:              hess = null;                                             break;
+                        hess = HessMatrixZeros(size * 3, size * 3);
+                    }
+                    else
+                    {
+                        switch(outHessFormat)
+                        {
+                            case "full matrix"  : hess = HessMatrixDense .ZerosDense (size * 3, size * 3); break;
+                            case "sparse matrix": hess = HessMatrixSparse.ZerosSparse(size * 3, size * 3); break;
+                            default:              hess = null;                                             break;
+                        }
                     }
                     //HDebug.SetEpsilon(hess);
                     string step = "";
