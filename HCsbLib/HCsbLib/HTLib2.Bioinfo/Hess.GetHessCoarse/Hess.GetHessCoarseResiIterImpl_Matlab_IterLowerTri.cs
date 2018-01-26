@@ -99,8 +99,9 @@ namespace HTLib2.Bioinfo
                             int iremv_min = iremv.Min();
                             int iremv_max = iremv.Max();
 
-                            List<Tuple<int, int, MatrixByArr>> lst_bc_br_bval = H.EnumBlocksInCols_dep(idxremv).ToList();
-                            foreach(var bc_br_bval in lst_bc_br_bval)
+                            //List<Tuple<int, int, MatrixByArr>> lst_bc_br_bval = H.EnumBlocksInCols(idxremv).ToList();
+                            //foreach(var bc_br_bval in lst_bc_br_bval)
+                            foreach(var bc_br_bval in H.EnumBlocksInCols(idxremv))
                             {
                                 int bc   = bc_br_bval.Item1;
                                 int br   = bc_br_bval.Item2;
@@ -129,7 +130,7 @@ namespace HTLib2.Bioinfo
                                     }
                                 }
                             }
-                            HDebug.Assert(H.EnumBlocksInCols_dep(idxremv).ToList().Count == 0);
+                            HDebug.Assert(H.EnumBlocksInCols(idxremv).Count() == 0);
                         }
                         if(process_disp_console)
                         {
