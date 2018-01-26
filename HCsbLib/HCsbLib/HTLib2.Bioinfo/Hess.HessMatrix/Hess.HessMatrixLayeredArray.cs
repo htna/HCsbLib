@@ -358,7 +358,8 @@ namespace HTLib2.Bioinfo
         }
         public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks()
         {
-            throw new NotImplementedException();
+            foreach(var item in _EnumBlocks())
+                yield return new ValueTuple<int, int, MatrixByArr>(item.Item1, item.Item2, item.Item3);
         }
         //public override IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocksInCols_dep(int[] lstBlkCol)
         //{
