@@ -153,10 +153,7 @@ namespace HTLib2.Bioinfo
         {
             if(bc == br)
             {
-                double[,] diag_bc = diag[bc];
-                diag_bc[0, 0] = 0; diag_bc[0, 1] = 0; diag_bc[0, 2] = 0;
-                diag_bc[1, 0] = 0; diag_bc[1, 1] = 0; diag_bc[1, 2] = 0;
-                diag_bc[2, 0] = 0; diag_bc[2, 1] = 0; diag_bc[2, 2] = 0;
+                diag[bc] = null;
             }
             else
             {
@@ -297,7 +294,7 @@ namespace HTLib2.Bioinfo
             offdiag_count = new List<int   []     >(colblksize);
             for(int bc=0; bc<colblksize; bc++)
             {
-                   diag      .Add(new double          [3,3]);
+                   diag      .Add(null                     );
                 offdiag      .Add(new double[br1_size][][,]);
                 offdiag_count.Add(new int   [br1_size]     );
                 for(int br1=0; br1<br1_size; br1++)
@@ -346,23 +343,24 @@ namespace HTLib2.Bioinfo
         }
         public IEnumerable<ValueTuple<int, int, double[,]>> _EnumBlocksInCol(int bc)
         {
+            if(diag[bc] != null)
                 yield return new ValueTuple<int, int, double[,]>(bc, bc, diag[bc]);
-                double[][][,] offdiag_bc = offdiag[bc];
-                for(int br1=0; br1<offdiag_bc.Length; br1++)
+            double[][][,] offdiag_bc = offdiag[bc];
+            for(int br1=0; br1<offdiag_bc.Length; br1++)
+            {
+                double[][,] offdiag_bc_br1 = offdiag_bc[br1];
+                if(offdiag_bc_br1 == null)
+                    continue;
+                for(int br2=0; br2<offdiag_bc_br1.Length; br2++)
                 {
-                    double[][,] offdiag_bc_br1 = offdiag_bc[br1];
-                    if(offdiag_bc_br1 == null)
-                        continue;
-                    for(int br2=0; br2<offdiag_bc_br1.Length; br2++)
+                    double[,] offdiag_bc_br1br2 = offdiag_bc_br1[br2];
+                    if(offdiag_bc_br1br2 != null)
                     {
-                        double[,] offdiag_bc_br1br2 = offdiag_bc_br1[br2];
-                        if(offdiag_bc_br1br2 != null)
-                        {
-                            int br = br1 * layersize + br2;
-                            yield return new ValueTuple<int, int, double[,]>(bc, br, offdiag_bc_br1br2);
-                        }
+                        int br = br1 * layersize + br2;
+                        yield return new ValueTuple<int, int, double[,]>(bc, br, offdiag_bc_br1br2);
                     }
                 }
+            }
         }
         public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks()
         {
@@ -477,7 +475,7 @@ namespace HTLib2.Bioinfo
             offdiag_count = new List<int   []     >(colblksize);
             for(int bc=0; bc<colblksize; bc++)
             {
-                   diag      .Add(new double          [3,3]);
+                   diag      .Add(null                     );
                 offdiag      .Add(new double[br1_size][][,]);
                 offdiag_count.Add(new int   [br1_size]     );
                 for(int br1=0; br1<br1_size; br1++)
