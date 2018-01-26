@@ -127,7 +127,7 @@ namespace HTLib2.Bioinfo
                     if(bool.Parse("false"))
                         #region
                     {
-                        HDirectory.CreateDirectory(@"C:\temp\$coarse-graining\");
+                        HDirectory.CreateDirectory(@"K:\temp\$coarse-graining\");
                         {   // export original hessian matrix
                             List<int> cs = new List<int>();
                             List<int> rs = new List<int>();
@@ -144,7 +144,7 @@ namespace HTLib2.Bioinfo
                             Matlab.Execute("figure; spy(hess)");
                             Matlab.Execute("cs = int32(cs+1);");
                             Matlab.Execute("rs = int32(rs+1);");
-                            Matlab.Execute(@"save('C:\temp\$coarse-graining\hess-original.mat', 'cs', 'rs', '-v6');");
+                            Matlab.Execute(@"save('K:\temp\$coarse-graining\hess-original.mat', 'cs', 'rs', '-v6');");
                             Matlab.Clear();
                         }
                         {   // export reshuffled hessian matrix
@@ -163,7 +163,7 @@ namespace HTLib2.Bioinfo
                             Matlab.Execute("figure; spy(H)");
                             Matlab.Execute("cs = int32(cs+1);");
                             Matlab.Execute("rs = int32(rs+1);");
-                            Matlab.Execute(@"save('C:\temp\$coarse-graining\hess-reshuffled.mat', 'cs', 'rs', '-v6');");
+                            Matlab.Execute(@"save('K:\temp\$coarse-graining\hess-reshuffled.mat', 'cs', 'rs', '-v6');");
                             Matlab.Clear();
                         }
                     }
