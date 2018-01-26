@@ -189,11 +189,11 @@ namespace HTLib2
         {
             return blkmatrix.EnumElements();
         }
-        public IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocks_dep(params int[] lstBlkCol)
+        public IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocks_dep(int[] lstBlkCol)
         {
             return blkmatrix.EnumElements_dep(lstBlkCol);
         }
-        public IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks(params int[] lstBlkCol)
+        public IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks(int[] lstBlkCol)
         {
             return blkmatrix.EnumElements(lstBlkCol);
         }
