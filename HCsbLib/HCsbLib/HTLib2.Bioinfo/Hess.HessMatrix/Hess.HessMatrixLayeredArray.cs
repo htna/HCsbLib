@@ -360,10 +360,10 @@ namespace HTLib2.Bioinfo
         {
             throw new NotImplementedException();
         }
-        public override IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocksInCols_dep(int[] lstBlkCol)
-        {
-            throw new NotImplementedException();
-        }
+        //public override IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocksInCols_dep(int[] lstBlkCol)
+        //{
+        //    throw new NotImplementedException();
+        //}
         public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocksInCols(int[] lstBlkCol)
         {
             throw new NotImplementedException();

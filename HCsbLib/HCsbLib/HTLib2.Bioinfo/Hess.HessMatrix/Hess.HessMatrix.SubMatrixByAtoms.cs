@@ -122,7 +122,7 @@ namespace HTLib2.Bioinfo
 
             HessMatrix nhess = Zeros(idxColAtoms.Count*3, idxRowAtoms.Count*3);
             {
-                Action<Tuple<int, int, MatrixByArr>> func = delegate(Tuple<int, int, MatrixByArr> bc_br_bval)
+                Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
                 {
                     int bc   = bc_br_bval.Item1; if(col_idx2nidx.ContainsKey(bc) == false) return;
                     int br   = bc_br_bval.Item2; if(row_idx2nidx.ContainsKey(br) == false) return;
@@ -143,8 +143,8 @@ namespace HTLib2.Bioinfo
                     }
                 };
 
-                if(parallel)    Parallel.ForEach(         EnumBlocksInCols_dep(col_idxs.ToArray()), func           );
-                else            foreach(var bc_br_bval in EnumBlocksInCols_dep(col_idxs.ToArray())) func(bc_br_bval);
+                if(parallel)    Parallel.ForEach(         EnumBlocksInCols(col_idxs.ToArray()), func           );
+                else            foreach(var bc_br_bval in EnumBlocksInCols(col_idxs.ToArray())) func(bc_br_bval);
             
             }
             if(SubMatrixByAtomsImpl_selftest2)

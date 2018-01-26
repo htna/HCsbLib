@@ -118,13 +118,13 @@ namespace HTLib2.Bioinfo
                     if(HasBlock(bc, br))
                         yield return new Tuple<int, int, MatrixByArr>(bc, br, GetBlock(bc, br));
         }
-        public override IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocksInCols_dep(int[] lstBlkCol)
-        {
-            foreach(int bc in lstBlkCol)
-                for(int br=0; br<RowBlockSize; br++)
-                    if(HasBlock(bc, br))
-                        yield return new Tuple<int, int, MatrixByArr>(bc, br, GetBlock(bc, br));
-        }
+        //public override IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocksInCols_dep(int[] lstBlkCol)
+        //{
+        //    foreach(int bc in lstBlkCol)
+        //        for(int br=0; br<RowBlockSize; br++)
+        //            if(HasBlock(bc, br))
+        //                yield return new Tuple<int, int, MatrixByArr>(bc, br, GetBlock(bc, br));
+        //}
         public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocksInCols(int[] lstBlkCol)
         {
             foreach(int bc in lstBlkCol)
