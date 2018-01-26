@@ -163,7 +163,7 @@ namespace HTLib2.Bioinfo
                 }
             }
         }
-        public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks_dep()
+        public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks()
         {
             throw new NotImplementedException();
         }

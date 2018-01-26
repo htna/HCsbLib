@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace HTLib2.Bioinfo
 {
@@ -147,7 +148,7 @@ namespace HTLib2.Bioinfo
             if(HDebug.IsDebuggerAttached)
                 debug_prv = this.ToArray();
 
-            foreach(var bc_br_bval in EnumBlocks_dep().ToArray())
+            foreach(var bc_br_bval in EnumBlocks())
             {
                 int         bc   = bc_br_bval.Item1;
                 int         br   = bc_br_bval.Item2;
@@ -232,8 +233,8 @@ namespace HTLib2.Bioinfo
                 }
             };
 
-            if(parallel) System.Threading.Tasks.Parallel.ForEach(other.EnumBlocks_dep(), func);
-            else         foreach(var bc_br_bval in other.EnumBlocks_dep())   func(bc_br_bval);
+            if(parallel) Parallel.ForEach(other.EnumBlocks(), func);
+            else                  foreach(var bc_br_bval in other.EnumBlocks())   func(bc_br_bval);
             
             if(debug_updateadd != null)
             {
@@ -247,7 +248,7 @@ namespace HTLib2.Bioinfo
         public virtual HessMatrix Tr()
         {
             HessMatrix tr = Zeros(RowSize, ColSize);
-            foreach(var bc_br_bval in EnumBlocks_dep())
+            foreach(var bc_br_bval in EnumBlocks())
             {
                 int bc = bc_br_bval.Item1;
                 int br = bc_br_bval.Item2;

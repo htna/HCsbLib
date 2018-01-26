@@ -35,7 +35,7 @@ namespace HTLib2.Bioinfo
                 /// keep only lower triangle of H (lower block triangles)
                 {
                     HashSet<Tuple<int, int, MatrixByArr>> lstUppTrig = new HashSet<Tuple<int, int, MatrixByArr>>();
-                    foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in H.EnumBlocks_dep())
+                    foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in H.EnumBlocks())
                     {
                         int bc = bc_br_bval.Item1;
                         int br = bc_br_bval.Item2;
@@ -146,7 +146,7 @@ namespace HTLib2.Bioinfo
                             double thres_absmax = thres_zeroblk;
 
                             List<Tuple<int, int>> lstIdxToMakeZero = new List<Tuple<int, int>>();
-                            foreach(var bc_br_bval in C.EnumBlocks_dep())
+                            foreach(var bc_br_bval in C.EnumBlocks())
                             {
                                 int bc   = bc_br_bval.Item1;
                                 int br   = bc_br_bval.Item2;
@@ -198,7 +198,7 @@ namespace HTLib2.Bioinfo
 
                             int count = 0;
                             int count_ignored = 0;
-                            foreach(var bc_br_bval in other.EnumBlocks_dep())
+                            foreach(var bc_br_bval in other.EnumBlocks())
                             {
                                 count++;
                                 int               bc   = bc_br_bval.Item1;
@@ -286,7 +286,7 @@ namespace HTLib2.Bioinfo
                 HessMatrix B_invD_C;
                 Dictionary<int, int> Cbr_CCbr = new Dictionary<int, int>();
                 List<int>            CCbr_Cbr = new List<int>();
-                foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in C.EnumBlocks_dep())
+                foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in C.EnumBlocks())
                 {
                     int Cbr = bc_br_bval.Item2;
                     if(Cbr_CCbr.ContainsKey(Cbr) == false)
@@ -310,8 +310,8 @@ namespace HTLib2.Bioinfo
                              CC.SetBlock(CCbc, CCbr, bval);
                     };
 
-                    if(parallel)    Parallel.ForEach(         C.EnumBlocks_dep(), func);
-                    else            foreach(var bc_br_bval in C.EnumBlocks_dep()) func(bc_br_bval);
+                    if(parallel)    Parallel.ForEach(         C.EnumBlocks(), func);
+                    else            foreach(var bc_br_bval in C.EnumBlocks()) func(bc_br_bval);
                 }
                                                                                                                 if(process_disp_console) { System.Console.Write("squeezeC({0,6}->{1,6} blk), ", C.RowBlockSize, CC.RowBlockSize); }
                 {
@@ -471,8 +471,8 @@ namespace HTLib2.Bioinfo
                                 B_invD_C.SetBlock(bc, br, bval);
                         };
                     
-                        if(parallel)    Parallel.ForEach(           BB_invDD_CC.EnumBlocks_dep(), func);
-                        else            foreach(var bcc_brr_bval in BB_invDD_CC.EnumBlocks_dep()) func(bcc_brr_bval);
+                        if(parallel)    Parallel.ForEach(           BB_invDD_CC.EnumBlocks(), func);
+                        else            foreach(var bcc_brr_bval in BB_invDD_CC.EnumBlocks()) func(bcc_brr_bval);
                     }
                 }
                 GC.Collect(0);

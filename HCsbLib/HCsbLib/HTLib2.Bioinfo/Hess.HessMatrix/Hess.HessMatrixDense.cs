@@ -111,7 +111,7 @@ namespace HTLib2.Bioinfo
             //    return HasBlock(bc, br);
             //}
         }
-        public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks_dep()
+        public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks()
         {
             for(int bc=0; bc<ColBlockSize; bc++)
                 for(int br=0; br<RowBlockSize; br++)

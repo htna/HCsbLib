@@ -35,7 +35,7 @@ namespace HTLib2.Bioinfo
                 Graph<int, object> g = new Graph<int, object>();
                 for(int i=0; i<H.ColBlockSize; i++)
                     g.AddNode(i);
-                foreach(var bc_br_bval in H.EnumBlocks_dep())
+                foreach(var bc_br_bval in H.EnumBlocks())
                 {
                     int bc = bc_br_bval.Item1;
                     int br = bc_br_bval.Item2;

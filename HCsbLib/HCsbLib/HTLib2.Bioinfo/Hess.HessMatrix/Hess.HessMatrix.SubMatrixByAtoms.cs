@@ -212,7 +212,7 @@ namespace HTLib2.Bioinfo
             if(hess.ColSize != equal.ColSize) return false;
             if(hess.RowSize != equal.RowSize) return false;
 
-            foreach(var bc_br_bval in hess.EnumBlocks_dep())
+            foreach(var bc_br_bval in hess.EnumBlocks())
             {
                 int bc  = bc_br_bval.Item1;
                 int br  = bc_br_bval.Item2;
@@ -222,7 +222,7 @@ namespace HTLib2.Bioinfo
                 if((bv - bv0).HAbsMax() != 0) return false;
             }
 
-            foreach(var bc_br_bval in equal.EnumBlocks_dep())
+            foreach(var bc_br_bval in equal.EnumBlocks())
             {
                 int bc  = bc_br_bval.Item1;
                 int br  = bc_br_bval.Item2;

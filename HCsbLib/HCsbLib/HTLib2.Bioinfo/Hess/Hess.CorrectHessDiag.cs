@@ -34,7 +34,7 @@ namespace HTLib2.Bioinfo
 
             for(int i=0; i<size; i++)
                 nhess.SetBlock(i, i, new double[3, 3]);
-            foreach(var bc_br_bval in nhess.EnumBlocks_dep())
+            foreach(var bc_br_bval in nhess.EnumBlocks())
             {
                 int bc   = bc_br_bval.Item1;
                 int br   = bc_br_bval.Item2;

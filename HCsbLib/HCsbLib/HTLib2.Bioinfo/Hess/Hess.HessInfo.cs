@@ -82,7 +82,7 @@ namespace HTLib2.Bioinfo
                 Vector[] subcoords = (coords == null) ? null : coords.HSelectByIndex(idxSele);
                 int subsize = idxSele.Count;
                 HessMatrix subhess = hess.Zeros(subsize*3, subsize*3);
-                foreach(var bc_br_bval in hess.EnumBlocks_dep())
+                foreach(var bc_br_bval in hess.EnumBlocks())
                 {
                     int bc   = bc_br_bval.Item1; if(whole2sele.ContainsKey(bc) == false) continue; int nbc = whole2sele[bc];
                     int br   = bc_br_bval.Item2; if(whole2sele.ContainsKey(br) == false) continue; int nbr = whole2sele[br];

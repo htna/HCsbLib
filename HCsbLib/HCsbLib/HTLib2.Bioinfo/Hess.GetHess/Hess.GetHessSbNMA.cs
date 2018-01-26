@@ -336,7 +336,7 @@ namespace HTLib2.Bioinfo
 
                 //Hess.UpdateHessNaN(hess, coords);
                 {
-                    foreach(var bc_br_bval in hess.EnumBlocks_dep())
+                    foreach(var bc_br_bval in hess.EnumBlocks())
                     {
                         int bc   = bc_br_bval.Item1;
                         int br   = bc_br_bval.Item2;

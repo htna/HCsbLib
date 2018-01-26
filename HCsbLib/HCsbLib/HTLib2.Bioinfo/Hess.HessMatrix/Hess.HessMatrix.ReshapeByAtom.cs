@@ -13,7 +13,7 @@ namespace HTLib2.Bioinfo
         {
             double min_absmax_bval = double.MaxValue;
             List<Tuple<int,int>> lstIdxToMakeZero = new List<Tuple<int, int>>();
-            foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in EnumBlocks_dep())
+            foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in EnumBlocks())
             {
                 int bc   = bc_br_bval.Item1;
                 int br   = bc_br_bval.Item2;
