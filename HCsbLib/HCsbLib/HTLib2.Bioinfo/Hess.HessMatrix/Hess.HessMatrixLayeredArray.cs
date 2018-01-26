@@ -364,7 +364,7 @@ namespace HTLib2.Bioinfo
         {
             throw new NotImplementedException();
         }
-        public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks(int[] lstBlkCol)
+        public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocksInCols(int[] lstBlkCol)
         {
             throw new NotImplementedException();
         }

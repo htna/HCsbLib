@@ -91,7 +91,7 @@ namespace HTLib2.Bioinfo
                             List<MatrixByArr> C_lstbval = new List<MatrixByArr>();
                             {
                                 // get C and D
-                                foreach(var (bc, br, bval) in H.EnumBlocks(new int[] { iremv }))
+                                foreach(var (bc, br, bval) in H.EnumBlocksInCols(new int[] { iremv }))
                                 {
                                     HDebug.Assert(iremv == bc);
                                     if(bc == br)
