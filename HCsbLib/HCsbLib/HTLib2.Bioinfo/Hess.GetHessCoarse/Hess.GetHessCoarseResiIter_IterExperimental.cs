@@ -78,7 +78,7 @@ namespace HTLib2.Bioinfo
                             int iremv_min = iremv.Min();
                             int iremv_max = iremv.Max();
 
-                            foreach(var bc_br_bval in H.EnumBlocks_dep(idxremv))
+                            foreach(var bc_br_bval in H.EnumBlocksInCols_dep(idxremv))
                             {
                                 int bc   = bc_br_bval.Item1;
                                 int br   = bc_br_bval.Item2;

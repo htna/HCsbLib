@@ -126,7 +126,7 @@ namespace HTLib2.Bioinfo
         {
             return hess.EnumBlocks();
         }
-        public override IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocks_dep(int[] lstBlkCol)
+        public override IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocksInCols_dep(int[] lstBlkCol)
         {
             return hess.EnumBlocks_dep(lstBlkCol);
         }

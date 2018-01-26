@@ -143,8 +143,8 @@ namespace HTLib2.Bioinfo
                     }
                 };
 
-                if(parallel)    Parallel.ForEach(         EnumBlocks_dep(col_idxs.ToArray()), func           );
-                else            foreach(var bc_br_bval in EnumBlocks_dep(col_idxs.ToArray())) func(bc_br_bval);
+                if(parallel)    Parallel.ForEach(         EnumBlocksInCols_dep(col_idxs.ToArray()), func           );
+                else            foreach(var bc_br_bval in EnumBlocksInCols_dep(col_idxs.ToArray())) func(bc_br_bval);
             
             }
             if(SubMatrixByAtomsImpl_selftest2)
