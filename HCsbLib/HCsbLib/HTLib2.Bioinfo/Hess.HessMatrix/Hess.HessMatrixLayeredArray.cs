@@ -222,7 +222,7 @@ namespace HTLib2.Bioinfo
         public override double[,] ToArray()
         {
             double[,] arr = new double[ColSize, RowSize];
-            foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in _EnumBlocks())
+            foreach(ValueTuple<int, int, double[,]> bc_br_bval in _EnumBlocks())
             {
                 int bc   = bc_br_bval.Item1;
                 int br   = bc_br_bval.Item2;
