@@ -209,7 +209,7 @@ namespace HTLib2.Bioinfo
 
             object _lock = new object();
             object _lock_ignored = new object();
-            Action<Tuple<int, int, MatrixByArr>> func = delegate(Tuple<int, int, MatrixByArr> bc_br_bval)
+            Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
             {
                 count++;
                 int         other_bc   = bc_br_bval.Item1;

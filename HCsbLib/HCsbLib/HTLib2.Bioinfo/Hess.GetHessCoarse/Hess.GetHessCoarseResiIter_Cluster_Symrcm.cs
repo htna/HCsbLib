@@ -553,7 +553,7 @@ namespace HTLib2.Bioinfo
                     double thres_zeroblk = 1;
                     if(symrcm_filter_blckwise_interact != null) thres_zeroblk = symrcm_filter_blckwise_interact.Value;
                     HashSet<Tuple<int, int>> lbwi = new HashSet<Tuple<int, int>>();
-                    foreach(Tuple<int, int, MatrixByArr> bc_br_bval in hess.EnumBlocks_dep())
+                    foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in hess.EnumBlocks_dep())
                     {
                         double val = bc_br_bval.Item3.HAbsMax();
                         if(val < thres_zeroblk) continue;
@@ -697,7 +697,7 @@ namespace HTLib2.Bioinfo
                             atom_resi.Add(atom, resi);
 
                     HashSet<Tuple<int, int>> lrwi = new HashSet<Tuple<int, int>>();
-                    foreach(Tuple<int, int, MatrixByArr> bc_br_bval in hess.EnumBlocks_dep())
+                    foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in hess.EnumBlocks_dep())
                     {
                         double val = bc_br_bval.Item3.HAbsMax();
                         if(val < thres_zeroblk) continue;
@@ -822,7 +822,7 @@ namespace HTLib2.Bioinfo
                 {
                     awi = new List<Tuple<int, int>>();
                     HashSet<Universe.Atom> hkeeps = keeps.HToHashSet();
-                    foreach(Tuple<int, int, MatrixByArr> bc_br_bval in hess.EnumBlocks_dep())
+                    foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in hess.EnumBlocks_dep())
                     {
                         double val = bc_br_bval.Item3.HAbsMax();
                         if(val < thres_zeroblk) continue;

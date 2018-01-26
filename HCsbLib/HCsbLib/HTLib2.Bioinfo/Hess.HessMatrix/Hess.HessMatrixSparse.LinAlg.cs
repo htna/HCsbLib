@@ -23,7 +23,7 @@ namespace HTLib2.Bioinfo
                 HDebug.Exception(mv.Size == M.ColSize); //Vector mv = new double[M.ColSize];
                 HDebug.Exception(bvec.Size == 3);       //Vector bvec = new double[3];
                 HDebug.Exception(bmv .Size == 3);       //Vector bmv = new double[3];
-                foreach(Tuple<int, int, MatrixByArr> bc_br_bval in M.EnumBlocks_dep())
+                foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in M.EnumBlocks_dep())
                 {
                     int bc = bc_br_bval.Item1;
                     int br = bc_br_bval.Item2;

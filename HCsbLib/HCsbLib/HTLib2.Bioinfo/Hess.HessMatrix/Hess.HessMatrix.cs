@@ -50,7 +50,7 @@ namespace HTLib2.Bioinfo
         // foreach(Tuple<int, int, MatrixByArr> bc_br_bval in hess.EnumBlocks())
         public abstract bool HasBlock(int bc, int br);
         public abstract bool HasBlockLock(int bc, int br);
-        public abstract IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocks_dep();
+        public abstract IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks_dep();
         //public abstract IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocksInCols_dep(int[] lstBlkCol);
         public abstract IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocksInCols(int[] lstBlkCol);
         public abstract IEnumerable<Tuple<int, int>> EnumIndices_dep();
@@ -59,11 +59,11 @@ namespace HTLib2.Bioinfo
             Dictionary<int, List<Tuple<int, int, MatrixByArr>>> ibr_listBlock = new Dictionary<int, List<Tuple<int, int, MatrixByArr>>>();
             for(int ibr=0; ibr<RowBlockSize; ibr++)
                 ibr_listBlock.Add(ibr, new List<Tuple<int, int, MatrixByArr>>());
-            foreach(Tuple<int, int, MatrixByArr> bc_br_bval in EnumBlocks_dep())
+            foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in EnumBlocks_dep())
             {
                 //int ibc = bc_br_bval.Item1;
                 int ibr = bc_br_bval.Item2;
-                ibr_listBlock[ibr].Add(bc_br_bval);
+                ibr_listBlock[ibr].Add(bc_br_bval.ToTuple());
             }
             for(int ibr=0; ibr<RowBlockSize; ibr++)
             {
@@ -78,11 +78,11 @@ namespace HTLib2.Bioinfo
             Dictionary<int, List<Tuple<int, int, MatrixByArr>>> ibc_listBlock = new Dictionary<int, List<Tuple<int, int, MatrixByArr>>>();
             for(int ibc=0; ibc<ColBlockSize; ibc++)
                 ibc_listBlock.Add(ibc, new List<Tuple<int, int, MatrixByArr>>());
-            foreach(Tuple<int, int, MatrixByArr> bc_br_bval in EnumBlocks_dep())
+            foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in EnumBlocks_dep())
             {
                 int ibc = bc_br_bval.Item1;
                 //int ibr = bc_br_bval.Item2;
-                ibc_listBlock[ibc].Add(bc_br_bval);
+                ibc_listBlock[ibc].Add(bc_br_bval.ToTuple());
             }
             for(int ibc=0; ibc<ColBlockSize; ibc++)
             {

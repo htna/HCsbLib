@@ -131,7 +131,7 @@ namespace HTLib2.Bioinfo
                         {   // export original hessian matrix
                             List<int> cs = new List<int>();
                             List<int> rs = new List<int>();
-                            foreach(Tuple<int, int, MatrixByArr> bc_br_bval in hessinfo.hess.EnumBlocks_dep())
+                            foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in hessinfo.hess.EnumBlocks_dep())
                             {
                                 cs.Add(bc_br_bval.Item1);
                                 rs.Add(bc_br_bval.Item2);
@@ -150,7 +150,7 @@ namespace HTLib2.Bioinfo
                         {   // export reshuffled hessian matrix
                             List<int> cs = new List<int>();
                             List<int> rs = new List<int>();
-                            foreach(Tuple<int, int, MatrixByArr> bc_br_bval in H.EnumBlocks_dep())
+                            foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in H.EnumBlocks_dep())
                             {
                                 cs.Add(bc_br_bval.Item1);
                                 rs.Add(bc_br_bval.Item2);
@@ -251,7 +251,7 @@ namespace HTLib2.Bioinfo
                 HessMatrix B_invD_C;
                 Dictionary<int, int> Cbr_CCbr = new Dictionary<int, int>();
                 List<int>            CCbr_Cbr = new List<int>();
-                foreach(Tuple<int, int, MatrixByArr> bc_br_bval in C.EnumBlocks_dep())
+                foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in C.EnumBlocks_dep())
                 {
                     int Cbr = bc_br_bval.Item2;
                     if(Cbr_CCbr.ContainsKey(Cbr) == false)
@@ -266,7 +266,7 @@ namespace HTLib2.Bioinfo
 
                 HessMatrix CC = HessMatrixSparse.ZerosSparse(C.ColSize, Cbr_CCbr.Count*3);
                 {
-                    Action<Tuple<int, int, MatrixByArr>> func = delegate(Tuple<int, int, MatrixByArr> bc_br_bval)
+                    Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
                     {
                         int Cbc  = bc_br_bval.Item1; int CCbc = Cbc;
                         int Cbr  = bc_br_bval.Item2; int CCbr = Cbr_CCbr[Cbr];
@@ -379,7 +379,7 @@ namespace HTLib2.Bioinfo
                         //          HDebug.Exception(A.HasBlock(br, br));
                         //      }
                         //  }
-                        Action<Tuple<int, int, MatrixByArr>> func = delegate(Tuple<int, int, MatrixByArr> bcc_brr_bval)
+                        Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bcc_brr_bval)
                         {
                             int bcc = bcc_brr_bval.Item1;
                             int brr = bcc_brr_bval.Item2;

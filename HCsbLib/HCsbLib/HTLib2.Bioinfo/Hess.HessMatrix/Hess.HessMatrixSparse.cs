@@ -43,7 +43,7 @@ namespace HTLib2.Bioinfo
         public override double[,] ToArray()
         {
             double[,] arr = new double[ColSize, RowSize];
-            foreach(Tuple<int, int, MatrixByArr> bc_br_bval in EnumBlocks_dep())
+            foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in EnumBlocks_dep())
             {
                 int bc   = bc_br_bval.Item1;
                 int br   = bc_br_bval.Item2;
@@ -122,9 +122,10 @@ namespace HTLib2.Bioinfo
         {
             return hess.HasBlockLock(bc, br);
         }
-        public override IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocks_dep()
+        public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks_dep()
         {
-            return hess.EnumBlocks();
+            foreach(var item in hess.EnumBlocks())
+                yield return item.ToValueTuple();
         }
         //public override IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocksInCols_dep(int[] lstBlkCol)
         //{
