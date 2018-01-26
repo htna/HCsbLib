@@ -337,6 +337,12 @@ namespace HTLib2.Bioinfo
         {
             for(int bc=0; bc<colblksize; bc++)
             {
+                foreach(var blk in _EnumBlocksInCol(bc))
+                    yield return blk;
+            }
+        }
+        public IEnumerable<ValueTuple<int, int, double[,]>> _EnumBlocksInCol(int bc)
+        {
                 yield return new ValueTuple<int, int, double[,]>(bc, bc, diag[bc]);
                 double[][][,] offdiag_bc = offdiag[bc];
                 for(int br1=0; br1<offdiag_bc.Length; br1++)
@@ -354,12 +360,11 @@ namespace HTLib2.Bioinfo
                         }
                     }
                 }
-            }
         }
         public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks()
         {
-            foreach(var item in _EnumBlocks())
-                yield return new ValueTuple<int, int, MatrixByArr>(item.Item1, item.Item2, item.Item3);
+            foreach(var blk in _EnumBlocks())
+                yield return new ValueTuple<int, int, MatrixByArr>(blk.Item1, blk.Item2, blk.Item3);
         }
         //public override IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocksInCols_dep(int[] lstBlkCol)
         //{
@@ -367,7 +372,11 @@ namespace HTLib2.Bioinfo
         //}
         public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocksInCols(int[] lstBlkCol)
         {
-            throw new NotImplementedException();
+            for(int bc = 0; bc < colblksize; bc++)
+            {
+                foreach(var blk in _EnumBlocksInCol(bc))
+                    yield return blk;
+            }
         }
         public override IEnumerable<Tuple<int, int>> EnumIndices_dep()
         {
