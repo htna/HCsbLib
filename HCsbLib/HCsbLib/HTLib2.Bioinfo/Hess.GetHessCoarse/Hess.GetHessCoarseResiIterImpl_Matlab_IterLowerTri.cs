@@ -83,8 +83,46 @@ namespace HTLib2.Bioinfo
                     iterinfo.sizeHessBlkMat  = idxremv.Max()+1; // H.ColBlockSize;
                     iterinfo.numAtomsRemoved = idxremv.Length;
                     iterinfo.time0 = DateTime.UtcNow;
-                    double C_density0 = double.NaN;
-                    double C_density1 = double.NaN;
+                    double C_density0;
+                    double C_density1;
+                    // make C sparse
+                    {
+                        double thres_absmax = thres_zeroblk;
+
+                        C_density0 = 0;
+                        List<Tuple<int, int>> lstIdxToMakeZero = new List<Tuple<int, int>>();
+                        foreach(var bc_br_bval in H.EnumBlocksInCols(idxremv))
+                        {
+                            C_density0++;
+                            int bc   = bc_br_bval.Item1;
+                            int br   = bc_br_bval.Item2;
+                            var bval = bc_br_bval.Item3;
+                            double absmax_bval = bval.HAbsMax();
+                            if(absmax_bval < thres_absmax)
+                            {
+                                lstIdxToMakeZero.Add(new Tuple<int, int>(bc, br));
+                            }
+                        }
+                        C_density1 = C_density0 - lstIdxToMakeZero.Count;
+                        foreach(var bc_br in lstIdxToMakeZero)
+                        {
+                            int bc   = bc_br.Item1;
+                            int br   = bc_br.Item2;
+                            HDebug.Assert(bc > br);
+                            var Cval = H.GetBlock(bc, br);
+                            var Dval = H.GetBlock(bc, bc);
+                            var Aval = H.GetBlock(br, br);
+                            var Bval = Cval.Tr();
+                            H.SetBlock(bc, br, null);           // nCval = Cval    -Cval
+                            H.SetBlock(bc, bc, Dval + Cval);    // nDval = Dval - (-Cval) = Dval + Cval
+                                                                // nBval = Bval    -Bval
+                            H.SetBlock(br, br, Aval + Bval);    // nAval = Aval - (-Bval) = Aval + Bval
+                        }
+                        iterinfo.numSetZeroBlock = lstIdxToMakeZero.Count;
+                        iterinfo.numNonZeroBlock = (int)C_density1;
+                        C_density0 /= (idxkeep.Length * idxremv.Length);
+                        C_density1 /= (idxkeep.Length * idxremv.Length);
+                    }
                     {
                         //HessMatrix    A = H.SubMatrixByAtoms(false, idxkeep, idxkeep);
                         HessMatrix    A = H;
@@ -138,44 +176,44 @@ namespace HTLib2.Bioinfo
                             System.Console.Write("CD({0:00.00} min), ", (process_time[2]-process_time[0]).TotalMinutes);
                         }
 
-                        // make B,C sparse
-                        //int B_cntzero = B.MakeNearZeroBlockAsZero(thres_zeroblk);
-                        C_density0 = C.RatioUsedBlocks;
-                        /// iterinfo.numSetZeroBlock = C.MakeNearZeroBlockAsZero(thres_zeroblk);
-                        {
-                            double thres_absmax = thres_zeroblk;
-
-                            List<Tuple<int, int>> lstIdxToMakeZero = new List<Tuple<int, int>>();
-                            foreach(var bc_br_bval in C.EnumBlocks())
-                            {
-                                int bc   = bc_br_bval.Item1;
-                                int br   = bc_br_bval.Item2;
-                                var bval = bc_br_bval.Item3;
-                                double absmax_bval = bval.HAbsMax();
-                                if(absmax_bval < thres_absmax)
-                                {
-                                    lstIdxToMakeZero.Add(new Tuple<int, int>(bc, br));
-                                }
-                            }
-                            foreach(var bc_br in lstIdxToMakeZero)
-                            {
-                                int cc   = bc_br.Item1;
-                                int cr   = bc_br.Item2;
-                                var Cval = C.GetBlock(cc, cr);
-                                            C.SetBlock(cc, cr, null);
-                                var Dval = D.GetBlock(cc, cc);              // nCval = Cval    -Cval
-                                            D.SetBlock(cc, cc, Dval+Cval);   // nDval = Dval - (-Cval) = Dval + Cval
-                                int bc   = cr;
-                                int br   = cc;
-                                var Bval = Cval.Tr();
-                                var Aval = A.GetBlock(bc, bc);              // nBval = Bval    -Bval
-                                            A.SetBlock(bc, bc, Aval+Bval);   // nAval = Aval - (-Bval) = Aval + Bval
-                            }
-                            iterinfo.numSetZeroBlock = lstIdxToMakeZero.Count;
-                        }
-                        //int B_nzeros = B.NumUsedBlocks; double B_nzeros_ = Math.Sqrt(B_nzeros);
-                        iterinfo.numNonZeroBlock = C.NumUsedBlocks;
-                        C_density1 = C.RatioUsedBlocks;
+                        //  // make B,C sparse
+                        //  //int B_cntzero = B.MakeNearZeroBlockAsZero(thres_zeroblk);
+                        //  C_density0 = C.RatioUsedBlocks;
+                        //  /// iterinfo.numSetZeroBlock = C.MakeNearZeroBlockAsZero(thres_zeroblk);
+                        //  {
+                        //      double thres_absmax = thres_zeroblk;
+                        //  
+                        //      List<Tuple<int, int>> lstIdxToMakeZero = new List<Tuple<int, int>>();
+                        //      foreach(var bc_br_bval in C.EnumBlocks())
+                        //      {
+                        //          int bc   = bc_br_bval.Item1;
+                        //          int br   = bc_br_bval.Item2;
+                        //          var bval = bc_br_bval.Item3;
+                        //          double absmax_bval = bval.HAbsMax();
+                        //          if(absmax_bval < thres_absmax)
+                        //          {
+                        //              lstIdxToMakeZero.Add(new Tuple<int, int>(bc, br));
+                        //          }
+                        //      }
+                        //      foreach(var bc_br in lstIdxToMakeZero)
+                        //      {
+                        //          int cc   = bc_br.Item1;
+                        //          int cr   = bc_br.Item2;
+                        //          var Cval = C.GetBlock(cc, cr);
+                        //                      C.SetBlock(cc, cr, null);
+                        //          var Dval = D.GetBlock(cc, cc);              // nCval = Cval    -Cval
+                        //                      D.SetBlock(cc, cc, Dval+Cval);   // nDval = Dval - (-Cval) = Dval + Cval
+                        //          int bc   = cr;
+                        //          int br   = cc;
+                        //          var Bval = Cval.Tr();
+                        //          var Aval = A.GetBlock(bc, bc);              // nBval = Bval    -Bval
+                        //                      A.SetBlock(bc, bc, Aval+Bval);   // nAval = Aval - (-Bval) = Aval + Bval
+                        //      }
+                        //      iterinfo.numSetZeroBlock = lstIdxToMakeZero.Count;
+                        //  }
+                        //  //int B_nzeros = B.NumUsedBlocks; double B_nzeros_ = Math.Sqrt(B_nzeros);
+                        //  iterinfo.numNonZeroBlock = C.NumUsedBlocks;
+                        //  C_density1 = C.RatioUsedBlocks;
 
                         
                         HessMatrix B_invD_C = GetHessCoarseResiIterImpl_Matlab_IterLowerTri_Get_BInvDC(A, C, D, process_disp_console
@@ -226,6 +264,8 @@ namespace HTLib2.Bioinfo
                                 if(other_bmat != null)
                                 {
                                     MatrixByArr  this_bmat = _this.GetBlock(bc, br);
+                                    if(this_bmat == null)
+                                        this_bmat = new double[3, 3];
                                     MatrixByArr   new_bmat = this_bmat - other_bmat;
                                     _this.SetBlock(bc, br, new_bmat);
                                 }
@@ -299,7 +339,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                HessMatrix CC = HessMatrixSparse.ZerosSparse(C.ColSize, Cbr_CCbr.Count*3);
+                HessMatrix CC = C.Zeros(C.ColSize, Cbr_CCbr.Count*3);
                 {
                     Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
                     {
@@ -417,7 +457,7 @@ namespace HTLib2.Bioinfo
                             //  for(int i=0; i<listi.Length; i++)
                             //      BBinvDDCC[listi[i]-1, listj[i]-1] = lists[i];
                             //  //GC.Collect(0);
-                            BB_invDD_CC = HessMatrixSparse.ZerosSparse(colsize, rowsize);
+                            BB_invDD_CC = D.Zeros(colsize, rowsize);
                             foreach(var bc_br_bval in lst_bc_br_bval)
                             {
                                 int bc = bc_br_bval.Key.Item1;
@@ -442,7 +482,7 @@ namespace HTLib2.Bioinfo
                     }
                     //GC.Collect(0);
 
-                    B_invD_C = HessMatrixSparse.ZerosSparse(C.RowSize, C.RowSize);
+                    B_invD_C = A.Zeros(C.RowSize, C.RowSize);
                     {
                         //  for(int bcc=0; bcc<CCbr_Cbr.Count; bcc++)
                         //  {
