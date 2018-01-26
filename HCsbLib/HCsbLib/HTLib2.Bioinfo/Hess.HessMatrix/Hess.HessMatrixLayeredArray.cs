@@ -113,7 +113,10 @@ namespace HTLib2.Bioinfo
         {
             int br2 =  br        % layersize;
             int br1 = (br - br2) / layersize;
-            _SetBlock(bc, br, br1, br2, bval.ToArray());
+            double[,] blk = null;
+            if(bval != null)
+                blk = bval.ToArray();
+            _SetBlock(bc, br, br1, br2, blk);
         }
         public override void SetBlockLock(int bc, int br, MatrixByArr bval)
         {
@@ -372,7 +375,7 @@ namespace HTLib2.Bioinfo
         //}
         public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocksInCols(int[] lstBlkCol)
         {
-            for(int bc = 0; bc < colblksize; bc++)
+            foreach(int bc in lstBlkCol)
             {
                 foreach(var blk in _EnumBlocksInCol(bc))
                     yield return blk;
