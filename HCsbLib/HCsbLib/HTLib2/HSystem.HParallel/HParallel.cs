@@ -68,7 +68,7 @@ namespace HTLib2
         //      System.Console.WriteLine((string)base + i.ToString());
         //  }
         //  For<object>(0, 10, body, prefix);
-        public static ParallelLoopResult ForEach<TSource, TParam>(Partitioner<TSource> source, Action<TSource, TParam> body, TParam param)
+        public static ParallelLoopResult ForEach<TSource, TParam>(IEnumerable<TSource> source, Action<TSource, TParam> body, TParam param)
         {
             Action<TSource> lbody = delegate(TSource src)
             {
