@@ -54,7 +54,7 @@ namespace HTLib2.Bioinfo
         public abstract IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocks_dep(int[] lstBlkCol);
         public abstract IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks(int[] lstBlkCol);
         public abstract IEnumerable<Tuple<int, int>> EnumIndices_dep();
-        public IEnumerable<Tuple<int, Tuple<int, int, MatrixByArr>[]>> EnumColBlocks()
+        public IEnumerable<Tuple<int, Tuple<int, int, MatrixByArr>[]>> EnumColBlocksAll()
         {
             Dictionary<int, List<Tuple<int, int, MatrixByArr>>> ibr_listBlock = new Dictionary<int, List<Tuple<int, int, MatrixByArr>>>();
             for(int ibr=0; ibr<RowBlockSize; ibr++)
@@ -73,7 +73,7 @@ namespace HTLib2.Bioinfo
                 yield return new Tuple<int, Tuple<int, int, MatrixByArr>[]>(ibr, colblk);
             }
         }
-        public IEnumerable<Tuple<int, Tuple<int, int, MatrixByArr>[]>> EnumRowBlocks()
+        public IEnumerable<Tuple<int, Tuple<int, int, MatrixByArr>[]>> EnumRowBlocksAll()
         {
             Dictionary<int, List<Tuple<int, int, MatrixByArr>>> ibc_listBlock = new Dictionary<int, List<Tuple<int, int, MatrixByArr>>>();
             for(int ibc=0; ibc<ColBlockSize; ibc++)

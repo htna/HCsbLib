@@ -104,10 +104,10 @@ namespace HTLib2.Bioinfo
             }
 
             Dictionary<int, Dictionary<int, Tuple<int, int, MatrixByArr>>> left_ic_rows = new Dictionary<int, Dictionary<int, Tuple<int, int, MatrixByArr>>>();
-            foreach(var ic_row in left.EnumRowBlocks()) left_ic_rows.Add(ic_row.Item1, ic_row.Item2.HToDictionaryWithKeyItem2());
+            foreach(var ic_row in left.EnumRowBlocksAll()) left_ic_rows.Add(ic_row.Item1, ic_row.Item2.HToDictionaryWithKeyItem2());
 
             Dictionary<int, Dictionary<int, Tuple<int, int, MatrixByArr>>> right_ir_cols = new Dictionary<int, Dictionary<int, Tuple<int, int, MatrixByArr>>>();
-            foreach(var ir_col in right.EnumColBlocks()) right_ir_cols.Add(ir_col.Item1, ir_col.Item2.HToDictionaryWithKeyItem1());
+            foreach(var ir_col in right.EnumColBlocksAll()) right_ir_cols.Add(ir_col.Item1, ir_col.Item2.HToDictionaryWithKeyItem1());
 
             HessMatrix mul = null;
             if((left is HessMatrixDense) && (right is HessMatrixDense)) mul = HessMatrixDense .ZerosDense (left.ColSize, right.RowSize);
