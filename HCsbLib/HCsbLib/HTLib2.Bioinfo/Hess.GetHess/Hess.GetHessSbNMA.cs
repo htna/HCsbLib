@@ -342,6 +342,8 @@ namespace HTLib2.Bioinfo
                 if(options.Contains("TIP3P: (vdW+elec) for OH,OO,HH")) K_nbnd = "TIP3P: (vdW+elec) for OH,OO,HH";
                 if(options.Contains("TIP3P: (vdW+elec) for OH"      )) K_nbnd = "TIP3P: (vdW+elec) for OH"      ;
                 if(options.Contains("vdW:L79"                       )) K_nbnd = "L79";
+                if(options.Contains("vdW:UnifSgn"                   )) K_nbnd = "UnifSgn";
+                if(options.Contains("K_chi:1"                       )) K_chi  = 1;
 
                 HessMatrix hess = null;
                 if(b_bonds       )  hess = STeM.GetHessBond       (coords, univ.bonds          , K_r:K_r                    ,hessian: hess,                                                                         collector: collectorBond       );
