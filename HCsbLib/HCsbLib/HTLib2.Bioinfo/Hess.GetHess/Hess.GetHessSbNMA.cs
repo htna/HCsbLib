@@ -319,6 +319,14 @@ namespace HTLib2.Bioinfo
                 if(options.Contains("TIP3P: (vdW+elec) for OH"      )) nbnd_opt = "TIP3P: (vdW+elec) for OH"      ;
                 if(options.Contains("vdW:L79"                       )) nbnd_opt = "L79";
 
+                double? K_r       = null;  // null for sbNMA, and 340.00  for ssNMA
+                double? K_theta   = null;  // null for sbNMA, and 45.00   for ssNMA
+                double? K_ub      = null;  // null for sbNMA, and 10.00   for ssNMA
+                double? K_psi     = null;  // null for sbNMA, and 70.00   for ssNMA
+                double? K_chi     = null;  // null for sbNMA, and 1.00    for ssNMA
+                double? n         = null;  // null for sbNMA, and 1       for ssNMA
+                string k_vdW      = null;  // null for sbNMA, and "Unif"  for ssNMA
+
                 HessMatrix hess = null;
                 if(b_bonds       )  hess = STeM.GetHessBond       (coords, univ.bonds          , null      ,hessian: hess,                                                                         collector: collectorBond       );
                 if(b_angles      )  hess = STeM.GetHessAngle      (coords, univ.angles   , true, null, null,hessian: hess,                                                                         collector: collectorAngle      );
