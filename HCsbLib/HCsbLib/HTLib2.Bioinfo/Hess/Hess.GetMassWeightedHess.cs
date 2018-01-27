@@ -129,7 +129,7 @@ namespace HTLib2.Bioinfo
             }
             mass03sqrt = mass03sqrt.HSqrt();
 
-            foreach(var bc_br_bval in hess.EnumBlocks())
+            foreach(var bc_br_bval in hess.EnumBlocks().ToArray())
             {
                 int bc   = bc_br_bval.Item1;
                 int br   = bc_br_bval.Item2;
