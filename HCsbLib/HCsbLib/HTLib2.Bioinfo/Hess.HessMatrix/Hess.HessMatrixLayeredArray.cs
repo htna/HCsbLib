@@ -16,7 +16,17 @@ namespace HTLib2.Bioinfo
         int colblksize;
         int rowblksize;
         int layersize;
-        int numusedblocks_offdiag;
+        int numusedblocks_offdiag
+        {
+            get
+            {
+                int count = 0;
+                foreach(var items in offdiag_count)
+                    foreach(var item in items)
+                        count += item;
+                return count;
+            }
+        }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // Matrix
@@ -120,10 +130,17 @@ namespace HTLib2.Bioinfo
         }
         public override void SetBlockLock(int bc, int br, MatrixByArr bval)
         {
-            throw new NotImplementedException();
-            //if(bval != null && bval.IsZero())
-            //    bval = null;
-            //hess.SetBlockLock(bc, br, bval);
+            int br2 =  br        % layersize;
+            int br1 = (br - br2) / layersize;
+            double[,] blk = null;
+            if(bval != null)
+                blk = bval.ToArray();
+
+            double[][][,] offdiag_bc     = offdiag[bc];
+            double[][,]   offdiag_bc_br1 = offdiag[bc][br1];
+
+            if(offdiag_bc_br1 != null)  lock(offdiag_bc_br1)    _SetBlock(bc, br, br1, br2, blk);
+            else                        lock(offdiag_bc    )    _SetBlock(bc, br, br1, br2, blk);
         }
         public double[,] _GetBlock(int bc, int br, int br1, int br2)
         {
@@ -169,8 +186,7 @@ namespace HTLib2.Bioinfo
                     return;
 
                 offdiag_bc_br1[br2] = null;
-                offdiag_count[bc][br1] --;
-                numusedblocks_offdiag --;
+                offdiag_count[bc][br1]--;
             }
         }
         public void _SetBlock(int bc, int br, int br1, int br2, double[,] blk)
@@ -204,7 +220,6 @@ namespace HTLib2.Bioinfo
                 if(offdiag_bc_br1[br2] == null)
                 {
                     offdiag_count[bc][br1] ++;
-                    numusedblocks_offdiag ++;
                 }
                 offdiag_bc_br1[br2] = blk;
             }
@@ -284,7 +299,6 @@ namespace HTLib2.Bioinfo
             this.colblksize = colsize / 3;
             this.rowblksize = rowsize / 3;
             this.layersize  = layersize;
-            this.numusedblocks_offdiag = 0;
 
             int br2_size =  rowblksize % layersize;
             int br1_size = (rowblksize - br2_size) / layersize + 1;
