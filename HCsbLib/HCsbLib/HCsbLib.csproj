@@ -225,9 +225,12 @@
     <Compile Include="HTLib2.Bioinfo\HBioinfo\HBioinfo.PseudoBFactor.cs" />
     <Compile Include="HTLib2.Bioinfo\HBioinfo\HBioinfo.RMSIP.cs" />
     <Compile Include="HTLib2.Bioinfo\HBioinfo\HBioinfo.SimFluc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Coarse.CoarseHessForc\Coarse.CoarseHessForc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForc.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Hess.GetHessCoarseBlkmat.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Hess.GetHessCoarseResiIter.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Hess.GetHessCoarseResiIterImpl_LinAlg_IterLowerTri.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Coarse.CoarseHessForc\Coarse.CoarseHessForc.CoarseHessForcImpl.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Hess.GetHessCoarseResiIterImpl_Matlab_IterLowerTri.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Hess.GetHessCoarseResiIter_Cluster.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Hess.GetHessCoarseResiIter_Cluster_Symrcm.cs" />
