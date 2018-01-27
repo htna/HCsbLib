@@ -317,13 +317,6 @@ namespace HTLib2.Bioinfo
                 , Action<Universe.Atom, Vector, Universe.Atom, Vector, double>                                                       collectorNonbonded
                 , Action<Universe.Atom, Vector, Universe.Atom, Vector, double>                                                       collectorNonbonded14
                 , Func<HessSpr.CustomKijInfo, double> GetCustomKij = null
-                , double? K_r       = null  // null for sbNMA, and 340.00  for ssNMA
-                , double? K_theta   = null  // null for sbNMA, and 45.00   for ssNMA
-                , double? K_ub      = null  // null for sbNMA, and 10.00   for ssNMA
-                , double? K_psi     = null  // null for sbNMA, and 70.00   for ssNMA
-                , double? K_chi     = null  // null for sbNMA, and 1.00    for ssNMA
-                , double? n         = null  // null for sbNMA, and 1       for ssNMA
-                , string  K_nbnd    = null  // null for sbNMA, and "Unif"  for ssNMA
                 , params string[] options
                 )
             {
@@ -337,6 +330,14 @@ namespace HTLib2.Bioinfo
                 bool elec = false;     // ignore electrostatic
                 double D  = double.PositiveInfinity; // dielectric constant for Tinker is "1"
                 bool ignNegSpr = true; // ignore negative spring (do not add the spring into hessian matrix)
+
+                double? K_r       = null;   // null for sbNMA, and 340.00  for ssNMA
+                double? K_theta   = null;   // null for sbNMA, and 45.00   for ssNMA
+                double? K_ub      = null;   // null for sbNMA, and 10.00   for ssNMA
+                double? K_psi     = null;   // null for sbNMA, and 70.00   for ssNMA
+                double? K_chi     = null;   // null for sbNMA, and 1.00    for ssNMA
+                double? n         = null;   // null for sbNMA, and 1       for ssNMA
+                string  K_nbnd    = null;   // null for sbNMA, and "Unif"  for ssNMA
 
                 if(options.Contains("TIP3P: (vdW+elec) for OH,OO,HH")) K_nbnd = "TIP3P: (vdW+elec) for OH,OO,HH";
                 if(options.Contains("TIP3P: (vdW+elec) for OH"      )) K_nbnd = "TIP3P: (vdW+elec) for OH"      ;
