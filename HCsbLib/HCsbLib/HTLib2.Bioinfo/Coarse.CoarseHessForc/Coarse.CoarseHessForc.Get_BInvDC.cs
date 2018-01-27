@@ -91,25 +91,32 @@ namespace HTLib2.Bioinfo
                         Matlab.PutMatrix("C", CC);  if(process_disp_console) System.Console.Write("C"); //Matlab.PutSparseMatrix("C", CC.GetMatrixSparse(), 3, 3);
                         Matlab.PutMatrix("D", D);   if(process_disp_console) System.Console.Write("D");
 
-                        // Matlab.Execute("BinvDC = (C' / D) * C;");
+                        // Matlab.Execute("BinvDC = C' * inv(D) * C;");
                         {
-                            if(options.Contains("pinv(D)"))
+                            // Matlab.Execute("BinvDC = C' * inv(D);");
+                            // Matlab.Execute("BinvD_G = BinvDC * G;");
+                            // Matlab.Execute("BinvDC  = BinvDC * C;");
+
                             {
-                                Matlab.Execute("BinvDC = C' * pinv(D) * C;");
+                                if(options.Contains("/D"))
+                                {
+                                    Matlab.Execute("BinvDC = C' / D;");
+                                }
+                                else if(options.Contains("pinv(D)"))
+                                {
+                                    Matlab.Execute("BinvDC = C' * pinv(D);");
+                                }
+                                else if(options.Contains("/D -> pinv(D)"))
+                                {
+                                    string msg =  Matlab.Execute("BinvDC = C' / D;", true);
+                                    if(msg != "") Matlab.Execute("BinvDC = C' * pinv(D);");
+                                }
+                                else
+                                {
+                                    Matlab.Execute("BinvDC = C' * inv(D);");
+                                }
                             }
-                            if(options.Contains("/D -> pinv(D)"))
-                            {
-                                string msg =  Matlab.Execute("BinvDC = (C' / D) * C;",true);
-                                if(msg != "") Matlab.Execute("BinvDC = C' * pinv(D) * C;");
-                            }
-                            else if(options.Contains("/D"))
-                            {
-                                Matlab.Execute("BinvDC = (C' / D) * C;");
-                            }
-                            else
-                            {
-                                Matlab.Execute("BinvDC = (C' / D) * C;");
-                            }
+                            Matlab.Execute("BinvDC  = BinvDC * C;");
                         }
                         if(process_disp_console) System.Console.Write("X");
 
