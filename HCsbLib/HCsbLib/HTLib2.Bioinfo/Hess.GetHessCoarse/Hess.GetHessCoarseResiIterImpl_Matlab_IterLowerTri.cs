@@ -233,19 +233,16 @@ namespace HTLib2.Bioinfo
 
                         /// iterinfo.numAddIgnrBlock = A.UpdateAdd(B_invD_C, -1, null, thres_zeroblk/lstNewIdxRemv.Length, parallel:parallel);
                         {
-                            HessMatrix _this = A;
+                            HessMatrix __this = A;
                             HessMatrix other = B_invD_C;
-                            double thres_NearZeroBlock = thres_zeroblk/lstNewIdxRemv.Length;
+                            double _thres_NearZeroBlock = thres_zeroblk/lstNewIdxRemv.Length;
+
+                            int[] _count         = new int[1];
+                            int[] _count_ignored = new int[1];
 
                             //foreach(var bc_br_bval in other.EnumBlocks())
-                            Action<ValueTuple<int, int, MatrixByArr>, object> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval, object _param)
+                            Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
                             {
-                                Tuple<HessMatrix, double, int[], int[]> __param = _param as Tuple<HessMatrix, double, int[], int[]>;
-                                HessMatrix  __this               =      __param.Item1;
-                                double      _thres_NearZeroBlock =      __param.Item2;
-                                int[]       _count               =      __param.Item3;
-                                int[]       _count_ignored       =      __param.Item4;
-
                                 _count[0]++;
                                 int               bc   = bc_br_bval.Item1;
                                 int               br   = bc_br_bval.Item2;
@@ -254,21 +251,21 @@ namespace HTLib2.Bioinfo
                                     return; // continue;
                                 if(other_bmat.HAbsMax() <= _thres_NearZeroBlock)
                                 {
-                                    // other_bmat = other_bmat    -other_bmat;
-                                    // other_diag = other_diag - (-other_bmat) = other_diag + other_bmat;
-                                    //  this_diag =  this_diat - B_invD_C
-                                    //            =  this_diat - other_diag
-                                    //            =  this_diat - (other_diag + other_bmat)
-                                    //            =  this_diat - other_diag  - other_bmat
-                                    //            = (this_diat - other_bmat) - other_diag
-                                    //            = (this_diat - other_bmat) - (processed later)
-                                    //            = (this_diat - other_bmat)
+                                    /// other_bmat = other_bmat    -other_bmat;
+                                    /// other_diag = other_diag - (-other_bmat) = other_diag + other_bmat;
+                                    ///  this_diag =  this_diat - B_invD_C
+                                    ///            =  this_diat - other_diag
+                                    ///            =  this_diat - (other_diag + other_bmat)
+                                    ///            =  this_diat - other_diag  - other_bmat
+                                    ///            = (this_diat - other_bmat) - other_diag
+                                    ///            = (this_diat - other_bmat) - (processed later)
+                                    ///            = (this_diat - other_bmat)
                                     MatrixByArr  this_diag = __this.GetBlock(bc, bc);
                                     MatrixByArr   new_diag = this_diag - other_bmat;
                                     __this.SetBlockLock(bc, bc, new_diag);
                                     other_bmat = null;
                                     lock(_count_ignored)
-                                        _count_ignored[0]++;
+                                         _count_ignored[0]++;
                                 }
                                 if(other_bmat != null)
                                 {
@@ -279,20 +276,10 @@ namespace HTLib2.Bioinfo
                                     __this.SetBlockLock(bc, br, new_bmat);
                                 }
                             };
-                            Tuple<HessMatrix, double, int[], int[]> param = new Tuple<HessMatrix, double, int[], int[]>
-                                ( _this
-                                , thres_NearZeroBlock
-                                , new int[1] // count              
-                                , new int[1] // count_ignored      
-                                );
-                            if(parallel)    HParallel.ForEach(other.EnumBlocks(), param, func);
-                            else            foreach(var bc_br_bval in other.EnumBlocks()) func(bc_br_bval, param);
+                            if(parallel)    HParallel.ForEach(other.EnumBlocks(), func);
+                            else            foreach(var bc_br_bval in other.EnumBlocks()) func(bc_br_bval);
                             
-
-                            int count         = param.Item3[0];
-                            int count_ignored = param.Item4[0];
-
-                            iterinfo.numAddIgnrBlock = count_ignored;
+                            iterinfo.numAddIgnrBlock = _count_ignored[0];
                         }
                         if(process_disp_console)
                         {
@@ -352,6 +339,9 @@ namespace HTLib2.Bioinfo
                 , bool parallel=false
                 )
             {
+                if(options == null)
+                    options = new string[0];
+
                 HessMatrix B_invD_C;
                 Dictionary<int, int> Cbr_CCbr = new Dictionary<int, int>();
                 List<int>            CCbr_Cbr = new List<int>();
@@ -414,42 +404,32 @@ namespace HTLib2.Bioinfo
                     HessMatrix BB_invDD_CC;
                     using(new Matlab.NamedLock(""))
                     {
-                        Matlab.Execute("clear;");                                                               if(process_disp_console) System.Console.Write("matlab(");
-                        Matlab.PutMatrix("C", CC);                                                              if(process_disp_console) System.Console.Write("C"); //Matlab.PutSparseMatrix("C", CC.GetMatrixSparse(), 3, 3); 
-                        Matlab.PutMatrix("D", D);                                                               if(process_disp_console) System.Console.Write("D");
-                        {   // Matlab.Execute("BinvDC = (C' / D) * C;");
-                            if(options != null && options.Contains("pinv(D)"))
+                        Matlab.Execute("clear;");   if(process_disp_console) System.Console.Write("matlab(");
+                        Matlab.PutMatrix("C", CC);  if(process_disp_console) System.Console.Write("C"); //Matlab.PutSparseMatrix("C", CC.GetMatrixSparse(), 3, 3);
+                        Matlab.PutMatrix("D", D);   if(process_disp_console) System.Console.Write("D");
+
+                        // Matlab.Execute("BinvDC = (C' / D) * C;");
+                        {
+                            if(options.Contains("pinv(D)"))
+                            {
+                                Matlab.Execute("BinvDC = C' * pinv(D) * C;");
+                            }
+                            if(options.Contains("/D -> pinv(D)"))
                             {
                                 string msg =  Matlab.Execute("BinvDC = (C' / D) * C;",true);
                                 if(msg != "") Matlab.Execute("BinvDC = C' * pinv(D) * C;");
+                            }
+                            else if(options.Contains("/D"))
+                            {
+                                Matlab.Execute("BinvDC = (C' / D) * C;");
                             }
                             else
                             {
                                 Matlab.Execute("BinvDC = (C' / D) * C;");
                             }
-                        }                                                                                       if(process_disp_console) System.Console.Write("X");
-                        /// » whos
-                        ///   Name         Size                 Bytes  Class     Attributes
-                        ///                                                                                 //   before compressing C matrix
-                        ///   C         1359x507              5512104  double                               //   C         1359x1545            16797240  double              
-                        ///   CC        1359x507               198464  double    sparse                     //   CC        1359x1545              206768  double    sparse    
-                        ///   D         1359x1359            14775048  double                               //   D         1359x1359            14775048  double              
-                        ///   DD        1359x1359              979280  double    sparse                     //   DD        1359x1359              979280  double    sparse    
-                        ///   ans          1x1                      8  double              
-                        /// 
-                        /// » tic; for i=1:30; A=(C' / D) * C; end; toc         dense  * dense  * dense  => 8.839463 seconds. (win)
-                        /// Elapsed time is 8.839463 seconds.
-                        /// » tic; for i=1:30; AA=(CC' / DD) * CC; end; toc     sparse * sparse * sparse => 27.945534 seconds.
-                        /// Elapsed time is 27.945534 seconds.
-                        /// » tic; for i=1:30; AAA=(C' / DD) * C; end; toc      sparse * dense  * sparse => 29.136144 seconds.
-                        /// Elapsed time is 29.136144 seconds.
-                        /// » 
-                        /// » tic; for i=1:30; A=(C' / D) * C; end; toc         dense  * dense  * dense  => 8.469071 seconds. (win)
-                        /// Elapsed time is 8.469071 seconds.
-                        /// » tic; for i=1:30; AA=(CC' / DD) * CC; end; toc     sparse * sparse * sparse => 28.309953 seconds.
-                        /// Elapsed time is 28.309953 seconds.
-                        /// » tic; for i=1:30; AAA=(C' / DD) * C; end; toc      sparse * dense  * sparse => 28.586375 seconds.
-                        /// Elapsed time is 28.586375 seconds.
+                        }
+                        if(process_disp_console) System.Console.Write("X");
+
                         //Matrix BBinvDDCC = Matlab.GetMatrix("BinvDC", true);                                    
                         if(thld_BinvDC != null)
                         {
