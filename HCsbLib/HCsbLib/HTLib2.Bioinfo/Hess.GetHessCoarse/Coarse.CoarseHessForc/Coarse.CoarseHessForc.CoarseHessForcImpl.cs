@@ -189,7 +189,7 @@ namespace HTLib2.Bioinfo
                     HessMatrix B_invD_C;
                     {
                         {
-                            B_invD_C = GetHessCoarseResiIterImpl_Matlab_IterLowerTri_Get_BInvDC(A, C, D, process_disp_console
+                            B_invD_C = Get_BInvDC(A, C, D, process_disp_console
                                 , options
                                 , thld_BinvDC: thres_zeroblk/lstNewIdxRemv.Length
                                 , parallel:parallel
@@ -308,7 +308,7 @@ namespace HTLib2.Bioinfo
                     H = H,
                 };
             }
-            private static HessMatrix GetHessCoarseResiIterImpl_Matlab_IterLowerTri_Get_BInvDC
+            private static HessMatrix Get_BInvDC
                 ( HessMatrix A
                 , HessMatrix C
                 , HessMatrix D
