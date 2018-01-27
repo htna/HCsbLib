@@ -12,8 +12,8 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForc
         {
-            public static HessInfo GetCoarseHessForc
-                ( Hess.HessInfo hessinfo
+            public static HessForcInfo GetCoarseHessForc
+                ( HessForcInfo hessforc
                 , Vector[] coords
                 , FuncGetIdxKeepListRemv GetIdxKeepListRemv
                 , ILinAlg ila
@@ -32,7 +32,7 @@ namespace HTLib2.Bioinfo
                 Tuple<int[],int[][]> idxKeepRemv = null;
                 //System.Console.WriteLine("begin re-indexing hess");
                 {
-                    object[] atoms = hessinfo.atoms;
+                    object[] atoms = hessforc.atoms;
                     idxKeepRemv = GetIdxKeepListRemv(atoms, coords);
                     int[]   idxKeep  = idxKeepRemv.Item1;
                     int[][] idxsRemv = idxKeepRemv.Item2;
@@ -51,10 +51,10 @@ namespace HTLib2.Bioinfo
                         idxs.AddRange(idxRemv);
                     HDebug.Assert(idxs.Count == idxs.HToHashSet().Count);
 
-                    H = hessinfo.hess.ReshapeByAtom(idxs);
+                    H = hessforc.hess.ReshapeByAtom(idxs);
                     numca    = idxKeep.Length;
-                    reMass   = hessinfo.mass .ToArray().HSelectByIndex(idxs);
-                    reAtoms  = hessinfo.atoms.ToArray().HSelectByIndex(idxs);
+                    reMass   = hessforc.mass .ToArray().HSelectByIndex(idxs);
+                    reAtoms  = hessforc.atoms.ToArray().HSelectByIndex(idxs);
                     reCoords = coords                  .HSelectByIndex(idxs);
 
                     int nidx = idxKeep.Length;
@@ -115,7 +115,7 @@ namespace HTLib2.Bioinfo
                     int[] ikeep = idxKeepRemv.Item1;
                     foreach(int idx in ikeep)
                     {
-                        bool equal = object.ReferenceEquals(hessinfo.atoms[idx], reAtoms[nidx]);
+                        bool equal = object.ReferenceEquals(hessforc.atoms[idx], reAtoms[nidx]);
                         if(equal == false)
                             HDebug.Assert(false);
                         HDebug.Assert(equal);
@@ -127,13 +127,12 @@ namespace HTLib2.Bioinfo
                     H = H.CorrectHessDiag();
                 //System.Console.WriteLine("finish fixing diag");
 
-                return new HessInfo
+                return new HessForcInfo
                 {
                     hess          = H,
                     mass          = reMass.HSelectCount(numca),
                     atoms         = reAtoms.HSelectCount(numca),
                     coords        = reCoords.HSelectCount(numca),
-                    numZeroEigval = 6,
                     iterinfos     = iterinfos,
                 };
             }

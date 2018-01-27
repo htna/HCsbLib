@@ -39,9 +39,35 @@ namespace HTLib2.Bioinfo
                     return str;
                 }
             }
-            public class HessInfo : Hess.HessInfo
+            public class HessForcInfo
             {
                 public List<IterInfo> iterinfos = null;
+
+                public object[]     atoms   = null;
+                public Vector       mass    = null;
+                public Vector[]     coords  = null;
+                public HessMatrix   hess    = null;
+                public Vector       forc    = null;
+
+                public static HessForcInfo From(Hess.HessInfo hessinfo)
+                {
+                    return new HessForcInfo{
+                        atoms  = hessinfo.atoms ,
+                        mass   = hessinfo.mass  ,
+                        coords = hessinfo.coords,
+                        hess   = hessinfo.hess  ,
+                    };
+                }
+                public static HessForcInfo From(Hess.HessInfo hessinfo, Vector forc)
+                {
+                    return new HessForcInfo{
+                        atoms  = hessinfo.atoms ,
+                        mass   = hessinfo.mass  ,
+                        coords = hessinfo.coords,
+                        hess   = hessinfo.hess  ,
+                        forc   = forc           ,
+                    };
+                }
             }
             public class CGetHessCoarseResiIterImpl
             {
