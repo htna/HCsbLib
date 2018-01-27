@@ -98,7 +98,7 @@ namespace HTLib2.Bioinfo
                     object[] atoms = reAtoms; // reAtoms.HToType(null as Universe.Atom[]);
                     CGetHessCoarseResiIterImpl info = null;
                     {
-                        info = GetCoarseHessForcImpl(atoms, H, lstNewIdxRemv, thres_zeroblk, ila, false, options);
+                        info = GetCoarseHessImpl(atoms, H, lstNewIdxRemv, thres_zeroblk, ila, false, options);
                     };
                     H = info.H;
                     iterinfos = info.iterinfos;
