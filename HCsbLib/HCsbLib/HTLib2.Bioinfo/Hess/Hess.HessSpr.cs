@@ -465,7 +465,7 @@ namespace HTLib2.Bioinfo
                 ( IList<Vector> coords
                 , IEnumerable<Universe.Nonbonded> nonbondeds
                 , double D
-                , string opt
+                , string K_nbnd
                 , HessMatrix hessian=null
                 , bool vdW=true
                 , bool elec=true
@@ -498,7 +498,7 @@ namespace HTLib2.Bioinfo
                     Vector coord0 = coords[id0];
                     Vector coord1 = coords[id1];
                     double Kij;
-                    switch(opt)
+                    switch(K_nbnd)
                     {
                         case "gromacs":
                             Kij = GetSprNonbondCustomGromacs(atom0, atom1, coord0, coord1, NbndType.nbnd, D, vdW, elec);
@@ -586,7 +586,7 @@ namespace HTLib2.Bioinfo
                                 if(water0 && water1)
                                 {
                                     string inttype = (atom0.AtomElem == atom1.AtomElem) ? "OO,HH" : "OH";
-                                    if(opt.Contains(inttype))
+                                    if(K_nbnd.Contains(inttype))
                                     {
                                         lelec = true;
                                         lD    = 1; // dielectric constant for Tinker is "1"
@@ -610,7 +610,7 @@ namespace HTLib2.Bioinfo
                                 if(water0 && water1)
                                 {
                                     string inttype = (atom0.AtomElem == atom1.AtomElem) ? "OO,HH" : "OH";
-                                    if(opt.Contains(inttype))
+                                    if(K_nbnd.Contains(inttype))
                                     {
                                         double rij = (coord0 - coord1).Dist;
                                         Kij = kijfij.Kij + kijfij.Fij/rij;
@@ -717,7 +717,7 @@ namespace HTLib2.Bioinfo
                     if(ignNegSpr && Kij < 0)
                         Kij = 0;
 
-                    switch(opt)
+                    switch(K_nbnd)
                     {
                         case "KijRij":
                             // do nothing
@@ -816,7 +816,7 @@ namespace HTLib2.Bioinfo
                 ( IList<Vector> coords
                 , IEnumerable<Universe.Nonbonded14> nonbonded14s
                 , double D
-                , string opt
+                , string K_nbnd
                 , HessMatrix hessian=null
                 , bool vdW=true
                 , bool elec=true
@@ -841,7 +841,7 @@ namespace HTLib2.Bioinfo
                     Vector coord0 = coords[id0];
                     Vector coord1 = coords[id1];
                     double Kij;
-                    switch(opt)
+                    switch(K_nbnd)
                     {
                         case "gromacs":
                             Kij = GetSprNonbondCustomGromacs(atom0, atom1, coord0, coord1, NbndType.nbnd14, D, vdW, elec);
@@ -1000,7 +1000,7 @@ namespace HTLib2.Bioinfo
                     if(ignNegSpr && Kij < 0)
                         Kij = 0;
 
-                    switch(opt)
+                    switch(K_nbnd)
                     {
                         case "KijRij":
                             // do nothing
