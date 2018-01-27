@@ -54,15 +54,16 @@ namespace HTLib2.Bioinfo
                 }
                 GC.Collect();
 
-                DateTime[] process_time         = new DateTime[6];
+                List<DateTime> process_time = new List<DateTime>();
 
                 //System.Console.WriteLine("begin coarse-graining");
                 List<HessCoarseResiIterInfo> iterinfos = new List<HessCoarseResiIterInfo>();
                 for(int iter=lstNewIdxRemv.Length-1; iter>=0; iter--)
                 {
+                    process_time.Clear();
                     if(process_disp_console)
                     {
-                        process_time[0] = DateTime.UtcNow;
+                        process_time.Add(DateTime.UtcNow);
                         System.Console.Write(" - {0:000} : ", iter);
                     }
 
@@ -172,8 +173,9 @@ namespace HTLib2.Bioinfo
                         }
                         if(process_disp_console)
                         {
-                            process_time[1] = process_time[2] = DateTime.UtcNow;
-                            System.Console.Write("CD({0:00.00} min), ", (process_time[2]-process_time[0]).TotalMinutes);
+                            process_time.Add(DateTime.UtcNow);
+                            int ptc = process_time.Count;
+                            System.Console.Write("CD({0:00.00} min), ", (process_time[ptc-1] -process_time[ptc-2]).TotalMinutes);
                         }
 
                         //  // make B,C sparse
@@ -223,10 +225,11 @@ namespace HTLib2.Bioinfo
                             );
                         if(process_disp_console)
                         {
-                            process_time[4] = DateTime.UtcNow;
-                            System.Console.Write("B.invD.C({0:00.00} min), ", (process_time[4]-process_time[3]).TotalMinutes);
+                            process_time.Add(DateTime.UtcNow);
+                            int ptc = process_time.Count;
+                            System.Console.Write("B.invD.C({0:00.00} min), ", (process_time[ptc-1] - process_time[ptc-2]).TotalMinutes);
                         }
-                        GC.Collect();
+                        GC.Collect(0);
 
                         /// iterinfo.numAddIgnrBlock = A.UpdateAdd(B_invD_C, -1, null, thres_zeroblk/lstNewIdxRemv.Length, parallel:parallel);
                         {
@@ -234,17 +237,22 @@ namespace HTLib2.Bioinfo
                             HessMatrix other = B_invD_C;
                             double thres_NearZeroBlock = thres_zeroblk/lstNewIdxRemv.Length;
 
-                            int count = 0;
-                            int count_ignored = 0;
-                            foreach(var bc_br_bval in other.EnumBlocks())
+                            //foreach(var bc_br_bval in other.EnumBlocks())
+                            Action<ValueTuple<int, int, MatrixByArr>, object> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval, object _param)
                             {
-                                count++;
+                                Tuple<HessMatrix, double, int[], int[]> __param = _param as Tuple<HessMatrix, double, int[], int[]>;
+                                HessMatrix  __this               =      __param.Item1;
+                                double      _thres_NearZeroBlock =      __param.Item2;
+                                int[]       _count               =      __param.Item3;
+                                int[]       _count_ignored       =      __param.Item4;
+
+                                _count[0]++;
                                 int               bc   = bc_br_bval.Item1;
                                 int               br   = bc_br_bval.Item2;
                                 MatrixByArr other_bmat = bc_br_bval.Item3;
                                 if(bc < br)
-                                    continue;
-                                if(other_bmat.HAbsMax() <= thres_NearZeroBlock)
+                                    return; // continue;
+                                if(other_bmat.HAbsMax() <= _thres_NearZeroBlock)
                                 {
                                     // other_bmat = other_bmat    -other_bmat;
                                     // other_diag = other_diag - (-other_bmat) = other_diag + other_bmat;
@@ -255,22 +263,42 @@ namespace HTLib2.Bioinfo
                                     //            = (this_diat - other_bmat) - other_diag
                                     //            = (this_diat - other_bmat) - (processed later)
                                     //            = (this_diat - other_bmat)
-                                    MatrixByArr  this_diag = _this.GetBlock(bc, bc);
+                                    MatrixByArr  this_diag = __this.GetBlock(bc, bc);
                                     MatrixByArr   new_diag = this_diag - other_bmat;
-                                    _this.SetBlock(bc, bc, new_diag);
+                                    __this.SetBlockLock(bc, bc, new_diag);
                                     other_bmat = null;
-                                    count_ignored++;
+                                    lock(_count_ignored)
+                                        _count_ignored[0]++;
                                 }
                                 if(other_bmat != null)
                                 {
-                                    MatrixByArr  this_bmat = _this.GetBlock(bc, br);
+                                    MatrixByArr  this_bmat = __this.GetBlock(bc, br);
                                     if(this_bmat == null)
                                         this_bmat = new double[3, 3];
                                     MatrixByArr   new_bmat = this_bmat - other_bmat;
-                                    _this.SetBlock(bc, br, new_bmat);
+                                    __this.SetBlockLock(bc, br, new_bmat);
                                 }
-                            }
+                            };
+                            Tuple<HessMatrix, double, int[], int[]> param = new Tuple<HessMatrix, double, int[], int[]>
+                                ( _this
+                                , thres_NearZeroBlock
+                                , new int[1] // count              
+                                , new int[1] // count_ignored      
+                                );
+                            if(parallel)    HParallel.ForEach(other.EnumBlocks(), param, func);
+                            else            foreach(var bc_br_bval in other.EnumBlocks()) func(bc_br_bval, param);
+                            
+
+                            int count         = param.Item3[0];
+                            int count_ignored = param.Item4[0];
+
                             iterinfo.numAddIgnrBlock = count_ignored;
+                        }
+                        if(process_disp_console)
+                        {
+                            process_time.Add(DateTime.UtcNow);
+                            int ptc = process_time.Count;
+                            System.Console.Write("A-BinvDC({0:00.00} min), ", (process_time[ptc - 1] - process_time[ptc - 2]).TotalMinutes);
                         }
                         //HessMatrix nH = A - B_invD_C;
                         //nH = ((nH + nH.Tr())/2).ToHessMatrix();
@@ -281,18 +309,19 @@ namespace HTLib2.Bioinfo
                     iterinfos.Add(iterinfo);
 
                     if(process_disp_console)
-                        System.Console.WriteLine("summary(makezero {0,5}, nonzero {1,5}, numIgnMul {2,7}, numRemvAtoms {3,3}, {4,5:0.00} sec, {5} mb, {6}x{6}, nzeroBlk/Atom {7:0.00})"
+                        System.Console.Write("summary(makezero {0,5}, nonzero {1,5}, numIgnMul {2,7}, numRemvAtoms {3,3}, {4,5:0.00} min, {5} mb, {6}x{6}, nzeroBlk/Atom {7:0.00}), GC("
                                             , iterinfo.numSetZeroBlock
                                             , iterinfo.numNonZeroBlock
                                             , iterinfo.numAddIgnrBlock
                                             , iterinfo.numAtomsRemoved
-                                            , iterinfo.compSec
+                                            , iterinfo.compTime.TotalMinutes
                                             , iterinfo.usedMemoryByte/(1024*1024)
                                             , (idxkeep.Length*3)
                                             , ((double)iterinfo.numNonZeroBlock / idxremv.Length)
                                             );
-
-                    GC.Collect(0);
+                    GC.Collect();
+                    if(process_disp_console)
+                        System.Console.WriteLine(")");
                 }
 
                 int numca = H.ColBlockSize - lstNewIdxRemv.HListCount().Sum();
@@ -304,7 +333,7 @@ namespace HTLib2.Bioinfo
                 {
                     H.MakeNearZeroBlockAsZero(thres_zeroblk);
                 }
-                GC.Collect(0);
+                GC.Collect();
                 //System.Console.WriteLine("finish resizing");
 
                 return new CGetHessCoarseResiIterImpl
@@ -426,10 +455,13 @@ namespace HTLib2.Bioinfo
                         {
                             Matlab.Execute("BinvDC(find(BinvDC < "+ thld_BinvDC.ToString() + ")) = 0;");
                         }
-                        if(Matlab.GetValue("nnz(BinvDC)/numel(BinvDC)") > 0.5)
+                        if(Matlab.GetValue("nnz(BinvDC)/numel(BinvDC)") > 0.5 || HDebug.True)
                         {
-                            double[,] arr = Matlab.GetMatrix("BinvDC", true);
-                            BB_invDD_CC = HessMatrixDense.FromMatrix(arr);
+                            Func<int, int, HessMatrix> Zeros = delegate(int colsize, int rowsize)
+                            {
+                                return HessMatrixDense.ZerosDense(colsize, rowsize);
+                            };
+                            BB_invDD_CC = Matlab.GetMatrix("BinvDC", Zeros, true);
                             if(process_disp_console) System.Console.Write("Y), ");
                         }
                         else
@@ -507,8 +539,8 @@ namespace HTLib2.Bioinfo
                     
                             int bc = CCbr_Cbr[bcc];
                             int br = CCbr_Cbr[brr];
-                            lock(B_invD_C)
-                                B_invD_C.SetBlock(bc, br, bval);
+                            //lock(B_invD_C)
+                                B_invD_C.SetBlockLock(bc, br, bval);
                         };
                     
                         if(parallel)    Parallel.ForEach(           BB_invDD_CC.EnumBlocks(), func);
