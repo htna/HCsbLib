@@ -19,7 +19,7 @@ namespace HTLib2.Bioinfo
                 , double thres_zeroblk
                 , ILinAlg ila
                 , bool cloneH
-                , string[] options
+                , string[] options // { "pinv(D)" }
                 )
             {
                 ila = null;
@@ -217,7 +217,7 @@ namespace HTLib2.Bioinfo
                         //  iterinfo.numNonZeroBlock = C.NumUsedBlocks;
                         //  C_density1 = C.RatioUsedBlocks;
 
-                        
+
                         HessMatrix B_invD_C = GetHessCoarseResiIterImpl_Matlab_IterLowerTri_Get_BInvDC(A, C, D, process_disp_console
                             , options
                             , thld_BinvDC: thres_zeroblk/lstNewIdxRemv.Length
