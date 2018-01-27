@@ -265,11 +265,28 @@ namespace HTLib2.Bioinfo
             )
         {
             return HessSbNMA.GetHessSbNMA
-            (univ, coords, nbondMaxDist
+            ( univ
+            , coords
+            , nbondMaxDist
             , maxAbsSpring
-            , b_bonds, b_angles, b_impropers, b_dihedrals, b_nonbondeds, b_nonbonded14s
-            , sca_bonds, sca_angles, sca_impropers, sca_dihedrals, sca_nonbondeds, sca_nonbonded14s
-            , collectorBond, collectorAngle, collectorImproper, collectorDihedral, collectorNonbonded, collectorNonbonded14
+            , b_bonds
+            , b_angles
+            , b_impropers
+            , b_dihedrals
+            , b_nonbondeds
+            , b_nonbonded14s
+            , sca_bonds
+            , sca_angles
+            , sca_impropers
+            , sca_dihedrals
+            , sca_nonbondeds
+            , sca_nonbonded14s
+            , collectorBond
+            , collectorAngle
+            , collectorImproper
+            , collectorDihedral
+            , collectorNonbonded
+            , collectorNonbonded14
             , GetCustomKij
             , null, null, null, null, null, null, null
             , options
