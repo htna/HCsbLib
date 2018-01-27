@@ -88,9 +88,10 @@ namespace HTLib2.Bioinfo
                     iterinfo.numAtomsRemoved = idxremv.Length;
                     iterinfo.time0 = DateTime.UtcNow;
 
+                    ////////////////////////////////////////////////////////////////////////////////////////
+                    // make C sparse
                     double C_density0;
                     double C_density1;
-                    // make C sparse
                     {
                         double thres_absmax = thres_zeroblk;
 
@@ -132,64 +133,71 @@ namespace HTLib2.Bioinfo
                         C_density0 /= (idxkeep.Length * idxremv.Length);
                         C_density1 /= (idxkeep.Length * idxremv.Length);
                     }
-                    // get C, D
+
+                    ////////////////////////////////////////////////////////////////////////////////////////
+                    // get A, B, C, D
+                    //HessMatrix    A = H.SubMatrixByAtoms(false, idxkeep, idxkeep);
+                    HessMatrix    A = H;    
+                    //HessMatrix    B = H.SubMatrixByAtoms(false, idxkeep, idxremv);
+
+                    HessMatrix    C, D;
+                    /// HessMatrix    C = H.SubMatrixByAtoms(false, idxremv, idxkeep, parallel:parallel);
+                    /// HessMatrix    D = H.SubMatrixByAtoms(false, idxremv, idxremv, parallel:parallel);
                     {
-                        //HessMatrix    A = H.SubMatrixByAtoms(false, idxkeep, idxkeep);
-                        HessMatrix    A = H;
-                        //HessMatrix    B = H.SubMatrixByAtoms(false, idxkeep, idxremv);
+                        C = H.Zeros(idxremv.Length*3, idxkeep.Length*3);
+                        D = H.Zeros(idxremv.Length*3, idxremv.Length*3);
 
-                        HessMatrix    C, D;
-                        /// HessMatrix    C = H.SubMatrixByAtoms(false, idxremv, idxkeep, parallel:parallel);
-                        /// HessMatrix    D = H.SubMatrixByAtoms(false, idxremv, idxremv, parallel:parallel);
+                        //List<Tuple<int, int, MatrixByArr>> lst_bc_br_bval = H.EnumBlocksInCols(idxremv).ToList();
+                        //foreach(var bc_br_bval in lst_bc_br_bval)
+                        foreach(var bc_br_bval in H.EnumBlocksInCols(idxremv))
                         {
-                            C = H.Zeros(idxremv.Length*3, idxkeep.Length*3);
-                            D = H.Zeros(idxremv.Length*3, idxremv.Length*3);
+                            int bc   = bc_br_bval.Item1;
+                            int br   = bc_br_bval.Item2;
+                            var bval = bc_br_bval.Item3;
 
-                            //List<Tuple<int, int, MatrixByArr>> lst_bc_br_bval = H.EnumBlocksInCols(idxremv).ToList();
-                            //foreach(var bc_br_bval in lst_bc_br_bval)
-                            foreach(var bc_br_bval in H.EnumBlocksInCols(idxremv))
+                            H.SetBlock(bc, br, null);
+                            if(bc > iremv_max) { HDebug.Assert(false); continue; }
+                            if(br > iremv_max) { HDebug.Assert(false); continue; }
+                            if(br < iremv_min)
                             {
-                                int bc   = bc_br_bval.Item1;
-                                int br   = bc_br_bval.Item2;
-                                var bval = bc_br_bval.Item3;
-
-                                H.SetBlock(bc, br, null);
-                                if(bc > iremv_max) { HDebug.Assert(false); continue; }
-                                if(br > iremv_max) { HDebug.Assert(false); continue; }
-                                if(br < iremv_min)
+                                int nc = bc - iremv_min;
+                                int nr = br;
+                                HDebug.Assert(C.HasBlock(nc, nr) == false);
+                                C.SetBlock(nc, nr, bval.CloneT());
+                            }
+                            else
+                            {
+                                int nc = bc - iremv_min;
+                                int nr = br - iremv_min;
+                                HDebug.Assert(D.HasBlock(nc, nr) == false);
+                                D.SetBlock(nc, nr, bval);
+                                if(nc != nr)
                                 {
-                                    int nc = bc - iremv_min;
-                                    int nr = br;
-                                    HDebug.Assert(C.HasBlock(nc, nr) == false);
-                                    C.SetBlock(nc, nr, bval.CloneT());
-                                }
-                                else
-                                {
-                                    int nc = bc - iremv_min;
-                                    int nr = br - iremv_min;
-                                    HDebug.Assert(D.HasBlock(nc, nr) == false);
-                                    D.SetBlock(nc, nr, bval);
-                                    if(nc != nr)
-                                    {
-                                        HDebug.Assert(D.HasBlock(nr, nc) == false);
-                                        D.SetBlock(nr, nc, bval.Tr());
-                                    }
+                                    HDebug.Assert(D.HasBlock(nr, nc) == false);
+                                    D.SetBlock(nr, nc, bval.Tr());
                                 }
                             }
-                            HDebug.Assert(H.EnumBlocksInCols(idxremv).Count() == 0);
                         }
-                        if(process_disp_console)
-                        {
-                            process_time.Add(DateTime.UtcNow);
-                            int ptc = process_time.Count;
-                            System.Console.Write("CD({0:00.00} min), ", (process_time[ptc-1] -process_time[ptc-2]).TotalMinutes);
-                        }
+                        HDebug.Assert(H.EnumBlocksInCols(idxremv).Count() == 0);
+                    }
+                    if(process_disp_console)
+                    {
+                        process_time.Add(DateTime.UtcNow);
+                        int ptc = process_time.Count;
+                        System.Console.Write("CD({0:00.00} min), ", (process_time[ptc - 1] - process_time[ptc - 2]).TotalMinutes);
+                    }
 
-                        HessMatrix B_invD_C = GetHessCoarseResiIterImpl_Matlab_IterLowerTri_Get_BInvDC(A, C, D, process_disp_console
-                            , options
-                            , thld_BinvDC: thres_zeroblk/lstNewIdxRemv.Length
-                            , parallel:parallel
-                            );
+                    ////////////////////////////////////////////////////////////////////////////////////////
+                    // Get B.inv(D).C
+                    HessMatrix B_invD_C;
+                    {
+                        {
+                            B_invD_C = GetHessCoarseResiIterImpl_Matlab_IterLowerTri_Get_BInvDC(A, C, D, process_disp_console
+                                , options
+                                , thld_BinvDC: thres_zeroblk/lstNewIdxRemv.Length
+                                , parallel:parallel
+                                );
+                        }
                         if(process_disp_console)
                         {
                             process_time.Add(DateTime.UtcNow);
@@ -197,67 +205,74 @@ namespace HTLib2.Bioinfo
                             System.Console.Write("B.invD.C({0:00.00} min), ", (process_time[ptc-1] - process_time[ptc-2]).TotalMinutes);
                         }
                         GC.Collect(0);
-
-                        /// iterinfo.numAddIgnrBlock = A.UpdateAdd(B_invD_C, -1, null, thres_zeroblk/lstNewIdxRemv.Length, parallel:parallel);
-                        {
-                            HessMatrix __this = A;
-                            HessMatrix other = B_invD_C;
-                            double _thres_NearZeroBlock = thres_zeroblk/lstNewIdxRemv.Length;
-
-                            int[] _count         = new int[1];
-                            int[] _count_ignored = new int[1];
-
-                            //foreach(var bc_br_bval in other.EnumBlocks())
-                            Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
-                            {
-                                _count[0]++;
-                                int               bc   = bc_br_bval.Item1;
-                                int               br   = bc_br_bval.Item2;
-                                MatrixByArr other_bmat = bc_br_bval.Item3;
-                                if(bc < br)
-                                    return; // continue;
-                                if(other_bmat.HAbsMax() <= _thres_NearZeroBlock)
-                                {
-                                    /// other_bmat = other_bmat    -other_bmat;
-                                    /// other_diag = other_diag - (-other_bmat) = other_diag + other_bmat;
-                                    ///  this_diag =  this_diat - B_invD_C
-                                    ///            =  this_diat - other_diag
-                                    ///            =  this_diat - (other_diag + other_bmat)
-                                    ///            =  this_diat - other_diag  - other_bmat
-                                    ///            = (this_diat - other_bmat) - other_diag
-                                    ///            = (this_diat - other_bmat) - (processed later)
-                                    ///            = (this_diat - other_bmat)
-                                    MatrixByArr  this_diag = __this.GetBlock(bc, bc);
-                                    MatrixByArr   new_diag = this_diag - other_bmat;
-                                    __this.SetBlockLock(bc, bc, new_diag);
-                                    other_bmat = null;
-                                    lock(_count_ignored)
-                                         _count_ignored[0]++;
-                                }
-                                if(other_bmat != null)
-                                {
-                                    MatrixByArr  this_bmat = __this.GetBlock(bc, br);
-                                    if(this_bmat == null)
-                                        this_bmat = new double[3, 3];
-                                    MatrixByArr   new_bmat = this_bmat - other_bmat;
-                                    __this.SetBlockLock(bc, br, new_bmat);
-                                }
-                            };
-                            if(parallel)    HParallel.ForEach(other.EnumBlocks(), func);
-                            else            foreach(var bc_br_bval in other.EnumBlocks()) func(bc_br_bval);
-                            
-                            iterinfo.numAddIgnrBlock = _count_ignored[0];
-                        }
-                        if(process_disp_console)
-                        {
-                            process_time.Add(DateTime.UtcNow);
-                            int ptc = process_time.Count;
-                            System.Console.Write("A-BinvDC({0:00.00} min), ", (process_time[ptc - 1] - process_time[ptc - 2]).TotalMinutes);
-                        }
-                        //HessMatrix nH = A - B_invD_C;
-                        //nH = ((nH + nH.Tr())/2).ToHessMatrix();
-                        H = A;
                     }
+
+                    ////////////////////////////////////////////////////////////////////////////////////////
+                    // Get A - B.inv(D).C
+                    /// iterinfo.numAddIgnrBlock = A.UpdateAdd(B_invD_C, -1, null, thres_zeroblk/lstNewIdxRemv.Length, parallel:parallel);
+                    {
+                        HessMatrix __this = A;
+                        HessMatrix other = B_invD_C;
+                        double _thres_NearZeroBlock = thres_zeroblk/lstNewIdxRemv.Length;
+
+                        int[] _count         = new int[1];
+                        int[] _count_ignored = new int[1];
+
+                        //foreach(var bc_br_bval in other.EnumBlocks())
+                        Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
+                        {
+                            _count[0]++;
+                            int               bc   = bc_br_bval.Item1;
+                            int               br   = bc_br_bval.Item2;
+                            MatrixByArr other_bmat = bc_br_bval.Item3;
+                            if(bc < br)
+                                return; // continue;
+                            if(other_bmat.HAbsMax() <= _thres_NearZeroBlock)
+                            {
+                                /// other_bmat = other_bmat    -other_bmat;
+                                /// other_diag = other_diag - (-other_bmat) = other_diag + other_bmat;
+                                ///  this_diag =  this_diat - B_invD_C
+                                ///            =  this_diat - other_diag
+                                ///            =  this_diat - (other_diag + other_bmat)
+                                ///            =  this_diat - other_diag  - other_bmat
+                                ///            = (this_diat - other_bmat) - other_diag
+                                ///            = (this_diat - other_bmat) - (processed later)
+                                ///            = (this_diat - other_bmat)
+                                MatrixByArr  this_diag = __this.GetBlock(bc, bc);
+                                MatrixByArr   new_diag = this_diag - other_bmat;
+                                __this.SetBlockLock(bc, bc, new_diag);
+                                other_bmat = null;
+                                lock(_count_ignored)
+                                        _count_ignored[0]++;
+                            }
+                            if(other_bmat != null)
+                            {
+                                MatrixByArr  this_bmat = __this.GetBlock(bc, br);
+                                if(this_bmat == null)
+                                    this_bmat = new double[3, 3];
+                                MatrixByArr   new_bmat = this_bmat - other_bmat;
+                                __this.SetBlockLock(bc, br, new_bmat);
+                            }
+                        };
+                        if(parallel)    HParallel.ForEach(other.EnumBlocks(), func);
+                        else            foreach(var bc_br_bval in other.EnumBlocks()) func(bc_br_bval);
+                            
+                        iterinfo.numAddIgnrBlock = _count_ignored[0];
+                    }
+                    if(process_disp_console)
+                    {
+                        process_time.Add(DateTime.UtcNow);
+                        int ptc = process_time.Count;
+                        System.Console.Write("A-BinvDC({0:00.00} min), ", (process_time[ptc - 1] - process_time[ptc - 2]).TotalMinutes);
+                    }
+                    //HessMatrix nH = A - B_invD_C;
+                    //nH = ((nH + nH.Tr())/2).ToHessMatrix();
+                    ////////////////////////////////////////////////////////////////////////////////////////
+                    // Replace A -> H
+                    H = A;
+
+                    ////////////////////////////////////////////////////////////////////////////////////////
+                    // print iteration log
                     iterinfo.usedMemoryByte = GC.GetTotalMemory(false);
                     iterinfo.time1 = DateTime.UtcNow;
                     iterinfos.Add(iterinfo);
