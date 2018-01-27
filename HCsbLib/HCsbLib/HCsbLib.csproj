@@ -67,7 +67,7 @@
     <Compile Include="HTLib2.Bioinfo\Anisou\Anisou.From.cs" />
     <Compile Include="HTLib2.Bioinfo\Anisou\Anisou.FromHessian.cs" />
     <Compile Include="HTLib2.Bioinfo\Anisou\AnisouStatic.cs" />
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.CoarseHessForcImpl.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForcImpl.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForc.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.IterInfo.cs" />

@@ -12,7 +12,7 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForc
         {
-            public static CGetHessCoarseResiIterImpl CoarseHessForcImpl
+            public static CGetHessCoarseResiIterImpl GetCoarseHessForcImpl
                 ( object[] atoms
                 , HessMatrix H
                 , List<int>[] lstNewIdxRemv
