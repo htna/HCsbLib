@@ -136,13 +136,10 @@ namespace HTLib2.Bioinfo
 
                     ////////////////////////////////////////////////////////////////////////////////////////
                     // get A, B, C, D
-                    //HessMatrix    A = H.SubMatrixByAtoms(false, idxkeep, idxkeep);
-                    HessMatrix    A = H;    
-                    //HessMatrix    B = H.SubMatrixByAtoms(false, idxkeep, idxremv);
-
-                    HessMatrix    C, D;
-                    /// HessMatrix    C = H.SubMatrixByAtoms(false, idxremv, idxkeep, parallel:parallel);
-                    /// HessMatrix    D = H.SubMatrixByAtoms(false, idxremv, idxremv, parallel:parallel);
+                    HessMatrix    A = H;    // HessMatrix    A = H.SubMatrixByAtoms(false, idxkeep, idxkeep);
+                                            // HessMatrix    B = H.SubMatrixByAtoms(false, idxkeep, idxremv);
+                    HessMatrix    C;        // HessMatrix    C = H.SubMatrixByAtoms(false, idxremv, idxkeep, parallel:parallel);
+                    HessMatrix    D;        // HessMatrix    D = H.SubMatrixByAtoms(false, idxremv, idxremv, parallel:parallel);
                     {
                         C = H.Zeros(idxremv.Length*3, idxkeep.Length*3);
                         D = H.Zeros(idxremv.Length*3, idxremv.Length*3);
