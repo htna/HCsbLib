@@ -313,11 +313,11 @@ namespace HTLib2.Bioinfo
                 bool elec = false;     // ignore electrostatic
                 double D  = double.PositiveInfinity; // dielectric constant for Tinker is "1"
                 bool ignNegSpr = true; // ignore negative spring (do not add the spring into hessian matrix)
-                string nbnd_opt = null;
+                string  K_nbnd    = null;  // null for sbNMA, and "Unif"  for ssNMA
 
-                if(options.Contains("TIP3P: (vdW+elec) for OH,OO,HH")) nbnd_opt = "TIP3P: (vdW+elec) for OH,OO,HH";
-                if(options.Contains("TIP3P: (vdW+elec) for OH"      )) nbnd_opt = "TIP3P: (vdW+elec) for OH"      ;
-                if(options.Contains("vdW:L79"                       )) nbnd_opt = "L79";
+                if(options.Contains("TIP3P: (vdW+elec) for OH,OO,HH")) K_nbnd = "TIP3P: (vdW+elec) for OH,OO,HH";
+                if(options.Contains("TIP3P: (vdW+elec) for OH"      )) K_nbnd = "TIP3P: (vdW+elec) for OH"      ;
+                if(options.Contains("vdW:L79"                       )) K_nbnd = "L79";
 
                 double? K_r       = null;  // null for sbNMA, and 340.00  for ssNMA
                 double? K_theta   = null;  // null for sbNMA, and 45.00   for ssNMA
@@ -325,22 +325,21 @@ namespace HTLib2.Bioinfo
                 double? K_psi     = null;  // null for sbNMA, and 70.00   for ssNMA
                 double? K_chi     = null;  // null for sbNMA, and 1.00    for ssNMA
                 double? n         = null;  // null for sbNMA, and 1       for ssNMA
-                string k_vdW      = null;  // null for sbNMA, and "Unif"  for ssNMA
 
                 HessMatrix hess = null;
-                if(b_bonds       )  hess = STeM.GetHessBond       (coords, univ.bonds          , null      ,hessian: hess,                                                                         collector: collectorBond       );
-                if(b_angles      )  hess = STeM.GetHessAngle      (coords, univ.angles   , true, null, null,hessian: hess,                                                                         collector: collectorAngle      );
-                if(b_impropers   )  hess = STeM.GetHessImproper   (coords, univ.impropers      , null      ,hessian: hess,                  useArnaud96:true,                                      collector: collectorImproper   );
-                if(b_dihedrals   )  hess = STeM.GetHessDihedral   (coords, univ.dihedrals      , null, null,hessian: hess, useAbsSpr: true, useArnaud96:true,                                      collector: collectorDihedral   );
-                if(b_nonbondeds  )  hess = HessSpr.GetHessNonbond (coords, nonbondeds        ,D, nbnd_opt  ,hessian: hess, vdW: vdW, elec: elec, ignNegSpr: ignNegSpr, maxAbsSpring: maxAbsSpring, collector: collectorNonbonded  , GetCustomKij: GetCustomKij);
-                if(b_nonbonded14s)  hess = HessSpr.GetHessNonbond (coords, nonbonded14s      ,D, nbnd_opt  ,hessian: hess, vdW: vdW, elec: elec, ignNegSpr: ignNegSpr, maxAbsSpring: maxAbsSpring, collector: collectorNonbonded14, GetCustomKij: GetCustomKij);
+                if(b_bonds       )  hess = STeM.GetHessBond       (coords, univ.bonds          , K_r:K_r                    ,hessian: hess,                                                                         collector: collectorBond       );
+                if(b_angles      )  hess = STeM.GetHessAngle      (coords, univ.angles   , true, K_theta:K_theta, K_ub:K_ub ,hessian: hess,                                                                         collector: collectorAngle      );
+                if(b_impropers   )  hess = STeM.GetHessImproper   (coords, univ.impropers      , K_psi:K_psi                ,hessian: hess,                  useArnaud96:true,                                      collector: collectorImproper   );
+                if(b_dihedrals   )  hess = STeM.GetHessDihedral   (coords, univ.dihedrals      , K_chi:K_chi, n:n           ,hessian: hess, useAbsSpr: true, useArnaud96:true,                                      collector: collectorDihedral   );
+                if(b_nonbondeds  )  hess = HessSpr.GetHessNonbond (coords, nonbondeds        ,D, K_nbnd:K_nbnd              ,hessian: hess, vdW: vdW, elec: elec, ignNegSpr: ignNegSpr, maxAbsSpring: maxAbsSpring, collector: collectorNonbonded  , GetCustomKij: GetCustomKij);
+                if(b_nonbonded14s)  hess = HessSpr.GetHessNonbond (coords, nonbonded14s      ,D, K_nbnd:K_nbnd              ,hessian: hess, vdW: vdW, elec: elec, ignNegSpr: ignNegSpr, maxAbsSpring: maxAbsSpring, collector: collectorNonbonded14, GetCustomKij: GetCustomKij);
 
-                if(sca_bonds        != null) if(sca_bonds       .Value != 1)  hess += (sca_bonds       .Value-1)*STeM.GetHessBond       (coords, univ.bonds          , null      ,hessian: null);
-                if(sca_angles       != null) if(sca_angles      .Value != 1)  hess += (sca_angles      .Value-1)*STeM.GetHessAngle      (coords, univ.angles   , true, null, null,hessian: null);
-                if(sca_impropers    != null) if(sca_impropers   .Value != 1)  hess += (sca_impropers   .Value-1)*STeM.GetHessImproper   (coords, univ.impropers      , null      ,hessian: null,                  useArnaud96:true);
-                if(sca_dihedrals    != null) if(sca_dihedrals   .Value != 1)  hess += (sca_dihedrals   .Value-1)*STeM.GetHessDihedral   (coords, univ.dihedrals      , null, null,hessian: null, useAbsSpr: true, useArnaud96:true);
-                if(sca_nonbondeds   != null) if(sca_nonbondeds  .Value != 1)  hess += (sca_nonbondeds  .Value-1)*HessSpr.GetHessNonbond (coords, nonbondeds        ,D, nbnd_opt  ,hessian: null, vdW: vdW, elec: elec, ignNegSpr: ignNegSpr, maxAbsSpring: maxAbsSpring);
-                if(sca_nonbonded14s != null) if(sca_nonbonded14s.Value != 1)  hess += (sca_nonbonded14s.Value-1)*HessSpr.GetHessNonbond (coords, nonbonded14s      ,D, nbnd_opt  ,hessian: null, vdW: vdW, elec: elec, ignNegSpr: ignNegSpr, maxAbsSpring: maxAbsSpring);
+                if(sca_bonds        != null) if(sca_bonds       .Value != 1)  hess += (sca_bonds       .Value-1)*STeM.GetHessBond       (coords, univ.bonds          , K_r:K_r                    ,hessian: null);
+                if(sca_angles       != null) if(sca_angles      .Value != 1)  hess += (sca_angles      .Value-1)*STeM.GetHessAngle      (coords, univ.angles   , true, K_theta:K_theta, K_ub:K_ub ,hessian: null);
+                if(sca_impropers    != null) if(sca_impropers   .Value != 1)  hess += (sca_impropers   .Value-1)*STeM.GetHessImproper   (coords, univ.impropers      , K_psi:K_psi                ,hessian: null,                  useArnaud96:true);
+                if(sca_dihedrals    != null) if(sca_dihedrals   .Value != 1)  hess += (sca_dihedrals   .Value-1)*STeM.GetHessDihedral   (coords, univ.dihedrals      , K_chi:K_chi, n:n           ,hessian: null, useAbsSpr: true, useArnaud96:true);
+                if(sca_nonbondeds   != null) if(sca_nonbondeds  .Value != 1)  hess += (sca_nonbondeds  .Value-1)*HessSpr.GetHessNonbond (coords, nonbondeds        ,D, K_nbnd:K_nbnd              ,hessian: null, vdW: vdW, elec: elec, ignNegSpr: ignNegSpr, maxAbsSpring: maxAbsSpring);
+                if(sca_nonbonded14s != null) if(sca_nonbonded14s.Value != 1)  hess += (sca_nonbonded14s.Value-1)*HessSpr.GetHessNonbond (coords, nonbonded14s      ,D, K_nbnd:K_nbnd              ,hessian: null, vdW: vdW, elec: elec, ignNegSpr: ignNegSpr, maxAbsSpring: maxAbsSpring);
 
                 //Hess.UpdateHessNaN(hess, coords);
                 {
