@@ -15,6 +15,7 @@ namespace HTLib2.Bioinfo
             public static CGetHessCoarseResiIterImpl GetCoarseHessImpl
                 ( object[] atoms
                 , HessMatrix H
+                , Vector     F
                 , List<int>[] lstNewIdxRemv
                 , double thres_zeroblk
                 , ILinAlg ila
@@ -189,11 +190,12 @@ namespace HTLib2.Bioinfo
                     HessMatrix B_invD_C;
                     {
                         {
-                            B_invD_C = Get_BInvDC(A, C, D, process_disp_console
+                            var BInvDC_BInvDG = Get_BInvDC_BInvDG(A, C, D, process_disp_console
                                 , options
                                 , thld_BinvDC: thres_zeroblk/lstNewIdxRemv.Length
                                 , parallel:parallel
                                 );
+                            B_invD_C = BInvDC_BInvDG.Item1;
                         }
                         if(process_disp_console)
                         {
