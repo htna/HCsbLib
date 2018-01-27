@@ -12,7 +12,7 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForc
         {
-            public static HessInfoCoarseResiIter GetCoarseHessForc
+            public static HessInfo GetCoarseHessForc
                 ( Hess.HessInfo hessinfo
                 , Vector[] coords
                 , FuncGetIdxKeepListRemv GetIdxKeepListRemv
@@ -71,7 +71,7 @@ namespace HTLib2.Bioinfo
                     HDebug.Assert(nidx == lstNewIdxRemv.Last().Last()+1);
                     HDebug.Assert(nidx == idxs.Count);
                 }
-                GC.Collect(0);
+                GC.Collect();
                 HDebug.Assert(numca == H.ColBlockSize - lstNewIdxRemv.HListCount().Sum());
 
                 if(HDebug.False)
@@ -93,7 +93,7 @@ namespace HTLib2.Bioinfo
                 }
                     #endregion
 
-                List<HessCoarseResiIterInfo> iterinfos = null;
+                List<IterInfo> iterinfos = null;
                 {
                     object[] atoms = reAtoms; // reAtoms.HToType(null as Universe.Atom[]);
                     CGetHessCoarseResiIterImpl info = null;
@@ -127,7 +127,7 @@ namespace HTLib2.Bioinfo
                     H = H.CorrectHessDiag();
                 //System.Console.WriteLine("finish fixing diag");
 
-                return new HessInfoCoarseResiIter
+                return new HessInfo
                 {
                     hess          = H,
                     mass          = reMass.HSelectCount(numca),

@@ -57,7 +57,7 @@ namespace HTLib2.Bioinfo
                 List<DateTime> process_time = new List<DateTime>();
 
                 //System.Console.WriteLine("begin coarse-graining");
-                List<HessCoarseResiIterInfo> iterinfos = new List<HessCoarseResiIterInfo>();
+                List<IterInfo> iterinfos = new List<IterInfo>();
                 for(int iter=lstNewIdxRemv.Length-1; iter>=0; iter--)
                 {
                     process_time.Clear();
@@ -83,7 +83,7 @@ namespace HTLib2.Bioinfo
                     int[] idxremv = HEnum.HEnumFromTo(iremv_min, iremv_max  ).ToArray();
                     //HDebug.Assert(idxkeep.HUnionWith(idxremv).Length == blksize);
 
-                    HessCoarseResiIterInfo iterinfo = new HessCoarseResiIterInfo();
+                    IterInfo iterinfo = new IterInfo();
                     iterinfo.sizeHessBlkMat  = idxremv.Max()+1; // H.ColBlockSize;
                     iterinfo.numAtomsRemoved = idxremv.Length;
                     iterinfo.time0 = DateTime.UtcNow;

@@ -225,6 +225,7 @@
     <Compile Include="HTLib2.Bioinfo\HBioinfo\HBioinfo.PseudoBFactor.cs" />
     <Compile Include="HTLib2.Bioinfo\HBioinfo\HBioinfo.RMSIP.cs" />
     <Compile Include="HTLib2.Bioinfo\HBioinfo\HBioinfo.SimFluc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Coarse.CoarseHessForc\Coarse.CoarseHessForc.IterInfo.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Coarse.CoarseHessForc\Coarse.CoarseHessForc.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForc.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHessCoarse\Hess.GetHessCoarseBlkmat.cs" />
