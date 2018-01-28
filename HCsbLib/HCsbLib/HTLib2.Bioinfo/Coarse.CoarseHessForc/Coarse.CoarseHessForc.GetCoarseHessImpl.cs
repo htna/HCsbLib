@@ -190,7 +190,7 @@ namespace HTLib2.Bioinfo
                     HessMatrix B_invD_C;
                     {
                         {
-                            var BInvDC_BInvDG = Get_BInvDC_BInvDG(A, C, D, process_disp_console
+                            var BInvDC_BInvDG = Get_BInvDC_BInvDG_WithSqueeze(A, C, D, process_disp_console
                                 , options
                                 , thld_BinvDC: thres_zeroblk/lstNewIdxRemv.Length
                                 , parallel:parallel
