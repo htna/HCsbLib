@@ -16,6 +16,7 @@ namespace HTLib2.Bioinfo
                 ( HessMatrix AA
                 , HessMatrix CC
                 , HessMatrix DD
+                , Vector     GG
                 , bool process_disp_console
                 , string[] options
                 , double? thld_BinvDC=null
@@ -23,11 +24,13 @@ namespace HTLib2.Bioinfo
                 )
             {
                 HessMatrix BB_invDD_CC;
+                Vector     BB_invDD_GG;
                 using(new Matlab.NamedLock(""))
                 {
                     Matlab.Execute("clear;");   if(process_disp_console) System.Console.Write("matlab(");
                     Matlab.PutMatrix("C", CC);  if(process_disp_console) System.Console.Write("C"); //Matlab.PutSparseMatrix("C", C.GetMatrixSparse(), 3, 3);
                     Matlab.PutMatrix("D", DD);  if(process_disp_console) System.Console.Write("D");
+                    Matlab.PutVector("G", GG);  if(process_disp_console) System.Console.Write("G");
 
                     // Matlab.Execute("BinvDC = C' * inv(D) * C;");
                     {
@@ -54,11 +57,13 @@ namespace HTLib2.Bioinfo
                                 Matlab.Execute("BinvDC = C' * inv(D);");
                             }
                         }
+                        Matlab.Execute("BinvD_G = BinvDC * G;");
                         Matlab.Execute("BinvDC  = BinvDC * C;");
                     }
                     if(process_disp_console) System.Console.Write("X");
 
 
+                    BB_invDD_GG = Matlab.GetVector("BinvD_G");
 
 
                     //Matrix BBinvDDCC = Matlab.GetMatrix("BinvDC", true);                                    
@@ -127,7 +132,7 @@ namespace HTLib2.Bioinfo
 
                 return new ValueTuple<HessMatrix, Vector>
                     ( BB_invDD_CC
-                    , null
+                    , BB_invDD_GG
                     );
             }
         }

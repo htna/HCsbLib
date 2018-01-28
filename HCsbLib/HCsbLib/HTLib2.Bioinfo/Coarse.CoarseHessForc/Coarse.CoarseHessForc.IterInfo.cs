@@ -47,7 +47,7 @@ namespace HTLib2.Bioinfo
                 public Vector       mass    = null;
                 public Vector[]     coords  = null;
                 public HessMatrix   hess    = null;
-                public Vector       forc    = null;
+                public Vector[]     forc    = null;
 
                 public static HessForcInfo From(Hess.HessInfo hessinfo)
                 {
@@ -58,7 +58,7 @@ namespace HTLib2.Bioinfo
                         hess   = hessinfo.hess  ,
                     };
                 }
-                public static HessForcInfo From(Hess.HessInfo hessinfo, Vector forc)
+                public static HessForcInfo From(Hess.HessInfo hessinfo, Vector[] forc)
                 {
                     return new HessForcInfo{
                         atoms  = hessinfo.atoms ,
@@ -73,6 +73,7 @@ namespace HTLib2.Bioinfo
             {
                 public List<IterInfo> iterinfos = null;
                 public HessMatrix H = null;
+                public Vector     F = null;
             };
             public delegate Tuple<int[], int[][]> FuncGetIdxKeepListRemv(object[] atoms, Vector[] coords);
         }

@@ -141,6 +141,8 @@ namespace HTLib2.Bioinfo
                                             // HessMatrix    B = H.SubMatrixByAtoms(false, idxkeep, idxremv);
                     HessMatrix    C;        // HessMatrix    C = H.SubMatrixByAtoms(false, idxremv, idxkeep, parallel:parallel);
                     HessMatrix    D;        // HessMatrix    D = H.SubMatrixByAtoms(false, idxremv, idxremv, parallel:parallel);
+                    Vector        nF;
+                    Vector        nG;
                     {
                         C = H.Zeros(idxremv.Length*3, idxkeep.Length*3);
                         D = H.Zeros(idxremv.Length*3, idxremv.Length*3);
@@ -177,6 +179,11 @@ namespace HTLib2.Bioinfo
                             }
                         }
                         HDebug.Assert(H.EnumBlocksInCols(idxremv).Count() == 0);
+
+                        nF = new double[idxkeep.Length * 3];
+                        nG = new double[idxremv.Length * 3];
+                        for(int i = 0; i < idxkeep.Length * 3; i++) nF[i] = F[i];
+                        for(int i = 0; i < idxremv.Length * 3; i++) nG[i] = F[i + nF.Size];
                     }
                     if(process_disp_console)
                     {
@@ -188,14 +195,16 @@ namespace HTLib2.Bioinfo
                     ////////////////////////////////////////////////////////////////////////////////////////
                     // Get B.inv(D).C
                     HessMatrix B_invD_C;
+                    Vector     B_invD_G;
                     {
                         {
-                            var BInvDC_BInvDG = Get_BInvDC_BInvDG_WithSqueeze(A, C, D, process_disp_console
+                            var BInvDC_BInvDG = Get_BInvDC_BInvDG_WithSqueeze(A, C, D, nG, process_disp_console
                                 , options
                                 , thld_BinvDC: thres_zeroblk/lstNewIdxRemv.Length
                                 , parallel:parallel
                                 );
                             B_invD_C = BInvDC_BInvDG.Item1;
+                            B_invD_G = BInvDC_BInvDG.Item2;
                         }
                         if(process_disp_console)
                         {
@@ -269,6 +278,7 @@ namespace HTLib2.Bioinfo
                     ////////////////////////////////////////////////////////////////////////////////////////
                     // Replace A -> H
                     H = A;
+                    F = nF - B_invD_G;
 
                     ////////////////////////////////////////////////////////////////////////////////////////
                     // print iteration log
@@ -304,10 +314,13 @@ namespace HTLib2.Bioinfo
                 GC.Collect();
                 //System.Console.WriteLine("finish resizing");
 
+                HDebug.Assert(H.ColSize == H.RowSize);
+                HDebug.Assert(H.ColSize == F.Size);
                 return new CGetHessCoarseResiIterImpl
                 {
                     iterinfos = iterinfos,
                     H = H,
+                    F = F,
                 };
             }
         }

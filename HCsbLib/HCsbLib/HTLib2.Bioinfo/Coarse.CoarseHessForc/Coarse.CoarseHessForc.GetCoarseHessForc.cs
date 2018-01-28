@@ -24,6 +24,7 @@ namespace HTLib2.Bioinfo
                 bool rediag=true;
 
                 HessMatrix H = null;
+                Vector[]   F = null;
                 List<int>[] lstNewIdxRemv = null;
                 int numca  = 0;
                 double[] reMass   = null;
@@ -53,6 +54,7 @@ namespace HTLib2.Bioinfo
 
                     H = hessforc.hess.ReshapeByAtom(idxs);
                     numca    = idxKeep.Length;
+                    F        = hessforc.forc .ToArray().HSelectByIndex(idxs);
                     reMass   = hessforc.mass .ToArray().HSelectByIndex(idxs);
                     reAtoms  = hessforc.atoms.ToArray().HSelectByIndex(idxs);
                     reCoords = coords                  .HSelectByIndex(idxs);
@@ -97,11 +99,14 @@ namespace HTLib2.Bioinfo
                 {
                     object[] atoms = reAtoms; // reAtoms.HToType(null as Universe.Atom[]);
                     CGetHessCoarseResiIterImpl info = null;
-                    {
-                        Vector F = hessforc.forc.Clone();
-                        info = GetCoarseHessImpl(atoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
-                    };
+
+                    Vector f = F.ToVector();
+                    info = GetCoarseHessImpl(atoms, H, f, lstNewIdxRemv, thres_zeroblk, ila, false, options);
+
                     H = info.H;
+                    F = info.F.ToVectors(3);
+                    HDebug.Assert(H.ColBlockSize == H.RowBlockSize);
+                    HDebug.Assert(H.ColBlockSize == F.Length);
                     iterinfos = info.iterinfos;
                 }
                 //{
@@ -131,6 +136,7 @@ namespace HTLib2.Bioinfo
                 return new HessForcInfo
                 {
                     hess          = H,
+                    forc          = F,
                     mass          = reMass.HSelectCount(numca),
                     atoms         = reAtoms.HSelectCount(numca),
                     coords        = reCoords.HSelectCount(numca),

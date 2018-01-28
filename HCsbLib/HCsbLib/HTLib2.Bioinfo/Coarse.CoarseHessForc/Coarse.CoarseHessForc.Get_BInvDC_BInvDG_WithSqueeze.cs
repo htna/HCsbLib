@@ -16,6 +16,7 @@ namespace HTLib2.Bioinfo
                 ( HessMatrix A
                 , HessMatrix C
                 , HessMatrix D
+                , Vector     G
                 , bool process_disp_console
                 , string[] options
                 , double? thld_BinvDC=null
@@ -26,6 +27,7 @@ namespace HTLib2.Bioinfo
                     options = new string[0];
 
                 HessMatrix B_invD_C;
+                Vector     B_invD_G;
                 Dictionary<int, int> Cbr_CCbr = new Dictionary<int, int>();
                 List<int>            CCbr_Cbr = new List<int>();
                 foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in C.EnumBlocks())
@@ -55,7 +57,11 @@ namespace HTLib2.Bioinfo
                     if(parallel)    Parallel.ForEach(         C.EnumBlocks(), func);
                     else            foreach(var bc_br_bval in C.EnumBlocks()) func(bc_br_bval);
                 }
-                                                                                                                if(process_disp_console) { System.Console.Write("squeezeC({0,6}->{1,6} blk), ", C.RowBlockSize, CC.RowBlockSize); }
+                if(process_disp_console)
+                {
+                    System.Console.Write("squeezeC({0,6}->{1,6} blk), ", C.RowBlockSize, CC.RowBlockSize);
+                }
+
                 {
                     /// If a diagonal element of D is null, that row and column should be empty.
                     /// This assume that the atom is removed. In this case, the removed diagonal block
@@ -85,9 +91,11 @@ namespace HTLib2.Bioinfo
                     }
 
                     HessMatrix BB_invDD_CC;
+                    Vector     BB_invDD_GG;
                     {
-                        var BBInvDDCC_BBInvDDGG = Get_BInvDC_BInvDG(A, CC, D, process_disp_console, options, thld_BinvDC, parallel);
+                        var BBInvDDCC_BBInvDDGG = Get_BInvDC_BInvDG(A, CC, D, G, process_disp_console, options, thld_BinvDC, parallel);
                         BB_invDD_CC = BBInvDDCC_BBInvDDGG.Item1;
+                        BB_invDD_GG = BBInvDDCC_BBInvDDGG.Item2;
                     }
 
                     B_invD_C = A.Zeros(C.RowSize, C.RowSize);
@@ -122,11 +130,22 @@ namespace HTLib2.Bioinfo
                         if(parallel)    Parallel.ForEach(           BB_invDD_CC.EnumBlocks(), func);
                         else            foreach(var bcc_brr_bval in BB_invDD_CC.EnumBlocks()) func(bcc_brr_bval);
                     }
+                    B_invD_G = new double[C.RowSize];
+                    {
+                        HDebug.Assert(BB_invDD_GG.Size % 3 == 0);
+                        for(int bii=0; bii<BB_invDD_GG.Size/3; bii++)
+                        {
+                            int bi = CCbr_Cbr[bii];
+                            B_invD_G[bi * 3 + 0] = BB_invDD_GG[bii * 3 + 0];
+                            B_invD_G[bi * 3 + 1] = BB_invDD_GG[bii * 3 + 1];
+                            B_invD_G[bi * 3 + 2] = BB_invDD_GG[bii * 3 + 2];
+                        }
+                    }
                 }
                 GC.Collect(0);
                 return new ValueTuple<HessMatrix, Vector>
                     ( B_invD_C
-                    , null
+                    , B_invD_G
                     );
             }
         }
