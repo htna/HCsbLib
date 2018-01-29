@@ -45,17 +45,18 @@ namespace HTLib2.Bioinfo
 
                 HessMatrix CC = C.Zeros(C.ColSize, Cbr_CCbr.Count*3);
                 {
-                    Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
+                    Action<ValueTuple<int, int, MatrixByArr>, HessMatrix, Dictionary<int, int>> func =
+                        delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval, HessMatrix _CC, Dictionary<int, int> _Cbr_CCbr)
                     {
                         int Cbc  = bc_br_bval.Item1; int CCbc = Cbc;
-                        int Cbr  = bc_br_bval.Item2; int CCbr = Cbr_CCbr[Cbr];
+                        int Cbr  = bc_br_bval.Item2; int CCbr = _Cbr_CCbr[Cbr];
                         var bval = bc_br_bval.Item3;
-                        lock(CC)
-                             CC.SetBlock(CCbc, CCbr, bval);
+                        lock(_CC)
+                             _CC.SetBlock(CCbc, CCbr, bval);
                     };
 
-                    if(parallel)    Parallel.ForEach(         C.EnumBlocks(), func);
-                    else            foreach(var bc_br_bval in C.EnumBlocks()) func(bc_br_bval);
+                    if(parallel)   HParallel.ForEach(         C.EnumBlocks(), CC, Cbr_CCbr, func);
+                    else            foreach(var bc_br_bval in C.EnumBlocks()) func(bc_br_bval, CC, Cbr_CCbr);
                 }
                 if(process_disp_console)
                 {
@@ -115,20 +116,21 @@ namespace HTLib2.Bioinfo
                         //          HDebug.Exception(A.HasBlock(br, br));
                         //      }
                         //  }
-                        Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bcc_brr_bval)
+                        Action<ValueTuple<int, int, MatrixByArr>, HessMatrix, List<int>> func =
+                            delegate(ValueTuple<int, int, MatrixByArr> bcc_brr_bval, HessMatrix _B_invD_C, List<int> _CCbr_Cbr)
                         {
                             int bcc = bcc_brr_bval.Item1;
                             int brr = bcc_brr_bval.Item2;
                             var bval= bcc_brr_bval.Item3;
                     
-                            int bc = CCbr_Cbr[bcc];
-                            int br = CCbr_Cbr[brr];
+                            int bc = _CCbr_Cbr[bcc];
+                            int br = _CCbr_Cbr[brr];
                             //lock(B_invD_C)
-                                B_invD_C.SetBlockLock(bc, br, bval);
+                                _B_invD_C.SetBlockLock(bc, br, bval);
                         };
                     
-                        if(parallel)    Parallel.ForEach(           BB_invDD_CC.EnumBlocks(), func);
-                        else            foreach(var bcc_brr_bval in BB_invDD_CC.EnumBlocks()) func(bcc_brr_bval);
+                        if(parallel)   HParallel.ForEach(           BB_invDD_CC.EnumBlocks(), B_invD_C, CCbr_Cbr, func);
+                        else            foreach(var bcc_brr_bval in BB_invDD_CC.EnumBlocks()) func(bcc_brr_bval, B_invD_C, CCbr_Cbr);
                     }
                     B_invD_G = new double[C.RowSize];
                     {
