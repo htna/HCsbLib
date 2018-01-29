@@ -206,7 +206,7 @@ namespace HTLib2.Bioinfo
                         Vector     B_invD_G;
                         {
                             {
-                                var BInvDC_BInvDG = Get_BInvDC_BInvDG_WithSqueeze(A, C, D, nG, process_disp_console
+                                var BInvDC_BInvDG = Get_BInvDC_BInvDG_WithSqueeze(C, D, nG, process_disp_console
                                     , options
                                     , thld_BinvDC: thres_zeroblk/lstNewIdxRemv.Length
                                     , parallel:parallel

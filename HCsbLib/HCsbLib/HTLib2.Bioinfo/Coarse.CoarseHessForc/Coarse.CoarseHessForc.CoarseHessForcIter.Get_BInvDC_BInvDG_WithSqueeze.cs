@@ -15,8 +15,7 @@ namespace HTLib2.Bioinfo
             public static partial class CoarseHessForcIter
             {
                 private static ValueTuple<HessMatrix, Vector> Get_BInvDC_BInvDG_WithSqueeze
-                    ( HessMatrix A
-                    , HessMatrix C
+                    ( HessMatrix C
                     , HessMatrix D
                     , Vector     G
                     , bool process_disp_console
@@ -96,12 +95,12 @@ namespace HTLib2.Bioinfo
                         HessMatrix BB_invDD_CC;
                         Vector     BB_invDD_GG;
                         {
-                            var BBInvDDCC_BBInvDDGG = Get_BInvDC_BInvDG(A, CC, D, G, process_disp_console, options, thld_BinvDC, parallel);
+                            var BBInvDDCC_BBInvDDGG = Get_BInvDC_BInvDG(CC, D, G, process_disp_console, options, thld_BinvDC, parallel);
                             BB_invDD_CC = BBInvDDCC_BBInvDDGG.Item1;
                             BB_invDD_GG = BBInvDDCC_BBInvDDGG.Item2;
                         }
 
-                        B_invD_C = A.Zeros(C.RowSize, C.RowSize);
+                        B_invD_C = C.Zeros(C.RowSize, C.RowSize);
                         {
                             //  for(int bcc=0; bcc<CCbr_Cbr.Count; bcc++)
                             //  {
