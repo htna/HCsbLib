@@ -14,7 +14,7 @@ namespace HTLib2.Bioinfo
         {
         public static partial class CoarseHessForcIter
         {
-            public static HessForcInfo GetCoarseHessForc
+            public static HessForcInfoIter GetCoarseHessForc
                 ( HessForcInfo hessforc
                 , Vector[] coords
                 , FuncGetIdxKeepListRemv GetIdxKeepListRemv
@@ -135,7 +135,7 @@ namespace HTLib2.Bioinfo
                     H = H.CorrectHessDiag();
                 //System.Console.WriteLine("finish fixing diag");
 
-                return new HessForcInfo
+                return new HessForcInfoIter
                 {
                     hess          = H,
                     forc          = F,

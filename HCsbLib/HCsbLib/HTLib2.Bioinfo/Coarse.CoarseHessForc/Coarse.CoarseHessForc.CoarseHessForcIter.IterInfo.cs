@@ -41,16 +41,10 @@ namespace HTLib2.Bioinfo
                     return str;
                 }
             }
-            public class HessForcInfo : Coarse.CoarseHessForc.HessForcInfo
+            public class HessForcInfoIter : HessForcInfo
             {
                 public List<IterInfo> iterinfos = null;
             }
-            public class CGetHessCoarseResiIterImpl
-            {
-                public List<IterInfo> iterinfos = null;
-                public HessMatrix H = null;
-                public Vector     F = null;
-            };
             public delegate Tuple<int[], int[][]> FuncGetIdxKeepListRemv(object[] atoms, Vector[] coords);
         }
         }
