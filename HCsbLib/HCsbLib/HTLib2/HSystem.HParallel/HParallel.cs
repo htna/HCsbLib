@@ -92,6 +92,30 @@ namespace HTLib2
             };
             return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, lbody);
         }
+        public static ParallelLoopResult ForEach<TSource, TParam1, TParam2>(IEnumerable<TSource> source, TParam1 param1, TParam2 param2, Action<TSource, TParam1, TParam2> body)
+        {
+            Action<TSource> lbody = delegate(TSource src)
+            {
+                body(src, param1, param2);
+            };
+            return System.Threading.Tasks.Parallel.ForEach<TSource>(source, lbody);
+        }
+        public static ParallelLoopResult For<TParam1, TParam2>(int fromInclusive, int toExclusive, TParam1 param1, TParam2 param2, Action<int, TParam1, TParam2> body)
+        {
+            Action<int> lbody = delegate(int src)
+            {
+                body(src, param1, param2);
+            };
+            return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, lbody);
+        }
+        public static ParallelLoopResult For<TParam1, TParam2>(long fromInclusive, long toExclusive, TParam1 param1, TParam2 param2, Action<long, TParam1, TParam2> body)
+        {
+            Action<long> lbody = delegate(long src)
+            {
+                body(src, param1, param2);
+            };
+            return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, lbody);
+        }
 
         public static void Sleep(int millisecondsTimeout) { System.Threading.Thread.Sleep(millisecondsTimeout); }
         public static void Sleep(TimeSpan        timeout) { System.Threading.Thread.Sleep(            timeout); }
