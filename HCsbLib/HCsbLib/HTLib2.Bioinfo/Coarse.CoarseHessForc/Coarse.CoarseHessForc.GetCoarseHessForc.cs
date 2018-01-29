@@ -12,6 +12,8 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForc
         {
+        public static partial class CoarseHessForcIter
+        {
             public static HessForcInfo GetCoarseHessForc
                 ( HessForcInfo hessforc
                 , Vector[] coords
@@ -143,6 +145,7 @@ namespace HTLib2.Bioinfo
                     iterinfos     = iterinfos,
                 };
             }
+        }
         }
     }
 }
