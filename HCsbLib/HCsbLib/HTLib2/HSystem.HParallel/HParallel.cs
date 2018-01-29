@@ -68,27 +68,27 @@ namespace HTLib2
         //      System.Console.WriteLine((string)base + i.ToString());
         //  }
         //  For<object>(0, 10, body, prefix);
-        public static ParallelLoopResult ForEach<TSource, TParam>(IEnumerable<TSource> source, TParam param, Action<TSource, TParam> body)
+        public static ParallelLoopResult ForEach<TSource, TParam1>(IEnumerable<TSource> source, TParam1 param1, Action<TSource, TParam1> body)
         {
             Action<TSource> lbody = delegate(TSource src)
             {
-                body(src, param);
+                body(src, param1);
             };
             return System.Threading.Tasks.Parallel.ForEach<TSource>(source, lbody);
         }
-        public static ParallelLoopResult For<TParam>(int fromInclusive, int toExclusive, TParam param, Action<int, TParam> body)
+        public static ParallelLoopResult For<TParam1>(int fromInclusive, int toExclusive, TParam1 param1, Action<int, TParam1> body)
         {
             Action<int> lbody = delegate(int src)
             {
-                body(src, param);
+                body(src, param1);
             };
             return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, lbody);
         }
-        public static ParallelLoopResult For<TParam>(long fromInclusive, long toExclusive, TParam param, Action<long, TParam> body)
+        public static ParallelLoopResult For<TParam1>(long fromInclusive, long toExclusive, TParam1 param1, Action<long, TParam1> body)
         {
             Action<long> lbody = delegate(long src)
             {
-                body(src, param);
+                body(src, param1);
             };
             return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, lbody);
         }
