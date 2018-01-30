@@ -70,11 +70,11 @@
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.CoarseHessForcSimple.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.Get_BInvDC_BInvDG_WithSqueeze.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.Get_BInvDC_BInvDG.cs" />
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForcImplIter.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForcSubIter.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForc.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.IterInfo.cs" />
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.CoarseHessForcSimple2.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForcSubSimple.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Gromacs\Archive\Gromacs.Topol.Angle.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Gromacs\Archive\Gromacs.Topol.Atom.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Gromacs\Archive\Gromacs.Topol.Bond.cs" />
