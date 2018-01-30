@@ -12,8 +12,6 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForc
         {
-            public static partial class CoarseHessForcIter
-            {
                 [Serializable]
                 public class IterInfo
                 {
@@ -47,6 +45,5 @@ namespace HTLib2.Bioinfo
                 }
                 public delegate Tuple<int[], int[][]> FuncGetIdxKeepListRemv(object[] atoms, Vector[] coords);
             }
-        }
     }
 }

@@ -12,8 +12,6 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForc
         {
-            public static partial class CoarseHessForcIter
-            {
                 public class CGetHessCoarseResiIterImpl
                 {
                     public List<IterInfo> iterinfos = null;
@@ -331,7 +329,6 @@ namespace HTLib2.Bioinfo
                         F = F,
                     };
                 }
-            }
         }
     }
 }
