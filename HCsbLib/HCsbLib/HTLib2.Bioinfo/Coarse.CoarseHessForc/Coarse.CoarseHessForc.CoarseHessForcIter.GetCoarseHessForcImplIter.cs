@@ -18,7 +18,7 @@ namespace HTLib2.Bioinfo
                     public HessMatrix H = null;
                     public Vector     F = null;
                 };
-                public static CGetHessCoarseResiIterImpl GetCoarseHessForcIter
+                public static CGetHessCoarseResiIterImpl GetCoarseHessForcImplIter
                     ( object[] atoms
                     , HessMatrix H
                     , Vector     F
