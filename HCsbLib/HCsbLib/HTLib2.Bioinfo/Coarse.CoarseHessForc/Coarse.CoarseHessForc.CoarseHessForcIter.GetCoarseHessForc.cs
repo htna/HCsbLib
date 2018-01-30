@@ -95,7 +95,21 @@ namespace HTLib2.Bioinfo
                         Matlab.PutSparseMatrix("D", D.GetMatrixSparse(), 3, 3);
                         Matlab.Clear();
                     }
-                        #endregion
+                    #endregion
+
+                    if(HDebug.IsDebuggerAttached)
+                    {
+                        int nidx = 0;
+                        int[] ikeep = idxKeepRemv.Item1;
+                        foreach(int idx in ikeep)
+                        {
+                            bool equal = object.ReferenceEquals(hessforc.atoms[idx], reAtoms[nidx]);
+                            if(equal == false)
+                                HDebug.Assert(false);
+                            HDebug.Assert(equal);
+                            nidx++;
+                        }
+                    }
 
                     List<IterInfo> iterinfos = null;
                     {
@@ -117,19 +131,6 @@ namespace HTLib2.Bioinfo
                     //}
                     GC.Collect(0);
 
-                    if(HDebug.IsDebuggerAttached)
-                    {
-                        int nidx = 0;
-                        int[] ikeep = idxKeepRemv.Item1;
-                        foreach(int idx in ikeep)
-                        {
-                            bool equal = object.ReferenceEquals(hessforc.atoms[idx], reAtoms[nidx]);
-                            if(equal == false)
-                                HDebug.Assert(false);
-                            HDebug.Assert(equal);
-                            nidx++;
-                        }
-                    }
 
                     if(rediag)
                         H = H.CorrectHessDiag();
