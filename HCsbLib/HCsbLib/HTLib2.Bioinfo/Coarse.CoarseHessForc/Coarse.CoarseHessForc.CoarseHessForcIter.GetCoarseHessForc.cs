@@ -103,7 +103,7 @@ namespace HTLib2.Bioinfo
                         CGetHessCoarseResiIterImpl info = null;
 
                         Vector f = F.ToVector();
-                        info = GetCoarseHessImpl(atoms, H, f, lstNewIdxRemv, thres_zeroblk, ila, false, options);
+                        info = GetCoarseHessForcIter(atoms, H, f, lstNewIdxRemv, thres_zeroblk, ila, false, options);
 
                         H = info.H;
                         F = info.F.ToVectors(3);
