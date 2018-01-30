@@ -74,6 +74,7 @@
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.CoarseHessForcIter.GetCoarseHessForc.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.CoarseHessForcIter.IterInfo.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.CoarseHessForcSimple2.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Gromacs\Archive\Gromacs.Topol.Angle.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Gromacs\Archive\Gromacs.Topol.Atom.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Gromacs\Archive\Gromacs.Topol.Bond.cs" />
