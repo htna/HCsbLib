@@ -115,7 +115,7 @@ namespace HTLib2.Bioinfo
                         CGetHessCoarseResiIterImpl info = null;
 
                         Vector f = F.ToVector();
-                        info = GetCoarseHessForcImplIter(atoms, H, f, lstNewIdxRemv, thres_zeroblk, ila, false, options);
+                        info = GetCoarseHessForcSubIter(atoms, H, f, lstNewIdxRemv, thres_zeroblk, ila, false, options);
 
                         H = info.H;
                         F = info.F.ToVectors(3);
