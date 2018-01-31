@@ -49,7 +49,39 @@ namespace HTLib2.Bioinfo
                 }
                 public static Tuple<int[], int[][]> GetIdxKeepListRemv(object[] atoms, Vector[] coords)
                 {
-                    return null;
+                    var xyzatoms = atoms as Tinker.Xyz.Atom[];
+
+                    int[] BiotypeN = new int[]
+                    {
+                        63, //"atom         63   24    NH1   \"Peptide Nitrogen\"             7    14.007    3",
+                        //64, //"atom         64   25    NH2   \"Amide Nitrogen\"               7    14.007    3",
+                        65, //"atom         65   26    NH3   \"Ammonium Nitrogen\"            7    14.007    4",
+                        66, //"atom         66   27    N     \"PRO Nitrogen\"                 7    14.007    3",
+                        67, //"atom         67   28    NP    \"N-Terminal PRO N\"             7    14.007    4",
+                    };
+
+                    List<List<int>> resi_atoms = new List<List<int>>();
+                    for(int i=0; i<xyzatoms.Length; i++)
+                    {
+                        var atom = xyzatoms[i];
+                        if(BiotypeN.Contains(atom.AtomId))
+                            resi_atoms.Add(new List<int>());
+                        resi_atoms.Last().Add(i);
+                    }
+
+                    List<int>   keep = new List<int>();
+                    List<int[]> remv = new List<int[]>();
+                    for(int i=0; i< resi_atoms.Count; i++)
+                    {
+                        if(i < 10)
+                            keep.AddRange(resi_atoms[i]);
+                        else
+                            remv.Add(resi_atoms[i].ToArray());
+                    }
+
+                    throw new NotImplementedException();
+
+                    return new Tuple<int[], int[][]>(keep.ToArray(), remv.ToArray());
                 }
             }
         }
