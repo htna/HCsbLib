@@ -111,7 +111,20 @@ namespace HTLib2.Bioinfo
 
                 HessForcInfo hessforcinfo;
 
-                hessforcinfo = GetCoarseHessForcSubIter(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
+                string iteropt = null;
+                if(options.Contains("TestSimple")) iteropt = "SubSimple";
+
+                switch(iteropt)
+                {
+                    case "TestSimple":
+                        hessforcinfo = GetCoarseHessForcSubSimple(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
+                        break;
+                    case null:
+                        hessforcinfo = GetCoarseHessForcSubIter(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
+                        break;
+                    default:
+                        goto case null;
+                }
 
                 HDebug.Assert(hessforcinfo.hess.ColBlockSize == hessforcinfo.hess.RowBlockSize);
                 HDebug.Assert(hessforcinfo.hess.ColBlockSize == hessforcinfo.forc.Length * 3);
