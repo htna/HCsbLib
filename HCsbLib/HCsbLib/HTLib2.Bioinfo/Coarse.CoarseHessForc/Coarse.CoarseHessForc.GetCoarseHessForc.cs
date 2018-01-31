@@ -109,9 +109,12 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                HessForcInfo hessforcinfo = GetCoarseHessForcSubIter(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
-                HDebug.Assert(H.ColBlockSize == H.RowBlockSize);
-                HDebug.Assert(H.ColBlockSize == F.Length);
+                HessForcInfo hessforcinfo;
+
+                hessforcinfo = GetCoarseHessForcSubIter(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
+
+                HDebug.Assert(hessforcinfo.hess.ColBlockSize == hessforcinfo.hess.RowBlockSize);
+                HDebug.Assert(hessforcinfo.hess.ColBlockSize == hessforcinfo.forc.Length * 3);
                 //{
                 //    var info = GetHessCoarseResiIterImpl_Matlab(H, lstNewIdxRemv, thres_zeroblk);
                 //    H = info.H;
@@ -120,7 +123,7 @@ namespace HTLib2.Bioinfo
 
 
                 if(rediag)
-                    H = H.CorrectHessDiag();
+                    hessforcinfo.hess = hessforcinfo.hess.CorrectHessDiag();
                 //System.Console.WriteLine("finish fixing diag");
 
                 hessforcinfo.mass   = reMass  .HSelectCount(numca);

@@ -14,8 +14,8 @@ namespace HTLib2.Bioinfo
         {
             public static HessForcInfo GetCoarseHessForcSubSimple
                 ( object[] atoms
-                , HessMatrix H
-                , Vector     F
+                , HessMatrix hess
+                , Vector[]   forc
                 , List<int>[] lstNewIdxRemv
                 , double thres_zeroblk
                 , ILinAlg ila
@@ -23,6 +23,9 @@ namespace HTLib2.Bioinfo
                 , string[] options // { "pinv(D)" }
                 )
             {
+                HessMatrix H = hess;
+                Vector     F = forc.ToVector();
+
                 if(cloneH)
                     H = H.CloneHess();
 
