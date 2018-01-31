@@ -12,7 +12,7 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForc
         {
-            public static HessForcInfoIter GetCoarseHessForc
+            public static HessForcInfo GetCoarseHessForc
                 ( HessForcInfo hessforc
                 , Vector[] coords
                 , FuncGetIdxKeepListRemv GetIdxKeepListRemv
@@ -109,20 +109,9 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                List<IterInfo> iterinfos = null;
-                {
-                    object[] atoms = reAtoms; // reAtoms.HToType(null as Universe.Atom[]);
-                    CGetHessCoarseResiIterImpl info = null;
-
-                    Vector f = F.ToVector();
-                    info = GetCoarseHessForcSubIter(atoms, H, f, lstNewIdxRemv, thres_zeroblk, ila, false, options);
-
-                    H = info.H;
-                    F = info.F.ToVectors(3);
-                    HDebug.Assert(H.ColBlockSize == H.RowBlockSize);
-                    HDebug.Assert(H.ColBlockSize == F.Length);
-                    iterinfos = info.iterinfos;
-                }
+                HessForcInfo hessforcinfo = GetCoarseHessForcSubIter(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
+                HDebug.Assert(H.ColBlockSize == H.RowBlockSize);
+                HDebug.Assert(H.ColBlockSize == F.Length);
                 //{
                 //    var info = GetHessCoarseResiIterImpl_Matlab(H, lstNewIdxRemv, thres_zeroblk);
                 //    H = info.H;
@@ -134,15 +123,11 @@ namespace HTLib2.Bioinfo
                     H = H.CorrectHessDiag();
                 //System.Console.WriteLine("finish fixing diag");
 
-                return new HessForcInfoIter
-                {
-                    hess          = H,
-                    forc          = F,
-                    mass          = reMass.HSelectCount(numca),
-                    atoms         = reAtoms.HSelectCount(numca),
-                    coords        = reCoords.HSelectCount(numca),
-                    iterinfos     = iterinfos,
-                };
+                hessforcinfo.mass   = reMass  .HSelectCount(numca);
+                hessforcinfo.atoms  = reAtoms .HSelectCount(numca);
+                hessforcinfo.coords = reCoords.HSelectCount(numca);
+
+                return hessforcinfo;
             }
         }
     }

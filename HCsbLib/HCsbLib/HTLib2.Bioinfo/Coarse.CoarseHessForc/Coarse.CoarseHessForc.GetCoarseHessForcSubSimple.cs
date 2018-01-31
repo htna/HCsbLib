@@ -12,7 +12,7 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForc
         {
-            public static CGetHessCoarseResiIterImpl GetCoarseHessForcSubSimple
+            public static HessForcInfo GetCoarseHessForcSubSimple
                 ( object[] atoms
                 , HessMatrix H
                 , Vector     F
@@ -153,11 +153,10 @@ namespace HTLib2.Bioinfo
 
                 HDebug.Assert(H.ColSize == H.RowSize);
                 HDebug.Assert(H.ColSize == F.Size);
-                return new CGetHessCoarseResiIterImpl
+                return new HessForcInfo
                 {
-                    iterinfos = null,
-                    H = H,
-                    F = F,
+                    hess = H,
+                    forc = F.ToVectors(3),
                 };
             }
         }

@@ -12,16 +12,16 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForc
         {
-            public class CGetHessCoarseResiIterImpl
-            {
-                public List<IterInfo> iterinfos = null;
-                public HessMatrix H = null;
-                public Vector     F = null;
-            };
-            public static CGetHessCoarseResiIterImpl GetCoarseHessForcSubIter
+            //public class CGetHessCoarseResiIterImpl
+            //{
+            //    public List<IterInfo> iterinfos = null;
+            //    public HessMatrix H = null;
+            //    public Vector     F = null;
+            //};
+            public static HessForcInfo GetCoarseHessForcSubIter
                 ( object[] atoms
-                , HessMatrix H
-                , Vector     F
+                , HessMatrix hess
+                , Vector[]   forc
                 , List<int>[] lstNewIdxRemv
                 , double thres_zeroblk
                 , ILinAlg ila
@@ -29,6 +29,9 @@ namespace HTLib2.Bioinfo
                 , string[] options // { "pinv(D)" }
                 )
             {
+                HessMatrix H = hess;
+                Vector     F = forc.ToVector();
+
                 ila = null;
                 if(cloneH)
                     H = H.CloneHess();
@@ -322,11 +325,11 @@ namespace HTLib2.Bioinfo
 
                 HDebug.Assert(H.ColSize == H.RowSize);
                 HDebug.Assert(H.ColSize == F.Size);
-                return new CGetHessCoarseResiIterImpl
+                return new HessForcInfoIter
                 {
                     iterinfos = iterinfos,
-                    H = H,
-                    F = F,
+                    hess = H,
+                    forc = F.ToVectors(3),
                 };
             }
         }
