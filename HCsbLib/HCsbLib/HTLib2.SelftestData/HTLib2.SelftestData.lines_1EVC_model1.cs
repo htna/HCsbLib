@@ -7,7 +7,7 @@ namespace HTLib2
 {
     public partial class SelftestData
 	{
-        public static string[] lines_1EVC_model1
+        public static string[] lines_1EVC_pdb   // model1
         {
             get
             {

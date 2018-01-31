@@ -109,7 +109,7 @@ namespace HTLib2.Bioinfo
         {
             if(HDebug.Selftest())
             {
-                Vector[] _coords = Pdb.FromLines(SelftestData.lines_1L2Y_model1).atoms.SelectByName("CA").ListCoord().ToArray().HSelectCount(10);
+                Vector[] _coords = Pdb.FromLines(SelftestData.lines_1L2Y_pdb).atoms.SelectByName("CA").ListCoord().ToArray().HSelectCount(10);
                 HashSet<Tuple<int, int, double>> sprs0 = //EnumHessAnmSpr_obsolete(_coords, 7, 1).HToHashSet();
                     new HashSet<Tuple<int, int, double>>
                 {
