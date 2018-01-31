@@ -1252,6 +1252,8 @@
     <None Include="HTLib2.Bioinfo\Hess\Hess.GetSprScalar.one" />
     <None Include="HTLib2.Bioinfo\Pdb\Depreciated\Struct.BuildBond\top_all27_prot_lipid.inp" />
     <None Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Pdb.Format_v33_Letter.pdf" />
+    <Compile Include="HTLib2.SelftestData\HTLib2.SelftestData.1L2Y.xyz.cs" />
+    <Compile Include="HTLib2.SelftestData\HTLib2.SelftestData.charmm22.prm.cs" />
     <None Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KDTreeDLL.zip" />
     <None Include="HTLib2\External.alglib381\alglib-3.8.1.csharp.zip" />
     <None Include="HTLib2\External.KDTree\KDTreeDLL.zip" />
