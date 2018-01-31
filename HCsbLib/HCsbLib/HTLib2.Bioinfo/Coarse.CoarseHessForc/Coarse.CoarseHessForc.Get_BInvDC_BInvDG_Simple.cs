@@ -13,7 +13,7 @@ namespace HTLib2.Bioinfo
         {
             public static partial class CoarseHessForcSimple
             {
-                private static ValueTuple<HessMatrix, Vector> Get_BInvDC_BInvDG
+                private static ValueTuple<HessMatrix, Vector> Get_BInvDC_BInvDG_Simple
                     (HessMatrix CC
                     , HessMatrix DD
                     , Vector GG
