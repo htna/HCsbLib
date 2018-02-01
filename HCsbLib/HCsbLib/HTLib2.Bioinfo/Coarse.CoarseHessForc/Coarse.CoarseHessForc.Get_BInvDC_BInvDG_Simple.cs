@@ -40,7 +40,7 @@ namespace HTLib2.Bioinfo
                     //Matrix BBinvDDCC = Matlab.GetMatrix("BinvDC", true);                                    
                     if(thld_BinvDC != null)
                     {
-                        Matlab.Execute("BinvDC(find(BinvDC < " + thld_BinvDC.ToString() + ")) = 0;");
+                        Matlab.Execute("BinvDC(find(abs(BinvDC) < " + thld_BinvDC.ToString() + ")) = 0;");
                     }
 
                     Func<int, int, HessMatrix> Zeros = delegate(int colsize, int rowsize)

@@ -151,6 +151,57 @@ namespace HTLib2.Bioinfo
                     F = Matlab.GetVector("FF");
                     Matlab.Execute("clear;");
 
+                    {
+                        ValueTuple<HessMatrix, Vector> BBInvDDCC_BBInvDDGG = Get_BInvDC_BInvDG_Simple
+                            ( C
+                            , D
+                            , nG
+                            , process_disp_console : false
+                            , thld_BinvDC: thres_zeroblk/lstNewIdxRemv.Length
+                            , parallel:parallel
+                            );
+                        HessMatrix HH = A  - BBInvDDCC_BBInvDDGG.Item1;
+                        Vector     FF = nF - BBInvDDCC_BBInvDDGG.Item2;
+                        double dbg_HH = (HH - H).HAbsMax();         
+                        double dbg_FF = (FF - F).ToArray().MaxAbs();
+                        HDebug.Assert(Math.Abs(dbg_HH) < 0.00000001);
+                        HDebug.Assert(Math.Abs(dbg_FF) < 0.00000001);
+                    }
+                    {
+                        ValueTuple<HessMatrix, Vector> BBInvDDCC_BBInvDDGG = Get_BInvDC_BInvDG
+                            ( C
+                            , D
+                            , nG
+                            , process_disp_console : false
+                            , options : new string[0]
+                            , thld_BinvDC: thres_zeroblk/lstNewIdxRemv.Length
+                            , parallel:parallel
+                            );
+                        HessMatrix HH = A  - BBInvDDCC_BBInvDDGG.Item1;
+                        Vector     FF = nF - BBInvDDCC_BBInvDDGG.Item2;
+                        double dbg_HH = (HH - H).HAbsMax();         
+                        double dbg_FF = (FF - F).ToArray().MaxAbs();
+                        HDebug.Assert(Math.Abs(dbg_HH) < 0.00000001);
+                        HDebug.Assert(Math.Abs(dbg_FF) < 0.00000001);
+                    }
+                    {
+                        ValueTuple<HessMatrix, Vector> BBInvDDCC_BBInvDDGG = Get_BInvDC_BInvDG_WithSqueeze
+                            ( C
+                            , D
+                            , nG
+                            , process_disp_console : false
+                            , options : new string[0]
+                            , thld_BinvDC: thres_zeroblk/lstNewIdxRemv.Length
+                            , parallel:parallel
+                            );
+                        HessMatrix HH = A  - BBInvDDCC_BBInvDDGG.Item1;
+                        Vector     FF = nF - BBInvDDCC_BBInvDDGG.Item2;
+                        double dbg_HH = (HH - H).HAbsMax();         
+                        double dbg_FF = (FF - F).ToArray().MaxAbs();
+                        HDebug.Assert(Math.Abs(dbg_HH) < 0.00000001);
+                        HDebug.Assert(Math.Abs(dbg_FF) < 0.00000001);
+                    }
+
                     GC.Collect();
                 }
 

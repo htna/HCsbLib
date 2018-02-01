@@ -57,16 +57,16 @@ namespace HTLib2.Bioinfo
                     double absmax_simple = (coarseinfo_debug.hess - coarseinfo_simple.hess).HAbsMax();
                     HDebug.Assert(Math.Abs(absmax_simple) < 0.00000001);
 
-                    var coarseinfo_noiter = Coarse.CoarseHessForc.GetCoarseHessForc
+                    var coarseinfo_1iter = Coarse.CoarseHessForc.GetCoarseHessForc
                     ( hessforcinfo
                     , coords            : hessinfo.coords
                     , GetIdxKeepListRemv: GetIdxKeepListRemv
                     , ila               : null
                     , thres_zeroblk     : double.Epsilon
-                    , options           : new string[] { "NoIter" }
+                    , options           : new string[] { "OneIter" }
                     );
-                    double absmax_noiter = (coarseinfo_debug.hess - coarseinfo_noiter.hess).HAbsMax();
-                    HDebug.Assert(Math.Abs(absmax_noiter) < 0.00000001);
+                    double absmax_1iter = (coarseinfo_debug.hess - coarseinfo_1iter.hess).HAbsMax();
+                    HDebug.Assert(Math.Abs(absmax_1iter) < 0.00000001);
 
                     var coarseinfo_iter = Coarse.CoarseHessForc.GetCoarseHessForc
                     ( hessforcinfo

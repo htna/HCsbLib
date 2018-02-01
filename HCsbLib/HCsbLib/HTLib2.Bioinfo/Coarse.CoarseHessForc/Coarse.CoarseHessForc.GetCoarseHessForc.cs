@@ -116,7 +116,7 @@ namespace HTLib2.Bioinfo
 
                 string iteropt = null;
                 if(options.Contains("SubSimple")) iteropt = "SubSimple";
-                if(options.Contains("NoIter")) iteropt = "NoIter";
+                if(options.Contains("OneIter")) iteropt = "OneIter";
                 if(options.Contains("Debug")) iteropt = "Debug";
 
                 switch(iteropt)
@@ -127,7 +127,7 @@ namespace HTLib2.Bioinfo
                     case null:
                         hessforcinfo = GetCoarseHessForcSubIter(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
                         break;
-                    case "NoIter":
+                    case "OneIter":
                         {
                             int totalcount = lstNewIdxRemv.HListCount().Sum();
                             for(int i=1; i<lstNewIdxRemv.Length; i++)
@@ -136,7 +136,9 @@ namespace HTLib2.Bioinfo
                                 lstNewIdxRemv[i] = null;
                             }
                             lstNewIdxRemv = new List<int>[] { lstNewIdxRemv[0] };
+                            HDebug.Assert(lstNewIdxRemv.Length == 1);
                             HDebug.Assert(totalcount == lstNewIdxRemv[0].Count);
+                            HDebug.Assert(totalcount == lstNewIdxRemv[0].HToHashSet().Count);
                             hessforcinfo = GetCoarseHessForcSubIter(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
                         }
                         break;
