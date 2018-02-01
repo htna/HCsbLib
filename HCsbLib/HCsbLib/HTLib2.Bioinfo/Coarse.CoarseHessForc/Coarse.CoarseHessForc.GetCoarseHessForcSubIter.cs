@@ -163,6 +163,11 @@ namespace HTLib2.Bioinfo
                             int bc   = bc_br_bval.Item1;
                             int br   = bc_br_bval.Item2;
                             var bval = bc_br_bval.Item3;
+                            if(bc < br)
+                            {
+                                HDebug.Assert(false);
+                                continue;
+                            }
 
                             H.SetBlock(bc, br, null);
                             if(bc > iremv_max) { HDebug.Assert(false); continue; }
@@ -319,6 +324,24 @@ namespace HTLib2.Bioinfo
                 }
                 {
                     H.MakeNearZeroBlockAsZero(thres_zeroblk);
+                }
+                {
+                    var list_bc_br_bval = H.EnumBlocks().ToArray();
+
+                    Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
+                    {
+                        int bc   = bc_br_bval.Item1;
+                        int br   = bc_br_bval.Item2;
+                        var bval = bc_br_bval.Item3;
+                        HDebug.Assert(bc >= br);
+                        if(bc == br)
+                            return;
+                        MatrixByArr bval_tr = bval.Tr();
+                        H.SetBlockLock(br, bc, bval_tr);
+                        HDebug.Assert(H.GetBlockLock(bc, br) == bval);
+                    };
+                    if(parallel)    HParallel.ForEach(list_bc_br_bval, func);
+                    else            foreach(var bc_br_bval in list_bc_br_bval) func(bc_br_bval);
                 }
                 GC.Collect();
                 //System.Console.WriteLine("finish resizing");
