@@ -58,11 +58,10 @@ namespace HTLib2.Bioinfo
         }
         public override MatrixByArr GetBlockLock(int bc, int br)
         {
-            throw new NotImplementedException();
-            //lock(this)
-            //{
-            //    return GetBlock(bc, br);
-            //}
+            lock(hess)
+            {
+                return GetBlock(bc, br);
+            }
         }
         public override void SetBlock(int bc, int br, MatrixByArr bval)
         {
@@ -82,11 +81,10 @@ namespace HTLib2.Bioinfo
         }
         public override void SetBlockLock(int bc, int br, MatrixByArr bval)
         {
-            throw new NotImplementedException();
-            //lock(this)
-            //{
-            //    SetBlock(bc, br, bval);
-            //}
+            lock(hess)
+            {
+                SetBlock(bc, br, bval);
+            }
         }
         public override bool HasBlock(int bc, int br)
         {
@@ -105,11 +103,10 @@ namespace HTLib2.Bioinfo
         }
         public override bool HasBlockLock(int bc, int br)
         {
-            throw new NotImplementedException();
-            //lock(this)
-            //{
-            //    return HasBlock(bc, br);
-            //}
+            lock(hess)
+            {
+                return HasBlock(bc, br);
+            }
         }
         public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks()
         {
