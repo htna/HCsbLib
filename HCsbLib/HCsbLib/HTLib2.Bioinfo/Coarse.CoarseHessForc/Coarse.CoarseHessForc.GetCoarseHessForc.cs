@@ -121,11 +121,11 @@ namespace HTLib2.Bioinfo
 
                 switch(iteropt)
                 {
-                    case "SubSimple":
-                        hessforcinfo = GetCoarseHessForcSubSimple(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
-                        break;
                     case null:
                         hessforcinfo = GetCoarseHessForcSubIter(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
+                        break;
+                    case "SubSimple":
+                        hessforcinfo = GetCoarseHessForcSubSimple(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
                         break;
                     case "OneIter":
                         {
