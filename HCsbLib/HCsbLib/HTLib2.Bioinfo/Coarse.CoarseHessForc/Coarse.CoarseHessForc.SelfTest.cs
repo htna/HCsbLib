@@ -79,6 +79,28 @@ namespace HTLib2.Bioinfo
                     double absmax_iter = (coarseinfo_debug.hess - coarseinfo_iter.hess).HAbsMax();
                     HDebug.Assert(Math.Abs(absmax_iter) < 0.00000001);
 
+                    double tolerance = 1.0E-6; // 0.00001;
+                    var coarseinfo_1iter_tolerant = Coarse.CoarseHessForc.GetCoarseHessForc
+                    ( hessforcinfo
+                    , coords            : hessinfo.coords
+                    , GetIdxKeepListRemv: GetIdxKeepListRemv
+                    , ila               : null
+                    , thres_zeroblk     : tolerance
+                    , options           : new string[] { "OneIter" }
+                    );
+                    double absmax_1iter_tolerant = (coarseinfo_debug.hess - coarseinfo_1iter_tolerant.hess).HAbsMax();
+                    HDebug.Assert(Math.Abs(absmax_1iter_tolerant) < tolerance*10);
+
+                    var coarseinfo_iter_tolerant = Coarse.CoarseHessForc.GetCoarseHessForc
+                    ( hessforcinfo
+                    , coords            : hessinfo.coords
+                    , GetIdxKeepListRemv: GetIdxKeepListRemv
+                    , ila               : null
+                    , thres_zeroblk     : tolerance
+                    , options           : null
+                    );
+                    double absmax_iter_tolerant = (coarseinfo_debug.hess - coarseinfo_iter_tolerant.hess).HAbsMax();
+                    HDebug.Assert(Math.Abs(absmax_iter_tolerant) < tolerance*10);
                 }
                 public static Tuple<int[], int[][]> GetIdxKeepListRemv(object[] atoms, Vector[] coords)
                 {
