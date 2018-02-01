@@ -11,8 +11,6 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForc
         {
-            public static partial class CoarseHessForcSimple
-            {
                 private static ValueTuple<HessMatrix, Vector> Get_BInvDC_BInvDG_Simple
                     (HessMatrix CC
                     , HessMatrix DD
@@ -61,7 +59,6 @@ namespace HTLib2.Bioinfo
                         , BB_invDD_GG
                         );
                 }
-            }
         }
     }
 }
