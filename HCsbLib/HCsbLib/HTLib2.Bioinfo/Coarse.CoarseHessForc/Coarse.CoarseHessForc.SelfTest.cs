@@ -37,14 +37,47 @@ namespace HTLib2.Bioinfo
 
                     var hessforcinfo = Coarse.CoarseHessForc.HessForcInfo.From(hessinfo);
                         hessforcinfo.forc = testgrad.anlyts.GetForces(xyz.atoms);
-                    var prothessinfo = Coarse.CoarseHessForc.GetCoarseHessForc
+                    var coarseinfo_debug = Coarse.CoarseHessForc.GetCoarseHessForc
                     ( hessforcinfo
                     , coords            : hessinfo.coords
                     , GetIdxKeepListRemv: GetIdxKeepListRemv
                     , ila               : null
-                    , thres_zeroblk     : 0.001
+                    , thres_zeroblk     : double.Epsilon
+                    , options           : new string[] { "Debug" }
+                    );
+
+                    var coarseinfo_simple = Coarse.CoarseHessForc.GetCoarseHessForc
+                    ( hessforcinfo
+                    , coords            : hessinfo.coords
+                    , GetIdxKeepListRemv: GetIdxKeepListRemv
+                    , ila               : null
+                    , thres_zeroblk     : double.Epsilon
+                    , options           : new string[] { "SubSimple" }
+                    );
+                    double absmax_simple = (coarseinfo_debug.hess - coarseinfo_simple.hess).HAbsMax();
+                    HDebug.Assert(Math.Abs(absmax_simple) < 0.00000001);
+
+                    var coarseinfo_noiter = Coarse.CoarseHessForc.GetCoarseHessForc
+                    ( hessforcinfo
+                    , coords            : hessinfo.coords
+                    , GetIdxKeepListRemv: GetIdxKeepListRemv
+                    , ila               : null
+                    , thres_zeroblk     : double.Epsilon
+                    , options           : new string[] { "NoIter" }
+                    );
+                    double absmax_noiter = (coarseinfo_debug.hess - coarseinfo_noiter.hess).HAbsMax();
+                    HDebug.Assert(Math.Abs(absmax_noiter) < 0.00000001);
+
+                    var coarseinfo_iter = Coarse.CoarseHessForc.GetCoarseHessForc
+                    ( hessforcinfo
+                    , coords            : hessinfo.coords
+                    , GetIdxKeepListRemv: GetIdxKeepListRemv
+                    , ila               : null
+                    , thres_zeroblk     : double.Epsilon
                     , options           : null
                     );
+                    double absmax_iter = (coarseinfo_debug.hess - coarseinfo_iter.hess).HAbsMax();
+                    HDebug.Assert(Math.Abs(absmax_iter) < 0.00000001);
 
                 }
                 public static Tuple<int[], int[][]> GetIdxKeepListRemv(object[] atoms, Vector[] coords)
@@ -78,8 +111,6 @@ namespace HTLib2.Bioinfo
                         else
                             remv.Add(resi_atoms[i].ToArray());
                     }
-
-                    throw new NotImplementedException();
 
                     return new Tuple<int[], int[][]>(keep.ToArray(), remv.ToArray());
                 }

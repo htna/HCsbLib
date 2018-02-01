@@ -21,6 +21,9 @@ namespace HTLib2.Bioinfo
                 , string[] options=null
                 )
             {
+                if(options == null)
+                    options = new string[0];
+
                 bool rediag=true;
 
                 HessMatrix H = null;
@@ -112,22 +115,82 @@ namespace HTLib2.Bioinfo
                 HessForcInfo hessforcinfo;
 
                 string iteropt = null;
-                if(options.Contains("TestSimple")) iteropt = "SubSimple";
+                if(options.Contains("SubSimple")) iteropt = "SubSimple";
+                if(options.Contains("NoIter")) iteropt = "NoIter";
+                if(options.Contains("Debug")) iteropt = "Debug";
 
                 switch(iteropt)
                 {
-                    case "TestSimple":
+                    case "SubSimple":
                         hessforcinfo = GetCoarseHessForcSubSimple(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
                         break;
                     case null:
                         hessforcinfo = GetCoarseHessForcSubIter(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
+                        break;
+                    case "NoIter":
+                        {
+                            int totalcount = lstNewIdxRemv.HListCount().Sum();
+                            for(int i=1; i<lstNewIdxRemv.Length; i++)
+                            {
+                                lstNewIdxRemv[0].AddRange(lstNewIdxRemv[i]);
+                                lstNewIdxRemv[i] = null;
+                            }
+                            lstNewIdxRemv = new List<int>[] { lstNewIdxRemv[0] };
+                            HDebug.Assert(totalcount == lstNewIdxRemv[0].Count);
+                            hessforcinfo = GetCoarseHessForcSubIter(reAtoms, H, F, lstNewIdxRemv, thres_zeroblk, ila, false, options);
+                        }
+                        break;
+                    case "Debug":
+                        lock(new Matlab.NamedLock(""))
+                        {
+                            // collect indexes to remove
+                            HashSet<int> idxRemv = new HashSet<int>();
+                            foreach(var lst in lstNewIdxRemv)
+                                foreach(var idx in lst)
+                                    idxRemv.Add(idx);
+                            // collect indexes to keep
+                            HashSet<int> idxKeep = new HashSet<int>();
+                            for(int idx = 0; idx < coords.Length; idx++)
+                                if(idxRemv.Contains(idx) == false)
+                                    idxKeep.Add(idx);
+                            // check
+                            HDebug.Assert(idxKeep.Min() == 0);
+                            HDebug.Assert(idxKeep.Max() + 1 == idxRemv.Min());
+                            HDebug.Assert(idxRemv.Max() == coords.Length - 1);
+                            // get A,B,C,D, F,G
+                            double assert;
+                            Matlab.Execute("clear");
+                            Matlab.PutMatrix("HH", H, true);
+                            Matlab.PutVector("FF", F.ToVector());
+                            Matlab.PutValue("n", idxKeep.Count*3);
+                            Matlab.PutValue("N", coords.Length*3);
+                            Matlab.Execute("A = HH(1:n  ,1:n  );");
+                            Matlab.Execute("B = HH(1:n  ,n+1:N);");
+                            Matlab.Execute("C = HH(n+1:N,1:n  );");
+                            Matlab.Execute("D = HH(n+1:N,n+1:N);");
+                            Matlab.Execute("F = FF(1:n  );");
+                            Matlab.Execute("G = FF(n+1:N);");
+                            assert = Matlab.GetValue("max(max(abs(B-C')))");    HDebug.Assert(assert == 0);
+                            // compute coarse hess/forc
+                            Matlab.Execute("HHH = A - B * inv(D) * C;");
+                            Matlab.Execute("FFF = F - B * inv(D) * G;");
+                            // return
+                            HessMatrix HHH = Matlab.GetMatrix("HHH", true);
+                            Vector     FFF = Matlab.GetVector("FFF");
+                            Matlab.Execute("clear");
+                            hessforcinfo = new HessForcInfo
+                            {
+                                hess = HHH,
+                                forc = FFF.ToVectors(3),
+                            };
+                        }
                         break;
                     default:
                         goto case null;
                 }
 
                 HDebug.Assert(hessforcinfo.hess.ColBlockSize == hessforcinfo.hess.RowBlockSize);
-                HDebug.Assert(hessforcinfo.hess.ColBlockSize == hessforcinfo.forc.Length * 3);
+                HDebug.Assert(hessforcinfo.hess.ColBlockSize == hessforcinfo.forc.Length);
                 //{
                 //    var info = GetHessCoarseResiIterImpl_Matlab(H, lstNewIdxRemv, thres_zeroblk);
                 //    H = info.H;
