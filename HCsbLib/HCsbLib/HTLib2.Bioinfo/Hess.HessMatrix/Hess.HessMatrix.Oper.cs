@@ -219,7 +219,7 @@ namespace HTLib2.Bioinfo
                 if(other_bmat.HAbsMax() <= thres_NearZeroBlock)
                 {
                     lock(_lock_ignored)
-                    count_ignored ++;
+                        count_ignored ++;
                     //continue;
                     return;
                 }
@@ -227,9 +227,19 @@ namespace HTLib2.Bioinfo
                 int               br   = idx_other[other_br];
                 lock(_lock)
                 {
-                MatrixByArr  this_bmat = GetBlock(bc, br);
-                MatrixByArr   new_bmat = this_bmat + mul_other*other_bmat;
-                SetBlock(bc, br, new_bmat);
+                    MatrixByArr  this_bmat = GetBlock(bc, br);
+                    MatrixByArr   new_bmat;
+                    if(this_bmat == null)
+                    {
+                        if(other_bmat == null)  new_bmat = null;
+                        else                    new_bmat =             mul_other*other_bmat;
+                    }
+                    else
+                    {
+                        if(other_bmat == null)  new_bmat = this_bmat.CloneT()              ;
+                        else                    new_bmat = this_bmat + mul_other*other_bmat;
+                    }
+                    SetBlock(bc, br, new_bmat);
                 }
             };
 
