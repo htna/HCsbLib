@@ -116,8 +116,14 @@ namespace HTLib2.Bioinfo
         }
         public override MatrixByArr GetBlockLock(int bc, int br)
         {
-            throw new NotImplementedException();
-            //return hess.GetBlockLock(bc, br);
+            int br2 =  br        % layersize;
+            int br1 = (br - br2) / layersize;
+
+            double[][][,] offdiag_bc     = offdiag[bc];
+            double[][,]   offdiag_bc_br1 = offdiag[bc][br1];
+
+            if(offdiag_bc_br1 != null)  lock(offdiag_bc_br1) return _GetBlock(bc, br, br1, br2);
+            else                        lock(offdiag_bc    ) return _GetBlock(bc, br, br1, br2);
         }
         public override void SetBlock(int bc, int br, MatrixByArr bval)
         {
