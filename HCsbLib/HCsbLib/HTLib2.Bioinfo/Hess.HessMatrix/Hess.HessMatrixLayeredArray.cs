@@ -359,7 +359,7 @@ namespace HTLib2.Bioinfo
         }
         public override bool HasBlockLock(int bc, int br)
         {
-            throw new NotImplementedException();
+            return (GetBlockLock(bc, br) != null);
         }
         public IEnumerable<ValueTuple<int, int, double[,]>> _EnumBlocks()
         {
