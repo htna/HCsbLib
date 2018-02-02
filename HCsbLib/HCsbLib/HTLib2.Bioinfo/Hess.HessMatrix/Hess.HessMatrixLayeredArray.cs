@@ -327,8 +327,16 @@ namespace HTLib2.Bioinfo
 
         public HessMatrixLayeredArray CloneT()
         {
-            throw new NotImplementedException();
-            //return new HessMatrixLayeredArray(hess.CloneT());
+            HessMatrixLayeredArray clone = new HessMatrixLayeredArray(ColSize, RowSize, layersize);
+            foreach(var bc_br_bval in EnumBlocks())
+            {
+                int bc   = bc_br_bval.Item1;
+                int br   = bc_br_bval.Item2;
+                var bval = bc_br_bval.Item3;
+
+                clone.SetBlock(bc, br, bval.CloneT());
+            }
+            return clone;
         }
 
         //public void SetBlock(IList<int> bcs, IList<int> brs, HessMatrix subhess)
