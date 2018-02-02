@@ -12,6 +12,7 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForc
         {
+            [Serializable]
             public class HessForcInfo
             {
                 public object[]     atoms   = null;
