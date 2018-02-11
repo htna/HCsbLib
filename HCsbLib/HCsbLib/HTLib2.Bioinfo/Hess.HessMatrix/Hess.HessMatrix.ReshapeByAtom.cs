@@ -79,7 +79,13 @@ namespace HTLib2.Bioinfo
                     int br = idxatms[nbr]; if(ignNegIdx && br < 0) continue;
                     if(HasBlock(bc, br) == false)
                     {
-                        HDebug.AssertTolerance(0, GetBlock(bc, br).ToArray());
+                        if(HDebug.IsDebuggerAttached)
+                        {
+                            if(GetBlock(bc, br) != null)
+                            {
+                                HDebug.AssertTolerance(0, GetBlock(bc, br).ToArray());
+                            }
+                        }
                         continue;
                     }
                     MatrixByArr blkrc = GetBlock(bc, br);
