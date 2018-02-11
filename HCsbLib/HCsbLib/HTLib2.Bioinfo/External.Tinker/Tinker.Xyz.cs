@@ -72,6 +72,7 @@ namespace HTLib2.Bioinfo
     }
     public partial class Tinker
     {
+        [Serializable]
         public partial class Xyz
         {
             public Element[] elements;
