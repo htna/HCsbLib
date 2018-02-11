@@ -320,6 +320,7 @@ namespace HTLib2.Bioinfo
             [Serializable]
             public class Atom : Element
             {
+                [Serializable]
                 public class Format
                 {
                     public int[] idxId       = new int[]{ 0, 5};    public string formatId       = "                     {0}";  // HSubEndStringCount
