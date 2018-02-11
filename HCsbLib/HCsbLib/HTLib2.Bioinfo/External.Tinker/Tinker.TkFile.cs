@@ -49,6 +49,7 @@ namespace HTLib2.Bioinfo
                 HFile.WriteAllLines(writepath, lines);
             }
 
+            [Serializable]
             public class Element
             {
                 public readonly string line;

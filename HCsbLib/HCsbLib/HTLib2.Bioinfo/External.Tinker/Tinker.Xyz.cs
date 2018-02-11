@@ -282,6 +282,7 @@ namespace HTLib2.Bioinfo
                 univ.SetCoords(newcoords);
                 return true;
             }
+            [Serializable]
             public class Header : Element
             {
                 public Header(string line) : base(line) { }
@@ -315,6 +316,7 @@ namespace HTLib2.Bioinfo
                     return header;
                 }
             }
+            [Serializable]
             public class Atom : Element
             {
                 public class Format
