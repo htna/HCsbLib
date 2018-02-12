@@ -202,6 +202,20 @@ namespace HTLib2.Bioinfo
                 )
             {
                 var xyz = Tinker.Xyz.FromFile(xyzpath, false);
+                return ReadHess
+                ( xyz
+                , outputpath
+                , optOutSource
+                , HessMatrixZeros
+                );
+            }
+            public static CTesthess ReadHess
+                ( Xyz xyz
+                , string outputpath
+                , Dictionary<string, string[]> optOutSource // =null
+                , Func<int, int, HessMatrix> HessMatrixZeros // =null
+                )
+            {
                 int size = xyz.atoms.Length;
 
                 #region format: output.txt
