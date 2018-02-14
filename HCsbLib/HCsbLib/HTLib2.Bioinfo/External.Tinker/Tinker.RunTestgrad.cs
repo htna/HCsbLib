@@ -385,9 +385,55 @@ namespace HTLib2.Bioinfo
                         ii++;
 
                         List<double> energy_value_sequence = new List<double>();
+
+                        // find location of toker break
+                        List<int> tokenbreak = new List<int>();
+                        {
+                            int jj = ii;
+                            while(lines[i+jj].Trim().Length != 0)
+                            {
+                                string   iiline = lines[i+jj];
+                                string[] iitokens = iiline.Split().HRemoveAll("");
+                                foreach(string iitoken in iitokens)
+                                {
+                                    string iitoken2 = iitoken.Substring(0, iitoken.Length-1) + "@";
+                                    HDebug.Assert(iitoken2.Length == iitoken.Length);
+                                    HDebug.Assert(iitoken2.Last() == '@');
+                                    iiline = iiline.Replace(iitoken, iitoken2);
+                                }
+                                for(int idx = 0; idx < iiline.Length; idx++)
+                                    if(iiline[idx] == '@')
+                                        tokenbreak.Add(idx);
+
+                                jj++;
+                            }
+                            tokenbreak.Add(-1);
+                            tokenbreak = tokenbreak.HToHashSet()
+                                                   .ToList()
+                                                   .HSort()
+                                                   .ToList()
+                                                   ;
+                        }
+
                         while(lines[i+ii].Trim().Length != 0)
                         {
-                            string[] iitokens = lines[i+ii].Split().HRemoveAll("");
+                            string   iiline = lines[i+ii];
+                            //string[] iitokens = iiline.Split().HRemoveAll("");
+                            List<string> iitokens = new List<string>();
+                            {
+                                string iiline2 = "";
+                                for(int jj=0; jj<tokenbreak.Count-1; jj++)
+                                {
+                                    int idx0 = tokenbreak[jj]+1;
+                                    int idx1 = tokenbreak[jj+1];
+                                    if(idx1 >= iiline.Length)
+                                        break;
+                                    int leng = idx1 - idx0 + 1;
+                                    iitokens.Add(iiline.Substring(idx0, leng));
+                                    iiline2 += iitokens[jj];
+                                }
+                                HDebug.Assert(iiline == iiline2);
+                            }
                             foreach(string iitoken in iitokens)
                             {
                                 if(iitoken.Contains("*"))
