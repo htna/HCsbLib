@@ -44,12 +44,17 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="Wolfram.NETLink, Version=1.5.4772.34337, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>External.NETLink\NETLink16\Wolfram.NETLink.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HTLib2.Bioinfo\Align\AlignData.cs" />
@@ -455,6 +460,26 @@
     <Compile Include="HTLib2.Bioinfo\[obsolete]\Topol\Topol.Pres.cs" />
     <Compile Include="HTLib2.Bioinfo\[obsolete]\Topol\Topol.Resi.cs" />
     <Compile Include="HTLib2.Bioinfo\[obsolete]\Topol\Topol.top_all27_prot_lipid.inp.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.Kernel.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.Run.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.ToString.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\IMathematica.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.DelaunayTriangulation.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.Kernel.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.ListPlot.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.NETLink.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.Notebook.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.Package.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.Stat.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.ToInt.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.ToString.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\MathematicaPlotForm.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\MathematicaPlotForm.Designer.cs">
+      <DependentUpon>MathematicaPlotForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Sample\Form1.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Sample\SimpleLink.cs" />
     <Compile Include="HTLib2.Matlab\Matlab.cmatlab.cs" />
     <Compile Include="HTLib2.Matlab\Matlab.cmatlab_locked.cs" />
     <Compile Include="HTLib2.Matlab\Matlab.cs" />
@@ -1245,6 +1270,7 @@
     <None Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Pdb.Format_v33_Letter.pdf" />
     <Compile Include="HTLib2.SelftestData\HTLib2.SelftestData.1L2Y.xyz.cs" />
     <Compile Include="HTLib2.SelftestData\HTLib2.SelftestData.charmm22.prm.cs" />
+    <None Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.NETLink.nb" />
     <None Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KDTreeDLL.zip" />
     <None Include="HTLib2\External.alglib381\alglib-3.8.1.csharp.zip" />
     <None Include="HTLib2\External.KDTree\KDTreeDLL.zip" />
@@ -1252,6 +1278,8 @@
     <None Include="HTLib2\HMath.Geometry\Geometry.MaxCircleBetweenCircles.one" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="External.NETLink\NETLink15\Wolfram.NETLink.dll" />
+    <Content Include="External.NETLink\NETLink16\Wolfram.NETLink.dll" />
     <Content Include="HTLib2.Bioinfo\External.HydroBond\HydroBond.reference.txt" />
     <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\action.i" />
     <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\align.i" />
@@ -1456,6 +1484,14 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\MathematicaPlotForm.resx">
+      <DependentUpon>MathematicaPlotForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Sample\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
