@@ -1,0 +1,149 @@
+CHARMM Element source/fcm/consta.fcm 1.1
+C-----------------------------------------------------------------------
+C this file contains all physical and mathematical constants
+C and conversion factors.
+C
+C  The following units are used:
+C
+C   length: Angstroms
+C   time: ps
+C   energy: Kcal/mol
+C   mass: atomic-mass-unit
+C   charge: electron-charge
+C   pressure: atmosphere
+C
+C physical constants in SI units
+C ------------------------------
+C     Kb = 1.380662 E-23 J/K
+C     Na = 6.022045 E23  1/mol
+C     e = 1.6021892 E-19 C
+C     eps = 8.85418782 E-12 F/m
+C
+C     1 Kcal = 4184.0 J
+C     1 amu = 1.6605655 E-27 Kg
+C     1 A = 1.0 E-10 m
+C
+C reference: CRC Handbook for Chemistry and Physics, 1983/84
+C
+C PI and conversion to degrees
+      REAL*8 PI,RADDEG,DEGRAD,TWOPI
+      PARAMETER(PI=3.14159265358979323846D0,TWOPI=2.0D0*PI)
+      PARAMETER (RADDEG=180.0D0/PI)
+      PARAMETER (DEGRAD=PI/180.0D0)
+C
+C Maximum cosine value for angle and dihedral tolerance code.
+      REAL*8 COSMAX
+      PARAMETER (COSMAX=0.9999999999D0)
+C
+C     TIMFAC is the conversion factor from AKMA time to picoseconds.
+C            (TIMFAC = SQRT ( ( 1A )**2 * 1amu * Na  / 1Kcal )
+C            this factor is used only intrinsically, all I/O is in ps.
+C
+      REAL*8 TIMFAC
+      PARAMETER (TIMFAC=4.88882129D-02)
+C      PARAMETER (TIMFAC=0.04888826)
+C
+C KBOLTZ is Boltzman constant AKMA units (KBOLTZ = N *K  / 1 Kcal)
+C                                                   a  b
+      REAL*8 KBOLTZ
+      PARAMETER (KBOLTZ=1.987191D-03)
+C
+C CCELEC is 1/ (4 pi eps ) in AKMA units, conversion from SI
+C units: CCELEC = e*e*Na / (4*pi*eps*1Kcal*1A)
+C
+      REAL*8 CCELEC
+C      PARAMETER (CCELEC=332.0636D0)! old value of dubious origin
+C      PARAMETER (CCELEC=331.843D0) ! value from 1986-1987 CRC Handbook
+C                                   ! of Chemistry and Physics
+##IF AMBER
+C Note: This value provides compatibility with electrostatics in AMBER
+      PARAMETER (CCELEC=332.0522173D0)
+##ELIF DISCOVER
+C Note: This value provides compatibility with electrostatics in DISCOVER
+      PARAMETER (CCELEC=332.054D0)
+##ELSE
+C Note: this old CHARMM value is kept for compatibility reasons
+      PARAMETER (CCELEC=332.0716D0)
+##ENDIF
+C
+C CNVFRQ converts from root eigenvalues to frequencies in CM-1.
+C        CNVFRQ = SQRT( 1KCAL )/( C * 2 * Pi )
+C
+      REAL*8 CNVFRQ
+      PARAMETER (CNVFRQ=2045.5D0/(2.99793D0*6.28319D0))
+C
+C SPEEDL is the speed of light in cm/ps
+C
+      REAL*8 SPEEDL
+      PARAMETER (SPEEDL=2.99793D-02)
+C
+C ATMOSP is the converting factor to calculate the boundary pressure
+C     1 ATMOSP = 1.01325   10**5  Joule/meter**3
+C              = 1.4584007 10**-5 Kcal/Mol/angs.**3
+      REAL*8 ATMOSP
+      PARAMETER (ATMOSP=1.4584007D-05)
+C
+C PATMOS is the inverse of ATMOSP.
+C
+      REAL*8 PATMOS
+      PARAMETER (PATMOS = 1.D0 / ATMOSP )
+C
+C BOHRR is the Bohr radius.
+C  (This constant is consistant with GAMESS)
+C
+      REAL*8 BOHRR
+      PARAMETER (BOHRR = 0.529177249D0 )
+C
+C
+C TOKCAL - conversion from atomic units to kcal/mole
+C In GAMESS the number is 627.51d0
+C This number is from GAUSSIAN
+C
+      REAL*8 TOKCAL
+      PARAMETER (TOKCAL = 627.5095D0 )
+C
+##IF MMFF
+C Jay Banks 25 Oct 95: added MMFF-specific constants
+C
+C   MDAKCAL = Conversion factor from millidynes-Angstroms to kcal/mol;
+C   based on Avogadro's number = 6.0221367 x 10**23 (E. R. Cohen and B.
+C   N. Taylor, "The 1986 Adjustment of the Fundamental Physical
+C   Constants," Pergamon, Elmsford, NY, Vol 63, 1986, and on 4.184 joules
+C   = 1 calorie (Pure and Applied Chemistry, 51, 1 (1979)
+C
+      real*8 MDAKCAL ! Conversion factor from mdyne-A to kcal/mol
+      parameter(MDAKCAL=143.9325D0)
+C
+##ENDIF
+C
+C DEBYEC - convert from atomic charges and Angstroms to Debyes.
+C  (This constant is consistant with GAMESS)
+C
+      REAL*8 DEBYEC
+      PARAMETER ( DEBYEC = 2.541766D0 / BOHRR )
+C
+C ZEROC - Temperature of 0C (in Kelvin)
+C
+      REAL*8 ZEROC,ROOMT
+      PARAMETER ( ZEROC = 273.15D0 )
+      PARAMETER ( ROOMT = 298.15D0 )
+C
+
+C.. 30a2fix 002 sb/tr ##IF PATHINT PBEQ
+C     ARD 00-11-28
+C     Moved these constants out of EPINT to avoid duplicating them in 
+C     EPIMC.  Curiously the kcal value appears to be a little different 
+C     from the value given in the comments at the top of the file.
+      REAL*8     HPLANCK, HBAR
+      PARAMETER (HPLANCK=6.626176D-34, HBAR=HPLANCK/TWOPI)
+ 
+      REAL*8     JKBOLTZ, AVOGADRO
+      PARAMETER (JKBOLTZ=1.380662D-23, AVOGADRO=6.022045D23)
+ 
+      REAL*8     JKCAL, KCALMOL
+      PARAMETER (JKCAL=4186.05D0, KCALMOL=JKCAL/AVOGADRO)
+ 
+      REAL*8     AMU, ANGSTROM
+      PARAMETER (AMU=1.6605655D-27, ANGSTROM=1.0D-10)
+C.. 30a2fix 002 ##ENDIF
+C

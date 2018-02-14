@@ -1,0 +1,33 @@
+* Minimize PDB
+*
+
+! read topology and parameter file
+read rtf card name top_all27_prot_na.rtf
+read param card name par_all27_prot_na.prm
+! read the psf and coordinate file
+read psf card name 1cbn-final.psf
+read coor card name 1cbn-final.crd
+
+! set up shake
+shake bonh param sele all end
+
+! set up electrostatics, since we're not using PME, set up switching
+! electrostatics
+nbond inbfrq -1 elec fswitch vdw vswitch cutnb 16. ctofnb 12. ctonnb 10.
+
+energy
+
+coor copy comp
+
+mini sd nstep 100
+mini abnr nstep 1000 nprint 100 tolg 0.01
+coor rms
+
+ioform extended
+
+write coor card name 1cbn-initialmini.crd
+* Initial minimization, no PME.
+*
+
+stop
+

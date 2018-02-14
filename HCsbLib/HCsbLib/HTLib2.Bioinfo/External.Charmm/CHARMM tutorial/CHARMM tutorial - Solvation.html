@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<title>Solvation - CHARMM tutorial</title>
+<meta charset="UTF-8" />
+<meta name="generator" content="MediaWiki 1.19.20+dfsg-0+deb7u3" />
+<link rel="canonical" href="/index.php/Solvation" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="CHARMM tutorial (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="https://www.charmmtutorial.org/api.php?action=rsd" />
+<link rel="copyright" href="http://creativecommons.org/licenses/publicdomain/" />
+<link rel="alternate" type="application/atom+xml" title="CHARMM tutorial Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.monobook&amp;only=styles&amp;skin=monobook&amp;*" />
+<!--[if IE 6]><link rel="stylesheet" href="/skins/monobook/IE60Fixes.css?303" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="/skins/monobook/IE70Fixes.css?303" media="screen" /><![endif]--><meta name="ResourceLoaderDynamicStyles" content="" />
+<link rel="stylesheet" href="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=monobook&amp;*" />
+<style>a:lang(ar),a:lang(ckb),a:lang(fa),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}a.new,#quickbar a.new{color:#ba0000}
+
+/* cache key: tutorial:resourceloader:filter:minify-css:7:c88e2bcd56513749bec09a7e29cb3ffa */</style>
+
+<script src="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=monobook&amp;*"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Solvation","wgTitle":"Solvation","wgCurRevisionId":1046,"wgArticleId":50,"wgIsArticle":true,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgRelevantPageName":"Solvation","wgRestrictionEdit":[],"wgRestrictionMove":[],"wgRedirectedFrom":"FINAL_Solvation"});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":5,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"monobook","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":
+0,"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;},{},{});mw.loader.implement("user.tokens",function($){mw.user.tokens.set({"editToken":"+\\","watchToken":false});;},{},{});
+
+/* cache key: tutorial:resourceloader:filter:minify-js:7:74a832f2292f1f4d40d425d223444e78 */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax"]);
+}</script>
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Solvation skin-monobook action-view">
+<div id="globalWrapper">
+<div id="column-content"><div id="content">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading"><span dir="auto">Solvation</span></h1>
+	<div id="bodyContent" class="mw-body">
+		<div id="siteSub">From CHARMM tutorial</div>
+		<div id="contentSub">(Redirected from <a href="/index.php?title=FINAL_Solvation&amp;redirect=no" title="FINAL Solvation">FINAL Solvation</a>)</div>
+		<div id="jump-to-nav" class="mw-jump">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>
+		<!-- start content -->
+<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Overview"><span class="tocnumber">1</span> <span class="toctext">Overview</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#How_much_solvent_is_needed"><span class="tocnumber">2</span> <span class="toctext">How much solvent is needed</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Consideration_on_shapes"><span class="tocnumber">3</span> <span class="toctext">Consideration on shapes</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="#Performing_the_solvation"><span class="tocnumber">4</span> <span class="toctext">Performing the solvation</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="#Orienting_the_structure"><span class="tocnumber">4.1</span> <span class="toctext">Orienting the structure</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Reading_in_and_cutting_down_the_water"><span class="tocnumber">4.2</span> <span class="toctext">Reading in and cutting down the water</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Building_the_crystal"><span class="tocnumber">4.3</span> <span class="toctext">Building the crystal</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Removing_waters_outside_the_crystal_structure"><span class="tocnumber">4.4</span> <span class="toctext">Removing waters outside the crystal structure</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#After_solvation"><span class="tocnumber">4.5</span> <span class="toctext">After solvation</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="Overview"> Overview </span></h2>
+<p>Solvation is surrounding the solute, generally a protein, nucleic acid strand, or other macromolecule with a solvent, typically water. This is very useful in biomolecular simulations since biochemical reactions generally take place in a viscous environment. Though CHARMM supports methods of estimating solvent effects implicitly, in many simulations it is useful to be able to explicitly place the system being studied into a solvated environment. There is no specific command for solvation, but it can be done through a series of commands. The basic procedure for solvation, as implemented by CHARMMing, is:
+</p>
+<ol><li> Read in the system to be solvated and center it
+</li><li> Read in a large box of pre-equilibrated waters (CHARMMing uses TIP3, which is the residue name for the default TIP3 water model)
+</li><li> Delete the waters that overlap the solute (any water whose Oxygen is within 2.5 Å of the solute) and are more than a certain distance from the center (the exact distance depends on the size of the solvent box chosen by the user), leaving a spherical water structure
+</li><li> Unless the shape of the water structure is to be a sphere, delete any remaining waters that are outside of the final unit cell
+</li></ol>
+<p>This procedure will be discussed below. A full-fledged example showing the exact CHARMM commands is given in the <a href="/index.php/FINAL_Full_example" title="FINAL Full example" class="mw-redirect">full example</a>.
+</p>
+<h2> <span class="mw-headline" id="How_much_solvent_is_needed"> How much solvent is needed </span></h2>
+<p>As a general rule, biochemists are not particularly fascinated in the behavior of bulk solvent, however, they are very interested with the way that various macromolecules behave in its presence. This creates something of a conundrum: there needs to be enough solvent present to allow the system of interest to interact with it naturally, but not so much that the system becomes too big to simulate on the computing power available (the solvent-solvent interactions add to the computing power needed to simulate the system).  Using periodic boundary conditions (PBC) does not relieve the user of the need to deal with this problem: if there is not enough solvent to fill the unit cell then unphysical "vacuum pockets" will be created; if the unit cell is too small then the macromolecule may interact with images of itself.
+</p><p>There is no hard and fast rule on how much solvent is needed. The decision should based on the size and shape of structure and how much it is expected to move during the simulation. If the system of interest is expected to move significantly and PBC is not being used, then it is necessary to provide a buffer of solvent sufficient to accommodate its movement in any direction plus a buffer zone of at least 12 Å. It is important to note that there can be substantial artifacts in the first couple of layers of solvent, and therefore a sufficiently large layer is needed to reproduce bulk solvent conditions. If PBC is being used, then in general the solvent structure and unit cell size should be at least the length of the longest axis of the molecule plus twice the cutoff distance from nonbond interactions so that no solvent water molecule interacts with both the solute and its image. Bear in mind when using "long and narrow" unit cells that some portions of the macromolecule may rotate "outside" of the solvation shell during simulation.
+</p>
+<h2> <span class="mw-headline" id="Consideration_on_shapes"> Consideration on shapes </span></h2>
+<p>As mentioned in the tutorial section on <a href="/index.php/FINAL_The_energy_function" title="FINAL The energy function" class="mw-redirect">CHARMM's energy function</a>, CHARMM supports PBC using any valid crystal unit cell (in practice, however, only a few different shapes of unit cells are actually used). It is convenient to set up the crystal structure (if one is needed) while solvating the system.  Bear in mind that regular shapes must be used as unit cells, i.e. you cannot have a spherically shaped unit cells because spheres cannot be packed to completely fill a given volume of space,
+</p><p>CHARMMing, our Web based interface to CHARMM, contains functionality to automatically determine an efficient shape. To do so, CHARMMing examines the longest and shortest axis of the structure. If the longest axis is more than 30% longer or the shortest axis is more than 30% shorter when compared to the middle axis, then a hexagonal prism is used. Otherwise, a rhombic dodecahedron is chosen. The rhombic dodecahedron (RHDO) is a good choice for globular proteins because it most closely approximates a sphere and thus is the most efficient crystal shape (not a lot of excess water). The hexagonal prism works well for long, thin structures for a similar reason, however it is necessary to be careful to make sure that the macromolecule does not rotate outside of the prism during the simulation. It is generally not a good idea to put restraints on molecules undergoing in MD, however to keep long and narrow structures from rotating MMFP cylinder restraints (see <a rel="nofollow" class="external text" href="http://www.charmm.org/html/documentation/current/mmfp.html">mmfp.doc</a> might be better than simply restraining the end residues. Ideally, however, the molecule should be able to rotate freely without moving outside the unit cell.
+</p>
+<h2> <span class="mw-headline" id="Performing_the_solvation"> Performing the solvation </span></h2>
+<h3> <span class="mw-headline" id="Orienting_the_structure"> Orienting the structure </span></h3>
+<p>Once you have the structure read into CHARMM, it is desirable to orient it with the "COOR ORIEnt" command. This will rotate the molecule so that the x axis is the longest axis, the y axis is the second longest, and the z axis is the shortest. You can then figure out the lengths of each of the three axes via:
+</p>
+<pre>coor stat
+calc xdist = abs(&#160;?xmax -&#160;?xmin )
+calc ydist = abs(&#160;?ymax -&#160;?ymin )
+calc zdist = abs(&#160;?zmax -&#160;?zmin )
+</pre>
+<h3> <span class="mw-headline" id="Reading_in_and_cutting_down_the_water"> Reading in and cutting down the water </span></h3>
+<p>Once you have the macromolecule read in and oriented properly, the next thing that is needed is a water box large enough to accommodate the desired crystal structure. You can download the one used by CHARMMing as a CHARMM coordinate file <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/static/files/water.crd">here</a>. Once you have the file, you can read it in with your existing structure. To do so, you must do two things: (1) append the waters to the PSF as a new segment and (2) read their coordinates in. Since there are 46656 waters in the box you can do this via the following commands:
+</p>
+<pre>! append to the PSF -- the generate command
+! automatically appends the BWAT segment to
+! your existing structure
+read sequence tip3 46656 
+generate bwat noangle nodihedral
+</pre>
+<pre>! now read the coordinates in using APPEND
+! to add them to the current set
+read coor card append name water.crd
+</pre>
+<p>When this is done, it is necessary to delete the water molecules that overlap with the solute. In CHARMMing, we accomplish this by deleting all waters whose oxygen atom is within 2.5 angstroms of the solute. The command to do this (assuming the segment of bulk waters is name BWAT) is:
+</p>
+<pre>delete atom sort sele .byres. ( segid BWAT .and. type oh2 .and. - 
+  (( .not. (segid BWAT .or. hydrogen)) .around. 2.5 )) end
+</pre>
+<p>After deleting the atoms that overlap, we recommend cutting the water structure down to a sphere just large enough to contain the final crystal structure. A reasonable way to do this is to set the diameter of this sphere just large enough to circumscribe a cube with an edge length  of the longest exis of the macromolecule (@xdist) plus two times the padding distance. All waters outside this diameter are then deleted. This is done for efficiency reasons; it will be much faster to remove extraneous water surrounding the unit cell if most of the extraneous waters have already been removed, The CHARMM commands to do so are:
+</p>
+<pre>calc caxislen =&#160;?xdim + ( 2 * @padding )
+calc caxislsq = @caxislen * @caxislen
+calc spherer = ( sqrt( 3 * @caxislsq ) ) / 2
+delete atom sort sele .byres. ( .not. ( point 0.0 0.0 0.0 cut @spherer ) .and. ( segid bwat ) ) end
+</pre>
+<p>In the above commands, <tt>@caxislen</tt> is set to the longest dimension of the macromolecule plus two times the desired padding and <tt>@caxislsq</tt> is the square of this value. The <tt>@padding</tt> is often set between 5 and 15 Å, depending on how much of a solvation shield is needed around the molecule. The <tt>@spherer</tt> variable is the radius of a sphere circumscribing the cube of edge length <tt>@caxislsq</tt> (the requisite diameter is calculated via the Pythagorean Theorem and divided by 2 to get the radius).  The complex part is the selection inside the delete command. It select all residues that are not within a radius <tt>@spherer</tt> of point (0,0,0) (this is another reason why it's important to do a <tt>COOR ORIEnt</tt> before adding the water, as it will center the molecule at the origin), and that are part of the BWAT segment (in the file from CHARMMing, the waters have their segment ID set as BWAT, adjust as necessary for your own structures). It is important to select by residue (<tt>.BYRES.</tt>) because otherwise you might wind up deleting only part of a water molecule.
+</p>
+<h3> <span class="mw-headline" id="Building_the_crystal"> Building the crystal </span></h3>
+<p>When we have the water structure cut down to size, we can go ahead and create the unit cell. This is done in two steps: the crystal structure is defined and then built. This tutorial assumes that you are using one of the standard shapes built into CHARMM (cube, hexagon, tetragonal, rhombic dodecahedron, etc). To define a crystal shape use the CRYStal DEFIne command. The basic syntax is:
+</p>
+<pre>cryst defi &lt;type&gt; &lt;a&gt; &lt;b&gt; &lt;c&gt; &lt;α&gt; &lt;β&gt; &lt;γ&gt;
+</pre>
+<p>where a. b. and c are the edge length and aplha, beta, and gamma are the angles. For example, to define a cube with sides of 20 angstroms you would write:
+</p>
+<pre>cryst defi cubic 20. 20. 20. 90. 90. 90.
+</pre>
+<p>to define a rhombic dodecahedron with edge length 30 you would write
+</p>
+<pre>cryst defi rhdo 30. 30. 30. 60. 90. 60.
+</pre>
+<p>The correct alpha, beta, and gamma values for each supported crystal type are given in <a rel="nofollow" class="external text" href="https://www.charmm.org/charmm/documentation/by-version/c40b1/params/doc/crystl/">crystl.doc</a>. Note that a high degree of precision for the angles is necessary to construct the truncated octahedron structure (i.e. if you try to round off the angles, you will not get a proper octahedron).
+</p><p>Once the crystal is defined, you can go ahead and build it with:
+</p>
+<pre>cryst build noper 0
+</pre>
+<p>The <tt>NOPERations</tt> option specifies how many crystal operations need to be performed. A regular shape centered at the origin with only translational symmetry does not need any crystal operations (see the discussion on crystal structure from the <a href="/index.php/FINAL_The_Energy_Function" title="FINAL The Energy Function" class="mw-redirect">energy page of this tutorial</a>.
+</p>
+<h3> <span class="mw-headline" id="Removing_waters_outside_the_crystal_structure"> Removing waters outside the crystal structure </span></h3>
+<p>It is now necessary to remove the waters that lie outside of the unit cell. This can be done by setting up images and forcing an image update (via the UPDAte command). When the image update is run, all atoms that are outside of the unit cell boundaries will be moved back inside them. By copying the coordinates to the comparison set before doing the update and finding the difference between the main set (the coordinates after the update) and comparison set (the coordinates after the update), we can detect which atoms moved and are, therefore extraneous. We can then delete these so as to preserve the correct density of the equilibrated water structure. This procedure is shown in detail in the <a href="/index.php/FINAL_Full_example" title="FINAL Full example" class="mw-redirect">worked-out example</a>.
+</p><p>The solvation procedure is now complete.
+</p>
+<h3> <span class="mw-headline" id="After_solvation"> After solvation </span></h3>
+<p>It is desirable to do a quick steepest-descent minimization (only a few tens of steps) to remove bad van der Waals contacts.
+</p><p>When using the solvated structure with PBC in a different script, you will need to recreate the crystal structure. To assist with this task, CHARMM can write out the crystal transform file as follows:
+</p>
+<pre>open unit 50 write card name crystal.xtl
+cryst write card unit 50
+* crystal structure -- it might be a good idea to put a, b, c, 
+* alpha, beta, gamma in the header
+*
+</pre>
+<p>This file can then be read back before the <tt>CRYStal BUILd</tt> command. Alternatively, you can just re-run <tt>CRYStal DEFIne&lt;tt&gt; with the exact same a, b, c, α, β, γ, and then re-run &lt;tt&gt;CRYStal BUILd</tt>. It is also desirable to put the lattice type and dimensions into the PSF and coordinate files that are written out after solvation.
+</p><p>Remember <tt>CRYStal</tt> by itself sets up the image transformations and everything needed for the energy calculation. You need to use the <tt>IMAGe</tt> command to specify which atoms in your system are subject to image centering.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 34/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key tutorial:pcache:idhash:50-0!*!0!!en!*!* and timestamp 20170915041658 -->
+</div><div class="printfooter">
+Retrieved from "<a href="https://www.charmmtutorial.org/index.php?title=Solvation&amp;oldid=1046">https://www.charmmtutorial.org/index.php?title=Solvation&amp;oldid=1046</a>"</div>
+		<div id='catlinks' class='catlinks catlinks-allhidden'></div>		<!-- end content -->
+				<div class="visualClear"></div>
+	</div>
+</div></div>
+<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+				<li id="ca-nstab-main" class="selected"><a href="/index.php/Solvation" primary="1" context="subject" title="View the content page [c]" accesskey="c">Page</a></li>
+				<li id="ca-talk" class="new"><a href="/index.php?title=Talk:Solvation&amp;action=edit&amp;redlink=1" primary="1" context="talk" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				<li id="ca-viewsource"><a href="/index.php?title=Solvation&amp;action=edit" primary="1" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li>
+				<li id="ca-history"><a href="/index.php?title=Solvation&amp;action=history" rel="archives" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+
+<li id="pt-login"><a href="/index.php?title=Special:UserLogin&amp;returnto=FINAL+Solvation" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+<a href="/index.php/CHARMM_Tutorial" style="background-image: url(https://www.charmmtutorial.org/tutorial-data/image-sm.png);" title="Visit the main page"></a>
+	</div>
+	<div class="generated-sidebar portlet" id="p-CHARMM_Tutorial">
+		<h5>CHARMM Tutorial</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage"><a href="/index.php/CHARMM_Tutorial" title="Visit the main page [z]" accesskey="z">CHARMM Tutorial</a></li>
+				<li id="n-Outline"><a href="/index.php/Outline">Outline</a></li>
+				<li id="n-Introduction"><a href="/index.php/Introduction">Introduction</a></li>
+				<li id="n-Basic-CHARMM-Scripting"><a href="/index.php/Basic_CHARMM_Scripting">Basic CHARMM Scripting</a></li>
+				<li id="n-Essential-CHARMM-Features"><a href="/index.php/Essential_CHARMM_Features">Essential CHARMM Features</a></li>
+				<li id="n-The-Energy-Function"><a href="/index.php/The_Energy_Function">The Energy Function</a></li>
+				<li id="n-Minimization"><a href="/index.php/Minimization">Minimization</a></li>
+				<li id="n-Solvation"><a href="/index.php/Solvation">Solvation</a></li>
+				<li id="n-Neutralization"><a href="/index.php/Neutralization">Neutralization</a></li>
+				<li id="n-Molecular-Dynamics"><a href="/index.php/MD">Molecular Dynamics</a></li>
+				<li id="n-Langevin-Dynamics"><a href="/index.php/LD">Langevin Dynamics</a></li>
+				<li id="n-Analysis"><a href="/index.php/Analysis">Analysis</a></li>
+				<li id="n-Full-example"><a href="/index.php/Full_example">Full example</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Appendices">
+		<h5>Appendices</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-Temperature-replica-exchange"><a href="/index.php/Temperature_replica_exchange">Temperature replica exchange</a></li>
+				<li id="n-Coarse-Grained-Go-Models"><a href="/index.php/Coarse_Grained_Go_Models">Coarse Grained Go Models</a></li>
+				<li id="n-CHARMMing.27s-PDB-reader"><a href="/index.php/CHARMMing%27s_PDB_Reader">CHARMMing's PDB reader</a></li>
+				<li id="n-Installing-CHARMMing"><a href="/index.php/Installation_of_CHARMMing">Installing CHARMMing</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-SAR_and_QSAR">
+		<h5>SAR and QSAR</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-SAR-and-QSAR-Introduction"><a href="/index.php/SAR_and_QSAR_Introduction">SAR and QSAR Introduction</a></li>
+				<li id="n-SAR-Categorization-Lesson"><a href="/index.php/SAR_Categorization_Lesson">SAR Categorization Lesson</a></li>
+				<li id="n-QSAR-Regression-Lesson"><a href="/index.php/QSAR_Regression_Lesson">QSAR Regression Lesson</a></li>
+				<li id="n-Docking-Introduction-and-Walkthrough"><a href="/index.php/Docking_Introduction_and_Walkthrough">Docking Introduction and Walkthrough</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Files">
+		<h5>Files</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-This-tutorial-as-a-PDF"><a href="http://www.charmmtutorial.org/tutorial-data/charmm_tutorial_2010.pdf" rel="nofollow">This tutorial as a PDF</a></li>
+				<li id="n-Tutorial-files-.28.tar.gz.29"><a href="http://www.charmmtutorial.org/tutorial-data/crambin_example.tar.gz" rel="nofollow">Tutorial files (.tar.gz)</a></li>
+				<li id="n-Tutorial-files-.28.zip.29"><a href="http://www.charmmtutorial.org/tutorial-data/crambin_example.zip" rel="nofollow">Tutorial files (.zip)</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Navigation">
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-recentchanges"><a href="/index.php/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-help"><a href="/index.php/Help:Contents" title="The place to find out">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="/index.php" id="searchform">
+				<input type='hidden' name="title" value="Special:Search"/>
+				<input type="search" name="search" title="Search CHARMM tutorial [f]" accesskey="f" id="searchInput" />
+				<input type="submit" name="go" value="Go" title="Go to a page with this exact name if exists" id="searchGoButton" class="searchButton" />&#160;
+				<input type="submit" name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton" />
+			</form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="/index.php/Special:WhatLinksHere/Solvation" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="/index.php/Special:RecentChangesLinked/Solvation" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+				<li id="t-specialpages"><a href="/index.php/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li><a href="/index.php?title=Solvation&amp;printable=yes" rel="alternate">Printable version</a></li>
+				<li id="t-permalink"><a href="/index.php?title=Solvation&amp;oldid=1046" title="Permanent link to this revision of the page">Permanent link</a></li>
+			</ul>
+		</div>
+	</div>
+</div><!-- end of the left (by default at least) column -->
+<div class="visualClear"></div>
+<div id="footer">
+	<div id="f-copyrightico">
+		<a href="http://creativecommons.org/licenses/publicdomain/"><img src="/skins/common/images/public-domain.png" alt="Public Domain" width="88" height="31" /></a>
+	</div>
+	<div id="f-poweredbyico">
+		<a href="//www.mediawiki.org/"><img src="/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+	</div>
+	<ul id="f-list">
+		<li id="lastmod"> This page was last modified on 9 June 2016, at 16:34.</li>
+		<li id="viewcount">This page has been accessed 46,146 times.</li>
+		<li id="copyright">Content is available under <a class="external" href="http://creativecommons.org/licenses/publicdomain/">Public Domain</a> unless otherwise noted.</li>
+		<li id="privacy"><a href="/index.php/CHARMM_tutorial:Privacy_policy" title="CHARMM tutorial:Privacy policy">Privacy policy</a></li>
+		<li id="about"><a href="/index.php/CHARMM_tutorial:About" title="CHARMM tutorial:About">About CHARMM tutorial</a></li>
+		<li id="disclaimer"><a href="/index.php/CHARMM_tutorial:General_disclaimer" title="CHARMM tutorial:General disclaimer">Disclaimers</a></li>
+	</ul>
+</div>
+</div>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.user","mediawiki.page.ready"], null, true);
+}</script>
+<script src="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=monobook&amp;*"></script>
+<!-- Served in 0.162 secs. --></body></html>

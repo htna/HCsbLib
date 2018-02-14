@@ -1,0 +1,487 @@
+CHARMM Element source/fcm/dimens.fcm 1.1
+C
+C This common file contains all useful dimensioning information.
+C                                   BRB - 01/12/89
+C
+C-----------------------------------------------------------------------
+C     Standard Size parameters
+C
+C   HUGE    version -  1,000,000 atoms
+C   XXLARGE version -   ~360,000 atoms 
+C   XLARGE  version -   ~240,000 atoms 
+C   LARGE   version -    ~60,000 atoms
+C   MEDIUM  version -    ~25,000 atoms
+C   SMALL   version -     ~6,000 atoms
+C   XSMALL  version -     ~2,000 atoms
+C   REDUCE  version - A special version for non-virtual memory machines.
+C                    There is an attempt to greatly limit static memory.
+C
+C   The actual size varies by machine type.
+C   It is listed in the header of the CHARMM output file.
+C
+      INTEGER LARGE,MEDIUM,SMALL,REDUCE
+##IF QUANTA
+      PARAMETER (LARGE=60000, MEDIUM=30000, SMALL=15000)
+##ELIF T3D
+      PARAMETER (LARGE=30120, MEDIUM=20160, SMALL=6120)
+##ELSE
+      PARAMETER (LARGE=60120, MEDIUM=25140, SMALL=6120)
+##ENDIF
+      PARAMETER (REDUCE=15000)
+      INTEGER SIZE
+##IF XLARGE
+      PARAMETER (SIZE=LARGE*4)
+##ELIF XXLARGE
+      PARAMETER (SIZE=LARGE*6)
+##ELIF HUGE
+      PARAMETER (SIZE=1000000)
+##ELIF LARGE
+      PARAMETER (SIZE=LARGE)
+##ELIF MEDIUM
+      PARAMETER (SIZE=MEDIUM)
+##ELIF REDUCE
+      PARAMETER (SIZE=REDUCE)
+##ELIF SMALL
+      PARAMETER (SIZE=SMALL)
+##ELIF XSMALL
+      PARAMETER (SIZE=SMALL/3)
+##ENDIF
+C-----------------------------------------------------------------------
+##IF MMFF
+C MMFF-specific information from (MSI/Merck version of) dimens.fcm
+C
+      integer MAXDEFI       ! maximum number of atom types
+      parameter(MAXDEFI=250)! not to be confused with maximum
+C                           ! allowed atom type MAXATC
+C
+C  NAME0  = LENGTH OF CHARACTER STRING FOR AN ATOM NAME AS RETURNED
+C           BY FUNCTION NAME OR XNAME
+C  NAMEQ0 = LENGTH OF CHARACTER STRING FOR A PARTIALLY OR FULLY
+C           QUALIFIED ATOM NAME AS RETURNED BY FUNCTION QNAME OR XQNAME
+C  NRES0  = LENGTH OF CHARACTER STRING FOR A RESIDUE NAME FIELD
+C  KRES0  = LENGTH OF CHARACTER STRING FOR A RESIDUE TYPE (E.G., "ALA")
+C
+      INTEGER NAME0,NAMEQ0,NRES0,KRES0
+      PARAMETER (NAME0=4,NAMEQ0=10,NRES0=4,KRES0=4)
+C
+      integer MaxAtN  ! maximum atomic number
+      parameter (MaxAtN=55)
+
+      INTEGER MAXAUX ! Maximum number of auxiliary parameters
+      PARAMETER (MAXAUX = 10) ! AuxPar(MAXAUX)
+
+##ENDIF
+C-----------------------------------------------------------------------
+C  FROM:  cnst.fcm
+C
+C  MAXHSET - The maximum number of harmonic restraint sets
+C  MAXCSP  - The maximum number of restrained dihedrals.
+C
+      INTEGER MAXCSP, MAXHSET
+      PARAMETER (MAXHSET = 200)
+##IF REDUCE
+      PARAMETER (MAXCSP = 10)
+##ELSE
+      PARAMETER (MAXCSP = 500)
+##ENDIF
+##IF HMCM
+      INTEGER MAXHCM,MAXPCM,MAXRCM
+##IF REDUCE
+      PARAMETER (MAXHCM=150)
+      PARAMETER (MAXPCM=500)
+      PARAMETER (MAXRCM=500)
+##ELSE
+      PARAMETER (MAXHCM=500)
+      PARAMETER (MAXPCM=5000)
+      PARAMETER (MAXRCM=2000)
+##ENDIF
+##ENDIF
+C
+C-----------------------------------------------------------------------
+C  FROM:  comand.fcm
+C
+C  MXCMSZ - The maximum command length (inluding all continuation lines)
+C
+      INTEGER MXCMSZ
+##IF IBM IBMRS CRAY INTEL IBMSP T3D REDUCE
+      PARAMETER (MXCMSZ = 500)
+##ELSE
+      PARAMETER (MXCMSZ = 5000)
+##ENDIF
+C
+C-----------------------------------------------------------------------
+C  FROM:  cstack.fcm
+C
+C  CHRSIZ - Length of the character stack (should be at least as
+C           large as MAXA).
+C
+      INTEGER CHRSIZ
+      PARAMETER (CHRSIZ = SIZE)
+C
+C-----------------------------------------------------------------------
+C  FROM:  etable.fcm
+C
+C  MAXATB - Maximum number of atom types for table uasge. Should
+C           probably match MAXATC.
+C
+      INTEGER MAXATB
+##IF REDUCE
+      PARAMETER (MAXATB = 10)
+##ELIF QUANTA
+      PARAMETER (MAXATB = 500)
+##ELSE
+      PARAMETER (MAXATB = 200)
+##ENDIF
+C
+C-----------------------------------------------------------------------
+C  FROM:  graph.fcm
+C
+C  IATBMX - Maximum number of bonds for any single atom.
+C
+      INTEGER IATBMX
+      PARAMETER (IATBMX = 8)
+C
+C-----------------------------------------------------------------------
+C  FROM:  hbond.fcm
+C
+C  MAXHB - The maximum number of active hydrogen bonds.
+C      Note: Hydrogen bonds removed by post processing of hbond list
+C      for the BEST and HBEXcl option also count against this total.
+C
+      INTEGER MAXHB
+##IF LARGE XLARGE XXLARGE HUGE
+      PARAMETER (MAXHB = 14000)
+##ELIF MEDIUM
+      PARAMETER (MAXHB = 8000)
+##ELIF SMALL
+      PARAMETER (MAXHB = 2500)
+##ELIF REDUCE XSMALL
+      PARAMETER (MAXHB = 20)
+##ELSE
+##ERROR 'Unrecognized size directive in DIMENS.FCM.'
+##ENDIF
+C
+C-----------------------------------------------------------------------
+C  FROM:  image.fcm
+C
+C  MAXTRN - The maximum number of image transformations.
+C
+      INTEGER MAXTRN,MAXSYM
+##IFN NOIMAGES
+      PARAMETER (MAXTRN = 5000)
+C
+C  MAXSYM - The maximum number of crystal symmetry operations allowed.
+C           The maximum number ever needed in a crystal is 192 but it
+C           is conceivable that in bizarre cases one may require more.
+C               (such as for some finite space groups)
+C
+      PARAMETER (MAXSYM = 192)
+##ELSE
+      PARAMETER (MAXTRN = 1)
+      PARAMETER (MAXSYM = 1)
+##ENDIF
+C
+C-----------------------------------------------------------------------
+C  FROM:  lonepr.fcm
+C
+C  MAXLP  - Maximum number of lone-pair atoms (typ 100)
+C  MAXLPH - Maximum number of lone-pair hosts (typ 500)
+C
+##IF LONEPAIR (lonepair_max)
+      INTEGER MAXLP,MAXLPH
+##IF REDUCE
+      PARAMETER (MAXLP  = 10)
+      PARAMETER (MAXLPH = 20)
+##ELSE
+      PARAMETER (MAXLP  = 20000)
+      PARAMETER (MAXLPH = 20000)
+##ENDIF
+##ENDIF (lonepair_max)
+C
+C-----------------------------------------------------------------------
+C  FROM:  noe.fcm
+C
+C  NOEMAX - The maximum number of NOE restraints.
+C  NOEMX2 - The maximum number of NOE atoms.
+C
+      INTEGER NOEMAX,NOEMX2
+##IF REDUCE
+      PARAMETER (NOEMAX = 10)
+      PARAMETER (NOEMX2 = 20)
+##ELSE
+      PARAMETER (NOEMAX = 2000)
+      PARAMETER (NOEMX2 = 4000)
+##ENDIF
+C
+C-----------------------------------------------------------------------
+C  FROM:  param.fcm
+C
+C  MAXATC - Maximum number of different atom types.
+C  MAXCB  - Maximum number of bond parameters.
+C  MAXCT  - Maximum number of angle parameters.
+C  MAXCP  - Maximum number of dihedral parameters.
+C  MAXCTP - Maximum number of cross-term maps                  !## CMAP
+C  MAXCI  - Maximum number of improper dihedral parameters.
+C  MAXCN  - Maximum number of vdw lookup values
+C  MAXCH  - Maximum number of hydrogen bond parameters.
+C  MAXNBF - Maximum number of nonbond fixes (vdw).
+C  MAXACTEQV- Maximum number of atom equivalences            !##FLEXPARM
+C
+      INTEGER MAXATC, MAXCB, MAXCH, MAXCI, MAXCP, MAXCT, MAXITC, MAXNBF
+##IF REDUCE
+      PARAMETER (MAXATC = 200, MAXCB = 700,  MAXCH = 1600, MAXCI = 500,
+     &           MAXCP  = 500, MAXCT = 2500, MAXITC=   95, MAXNBF= 100)
+##ELIF MMFF CFF
+      PARAMETER (MAXATC = 500, MAXCB = 1500, MAXCH = 3200, MAXCI = 600,
+     &           MAXCP  = 3000,MAXCT = 15500,MAXITC = 200, MAXNBF=1000)
+##ELIF YAMMP
+      PARAMETER (MAXATC = 1500, MAXCB = 2000, MAXCH = 300, MAXCI = 1000,
+     &           MAXCP  = 1000, MAXCT = 2000, MAXITC=  200, MAXNBF=1000)
+##ELIF LARGE XLARGE XXLARGE HUGE
+      PARAMETER (MAXATC = 500, MAXCB = 1500, MAXCH = 3200, MAXCI = 600,
+     &           MAXCP  = 1500, MAXCT = 5500, MAXITC=  200, MAXNBF=1000)
+##ELSE
+      PARAMETER (MAXATC = 500, MAXCB = 1500, MAXCH = 3200, MAXCI = 600,
+     &           MAXCP  = 700, MAXCT = 5500, MAXITC=  200, MAXNBF=1000)
+##ENDIF
+      INTEGER MAXCN
+      PARAMETER (MAXCN = MAXITC*(MAXITC+1)/2)
+C
+      INTEGER MAXCTP                                           !##CMAP
+      PARAMETER (MAXCTP = 10)                                  !##CMAP
+      INTEGER MAXACTEQV                                        !##FLEXPARM
+      PARAMETER (MAXACTEQV = 40)                               !##FLEXPARM
+C
+C-----------------------------------------------------------------------
+C  FROM:  psf.fcm
+C
+C  MAXA   - Maximum number of atoms.
+C  MAXAIM - Maximum number of atoms including image atoms.
+C  MAXB   - Maximum number of bonds.
+C  MAXT   - Maximum number of angles (thetas).
+C  MAXP   - Maximum number of dihedrals (phis).
+C  MAXIMP - Maximum number of improper dihedrals.
+C  MAXCRT - Maximum number of cross terms                      !## CMAP
+C  MAXNB  - Maximum number of explicit nonbond exclusions.
+C  MAXPAD - Maximum number of donors or acceptors.
+C  MAXRES - Maximum number of residues.
+C  MAXSEG - Maximum number of segments.
+C  MAXGRP - Maximum number of groups.
+C  MAXZ14 - Maximum size of Z14 table. Should be nearly indep of prot size.
+C  MXZ14G - Maximum size of Z14G table. Should be nearly indep of prot size.
+C
+      INTEGER MAXA, MAXAIM, MAXB, MAXT, MAXP
+      INTEGER MAXIMP, MAXNB, MAXPAD, MAXRES
+      INTEGER MAXCRT                                           !## CMAP
+      INTEGER MAXSEG, MAXGRP
+##IF LARGE XLARGE XXLARGE
+      PARAMETER (MAXA = SIZE, MAXB = SIZE, MAXT = SIZE*2,
+     &           MAXP = SIZE*3)
+      PARAMETER (MAXIMP =SIZE/2, MAXNB = 17200, MAXPAD = 72000,
+     &           MAXRES =SIZE/4)        ! was 72000
+      PARAMETER (MAXCRT = 20000)                               !## CMAP
+
+##IF MCSS XXLARGE
+      PARAMETER (MAXSEG = 10000)
+##ELSE
+      PARAMETER (MAXSEG = 1000)
+##ENDIF
+##ELIF HUGE
+      PARAMETER (MAXA = SIZE, MAXB = SIZE, MAXT = SIZE*2,
+     &           MAXP = SIZE*3)
+      PARAMETER (MAXIMP =SIZE/2, MAXNB = 17200, MAXPAD = 72000,
+     &           MAXRES =800000)
+      PARAMETER (MAXCRT = 20000)                               !## CMAP
+      PARAMETER (MAXSEG = 10000)
+##ELIF MEDIUM
+      PARAMETER (MAXA = SIZE, MAXB = SIZE, MAXT = SIZE*2,
+     &           MAXP = 3*SIZE)
+      PARAMETER (MAXIMP = SIZE/2, MAXNB = 17200, MAXPAD = 8160,
+     &           MAXRES = 14000)
+      PARAMETER (MAXCRT = 8000)                                !## CMAP
+
+##IF MCSS
+      PARAMETER (MAXSEG = 5000)
+##ELSE
+      PARAMETER (MAXSEG = 1000)
+##ENDIF
+##ELIF SMALL
+      PARAMETER (MAXA = SIZE, MAXB = SIZE, MAXT = SIZE,
+     &           MAXP = 2*SIZE)
+      PARAMETER (MAXIMP = 4200, MAXNB = 6200, MAXPAD = 4160,
+     &           MAXRES = 4000)
+      PARAMETER (MAXCRT = 4000)                                !## CMAP
+##IF MCSS
+      PARAMETER (MAXSEG = 5000)
+##ELSE
+      PARAMETER (MAXSEG = 1000)
+##ENDIF
+##ELIF XSMALL
+      PARAMETER (MAXA = SIZE, MAXB = SIZE, MAXT = 2*SIZE,
+     &           MAXP = SIZE)
+      PARAMETER (MAXIMP = 1000, MAXNB = 600, MAXPAD = 300,
+     &           MAXRES = 500)
+      PARAMETER (MAXSEG = 500)
+      PARAMETER (MAXCRT = 1000)       f                        !## CMAP
+##ELIF REDUCE
+C optimal for small protein in water (80% water, 20% protein)
+      PARAMETER (MAXA = 15000, MAXB = 15000, MAXT = 9000,
+     &           MAXP = 15000)
+      PARAMETER (MAXIMP = 1200, MAXNB = 100, MAXPAD = 1000,
+     &           MAXRES = 7000)
+      PARAMETER (MAXSEG = 1000)
+      PARAMETER (MAXCRT = 1000)                                !## CMAP
+##ELSE
+##ERROR 'Unrecognized size directive in DIMENS.FCM.'
+##ENDIF
+C
+##IF NOIMAGES
+      PARAMETER (MAXAIM = SIZE)
+      PARAMETER (MAXGRP = SIZE/3)
+##ELSE
+      PARAMETER (MAXAIM = 2*SIZE)
+      PARAMETER (MAXGRP = 2*SIZE/3)
+##ENDIF
+C
+C-----------------------------------------------------------------------
+C  FROM:  resdist.fcm
+C
+C  REDMAX - The maximum number of distance restraints.
+C  REDMX2 - The maximum number of specified atom pairs.
+C
+      INTEGER REDMAX,REDMX2
+##IF REDUCE
+      PARAMETER (REDMAX = 2)
+      PARAMETER (REDMX2 = 8)
+##ELSE
+      PARAMETER (REDMAX = 20)
+      PARAMETER (REDMX2 = 80)
+##ENDIF
+C
+C-----------------------------------------------------------------------
+C  FROM:  rtf.fcm
+C
+C  MXRTRS - Maximum number of residues in this data structure
+C  MXRTA  - Maximum number of atoms in all residues.
+C  MXRTB  - Maximum number of bonds in all residues.
+C  MXRTBL - Maximum number of internal coordinates in all residues.
+C  MXRTHA - Maximum number of hydrogen bond acceptors in all residues.
+C  MXRTHD - Maximum number of hydrogen bond donors in all residue.
+C  MXRTI  - Maximum number of impropers in all residue.
+C  MXRTCT - Maximum number of crossterms in all residues        !## CMAP
+C  MXRTP  - Maximum number of torsions (phi's) in all residues.
+C  MXRTT  - Maximum number of bond angles (theta's) in all residues.
+C  MXRTX  - Maximum number of non-bonded exclusions in all residues.
+C  NICM   - Number of different types of information stored in the RTF.
+C
+      INTEGER MXRTRS, MXRTA, MXRTB, MXRTT, MXRTP, MXRTI, MXRTX,
+     &        MXRTCT,                                           !## CMAP
+     &        MXRTHA, MXRTHD, MXRTBL, NICM
+      PARAMETER (MXRTRS = 200, MXRTA = 5000, MXRTB = 5000,
+     &           MXRTT = 5000, MXRTP = 5000, MXRTI = 2000,
+##IF YAMMP
+     &           MXRTX = 20000, MXRTHA = 300, MXRTHD = 300,
+##ELSE
+     &           MXRTX = 5000, MXRTHA = 300, MXRTHD = 300,
+##ENDIF
+##IF CMAP
+     &           MXRTCT = 1000, MXRTBL = 5000, NICM = 11)
+##ELSE
+     &           MXRTBL = 5000, NICM = 10)
+##ENDIF
+C
+C-----------------------------------------------------------------------
+C  FROM:  sbound.fcm
+C
+C  NMFTAB - Maximum number of distance lookup points for any table.
+C  NMCTAB - Maximum number of boundary tables.
+C  NMCATM - Maximum number of atoms for any boundary table.
+C  NSPLIN - Order of fit (3=cubic spline).
+C
+      INTEGER NMFTAB,  NMCTAB,  NMCATM,  NSPLIN
+##IF REDUCE
+      PARAMETER (NMFTAB = 10, NMCTAB = 3, NMCATM = 10, NSPLIN = 3)
+##ELSE
+      PARAMETER (NMFTAB = 200, NMCTAB = 3, NMCATM = 12000, NSPLIN = 3)
+##ENDIF
+C
+C-----------------------------------------------------------------------
+C  FROM:  shake.fcm
+C
+C  MAXSHK - The maximum number of SHAKE constraints.
+C
+      INTEGER MAXSHK
+##IF XSMALL
+      PARAMETER (MAXSHK = 20)
+##ELIF REDUCE
+      PARAMETER (MAXSHK = 5120)
+##ELSE
+      PARAMETER (MAXSHK = SIZE*3/4)
+##ENDIF
+C
+C-----------------------------------------------------------------------
+C  FROM:  string.fcm
+C
+C  SCRMAX - The maximum string length. Should match MXCMSZ.
+C
+      INTEGER SCRMAX
+##IF IBM IBMRS CRAY INTEL IBMSP T3D REDUCE
+      PARAMETER (SCRMAX = 500)
+##ELSE
+      PARAMETER (SCRMAX = 5000)
+##ENDIF
+C
+C-----------------------------------------------------------------------
+##IF TSM
+C  FROM:  tsms.fcm
+      INTEGER MXPIGG
+C  MXPIGG - The maximum number of "piggyback atom pairs".
+##IF REDUCE
+      PARAMETER (MXPIGG=50)
+##ELSE
+      PARAMETER (MXPIGG=500)
+##ENDIF
+      INTEGER MXCOLO,MXPUMB
+      PARAMETER (MXCOLO=20,MXPUMB=20)
+C
+##ENDIF
+C-----------------------------------------------------------------------
+##IF ADUMB
+C  FROM:  umb.fcm
+C
+C  MAXUMP - The maximum number of adaptive umbrella potentials.
+C  MAXNUM - Maximum number of NOE data sets for NOE constraints
+C  C.Bartels, 1996/1998
+C
+      INTEGER MAXUMP, MAXEPA, MAXNUM
+##IF REDUCE
+      PARAMETER (MAXUMP = 1, MAXNUM = 2)
+##ELSE
+      PARAMETER (MAXUMP = 10, MAXNUM = 4)
+##ENDIF
+##ENDIF
+C-----------------------------------------------------------------------
+C  Miscellaneous:
+C
+C  MAXING - The maximum number of atoms in any electrostatic group.
+C
+      INTEGER MAXING
+      PARAMETER (MAXING=1000)
+C-----------------------------------------------------------------------
+##IF MMFF
+C
+C       ADDITIONAL PARAMETERS FOR RING_FIND ROUTINES
+C       JAY BANKS, 24 SEPT 1993.
+C
+C       MAX_RINGSIZE, MAX_EACH_SIZE, and MAXPATHS are array dimensions.
+      integer MAX_RINGSIZE, MAX_EACH_SIZE
+      parameter (MAX_RINGSIZE = 20, MAX_EACH_SIZE = 1000)
+      integer MAXPATHS
+      parameter (MAXPATHS = 8000)
+C       MAX_TO_SEARCH is passed as an argument to ring_find, telling it the
+C       largest size ring it should look for.
+      integer MAX_TO_SEARCH
+      parameter (MAX_TO_SEARCH = 6)
+##ENDIF
+C-----------------------------------------------------------------------
+C

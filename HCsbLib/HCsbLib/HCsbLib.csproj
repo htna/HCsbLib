@@ -72,6 +72,20 @@
     <Compile Include="HTLib2.Bioinfo\Anisou\Anisou.From.cs" />
     <Compile Include="HTLib2.Bioinfo\Anisou\Anisou.FromHessian.cs" />
     <Compile Include="HTLib2.Bioinfo\Anisou\AnisouStatic.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\Charmm.1a.BuildPsfCrd.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\Charmm.2a.MinimizeCrd.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\Charmm.3a.Solvate.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\Charmm.4a.Hessian.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\Charmm.Crd.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\Charmm.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\Charmm.Tool.GenSolvCrd.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\energy\eintern.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\energy\etc.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\fcm\consta.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\fcm\dimens.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\fcm\econt.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\fcm\number.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\fcm\stream.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Gromacs\Archive\Gromacs.Topol.Angle.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Gromacs\Archive\Gromacs.Topol.Atom.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Gromacs\Archive\Gromacs.Topol.Bond.cs" />
@@ -891,6 +905,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Addions.str" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Append.inp" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Full example.url" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\charmming_parser.tar.gz" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Final-minimization.inp" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Final-minimization.out" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Initial-minimization.inp" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Md-analysis.inp" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Md-analysis.out" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Md-equil.inp" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Md-heat.inp" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Neutralize.inp" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Neutralize.out" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Setup.inp" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\Solvate.inp" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\energy\eintern.src" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\fcm\consta.fcm" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\fcm\dimens.fcm" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\fcm\econt.fcm" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\fcm\number.fcm" />
+    <None Include="HTLib2.Bioinfo\External.Charmm\[obsolete]\fcm\stream.fcm" />
     <None Include="HTLib2.Bioinfo\External.Tinker\src\echarge.f" />
     <None Include="HTLib2.Bioinfo\External.Tinker\src\echarge1.f" />
     <None Include="HTLib2.Bioinfo\External.Tinker\src\echarge2.f" />
@@ -1283,6 +1318,13 @@
   <ItemGroup>
     <Content Include="External.NETLink\NETLink15\Wolfram.NETLink.dll" />
     <Content Include="External.NETLink\NETLink16\Wolfram.NETLink.dll" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\1cbn-a.pdb" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Essential CHARMM Features.html" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Full example.html" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - MD.html" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Minimization.html" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Neutralization.html" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Solvation.html" />
     <Content Include="HTLib2.Bioinfo\External.HydroBond\HydroBond.reference.txt" />
     <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\action.i" />
     <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\align.i" />

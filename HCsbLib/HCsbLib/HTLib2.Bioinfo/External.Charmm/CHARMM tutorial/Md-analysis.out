@@ -1,0 +1,344 @@
+Linux c31.lobos.nih.gov 2.6.18-92.1.22.el5 #1 SMP Tue Dec 16 11:57:43 EST 2008 x86_64 x86_64 x86_64 GNU/Linux
+ 12:14:00 up 29 days, 12:47,  0 users,  load average: 0.02, 0.01, 0.00
+>>>========>>  FOR SYNTAX AND NOTES, TRY    "c35b3 -help"
+-rwxrwxr-x 1 rvenable 17688229 Dec 17 17:15 /v/apps/ncharmm/c35b3/em64t/ifortntl-xxl.x11
+/v/apps/ncharmm/c35b3/em64t/ifortntl-xxl.x11
+1
+                 Chemistry at HARvard Macromolecular Mechanics
+                   (CHARMM) - Developmental Version 35b3     August 15, 2008   
+       Copyright(c) 1984-2001  President and Fellows of Harvard College
+                              All Rights Reserved
+      Current operating system: Linux-2.6.18-92.1.22.el5(x86_64)@c31.lobos.n
+                 Created on  1/ 8/10 at 12:14: 0 by user: tim         
+
+            Maximum number of ATOMS:    360720, and RESidues:      120240
+            Current HEAP size:        10240000, and STACK size:  10000000
+
+ RDTITL> * ANALYSIS OF THE TRAJECTORY FILE
+ RDTITL> *
+  
+ CHARMM>     
+  
+ CHARMM>    ! read topology and parameter files
+ CHARMM>    read rtf card name top_all27_prot_na.rtf
+ VOPEN> Attempting to open::top_all27_prot_na.rtf::
+ MAINIO> Residue topology file being read from unit  90.
+ TITLE> *>>>>>>>>CHARMM22 ALL-HYDROGEN TOPOLOGY FILE FOR PROTEINS <<<<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>> AND NUCLEIC ACIDS <<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> *>>>>> INCLUDES PHI, PSI CROSS TERM MAP (CMAP) CORRECTION <<<<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>>>>   JULY, 2004    <<<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> * ALL COMMENTS TO ADM JR. VIA THE CHARMM WEB SITE: WWW.CHARMM.ORG
+ TITLE> *               PARAMETER SET DISCUSSION FORUM
+ TITLE> *
+ VCLOSE: Closing unit   90 with status "KEEP"
+  
+ CHARMM>    read param card name par_all27_prot_na.prm
+ VOPEN> Attempting to open::par_all27_prot_na.prm::
+
+          PARAMETER FILE BEING READ FROM UNIT 90
+ TITLE> *>>>>> CHARMM22 ALL-HYDROGEN PARAMETER FILE FOR PROTEINS <<<<<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>> AND NUCLEIC ACIDS <<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> *>>>>> INCLUDES PHI, PSI CROSS TERM MAP (CMAP) CORRECTION <<<<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>>>> DECEMBER, 2003 <<<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> * ALL COMMENTS TO ADM JR. VIA THE CHARMM WEB SITE: WWW.CHARMM.ORG
+ TITLE> *               PARAMETER SET DISCUSSION FORUM
+ TITLE> *
+ PARMIO> NONBOND, HBOND lists and IMAGE atoms cleared.
+ VCLOSE: Closing unit   90 with status "KEEP"
+  
+ CHARMM>    ! read the psf and coordinate file
+ CHARMM>    read psf card name 1cbn-neutralized.psf
+ VOPEN> Attempting to open::1cbn-neutralized.psf::
+ MAINIO> Protein structure file being read from unit  90.
+ PSFRD2> Reading PSF in the expanded format.
+ TITLE>  * 1CBN IN RHDO
+ TITLE>  *  DATE:    12/29/ 9     15:58:31      CREATED BY USER: tim
+ TITLE>  *
+ PSFSUM> PSF modified: NONBOND lists and IMAGE atoms cleared.
+ PSFSUM> Summary of the structure file counters :
+         Number of segments      =        4   Number of residues   =     2847
+         Number of atoms         =     9002   Number of groups     =     2996
+         Number of bonds         =     8991   Number of angles     =     3947
+         Number of dihedrals     =     1705   Number of impropers  =      107
+         Number of cross-terms   =       44
+         Number of HB acceptors  =     2846   Number of HB donors  =       71
+         Number of NB exclusions =        0   Total charge =    0.00000
+ VCLOSE: Closing unit   90 with status "KEEP"
+  
+ CHARMM>    read coor card name 1cbn-equil.crd
+ VOPEN> Attempting to open::1cbn-equil.crd::
+          SPATIAL COORDINATES BEING READ FROM UNIT 90
+ TITLE> * COORDINATES AFTER THE EQUILIBRATION RUN
+ TITLE> *  DATE:     1/ 1/10      6:26:45      CREATED BY USER: TIM
+ TITLE> *
+ VCLOSE: Closing unit   90 with status "KEEP"
+  
+ CHARMM>     
+  
+ CHARMM>     
+  
+ CHARMM>    ! SETUP CRYSTAL (DEFINE, BUILD), IMAGE CENTERING W. MODIFIED PSF
+ CHARMM>    ! WE USE THE SAME PARAMS AS IN SOLVATION
+ CHARMM>    set greaterval = 50.9261
+ Parameter: GREATERVAL <- "50.9261"
+  
+ CHARMM>    crystal define rhdo @greaterval @greaterval @greaterval 60. 90. 60.
+ Parameter: GREATERVAL -> "50.9261"
+ Parameter: GREATERVAL -> "50.9261"
+ Parameter: GREATERVAL -> "50.9261"
+ Crystal Parameters : Crystal Type = RHDO
+           A     =   50.92610 B    =   50.92610 C     =   50.92610
+           Alpha =   60.00000 Beta =   90.00000 Gamma =   60.00000
+  
+ CHARMM>    crystal build noper 0
+ XBUILD> Building all transformations with a minimum atom-atom
+         contact distance of less than   30.00 Angstroms.
+
+ Range of Grid Search for Transformation     1 :
+ Lattice Vector A    -3 TO     3
+ Lattice Vector B    -3 TO     3
+ Lattice Vector C    -3 TO     3
+
+
+ The number of transformations generated =    18
+
+
+ Number  Symop   A   B   C   Distance
+
+      1      1  -1   0  -1     4.7680
+      2      1  -1   1  -1     4.7196
+      3      1  -1   2  -1    11.3360
+      4      1   0   0  -1     2.7771
+      5      1   0   1  -1     2.8835
+      6      1  -1   0   0     3.5859
+      7      1  -1   1   0     3.1300
+      8      1   0  -1   0     2.5579
+      9      1   0   1   0     2.5579
+     10      1  -1   0   1     6.5773
+     11      1   0  -1   1     2.8835
+     12      1   0   0   1     2.7771
+     13      1   1   0   1     4.7680
+     14      1   1  -1   1     4.7196
+     15      1   1  -2   1    11.3360
+     16      1   1   0   0     3.5859
+     17      1   1  -1   0     3.1300
+     18      1   1   0  -1     6.5773
+                     THERE ARE NO ROTATIONS FOR THIS TRANSFORMATION SET
+    18 Transformations have been processed.
+
+  
+ CHARMM>     
+  
+ CHARMM>    ! These segments are used by CHARMMing for water and ions in bulk solvent
+ CHARMM>    define bulks sele segid bwat .or. segid pot .or. segid cl .or. segid sod .or. -
+ CHARMM>      segid cal .or. segid mg .or. segid ces end
+ SELRPN>   8363 atoms have been selected out of   9002
+  
+ CHARMM>     
+  
+ CHARMM>    ! Set up images -- center the protein by segment and the solvent by residue
+ CHARMM>    image byseg sele .not. resname tip3 .and. .not. bulks end
+ SELRPN>    639 atoms have been selected out of   9002
+ IMAGE CENTERING ON FOR SOME ATOMS
+  
+ CHARMM>    image byres sele resname tip3 .or. bulks end
+ SELRPN>   8363 atoms have been selected out of   9002
+ IMAGE CENTERING ON FOR SOME ATOMS
+  
+ CHARMM>     
+  
+ CHARMM>    ! set up shake
+ CHARMM>    shake bonh param sele all end
+ SELRPN>   9002 atoms have been selected out of   9002
+ SHKCOM> SHAKE parameters: TOL =   0.1000D-09 MXITer =    500
+
+            8656 constraints will held by SHAKE.
+  
+ CHARMM>     
+  
+ CHARMM>    ! open trajectory file for writing and a log file for reading
+ CHARMM>    open unit 20 read unform name 1cbn-equil-1.dcd
+ VOPEN> Attempting to open::1cbn-equil-1.dcd::
+ OPNLGU> Unit 20 opened for READONLY access to /v/bigbox12/home/tim/projects/learning/tutorial/new_files/crambin_example/1cbn-equil-1.dcd
+  
+ CHARMM>    open unit 30 write card name 1cbn-rgyr-log.txt
+ VOPEN> Attempting to open::1cbn-rgyr-log.txt::
+ OPNLGU> Unit 30 opened for WRITE access to /v/bigbox12/home/tim/projects/learning/tutorial/new_files/crambin_example/1cbn-rgyr-log.txt
+  
+ CHARMM>    open unit 31 write card name 1cbn-dist-log.txt
+ VOPEN> Attempting to open::1cbn-dist-log.txt::
+ OPNLGU> Unit 31 opened for WRITE access to /v/bigbox12/home/tim/projects/learning/tutorial/new_files/crambin_example/1cbn-dist-log.txt
+  
+ CHARMM>    open unit 32 write card name 1cbn-dcor-log.txt
+ VOPEN> Attempting to open::1cbn-dcor-log.txt::
+ OPNLGU> Unit 32 opened for WRITE access to /v/bigbox12/home/tim/projects/learning/tutorial/new_files/crambin_example/1cbn-dcor-log.txt
+  
+ CHARMM>     
+  
+ CHARMM>    ! put current coords in the comp set so we cfan use them if needed
+ CHARMM>    coor copy comp
+ SELECTED COORDINATES COPIED TO THE COMPARISON SET.
+
+  
+ CHARMM>     
+  
+ CHARMM>    ! set up correl
+ CHARMM>    correl maxseries 5 maxtim 2000 maxatom 50
+
+ SELECTED IMAGES ATOMS BEING CENTERED ABOUT  0.000000  0.000000  0.000000
+
+ <MKIMAT>: updating the image atom lists and remapping
+ Transformation   Atoms  Groups  Residues  Upper-Bound 
+    1  C001 has     166      56      56        0.00
+    2  C002 has    1894     638     638        0.00
+    3  C003 has     141      47      47        0.00
+    4  C004 has    1842     616     616        0.00
+    5  C005 has    1820     610     610        0.00
+    6  C006 has    1799     603     603        0.00
+    7  C007 has    1850     620     619        0.00
+    8  C008 has    1825     609     609        0.00
+   10  C010 has     141      47      47        0.00
+ Total of20480 atoms and 6842 groups and 6692 residues were included
+
+
+ NONBOND OPTION FLAGS: 
+     ELEC     VDW      ATOMs    CDIElec  SHIFt    VATOm    VSWItch 
+     BYGRoup  NOEXtnd  NOEWald 
+ CUTNB  = 14.000 CTEXNB =999.000 CTONNB = 10.000 CTOFNB = 12.000
+ WMIN   =  1.500 WRNMXD =  0.500 E14FAC =  1.000 EPS    =  1.000
+ NBXMOD =      5
+ There are        0 atom  pairs and        0 atom  exclusions.
+ There are        0 group pairs and        0 group exclusions.
+ <MAKINB> with mode   5 found  10163 exclusions and   1697 interactions(1-4)
+ <MAKGRP> found    574 group exclusions.
+ <MAKGRP> found      0 image group exclusions.
+ Generating nonbond list with Exclusion mode = 5
+ == PRIMARY == SPACE FOR  2586739 ATOM PAIRS AND        0 GROUP PAIRS
+ == PRIMARY == SPACE FOR  3880128 ATOM PAIRS AND        0 GROUP PAIRS
+
+ General atom nonbond list generation found:
+  3669664 ATOM PAIRS WERE FOUND FOR ATOM LIST
+   200114 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+ VEHEAP> Expanding heap size by         8241152 words.
+ SPACE FOR  4687284 ATOM PAIRS AND        0 GROUP PAIRS
+
+ Image nonbond list generation found:
+  1310970 ATOM PAIRS WERE FOUND FOR ATOM LIST
+        0 ATOM PAIRS WERE FOUND FOR ATOM SELF LIST
+   109728 GROUP PAIRS REQUIRED ATOM SEARCHES
+
+  
+ CORREL>    ! enter each value we want a correlation for
+ CORREL>    enter rgyr gyra mass
+  
+ CORREL>    enter dist bond a-pro 10 ca a-pro 46 ca
+  
+ CORREL>     
+  
+ CORREL>    ! fill in the trajectories by reading them in from our dcd
+ CORREL>    traj firstu 20 nunit 1 skip 100
+ The following time series will be filled:
+                    RGYR
+                    DIST
+
+
+
+ READING TRAJECTORY FROM UNIT  20
+   NUMBER OF COORDINATE SETS IN FILE:    2000
+   NUMBER OF PREVIOUS DYNAMICS STEPS:  100100
+   FREQUENCY FOR SAVING COORDINATES:      100
+   NUMBER OF STEPS FOR CREATION RUN:   200000
+
+ TITLE>  * MOLECULAR DYNAMICS
+ TITLE>  *  DATE:    12/31/ 9     23: 0:25      CREATED BY USER: tim
+ TITLE>  *
+ *****  WARNING  ***** BEGIN=       0 Was not specified. It has been set to:  100100
+
+ 2000 CORD RECORDS READ FROM   1 UNITS STARTING WITH UNIT  20
+ RUNNING FROM STEP  100100 TO   300000 SKIPPING  100 STEPS BETWEEN RECORDS
+ Time step was  2.0454828E-02 AKMA time units.
+    1 Series "RGYR"  Average =      21.564524  rms Fluctuation =       0.046935
+    2 Series "DIST"  Average =       6.538661  rms Fluctuation =       0.213859
+  
+ CORREL>     
+  
+ CORREL>    ! write out to the log files
+ CORREL>     
+  
+ CORREL>    write rgyr dumb time unit 30
+ RDTITL> * RADIUS OF GYRATION
+ RDTITL> *
+ VCLOSE: Closing unit   30 with status "KEEP"
+  
+ CORREL>     
+  
+ CORREL>    write dist dumb time unit 31
+ RDTITL> * DISTANCE BETWEEN CAS OF ARG(10) AND ASN(46)
+ RDTITL> *
+ VCLOSE: Closing unit   31 with status "KEEP"
+  
+ CORREL>     
+  
+ CORREL>    ! now calculate the time correlation of the dist and write it out
+ CORREL>    mantime dist dave ! subtract off the average from all elements
+ NSER:   1
+ NAMES:      DIST    
+ TOTALS:         2000
+ AVERAGE:    0.000000
+ FLUCT:      0.213859
+ VECCOD:            1
+ CLASS:      BOND    
+ VELCOD:            0
+ SKIP:            100
+ DELTA:      0.001000
+ OFFST:      0.100000
+ GECOD:             1
+ VALUE:      0.000000
+  
+ CORREL>    corfun dist dist total 2000
+ NSER:   1
+ NAMES:      CORR    
+ TOTALS:         2000
+ AVERAGE:   -0.023073
+ FLUCT:      0.112287
+ VECCOD:            1
+ CLASS:      CORR    
+ VELCOD:            0
+ SKIP:              1
+ DELTA:      0.100000
+ OFFST:      0.000000
+ GECOD:             1
+ VALUE:      0.000000
+  
+ CORREL>     
+  
+ CORREL>    write corr dumb time unit 32
+ RDTITL> * TIME CORRELATION OF ARG(10)-ASN(46) CA DIFFERENCE
+ RDTITL> *
+ VCLOSE: Closing unit   32 with status "KEEP"
+  
+ CORREL>     
+  
+ CORREL>    stop
+ VCLOSE: Closing unit   20 with status "KEEP"
+$$$$$$  New timer profile $$$$$
+   Shake Setup                     0.00 Other:            0.00
+ Total time                      2.51 Other:            2.51
+
+                    NORMAL TERMINATION BY NORMAL STOP
+                    MAXIMUM STACK SPACE USED IS 3428684
+                    STACK CURRENTLY IN USE IS        84
+                    NO WARNINGS WERE ISSUED
+                    HEAP PRINTOUT-  HEAP SIZE         10240000
+                    SPACE CURRENTLY IN USE IS            43878
+                    MAXIMUM SPACE USED IS             12318542
+                    FREE LIST
+  PRINHP> ADDRESS:               1 LENGTH:         2805170 NEXT:         2835175
+  PRINHP> ADDRESS:         2835175 LENGTH:         7390502 NEXT:        10239501
+  PRINHP> ADDRESS:        10239501 LENGTH:             450 NEXT:   5939269749109
+  PRINHP> ADDRESS:   5939269749109 LENGTH:         8241152 NEXT:               0
+
+                    $$$$$ JOB ACCOUNTING INFORMATION $$$$$
+                     ELAPSED TIME:     2.51  SECONDS 
+                         CPU TIME:     2.40  SECONDS 

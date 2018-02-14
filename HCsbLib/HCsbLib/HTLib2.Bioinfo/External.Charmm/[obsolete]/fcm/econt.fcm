@@ -1,0 +1,30 @@
+CHARMM Element source/fcm/econt.fcm 1.1
+C
+C  econt.fcm -  Energy contributions common block.
+C
+C  QECONT   - Flag to determine if partition analysis is on.
+C  ECONT(*) - Partial energy contribution for each atom
+C
+C  QATERM   - flag to indicate energy term selection is used
+C  ANSLCT(*)- Atom Selection for printing energy terms
+C  
+C  QAONLY   - Flag indicating that only energy terms where ALL
+C                   atoms are selected be listed
+C  QANBND   - Flag to print nonbond energy term table
+C  QAUNIT   - Output unit number for printing data
+C
+C
+      LOGICAL QECONT,QAONLY,QATERM,QANBND
+      INTEGER ANSLCT,QAUNIT
+      REAL*8 ECONT
+C
+      COMMON /ECONTL/QECONT,QAONLY,QATERM,QANBND
+      COMMON /ECONTI/ANSLCT(MAXAIM),QAUNIT
+      COMMON /ECONTR/ECONT(MAXAIM)
+C
+##IF SAVEFCM
+      SAVE /ECONTL/
+      SAVE /ECONTI/
+      SAVE /ECONTR/
+##ENDIF
+C

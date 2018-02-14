@@ -1,0 +1,432 @@
+Linux c31.lobos.nih.gov 2.6.18-92.1.22.el5 #1 SMP Tue Dec 16 11:57:43 EST 2008 x86_64 x86_64 x86_64 GNU/Linux
+ 15:58:07 up 19 days, 16:31,  0 users,  load average: 0.07, 0.05, 0.01
+>>>========>>  FOR SYNTAX AND NOTES, TRY    "c35b3 -help"
+-rwxrwxr-x 1 rvenable 17688229 Dec 17 17:15 /v/apps/ncharmm/c35b3/em64t/ifortntl-xxl.x11
+/v/apps/ncharmm/c35b3/em64t/ifortntl-xxl.x11
+1
+                 Chemistry at HARvard Macromolecular Mechanics
+                   (CHARMM) - Developmental Version 35b3     August 15, 2008   
+       Copyright(c) 1984-2001  President and Fellows of Harvard College
+                              All Rights Reserved
+      Current operating system: Linux-2.6.18-92.1.22.el5(x86_64)@c31.lobos.n
+                 Created on 12/29/ 9 at 15:58: 7 by user: tim         
+
+            Maximum number of ATOMS:    360720, and RESidues:      120240
+            Current HEAP size:        10240000, and STACK size:  10000000
+
+ RDTITL> * NEUTRALIZE SYSTEM
+ RDTITL> *
+  
+ CHARMM>     
+  
+ CHARMM>    read rtf card name top_all27_prot_na.rtf
+ VOPEN> Attempting to open::top_all27_prot_na.rtf::
+ MAINIO> Residue topology file being read from unit  90.
+ TITLE> *>>>>>>>>CHARMM22 ALL-HYDROGEN TOPOLOGY FILE FOR PROTEINS <<<<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>> AND NUCLEIC ACIDS <<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> *>>>>> INCLUDES PHI, PSI CROSS TERM MAP (CMAP) CORRECTION <<<<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>>>>   JULY, 2004    <<<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> * ALL COMMENTS TO ADM JR. VIA THE CHARMM WEB SITE: WWW.CHARMM.ORG
+ TITLE> *               PARAMETER SET DISCUSSION FORUM
+ TITLE> *
+ VCLOSE: Closing unit   90 with status "KEEP"
+  
+ CHARMM>    read param card name par_all27_prot_na.prm
+ VOPEN> Attempting to open::par_all27_prot_na.prm::
+
+          PARAMETER FILE BEING READ FROM UNIT 90
+ TITLE> *>>>>> CHARMM22 ALL-HYDROGEN PARAMETER FILE FOR PROTEINS <<<<<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>> AND NUCLEIC ACIDS <<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> *>>>>> INCLUDES PHI, PSI CROSS TERM MAP (CMAP) CORRECTION <<<<<<<
+ TITLE> *>>>>>>>>>>>>>>>>>>>>>> DECEMBER, 2003 <<<<<<<<<<<<<<<<<<<<<<<<<<
+ TITLE> * ALL COMMENTS TO ADM JR. VIA THE CHARMM WEB SITE: WWW.CHARMM.ORG
+ TITLE> *               PARAMETER SET DISCUSSION FORUM
+ TITLE> *
+ PARMIO> NONBOND, HBOND lists and IMAGE atoms cleared.
+ VCLOSE: Closing unit   90 with status "KEEP"
+  
+ CHARMM>    read psf card name 1cbn-solvated.psf
+ VOPEN> Attempting to open::1cbn-solvated.psf::
+ MAINIO> Protein structure file being read from unit  90.
+ PSFRD2> Reading PSF in the expanded format.
+ TITLE>  * NEW_1CBN-18126-1-SOLV.PSF
+ TITLE>  * SOLVATION: RHDO WITH A CRYSTAL DIMENSION OF 50.9261
+ TITLE>  *  DATE:    12/29/ 9     15:23:22      CREATED BY USER: tim
+ TITLE>  *
+ PSFSUM> PSF modified: NONBOND lists and IMAGE atoms cleared.
+ PSFSUM> Summary of the structure file counters :
+         Number of segments      =        2   Number of residues   =     2847
+         Number of atoms         =     9042   Number of groups     =     2996
+         Number of bonds         =     9051   Number of angles     =     3967
+         Number of dihedrals     =     1705   Number of impropers  =      107
+         Number of cross-terms   =       44
+         Number of HB acceptors  =     2866   Number of HB donors  =       71
+         Number of NB exclusions =        0   Total charge =    0.00000
+ VCLOSE: Closing unit   90 with status "KEEP"
+  
+ CHARMM>    read coor card name 1cbn-solvated.crd
+ VOPEN> Attempting to open::1cbn-solvated.crd::
+          SPATIAL COORDINATES BEING READ FROM UNIT 90
+ TITLE> * NEW_1CBN-18126-1-SOLV.CRD
+ TITLE> * SOLVATION: RHDO WITH A CRYSTAL DIMENSION OF 50.9261
+ TITLE> *  DATE:    12/29/ 9     15:23:23      CREATED BY USER: TIM
+ TITLE> *
+ VCLOSE: Closing unit   90 with status "KEEP"
+  
+ CHARMM>     
+  
+ CHARMM>    ! Determine what type of ions being used
+ CHARMM>    set nneg CLA                     ! set segid of neg. ion
+ Parameter: NNEG <- "CLA"
+  
+ CHARMM>    set negion CL                    ! set atom type of neg. ion
+ Parameter: NEGION <- "CL"
+  
+ CHARMM>    set npos POT                     ! set segid of pos. ion
+ Parameter: NPOS <- "POT"
+  
+ CHARMM>    set posion POT                   ! set atom type of pos. ion
+ Parameter: POSION <- "POT"
+  
+ CHARMM>     
+  
+ CHARMM>    ! Setup coor volume scalar arrays
+ CHARMM>    scalar radi store 1
+  
+ CHARMM>    scalar wmain set 0.5
+  
+ CHARMM>    scalar wmain store 2
+  
+ CHARMM>     
+  
+ CHARMM>    ! determine the net charge on the system
+ CHARMM>    scalar charge stat sele all end
+ SELRPN>   9042 atoms have been selected out of   9042
+ Statistics for 9042 selected atoms:
+       minimum =  -0.834000      maximum =   0.640000     weight =    9042.00    
+       average =   1.718992E-19  variance=   0.574653     total  =   1.554312E-15
+  
+ CHARMM>    set chrg = ?stot
+ RDCMND substituted energy or value "?STOT" to "1.554312E-15"
+ Parameter: CHRG <- "1.554312E-15"
+  
+ CHARMM>     
+  
+ CHARMM>    ! Compute volume of entire box
+ CHARMM>    calc volspace ?NATO * 160
+ RDCMND substituted energy or value "?NATO" to "9042"
+Evaluating: 9042*160
+ Parameter: VOLSPACE <- "1.44672E+06"
+  
+ CHARMM>    coor volume space @volspace select all end
+ Parameter: VOLSPACE -> "1.44672E+06"
+ SELRPN>   9042 atoms have been selected out of   9042
+ COMPUTING VOLUME PER ATOM WITH:
+   XMIN=    -29.7786 XMAX=     29.2964 NX= 108
+   YMIN=    -32.6692 YMAX=     32.7521 NY= 120
+   ZMIN=    -30.2492 ZMAX=     29.8925 NZ= 110
+
+
+ A TOTAL OF  1034552   VACUUM POINTS WERE FOUND
+ A TOTAL OF   391048 OCCUPIED POINTS WERE FOUND
+ A TOTAL OF        0 EXTERNAL POINTS WERE FOUND
+ A TOTAL OF   391048 SELECTED POINTS WERE FOUND
+ TOTAL OCCUPIED  VOLUME =   63757.398282
+ TOTAL SELECTED  VOLUME =   63757.398282
+ TOTAL FREE      VOLUME =  168675.824726
+ FRACTIONAL FREE VOLUME =      72.569585
+  
+ CHARMM>    show ?VOLUME
+ RDCMND substituted energy or value "?VOLUME" to "63757.4"
+  
+ CHARMM>    show ?FREEVOL
+ RDCMND substituted energy or value "?FREEVOL" to "168676"
+  
+ CHARMM>    calc tvol ?VOLUME + ?FREEVOL
+ RDCMND substituted energy or value "?VOLUME" to "63757.4"
+ RDCMND substituted energy or value "?FREEVOL" to "168676"
+Evaluating: 63757.4+168676
+ Parameter: TVOL <- "232433"
+  
+ CHARMM>     
+  
+ CHARMM>    ! Compute volume of just the protein
+ CHARMM>    define tmp select .not. segid BWAT end
+ SELRPN>    639 atoms have been selected out of   9042
+  
+ CHARMM>    show ?NSEL
+ RDCMND substituted energy or value "?NSEL" to "639"
+  
+ CHARMM>    calc volspace ?NSEL * 160
+ RDCMND substituted energy or value "?NSEL" to "639"
+Evaluating: 639*160
+ Parameter: VOLSPACE <- "102240"
+  
+ CHARMM>    coor volume space @volspace select .not. segid BWAT end
+ Parameter: VOLSPACE -> "102240"
+ SELRPN>    639 atoms have been selected out of   9042
+ COMPUTING VOLUME PER ATOM WITH:
+   XMIN=    -16.7406 XMAX=     16.8261 NX=  57
+   YMIN=    -14.4099 YMAX=     13.7356 NY=  47
+   ZMIN=    -10.4678 ZMAX=     11.3850 NZ=  37
+
+
+ A TOTAL OF    74506   VACUUM POINTS WERE FOUND
+ A TOTAL OF    24617 OCCUPIED POINTS WERE FOUND
+ A TOTAL OF        0 EXTERNAL POINTS WERE FOUND
+ A TOTAL OF    24617 SELECTED POINTS WERE FOUND
+ TOTAL OCCUPIED  VOLUME =    5127.264670
+ TOTAL SELECTED  VOLUME =    5127.264670
+ TOTAL FREE      VOLUME =   15518.218366
+ FRACTIONAL FREE VOLUME =      75.165199
+  
+ CHARMM>    show ?VOLUME
+ RDCMND substituted energy or value "?VOLUME" to "5127.26"
+  
+ CHARMM>    show ?FREEVOL
+ RDCMND substituted energy or value "?FREEVOL" to "15518.2"
+  
+ CHARMM>    calc protvol ?VOLUME + ?FREEVOL
+ RDCMND substituted energy or value "?VOLUME" to "5127.26"
+ RDCMND substituted energy or value "?FREEVOL" to "15518.2"
+Evaluating: 5127.26+15518.2
+ Parameter: PROTVOL <- "20645.5"
+  
+ CHARMM>     
+  
+ CHARMM>    ! Compute just the volume of the water
+ CHARMM>    calc wvol @tvol - @protvol
+ Parameter: TVOL -> "232433"
+ Parameter: PROTVOL -> "20645.5"
+Evaluating: 232433-20645.5
+ Parameter: WVOL <- "211788"
+  
+ CHARMM>     
+  
+ CHARMM>    ! Compute how many K+/Cl- are needed for 0.15M concentration
+ CHARMM>    set concentration 0.15
+ Parameter: CONCENTRATION <- "0.15"
+  
+ CHARMM>    calc volconv 1 * 0.000000000000000000000001
+Evaluating: 1*0.000000000000000000000001
+ Parameter: VOLCONV <- "1E-24"
+  
+ CHARMM>    calc wvoll ( ( @wvol * @volconv ) / 1000 )
+ Parameter: WVOL -> "211788"
+ Parameter: VOLCONV -> "1E-24"
+Evaluating: ((211788*1E-24)/1000)
+ Parameter: WVOLL <- "2.11788E-22"
+  
+ CHARMM>    calc avog 1 * 602213670000000000000000
+Evaluating: 1*602213670000000000000000
+ Parameter: AVOG <- "6.022137E+23"
+  
+ CHARMM>     
+  
+ CHARMM>    FORMat (I5)
+  
+ CHARMM>    if @chrg gt 0 then
+ Parameter: CHRG -> "1.554312E-15"
+ Comparing "1.554312E-15" and "0".
+ IF test evaluated as true.  Performing command
+  
+ CHARMM>       calc totions ( @wvoll * @avog * @concentration )
+ Parameter: WVOLL -> "2.11788E-22"
+ Parameter: AVOG -> "6.022137E+23"
+ Parameter: CONCENTRATION -> "0.15"
+Evaluating: (2.11788E-22*6.022137E+23*0.15)
+ Parameter: TOTIONS <- "   19"
+  
+ CHARMM>       calc nions ( @wvoll * @avog * @concentration ) - @chrg
+ Parameter: WVOLL -> "2.11788E-22"
+ Parameter: AVOG -> "6.022137E+23"
+ Parameter: CONCENTRATION -> "0.15"
+ Parameter: CHRG -> "1.554312E-15"
+Evaluating: (2.11788E-22*6.022137E+23*0.15)-1.554312E-15
+ Parameter: NIONS <- "   19"
+  
+ CHARMM>    else
+ Skip commands until next ENDIF
+  
+ CHARMM>     
+  
+ CHARMM>    ! Make sure that an even number of charges are added
+ CHARMM>    calc tmpb int(@nions / 2) * 2
+ Parameter: NIONS -> "   19"
+Evaluating: INT(19/2)*2
+ Parameter: TMPB <- "   18"
+  
+ CHARMM>    calc tmpc @nions - @tmpb
+ Parameter: NIONS -> "   19"
+ Parameter: TMPB -> "   18"
+Evaluating: 19-18
+ Parameter: TMPC <- "    1"
+  
+ CHARMM>    if @tmpc eq 1 then
+ Parameter: TMPC -> "    1"
+ Comparing "1" and "1".
+ IF test evaluated as true.  Performing command
+  
+ CHARMM>       if @chrg .gt. 0 then
+ Parameter: CHRG -> "1.554312E-15"
+ Comparing "1.554312E-15" and "0".
+ IF test evaluated as true.  Performing command
+  
+ CHARMM>          calc nions @nions + 1
+ Parameter: NIONS -> "   19"
+Evaluating: 19+1
+ Parameter: NIONS <- "   20"
+  
+ CHARMM>       else
+ Skip commands until next ENDIF
+  
+ CHARMM>    endif
+  
+ CHARMM>     
+  
+ CHARMM>    ! Setup number of charges
+ CHARMM>    if @chrg gt 0 then
+ Parameter: CHRG -> "1.554312E-15"
+ Comparing "1.554312E-15" and "0".
+ IF test evaluated as true.  Performing command
+  
+ CHARMM>       calc ineg ( @nions / 2 ) + @chrg        ! no. negative ions (i.e. chlorides)
+ Parameter: NIONS -> "   20"
+ Parameter: CHRG -> "1.554312E-15"
+Evaluating: (20/2)+1.554312E-15
+ Parameter: INEG <- "   10"
+  
+ CHARMM>       calc ipos ( @nions / 2 )                ! no. positive ions (i.e. potassiums)
+ Parameter: NIONS -> "   20"
+Evaluating: (20/2)
+ Parameter: IPOS <- "   10"
+  
+ CHARMM>    else
+ Skip commands until next ENDIF
+  
+ CHARMM>     
+  
+ CHARMM>    format                                    ! reset formating
+  
+ CHARMM>    set mnd 5.5                               ! minimum distance to solute, other ions
+ Parameter: MND <- "5.5"
+  
+ CHARMM>    set sol .not. segid BWAT                  ! atoms selection for solvent
+ Parameter: SOL <- ".NOT. SEGID BWAT"
+  
+ CHARMM>    set emin 1E20                             ! initial min energy value
+ Parameter: EMIN <- "1E20"
+  
+ CHARMM>    set ncfg 1                                ! initialize loop counter
+ Parameter: NCFG <- "1"
+  
+ CHARMM>    set last 3                                ! no. of passes thru the loop
+ Parameter: LAST <- "3"
+  
+ CHARMM>    random uniform iseed 314159               ! change iseed to sample diff states
+DIST= UNIF     SEED=     314159     SIGMA=    1.000    
+    SCALE=    1.000         OFFSET=    0.000    
+  
+ CHARMM>     
+  
+ CHARMM>    ! BEGINNING OF MAIN MONTE-CARLO LOOP
+ CHARMM>    label placion
+  
+ CHARMM>    time now
+ CPU TIME=       0.31 ELAPSED TIME=       0.32
+  
+ CHARMM>     
+  
+ CHARMM>    open unit 10 write card name loop-1cbn-@ncfg.log
+ Parameter: NCFG -> "1"
+ VOPEN> Attempting to open::loop-1cbn-1.log::
+ OPNLGU> Unit 10 opened for WRITE access to /v/bigbox12/home/tim/projects/learning/tutorial/new_files/final/loop-1cbn-1.log
+  
+ CHARMM>    outu 10
+  
+ CHARMM>    close unit 10
+ VCLOSE: Closing unit   10 with status "KEEP"
+  
+ CHARMM>    if ncfg le @LAST goto placion
+ Parameter: LAST -> "3"
+ Comparing "2" and "3".
+ IF test evaluated as true.  Performing command
+  
+ CHARMM>    time now
+ CPU TIME=       0.00 ELAPSED TIME=      29.84
+  
+ CHARMM>     
+  
+ CHARMM>    open unit 10 write card name loop-1cbn-@ncfg.log
+ Parameter: NCFG -> "2"
+ VOPEN> Attempting to open::loop-1cbn-2.log::
+ OPNLGU> Unit 10 opened for WRITE access to /v/bigbox12/home/tim/projects/learning/tutorial/new_files/final/loop-1cbn-2.log
+  
+ CHARMM>    outu 10
+  
+ CHARMM>    close unit 10
+ VCLOSE: Closing unit   10 with status "KEEP"
+  
+ CHARMM>    if ncfg le @LAST goto placion
+ Parameter: LAST -> "3"
+ Comparing "3" and "3".
+ IF test evaluated as true.  Performing command
+  
+ CHARMM>    time now
+ CPU TIME=       0.00 ELAPSED TIME=      53.56
+  
+ CHARMM>     
+  
+ CHARMM>    open unit 10 write card name loop-1cbn-@ncfg.log
+ Parameter: NCFG -> "3"
+ VOPEN> Attempting to open::loop-1cbn-3.log::
+ OPNLGU> Unit 10 opened for WRITE access to /v/bigbox12/home/tim/projects/learning/tutorial/new_files/final/loop-1cbn-3.log
+  
+ CHARMM>    outu 10
+  
+ CHARMM>    close unit 10
+ VCLOSE: Closing unit   10 with status "KEEP"
+  
+ CHARMM>    if ncfg le @LAST goto placion
+ Parameter: LAST -> "3"
+ Comparing "4" and "3".
+ IF test evaluated as false.  Skipping command
+  
+ CHARMM>     
+  
+ CHARMM>    stop
+$$$$$$  New timer profile $$$$$
+   Shake Setup                     0.01 Other:            0.00
+   Shake time                      0.50 Other:            0.00
+            Direct Ewald time              36.90 Other:            0.00
+               Fill charge grid                1.33 Other:            0.00
+               Scalar sum                      0.83 Other:            0.00
+               Grad sum                        1.23 Other:            0.00
+               FFT                             0.87 Other:            0.00
+            Recip Ewald time                4.30 Other:            0.05
+         Ewald time                     41.20 Other:            0.00
+      Nonbond force                  41.30 Other:            0.10
+         Bond energy                     0.03 Other:            0.00
+         Angle energy                    0.08 Other:            0.00
+         Dihedral energy                 0.05 Other:            0.00
+         Restraints energy               0.00 Other:            0.00
+      INTRNL energy                   0.26 Other:            0.11
+   Energy time                    41.65 Other:            0.09
+ Total time                     78.17 Other:           36.01
+
+                    NORMAL TERMINATION BY NORMAL STOP
+                    MAXIMUM STACK SPACE USED IS 3435502
+                    STACK CURRENTLY IN USE IS         0
+                    NO WARNINGS WERE ISSUED
+                    HEAP PRINTOUT-  HEAP SIZE         10240000
+                    SPACE CURRENTLY IN USE IS            13824
+                    MAXIMUM SPACE USED IS             18998270
+                    FREE LIST
+  PRINHP> ADDRESS:               1 LENGTH:        10225676 NEXT:        10239501
+  PRINHP> ADDRESS:        10239501 LENGTH:             500 NEXT:   5880544766325
+  PRINHP> ADDRESS:   5880544766325 LENGTH:        11550720 NEXT:   5880556317557
+  PRINHP> ADDRESS:   5880556317557 LENGTH:        11550720 NEXT:               0
+
+                    $$$$$ JOB ACCOUNTING INFORMATION $$$$$
+                     ELAPSED TIME:     1.30  MINUTES 
+                         CPU TIME:     1.12  MINUTES 

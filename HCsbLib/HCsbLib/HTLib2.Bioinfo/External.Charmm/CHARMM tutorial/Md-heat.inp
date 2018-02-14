@@ -1,0 +1,61 @@
+* Molecular Dynamics
+*
+
+! print out only on the first processor
+prnlev 5 node 0
+
+! read topology and parameter files
+read rtf card name top_all27_prot_na.rtf
+read param card name par_all27_prot_na.prm
+
+! read the psf and coordinate file
+read psf card name 1cbn-neutralized.psf
+read coor card name 1cbn-finalmini.crd
+
+! SETUP CRYSTAL (DEFINE, BUILD), IMAGE CENTERING W. MODIFIED PSF
+! WE USE THE SAME PARAMS AS IN SOLVATION
+set greaterval = 50.9261
+crystal define rhdo @greaterval @greaterval @greaterval 60. 90. 60.
+crystal build noper 0
+
+! These segments are used by CHARMMing for water and ions in bulk solvent
+define bulks sele segid bwat .or. segid pot .or. segid cl .or. segid sod .or. -
+segid cal .or. segid mg .or. segid ces end
+
+! Set up images -- center the protein by segment and the solvent by residue
+image byseg sele .not. resname tip3 .and. .not. bulks end
+image byres sele resname tip3 .or. bulks end
+
+! SETUP NONBOND, this time we will be using electrostatics with PME, since
+! we've set up a crystal structure.
+nbond inbfrq -1 imgfrq -1 atom vatom cdie eps 1.0 -
+    elec ewald pmew fftx 48 ffty 48  fftz 48  kappa .34 spline order 6 -
+    vdw vswitch cutnb 16.0 cutim 16.0 ctofnb 12. ctonnb 10. wmin 1.0
+
+! Configure shake
+shake bonh param sele all end
+
+open unit 41 write card name 1cbn-heat.res !restart file that will be written
+open unit 31 write file name 1cbn-heat.dcd !trajectory file name
+
+! dynamics command
+dyna leap verlet start -                     ! use leap-frog verlet integrator
+   timestep 0.001 nstep 100000 nprint 1000 - ! run 100K steps @ 1 fs time-steps
+   iunwri 41 iuncrd 31 nsavc 100 -           ! save a restart file to unit 41, write coordinates to thetrajectory every 100 steps
+   firstt 110.0 finalt 310.0 tbath 310.0 -   ! heat from 110K to 310K (200 K) with a 310K bath
+   ihtfrq 2500 teminc 5 ieqfrq 0 -           ! heat the system 5K every 2500 steps, no equilibration needed
+   iasors 1 iasvel 1 iscvel 0 ichecw 0 -     ! assign velocities via a Gaussian distribution every IHTFRQ steps, do not check temperatures (always scale)
+   ntrfrq 500 -                              ! stop rotation and translation every 500 steps
+   iseed  11033 -                            ! pick a random seed for the velocity re-assignment
+   echeck 100.0                              ! If energy changes more than 100 kcal/mol bail out
+
+
+! write out the final coordinates
+ioform extended
+
+write coor card name 1cbn-heat.crd
+* Coordinates after heating
+*
+
+stop
+

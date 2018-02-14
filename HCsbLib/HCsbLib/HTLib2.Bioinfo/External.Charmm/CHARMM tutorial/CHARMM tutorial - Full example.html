@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<title>Full example - CHARMM tutorial</title>
+<meta charset="UTF-8" />
+<meta name="generator" content="MediaWiki 1.19.20+dfsg-0+deb7u3" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="CHARMM tutorial (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="https://www.charmmtutorial.org/api.php?action=rsd" />
+<link rel="copyright" href="http://creativecommons.org/licenses/publicdomain/" />
+<link rel="alternate" type="application/atom+xml" title="CHARMM tutorial Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.monobook&amp;only=styles&amp;skin=monobook&amp;*" />
+<!--[if IE 6]><link rel="stylesheet" href="/skins/monobook/IE60Fixes.css?303" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="/skins/monobook/IE70Fixes.css?303" media="screen" /><![endif]--><meta name="ResourceLoaderDynamicStyles" content="" />
+<link rel="stylesheet" href="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=monobook&amp;*" />
+<style>a:lang(ar),a:lang(ckb),a:lang(fa),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}a.new,#quickbar a.new{color:#ba0000}
+
+/* cache key: tutorial:resourceloader:filter:minify-css:7:c88e2bcd56513749bec09a7e29cb3ffa */</style>
+
+<script src="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=monobook&amp;*"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Full_example","wgTitle":"Full example","wgCurRevisionId":831,"wgArticleId":55,"wgIsArticle":true,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgRelevantPageName":"Full_example","wgRestrictionEdit":[],"wgRestrictionMove":[]});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":5,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"monobook","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":
+0,"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;},{},{});mw.loader.implement("user.tokens",function($){mw.user.tokens.set({"editToken":"+\\","watchToken":false});;},{},{});
+
+/* cache key: tutorial:resourceloader:filter:minify-js:7:74a832f2292f1f4d40d425d223444e78 */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax"]);
+}</script>
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Full_example skin-monobook action-view">
+<div id="globalWrapper">
+<div id="column-content"><div id="content">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading"><span dir="auto">Full example</span></h1>
+	<div id="bodyContent" class="mw-body">
+		<div id="siteSub">From CHARMM tutorial</div>
+		<div id="contentSub"></div>
+		<div id="jump-to-nav" class="mw-jump">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>
+		<!-- start content -->
+<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><p>This section of the tutorial will present an example of a real molecular dynamics simulation using the protein Crambin (PDB ID 1CBN). You will be able to download the input scripts as you read along. These scripts are based off of the inputs generated by CHARMMing with additional comments added and some complexity that is only needed in an automated system removed. You should run these on your own computer to get a feel for the type of output you can expect to see from CHARMM. Suggested exercises are given to encourage you to modify the scripts in various ways. It is highly recommended that you download the tarball containing all of the inputs, outputs, and other files needed before beginning to work through this example. All of the files are available in <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/tutorial-data/crambin_example.tar.gz">tar.gz format</a> or <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/tutorial-data/crambin_example.zip">zip format</a>.
+</p>
+<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Reading_in_the_Crambin_structure"><span class="tocnumber">1</span> <span class="toctext">Reading in the Crambin structure</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Reading_in_the_PDB_file"><span class="tocnumber">1.1</span> <span class="toctext">Reading in the PDB file</span></a>
+<ul>
+<li class="toclevel-3 tocsection-3"><a href="#Background"><span class="tocnumber">1.1.1</span> <span class="toctext">Background</span></a></li>
+<li class="toclevel-3 tocsection-4"><a href="#Our_script"><span class="tocnumber">1.1.2</span> <span class="toctext">Our script</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-5"><a href="#Making_the_final_structure"><span class="tocnumber">1.2</span> <span class="toctext">Making the final structure</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-6"><a href="#Vacuum_minimization"><span class="tocnumber">2</span> <span class="toctext">Vacuum minimization</span></a>
+<ul>
+<li class="toclevel-2 tocsection-7"><a href="#Basic_notes"><span class="tocnumber">2.1</span> <span class="toctext">Basic notes</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Exercises"><span class="tocnumber">2.2</span> <span class="toctext">Exercises</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-9"><a href="#Solvation_and_neutralization"><span class="tocnumber">3</span> <span class="toctext">Solvation and neutralization</span></a>
+<ul>
+<li class="toclevel-2 tocsection-10"><a href="#Solvation"><span class="tocnumber">3.1</span> <span class="toctext">Solvation</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#Neutralization"><span class="tocnumber">3.2</span> <span class="toctext">Neutralization</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Exercises_2"><span class="tocnumber">3.3</span> <span class="toctext">Exercises</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-13"><a href="#Minimization_with_PBC"><span class="tocnumber">4</span> <span class="toctext">Minimization with PBC</span></a>
+<ul>
+<li class="toclevel-2 tocsection-14"><a href="#Comments_on_setting_up_PBC"><span class="tocnumber">4.1</span> <span class="toctext">Comments on setting up PBC</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="#Exercises_3"><span class="tocnumber">4.2</span> <span class="toctext">Exercises</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-16"><a href="#Dynamics:_heating"><span class="tocnumber">5</span> <span class="toctext">Dynamics: heating</span></a>
+<ul>
+<li class="toclevel-2 tocsection-17"><a href="#Pre-dynamics_Setup"><span class="tocnumber">5.1</span> <span class="toctext">Pre-dynamics Setup</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#The_DYNAmics_Command"><span class="tocnumber">5.2</span> <span class="toctext">The DYNAmics Command</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="#Interpreting_the_Output"><span class="tocnumber">5.3</span> <span class="toctext">Interpreting the Output</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-20"><a href="#Dynamics:_equilibration_and_production_runs"><span class="tocnumber">6</span> <span class="toctext">Dynamics: equilibration and production runs</span></a>
+<ul>
+<li class="toclevel-2 tocsection-21"><a href="#Restarting_a_Dynamics_run"><span class="tocnumber">6.1</span> <span class="toctext">Restarting a Dynamics run</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="#Using_the_Hoover_thermostat_and_constant_pressure"><span class="tocnumber">6.2</span> <span class="toctext">Using the Hoover thermostat and constant pressure</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-23"><a href="#Trajectory_Analysis"><span class="tocnumber">7</span> <span class="toctext">Trajectory Analysis</span></a></li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="Reading_in_the_Crambin_structure"> Reading in the Crambin structure </span></h2>
+<p>The first step of any simulation is getting your structure read into CHARMM. Unfortunately, it is not always straightforward to just get a PDB file from <a rel="nofollow" class="external text" href="http://www.pdb.org">the Protein Data Bank</a> and load it up. This is mainly because the PDB uses different naming conventions than CHARMM for some atoms and residues. Fortunately, there are a number of tools that can help with this such as the conv_pdb.pl script in MMTSB or the standalone PDB parser from CHARMMing, which you can download <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/tutorial-data/charmming_parser.tar.gz">from this site</a>. In this case, we will start with a version of 1CBN that has been run through CHARMMing's parser. In order to keep things simple, we will use only the protein atoms and not the bound ligand (the hetero atoms). The parsed PDB with the HETATMs removed can be found <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/c/c2/1cbn-a.pdb">here</a>.
+</p>
+<h3> <span class="mw-headline" id="Reading_in_the_PDB_file">Reading in the PDB file</span></h3>
+<h4> <span class="mw-headline" id="Background">Background</span></h4>
+<p>Correctly reading in a structure from the PDB can be one of the trickiest parts of using CHARMM because of differences in format and nomenclature between PDB files and what CHARMM expects.  <a rel="nofollow" class="external text" href="http://www.charmming.org">CHARMMing</a> uses an automated script to format the PDB into an amenable input source for CHARMM. However, this automated procedure has some drawbacks, namely residue and atom number is not preserved (we intend to fix this in the near future). Also, there will be occasional instances where it will not work quite right for some reason or another. In this case you will need to "roll your own"and the examples in the script archive of the CHARMM forums should be of some use. In particular, see the <a rel="nofollow" class="external text" href="http://www.charmm.org/ubbthreads-7-5-5/ubbthreads.php?ubb=showflat&amp;Number=4116#Post4116">complex PDB input</a> post by Rick Venable. As a general rule, the script archive is a good place to look for examples of how to do things in CHARMM. 
+</p>
+<h4> <span class="mw-headline" id="Our_script">Our script</span></h4>
+<p>The first input script to be used is <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/7/75/Setup.inp">setup.inp</a>, which reads the sequence and coordinates from the PDB file and creates the other data structures needed by CHARMM. Most of this script should be reasonably straightforward, however there are a couple of commands that have not been seen previously:
+</p>
+<ul><li> <tt>READ SEQUence</tt> tells CHARMM to read the sequence for the macromolecule from the file. For example, the sequence "ALA ALA" would refer to an alanine dipeptide.
+</li><li> The <tt>GENErate</tt> command is used to create a new segment in the protein structure file. In this script, we do not read in a PSF, so the <tt>GENErate</tt> command effectively creates the PSF.
+<ul><li> The <tt>SETUp</tt> option to <tt>GENErate</tt> tells CHARMM to create the internal coordinate (IC) tables.
+</li><li> a-pro is the identifier we give to the segment that we are generating (this is called the SEGID and is limited to 5 characters).
+</li><li> <tt>first nter last cter</tt> determine the terminal group patchings for the segments. NTER and CTER are the defaults for proteins and refer to the capping at each end of the peptide chain.
+</li></ul>
+</li><li> The REWInd command tells CHARMM to begin reading a file again from the beginning (handy when you want to read two types of data from a file as we do here)!
+</li><li> The IC commands in this file tell CHARMM to fill in missing data in the internal coordinate table with information from the parameter sets (bonds, angles, etc. being placed at their minimum). This data can then be used to build cartesian coordinates. However, since the PDB file already has cartesian coordinates for all of the atoms except the hydrogens, it is not really needed here (but it does not hurt to have it).
+</li><li> The <tt>HBUIld</tt> command places the hydrogens relative to the heavy atom positions. Most PDB files do not have hydrogen positions, so this command is used within CHARMM to build them. Note that the hydrogen positions may not be optimal, so it is best to minimize these following the set-up.
+</li></ul>
+<p>Once we have all of the coordinates in place, we go ahead and save out our newly created PSF and coordinate files.
+</p>
+<h3> <span class="mw-headline" id="Making_the_final_structure">Making the final structure</span></h3>
+<p>Now that we have the protein segment read in, there is still a little bit more to do to get a really correct structure that we can work with. In many cases, a protein will have more than one segment and they will all need to be prepared separately, read in, and appended together to make a final structure. This can be done with the APPEnd option to READ PSF and READ COOR. In this case, however, we only have a single segment to read in so this step is somewhat superfluous. It is presented here only because in a lot of cases you will need to do it. However, there is one important thing we must do now! If you look at the original 1CBN PDB from the Protein Data Bank, you will notice some lines in the header that begin with <tt>SSBOND</tt>. These lines indicate that there are disulfide bridges present in the protein, which can have a substantial effect on the behavior of participating residues. These must therefore be added, which is done via the PATCh command in CHARMM. There are other types of patches we could include as well -- these are mostly used to change the protonation state of a residue. For example, the ASPP patch adds an extra proton to an Aspertine residue, giving it a net +1 charge.
+</p><p>In this case, however, we just want to apply the disulfide bridge patches. The input script we have to do all of this is <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/2/25/Append.inp">append.inp</a>. When you run it, be careful to note the output from the <tt>PATCh</tt> command to make sure that the patch was applied successfully. CHARMM does not always stop processing when a patch application fails, which can lead to strange problems in later scripts. There are a couple of syntactic points to note as well:
+</p>
+<ul><li> Note the syntax of the <tt>PATCh</tt> command: <tt>PATCh &lt;patch name&gt; &lt;residue selection(s)&gt; &lt;other options&gt;</tt>. In this case <tt>DISUL</tt> (for disulfide) is the name of the patch, 2 selections are needed (since a disulfide bridge links two residues, and the <tt>SETUp</tt> options is used again because the IC table is modified and thus needs to be re-created.
+</li><li> We delete the hydrogen atom coordinates and re-place them once the patching is done. In this case this is not really necessary, however when appending multiple segments it is a good idea to re-create the hydrogen atoms coordinates with the whole structure in place. This will reduce bad contacts between the hydrogens and heavy atoms.
+</li><li> The <tt>IOFOrm EXTEnded</tt> command tells CHARMM to print the coordinate files out in high precision (note: older versions of CHARMM may have trouble reading these in).
+</li></ul>
+<h2> <span class="mw-headline" id="Vacuum_minimization"> Vacuum minimization </span></h2>
+<h3> <span class="mw-headline" id="Basic_notes">Basic notes</span></h3>
+<p>Now that the structure has been prepared for use with CHARMM, the next step is to minimize it. The input script (initial-minimization.inp) may be found <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/5/5f/Initial-minimization.inp">here</a> and you may also download <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/1/1b/Initial-minimization.out">the output file</a>. As mentioned in the <a href="/index.php/FINAL_Minimization" title="FINAL Minimization" class="mw-redirect">Minimization</a> section of the tutorial, there are several different methods for performing minimization. This script implements a fairly straightforward routine of 100 steps of steepest descent followed by 1000 steps of <tt>ABNR</tt> with a gradient tolerance of 0.01. After the minimization is completed, the COOR RMS command is used to show the difference between the initial and final structures (the original coordinates are copied to the comparison coordinate set (<tt>COMP</tt>) set via the <tt>COOR COPY COMP</tt> command that is issued prior to minimization; by default <tt>COOR RMS</tt> prints out the root mean square distance between the coordinates in the main and comp sets).
+</p><p>The PSF and initial coordinates are read in from the files created by the append script. We only need to write out a new coordinate file since minimizing the structure does not change the coordinates.
+</p><p>For real production use, this may be too much vacuum minimization. Restraints might need to be applied to keep the structure from twisting too far out of shape. Remember that the examples in this tutorial serve illustrative purposes only. <b>You</b> are responsible for examining your outputs and visualizing your structures after every step to make sure that they make sense in the context of the work you are doing. Adding restraints is given as an exercise below.
+</p>
+<h3> <span class="mw-headline" id="Exercises">Exercises</span></h3>
+<ol><li> Modify the minimization script to do three separate rounds of minimization: (1) minimize only the hydrogens, fixing the heavy atoms, (2) minimize with the backbone C, N, and O atoms fixed and all other atoms free to move, (3) minimize with all atoms free. Which minimization reduces system energy the most?
+</li><li> Use COOR DIFF to get the atom by atom difference between the initial coordinates and final coordinates. Which atoms moved the most? The least?
+</li></ol>
+<h2> <span class="mw-headline" id="Solvation_and_neutralization"> Solvation and neutralization </span></h2>
+<p>The first simulation we'll set up for this tutorial will be molecular dynamics in explicit solvent. In order to continue on, we need to place a water structure around the protein. Although Crambin is neutral, we will also place it in a 0.15 molar solution of potassium chloride to illustrate the process of neutralization.
+</p>
+<h3> <span class="mw-headline" id="Solvation"> Solvation </span></h3>
+<p>The input file for solvation is <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/1/1b/Solvate.inp">Solvate.inp</a> (the corresponding output file can be downloaded <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/5/5b/Solvate.out">here</a>). We have chosen to solvate the Crambin in a rhombic dodecahedron (RHDO) because it is the most globular. As seen earlier, the RHDO approaches the efficiency of a sphere, and so it is a good choice for this system. A cubic or rectangular box would have worked well too.
+</p><p>There are a few points of interest in this script:
+</p>
+<ol><li> After the structure is read in, the <tt>COORdinate ORIEnt</tt> command is issued which centers the structure at the origin, making the longest axis of the protein correspond to the Cartesian X-axis and the second longest axis correspond to the Cartesian Y-axis. In our case this is OK because the water box is centered. If the water box is far off-center this can move the protein coordinates in an undesirable way. It is best to make sure that the water is pre-centered, but failing this you can do a <tt>COOR STAT</tt> on the water and then <tt>COOR TRANS</tt> to translate the water structure such that it is roughly centered.
+</li><li> The dimensions of the three axes are determined via the <tt>CALC</tt> command. <tt>CALC</tt> allows for mathematical manipulation within CHARMM scripts
+</li><li> The method of creating the water structure is that outlined on the <a href="/index.php/FINAL_Solvation" title="FINAL Solvation" class="mw-redirect">solvation</a> page:
+<ol><li> Delete the waters whose oxygen atoms are within 2.5 Å of the protein (note that the waters we read in are generated as segment BWAT for easy identification later). We do this by selecting <tt>.BYRES.</tt> all OH2 atoms within 2.5 angstroms of any atom that is not in segid BWAT or is a hydrogen. Pay careful attention to the syntax of the select statement -- this can be a bit tricky!
+</li><li> Calculate the radius of a circle that will circumscribe the final RHDO (we call the radius variable <tt>@safesphere</tt> in the script) and then delete all waters outside it.
+</li><li> Create the crystal structure using <tt>CRYStal DEFIne</tt> and <tt>CRYStal BUILD</tt>
+</li><li> Use the <tt>IMAGe</tt> command to force the whole BWAT segment to be updated by residue (<tt>BYRES</tt>). Recall that this means any water molecules in BWAT that are outside the unit cell will be translated back inside it when images are updated.
+</li><li> Save the current coordinates and use the UPDAte command to move the waters that are outside the RHDO back inside it.
+</li><li> Detect which waters have moved (via <tt>COOR DIFF</tt>) and delete them as extraneous.
+</li></ol>
+</li><li> Minimize the final structure slightly to remove bad contacts. An alternate approach is to fix (useing <tt>CONS FIX</tt>) or restrain (using <tt>CONS HARM</tt> or similar; these are discussed on the <a href="/index.php/FINAL_Essential_CHARMM_Features" title="FINAL Essential CHARMM Features" class="mw-redirect">essential CHARMM features</a> page) the Crambin and minimize only the solvent in this step.
+</li></ol>
+<p>This script, while complex, should be easily adoptable to different situations. As an <b>exercise</b>, try solvating Crambin in a cubic box rather than an RHDO. You should visualize both the cubic and the RHDO structures to make sure that the protein is entirely surrounded by water with a sufficient buffer to ensure that the Crambin won't interact directly with an image of itself.
+</p>
+<h3> <span class="mw-headline" id="Neutralization"> Neutralization </span></h3>
+<p>The <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/5/5c/Neutralize.inp">neutralize.inp</a> script is slightly simplified from the version used by CHARMMing, mainly by removing support for triatomic salts such as MgCL<sub>2</sub>. In this script we limit ourselves to the diatomic salt Potassium Chloride (KCl). Nonetheless, this is still one of the most complex scripts used by CHARMMing. Once you have the input script you may also download <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/d/d8/Neutralize.out">its output file</a>.
+</p><p>As mentioned on <a href="/index.php/FINAL_Neutralization" title="FINAL Neutralization" class="mw-redirect">the Neutralization page</a>, the basic idea of this script is to run a certain number of trials, each one of which replaces a number of water molecules with counter-ions in order to achieve the desired concentration. The trial that yields the lowest energy (after a brief minimization) is then used. The first thing that is done is to calculate the volume used by the entire system and the volume taken up by the protein, which is accomplished by the <tt>COOR VOLUme</tt> command (this is necessary to get the concentration right). As stated in the documentation, we must store the radii of each atom in the first scalar array and the outer probe diameter in the second. We also need to give a maximum number of cubic pixels via the <tt>SPACE</tt> option. A larger <tt>SPACE</tt> value gives a more accurate answer at the cost of more CPU time and memory. We use 168 times the number of atoms, which is a reasonable heuristic. The total volume from <tt>COOR VOLUme</tt> is the sum of the <tt>?VOLUME</tt> (space taken up by the atoms themselves) and <tt>?FREEVOL</tt> (space in between them) CHARMM variables. When we have the total volume for the whole system and for the protein, their difference is the volume of the solvent -- this is the space we have to insert the ions.
+</p><p>Once we know how much volume that we are dealing with, it is necessary to figure out how many ions are needed. This is a fairly straightforward calculation based on Avogadro's number, with the total number of ions needed to achieve the desired concentration is stored in the <tt>@totions</tt> variable. The number of charges necessary is then added (or subtracted) from <tt>@totions</tt> depending on whether we need to add or subtract cations (positive charges). The final result is stored in the <tt>@nions</tt> variable. We then make sure that an even number of charges are added (since we have to pair positive and negative charges except for the any additional ions needed to neutralize the system). Finally we add negative or subtract positive charges as needed to neutralize the system, storing the very final number of positive and negative ions in <tt>@ipos</tt> and <tt>@ineg</tt>.
+</p><p>Once we know how many ions that we need to place, we enter into the main Monte-Carlo loop. Right at the beginning, we use a neat trick to redirect the output to another file to keep from cluttering up our "main" output file. To do so, we open up a new unit for writing and then use CHARMM's <tt>OUTUnit</tt> command to tell the program to send its output to the new unit we opened up. When we're done with the loop (at the end of the script), we issue:
+</p>
+<pre> outu 6
+</pre>
+<p>to tell CHARMM to go back to sending its output to unit 6 (which is standard output on Unix-like systems).
+</p><p>In each iteration of the loop, the PSF and coordinates from solvation are re-read so we start fresh each time. We then call a <b>stream file</b> (addions.str). Stream files are just regular CHARMM scripts, but they can be called by other CHARMM scripts (like a subroutine in other programming languages). This allows us to modularize CHARMM scripts and re-use different pieces of code without copying and pasting them into different scripts. In this case the <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/d/da/Addions.str">addions.str</a> stream file handles the actual placing of the ions. To do so, it first generates two new segments, one for the positive ions and one for the negative ions. All of the coordinates for the atoms in these segments are initially set to zero via the COOR SET command. 
+</p><p>To actually place the ions, the script uses two loops, one for the cations and one for the anions. The first step in each loop is to select which water molecules are candidates for being replaced. We select all of the oxygens (type OH2) that are part of water moleculaes that are at least 5.5 Å away from the protein and from another ion (notice how SELEct AROUnd comes in handy). These are the candidates for deletion! We then get a random number via the CHARMM&#160;?RAND variable (which will produce a new random number between 0 and 1 each time that it is used). To convert this random number to an atom number we multiply it by the number of candidates for deletion, stripping out any fractional part (via the <tt>INTeger</tt> function which can be used with <tt>CALC</tt>). This gives us the variable <tt>@in</tt> -- the index of the atom within the selection to replace. The <tt>SUBSET</tt> option is then used in the <tt>SELECT</tt> command to select the <tt>@{in}</tt>th atom in the selection. We save its coordinates, assign them to the ion, and then delete the water molecule by using <tt>BYRES</tt> in the delete command (so that the whole water molecule is deleted, not just the oxygen).
+</p><p>After the ions are placed, we perform a brief minimization (10 steps of SD plus 25 steps of ABNR). Since the PSF has been cleared and reloaded, we must also redo all of the crystal setup and shake (for ABNR). In general, whenever the PSF is modified in any way existing constraints and possibly crystal data is cleared. When in doubt, repeat the crystal set-up! This is also why it's usually a good idea not to muck with the PSF within a script unless you know you need to. We then compare the minimum energy value to the previously realized minimum energy (stored in <tt>@emin</tt>, which is initially set to a ridiculously high energy value). If it is lower, we write out the new structure; if not, we simply move on, discarding it.
+</p>
+<h3> <span class="mw-headline" id="Exercises_2"> Exercises </span></h3>
+<ol><li> Practice solvating Crambin in various types of structures (box, rectangle, hexagonal prism, octahedron). Make sure the protein can rotate 360 degrees without leaving the solvated box. Which structure is most efficient (highest ratio of protein volume to total volume)? Which is least efficient?
+</li><li> Try altering the ion concentration and type of ion used (consult the CHARMM topology file for a list of supported ions). Can you cause an error by adding too many or too few ions? If so, how might this be avoided in the script?
+</li></ol>
+<h2> <span class="mw-headline" id="Minimization_with_PBC"> Minimization with PBC </span></h2>
+<p>With solvation and neutralization complete, we now have the very final PSF that we will use for dynamics. However, the very brief minimizations done as part of solvation and neutralization are probably not sufficient to completely remove bad contacts, therefore we need to do a more thorough minimization of this structure to place it at a lower potential energy. You can download the <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/a/a9/Final-minimization.inp">input</a> and <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/4/4f/Final-minimization.out">output files</a>.
+</p>
+<h3> <span class="mw-headline" id="Comments_on_setting_up_PBC"> Comments on setting up PBC </span></h3>
+<p>Because we are planning to run molecular dynamics with periodic boundary conditions (PBC), it is necessary to perform our final minimization under the same conditions. There are three basic steps steps for this: (1) defining and building the crystal structure, (2) setting up images, and (3) configuring the nonbond parameters. As in the case of neutralization, we must be careful to set the crystal parameters to their correct values from solvation, so we just copy the crystal dimension we calculate from the solvation script and re-do CRYSTal BUILd. Setting up images requires us to define which parts of the system for which we want image atoms created. We also need to define how image centering will work, i.e. how atoms that move outside of the unit cell should be treated. As a simulation progresses, some non-image atoms may move far away from the primary structure; recentering allows CHARMM to pick new "primary" atoms from among the images of these based upon their distance from the rest of the primary structure. In order to activate this feature, the user must explicitly state which atoms are allowed to be re-centered (the default is not to re-center anything); atoms can be re-centered two ways: by segment and by residue. In general, connected residues should be recentered by segment (after all, you don't want to break up a polymer chain along a backbone bond!) and non-connected segments (e.g. solvent) recentered by residue. This is the approach we take in our script.
+</p><p>Once the crystal structure and images are set up, we can issue the NBONDs command to set the nonbond parameters.
+</p>
+<h3> <span class="mw-headline" id="Exercises_3"> Exercises </span></h3>
+<ol><li> Try minimizing only the solvent, keeping the Crambin fixed. How close to the minimum energy do you get simply by optimizing the solvent positions?  
+</li><li> Find the RMSD between the Crambin minimized in vacuum and the Crambin minimized freely in the presence of solvent. How does the minimum energy structure change in the presence of solvent?
+</li><li> Go back to the neutralization step and increase the ion concentration, and then re-minimize. Does Crambin have any charged surface residues? How do these affect the optimal positions of the ions?
+</li><li> Try moving one of the ions right next to the protein. What happens to it during the course of the minimization?
+</li></ol>
+<h2> <span class="mw-headline" id="Dynamics:_heating"> Dynamics: heating </span></h2>
+<p>Heating is performed via the <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/9/9c/Md-heat.inp">md-heat.inp</a> script and <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/a/af/Md-heat.out">its output file</a>. The goal of this script is to heat the system from 110K to 310K (since the low energy conformation from minimization represents a structure that would likely be present at a lower temperature). The choice of 110K is somewhat arbitrary; it's mostly based on the fact that it is 200K lower than a reasonable physiological temperature which makes the temperature incrementing scheme use round numbers. For problematic structures, it may be necessary to start at a lower temperature, decrease the heating increments, or reduce the timestep to lower than 1 femtosecond (e.g. 0.5 fs).
+</p>
+<h3> <span class="mw-headline" id="Pre-dynamics_Setup"> Pre-dynamics Setup </span></h3>
+<p>The setup for dynamics looks very similar to that used in the final minimization with PBC. We once again need to set up crystals, images, and nonbond parameters. The only new thing here is that we open up two units for writing: unit 31 for the trajectory file and unit 41 for the restart file. Make sure you open these in the correct manner; trajectory files are written as binary data and must be opened <tt>UNFOrmatted</tt> (<tt>FILE</tt> is a synonym for <tt>UNFOrmatted</tt>) while the restart file is plain text and can be opened with the CARD keyword.
+</p>
+<h3> <span class="mw-headline" id="The_DYNAmics_Command"> The DYNAmics Command </span></h3>
+<p>If you paid attention to the <a href="/index.php/FINAL_MD" title="FINAL MD" class="mw-redirect">molecular dynamics</a> page in this tutorial, this should look fairly straightforward. The options to the <tt>DYNAmics</tt> command may be given in any order, but to make this script more legible I've grouped them by functionality. The first two lines set up basic parameters (we want to run for 100 picoseconds (100,000 steps with a 1 femtosecond timestep) while writing coordinates to the trajectory and printing the status periodically (100 and 1000 steps, respectively). We have to give the unit numbers for the restart and coordinate files to the <tt>IUNWRI</tt> and <tt>IUNCRD</tt> options.
+</p><p>The third line (starts with "firstt") and fourth line determine our heating schedule. The temperature is increased by 5K every 2500 steps for a total increase of 200K over the course of the run. Note that this is a much more gradual heating than that set up by default by the publically accessible CHARMMing install on <a rel="nofollow" class="external text" href="http://www.charmming.org">www.charmming.org</a>, as this installation is limited to 1000 steps per dynamics run -- users who install their own CHARMMing server may set the limit higher). The temperature bath is set to the final temperature, but we do not do any equilibration (<tt>IEQFRQ</tt> is 0), just heating. The fifth line handles initial velocity assignment. In this case velocities are assigned (not rescaled, since <tt>ISCVEL</tt> = 0) using a Gaussian distribution (<tt>IASVEL</tt> = 1). We do not want to impose any external checking of the temperature, so we set <tt>ICHECW</tt> to 0. <tt>ICHECW</tt> can be used to conditionally rescale or reassign velocities if the temperature moves outside of a predetermined range. The last three lines all control important options: <tt>NTRFRQ</tt> determines the frequency at which CHARMM removes net rotation and translation from the system. This is necessary when PME is used since otherwise the system's energy can be diverted to this motion, leading to a "flying ice cube." <tt>NTRFRQ</tt> should be set to somewhere between a few dozen and a few thousand steps; it's not clear what an optimal value is, but it should be set to <b>something</b> within this range. The <tt>ISEED</tt> option controls the seeds for the random number generator. Two simulations with identical starting conditions done with the same seed should yield identical results (numerical rounding aside). Finally the <tt>ECHECK</tt> option tells CHARMM to abort the simulation if total energy shifts more than 100 kcal/mol in one step. This is to provide a watchdog against runaway energy changes which may be the result of model building errors. Depending on the size of your system and the type of simulation being run, it will probably be necessary to adjust this value.
+</p>
+<h3> <span class="mw-headline" id="Interpreting_the_Output"> Interpreting the Output </span></h3>
+<p>Until now, output from the scripts has been relatively short and straightforward to interpret. However, since the output from DYNAmics is quite long and involved, it makes sense to spend a little time figuring out exactly what's what.
+</p><p>Immediately after the DYNAmics command, CHARMM prints out the options it is going to use. Reading these is a good way to check that everything really is set up the way that you want it (and that you didn't make any typos in your DYNAmics command). After this is the output from the dynamics run itself. Every NPRINT steps CHARMM will print out the energy at that particular step as well as the amount of time (in picoseconds) that has been simulated and the current temperature. It will also print the averages of these over all of the time steps since the last print out in lines beginning with "AVER" and their fluctuations in lines beginning with "FLUC". When calculating averages, it is important to use the average values since only these reflect all of the time steps in the simulation. Additionally, every <tt>NTRFRQ</tt> steps (in this case 500) you will see a group of lines beginning with "DETAILS ABOUT THE CENTER OF MASS" -- this data is used by CHARMM to stop translational and rotational motion. Also, periodically you will see lines such as:
+</p>
+<pre>SELECTED IMAGES ATOMS BEING CENTERED ABOUT 0.00000 0.00000 0.00000
+UPDECI: Nonbond update at step       176
+UPDECI: Image update at step       482
+</pre>
+<p>The first line indicates that the system is being recentered in the unit cell (Remember the <tt>IMAGE BYRES</tt> and <tt>IMAGE BYSEG</tt> commands we used in the set-up? They are at work here!). The next two lines indicate that the nonbond and image atom lists are being updated. We set <tt>INBFRQ</tt> and <tt>IMGFRQ</tt> to -1 in our <tt>NBONDs</tt> command, which means that these updates do not occur on any particular schedule, but are done heuristically when the atoms in the system have moved enough.
+</p><p>If you look to the end of the output, you'll see that molecular dynamics can take some time, even for a relatively short simulation like this one. I ran this script in parallel (4 processors) on a fairly modern machine and it still took over 3 hours to complete.
+</p>
+<h2> <span class="mw-headline" id="Dynamics:_equilibration_and_production_runs"> Dynamics: equilibration and production runs </span></h2>
+<p>Now that the system is heated up, it is usually wise to let it "settle in" and the desired temperature via an equilibration run. There are several ways of doing this (including using <tt>IEQFRQ</tt> in the NVE ensemble), but the method we use here is to run NVT using the Hoover thermostat. This is the same script that would be used for an NVT production run with Hoover, but it's often wise to let a system equilibrate before collecting statistics from the trajectory. We use the <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/a/a4/Md-equil.inp">md-equil.inp</a> script to run this simulation, and you can find the output <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/0/0f/Md-equil.out.gz">here</a> (note that the equilibration output is large enough that it has been gzipped to save space). Some people like to use the NPT ensemble for equilibration and run with this ensemble until the volume becomes stable. To modify this script to use NPT, use must set a positive value for <tt>PMASS</tt>,
+</p><p>The three main differences between this scripts and the heating script are:
+</p>
+<ol><li> The Hoover thermostat is used for temperature control; IHTFRQ and IEQFRQ are not used.
+</li><li> Pressure statistics are reported (via the <tt>PCONS</tt> option), but constant pressure is not imposed (<tt>PMASS</tt> = 0)
+</li><li> The Dynamics run is restarted, rather than started fresh
+</li><li> We do 200 picoseconds of dynamics instead of 100
+</li></ol>
+<p>The crystal, image, and nonbond setups are the same as for heating, as you would expect.
+</p>
+<h3> <span class="mw-headline" id="Restarting_a_Dynamics_run"> Restarting a Dynamics run </span></h3>
+<p>Restarting a dynamics run is relatively easy. We open the restart file from the heating run and then pass its unit number to the IUNREA option to DYNAmics. CHARMM tells us this worked with the lines:
+</p>
+<pre> READYN&gt; dynamics restart file was read. Current step=  100000
+ NSTEP  =100000  JHSTRT =     0
+</pre>
+<p>The number of steps already run is tracked in the restart file. All of the simulation times in the dynamics output will be global (i.e., they will include the time in previous simulations). We save out a new restart file at the end of this run in case we want to extend it further. One word of advice: develop a naming convention for your restart files and stick to it so you always know which one to use. One method is to number them sequentially, e.g. dyn1.res, dyn2.res, etc. Note that we name our restart file 1cbn-equil-1.dcd for this reason.
+</p>
+<h3> <span class="mw-headline" id="Using_the_Hoover_thermostat_and_constant_pressure"> Using the Hoover thermostat and constant pressure </span></h3>
+<p>The Hoover thermostat applies strict temperature control to the simulation and is generally used for NVT runs. It requires the <tt>CPT</tt> keyword, even though hoover can be run without constant pressure (as, indeed, we do). The line:
+</p>
+<pre>hoover reft 310.0 tmass @tmass
+</pre>
+<p>tells CHARMM to use it. Note that the <tt>TCONS</tt> keyword will invoke the weak-coupling Berendsen thermostat and <b>should not be used</b>! We choose to let the simulation run at 310K which is the final temperature from the heating run (the temperature will still fluctuate slightly, however, particularly for small systems). Also IHTFRQ and IEQFRQ are both set to 0 so CHARMM will never try to use velocity assignment or rescaling for temperature control (even though IASORS and IASVEL are turned on, they have no effect because IHTFRQ and IEQFRQ are 0 and we are restarting the simulation). Likewise, pressure reporting is invoked with:
+</p>
+<pre> pcons pint pref 1.0 pmass @pmass pgamma 0.0
+</pre>
+<p>Since PGAMMA (piston collision frequency) is 0, we aren't damping the motion of the pressure piston.
+</p>
+<h2> <span class="mw-headline" id="Trajectory_Analysis"> Trajectory Analysis </span></h2>
+<p>A basic file for doing analysis can be found <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/6/68/Md-analysis.inp">here</a> (output file is <a rel="nofollow" class="external text" href="http://www.charmmtutorial.org/images/c/c6/Md-analysis.out">here</a>). This file runs through some basic analysis using the CORREL command. The end result is to get three different properties from the simulation.
+</p>
+<ul><li> The radius of gyration over time
+</li><li> The distance between the alpha-carbons of residues 10 and 46
+</li><li> The time correlation function of this distance
+</li></ul>
+<p>Residues 10 and 46 were chosen because some literature suggests that a disulfide bridge between between these residues has implications for the physical behavior of the macromolecule (see Bang et al, <i>Mol Biosyst.</i> 2009 Jul;5(7):750-6. Epub 2009 May 28). Extracting data from the trajectories takes several steps:
+</p>
+<ul><li> we first must set up the system using the exact same parameters as used with the MD simulation. This is because energies are not stored in trajectory files, just coordinates or velocities; we have to be able to calculate the energy under the same conditions as the MD run.
+</li><li> the trajectory file from dynamics is opened for reading
+</li><li> we then open a log file for each of the three properties. The log file will have the format "time: value" which can easily be plotted by GNUPLOT or a similar plotting program.
+</li><li> correl itself is set up. We could use <tt>MAXSeries 2</tt> as we will only be working with three sets of data: the radius of gyration, the residue distance, and the time correlation of the distance, the last of which has its own special series set up by CHARMM. We will only be looking at a few atoms, so <tt>MAXAtoms</tt> is 50, likewise, there are 2000 time steps in our trajectory file. These numbers will change from run to run depending on what you want to look at.
+</li><li> We use <tt>ENTEr</tt> to set up two sets of data, one for the radius of gyration (we name this data set "rgyr", <tt>GYRA</tt> is the key word that tells CHARMM this data set is to contain the radius of gyration at each step. Likewise a set for the CA-CA distance is created (the set is named "dist", the <tt>BOND</tt> keyword tells CHARMM that this set will contain the distance between two atoms (even though they are not bonded). The atom selection tells CHARMM which two atoms we want.
+</li><li> We fill in the sets by reading from the trajectory file opened earlier
+</li><li> We write both sets of data to their output files (we do this now since we need to modify the "dist" set to compute the time correlation).
+</li><li> The <tt>MANTime</tt> command is used to subtract the average off from each element of the "dist" set (so each data point becomes a displacement from the mean).
+</li><li> The <tt>CORFUN</tt> command is used to calculate the correlation of the "dist" data. It is implicitly saved in a set called "corr" (if we call <tt>CORFUN</tt> again before writing the data out, it will be lost!)
+</li><li> We write the "corr" data set out in the same manner as "dist" and "rgyr"
+</li></ul>
+<p>Below are plots of the distance, radius of gyration, and time correlation:
+</p><p><a href="/index.php/File:Dist.png" class="image" title="caption"><img alt="caption" src="/images/thumb/4/48/Dist.png/500px-Dist.png" width="500" height="350" /></a>
+CA-CA distance between residues 10 and 46 of 1CBN from our dynamics trajectory.
+</p><p><a href="/index.php/File:Dcor.png" class="image" title="caption"><img alt="caption" src="/images/thumb/b/b8/Dcor.png/500px-Dcor.png" width="500" height="350" /></a>
+Time correlation calculated from the above data
+</p><p><a href="/index.php/File:Rgyr.png" class="image" title="caption"><img alt="caption" src="/images/thumb/9/9f/Rgyr.png/500px-Rgyr.png" width="500" height="350" /></a>
+Radius of gyration of 1CBN from our dynamics trajectory.
+</p><p><br />
+The GNUPLOT scripts used to generate these images from the raw data files are available in the complete tarball of this example.
+</p><p>These graphs show that the distance between the alpha carbons of the two residues fluctuates around an average value slightly greater than 6.5 Å. Likewise, the time correlation function drops styeeply, indicating that this distance between these two residues quickly become uncorrelated with the starting structure. Likewise, the radius of gyration fluctuates around 21.5 and 21.6 Å.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 91/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key tutorial:pcache:idhash:55-0!*!0!!en!2!* and timestamp 20170914191412 -->
+</div><div class="printfooter">
+Retrieved from "<a href="https://www.charmmtutorial.org/index.php?title=Full_example&amp;oldid=831">https://www.charmmtutorial.org/index.php?title=Full_example&amp;oldid=831</a>"</div>
+		<div id='catlinks' class='catlinks catlinks-allhidden'></div>		<!-- end content -->
+				<div class="visualClear"></div>
+	</div>
+</div></div>
+<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+				<li id="ca-nstab-main" class="selected"><a href="/index.php/Full_example" primary="1" context="subject" title="View the content page [c]" accesskey="c">Page</a></li>
+				<li id="ca-talk" class="new"><a href="/index.php?title=Talk:Full_example&amp;action=edit&amp;redlink=1" primary="1" context="talk" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				<li id="ca-viewsource"><a href="/index.php?title=Full_example&amp;action=edit" primary="1" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li>
+				<li id="ca-history"><a href="/index.php?title=Full_example&amp;action=history" rel="archives" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+
+<li id="pt-login"><a href="/index.php?title=Special:UserLogin&amp;returnto=Full+example" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+<a href="/index.php/CHARMM_Tutorial" style="background-image: url(https://www.charmmtutorial.org/tutorial-data/image-sm.png);" title="Visit the main page"></a>
+	</div>
+	<div class="generated-sidebar portlet" id="p-CHARMM_Tutorial">
+		<h5>CHARMM Tutorial</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage"><a href="/index.php/CHARMM_Tutorial" title="Visit the main page [z]" accesskey="z">CHARMM Tutorial</a></li>
+				<li id="n-Outline"><a href="/index.php/Outline">Outline</a></li>
+				<li id="n-Introduction"><a href="/index.php/Introduction">Introduction</a></li>
+				<li id="n-Basic-CHARMM-Scripting"><a href="/index.php/Basic_CHARMM_Scripting">Basic CHARMM Scripting</a></li>
+				<li id="n-Essential-CHARMM-Features"><a href="/index.php/Essential_CHARMM_Features">Essential CHARMM Features</a></li>
+				<li id="n-The-Energy-Function"><a href="/index.php/The_Energy_Function">The Energy Function</a></li>
+				<li id="n-Minimization"><a href="/index.php/Minimization">Minimization</a></li>
+				<li id="n-Solvation"><a href="/index.php/Solvation">Solvation</a></li>
+				<li id="n-Neutralization"><a href="/index.php/Neutralization">Neutralization</a></li>
+				<li id="n-Molecular-Dynamics"><a href="/index.php/MD">Molecular Dynamics</a></li>
+				<li id="n-Langevin-Dynamics"><a href="/index.php/LD">Langevin Dynamics</a></li>
+				<li id="n-Analysis"><a href="/index.php/Analysis">Analysis</a></li>
+				<li id="n-Full-example"><a href="/index.php/Full_example">Full example</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Appendices">
+		<h5>Appendices</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-Temperature-replica-exchange"><a href="/index.php/Temperature_replica_exchange">Temperature replica exchange</a></li>
+				<li id="n-Coarse-Grained-Go-Models"><a href="/index.php/Coarse_Grained_Go_Models">Coarse Grained Go Models</a></li>
+				<li id="n-CHARMMing.27s-PDB-reader"><a href="/index.php/CHARMMing%27s_PDB_Reader">CHARMMing's PDB reader</a></li>
+				<li id="n-Installing-CHARMMing"><a href="/index.php/Installation_of_CHARMMing">Installing CHARMMing</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-SAR_and_QSAR">
+		<h5>SAR and QSAR</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-SAR-and-QSAR-Introduction"><a href="/index.php/SAR_and_QSAR_Introduction">SAR and QSAR Introduction</a></li>
+				<li id="n-SAR-Categorization-Lesson"><a href="/index.php/SAR_Categorization_Lesson">SAR Categorization Lesson</a></li>
+				<li id="n-QSAR-Regression-Lesson"><a href="/index.php/QSAR_Regression_Lesson">QSAR Regression Lesson</a></li>
+				<li id="n-Docking-Introduction-and-Walkthrough"><a href="/index.php/Docking_Introduction_and_Walkthrough">Docking Introduction and Walkthrough</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Files">
+		<h5>Files</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-This-tutorial-as-a-PDF"><a href="http://www.charmmtutorial.org/tutorial-data/charmm_tutorial_2010.pdf" rel="nofollow">This tutorial as a PDF</a></li>
+				<li id="n-Tutorial-files-.28.tar.gz.29"><a href="http://www.charmmtutorial.org/tutorial-data/crambin_example.tar.gz" rel="nofollow">Tutorial files (.tar.gz)</a></li>
+				<li id="n-Tutorial-files-.28.zip.29"><a href="http://www.charmmtutorial.org/tutorial-data/crambin_example.zip" rel="nofollow">Tutorial files (.zip)</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Navigation">
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-recentchanges"><a href="/index.php/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-help"><a href="/index.php/Help:Contents" title="The place to find out">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="/index.php" id="searchform">
+				<input type='hidden' name="title" value="Special:Search"/>
+				<input type="search" name="search" title="Search CHARMM tutorial [f]" accesskey="f" id="searchInput" />
+				<input type="submit" name="go" value="Go" title="Go to a page with this exact name if exists" id="searchGoButton" class="searchButton" />&#160;
+				<input type="submit" name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton" />
+			</form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="/index.php/Special:WhatLinksHere/Full_example" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="/index.php/Special:RecentChangesLinked/Full_example" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+				<li id="t-specialpages"><a href="/index.php/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li><a href="/index.php?title=Full_example&amp;printable=yes" rel="alternate">Printable version</a></li>
+				<li id="t-permalink"><a href="/index.php?title=Full_example&amp;oldid=831" title="Permanent link to this revision of the page">Permanent link</a></li>
+			</ul>
+		</div>
+	</div>
+</div><!-- end of the left (by default at least) column -->
+<div class="visualClear"></div>
+<div id="footer">
+	<div id="f-copyrightico">
+		<a href="http://creativecommons.org/licenses/publicdomain/"><img src="/skins/common/images/public-domain.png" alt="Public Domain" width="88" height="31" /></a>
+	</div>
+	<div id="f-poweredbyico">
+		<a href="//www.mediawiki.org/"><img src="/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+	</div>
+	<ul id="f-list">
+		<li id="lastmod"> This page was last modified on 8 December 2011, at 15:40.</li>
+		<li id="viewcount">This page has been accessed 104,888 times.</li>
+		<li id="copyright">Content is available under <a class="external" href="http://creativecommons.org/licenses/publicdomain/">Public Domain</a> unless otherwise noted.</li>
+		<li id="privacy"><a href="/index.php/CHARMM_tutorial:Privacy_policy" title="CHARMM tutorial:Privacy policy">Privacy policy</a></li>
+		<li id="about"><a href="/index.php/CHARMM_tutorial:About" title="CHARMM tutorial:About">About CHARMM tutorial</a></li>
+		<li id="disclaimer"><a href="/index.php/CHARMM_tutorial:General_disclaimer" title="CHARMM tutorial:General disclaimer">Disclaimers</a></li>
+	</ul>
+</div>
+</div>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.user","mediawiki.page.ready"], null, true);
+}</script>
+<script src="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=monobook&amp;*"></script>
+<!-- Served in 0.179 secs. --></body></html>

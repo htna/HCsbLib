@@ -1,0 +1,65 @@
+* Analysis of the trajectory file
+*
+
+! read topology and parameter files
+read rtf card name top_all27_prot_na.rtf
+read param card name par_all27_prot_na.prm
+! read the psf and coordinate file
+read psf card name 1cbn-neutralized.psf
+read coor card name 1cbn-equil.crd
+
+
+! SETUP CRYSTAL (DEFINE, BUILD), IMAGE CENTERING W. MODIFIED PSF
+! WE USE THE SAME PARAMS AS IN SOLVATION
+set greaterval = 50.9261
+crystal define rhdo @greaterval @greaterval @greaterval 60. 90. 60.
+crystal build noper 0
+
+! These segments are used by CHARMMing for water and ions in bulk solvent
+define bulks sele segid bwat .or. segid pot .or. segid cl .or. segid sod .or. -
+  segid cal .or. segid mg .or. segid ces end
+
+! Set up images -- center the protein by segment and the solvent by residue
+image byseg sele .not. resname tip3 .and. .not. bulks end
+image byres sele resname tip3 .or. bulks end
+
+! set up shake
+shake bonh param sele all end
+
+! open trajectory file for writing and a log file for reading
+open unit 20 read unform name 1cbn-equil-1.dcd
+open unit 30 write card name 1cbn-rgyr-log.txt
+open unit 31 write card name 1cbn-dist-log.txt
+open unit 32 write card name 1cbn-dcor-log.txt
+
+! put current coords in the comp set so we cfan use them if needed
+coor copy comp
+
+! set up correl
+correl maxseries 5 maxtim 2000 maxatom 50
+! enter each value we want a correlation for
+enter rgyr gyra mass 
+enter dist bond a-pro 10 ca a-pro 46 ca
+
+! fill in the trajectories by reading them in from our dcd
+traj firstu 20 nunit 1 skip 100
+
+! write out to the log files
+
+write rgyr dumb time unit 30
+* radius of gyration
+*
+
+write dist dumb time unit 31
+* distance between CAs of Arg(10) and Asn(46)
+*
+
+! now calculate the time correlation of the dist and write it out
+mantime dist dave ! subtract off the average from all elements
+corfun dist dist total 2000
+
+write corr dumb time unit 32
+* time correlation of Arg(10)-Asn(46) CA difference
+*
+
+stop

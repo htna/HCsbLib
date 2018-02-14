@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<title>Essential CHARMM Features - CHARMM tutorial</title>
+<meta charset="UTF-8" />
+<meta name="generator" content="MediaWiki 1.19.20+dfsg-0+deb7u3" />
+<link rel="canonical" href="/index.php/Essential_CHARMM_Features" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="CHARMM tutorial (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="https://www.charmmtutorial.org/api.php?action=rsd" />
+<link rel="copyright" href="http://creativecommons.org/licenses/publicdomain/" />
+<link rel="alternate" type="application/atom+xml" title="CHARMM tutorial Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.monobook&amp;only=styles&amp;skin=monobook&amp;*" />
+<!--[if IE 6]><link rel="stylesheet" href="/skins/monobook/IE60Fixes.css?303" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="/skins/monobook/IE70Fixes.css?303" media="screen" /><![endif]--><meta name="ResourceLoaderDynamicStyles" content="" />
+<link rel="stylesheet" href="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=monobook&amp;*" />
+<style>a:lang(ar),a:lang(ckb),a:lang(fa),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}a.new,#quickbar a.new{color:#ba0000}
+
+/* cache key: tutorial:resourceloader:filter:minify-css:7:c88e2bcd56513749bec09a7e29cb3ffa */</style>
+
+<script src="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=monobook&amp;*"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Essential_CHARMM_Features","wgTitle":"Essential CHARMM Features","wgCurRevisionId":757,"wgArticleId":56,"wgIsArticle":true,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgRelevantPageName":"Essential_CHARMM_Features","wgRestrictionEdit":[],"wgRestrictionMove":[],"wgRedirectedFrom":"FINAL_Essential_CHARMM_Features"});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":5,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"monobook","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":
+0,"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;},{},{});mw.loader.implement("user.tokens",function($){mw.user.tokens.set({"editToken":"+\\","watchToken":false});;},{},{});
+
+/* cache key: tutorial:resourceloader:filter:minify-js:7:74a832f2292f1f4d40d425d223444e78 */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax"]);
+}</script>
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Essential_CHARMM_Features skin-monobook action-view">
+<div id="globalWrapper">
+<div id="column-content"><div id="content">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading"><span dir="auto">Essential CHARMM Features</span></h1>
+	<div id="bodyContent" class="mw-body">
+		<div id="siteSub">From CHARMM tutorial</div>
+		<div id="contentSub">(Redirected from <a href="/index.php?title=FINAL_Essential_CHARMM_Features&amp;redirect=no" title="FINAL Essential CHARMM Features">FINAL Essential CHARMM Features</a>)</div>
+		<div id="jump-to-nav" class="mw-jump">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>
+		<!-- start content -->
+<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><p>This section covers several essential features of CHARMM that are used in most every CHARMM script.
+</p>
+<table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#File_I.2FO"><span class="tocnumber">1</span> <span class="toctext">File I/O</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Main_and_Comparison_Coordinate_Sets"><span class="tocnumber">2</span> <span class="toctext">Main and Comparison Coordinate Sets</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Atom_Selection"><span class="tocnumber">3</span> <span class="toctext">Atom Selection</span></a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="#Controlling_which_atoms_are_selected:_BYREsidue_and_BYGRoup"><span class="tocnumber">3.1</span> <span class="toctext">Controlling which atoms are selected: BYREsidue and BYGRoup</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Basic_operators:_.AND..2C_.OR..2C_and_.NOT."><span class="tocnumber">3.2</span> <span class="toctext">Basic operators: .AND., .OR., and .NOT.</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#Basic_factors:_atom.2C_segment.2C_and_residue_types"><span class="tocnumber">3.3</span> <span class="toctext">Basic factors: atom, segment, and residue types</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Advanced_operators:_AROUnd_and_BONDed"><span class="tocnumber">3.4</span> <span class="toctext">Advanced operators: AROUnd and BONDed</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Additional_factors"><span class="tocnumber">3.5</span> <span class="toctext">Additional factors</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="#Properties"><span class="tocnumber">3.6</span> <span class="toctext">Properties</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-10"><a href="#Variables_in_CHARMM"><span class="tocnumber">4</span> <span class="toctext">Variables in CHARMM</span></a>
+<ul>
+<li class="toclevel-2 tocsection-11"><a href="#User-settable_Variables"><span class="tocnumber">4.1</span> <span class="toctext">User-settable Variables</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="#Substitution_Variables"><span class="tocnumber">4.2</span> <span class="toctext">Substitution Variables</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="#Loops_and_flow_control"><span class="tocnumber">4.3</span> <span class="toctext">Loops and flow control</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-14"><a href="#Constraints_and_Restraints"><span class="tocnumber">5</span> <span class="toctext">Constraints and Restraints</span></a>
+<ul>
+<li class="toclevel-2 tocsection-15"><a href="#Basic_overview"><span class="tocnumber">5.1</span> <span class="toctext">Basic overview</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="#Harmonic_restraints"><span class="tocnumber">5.2</span> <span class="toctext">Harmonic restraints</span></a></li>
+<li class="toclevel-2 tocsection-17"><a href="#Distance_Restraints"><span class="tocnumber">5.3</span> <span class="toctext">Distance Restraints</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="#SHAKE"><span class="tocnumber">5.4</span> <span class="toctext">SHAKE</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-19"><a href="#Debugging_CHARMM_scripts"><span class="tocnumber">6</span> <span class="toctext">Debugging CHARMM scripts</span></a>
+<ul>
+<li class="toclevel-2 tocsection-20"><a href="#Debugging_via_prnlev"><span class="tocnumber">6.1</span> <span class="toctext">Debugging via prnlev</span></a></li>
+<li class="toclevel-2 tocsection-21"><a href="#Printing_data_structures"><span class="tocnumber">6.2</span> <span class="toctext">Printing data structures</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="File_I.2FO"> File I/O </span></h2>
+<p>CHARMM provides a consistent set of commands for reading and writing files. In general, a file must be <tt>OPENed</tt>, read from or written to, and then, in some cases, <tt>CLOSEd</tt>. To provide a basic example, here is how to read an already-created protein structure file (PSF) into CHARMM:
+</p>
+<pre>open read card unit 10 name myfile.psf
+read psf card unit 10
+close unit 10
+</pre>
+<p>Already, from this simple example, there are several features that must be noted. First and foremost, it is necessary to associate each open file with a unit number (FORTRAN programmers will recognize this immediately). Unit numbers must be in the range from 1-99 for CHARMM versions c35 and older. It is generally good practice to use numbers greater than 10, as the lower number units may be in use by the system (e.g. the standard output stream is usually written to unit 6 on modern systems). Another interesting point is the use of the <tt>CARD</tt> subcommand. CHARMM can read and write two types of files, those containing ASCII text are designated as <tt>CARD</tt> or <tt>FORMatted</tt>, and those containing binary data are designated <tt>FILE</tt> or <tt>UNFOrmatted</tt>. By specifying <tt>CARD</tt> in the <tt>OPEN</tt> and <tt>READ</tt> commands, we are telling CHARMM that we expect the data to be ASCII text (as, indeed, PSF files are). Also in the <tt>READ</tt> command we must tell CHARMM which unit we want to read from, since we can have a number of files open at a given time.
+</p><p>Once we are done with the file it is good practice to <tt>CLOSe</tt> it. If you attempt to re-open the unit number before closing the file, CHARMM will close the file for you, but it's cleaner and less confusing to explicitly close it yourself. Note that when writing files, they are generally closed automatically after writing is complete.
+</p><p>In this particular simple example, we can compress the syntax to
+</p>
+<pre>read psf card name myfile.psf
+</pre>
+<p>In this case, CHARMM will assign a unit number to myfile.psf, open it, read it, and close it all with one command.
+</p><p>Writing works similarly to reading, the file is opened written to, and closed. For example, one may wish to write out the current coordinate set. This can be done as follows:
+</p>
+<pre>open unit 11 write card name new-coordinates.crd
+write coor card unit 11
+* title of the coordinate file
+*
+</pre>
+<p>Note that in this case, we did not close the file as CHARMM closes it automatically once the writing is done.
+</p><p>To give an example of opening an unformatted/binary file, consider the case of opening a file to write a coordinate trajectory for dynamics (trajectories are discussed further in the dynamics and analysis sections):
+</p>
+<pre>open unit 20 write unfo name my-trajectory.trj
+dyna ... iuncrd 20 ...
+</pre>
+<p>In this case no title is written (after all the file contains binary data) and the unit number is passed to the <tt>IUNCRD</tt> option to the <tt>DYNAmics</tt> command, which specifies the unit number on which to write out the coordinate trajectory.
+</p><p>A complete treatment of how CHARMM handles file I/O can be found in <a rel="nofollow" class="external text" href="http://www.charmm.org/documentation/current/io.html">io.doc</a>. Full-fledged examples are given on the <a href="/index.php/FINAL_Full_example" title="FINAL Full example" class="mw-redirect">complete example page</a>, and an example of opening trajectory files is given on the <a href="/index.php/FINAL_Analysis" title="FINAL Analysis" class="mw-redirect">analysis page</a>.
+</p>
+<h2> <span class="mw-headline" id="Main_and_Comparison_Coordinate_Sets"> Main and Comparison Coordinate Sets </span></h2>
+<p>During a run, CHARMM stores two sets of coordinates; the coordinates being acted upon are called the main set (<tt>MAIN</tt>), but there is another set available called the comparison set (<tt>COMP</tt>). This is extremely useful for measuring how much atoms have moved around during a particular action, for example...
+</p>
+<pre>! copy the contents of the main set into the comp set
+coor copy comp
+
+! do something to move the coordinates such as
+! minimization
+.
+.
+.
+
+! get the difference between the main and the
+! comparison set and save it in the
+! comparison set
+coor diff comp
+
+! print out the differences
+print coor comp
+</pre>
+<p>You can also use
+</p>
+<pre>coor copy
+</pre>
+<p>to copy the <tt>COMP</tt> set into the <tt>MAIN</tt> set and
+</p>
+<pre>coor swap
+</pre>
+<p>to swap the main and comparison sets.
+</p><p>One important caveat is that some calculations such as molecular dynamics may overwrite the <tt>COMP</tt> coordinate set. If in doubt, you should save the coordinates to file and then read them back into the <tt>COMP</tt> set, e.g.:
+</p>
+<pre>write coor card name temp.crd&#160;! write set out to a file
+
+! do something that might overwrite the comp set, e.g. dynamics
+.
+.
+.
+
+! re-fill the COMP set from the file we wrote before
+read coor comp card name temp.crd
+</pre>
+<p>This way, you will be sure you have the coordinates that you're expecting in <tt>COMP</tt>!
+</p>
+<h2> <span class="mw-headline" id="Atom_Selection"> Atom Selection </span></h2>
+<p>One of the most useful features of CHARMM is its powerful atom selection functionality. This can be used to modify the effects of certain commands, making them apply to a subset of the atoms or the whole system. For example, if you want to write only some of the coordinates out, there's a command for that.
+</p><p>All atom selections are done with the <tt>SELEct</tt> subcommand. <tt>SELEct</tt> is not a command itself, but is often used as an integral part of other commands to determine which atom(s) will be operated upon (there will be plenty of examples of this as we move through the tutorial). The basic syntax for <tt>SELEct</tt> is:
+</p>
+<pre>sele &lt;criteria&gt; end
+</pre>
+<p>Where &lt;criteria&gt; is the specification of which atoms you want selected (this tutorial will give plenty of examples of which criteria you can use). When experimenting with the SELEct command, it is helpful to put the subcommand SHOW directly before the END statement. This will tell CHARMM to list which atoms were actually selected, which is very helpful for debugging SELEct statements!
+</p><p>A full description of atom selection is contained in <a rel="nofollow" class="external text" href="http://www.charmm.org/documentation/current/select.html">select.doc</a>.
+</p>
+<h3> <span class="mw-headline" id="Controlling_which_atoms_are_selected:_BYREsidue_and_BYGRoup"> Controlling which atoms are selected: BYREsidue and BYGRoup </span></h3>
+<p>Usually CHARMM will only mark those atoms which match the selection criteria. However, sometimes you want to select all atoms in a group or residue in which one atom matches the criteria. The <tt>.byres.</tt> and <tt>.bygroup.</tt> key words (note the leading and trailing dots) allow you to do this. For example:
+</p>
+<pre> sele .byres. bynum 12 end
+</pre>
+<p>will select all atoms in the same residue (<tt>.byres.</tt>) as atom number 12 (the <tt>bynum</tt> factor is described later on, but its use should be self-evident here).
+</p>
+<h3> <span class="mw-headline" id="Basic_operators:_.AND..2C_.OR..2C_and_.NOT."> Basic operators: .AND., .OR., and .NOT. </span></h3>
+<p>It is possible to use basic <a rel="nofollow" class="external text" href="http://en.wikipedia.org/Boolean_logic">boolean logical operators</a> (.AND., .OR., and .NOT.: the periods are optional) with atom selections, and they behave exactly as one would expect. For example, if you need to select atom numbers 12 and 15, this can be done by:
+</p>
+<pre> sele bynum 12 .or. bynum 15 end
+</pre>
+<p>A commonly seen mistake is to do:
+</p>
+<pre> sele bynum 12 .and. bynum 15 end
+</pre>
+<p>This selection will return no results because it is impossible for an atom to be both number 12 and number 15 at the same time!
+</p><p>Likewise, you can select all atoms except for atom number 12 by doing:
+</p>
+<pre> sele .not. bynum 12 end
+</pre>
+<h3> <span class="mw-headline" id="Basic_factors:_atom.2C_segment.2C_and_residue_types"> Basic factors: atom, segment, and residue types </span></h3>
+<p>There are a number of keywords that let you select an atom based on a particular characteristic. We've already seen one of these, the <tt>bynum</tt> command which select an atom based on (surprise, surprise) its number. An advanced feature of the <tt>bynum</tt> token is that you can select a range of numbers by seperating them with a colon, for example:
+</p>
+<pre>sele bynum 12&#160;: 20 end
+</pre>
+<p>selects atoms 12-20. One of the most important factors for day to day use is the ATOM token. The syntax is:
+</p>
+<pre>sele atom &lt;segment ID&gt; &lt;residue ID&gt; &lt;type&gt; end
+</pre>
+<p>Any of the segment ID, residue ID, or type can use wildcards. A "*" matches any string of characters, a "#" matches any string of numbers, and "%" and "+" match a single character or number, respectively. So for example:
+</p>
+<pre>sele atom A * C* end
+</pre>
+<p>will select all carbon atoms in all residues of segment A (note that C* matches C, CA, CT, etc.).
+</p><p>It is possible to select by the segment ID, residue ID and type individually with the <tt>SEGId</tt>, <tt>RESId</tt>, and <tt>TYPE</tt> factors, so for example:
+</p>
+<pre>sele segid A .and. type C* end
+</pre>
+<p>will provide equivalent results to the previous atom selection.
+</p><p>Another example of what you can do is select a range of residues. Suppose, for example, residues 22 through 48 of a protein make up an alpha helix and you want to select all of them to perform some action, you can do:
+</p>
+<pre>sele resid 22:48 end
+</pre>
+<p>The final basic factor that is commonly used is the <tt>RESName</tt> criteria, which selects atoms based on their residue name. For example:
+</p>
+<pre> sele resn GLY end
+</pre>
+<p>will select all atoms in all Glycine residues.
+</p>
+<h3> <span class="mw-headline" id="Advanced_operators:_AROUnd_and_BONDed"> Advanced operators: AROUnd and BONDed </span></h3>
+<p>It is also possible to select atoms based on their spatial or bonded relationship with other atoms. To select atoms within a given distance of a group of atoms, one can use the .AROUND. followed by a real number immediately after another factor. For example:
+</p>
+<pre>sele resid 10 .around. 5.0 end
+</pre>
+<p>will select all atoms within 5 angstroms of residue number 10.
+</p><p>Likewise, you can select the atoms that are bonded to a particular atom with the <tt>.BONDED.</tt> modifier:
+</p>
+<pre>sele atom * * H* .and. .bonded. type C* end
+</pre>
+<p>will select all hydrogens bonded to a carbon atom.
+</p>
+<h3> <span class="mw-headline" id="Additional_factors"> Additional factors </span></h3>
+<p>There are several other keywords that you can use to select atoms
+</p>
+<ul><li> INITial: This keyword selects all atoms that do not have coordinates initialized (CHARMM sets uninitialized coordinates to 9999.9999).
+</li><li> HYDRogen: selects all of the hydrogen atoms in the system
+</li><li> CARBon: selects all of the carbon atoms in the system
+</li></ul>
+<h3> <span class="mw-headline" id="Properties"> Properties </span></h3>
+<p>The PROPerty key word allows for atom selection based on CHARMM's SCALar properties, a full list of which may be found in <a rel="nofollow" class="external text" href="http://www.charmm.org/documentation/current/scalar.html">scalar.doc</a>. Both the main and comparison coordinate and weighting arrays are permitted. For example:
+</p>
+<pre>sele property wcomp .eq. 1 end
+</pre>
+<p>would select those atoms having a weight of 1 in the comparison weighting array. Other scalar values that may be selected include the X, Y, and Z coordinates (called XCOMP, YCOMP, and ZCOMP for the comparison coordinate set), the mass of the atom (MASS), and several others. The complete list is in <a rel="nofollow" class="external text" href="http://www.charmm.org/documentation/current/select.html">select.doc</a>.
+</p><p>One interesting note is that you can use this to print atoms that move more than a particular amount during a simulation, e.g.
+</p>
+<pre>! copy current coordinates to the comparison set
+coor copy comp
+
+! minimize, or do dynamics or whatever
+
+! compute the differences between the new coordinates and the ones saved previously, 
+! storing these differences in the comp set
+coor diff comp 
+
+! print out those atoms that are displaced more than 10 angstroms
+! in any directions
+define bigmove sele prop xcomp .gt. 10 .or. prop ycomp .gt. 10 -
+ .or. prop zcomp .gt. 10 show end
+</pre>
+<p>There is a new command in the example above -- DEFIne. DEFIne allows you to associate a name for an atom selection and then use it later, for example:
+</p>
+<pre>define sel1 <big>
+.
+.
+.
+print coor select sel1 end
+</pre>
+<p>In the above example the &lt;big nasty long atom selection&gt; can be used multiple times without having to retype it. To give a concrete example, if you are going to do operations repeatedly on all atoms withing 5 angstroms of residues 10 through 20, you can do::
+</p>
+<pre>define critreg select resid 10:20 .around. 5 end
+
+...&#160;! do some stuff
+
+coor stat select critreg end&#160;! get coordinate statistics
+                            &#160;! of atoms in critreg only
+</pre>
+<p>Note that after defining <tt>critreg</tt> it is necessary to encapsulate it within a <tt>SELEct</tt> statement, i.e. <tt>SELEct critreg END</tt>
+</p>
+<h2> <span class="mw-headline" id="Variables_in_CHARMM"> Variables in CHARMM </span></h2>
+<h3> <span class="mw-headline" id="User-settable_Variables"> User-settable Variables </span></h3>
+<p>So far, the CHARMM scripting language seems to be a concatenation of individual commands. It does contain, however, most (if not all) elements of a (imperative) programming language (even though it is not an extremely comfortable one). One key element of a programming language is the ability to set and manipulate variables. In the context of running CHARMM, it is extremely useful to pass certain variables into the program from the outside. Run the following miniscript (we name it title2.inp)  
+</p>
+<pre>* Example of passing a variable from the command line  
+* The variable myvalue was initialized to @myvalue  
+*  
+stop 
+</pre>
+<p>by executing
+</p>
+<pre>charmm_executable myvalue=500 &lt; title2.inp 
+</pre>
+<p>and study the output (you could also state <tt>myvalue:500</tt>): Before the title is echoed, you see that an argument was passed 
+</p>
+<pre>Processing passed argument "myvalue:500"  
+Parameter: MYVALUE &lt;- "500" 
+</pre>
+<p>and in the echoing of the title, @myvalue is replaced by the value assigned to the variable <i>myvalue</i>, i.e., 500 in our case. The little example highlights something to keep in mind. The first thing that is done when a line in a script (containing a title or a command) is parsed, is to scan for @variables, which are then replaced by their value (no variable replacement is done in comments!).  
+</p>
+<h3> <span class="mw-headline" id="Substitution_Variables"> Substitution Variables </span></h3>
+<p>For completeness sake, a preliminary comment on a second type of variable is needed. Many CHARMM commands, aside from producing more or less direct output, place some key values in "internal" variables. E.g., the energy of a system calculated with the most recent <tt>ENERgy</tt> command is put into a variable named <tt>ENER</tt>. To avoid name clashes with variables set by users, the values of these variables can be accessed by preceding the variable name by a question mark "?". For example, if CHARMM encounters (in a title or in a command) the string <tt>?ENER</tt>, it will attept to replace it with the energy value from the most recent <tt>ENERgy</tt> command. This is quite handy, and we'll see many examples later on, once we have reached the stage where we can use CHARMM to work with biomolecular systems.
+</p>
+<h3> <span class="mw-headline" id="Loops_and_flow_control"> Loops and flow control </span></h3>
+<p>The beginning of loops in CHARMM is marked by a <tt>label</tt>
+</p>
+<pre>label someplace
+</pre>
+<p>basically anywhere in a CHARMM script. If (before or after) that <tt>label</tt> CHARMM encounters a 
+</p>
+<pre>goto someplace
+</pre>
+<p>command, the script continues from "<tt>label someplace</tt>"; i.e., control is transferred to that line of the script.  The <tt>label/goto</tt> tandem, combined with <tt>if</tt>s, make it possible to construct almost arbitrary control structures, in particular loops (see below). First, however, two simpler examples.
+</p><p><b>Example 1:</b> We just showed how to provide a default value to a variable that is expected to be passed from the command line. Obviously, this is not possible or sensible in all cases. The script <tt>simplemini.inp</tt> expects two parameters, <tt>@nstep</tt> and <tt>@system</tt>. While it makes sense to set a default for the former (if the user forgets to specify a value), the second variable has to be set to a sensible value. Thus, we may want to check whether <tt>@system</tt> is initialized, and if not, write a meaningful error message and exit the script. This is done by querying <tt>@?system</tt> -- the <tt>@?variable</tt> operator is 1 if <tt>@variable</tt> is set and 0 if it is not. The following script fragment shows how to use this
+</p>
+<pre>* The title
+* ...
+*
+if @?nstep eq 0 set nstep 100&#160;! provide default for nstep
+if @?system eq 0 goto systemerror
+
+...&#160;! continue with normal script up to normal
+
+stop
+
+label systemerror
+
+echo You need to pass a value for variable system
+echo
+echo Aborting execution
+
+stop
+</pre>
+<p><b>Example 2:</b> It was pointed out that many CHARMM scripts do identical things (read rtf, params, psf, coords, some more stuff) whereas the "genuine" work part (minimization, molecular dynamics, etc.) consists of just a few lines. Thus, the first twenty to forty lines of many CHARMM scripts contain essentially the same commands. Using <tt>label/goto</tt> statements one can reorganize such scripts, so that the boring stuff is placed after a label at the end of the scripts. Thus, the more unique parts of the script can be seen earlier in the file (note that <i>stream files provide a better way of accomplishing the same goal</i>, but the technique may prove useful in other cases). Take a look at <a rel="nofollow" class="external text" href="http://www.mdy.univie.ac.at/charmmtutorial/simple_mini2.inp">simple_mini2.inp</a>. After checking whether <tt>@nstep</tt> and <tt>@system</tt> were passed from the command line, command is transferred to <tt>label setupsystem</tt>. The corresponding code is at the end of the script; from there, control is transferred back to the beginning of the script (<tt>label fromsetupsystem</tt>). The first interesting line (<tt>mini sd</tt>) moves up about 15 lines; one can understand a bit more quickly what the script does.
+</p><p><b>Example 3:</b> As mentioned above, <tt>label</tt> statements provide for a simple way to make a loop. The following example shows a loop that repeats an action ten times over
+</p>
+<pre>set i = 0
+ 
+label beginloop
+incr i by 1
+! ... this is the body of the loop ...
+ 
+if @i .lt. 10 then goto beginloop
+
+! commands below this point are executed
+! after the loop finishes
+</pre>
+<p>Pay attention to how the <tt>INCRement</tt> command is used to add 1 to the value of <tt>@i</tt> for each iteration of the loop.
+</p>
+<h2> <span class="mw-headline" id="Constraints_and_Restraints"> Constraints and Restraints </span></h2>
+<h3> <span class="mw-headline" id="Basic_overview"> Basic overview </span></h3>
+<p>CHARMM has the ability to constrain or restrain atoms using the CONStraint command. This can be used to ensure that atoms stay close to a given point or another atom during a simulation. As an example, it is often desirable to constrain or restrain protein backbone atoms during minimization and only optimize the positions of the various side chains while the basic trace of the backbone remains fixed. Constraints and restraints can also be used to reduce high-frequency motions in the system as in the case of SHAKE, which constrains bond lengths.
+</p><p>The basic difference between a constraint and a restraint is that a constraint completely removes the given degree(s) of freedom from the system while a restraint retains them but applies a penalty function to the energy if the atom(s) involved move away from the desired configuration. More information can be found in the <a rel="nofollow" class="external text" href="http://www.charmm.org/documentation/current/cons.html">cons.doc</a> CHARMM documentation file. Below we describe three of the most commonly seen restraints.
+</p>
+<h3> <span class="mw-headline" id="Harmonic_restraints"> Harmonic restraints </span></h3>
+<p>Harmonic restraints are used to hold atoms near a given location by applying a harmonic penalty function as they move away from the desired location. There are three types of harmonic restraints: absolute, relative, and bestfit.
+</p>
+<ul><li> Absolute restraints require the atom(s) to stay near a given cartesian position. A set of reference coordinates must be given. By default, the current position in the main coordinate set is used, but the comparison set may also be used. It is not possible to specify the reference coordinates directly in the command; they must be in either the main or comparison coordinate set.
+</li><li> Bestfit restraints are similar to absolute restraints, but rotation and translation are allowed to minimize the restraints energy.This makes it useful for holding inter-atom geometry intact while allowing for block motion. Second derivatives are not supported for bestfit restraints.
+</li><li> Relative positional restraints are similar to bestfit restraints, but there are no reference coordinates. It is used to force two sets of atoms to have the same shape
+</li></ul>
+<p>One important caveat is that no atom may participate in more than one restraint set. It is possible in the case of <tt>ABSOLUTE</tt> restraints to specify the exponent for the harmonic restraint (i.e. where the penalty function is linear, quadratic, cubic, quartic, etc.) and to scale the restraint separately in the x, y, and z directions.
+</p><p>Some examples are:
+</p>
+<pre>define backbone sele type N .or. type CA .or. type C end
+cons harm absolute sele backbone end
+</pre>
+<p>restrains the protein backbone based on its current coordinates. This can be handy in minimization where you don't want to change the basic shape of the atom from that in the crystal structure.
+</p>
+<pre>cons harm absolute expo 4 xscale 1.0 yscale 0.5 zscale 0.0 sele backbone end
+</pre>
+<p>restrains the backbone using a quartic penalty function in the x direction. The restraint energy in the y direction is halved, and the restraint is not applied in the z direction. Such an unusual restraint would probably not be used much in normal circumstances. 
+</p>
+<pre>cons harm bestfit sele resid 20 end
+</pre>
+<p>restrains residue #20 to its current geometry. For example, if you have a ligand whose internal conformation should remain rigid but that is allowed to rotate and translate, a restraint like this could be used.
+</p>
+<pre>cons harm relative sele segid 1 end sele segid 2 end
+</pre>
+<p>restrains segment 1 to maintain the same geometry as segment 2.
+</p><p>Note that the <tt>MASS</tt> keyword may be used to mass weight the restraints.
+</p><p>All harmonic constraints can be cleared with the command
+</p>
+<pre>cons harm clear
+</pre>
+<h3> <span class="mw-headline" id="Distance_Restraints"> Distance Restraints </span></h3>
+<p>Distance restraints require two atoms to remain within a given proximity of each other. The desired distance, force constant, and exponent must be given to the RESDistance command. For example:
+</p>
+<pre>resd kval 10.0 rval 5.0 ival 2 sele atom 1 1 CA end sele atom 1 2 CA end
+</pre>
+<p>restrains the alpha carbons of residues 1 and 2 of segment 1 to be 5 angstoms apart, with a quadratic penalty function. The functional form of this energy term is:
+</p><p><span class="texhtml" dir="ltr"><i>E</i><sub><i>r</i><i>e</i><i>s</i><i>d</i></sub> = <i>K</i><i>v</i><i>a</i><i>l</i>(<i>r</i> &#8722; <i>r</i><i>v</i><i>a</i><i>l</i>)<sup><i>i</i><i>v</i><i>a</i><i>l</i></sup></span>
+</p><p>This energy term is very similar to the bonded energy term!
+</p><p>For individual pairs of atoms, NOE restraints can also be used (this is very good for distances which depend on one another). Discussion of this functionality is beyond the scope of this tutorial, but you can find more information in the NOE sections of <a rel="nofollow" class="external text" href="http://www.charmm.org/documentation/current/cons.html">cons.doc</a>.
+</p>
+<h3> <span class="mw-headline" id="SHAKE"> SHAKE </span></h3>
+<p>SHAKe is a constraint that fixes bond lengths. It can be used to fix angles as well, but this is not recommended. It is most widely used to fix the lengths of bonds involving hydrogens, since these tend to vibrate at very high frequencies, which can lead to numerical imprecision during simulations. The use of SHAKe on bonds involving hydrogens allows for numerical integration at a 1-2 fs step size during dynamics.
+</p><p>To apply shake to all bonds involving hydrogens do
+</p>
+<pre>shake bonh param sele all end
+</pre>
+<p>Note that the <tt>sele all end</tt> is the default atom selection when none is given (i.e. it's a bit redundant here). The <tt>PARAm</tt> keyword uses the values in the parameter file as the optimal bond lengths. If it is not used, the current distance from the main coordinate set is used (or the current distance from the comparison set if the <tt>COMP</tt> keyword is given in place of <tt>PARAm</tt>).
+</p>
+<h2> <span class="mw-headline" id="Debugging_CHARMM_scripts"> Debugging CHARMM scripts </span></h2>
+<h3> <span class="mw-headline" id="Debugging_via_prnlev"> Debugging via prnlev </span></h3>
+<p>The <tt>PRNLev</tt> command controls how verbose CHARMM is in its output. The default value is 5, the minimum level is 0 (which will cause CHARMM to be virtually silent), and the maximum level is 9. Higher values of <tt>PRNLev</tt> produce more output. This command also controls which node prints output in a parallel job. The default is that all nodes produce output, which is usually not desirable. The <tt>NODE</tt> subcommand to <tt>PRNLev</tt> restricts print out to a single node, e.g.:
+</p>
+<pre>prnlev 6 node 0
+</pre>
+<p>Sets the <tt>PRNLev</tt> to 6 and states that only the first node (index 0) should produce output.
+</p><p>At higher values of PRNLev, CHARMM will detail exactly which energy terms are being computed and give details about which subroutines are being called. This can be very helpful for debugging incorrect results.
+</p><p>The <tt>BOMBlev</tt> and <tt>WARNlev</tt> commands are similar, except that they control the severity of errors which will cause CHARMM to abort execution or issue a warning. Errors and warnings range in severity from +5 (least severe) to -5 (most severe). One common mistake made by novices is to set <tt>BOMBlev</tt> too low. Level 0 errors and below are serious problems that may affect the validity of numerical results from the runs. Level 0 and -1 errors should only be accepted when the user understands what they mean and has determined that they will not affect the results. Errors at the -2 level or below are very severe and generally mean that the results of the run are invalid. In no cases should the BOMBlev ever be set below -2. In general, it is always safe and recommended to set <tt>BOMBlev</tt> to 0 (although it may need to be temporarily lowered for some operations).
+</p>
+<h3> <span class="mw-headline" id="Printing_data_structures"> Printing data structures </span></h3>
+<p>CHARMM provides the functionality to print out data structures. For example, the commands:
+</p>
+<pre>print psf
+print coor
+</pre>
+<p>would print out the current protein structure file and coordinate set. Parameters can be printed in the same way, however in many cases most of the parameters that are read in do not apply to the structure being studied. The command
+</p>
+<pre>print param used
+</pre>
+<p>only prints out those parameters that are currently referenced by the PSF.
+</p><p>It is also possible to display  the current forces acting on each atom, for example:
+</p>
+<pre>coor force comp
+print coor comp
+</pre>
+<p>Puts the forces into the COMParison coordinate set and then prints them out. It is possible to combine these with a <tt>PROPerty</tt> based atom selection (described above) to print all forces over a certain magnitude, e.g.:
+</p>
+<pre>coor force comp
+print coor comp sele prop abs x .gt. 500.0 .or. prop abs y .gt. 500.0 .or. prop abs z .gt. 500.0 end
+</pre>
+<p>will print all atoms who have at least one of their force components greater than 500 in absolute value.
+</p><p>If a more detailed analysis is needed (for example, if the force on one of the atoms is blowing up for an unknown reason), it is possible to print out all of the individual terms of the first field, this is done by the <tt>ANAL TERM</tt> command. By default, <tt>ANAL TERM</tt> only prints out the bonded interaction terms, <tt>ANAL TERM NONBonded</tt> will print all of the terms. It is possible to see in which order the energy functions are called by setting the <tt>PRNLev</tt> to 9.</big>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 93/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key tutorial:pcache:idhash:56-0!1!0!!en!*!* and timestamp 20170916025652 -->
+</div><div class="printfooter">
+Retrieved from "<a href="https://www.charmmtutorial.org/index.php?title=Essential_CHARMM_Features&amp;oldid=757">https://www.charmmtutorial.org/index.php?title=Essential_CHARMM_Features&amp;oldid=757</a>"</div>
+		<div id='catlinks' class='catlinks catlinks-allhidden'></div>		<!-- end content -->
+				<div class="visualClear"></div>
+	</div>
+</div></div>
+<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+				<li id="ca-nstab-main" class="selected"><a href="/index.php/Essential_CHARMM_Features" primary="1" context="subject" title="View the content page [c]" accesskey="c">Page</a></li>
+				<li id="ca-talk" class="new"><a href="/index.php?title=Talk:Essential_CHARMM_Features&amp;action=edit&amp;redlink=1" primary="1" context="talk" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				<li id="ca-viewsource"><a href="/index.php?title=Essential_CHARMM_Features&amp;action=edit" primary="1" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li>
+				<li id="ca-history"><a href="/index.php?title=Essential_CHARMM_Features&amp;action=history" rel="archives" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+
+<li id="pt-login"><a href="/index.php?title=Special:UserLogin&amp;returnto=FINAL+Essential+CHARMM+Features" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+<a href="/index.php/CHARMM_Tutorial" style="background-image: url(https://www.charmmtutorial.org/tutorial-data/image-sm.png);" title="Visit the main page"></a>
+	</div>
+	<div class="generated-sidebar portlet" id="p-CHARMM_Tutorial">
+		<h5>CHARMM Tutorial</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage"><a href="/index.php/CHARMM_Tutorial" title="Visit the main page [z]" accesskey="z">CHARMM Tutorial</a></li>
+				<li id="n-Outline"><a href="/index.php/Outline">Outline</a></li>
+				<li id="n-Introduction"><a href="/index.php/Introduction">Introduction</a></li>
+				<li id="n-Basic-CHARMM-Scripting"><a href="/index.php/Basic_CHARMM_Scripting">Basic CHARMM Scripting</a></li>
+				<li id="n-Essential-CHARMM-Features"><a href="/index.php/Essential_CHARMM_Features">Essential CHARMM Features</a></li>
+				<li id="n-The-Energy-Function"><a href="/index.php/The_Energy_Function">The Energy Function</a></li>
+				<li id="n-Minimization"><a href="/index.php/Minimization">Minimization</a></li>
+				<li id="n-Solvation"><a href="/index.php/Solvation">Solvation</a></li>
+				<li id="n-Neutralization"><a href="/index.php/Neutralization">Neutralization</a></li>
+				<li id="n-Molecular-Dynamics"><a href="/index.php/MD">Molecular Dynamics</a></li>
+				<li id="n-Langevin-Dynamics"><a href="/index.php/LD">Langevin Dynamics</a></li>
+				<li id="n-Analysis"><a href="/index.php/Analysis">Analysis</a></li>
+				<li id="n-Full-example"><a href="/index.php/Full_example">Full example</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Appendices">
+		<h5>Appendices</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-Temperature-replica-exchange"><a href="/index.php/Temperature_replica_exchange">Temperature replica exchange</a></li>
+				<li id="n-Coarse-Grained-Go-Models"><a href="/index.php/Coarse_Grained_Go_Models">Coarse Grained Go Models</a></li>
+				<li id="n-CHARMMing.27s-PDB-reader"><a href="/index.php/CHARMMing%27s_PDB_Reader">CHARMMing's PDB reader</a></li>
+				<li id="n-Installing-CHARMMing"><a href="/index.php/Installation_of_CHARMMing">Installing CHARMMing</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-SAR_and_QSAR">
+		<h5>SAR and QSAR</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-SAR-and-QSAR-Introduction"><a href="/index.php/SAR_and_QSAR_Introduction">SAR and QSAR Introduction</a></li>
+				<li id="n-SAR-Categorization-Lesson"><a href="/index.php/SAR_Categorization_Lesson">SAR Categorization Lesson</a></li>
+				<li id="n-QSAR-Regression-Lesson"><a href="/index.php/QSAR_Regression_Lesson">QSAR Regression Lesson</a></li>
+				<li id="n-Docking-Introduction-and-Walkthrough"><a href="/index.php/Docking_Introduction_and_Walkthrough">Docking Introduction and Walkthrough</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Files">
+		<h5>Files</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-This-tutorial-as-a-PDF"><a href="http://www.charmmtutorial.org/tutorial-data/charmm_tutorial_2010.pdf" rel="nofollow">This tutorial as a PDF</a></li>
+				<li id="n-Tutorial-files-.28.tar.gz.29"><a href="http://www.charmmtutorial.org/tutorial-data/crambin_example.tar.gz" rel="nofollow">Tutorial files (.tar.gz)</a></li>
+				<li id="n-Tutorial-files-.28.zip.29"><a href="http://www.charmmtutorial.org/tutorial-data/crambin_example.zip" rel="nofollow">Tutorial files (.zip)</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Navigation">
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-recentchanges"><a href="/index.php/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-help"><a href="/index.php/Help:Contents" title="The place to find out">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="/index.php" id="searchform">
+				<input type='hidden' name="title" value="Special:Search"/>
+				<input type="search" name="search" title="Search CHARMM tutorial [f]" accesskey="f" id="searchInput" />
+				<input type="submit" name="go" value="Go" title="Go to a page with this exact name if exists" id="searchGoButton" class="searchButton" />&#160;
+				<input type="submit" name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton" />
+			</form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="/index.php/Special:WhatLinksHere/Essential_CHARMM_Features" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="/index.php/Special:RecentChangesLinked/Essential_CHARMM_Features" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+				<li id="t-specialpages"><a href="/index.php/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li><a href="/index.php?title=Essential_CHARMM_Features&amp;printable=yes" rel="alternate">Printable version</a></li>
+				<li id="t-permalink"><a href="/index.php?title=Essential_CHARMM_Features&amp;oldid=757" title="Permanent link to this revision of the page">Permanent link</a></li>
+			</ul>
+		</div>
+	</div>
+</div><!-- end of the left (by default at least) column -->
+<div class="visualClear"></div>
+<div id="footer">
+	<div id="f-copyrightico">
+		<a href="http://creativecommons.org/licenses/publicdomain/"><img src="/skins/common/images/public-domain.png" alt="Public Domain" width="88" height="31" /></a>
+	</div>
+	<div id="f-poweredbyico">
+		<a href="//www.mediawiki.org/"><img src="/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+	</div>
+	<ul id="f-list">
+		<li id="lastmod"> This page was last modified on 20 July 2010, at 12:01.</li>
+		<li id="viewcount">This page has been accessed 69,324 times.</li>
+		<li id="copyright">Content is available under <a class="external" href="http://creativecommons.org/licenses/publicdomain/">Public Domain</a> unless otherwise noted.</li>
+		<li id="privacy"><a href="/index.php/CHARMM_tutorial:Privacy_policy" title="CHARMM tutorial:Privacy policy">Privacy policy</a></li>
+		<li id="about"><a href="/index.php/CHARMM_tutorial:About" title="CHARMM tutorial:About">About CHARMM tutorial</a></li>
+		<li id="disclaimer"><a href="/index.php/CHARMM_tutorial:General_disclaimer" title="CHARMM tutorial:General disclaimer">Disclaimers</a></li>
+	</ul>
+</div>
+</div>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.user","mediawiki.page.ready"], null, true);
+}</script>
+<script src="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=monobook&amp;*"></script>
+<!-- Served in 0.169 secs. --></body></html>

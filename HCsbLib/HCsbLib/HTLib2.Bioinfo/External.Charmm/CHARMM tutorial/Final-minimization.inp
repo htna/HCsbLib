@@ -1,0 +1,61 @@
+* Minimize PDB
+*
+
+! read topology and parameter files
+
+read rtf card name top_all27_prot_na.rtf
+read param card name par_all27_prot_na.prm
+read psf card name 1cbn-neutralized.psf
+read coor card name 1cbn-neutralized.crd
+
+! set up SHAKE again
+shake bonh param sele all end
+
+! set up crystal and images
+set greaterval = 50.9261
+crystal define rhdo @greaterval @greaterval @greaterval 60. 90. 60.
+crystal build noper 0
+
+! These segments are used for water and ions in bulk solvent
+define bulks sele segid bwat .or. segid pot .or. segid cl .or. segid sod .or. -
+  segid cal .or. segid mg .or. segid ces end
+
+! You may need to change these depending on how you plan to do recentering
+image byseg sele .not. resname tip3 .and. .not. bulks end
+image byres sele resname tip3 .or. bulks end
+
+
+! the total charge on the system must be 0 or else Ewald will not work correctly, we need to test for this...
+! we do the almost equal if test to avoid floating point rounding errors.
+scalar charge stat sele all end
+if ?stot .ae. 0 then goto okewald
+
+! uh-oh, total charge != 0, we cannot proceed, set the bomlev to an absurdly high level
+! to force a bailout.
+bomlev 5
+Achtung, particle-mesh ewald only works correctly on a structure with 0 total charge!!!!
+
+label okewald
+
+! set up nonbond correctly to the same values we will be using in dynamics
+
+nbond inbfrq -1 imgfrq -1 -
+      elec ewald pmew fftx 48 ffty 48 fftz 48 kappa .34 spline order 6 -
+      vdw vswitch cutnb 16. cutim 16. ctofnb 12. ctonnb 10.
+
+energy
+
+coor copy comp
+
+mini sd nstep 200
+mini abnr nstep 1000 nprint 100 tolg 0.01
+coor rms
+
+ioform extended
+
+write coor card name 1cbn-finalmini.crd
+* Final minimized coordinates, done with PME
+*
+
+stop
+

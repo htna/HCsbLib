@@ -1,0 +1,66 @@
+* Molecular Dynamics
+*
+
+prnlev 5 node 0
+
+! read topology and parameter files
+read rtf card name top_all27_prot_na.rtf
+read param card name par_all27_prot_na.prm
+! read the psf and coordinate file
+read psf card name 1cbn-neutralized.psf
+read coor card name 1cbn-heat.crd
+
+
+! SETUP CRYSTAL (DEFINE, BUILD), IMAGE CENTERING W. MODIFIED PSF
+! WE USE THE SAME PARAMS AS IN SOLVATION
+set greaterval = 50.9261
+crystal define rhdo @greaterval @greaterval @greaterval 60. 90. 60.
+crystal build noper 0
+
+! These segments are used by CHARMMing for water and ions in bulk solvent
+define bulks sele segid bwat .or. segid pot .or. segid cl .or. segid sod .or. -
+  segid cal .or. segid mg .or. segid ces end
+
+! Set up images -- center the protein by segment and the solvent by residue
+image byseg sele .not. resname tip3 .and. .not. bulks end
+image byres sele resname tip3 .or. bulks end
+
+! set up shake
+shake bonh param sele all end
+
+open unit 41 write card name 1cbn-equil-1.res !restart file that will be written
+open unit 51 read card name 1cbn-heat.res !restart file that will be reading
+open unit 31 write file name 1cbn-equil-1.dcd !trajectory file name
+
+! set up nonbond parameters -- same as for heating
+nbond inbfrq -1 imgfrq -1 atom vatom cdie eps 1.0 -
+    elec ewald pmew fftx 48 ffty 48  fftz 48  kappa .34 spline order 6 -
+    vdw vswitch cutnb 16.0 cutim 16.0 ctofnb 12. ctonnb 10. wmin 1.0
+
+! We're going to use the Langevin piston method, so we're going to need to
+! calculate masses for the pressure and temperature pistons (pmass & tmass)
+! calc pmass = total molecular mass / 50
+! calc tmass = pmass * 10
+scalar mass stat
+calc pmass = int ( ?stot  /  50.0 )
+calc tmass = @pmass * 10
+
+dyna leap cpt restart -                         ! restart the run from our heating restart, use CPT dynamics
+  timestep 0.001 nstep 200000 nprint 1000 -     ! do 200 picoseconds, 1 fs time steps
+  iunrea 51 iunwri 41 iuncrd 31 nsavcc 100 -    ! units for reading/writing restarts and coordinate trajectory
+  hoover reft 310.0 tmass @tmass -              ! hoover thermostat, constant temp - 310 K, tmass as above
+  pcons pint pref 1.0 pmass @pmass pgamma 0.0 - ! constant pressure, 1 atmosphere, use internal virial (pint), collision freq. 0
+  ihtfrq 0 ieqfrq 0 ntrfrq 500 -                ! temperature under Hoover's control, cancel rotation/translation every 10 steps
+  iasors 1 iasvel 1 iscvel 0 ichecw 0 -         ! since we're restarting and ihtfrq = ieqfrq = 0, these don't really matter
+  echeck 100.                                   ! check energy diff as before
+    
+
+ioform extended
+
+write coor card name 1cbn-equil.crd
+* coordinates after the equilibration run
+*
+
+
+stop
+

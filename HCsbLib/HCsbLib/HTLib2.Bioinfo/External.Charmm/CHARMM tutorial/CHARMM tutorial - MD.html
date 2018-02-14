@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<title>MD - CHARMM tutorial</title>
+<meta charset="UTF-8" />
+<meta name="generator" content="MediaWiki 1.19.20+dfsg-0+deb7u3" />
+<link rel="canonical" href="/index.php/MD" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="CHARMM tutorial (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="https://www.charmmtutorial.org/api.php?action=rsd" />
+<link rel="copyright" href="http://creativecommons.org/licenses/publicdomain/" />
+<link rel="alternate" type="application/atom+xml" title="CHARMM tutorial Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.monobook&amp;only=styles&amp;skin=monobook&amp;*" />
+<!--[if IE 6]><link rel="stylesheet" href="/skins/monobook/IE60Fixes.css?303" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="/skins/monobook/IE70Fixes.css?303" media="screen" /><![endif]--><meta name="ResourceLoaderDynamicStyles" content="" />
+<link rel="stylesheet" href="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=monobook&amp;*" />
+<style>a:lang(ar),a:lang(ckb),a:lang(fa),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}a.new,#quickbar a.new{color:#ba0000}
+
+/* cache key: tutorial:resourceloader:filter:minify-css:7:c88e2bcd56513749bec09a7e29cb3ffa */</style>
+
+<script src="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=monobook&amp;*"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"MD","wgTitle":"MD","wgCurRevisionId":832,"wgArticleId":52,"wgIsArticle":true,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgRelevantPageName":"MD","wgRestrictionEdit":[],"wgRestrictionMove":[],"wgRedirectedFrom":"FINAL_MD"});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":5,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"monobook","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":
+0,"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;},{},{});mw.loader.implement("user.tokens",function($){mw.user.tokens.set({"editToken":"+\\","watchToken":false});;},{},{});
+
+/* cache key: tutorial:resourceloader:filter:minify-js:7:74a832f2292f1f4d40d425d223444e78 */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax"]);
+}</script>
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-MD skin-monobook action-view">
+<div id="globalWrapper">
+<div id="column-content"><div id="content">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading"><span dir="auto">MD</span></h1>
+	<div id="bodyContent" class="mw-body">
+		<div id="siteSub">From CHARMM tutorial</div>
+		<div id="contentSub">(Redirected from <a href="/index.php?title=FINAL_MD&amp;redirect=no" title="FINAL MD">FINAL MD</a>)</div>
+		<div id="jump-to-nav" class="mw-jump">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>
+		<!-- start content -->
+<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Description_of_Molecular_Dynamics"><span class="tocnumber">1</span> <span class="toctext">Description of Molecular Dynamics</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="#Prerequisites"><span class="tocnumber">1.1</span> <span class="toctext">Prerequisites</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="#Choosing_an_ensemble"><span class="tocnumber">1.2</span> <span class="toctext">Choosing an ensemble</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#A_note_about_the_DYNAmics_command"><span class="tocnumber">1.3</span> <span class="toctext">A note about the DYNAmics command</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-5"><a href="#What_actually_happens_during_molecular_dynamics"><span class="tocnumber">2</span> <span class="toctext">What actually happens during molecular dynamics</span></a>
+<ul>
+<li class="toclevel-2 tocsection-6"><a href="#Choosing_an_integrator"><span class="tocnumber">2.1</span> <span class="toctext">Choosing an integrator</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#How_the_leapfrog_Verlet_algorithm_works"><span class="tocnumber">2.2</span> <span class="toctext">How the leapfrog Verlet algorithm works</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Velocity_assignment"><span class="tocnumber">2.3</span> <span class="toctext">Velocity assignment</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-9"><a href="#Temperature_and_pressure_control"><span class="tocnumber">3</span> <span class="toctext">Temperature and pressure control</span></a>
+<ul>
+<li class="toclevel-2 tocsection-10"><a href="#Primitive_temperature_control"><span class="tocnumber">3.1</span> <span class="toctext">Primitive temperature control</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="#CPT_dynamics_and_the_Hoover_Thermostat"><span class="tocnumber">3.2</span> <span class="toctext">CPT dynamics and the Hoover Thermostat</span></a>
+<ul>
+<li class="toclevel-3 tocsection-12"><a href="#Temperature_Options"><span class="tocnumber">3.2.1</span> <span class="toctext">Temperature Options</span></a></li>
+<li class="toclevel-3 tocsection-13"><a href="#Pressure_Options"><span class="tocnumber">3.2.2</span> <span class="toctext">Pressure Options</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-14"><a href="#Writing_out_trajectories"><span class="tocnumber">4</span> <span class="toctext">Writing out trajectories</span></a></li>
+<li class="toclevel-1 tocsection-15"><a href="#Re-starting_MD_runs"><span class="tocnumber">5</span> <span class="toctext">Re-starting MD runs</span></a></li>
+<li class="toclevel-1 tocsection-16"><a href="#Summary_and_recommendations"><span class="tocnumber">6</span> <span class="toctext">Summary and recommendations</span></a></li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="Description_of_Molecular_Dynamics">Description of Molecular Dynamics</span></h2>
+<p>Molecular dynamics simulates the motion of a system by numerically integrating Newton's second law of motion. The objective of a MD simulation is usually to determine the time correlation between events or to get a statistically-valid collection of structures that satisfies ergodicity (this is called sampling from the ensemble). Currently, MD simulations tend to run from several nanoseconds to around a microsecond (although millisecond scale MD simulations are possible on advanced hardware). This is often too short to simulate biological processes such as the folding of complex polypeptides. Biophysicists often therefore look to use the results of MD simulations to make statistical arguments about the behavior of a structure instead of directly observing long scale behavior. This tutorial will focus on the practical issues of setting up a molecular dynamics simulation in CHARMM. We will begin with a discussion of the prerequisites for undertaking a successful simulation.
+</p>
+<h3> <span class="mw-headline" id="Prerequisites">Prerequisites</span></h3>
+<p>In order to begin an MD simulation, you should have a structure that has been reasonably well minimized under the <b>exact same</b> conditions as you are planning to use for the dynamics. This means that the non-bonded set-up (including Ewald) and periodic boundary conditions should be exactly the same. However, in many cases it is undesirable to minimize the structure too much, as it may deform in an undesirable manner. Please see the <a href="/index.php/FINAL_Minimization" title="FINAL Minimization" class="mw-redirect">Minimization</a> page for more details.
+</p><p>If there are problems with the way that the model was built, they will likely manifest themselves in the dynamics run. In many cases, the potential energy of the system will explode to unrealistic levels. In other cases, the structure will twist into physically impossible conformations. You should keep an eye on the energy and position of your system during dynamics to make sure that this does not happen. Visualizing the MD trajectory is highly recommended as a check for possible problems. Also, pay careful attention to the warnings CHARMM prints out and resist the temptation to disable ECHECK (or set it to an unreasonably high value). Exceeding the energy change tolerance (ECHECK) and deviations in SHAKE can indicate model building errors or an incorrect dynamics set-up. 
+</p><p>It is usually necessary to heat and equilibrate a structure at the desired temperature after minimization. This topic is discussed further below. For finicky structures, it might be necessary to begin the equilibration at a shorter time step (e.g. 0.5 fs instead of 1 fs) to keep within the energy change tolerance. It may also be desirable in certain circumstances to restrain the structure during heating in order to prevent it from deviating too far from the minimized structure. However, it is generally <b>not</b> a good idea to fix atoms in place (using cons fix) during any type of dynamics. CHARMMing fixes atoms whose parameters were estimated via GENRTF, but this is not a good idea for real production dynamics (atoms without "real" parameters should either be deleted or real parameters generated for them using, for example, the CHARMM General Force Field).
+</p>
+<h3> <span class="mw-headline" id="Choosing_an_ensemble">Choosing an ensemble</span></h3>
+<p>As mentioned above, one of the purposes of running molecular dynamics is to sample a collection of structures so as to be able to make a valid statistical argument about the system of interest. CHARMM supports several different types of ensembles which you can sample from. A comparison of these ensembles is beyond the scope of this tutorial; consult your favorite statistical mechanics textbook for more details!
+</p><p>The main types of ensembles used are:
+</p>
+<ul><li> Canonical (NVT): In this ensemble, number of particles (N), volume (V), and temperature (T) are held constant. 
+</li><li> Microcanonical (NVE): This ensemble holds number of particles, volume, and total energy (E) constant.
+</li><li> Isothermic-isobaric (NPT): For this ensemble number of  particles, pressure (P), and temperature are constant.
+</li></ul>
+<p>CHARMM has several temperature and pressure control mechanisms which are discussed below. After initial thermal equilibration, an NVE ensemble can be simulated by disabling any further heating (setting <tt>IHTFRQ</tt> and <tt>IEQFRQ</tt> to 0). This is discussed in further detail below.
+</p>
+<h3> <span class="mw-headline" id="A_note_about_the_DYNAmics_command">A note about the DYNAmics command</span></h3>
+<p>Molecular dynamics simulations in CHARMM are run via the <tt>DYNAmics</tt> command. This command takes a lot of options, and for that reason the first six characters of each subcommand name are significant (as opposed to the first four elsewhere in CHARMM). All of the key words listed on this page of the tutorial are options to the dynamics command. Some of the more important options that will be used in almost every MD run are:
+</p>
+<ul><li> NSTEP &lt;integer&gt;: specifies the number of steps to be run
+</li><li> TIMESTep &lt;real&gt;: The time step in picoseconds, 0.001 is 1 fs.
+</li><li> NPRINT &lt;integer&gt;: specifies the frequency at which the energy should be printed out, e.g. NPRINT 100 prints the energy every one hundred steps.
+</li><li> NSAVC &lt;integer&gt;: frequency to write the coordinates to a trajectory file
+</li><li> IUNCRD &lt;integer&gt;: Unit number of the coordinate trajectory file (must by opened before DYNAmics are invoked)
+</li><li> NTRFRQ &lt;integer&gt;: Number of steps to check for and cancel external translation and rotation forces
+</li></ul>
+<p>A complete dynamics set-up might look like:
+</p>
+<pre>! open the trajectory file
+open unit 50 write unform name trajectory.trj
+
+! IHTFRQ &amp; IEQFRQ are, by default 0, so since
+! we don't set them here, this runs with the
+! NVE ensemble
+dyna leap start nstep 1000000 timestep 0.001 -
+     nprint 1000 nsavc 50 iuncrd 50 ntrfrq 5000
+</pre>
+<p>Note: it is not usually correct to run NVE dynamics without prior heating and equilibration (discussed below); this example merely shows the correct way to invoke the dynamics command,
+</p><p>This will run 1 ns of molecular dynamics, saving a coordinate trajectory frame to a file called trajectory.trj every 50 steps (0.05 picoseconds). It is also possible to save the energy, temperature, and velocities to a trajectory, but this is less used in practice. We will talk much more about trajectory files and what to do with them once you have them as the tutorial progresses. The only option that you have not seen here is <tt>START</tt>, which tells CHARMM to start a new run (as opposed to continuing an old run). We'll talk about restarting molecular dynamics simulations below.
+</p><p>DYNAmics, like other CHARMM commands, will use the previously established non-bond configuration unless these are over-ridden in the <tt>DYNAmics</tt> command itself. The recommended practice is to set up your non-bond options in advanced so as not to clutter up the DYNA command (it has enough options already!).
+</p>
+<h2> <span class="mw-headline" id="What_actually_happens_during_molecular_dynamics">What actually happens during molecular dynamics</span></h2>
+<h3> <span class="mw-headline" id="Choosing_an_integrator">Choosing an integrator</span></h3>
+<p>The integrator is the method used to numerically integrate Newton's second law of motion during molecular dynamics. CHARMM supports five integrators:
+</p>
+<ul><li> The leapfrog verlet integrator (keyword <tt>LEAP</tt>): this integrator is similar to the standard 3-step Verlet integrator, but provides additional accuracy.
+</li><li> The original verlet integrator (keyword <tt>ORIG</tt>): this is the standard verlet integrator. In most cases, LEAP is preferred for its higher accuracy
+</li><li> The velocity verlet integrator (keyword <tt>VVER</tt>): implements the Verlet algorithm differently. However, it does not print the Hamiltonian during dynamics so results validation is more difficult.
+</li><li> The 4D verlet (<tt>VER4</tt>) integrator: this algorithm is primarily used with 4-D molecular dynamics, which is beyond the scope of this tutorial
+</li><li> The velocity verlet 2 (<tt>VV2</tt>) integrator: this integrator is required for use with polarizable force fields using drude particles due to the fact that the drude particles must be integrated independently.
+</li></ul>
+<p>Most molecular dynamics simulations use the LEAP integrator (which supports Langevin dynamics as well).
+</p>
+<h3> <span class="mw-headline" id="How_the_leapfrog_Verlet_algorithm_works">How the leapfrog Verlet algorithm works</span></h3>
+<p>Given the atomic positions (<span class="texhtml" dir="ltr"><i>X</i></span>) at timestep <span class="texhtml" dir="ltr"><i>t</i></span> and the velocities (<span class="texhtml" dir="ltr"><i>V</i></span>) at <img class="tex" alt="t - \frac{1}{2}\Delta t" src="/images/math/2/8/2/282b55f038699d88497b8eae44dc6d48.png" />, the leapfrog verlet integrator computes the positions at <span class="texhtml" dir="ltr"><i>t</i> + &#916;<i>t</i></span> and the velocity at <img class="tex" alt="t + \frac{1}{2}\Delta t" src="/images/math/0/a/9/0a97361e60ca746ff64966a1ba202c68.png" /> using the following procedure:
+</p><p><br />
+</p>
+<ol><li> Calculate the acceleration on each atom <span class="texhtml" dir="ltr"><i>i</i></span> (<span class="texhtml" dir="ltr"><i>a</i><sub><i>i</i></sub></span>), using the formula <img class="tex" alt="a_i = \frac{F_i}{m_i}" src="/images/math/b/d/e/bde420bad5af12b13b20361fc899f7da.png" /> where <span class="texhtml" dir="ltr"><i>F</i><sub><i>i</i></sub></span> is the force on atom <span class="texhtml" dir="ltr"><i>i</i></span>, which is the negative gradient (first derivative) of <a href="/index.php/FINAL_The_energy_function" title="FINAL The energy function" class="mw-redirect">the energy function</a> and <span class="texhtml" dir="ltr"><i>m</i><sub><i>i</i></sub></span> is the mass of atom <span class="texhtml" dir="ltr"><i>i</i></span>.
+</li><li> Compute the velocity at <img class="tex" alt="t + \frac{1}{2}\Delta t" src="/images/math/0/a/9/0a97361e60ca746ff64966a1ba202c68.png" /> via the formula <img class="tex" alt="V_{t + \frac{1}{2} \Delta t, i} = V_{t - \frac{1}{2} \Delta t, i} + a_{i}" src="/images/math/2/c/b/2cb95986aaf22b20cd282efb983bfe46.png" />
+</li><li> Compute the positions at <span class="texhtml" dir="ltr"><i>t</i> + &#916;<i>t</i></span> via the equation <img class="tex" alt="X_{t + \Delta t, i} = X_{t, i} + \Delta t V_{t + \frac{1}{2}\Delta t, i}" src="/images/math/0/b/d/0bd3b85809616b866ebe1283d21ffd93.png" />
+</li></ol>
+<p>In this case <span class="texhtml" dir="ltr">&#916;<i>t</i></span> represents the time step specified by the users; in general, the larger the time step, the less accurate the numerical integration will be. We can see why the algorithm is called a leap-frog since the velocities are computed at midpoints between the time steps.
+</p><p>Further discussion of the leapfrog Verlet and other molecular dynamics algorithms with formulas may be found on the <a rel="nofollow" class="external text" href="http://www.ch.embnet.org/MD_tutorial/pages/MD.Part1.html">embnet Theory of Molecular Dynamics tutorial</a>.
+</p>
+<h3> <span class="mw-headline" id="Velocity_assignment">Velocity assignment</span></h3>
+<p>If you study the procedure for leapfrog Verlet outlined above, you will notice a potential problem: for the first time step in the simulation, we need to have velocities for all of the atoms. Fortunately, CHARMM has the ability to generate initial velocities for the system or to read them from the COMP coordinate set. In most cases, CHARMM generates initial velocities from a distribution. The distribution is determined by the value of <tt>IASVEL</tt>; if this is greater than 0, a gaussian distribution is used, if it is less than 0 a uniform distribution is used, and if it is equal to 0, initial velocities are read from the COMP coordinate set. Subsequent velocity assignment and rescaling (during heating and equilibration) are controlled by the <tt>IASORS</tt> and <tt>ISCVEL</tt> options to <tt>DYNAmics</tt>. When <tt>IASORS</tt> is 0, velocities are rescaled, otherwise they are reassigned. In the latter case, the method of assignment is determined by the <tt>IASVEL</tt> option, which works the same way as it does for initial velocity assignment. When velocities are rescaled, the rescaling mechanism is controlled by the <tt>ISCVEL</tt> option; when it is 0, a single scale factor is used for all atoms otherwise the scale factor for each atom is dependent on the ratio of the average kinetic energy along each degree of freedom of the atom. Note that velocities will only be assigned or rescaled at the start of a dynamics run so long as <tt>IHTFRQ</tt>, <tt>IEQFRQ</tt>, and <tt>ICHECW</tt> are all set to 0 (these options are described below).
+</p>
+<h2> <span class="mw-headline" id="Temperature_and_pressure_control">Temperature and pressure control</span></h2>
+<h3> <span class="mw-headline" id="Primitive_temperature_control">Primitive temperature control</span></h3>
+<p>CHARMM employs several methods of controlling temperature and pressure, however not all of these are equally good! A primitive method of temperature control can be obtained by using the basic temperature control subcommands. These are <tt>IHTFRQ</tt>, <tt>IEQFRQ</tt>, <tt>FIRSTT</tt>, <tt>FINALT</tt>, <tt>TBATH</tt>, <tt>TEMINC</tt>, and <tt>ICHECW</tt>. The <tt>FIRSTT</tt> and <tt>FINALT</tt> option set the initial and ending temperatures of the simulation (if the temperature of the simulation is expected to remain constant then these should be the same. The <tt>TBATH</tt> sets the temperature of the external heat bath that is coupled to the simulation. In general it is a good idea to set this to <tt>FINALT</tt>. <tt>TEMINC</tt> and <tt>IHTFRQ</tt> control heating and should be omitted in constant temperature simulations. During a heating run, the temperatures are increased by <tt>TEMINC</tt> degrees every <tt>IHTFRQ</tt> steps, which is accomplished by either reassigning or rescaling (depending on the value of <tt>IASORS</tt> -- see above) the velocities accordingly. <tt>IEQFRQ</tt> behaves similarly when equilibrating a simulation at constant temperature; velocities are reassigned or rescaled to match the desired temperature every <tt>IEQFRQ</tt> steps. The primary difference with <tt>IEQFRQ</tt> is that velocity adjustments are not tied to the heating frequency (<tt>IHTFRQ</tt>) or the temperature increment (<tt>TEMINC</tt>), It is possible to further control this rescaling using <tt>ICHECW</tt>; if <tt>ICHECW</tt> is 0, the velocities will always be rescaled, but if if it is 1 they will only be rescaled if they are outside a range around the desired temperature. The upper and lower bounds of this range are set by the <tt>TWINDH</tt> and <tt>TWINDL</tt> options.
+</p>
+<h3> <span class="mw-headline" id="CPT_dynamics_and_the_Hoover_Thermostat">CPT dynamics and the Hoover Thermostat</span></h3>
+<p>It is important to note that the primitive temperature control above is <b>not</b> sufficient to ensure a NVT statistical ensemble, however it is often good enough for thermal heating and equilibration prior to an NVE dynamics run. For proper NVT dynamics, however, some sort of thermostat must be used. The best thermostat available in CHARMM is the Hoover thermostat, which is part of the constant pressure and temperature (CPT) method, which is enabled by the <tt>CPT</tt> option to the dynamics command. The hoover thermostat often is used with constant pressure (the <tt>PCONS</tt> keyword), but this is not a requirement. NVT, as opposed to NPT, can be run even when <tt>PCONS</tt> is used (see the next paragraph). The reason to do this is to make CHARMM print out pressure statistics (these will not be displayed if <tt>PCONS</tt> is not used). The weak-coupling Berendsen thermostat (the <tt>TCONS</tt> option) has a number of known problems and its use is not recommended <b>under any circumstances</b>. Both the constant pressure and temperature methods in CPT use the Langevin piston method.
+</p><p>The options to use when applying the hoover thermostat and constant pressure are:
+</p>
+<pre>dyna cpt pcons pref AAA pgamma BBB pmass CCC hoover reft XXX tmass YYY ...
+</pre>
+<p>These options can be divided into two parts, those controlling temperature, and those controlling pressure:
+</p>
+<h4> <span class="mw-headline" id="Temperature_Options">Temperature Options</span></h4>
+<ul><li> <tt>HOOVER</tt>: tells CHARMM to use the Hoover thermostat
+</li><li> <tt>REFT</tt>: the temperature at which the thermostat is set, i.e. this is the temperature at which the thermostat will keep the system.
+</li><li> <tt>TMASS</tt>: the mass of the temperature piston. The <tt>TMASS</tt> option is not in atomic mass units but <img class="tex" alt="\frac{kcal * ps^2}{mol}" src="/images/math/3/d/c/3dc310833eb1499f83b908a0353d6c8a.png" />. We have found that a good value for the piston mass is generally about 20% of the system's mass (which can be found in the <tt>?STOT</tt> variable after performing the <tt>SCALar MASS STAT</tt> command), and this is the value that CHARMMing uses.
+</li></ul>
+<h4> <span class="mw-headline" id="Pressure_Options">Pressure Options</span></h4>
+<ul><li> <tt>PCONS</tt>: Turns on pressure reporting. The pressure of the system will be held constant unless <tt>PMASS</tt> is set to 0 (in this case, pressure statistics are still displayed, but constant pressure is not enforced and an NVT ensemble is obtained).
+</li><li> <tt>PREF</tt>: The reference pressure in atmospheres. It is usually set to 1 to mimic biological conditions.
+</li><li> <tt>PMASS</tt>: The mass of the pressure piston, which <b>is</b> measured in atomic mass units (amu). This value can be set to 0 which will disable the pressure control (but pressure will still be reported in the output). In cases when <tt>PMASS</tt> is non-zero, a good value is generally 2% of the system mass. 
+</li><li> <tt>PGAMMA</tt>: The Langevin collision frequency for the pressure piston. This is usually set to 0 except during heating to allow the pressure piston to move freely. During heating it is desirable to damp the piston (to prevent the volume from changing too rapidly) by setting a positive <tt>PGAMMA</tt>.
+</li></ul>
+<h2> <span class="mw-headline" id="Writing_out_trajectories">Writing out trajectories</span></h2>
+<p>CHARMM provides a method to save coordinates and velocities of all atoms at fixed intervals during a simulation. In most cases it is not necessary to store velocities, so most users only save coordinate trajectories. The energies and forces for a given time step can be derived from the coordinate trajectory frame. These so-called trajectory files can be used for later analysis, a topic which is discussed further in the analysis section of this tutorial. In order to write out trajectory files, it is necessary to open a unit for writing unformatted (binary) data. This can be done with:
+</p>
+<pre>open unit 20 write unform name velocities.trj
+open unit 21 write unform name coordinates.trj
+</pre>
+<p>The <tt>IUNCRD</tt> and <tt>IUNVEL</tt> options then specify which units are used for coordinate and velocities trajectories. The <tt>NSAVC</tt> and <tt>NSAVV</tt> options determine the frequency at which coordinates and velocities are saved, respectively. Therefore, to write velocities and coordinates out every 100 steps, you would do:
+</p>
+<pre>dyna ... iuncrd 21 iunvel 20 nsavc 100 nsavv 100 ...
+</pre>
+<p>Some people like to give their trajectory files .dcd extensions because certain third-party software automatically recognizes these as CHARMM-format trejectories, however CHARMM itself does not care what you name the files. One thing to be concerned about is trajectory portability between 32 and 64 bit machines. This is not a problem with newer versions of CHARMM (generally defined as c34 and later), but trajectories generated by older versions compiled with certain versions of gcc might only be readable on the same type of computer as the one that generated them. Trajectory I/O issues caused by size mismatches can often be dealt with using the <tt>DYNA FORMAT</tt> command. Please refer to <a rel="nofollow" class="external text" href="http://www.charmm.org/documentation/current/dynamc.html">dynamc.doc</a> for further details.
+</p>
+<h2> <span class="mw-headline" id="Re-starting_MD_runs">Re-starting MD runs</span></h2>
+<p>Because molecular dynamics runs can take a long time (potentially months of wall clock time), CHARMM provides the functionality to stop and restart runs via the use of a restart file. The restart file contains the coordinates, velocities, and other state information. If you have a restart file, you can restart a dynamics run by using "<tt>DYNA RESTart ...</tt>" rather than "<tt>DYNA START ...</tt>". Please note that dynamics parameters (number of steps, trajectory units, etc.) are not saved in the restart file, and therefore you need to write out the entire <tt>DYNAmics</tt> command again (or better yet, paste it from your previous script and modify as necessary). If the <tt>RESTart</tt> options is used than the <tt>IUNREAd</tt> option must be given to tell CHARMM which unit to read the restart file from. To write out  restart file, it is necessary to open the unit (card format) and use the <tt>IUNWRIte</tt> option to tell CHARMM which unit to use. You can use the <tt>ISVFRQ</tt> option to determine how often the re-start file will be saved. However, CHARMM will use the same file name for each restart file so if the program crashes while writing the restart file, the file will be corrupted (you can write a script to take snapshots of the restart file, however). Many users prefer to write one restart file per run and utilize many short runs rather than a single long one.
+</p><p>Here is an example of starting a run and writing out a restart file:
+</p>
+<pre>open unit 20 write card name restart.res
+open unit 50 write unform name run1.dcd
+
+dyna start leap cpt -
+  nstep 1000000 timestep 0.001 -      &#160;! 1 ns in 1 fs timesteps
+  pcons pmass 0.0 pgamma 0 pref 1.0 - &#160;! report pressure, but do NVT
+  hoover reft 300.0 tmass 500.0 -     &#160;! constant temperature
+  iuncrd 50 iunwri 20 nsavc 1000 -    &#160;! trajectory and restart
+  iasors 1 iasvel 1 ihtfrq 0 -        &#160;! assign velocities, but
+  ieqfrq 0 ichecw 0                   &#160;! do no rescaling (NVT)
+</pre>
+<p>This command will produce a restart file after one nanosecond of dynamics. To continue the run, you would write:
+</p>
+<pre>open unit 20 read card name restart.res
+open unit 21 write card name restart2.res
+open unit 50 write unform name run2.dcd
+
+dyna restart leap cpt -
+  iunrea 20 -                        &#160;! unit to read restart file
+  nstep 1000000 timestep 0.001 -     &#160;! 1 ns in 1 fs timesteps
+  pcons pmass 0.0 pgamma 0 pref 1.0 -&#160;! constant pressure
+  hoover reft 300.0 tmass 500.0 -    &#160;! constant temperature
+  iuncrd 50 iunwri 21 nsavc 1000 -   &#160;! trajectory and restart
+  iasors 1 iasvel 1 ihtfrq 0 -       &#160;! assign velocities,
+  ieqfrq 0 ichecw 0                  &#160;! but do no rescaling
+   
+</pre>
+<p>Note that it is not possible to append to the trajectory file given by the first dynamics command. Instead, you must create a second trajectory and then merge it with the first one (alternatively, CHARMM's analysis tools have very good support for reading a sequence of trajectory files -- this process is described in the analysis section of the tutorial). Also, although <tt>IASVEL</tt> is set to 1, no velocity re-assignment will be done because the velocities are read from the restart file and  <tt>IHTFRQ</tt>, <tt>IEQFRQ</tt>, and <tt>ICHECW</tt> are all 0.
+</p>
+<h2> <span class="mw-headline" id="Summary_and_recommendations">Summary and recommendations</span></h2>
+<p>Although the <tt>DYNAmics</tt> command is complex, most of its options can be broken down into simple groups controlling the number of steps and the size of each step, temperature and pressure control, setting up of initial velocities, and and reading/writing various control and trajectory files. We recommend setting up non-bond parameters before the main <tt>DYNA</tt> commands. CHARMM's <a rel="nofollow" class="external text" href="http://www.charmm.org/documentation/current/dynamc.html">dynamc.doc</a> provides recommendations of what options to use for various purposes. These are reproduced below with some minor fixes to represent currently suggested best practices (in particular #3 has been changed to use the Hoover thermostat, as we do not recommend using the weak-coupling Berendsen thermostat):
+</p><p><b>1)    For heating and early equilibration:</b>
+</p>
+<pre>DYNAMICS LEAP VERLET RESTART(*)  NSTEP 20000 TIMESTEP 0.001 -
+    IPRFRQ 1000 IHTFRQ 100 IEQFRQ 5000 NTRFRQ 5000  -
+    IUNREA 30 IUNWRI 31 IUNCRD 50 IUNVEL -1 KUNIT 70 -
+    NPRINT 100 NSAVC 100 NSAVV 0 -
+    FIRSTT 100.0 FINALT 300.0 TEMINC 10.0   -
+    IASORS 1 IASVEL 1 ISCVEL 0 ICHECW 0 TWINDH 10.0 TWINDL -10.0
+</pre>
+<p>(*)   Except for first run, then use STRT in place of RESTART
+</p><p><br />
+<b>2)    For late equilibration and analysis runs:</b>
+</p>
+<pre>DYNAMICS LEAP VERLET RESTART  NSTEP 20000 TIMESTEP 0.001 -
+    IPRFRQ 1000 IHTFRQ 0 IEQFRQ 0(*) NTRFRQ 5000  -
+    IUNREA 30 IUNWRI 31 IUNCRD 50 IUNVEL -1 KUNIT 70 -
+    NPRINT 100 NSAVC 100 NSAVV 0 -
+    FIRSTT 100.0 FINALT 300.0 -
+    IASORS 0 IASVEL 1 ISCVEL 0 ICHECW 1 TWINDH 10.0 TWINDL -10.0
+</pre>
+<p>(*) This should probably be positive for an equilibration run.
+</p><p><b>3)  For constant temperature and/or pressure dynamics</b>
+</p>
+<pre>DYNA LEAP VERLET STRT(*) CPT NSTEP 20000 TIMESTEP 0.001 -
+    IPRFRQ 1000 IHTFRQ 0 IEQFRQ 0 NTRFRQ 0  -
+    IUNREA 30 IUNWRI 31 IUNCRD 50 IUNVEL -1 KUNIT 70 -
+    NPRINT 100 NSAVC 100 NSAVV 0 IHBFRQ 0 INBFRQ 25  -
+    PCONS PMASS(+) 50.0 PGAMMA 0 PREF 1.0 -
+    HOOVER REFT 300.0 TMASS(+) 500.0 - 
+    IASORS 0 IASVEL 1 ISCVEL 0 ICHECW 0 TWINDH 0.0 TWINDL 0.0
+</pre>
+<p>(*)   For first run, use RESTART otherwise
+(+)   PMASS and TMASS must be adjusted to match your system size. PMASS should be set to 0 if NVT, instead of NPT, is desired. See above for more information about this.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 233/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key tutorial:pcache:idhash:52-0!1!0!!en!*!* and timestamp 20170915212947 -->
+</div><div class="printfooter">
+Retrieved from "<a href="https://www.charmmtutorial.org/index.php?title=MD&amp;oldid=832">https://www.charmmtutorial.org/index.php?title=MD&amp;oldid=832</a>"</div>
+		<div id='catlinks' class='catlinks catlinks-allhidden'></div>		<!-- end content -->
+				<div class="visualClear"></div>
+	</div>
+</div></div>
+<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+				<li id="ca-nstab-main" class="selected"><a href="/index.php/MD" primary="1" context="subject" title="View the content page [c]" accesskey="c">Page</a></li>
+				<li id="ca-talk" class="new"><a href="/index.php?title=Talk:MD&amp;action=edit&amp;redlink=1" primary="1" context="talk" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				<li id="ca-viewsource"><a href="/index.php?title=MD&amp;action=edit" primary="1" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li>
+				<li id="ca-history"><a href="/index.php?title=MD&amp;action=history" rel="archives" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+
+<li id="pt-login"><a href="/index.php?title=Special:UserLogin&amp;returnto=FINAL+MD" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+<a href="/index.php/CHARMM_Tutorial" style="background-image: url(https://www.charmmtutorial.org/tutorial-data/image-sm.png);" title="Visit the main page"></a>
+	</div>
+	<div class="generated-sidebar portlet" id="p-CHARMM_Tutorial">
+		<h5>CHARMM Tutorial</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage"><a href="/index.php/CHARMM_Tutorial" title="Visit the main page [z]" accesskey="z">CHARMM Tutorial</a></li>
+				<li id="n-Outline"><a href="/index.php/Outline">Outline</a></li>
+				<li id="n-Introduction"><a href="/index.php/Introduction">Introduction</a></li>
+				<li id="n-Basic-CHARMM-Scripting"><a href="/index.php/Basic_CHARMM_Scripting">Basic CHARMM Scripting</a></li>
+				<li id="n-Essential-CHARMM-Features"><a href="/index.php/Essential_CHARMM_Features">Essential CHARMM Features</a></li>
+				<li id="n-The-Energy-Function"><a href="/index.php/The_Energy_Function">The Energy Function</a></li>
+				<li id="n-Minimization"><a href="/index.php/Minimization">Minimization</a></li>
+				<li id="n-Solvation"><a href="/index.php/Solvation">Solvation</a></li>
+				<li id="n-Neutralization"><a href="/index.php/Neutralization">Neutralization</a></li>
+				<li id="n-Molecular-Dynamics"><a href="/index.php/MD">Molecular Dynamics</a></li>
+				<li id="n-Langevin-Dynamics"><a href="/index.php/LD">Langevin Dynamics</a></li>
+				<li id="n-Analysis"><a href="/index.php/Analysis">Analysis</a></li>
+				<li id="n-Full-example"><a href="/index.php/Full_example">Full example</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Appendices">
+		<h5>Appendices</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-Temperature-replica-exchange"><a href="/index.php/Temperature_replica_exchange">Temperature replica exchange</a></li>
+				<li id="n-Coarse-Grained-Go-Models"><a href="/index.php/Coarse_Grained_Go_Models">Coarse Grained Go Models</a></li>
+				<li id="n-CHARMMing.27s-PDB-reader"><a href="/index.php/CHARMMing%27s_PDB_Reader">CHARMMing's PDB reader</a></li>
+				<li id="n-Installing-CHARMMing"><a href="/index.php/Installation_of_CHARMMing">Installing CHARMMing</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-SAR_and_QSAR">
+		<h5>SAR and QSAR</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-SAR-and-QSAR-Introduction"><a href="/index.php/SAR_and_QSAR_Introduction">SAR and QSAR Introduction</a></li>
+				<li id="n-SAR-Categorization-Lesson"><a href="/index.php/SAR_Categorization_Lesson">SAR Categorization Lesson</a></li>
+				<li id="n-QSAR-Regression-Lesson"><a href="/index.php/QSAR_Regression_Lesson">QSAR Regression Lesson</a></li>
+				<li id="n-Docking-Introduction-and-Walkthrough"><a href="/index.php/Docking_Introduction_and_Walkthrough">Docking Introduction and Walkthrough</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Files">
+		<h5>Files</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-This-tutorial-as-a-PDF"><a href="http://www.charmmtutorial.org/tutorial-data/charmm_tutorial_2010.pdf" rel="nofollow">This tutorial as a PDF</a></li>
+				<li id="n-Tutorial-files-.28.tar.gz.29"><a href="http://www.charmmtutorial.org/tutorial-data/crambin_example.tar.gz" rel="nofollow">Tutorial files (.tar.gz)</a></li>
+				<li id="n-Tutorial-files-.28.zip.29"><a href="http://www.charmmtutorial.org/tutorial-data/crambin_example.zip" rel="nofollow">Tutorial files (.zip)</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Navigation">
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-recentchanges"><a href="/index.php/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-help"><a href="/index.php/Help:Contents" title="The place to find out">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="/index.php" id="searchform">
+				<input type='hidden' name="title" value="Special:Search"/>
+				<input type="search" name="search" title="Search CHARMM tutorial [f]" accesskey="f" id="searchInput" />
+				<input type="submit" name="go" value="Go" title="Go to a page with this exact name if exists" id="searchGoButton" class="searchButton" />&#160;
+				<input type="submit" name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton" />
+			</form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="/index.php/Special:WhatLinksHere/MD" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="/index.php/Special:RecentChangesLinked/MD" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+				<li id="t-specialpages"><a href="/index.php/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li><a href="/index.php?title=MD&amp;printable=yes" rel="alternate">Printable version</a></li>
+				<li id="t-permalink"><a href="/index.php?title=MD&amp;oldid=832" title="Permanent link to this revision of the page">Permanent link</a></li>
+			</ul>
+		</div>
+	</div>
+</div><!-- end of the left (by default at least) column -->
+<div class="visualClear"></div>
+<div id="footer">
+	<div id="f-copyrightico">
+		<a href="http://creativecommons.org/licenses/publicdomain/"><img src="/skins/common/images/public-domain.png" alt="Public Domain" width="88" height="31" /></a>
+	</div>
+	<div id="f-poweredbyico">
+		<a href="//www.mediawiki.org/"><img src="/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+	</div>
+	<ul id="f-list">
+		<li id="lastmod"> This page was last modified on 24 August 2012, at 15:08.</li>
+		<li id="viewcount">This page has been accessed 90,402 times.</li>
+		<li id="copyright">Content is available under <a class="external" href="http://creativecommons.org/licenses/publicdomain/">Public Domain</a> unless otherwise noted.</li>
+		<li id="privacy"><a href="/index.php/CHARMM_tutorial:Privacy_policy" title="CHARMM tutorial:Privacy policy">Privacy policy</a></li>
+		<li id="about"><a href="/index.php/CHARMM_tutorial:About" title="CHARMM tutorial:About">About CHARMM tutorial</a></li>
+		<li id="disclaimer"><a href="/index.php/CHARMM_tutorial:General_disclaimer" title="CHARMM tutorial:General disclaimer">Disclaimers</a></li>
+	</ul>
+</div>
+</div>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.user","mediawiki.page.ready"], null, true);
+}</script>
+<script src="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=monobook&amp;*"></script>
+<!-- Served in 0.160 secs. --></body></html>

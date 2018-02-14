@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="client-nojs">
+<head>
+<title>Minimization - CHARMM tutorial</title>
+<meta charset="UTF-8" />
+<meta name="generator" content="MediaWiki 1.19.20+dfsg-0+deb7u3" />
+<link rel="canonical" href="/index.php/Minimization" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="CHARMM tutorial (en)" />
+<link rel="EditURI" type="application/rsd+xml" href="https://www.charmmtutorial.org/api.php?action=rsd" />
+<link rel="copyright" href="http://creativecommons.org/licenses/publicdomain/" />
+<link rel="alternate" type="application/atom+xml" title="CHARMM tutorial Atom feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom" />
+<link rel="stylesheet" href="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=mediawiki.legacy.commonPrint%2Cshared%7Cskins.monobook&amp;only=styles&amp;skin=monobook&amp;*" />
+<!--[if IE 6]><link rel="stylesheet" href="/skins/monobook/IE60Fixes.css?303" media="screen" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" href="/skins/monobook/IE70Fixes.css?303" media="screen" /><![endif]--><meta name="ResourceLoaderDynamicStyles" content="" />
+<link rel="stylesheet" href="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=styles&amp;skin=monobook&amp;*" />
+<style>a:lang(ar),a:lang(ckb),a:lang(fa),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}a.new,#quickbar a.new{color:#ba0000}
+
+/* cache key: tutorial:resourceloader:filter:minify-css:7:c88e2bcd56513749bec09a7e29cb3ffa */</style>
+
+<script src="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=startup&amp;only=scripts&amp;skin=monobook&amp;*"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Minimization","wgTitle":"Minimization","wgCurRevisionId":1045,"wgArticleId":49,"wgIsArticle":true,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgRelevantPageName":"Minimization","wgRestrictionEdit":[],"wgRestrictionMove":[],"wgRedirectedFrom":"FINAL_Minimization"});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"highlightbroken":1,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":5,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"monobook","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":
+0,"watchlistdays":3,"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;},{},{});mw.loader.implement("user.tokens",function($){mw.user.tokens.set({"editToken":"+\\","watchToken":false});;},{},{});
+
+/* cache key: tutorial:resourceloader:filter:minify-js:7:74a832f2292f1f4d40d425d223444e78 */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax"]);
+}</script>
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Minimization skin-monobook action-view">
+<div id="globalWrapper">
+<div id="column-content"><div id="content">
+	<a id="top"></a>
+	
+	<h1 id="firstHeading" class="firstHeading"><span dir="auto">Minimization</span></h1>
+	<div id="bodyContent" class="mw-body">
+		<div id="siteSub">From CHARMM tutorial</div>
+		<div id="contentSub">(Redirected from <a href="/index.php?title=FINAL_Minimization&amp;redirect=no" title="FINAL Minimization">FINAL Minimization</a>)</div>
+		<div id="jump-to-nav" class="mw-jump">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>
+		<!-- start content -->
+<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><table id="toc" class="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#Description_of_Minimization"><span class="tocnumber">1</span> <span class="toctext">Description of Minimization</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Motivation"><span class="tocnumber">2</span> <span class="toctext">Motivation</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="#How_much_should_a_structure_be_minimized.3F"><span class="tocnumber">2.1</span> <span class="toctext">How much should a structure be minimized?</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="#What_algorithm_should_be_used.3F"><span class="tocnumber">2.2</span> <span class="toctext">What algorithm should be used?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-5"><a href="#How_to_perform_minimization"><span class="tocnumber">3</span> <span class="toctext">How to perform minimization</span></a>
+<ul>
+<li class="toclevel-2 tocsection-6"><a href="#Gas_phase_minimization"><span class="tocnumber">3.1</span> <span class="toctext">Gas phase minimization</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="#Minimizing_a_solvated_structure"><span class="tocnumber">3.2</span> <span class="toctext">Minimizing a solvated structure</span></a></li>
+<li class="toclevel-2 tocsection-8"><a href="#Conclusion"><span class="tocnumber">3.3</span> <span class="toctext">Conclusion</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<h2> <span class="mw-headline" id="Description_of_Minimization">Description of Minimization</span></h2>
+<p>Energy minimization, as the name implies, is a procedure that attempts to minimize the <a href="/index.php/FINAL_The_energy_function" title="FINAL The energy function" class="mw-redirect">potential energy</a> of the system to the lowest possible point. This can be a challenging problem, as there is only one global minimum of the energy surface, but many local minima. If steps are not taken to avoid it, a minimization algorithm might get stuck in a local minimum without ever finding the global minimum. In most cases, this is what will actually happen in CHARMM, but as explained below, finding a global minimum is often not necessary. CHARMM's minimization algorithms examine the first (and in some cases second) derivatives to determine whether they are at a minimum. More complex methods of exploring the energy surface (e.g. conformational space annealing, or methods in which the system is repeatedly heated and cooled) are beyond the scope of this tutorial.
+</p>
+<h2> <span class="mw-headline" id="Motivation">Motivation</span></h2>
+<p>One might reasonably ask why you would want to perform energy minimization in the first place. There are a number of reasons, but they mostly center around removing nonphysical contacts / interactions. For example, with a structure that has been solved via X-ray crystallography, contacts with neighbors in the crystal can cause changes from the <i>in vitro</i> structure. Missing coordinates obtained from the internal coordinate facility or the HBUIld module of CHARMM may be far from optimal.  Additionally, when two sets of coordinates are merged (e.g., when a protein is put inside a water box or sphere) it is possible that there are steric clashes present in the resulting coordinate set. Such <i>bad contacts</i> may cause large, unphysical changes in potential energy in subsequent dynamics simulations, or possibly other artifacts. A brief minimization can remove such potential problems. As a result, minimization is generally not done as an end unto itself, but to prepare for another type of calculation and must be done under the same conditions as the later calculation. For example, when planning a QM/MM calculation (i.e. when one part of your system is modeled with quantum mechanics while the rest uses the standard CHARMM force field)), it is important to re-minimize the system with the QM/MM conditions in place.
+</p>
+<h3> <span class="mw-headline" id="How_much_should_a_structure_be_minimized.3F">How much should a structure be minimized?</span></h3>
+<p>A minimization is considered converged if the root mean squared deviation of the gradient (GRMS) is very close to zero (recall that the necessary condition for a function to have a local minimum  is that all its first derivatives are zero -- of course, it could also be an extreme, saddle point etc.). In addition, the energy changes from step to step should be very small when the minimization is close to convergence.
+</p><p>How much minimization is necessary depends upon the intended use of the final structure. In general, if the output is to be used for solvation or dynamics, it is not necessary for the minimization to be fully converged. In fact, when preparing a structure for dynamics, it is not advised to let it move too much from its original conformation. Exploration of conformational changes should be done during dynamics itself, not minimization. Over-minimization can lead to unphysical "freezing" of the structure. It may be desirable to use thermal B-factors to restrain the structure (as these are hints from the people who solved the structure about the certainty of the atomic positions). However, if the structure is to be used for a normal modes calculation, then it should be as close to a local minimum as possible. This is because a normal mode calculation treats the potential as a harmonic well. If the structure is not at, or very close to, a minimum, it will not be at the bottom of that well. Consequently there will be elements of the matrix made up of second derivatives of the energy (i.e. the Hessian) that will be negative. Thus this matrix will not be positive definite and there will be negative eigenvalues and, hence, imaginary normal modes.
+</p><p>When both minimizing and solvating a structure, it is often best to minimize the structure in vacuum before performing solvation.It is often difficult to resolve bad protein-protein contacts and bad protein-solvent contacts within the same minimization, so it is often desirable to do these minimizations separately.
+</p>
+<h3> <span class="mw-headline" id="What_algorithm_should_be_used.3F">What algorithm should be used?</span></h3>
+<p>A full description of the minimization options available in CHARMM can be found in <a rel="nofollow" class="external text" href="http://www.charmm.org/documentation/current/minimiz.html">minimiz.doc</a>, which also documents the exact syntax for the MINImize command (described in the next section). Most people use just two of the available  minimizers, steepest descent (SD) and the adopted basis Newton Raphson method (ABNR). SD is the simplest algorithm; it simply moves the coordinates in the negative direction of the gradient. The only adjustable parameter is the step size, which determines how much the coordinates are shifted at each step. The step size is adjusted dynamically to achieve rapid convergence. The main problem with steepest descent is that it does not generally converge to a local minimum; however, it will rapidly improve the conformation when the GRMS is high (i.e. when the system is far from a minimum). Therefore, it is often used briefly on a new structure to quickly remove bad contacts and clashes. Many practitioners only use SD for the initial 25-50 steps of minimization to remove bad van der Waals contact, however it can be run for longer. Once this is done, it is advisable to switch to a more precise minimizer, usually ABNR, to finish the calculation. The ABNR minimizer will be able to detect when it has converged and will exit automatically, therefore there is no danger in running it for a long time (i.e., specifying a large number of steps; see below). However, as stated previously, except for when computing normal nodes or preparing for QM/MM dynamics, there is generally no need to arrive at an exact minimum. When the energy change from step to step is less than 0.001 kcal/mol, the structure is sufficiently minimized for most purposes.
+</p><p>In certain special cases, it may be necessary to use another minimizer such as the <tt>CONJugate-gradient</tt> method or the <tt>POWEll</tt> minimizer. Consulting the documentation carefully is recommended in these cases. In particular, note that the <tt>POWEll</tt> minimizer does not support the <tt>INBFrq</tt> and <tt>IMGFrq</tt> keywords (which determine how often the non-bond and image atom lists are regenerated). Therefore, it will certainly fail if the structure moves too much during the calculation. It is suggested to use the <tt>POWEll</tt> method in a loop; however it is probably best avoided alltogether.
+</p>
+<h2> <span class="mw-headline" id="How_to_perform_minimization">How to perform minimization</span></h2>
+<p>Energy minimization can be performed once a valid PSF and coordinate set have been loaded into CHARMM. The <tt>MINImize</tt> command is used to initiate the procedure. Immediately after the command itself the method (e.g. <tt>SD</tt>, <tt>ABNR</tt>) must be specified, followed by any minimizer specific options. In general, the only options that need to be given are <tt>NSTEp</tt>, TOLGradient, and <tt>TOLEnergy</tt>. The <tt>NSTEp</tt> option specifies the maximum number of steps that the minimizer will run. Likewise, the <tt>TOLGradient</tt> option tells the minimizer to exit once the specified GRMS is achieved and the <tt>TOLEnergy</tt> option tells the routine to exit after the energy changes by less than the given amount. If these are not specified, minimization will run until its own convergence criteria is met. For most systems, it is sufficient to do a few hundred steps of minimization with no <tt>TOLG</tt> or <tt>TOLE</tt> specified to get the system away from sharp peaks in the energy curve, followed by a sufficient number of ABNR steps to meet the desired <tt>TOLG</tt>. For example:
+</p>
+<pre>! perform a basic energy minimization
+mini sd nstep 50
+mini abnr nstep 1000000 tolg 0.01
+</pre>
+<p>will be sufficient in most instances. As mentioned above, there is no harm in setting the large value of <tt>NSTEp</tt>, even without the <tt>TOLG</tt> or <tt>TOLE</tt> options; the minimizer will exit once it has converged (note, however, that the defaults for <tt>TOLE</tt> and <tt>TOLG</tt> are 0.00 so unless these are increased it the minimization will run until the system is either right on a local minimum or <tt>NSTEp</tt> is reached.
+</p><p>There is some debate as to whether a structure should ever be minimized in vacuum, although as mentioned above light vacuum minimization is often very useful when preparing a structure for solvation. This is unavoidable when a gas phase normal mode calculation is to be performed. General hints for both gas phase and solvent minimization are given below.
+</p><p>If minimizing directly before a dynamics run, it is necessary to make sure that the conditions under which the minimization takes place are the same as those intended to be used for dynamics. For example, if particle-mesh ewald is to be used in dynamics, it should be used for minimization as well. Consideration should be made of the system in question; below, general hints for minimizations in gas phase and in explicit solvent are given.
+</p>
+<h3> <span class="mw-headline" id="Gas_phase_minimization">Gas phase minimization</span></h3>
+<p>Gas phase minimization may be complex as, without solvent buffering, the structure can minimize into non-physical conformations. Some find it helpful to put harmonic restraints on the backbone atoms of the protein, letting only side chains move. It is possible to go even farther and fix (or, at least, restrain) all atoms except for hydrogens, allowing just their positions to be minimized. As mentioned above, thermal B-factors can serve as guides for how strongly to restrain individual atoms. Minimizing only hydrogens can be desirable since CHARMM's hydrogen position builder (HBUIld) often does not put hydrogens in the most physically advantageous positions. It is generally possible to gradually heat a minimized structure to obtain a higher temperature configuration that is reasonably energetically stable.
+</p>
+<h3> <span class="mw-headline" id="Minimizing_a_solvated_structure">Minimizing a solvated structure</span></h3>
+<p>As mentioned above, the conditions under which minimization takes place should be the same under which the dynamics run will be performed. Therefore, it is necessary to set up periodic boundary conditions and nonbonded parameters as they will be used later. As alluded to above, it is wise to remember that the goal of the minimization is to reduce bad contacts and relax the structure. Using too many steps can result in over-minimization, which can cause issues with subsequent MD simulations. As in the gas phase, it may be desirable to constrain backbone atoms, allowing the solvent and sidechains to orient optimally while the basic shape of the protein stays intact. Remember, the structure can be heated to and equilibrated at the proper temperature before starting production dynamics, but over minimization will cause these processes to take a lot longer or possibly fail entirely. One hundred steps of SD followed by a few hundred steps of ABNR are often sufficient to prepare a solvated structure for dynamics.
+</p>
+<h3> <span class="mw-headline" id="Conclusion">Conclusion</span></h3>
+<p>The general difference between vacuum and gas phase minimization is that one must be even more careful to prevent radical changes to the structure during gas phase. Ideally, a structure should only be minimized in the presence of solvent, but there may be issues that need to be resolved before initiating solvation where a short gas phase minimization would be desirable. The main thing that must be considered when setting up the minimization of the solvated system is making sure that, if periodic boundary conditions are to be used in dynamics then they should be configured identically.
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 30/1000000
+Post‐expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key tutorial:pcache:idhash:49-0!*!0!!en!*!* and timestamp 20170916031434 -->
+</div><div class="printfooter">
+Retrieved from "<a href="https://www.charmmtutorial.org/index.php?title=Minimization&amp;oldid=1045">https://www.charmmtutorial.org/index.php?title=Minimization&amp;oldid=1045</a>"</div>
+		<div id='catlinks' class='catlinks catlinks-allhidden'></div>		<!-- end content -->
+				<div class="visualClear"></div>
+	</div>
+</div></div>
+<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+				<li id="ca-nstab-main" class="selected"><a href="/index.php/Minimization" primary="1" context="subject" title="View the content page [c]" accesskey="c">Page</a></li>
+				<li id="ca-talk" class="new"><a href="/index.php?title=Talk:Minimization&amp;action=edit&amp;redlink=1" primary="1" context="talk" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				<li id="ca-viewsource"><a href="/index.php?title=Minimization&amp;action=edit" primary="1" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li>
+				<li id="ca-history"><a href="/index.php?title=Minimization&amp;action=history" rel="archives" title="Past revisions of this page [h]" accesskey="h">History</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+
+<li id="pt-login"><a href="/index.php?title=Special:UserLogin&amp;returnto=FINAL+Minimization" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in</a></li>
+</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+<a href="/index.php/CHARMM_Tutorial" style="background-image: url(https://www.charmmtutorial.org/tutorial-data/image-sm.png);" title="Visit the main page"></a>
+	</div>
+	<div class="generated-sidebar portlet" id="p-CHARMM_Tutorial">
+		<h5>CHARMM Tutorial</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage"><a href="/index.php/CHARMM_Tutorial" title="Visit the main page [z]" accesskey="z">CHARMM Tutorial</a></li>
+				<li id="n-Outline"><a href="/index.php/Outline">Outline</a></li>
+				<li id="n-Introduction"><a href="/index.php/Introduction">Introduction</a></li>
+				<li id="n-Basic-CHARMM-Scripting"><a href="/index.php/Basic_CHARMM_Scripting">Basic CHARMM Scripting</a></li>
+				<li id="n-Essential-CHARMM-Features"><a href="/index.php/Essential_CHARMM_Features">Essential CHARMM Features</a></li>
+				<li id="n-The-Energy-Function"><a href="/index.php/The_Energy_Function">The Energy Function</a></li>
+				<li id="n-Minimization"><a href="/index.php/Minimization">Minimization</a></li>
+				<li id="n-Solvation"><a href="/index.php/Solvation">Solvation</a></li>
+				<li id="n-Neutralization"><a href="/index.php/Neutralization">Neutralization</a></li>
+				<li id="n-Molecular-Dynamics"><a href="/index.php/MD">Molecular Dynamics</a></li>
+				<li id="n-Langevin-Dynamics"><a href="/index.php/LD">Langevin Dynamics</a></li>
+				<li id="n-Analysis"><a href="/index.php/Analysis">Analysis</a></li>
+				<li id="n-Full-example"><a href="/index.php/Full_example">Full example</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Appendices">
+		<h5>Appendices</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-Temperature-replica-exchange"><a href="/index.php/Temperature_replica_exchange">Temperature replica exchange</a></li>
+				<li id="n-Coarse-Grained-Go-Models"><a href="/index.php/Coarse_Grained_Go_Models">Coarse Grained Go Models</a></li>
+				<li id="n-CHARMMing.27s-PDB-reader"><a href="/index.php/CHARMMing%27s_PDB_Reader">CHARMMing's PDB reader</a></li>
+				<li id="n-Installing-CHARMMing"><a href="/index.php/Installation_of_CHARMMing">Installing CHARMMing</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-SAR_and_QSAR">
+		<h5>SAR and QSAR</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-SAR-and-QSAR-Introduction"><a href="/index.php/SAR_and_QSAR_Introduction">SAR and QSAR Introduction</a></li>
+				<li id="n-SAR-Categorization-Lesson"><a href="/index.php/SAR_Categorization_Lesson">SAR Categorization Lesson</a></li>
+				<li id="n-QSAR-Regression-Lesson"><a href="/index.php/QSAR_Regression_Lesson">QSAR Regression Lesson</a></li>
+				<li id="n-Docking-Introduction-and-Walkthrough"><a href="/index.php/Docking_Introduction_and_Walkthrough">Docking Introduction and Walkthrough</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Files">
+		<h5>Files</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-This-tutorial-as-a-PDF"><a href="http://www.charmmtutorial.org/tutorial-data/charmm_tutorial_2010.pdf" rel="nofollow">This tutorial as a PDF</a></li>
+				<li id="n-Tutorial-files-.28.tar.gz.29"><a href="http://www.charmmtutorial.org/tutorial-data/crambin_example.tar.gz" rel="nofollow">Tutorial files (.tar.gz)</a></li>
+				<li id="n-Tutorial-files-.28.zip.29"><a href="http://www.charmmtutorial.org/tutorial-data/crambin_example.zip" rel="nofollow">Tutorial files (.zip)</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="generated-sidebar portlet" id="p-Navigation">
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-recentchanges"><a href="/index.php/Special:RecentChanges" title="A list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-help"><a href="/index.php/Help:Contents" title="The place to find out">Help</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="/index.php" id="searchform">
+				<input type='hidden' name="title" value="Special:Search"/>
+				<input type="search" name="search" title="Search CHARMM tutorial [f]" accesskey="f" id="searchInput" />
+				<input type="submit" name="go" value="Go" title="Go to a page with this exact name if exists" id="searchGoButton" class="searchButton" />&#160;
+				<input type="submit" name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton" />
+			</form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="/index.php/Special:WhatLinksHere/Minimization" title="A list of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="/index.php/Special:RecentChangesLinked/Minimization" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+				<li id="t-specialpages"><a href="/index.php/Special:SpecialPages" title="A list of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li><a href="/index.php?title=Minimization&amp;printable=yes" rel="alternate">Printable version</a></li>
+				<li id="t-permalink"><a href="/index.php?title=Minimization&amp;oldid=1045" title="Permanent link to this revision of the page">Permanent link</a></li>
+			</ul>
+		</div>
+	</div>
+</div><!-- end of the left (by default at least) column -->
+<div class="visualClear"></div>
+<div id="footer">
+	<div id="f-copyrightico">
+		<a href="http://creativecommons.org/licenses/publicdomain/"><img src="/skins/common/images/public-domain.png" alt="Public Domain" width="88" height="31" /></a>
+	</div>
+	<div id="f-poweredbyico">
+		<a href="//www.mediawiki.org/"><img src="/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31" /></a>
+	</div>
+	<ul id="f-list">
+		<li id="lastmod"> This page was last modified on 19 January 2016, at 14:14.</li>
+		<li id="viewcount">This page has been accessed 55,205 times.</li>
+		<li id="copyright">Content is available under <a class="external" href="http://creativecommons.org/licenses/publicdomain/">Public Domain</a> unless otherwise noted.</li>
+		<li id="privacy"><a href="/index.php/CHARMM_tutorial:Privacy_policy" title="CHARMM tutorial:Privacy policy">Privacy policy</a></li>
+		<li id="about"><a href="/index.php/CHARMM_tutorial:About" title="CHARMM tutorial:About">About CHARMM tutorial</a></li>
+		<li id="disclaimer"><a href="/index.php/CHARMM_tutorial:General_disclaimer" title="CHARMM tutorial:General disclaimer">Disclaimers</a></li>
+	</ul>
+</div>
+</div>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.user","mediawiki.page.ready"], null, true);
+}</script>
+<script src="https://www.charmmtutorial.org/load.php?debug=false&amp;lang=en&amp;modules=site&amp;only=scripts&amp;skin=monobook&amp;*"></script>
+<!-- Served in 0.187 secs. --></body></html>
