@@ -13,7 +13,7 @@ namespace HTLib2
 		public static string ToString(params object[] objs)
 		{
             if(objs.Length == 1)
-                return __ToString(objs[0], null);
+                return _ToString(null, objs[0]);
 			return _ToString((IEnumerable<object>)objs);
 		}
 		public static string ToString_Nearest<T, U>(IEnumerable<KeyValuePair<T,U>> objs, bool ignore_null)
@@ -50,7 +50,7 @@ namespace HTLib2
 		}
         public static string ToString(object obj)
 		{
-			return __ToString(obj, null);
+			return _ToString(null, obj);
 		}
         public static string ToString<T>(T[] objs)
         {
@@ -74,7 +74,7 @@ namespace HTLib2
 				{
 					if(addcomma) text.Append(", ");
 					else addcomma = true;
-					text.Append(__ToString(obj, null));
+					text.Append(_ToString(null, obj));
 				}
 			text.Append("}");
 			return text.ToString();
@@ -94,7 +94,7 @@ namespace HTLib2
 				for(int j=0; j<objs.GetLength(1); j++)
 				{
 					if(j != 0) text.Append(", ");
-					text.Append(__ToString(objs[i, j], null));
+					text.Append(_ToString(null, objs[i, j]));
 				}
 				text.Append("}");
 			}
@@ -116,7 +116,7 @@ namespace HTLib2
 					for(int k=0; k<objs.GetLength(2); k++)
 					{
 						if(k != 0) text.Append(", ");
-						text.Append(__ToString(objs[i, j, k], null));
+						text.Append(_ToString(null, objs[i, j, k]));
 					}
 					text.Append("}");
 				}
@@ -149,13 +149,13 @@ namespace HTLib2
 			HDebug.Assert(delims.Length == 3);
 			StringBuilder text = new StringBuilder();
 			text.Append(delims[0]);
-			text.Append(__ToString(obj.Key, null));
+			text.Append(_ToString(null, obj.Key));
 			text.Append(delims[1]);
-			text.Append(__ToString(obj.Value, null));
+			text.Append(_ToString(null, obj.Value));
 			text.Append(delims[2]);
 			return text.ToString();
 		}
-		protected static string __ToString(object obj, string format)
+		protected static string _ToString(string format, object obj)
 		{
 		try{
 			if(obj == null)
