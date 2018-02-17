@@ -16,6 +16,12 @@ namespace HTLib2
                 return _ToString(null, objs[0]);
             return _ToString(null, (IEnumerable<object>)objs);
         }
+        public static string ToString(string format, params object[] objs)
+        {
+            if(objs.Length == 1)
+                return _ToString(format, objs[0]);
+            return _ToString(format, (IEnumerable<object>)objs);
+        }
         public static string ToString_Nearest<T, U>(IEnumerable<KeyValuePair<T,U>> objs, bool ignore_null)
         {
             StringBuilder text = new StringBuilder();
@@ -52,6 +58,10 @@ namespace HTLib2
         {
             return _ToString(null, obj);
         }
+        public static string ToString(string format, object obj)
+        {
+            return _ToString(format, obj);
+        }
         public static string ToString<T>(T[] objs)
         {
             return _ToString(null, objs);
@@ -74,7 +84,7 @@ namespace HTLib2
                 {
                     if(addcomma) text.Append(", ");
                     else addcomma = true;
-                    text.Append(_ToString(null, obj));
+                    text.Append(_ToString(format, obj));
                 }
             text.Append("}");
             return text.ToString();
@@ -94,7 +104,7 @@ namespace HTLib2
                 for(int j=0; j<objs.GetLength(1); j++)
                 {
                     if(j != 0) text.Append(", ");
-                    text.Append(_ToString(null, objs[i, j]));
+                    text.Append(_ToString(format, objs[i, j]));
                 }
                 text.Append("}");
             }
@@ -116,7 +126,7 @@ namespace HTLib2
                     for(int k=0; k<objs.GetLength(2); k++)
                     {
                         if(k != 0) text.Append(", ");
-                        text.Append(_ToString(null, objs[i, j, k]));
+                        text.Append(_ToString(format, objs[i, j, k]));
                     }
                     text.Append("}");
                 }
@@ -149,9 +159,9 @@ namespace HTLib2
             HDebug.Assert(delims.Length == 3);
             StringBuilder text = new StringBuilder();
             text.Append(delims[0]);
-            text.Append(_ToString(null, obj.Key));
+            text.Append(_ToString(format, obj.Key));
             text.Append(delims[1]);
-            text.Append(_ToString(null, obj.Value));
+            text.Append(_ToString(format, obj.Value));
             text.Append(delims[2]);
             return text.ToString();
         }
