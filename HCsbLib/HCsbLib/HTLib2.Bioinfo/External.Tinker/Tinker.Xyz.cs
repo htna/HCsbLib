@@ -110,6 +110,20 @@ namespace HTLib2.Bioinfo
         {
             public Element[] elements;
             public Atom[]    atoms { get { return elements.HSelectByType<Element,Atom>().ToArray(); } }
+            public Atom.Format atoms_format
+            {
+                get
+                {
+                    Atom[] atoms = this.atoms;
+                    Atom.Format format = atoms[0].format;
+                    if(HDebug.IsDebuggerAttached)
+                    {
+                        foreach(var atom in atoms)
+                            HDebug.Assert(format == atom.format);
+                    }
+                    return format;
+                }
+            }
             /// 186  GNOMES, ROCK MONSTERS AND CHILI SAUCE
             ///   1  NH3  -11.020000  -12.540000  -24.210000    65     2     5     6     7
             ///   2  CT1  -12.460000  -12.650000  -24.060000    24     1     3     8     9
@@ -364,7 +378,7 @@ namespace HTLib2.Bioinfo
                     public int[] idxAtomId   = new int[]{47,52};    public string formatAtomId   = "                     {0}";  // HSubEndStringCount
                     public int[] idxBondedId = new int[]{53,58};    public string formatBondedId = "                     {0}";  // HSubEndStringCount
                 }
-                Format format;
+                public readonly Format format;
                 public static Format defformat_digit06 = new Format
                 {
                     ///  id  (atom type in prm)   x     y      z        (atom-id in prm)  bonds, ...

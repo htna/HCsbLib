@@ -69,7 +69,7 @@ namespace HTLib2.Bioinfo
                                                     );
                     HDebug.Assert(HFile.Exists("prot.xyz_2"));
                     HDebug.Assert(HFile.Exists("prot.xyz_3") == false);
-                    minxyz = Tinker.Xyz.FromFile("prot.xyz_2", false);
+                    minxyz = Tinker.Xyz.FromFile("prot.xyz_2", false, xyz.atoms_format);
                     minlog = HFile.ReadAllLines("prot.log");
                     temp.QuitTemp();
                 }
