@@ -25,7 +25,11 @@ namespace HTLib2.Bioinfo
                         return true;
             return false;
         }
-        public static bool IsInter1234(this Tinker.Xyz.Atom atom0, Tinker.Xyz.Atom atom1, Dictionary<int, Tinker.Xyz.Atom> id2atom)
+        public static bool IsInter1234
+            ( this Tinker.Xyz.Atom atom0
+            , Tinker.Xyz.Atom atom1
+            , Dictionary<int, Tinker.Xyz.Atom> id2atom  // = atoms.HToType<object, Tinker.Xyz.Atom>().ToIdDictionary();
+            )
         {
             int id1 = atom0.Id;
             var id2s = atom0.BondedIds;
