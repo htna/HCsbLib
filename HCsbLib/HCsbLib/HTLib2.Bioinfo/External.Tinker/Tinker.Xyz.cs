@@ -605,6 +605,50 @@ namespace HTLib2.Bioinfo
                     Atom dest = FromData(format, src.Id, src.AtomType, x, y, z, src.AtomId, src.BondedIds);
                     return dest;
                 }
+
+                /// public Prm.Charge GetCharge(Prm prm)
+                /// {
+                ///     Dictionary(int, Prm.Charge) prm_id2charge = prm.charges.ToIdDictionary();
+                ///     Prm.Charge prm_charge = prm_id2charge[AtomId];
+                ///     return prm_charge;
+                /// }
+                public Prm.Charge GetCharge(Prm prm)
+                {
+                    return GetCharge(prm.charges);
+                }
+                public Prm.Charge GetCharge(Prm.Charge[] prm_charges)
+                {
+                    Dictionary<int, Prm.Charge> prm_id2charge = prm_charges.ToIdDictionary();
+                    return GetCharge(prm_id2charge);
+                }
+                public Prm.Charge GetCharge(Dictionary<int, Prm.Charge> prm_id2charge)
+                {
+                    Prm.Charge prm_charge = prm_id2charge[AtomId];
+                    return prm_charge;
+                }
+
+                /// public double GetMass(Prm prm)
+                /// {
+                ///     Dictionary(int,Prm.Atom) prm_id2atom = prm.atoms.ToIdDictionary();
+                ///     Prm.Atom prm_atom = prm_id2atom  [AtomId];
+                ///     double mass = prm_atom.Mass;
+                ///     return mass;
+                /// }
+                public double GetMass(Prm prm)
+                {
+                    return GetMass(prm.atoms);
+                }
+                public double GetMass(Prm.Atom[] prm_atoms)
+                {
+                    Dictionary<int,Prm.Atom> prm_id2atom = prm_atoms.ToIdDictionary();
+                    return GetMass(prm_id2atom);
+                }
+                public double GetMass(Dictionary<int, Prm.Atom> prm_id2atom)
+                {
+                    Prm.Atom prm_atom = prm_id2atom[AtomId];
+                    double mass = prm_atom.Mass;
+                    return mass;
+                }
             }
         }
     }
