@@ -277,6 +277,7 @@ namespace HTLib2
             if(name == typeof(string).FullName)
             {
                 return obj.ToString();
+                //return "\"" + obj.ToString() + "\"";
             }
             HDebug.Assert(false);
             HDebug.Break();
