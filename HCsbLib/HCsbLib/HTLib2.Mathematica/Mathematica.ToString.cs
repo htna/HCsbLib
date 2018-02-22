@@ -259,13 +259,13 @@ namespace HTLib2
             if(name == typeof(int).FullName)
             {
                 if(format == null) return obj.ToString();
-                else               return ((int)obj).ToString(format);
+                else               return string.Format(format, (int)obj);
             }
             if(name == typeof(double).FullName)
             {
                 string text;
                 if(format == null) text = ((double)obj).ToString();
-                else               text = ((double)obj).ToString(format);
+                else               text = string.Format(format, (double)obj);
 
                 if(text.Contains("E") || text.Contains("e"))
                 {
