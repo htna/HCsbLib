@@ -821,6 +821,7 @@
     <Compile Include="HTLib2\HSystem.System\HEnvironment.Is64Bit.cs" />
     <Compile Include="HTLib2\HSystem.System\HGC.cs" />
     <Compile Include="HTLib2\HSystem.System\HReflection.cs" />
+    <Compile Include="HTLib2\Interface\IMatrix.Static.cs" />
     <Compile Include="HTLib2\Interface\IMatrixSparse.cs" />
     <Compile Include="HTLib2\Interface\IMatrix.cs" />
     <Compile Include="HTLib2\Interface\IVectorSparse.cs" />
