@@ -692,6 +692,7 @@
     <Compile Include="HTLib2\HMath.Numerics\Quaternion.cs" />
     <Compile Include="HTLib2\HMath.Random\Random.cs" />
     <Compile Include="HTLib2\HOption\HOptions.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumCall.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumByGroup.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumCombination.cs" />
@@ -699,6 +700,7 @@
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumNonZeros.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumSequence.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.Tuple.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HPow.cs" />
     <Compile Include="HTLib2\HStatic.HMath\HMath.Between.cs" />
     <Compile Include="HTLib2\HStatic.HMath\HMath.cs" />
     <Compile Include="HTLib2\HStatic.HMath\HMath.HAbs.cs" />
