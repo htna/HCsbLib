@@ -22,7 +22,7 @@ namespace HTLib2
             foreach(var item in list)
                 yield return Func(item, p1, p2);
         }
-        public static IEnumerable<U> HEnumCall<T, U, P1, P2, P3>(this IEnumerable<T> list, Func<T, P1, P2, U> Func, P1 p1, P2 p2, P3 p3)
+        public static IEnumerable<U> HEnumCall<T, U, P1, P2, P3>(this IEnumerable<T> list, Func<T, P1, P2, P3, U> Func, P1 p1, P2 p2, P3 p3)
         {
             foreach(var item in list)
                 yield return Func(item, p1, p2, p3);
