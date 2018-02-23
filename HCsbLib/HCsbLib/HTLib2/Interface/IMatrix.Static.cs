@@ -9,7 +9,7 @@ namespace HTLib2
 {
     public static partial class IMatrixStatic
     {
-        public static IEnumerable<T> HEnumIntByString<T>(this IMatrix<T> mat)
+        public static IEnumerable<T> HEnumElement<T>(this IMatrix<T> mat)
         {
             for(int c = 0; c < mat.ColSize; c++)
                 for(int r = 0; r < mat.RowSize; r++)
