@@ -65,6 +65,8 @@ namespace HTLib2.Bioinfo
                                                                  // null  for not ordering by distance; 
                                         )
             {
+                Universe univ = new Universe();
+
                 Dictionary<int,                    Prm.Atom    > prm_id2atom      = prm.atoms    .ToIdDictionary();
                 Dictionary<int,                    Prm.Vdw     > prm_cls2vdw      = prm.vdws     .ToClassDictionary();
                 Dictionary<int,                    Prm.Vdw14   > prm_cls2vdw14    = prm.vdw14s   .ToClassDictionary();
@@ -94,7 +96,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                Atoms atoms = new Atoms();
+                Atoms atoms = new Atoms(univ);
                 /// Debug.Assert(pdb.atoms.Length == top_atoms.Count);
                 for(int i=0; i<xyz_atoms.Length; i++)
                 {
@@ -560,7 +562,7 @@ namespace HTLib2.Bioinfo
                 //nonbondeds.Build(atoms);
 
 
-                Universe univ = new Universe();
+                //Universe univ = new Universe();
                 univ.pdb          = pdb;
                 univ.refs.Add("xyz", xyz);
                 univ.refs.Add("prm", prm);

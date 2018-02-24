@@ -9,7 +9,9 @@ namespace HTLib2.Bioinfo
     {
         static Universe BuildUnion(Universe univ1, Universe univ2)
         {
-            Atoms atoms = new Atoms();
+            Universe univ = new Universe();
+
+            Atoms atoms = new Atoms(univ);
             //int maxresi = int.MinValue;
             //foreach(var atom in univ1.atoms)
             //{
@@ -113,7 +115,7 @@ namespace HTLib2.Bioinfo
                 pdb = new Pdb(elements);
             }
 
-            Universe univ = new Universe();
+            //Universe univ = new Universe();
             univ.pdb          = pdb;
             univ.refs.Add("pdb", pdb);
             univ.atoms        = atoms;

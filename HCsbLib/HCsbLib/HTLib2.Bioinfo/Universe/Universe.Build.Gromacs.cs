@@ -27,6 +27,8 @@ namespace HTLib2.Bioinfo
             }
             public static Universe Build(Pdb pdb, Gromacs.Top top, ITextLogger logger)
             {
+                Universe univ = new Universe();
+
                 // atoms
                 List<Top.Atom>     top_atoms    = top.elements.SelectSourceExtTop().ListAtom().SelectMatchToPdb(pdb.atoms);
                 List<Top.Bond>     top_bonds    = top.elements.SelectSourceExtTop().ListType<Top.Bond>();
@@ -63,7 +65,7 @@ namespace HTLib2.Bioinfo
                     HDebug.Assert(elems.Count == 0);
                 }
 
-                Atoms atoms = new Atoms();
+                Atoms atoms = new Atoms(univ);
                 HDebug.Assert(pdb.atoms.Length == top_atoms.Count);
                 for(int i=0; i<top_atoms.Count; i++)
                 {
@@ -250,7 +252,7 @@ namespace HTLib2.Bioinfo
                 //nonbondeds.Build(atoms);
 
 
-                Universe univ = new Universe();
+                //Universe univ = new Universe();
                 univ.pdb          = pdb;
                 univ.refs.Add("top", top);
                 univ.atoms        = atoms;

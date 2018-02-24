@@ -44,8 +44,10 @@ namespace HTLib2.Bioinfo
 
             public static Universe Build(Namd.Psf psf, Namd.Prm prm, Pdb pdb, bool? ignore_neg_occupancy, ITextLogger logger)
             {
+                Universe univ = new Universe();
+            
                 // atoms
-                Atoms atoms = new Atoms();
+                Atoms atoms = new Atoms(univ);
                 Dictionary<int, Atom> id_atom = new Dictionary<int, Atom>();
                 Pdb.Atom[] pdb_atoms = pdb.atoms;
                 HDebug.Assert(psf.atoms.Length == pdb_atoms.Length);
@@ -173,7 +175,7 @@ namespace HTLib2.Bioinfo
                 //nonbondeds.Build(atoms);
 
 
-                Universe univ = new Universe();
+                //Universe univ = new Universe();
                 univ.pdb          = pdb;
                 univ.refs.Add("psf", psf);
                 univ.refs.Add("prm", prm);

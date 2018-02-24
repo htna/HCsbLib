@@ -16,7 +16,7 @@ namespace HTLib2.Bioinfo
         public Dictionary<string, HDynamic> lextra = new Dictionary<string, HDynamic>(); //public InfoPack extra = new InfoPack();
 
         public int size { get { return atoms.Count; } }
-		public Atoms        atoms        = new Atoms       ();
+        public Atoms        atoms        = null;// new Atoms       ();
 		public Bonds        bonds        = new Bonds       ();
 		public Angles       angles       = new Angles      ();
 		public Dihedrals    dihedrals    = new Dihedrals   ();

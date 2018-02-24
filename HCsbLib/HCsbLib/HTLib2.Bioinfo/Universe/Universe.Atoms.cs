@@ -13,6 +13,7 @@ namespace HTLib2.Bioinfo
 	{
         public class Atoms
         {
+            Universe univ;
             List<Atom> atoms = new List<Atom>();
             public int                   Count           { get { return atoms.Count;  } }
             public Atom                  this[int index] { get { return atoms[index]; } }
@@ -20,6 +21,11 @@ namespace HTLib2.Bioinfo
             public Atom[]                ToArray()       { return atoms.ToArray(); }
 
             //HashSet<Atom> _dbgatoms = (HDebug.IsDebuggerAttached ? new HashSet<Atom>() : null);
+            public Atoms(Universe univ)
+            {
+                this.univ = univ;
+            }
+
             public void Add(Atom atom)
             {
                 int id=Count;
@@ -36,6 +42,7 @@ namespace HTLib2.Bioinfo
             {
                 HDebug.Assert(Verify());
                 HDebug.Assert(atom == atoms[atom.ID]);
+                atom.Isolate(univ);
                 atoms.RemoveAt(atom.ID);
                 for(int id=0; id<atoms.Count; id++)
                 {
