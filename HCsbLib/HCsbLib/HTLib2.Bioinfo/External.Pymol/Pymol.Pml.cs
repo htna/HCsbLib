@@ -61,7 +61,7 @@ namespace HTLib2.Bioinfo
                     file.WriteLine("BEGIN, LINES,");
                     if(linewidth != null)
                         file.WriteLine("LINEWIDTH, {0:0.000},", linewidth);
-                    for(int i=1; i<pathcoords.Count/2; i++)
+                    for(int i=0; i<pathcoords.Count/2; i++)
                     {
                         Vector vert1 = pathcoords[i*2+0];
                         Vector vert2 = pathcoords[i*2+1];
