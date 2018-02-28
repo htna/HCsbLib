@@ -733,7 +733,7 @@
     <Compile Include="HTLib2\HStatic\HLib2Static.HListIndexCommon.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HListIndexEqualTo.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HListIndexOf.cs" />
-    <Compile Include="HTLib2\HStatic\HLib2Static.HListItemN.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HListItemN.Tuple.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HParseT.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HQuery.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HQuery.Ineql.cs" />
