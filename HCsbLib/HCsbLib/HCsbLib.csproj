@@ -145,7 +145,7 @@
     <Compile Include="HTLib2.Bioinfo\External.Namd\Psf\Psf.FromFile.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Namd\Psf\Psf.ReadAllLines.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Pymol\Pymol.cs" />
-    <Compile Include="HTLib2.Bioinfo\External.Pymol\Pymol.Pml.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Pymol\Pymol.Py.Cgo.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\SelfTest\capture.vibrate.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\SelfTest\capture.xyz_pdb.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\SelfTest\capture.xyz_xyz.cs" />
