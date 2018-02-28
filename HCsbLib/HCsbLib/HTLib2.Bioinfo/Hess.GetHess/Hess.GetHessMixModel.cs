@@ -292,15 +292,15 @@ namespace HTLib2.Bioinfo
                         #region verify by plotting
                     {
                         Pdb.ToFile(@"C:\temp\mix.pdb", pdbatoms, coords);
-                        Pymol.Py.WriteBlank (@"C:\temp\mix.py", false);
-                        Pymol.Py.WriteSphere(@"C:\temp\mix.py", "Ca", coords.HSelectByIndex(idxCa).HRemoveAllNull(), 0.3);
-                        Pymol.Py.WriteSphere(@"C:\temp\mix.py", "backbone", coords.HSelectByIndex(idxBkbn).HRemoveAllNull(), 0.3);
-                        Pymol.Py.WriteSphere(@"C:\temp\mix.py", "active", coordSele.HRemoveAllNull()
-                                                                        , 0.3
-                                                                        , red:1, green:0, blue:0);
-                        Pymol.Py.WriteSphere(@"C:\temp\mix.py", "connect", coords.HSelectByIndex(idxCntk).HRemoveAllNull()
-                                                                         , 0.3
-                                                                         , red:0, green:0, blue:1);
+                        Pymol.Py.CgoOld.WriteBlank (@"C:\temp\mix.py", false);
+                        Pymol.Py.CgoOld.WriteSphere(@"C:\temp\mix.py", "Ca", coords.HSelectByIndex(idxCa).HRemoveAllNull(), 0.3);
+                        Pymol.Py.CgoOld.WriteSphere(@"C:\temp\mix.py", "backbone", coords.HSelectByIndex(idxBkbn).HRemoveAllNull(), 0.3);
+                        Pymol.Py.CgoOld.WriteSphere(@"C:\temp\mix.py", "active", coordSele.HRemoveAllNull()
+                                                                               , 0.3
+                                                                               , red:1, green:0, blue:0);
+                        Pymol.Py.CgoOld.WriteSphere(@"C:\temp\mix.py", "connect", coords.HSelectByIndex(idxCntk).HRemoveAllNull()
+                                                                                , 0.3
+                                                                                , red:0, green:0, blue:1);
                         HFile.WriteAllLines(@"C:\temp\mix.pml", new string[]
                         {
                             "load mix.pdb",
