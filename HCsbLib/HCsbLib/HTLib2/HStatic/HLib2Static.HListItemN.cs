@@ -40,7 +40,7 @@ namespace HTLib2
         public static T6[] HListItem6<T1, T2, T3, T4, T5, T6, T7>(this IList<Tuple<T1, T2, T3, T4, T5, T6, T7>> list) { T6[] items = new T6[list.Count]; for(int i=0; i<list.Count; i++) items[i]=list[i].Item6; return items; }
         public static T7[] HListItem7<T1, T2, T3, T4, T5, T6, T7>(this IList<Tuple<T1, T2, T3, T4, T5, T6, T7>> list) { T7[] items = new T7[list.Count]; for(int i=0; i<list.Count; i++) items[i]=list[i].Item7; return items; }
 
-        public static List<Tuple<T1, T2>> HListItem12<T1, T2, T3>(this IList<Tuple<T1, T2, T3>> list) { Tuple<T1,T2>[] items = new Tuple<T1, T2>[list.Count]; for(int i=0; i<list.Count; i++) items[i] = new Tuple<T1, T2>(list[i].Item1, list[i].Item2); return new List<Tuple<T1, T2>>(items); }
+        public static List<Tuple<T1,T2>> HListItem12<T1,T2,T3>(this IList<Tuple<T1,T2,T3>> list) { Tuple<T1,T2>[] items = new Tuple<T1,T2>[list.Count]; for(int i=0; i<list.Count; i++) items[i] = new Tuple<T1,T2>(list[i].Item1, list[i].Item2); return new List<Tuple<T1,T2>>(items); }
         public static List<Tuple<T1,T3>> HListItem13<T1,T2,T3>(this IList<Tuple<T1,T2,T3>> list) { Tuple<T1,T3>[] items = new Tuple<T1,T3>[list.Count]; for(int i=0; i<list.Count; i++) items[i] = new Tuple<T1,T3>(list[i].Item1, list[i].Item3); return new List<Tuple<T1,T3>>(items); }
         public static List<Tuple<T2,T3>> HListItem23<T1,T2,T3>(this IList<Tuple<T1,T2,T3>> list) { Tuple<T2,T3>[] items = new Tuple<T2,T3>[list.Count]; for(int i=0; i<list.Count; i++) items[i] = new Tuple<T2,T3>(list[i].Item2, list[i].Item3); return new List<Tuple<T2,T3>>(items); }
 
