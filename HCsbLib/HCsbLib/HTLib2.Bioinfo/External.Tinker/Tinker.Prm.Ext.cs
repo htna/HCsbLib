@@ -8,6 +8,21 @@ namespace HTLib2.Bioinfo
     using Prm = Tinker.Prm;
     public static partial class TinkerStatic
     {
+        public static IEnumerable<int> HEnumClass(this IEnumerable<Tinker.Prm.Vdw> vdws)
+        {
+            foreach(var vdw in vdws)
+                yield return vdw.Class;
+        }
+        public static IEnumerable<double> HEnumRmin2(this IEnumerable<Tinker.Prm.Vdw> vdws)
+        {
+            foreach(var vdw in vdws)
+                yield return vdw.Rmin2;
+        }
+        public static IEnumerable<double> HEnumEpsilon(this IEnumerable<Tinker.Prm.Vdw> vdws)
+        {
+            foreach(var vdw in vdws)
+                yield return vdw.Epsilon;
+        }
         public static Tinker.Prm.Atom SelectByXyzAtom(this IList<Tinker.Prm.Atom> prmatoms, Tinker.Xyz.Atom xyzatom, HPack<Dictionary<int, Tinker.Prm.Atom>> cache=null)
         {
             foreach(var prmatom in prmatoms)
