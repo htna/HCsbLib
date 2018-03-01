@@ -653,6 +653,14 @@ namespace HTLib2.Bioinfo
                     double mass = prm_atom.Mass;
                     return mass;
                 }
+                public Prm.Vdw GetVdw(Prm prm)
+                {
+                    Dictionary<int,Prm.Atom> prm_id2atom = prm.atoms.ToIdDictionary();
+                    Dictionary<int,Prm.Vdw > prm_cls2vdw = prm.vdws .ToClassDictionary();
+                    Prm.Atom   prm_atom = prm_id2atom  [this.AtomId];
+                    Prm.Vdw    prm_vdw  = prm_cls2vdw[prm_atom.Class];
+                    return prm_vdw;
+                }
             }
         }
     }
