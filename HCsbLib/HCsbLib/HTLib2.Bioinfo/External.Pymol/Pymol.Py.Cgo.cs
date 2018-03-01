@@ -58,11 +58,12 @@ namespace HTLib2.Bioinfo
 
                         string line = "    ";
                         if(alpha != null) line += "ALPHA, " + alpha.Value + ", ";
+                        line += "CYLINDER, ";
                         line += pt1[0] + ", " + pt1[1] + ", " + pt1[2] + ", ";
                         line += pt2[0] + ", " + pt2[1] + ", " + pt2[2] + ", ";
                         line += rad    + ", ";
-                        line += rgb1[0] + ", " + rgb1[0] + ", " + rgb1[0] + ", ";
-                        line += rgb2[0] + ", " + rgb2[0] + ", " + rgb2[0] + ", ";
+                        line += rgb1[0] + ", " + rgb1[1] + ", " + rgb1[2] + ", ";
+                        line += rgb2[0] + ", " + rgb2[1] + ", " + rgb2[2] + ", ";
                         file.WriteLine(line);
                     }
                     file.WriteLine("]");
