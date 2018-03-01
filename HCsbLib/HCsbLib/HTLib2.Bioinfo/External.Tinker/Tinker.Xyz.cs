@@ -610,12 +610,12 @@ namespace HTLib2.Bioinfo
                     return dest;
                 }
 
-                /// public Prm.Charge GetCharge(Prm prm)
-                /// {
-                ///     Dictionary(int, Prm.Charge) prm_id2charge = prm.charges.ToIdDictionary();
-                ///     Prm.Charge prm_charge = prm_id2charge[AtomId];
-                ///     return prm_charge;
-                /// }
+                //  public Prm.Charge GetCharge(Prm prm)
+                //  {
+                //      Dictionary(int, Prm.Charge) prm_id2charge = prm.charges.ToIdDictionary();
+                //      Prm.Charge prm_charge = prm_id2charge[AtomId];
+                //      return prm_charge;
+                //  }
                 public Prm.Charge GetCharge(Prm prm)
                 {
                     return GetCharge(prm.charges);
@@ -631,13 +631,13 @@ namespace HTLib2.Bioinfo
                     return prm_charge;
                 }
 
-                /// public double GetMass(Prm prm)
-                /// {
-                ///     Dictionary(int,Prm.Atom) prm_id2atom = prm.atoms.ToIdDictionary();
-                ///     Prm.Atom prm_atom = prm_id2atom  [AtomId];
-                ///     double mass = prm_atom.Mass;
-                ///     return mass;
-                /// }
+                //  public double GetMass(Prm prm)
+                //  {
+                //      Dictionary(int,Prm.Atom) prm_id2atom = prm.atoms.ToIdDictionary();
+                //      Prm.Atom prm_atom = prm_id2atom  [AtomId];
+                //      double mass = prm_atom.Mass;
+                //      return mass;
+                //  }
                 public double GetMass(Prm prm)
                 {
                     return GetMass(prm.atoms);
@@ -653,10 +653,26 @@ namespace HTLib2.Bioinfo
                     double mass = prm_atom.Mass;
                     return mass;
                 }
+
+                //  public Prm.Vdw GetVdw(Prm prm)
+                //  {
+                //      Dictionary<int,Prm.Atom> prm_id2atom = prm.atoms.ToIdDictionary();
+                //      Dictionary<int,Prm.Vdw > prm_cls2vdw = prm.vdws .ToClassDictionary();
+                //      Prm.Atom   prm_atom = prm_id2atom  [this.AtomId];
+                //      Prm.Vdw    prm_vdw  = prm_cls2vdw[prm_atom.Class];
+                //      return prm_vdw;
+                //  }
                 public Prm.Vdw GetVdw(Prm prm)
                 {
                     Dictionary<int,Prm.Atom> prm_id2atom = prm.atoms.ToIdDictionary();
                     Dictionary<int,Prm.Vdw > prm_cls2vdw = prm.vdws .ToClassDictionary();
+                    return GetVdw(prm_id2atom, prm_cls2vdw);
+                }
+                public Prm.Vdw GetVdw
+                    ( Dictionary<int, Prm.Atom> prm_id2atom
+                    , Dictionary<int, Prm.Vdw > prm_cls2vdw
+                    )
+                {
                     Prm.Atom   prm_atom = prm_id2atom  [this.AtomId];
                     Prm.Vdw    prm_vdw  = prm_cls2vdw[prm_atom.Class];
                     return prm_vdw;
