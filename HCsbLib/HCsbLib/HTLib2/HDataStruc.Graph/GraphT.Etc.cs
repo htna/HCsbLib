@@ -12,7 +12,7 @@ namespace HTLib2
         {
             return (graph.FindEdge(node1, node2) as Edge);
         }
-        public EDGE FindEdge(NODE nodeval1, NODE nodeval2, EDGE nullvalue)
+        public EDGE FindEdgeValue(NODE nodeval1, NODE nodeval2, EDGE nullvalue)
         {
             if(nodeval_node.ContainsKey(nodeval1) == false) return nullvalue;
             if(nodeval_node.ContainsKey(nodeval2) == false) return nullvalue;

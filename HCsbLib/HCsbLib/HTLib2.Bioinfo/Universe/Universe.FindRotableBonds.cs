@@ -696,7 +696,7 @@ namespace HTLib2.Bioinfo
                     if(i>=1)
                     {
                         int atomidPrv = graph.GetNodeValue(loop[i-1]);
-                        Bond bond = graph.FindEdge(atomidPrv, atomid, null);
+                        Bond bond = graph.FindEdgeValue(atomidPrv, atomid, null);
                         HDebug.Assert(bond.atoms.Contains(atoms[atomidPrv])
                                      ,bond.atoms.Contains(atoms[atomid   ])
                                      );
