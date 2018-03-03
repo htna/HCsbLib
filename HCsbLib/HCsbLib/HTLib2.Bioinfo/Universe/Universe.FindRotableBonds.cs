@@ -483,7 +483,7 @@ namespace HTLib2.Bioinfo
                 Graph<Atom[],Bond>.Node root = null;
                 foreach(Graph<Atom[],Bond>.Node node in flexgraph.Nodes)
                 {
-                    if(flexgraph.GetValue(node).Contains(atom0))
+                    if(flexgraph.GetNodeValue(node).Contains(atom0))
                     {
                         HDebug.Assert(root == null);
                         root = node;
@@ -494,15 +494,15 @@ namespace HTLib2.Bioinfo
                 Tree<Tuple<Graph<Atom[],Bond>.Node,Graph<Atom[],Bond>.Edge>> tree = flexgraph.BuildTree(root);
                 foreach(Tree.Node node in tree.ListDescendents(tree.Root,false))
                 {
-                    Atom[] parents = flexgraph.GetValue(tree.GetValue(node.parent).Item1);
-                    Bond   bond    = flexgraph.GetValue(tree.GetValue(node).Item2);
+                    Atom[] parents = flexgraph.GetNodeValue(tree.GetValue(node.parent).Item1);
+                    Bond   bond    = flexgraph.GetEdgeValue(tree.GetValue(node).Item2);
 
                     List<Tree.Node> descendent_nodes = tree.ListDescendents(node, true);
                     List<Atom[]> descendentss = new List<Atom[]>(descendent_nodes.Count);
                     List<Atom> descendents = new List<Atom>();
                     foreach(Tree.Node descendent_node in descendent_nodes)
                     {
-                        Atom[] ldescendents = flexgraph.GetValue(tree.GetValue(descendent_node).Item1);
+                        Atom[] ldescendents = flexgraph.GetNodeValue(tree.GetValue(descendent_node).Item1);
                         descendentss.Add(ldescendents);
                         descendents.AddRange(ldescendents);
                     }
@@ -691,11 +691,11 @@ namespace HTLib2.Bioinfo
                 List<Bond> bondring = new List<Bond>(loop.Count-1);
                 for(int i=0; i<loop.Count; i++)
                 {
-                    int atomid = graph.GetValue(loop[i]);
+                    int atomid = graph.GetNodeValue(loop[i]);
                     atomring.Add(atoms[atomid]);
                     if(i>=1)
                     {
-                        int atomidPrv = graph.GetValue(loop[i-1]);
+                        int atomidPrv = graph.GetNodeValue(loop[i-1]);
                         Bond bond = graph.FindEdge(atomidPrv, atomid, null);
                         HDebug.Assert(bond.atoms.Contains(atoms[atomidPrv])
                                      ,bond.atoms.Contains(atoms[atomid   ])
@@ -833,7 +833,7 @@ namespace HTLib2.Bioinfo
                 }
 
                 List<List<Graph<int,Tuple<int,int>>.Node>> connecteds = graph.FindConnectedNodes();
-                List<List<int>> connecteds_atomid = graph.GetValue(connecteds);
+                List<List<int>> connecteds_atomid = graph.GetNodeValuess(connecteds);
 
                 HashSet<int> check = new HashSet<int>();
                 foreach(List<int> conn in connecteds_atomid)

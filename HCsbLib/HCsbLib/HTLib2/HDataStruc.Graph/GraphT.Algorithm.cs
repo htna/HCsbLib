@@ -151,16 +151,16 @@ namespace HTLib2
                 };
                 Graph<Graph.Node, Graph.Edge> mst = Graph.Kruskal.BuildMST(graph.graph, fnedgecost);
                 Graph<NODE, EDGE> mst2 = new Graph<NODE, EDGE>();
-                foreach(Graph.Node node in mst.GetValueNodes())
+                foreach(Graph.Node node in mst.GetNodeValues())
                 {
-                    NODE nodeval = graph.GetValue((Node)node);
+                    NODE nodeval = graph.GetNodeValue((Node)node);
                     HDebug.Verify(mst2.AddNode(nodeval) != null);
                 }
-                foreach(Graph.Edge edge in mst.GetValueEdges())
+                foreach(Graph.Edge edge in mst.GetEdgeValues())
                 {
                     EDGE edgeval = ((Edge)edge).value;
-                    Node node0 = (Node)edge.nodes[0]; NODE nodeval0 = graph.GetValue(node0); HDebug.Assert(mst2.GetNode(nodeval0) != null);
-                    Node node1 = (Node)edge.nodes[1]; NODE nodeval1 = graph.GetValue(node1); HDebug.Assert(mst2.GetNode(nodeval1) != null);
+                    Node node0 = (Node)edge.nodes[0]; NODE nodeval0 = graph.GetNodeValue(node0); HDebug.Assert(mst2.GetNode(nodeval0) != null);
+                    Node node1 = (Node)edge.nodes[1]; NODE nodeval1 = graph.GetNodeValue(node1); HDebug.Assert(mst2.GetNode(nodeval1) != null);
                     HDebug.Verify(mst2.AddEdge(nodeval0, nodeval1, edgeval) != null);
                 }
                 return mst2;

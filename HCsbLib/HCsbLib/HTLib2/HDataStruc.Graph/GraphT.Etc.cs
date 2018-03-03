@@ -30,13 +30,13 @@ namespace HTLib2
             if(node1.nexts.ContainsKey(node2))
             {
                 HDebug.Assert(node2.nexts.ContainsKey(node1));
-                HDebug.Assert(edgecomparer.Equals(GetValue(FindEdge(node1, node2)),edgeval));
+                HDebug.Assert(edgecomparer.Equals(GetEdgeValue(FindEdge(node1, node2)),edgeval));
                 return null;
             }
             if(node2.nexts.ContainsKey(node1))
             {
                 HDebug.Assert(node1.nexts.ContainsKey(node2));
-                HDebug.Assert(edgecomparer.Equals(GetValue(FindEdge(node1, node2)),edgeval));
+                HDebug.Assert(edgecomparer.Equals(GetEdgeValue(FindEdge(node1, node2)),edgeval));
                 return null;
             }
 
@@ -67,14 +67,14 @@ namespace HTLib2
         public ReadOnlyCollection<Node> Nodes { get { return graph.Nodes.HToType<Graph.Node, Node>(); } }
         public ReadOnlyCollection<Edge> Edges { get { return graph.Edges.HToType<Graph.Edge, Edge>(); } }
 
-        public List<NODE> GetValueNodes() { return GetValue(Nodes); }
-        public List<EDGE> GetValueEdges() { return GetValue(Edges); }
-        public NODE GetValue(Node node) { return ((Node)node).value; }
-        public EDGE GetValue(Edge edge) { return ((Edge)edge).value; }
-        public List<NODE> GetValue(IList<Node> nodes) { List<NODE> value = new List<NODE>(); foreach(Node node in nodes) value.Add(GetValue(node)); return value; }
-        public List<EDGE> GetValue(IList<Edge> edges) { List<EDGE> value = new List<EDGE>(); foreach(Edge edge in edges) value.Add(GetValue(edge)); return value; }
-        public List<List<NODE>> GetValue(List<List<Node>> nodes) { List<List<NODE>> value = new List<List<NODE>>(); foreach(List<Node> node in nodes) value.Add(GetValue(node)); return value; }
-        public List<List<EDGE>> GetValue(List<List<Edge>> Edges) { List<List<EDGE>> value = new List<List<EDGE>>(); foreach(List<Edge> Edge in Edges) value.Add(GetValue(Edge)); return value; }
+        public List<NODE> GetNodeValues() { return GetNodeValues(Nodes); }
+        public List<EDGE> GetEdgeValues() { return GetEdgeValues(Edges); }
+        public NODE GetNodeValue(Node node) { return ((Node)node).value; }
+        public EDGE GetEdgeValue(Edge edge) { return ((Edge)edge).value; }
+        public List<NODE> GetNodeValues(IList<Node> nodes) { List<NODE> value = new List<NODE>(); foreach(Node node in nodes) value.Add(GetNodeValue(node)); return value; }
+        public List<EDGE> GetEdgeValues(IList<Edge> edges) { List<EDGE> value = new List<EDGE>(); foreach(Edge edge in edges) value.Add(GetEdgeValue(edge)); return value; }
+        public List<List<NODE>> GetNodeValuess(List<List<Node>> nodes) { List<List<NODE>> value = new List<List<NODE>>(); foreach(List<Node> node in nodes) value.Add(GetNodeValues(node)); return value; }
+        public List<List<EDGE>> GetEdgeValuess(List<List<Edge>> Edges) { List<List<EDGE>> value = new List<List<EDGE>>(); foreach(List<Edge> Edge in Edges) value.Add(GetEdgeValues(Edge)); return value; }
 
         public Node GetNode(NODE nodeval)
         {

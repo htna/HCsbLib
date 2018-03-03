@@ -24,7 +24,7 @@ namespace HTLib2
             }
             public NODE GetValue(Graph<NODE, EDGE> graph)
             {
-                return graph.GetValue(this);
+                return graph.GetNodeValue(this);
             }
             public override string ToString()
             {
@@ -55,7 +55,7 @@ namespace HTLib2
             }
             public EDGE GetValue(Graph<NODE, EDGE> graph)
             {
-                return graph.GetValue(this);
+                return graph.GetEdgeValue(this);
             }
             public override string ToString()
             {

@@ -50,8 +50,8 @@ namespace HTLib2
             HDebug.Assert(treenode2.children.Count == 0);
             foreach(Tree<Tuple<Node,Edge>>.Node treechild in treenode.children)
             {
-                Node node = (treechild as Tree<Tuple<Node,Edge>>.Node).value.Item1; NODE nodeval = GetValue(node);
-                Edge edge = (treechild as Tree<Tuple<Node,Edge>>.Node).value.Item2; EDGE edgeval = GetValue(edge);
+                Node node = (treechild as Tree<Tuple<Node,Edge>>.Node).value.Item1; NODE nodeval = GetNodeValue(node);
+                Edge edge = (treechild as Tree<Tuple<Node,Edge>>.Node).value.Item2; EDGE edgeval = GetEdgeValue(edge);
                 Tree<Tuple<NODE,EDGE>>.Node treechild2 = (tree2.AddChild(treenode2, new Tuple<NODE,EDGE>(nodeval, edgeval)) as Tree<Tuple<NODE,EDGE>>.Node);
                 CopyTreeRec(tree, treechild, tree2, treechild2);
             }
