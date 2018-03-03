@@ -98,6 +98,11 @@ namespace HTLib2
         {
             return graph.FindConnectedNodes().HToType<Graph.Node, Node>();
         }
+        public List<List<NODE>> FindConnectedNodeValues()
+        {
+            List<List<Node>> nodess = graph.FindConnectedNodes().HToType<Graph.Node, Node>();
+            return GetNodeValuess(nodess);
+        }
         public List<List<Node>> FindLoops(int maxLength=int.MaxValue)
         {
             return graph.FindLoops(maxLength).HToType<Graph.Node, Node>();
@@ -117,6 +122,11 @@ namespace HTLib2
         public List<Edge> NodesToEdges(List<Node> nodes)
         {
             return graph.NodesToEdges(nodes.HToType<Node, Graph.Node>()).HToType<Graph.Edge, Edge>();
+        }
+        public List<EDGE> NodesToEdgeValues(List<Node> nodes)
+        {
+            List<Edge> edges = graph.NodesToEdges(nodes.HToType<Node, Graph.Node>()).HToType<Graph.Edge, Edge>();
+            return GetEdgeValues(edges);
         }
     }
 }
