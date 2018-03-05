@@ -272,7 +272,7 @@ namespace HTLib2
 		{
             if((bUseFile == false) || (_path_temporary == null))
             {
-                //Debug.Assert(real.Length < 2000*2000);
+                Debug.Assert(real.Length < 2000*2000);
                 System.Array arr_real = real;
                 System.Array arr_imag = new double[real.GetLength(0), real.GetLength(1)];
                 matlab.PutFullMatrix("htlib2_matlab_PutMatrix", "base", arr_real, arr_imag);
@@ -312,7 +312,7 @@ namespace HTLib2
 		{
             if((bUseFile == false) || (_path_temporary == null))
             {
-                //Debug.Assert(real.Length < 2000*2000);
+                Debug.Assert(real.Length < 2000*2000);
                 System.Array arr_real = real.ToArray();
                 System.Array arr_imag = new double[real.ColSize, real.RowSize];
                 matlab.PutFullMatrix("htlib2_matlab_PutMatrix", "base", arr_real, arr_imag);
