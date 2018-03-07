@@ -220,7 +220,14 @@ namespace HTLib2.Bioinfo
             public override string ToString()
             {
                 var torinfo = GetTorInfo();
-                string str = string.Format("{0}={1}, rot {2} atoms,", torinfo.Item1, torinfo.Item2, rotAtoms.Length);
+
+                string str = string.Format
+                    ( "{0}={1}, {2}, rot {3} atoms"
+                    , torinfo.Item1, torinfo.Item2
+                    , torinfo.Item3.ResidueId+":"+torinfo.Item3.ResidueName
+                    , rotAtoms.Length
+                    );
+                HDebug.Assert(torinfo.Item3.ResidueId == torinfo.Item4.ResidueId);
                 return str;
             }
             public Tuple<string, string, Universe.Atom, Universe.Atom, string> GetTorInfo()
