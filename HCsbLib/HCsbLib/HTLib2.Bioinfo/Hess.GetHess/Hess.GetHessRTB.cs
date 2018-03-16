@@ -366,6 +366,37 @@ namespace HTLib2.Bioinfo
             }
             public static Vector[] GetRotate(Vector[] coords, Vector cent, int[] block)
             {
+                /// rotx[t_           ] := { { 1,0,0,0},{ 0,Cos[t],-Sin[t],0},{ 0,Sin[t],Cos[t],0},{ 0,0,0,1} };
+                /// roty[t_           ] := { { Cos[t],0,Sin[t],0},{ 0,1,0,0},{ -Sin[t],0,Cos[t],0},{ 0,0,0,1} };
+                /// rotz[t_           ] := { { Cos[t],-Sin[t],0,0},{ Sin[t],Cos[t],0,0},{ 0,0,1,0},{ 0,0,0,1} };
+                /// tran[tx_, ty_, tz_] := { { 1,0,0,tx},{ 0,1,0,ty},{ 0,0,1,tz},{ 0,0,0,1} };
+                /// pt                   = Transpose[{{px,py,pz,1}}];
+                /// 
+                /// point  : (px,py,pz)
+                /// center : (cx,cy,cz)
+                /// angle  : t
+                /// 
+                /// MatrixForm[tran[cx, cy, cz].rotx[t].tran[-cx, -cy, -cz].pt]    =    {{px}, {cy - cy Cos[t] + py Cos[t] + cz Sin[t] - pz Sin[t]}, {cz - cz Cos[t] + pz Cos[t] - cy Sin[t] + py Sin[t]}, {1}}
+                /// MatrixForm[tran[cx, cy, cz].roty[t].tran[-cx, -cy, -cz].pt]    =    {{cx - cx Cos[t] + px Cos[t] - cz Sin[t] + pz Sin[t]}, {py}, {cz - cz Cos[t] + pz Cos[t] + cx Sin[t] - px Sin[t]}, {1}}
+                /// MatrixForm[tran[cx, cy, cz].rotz[t].tran[-cx, -cy, -cz].pt]    =    {{cx - cx Cos[t] + px Cos[t] + cy Sin[t] - py Sin[t]}, {cy - cy Cos[t] + py Cos[t] - cx Sin[t] + px Sin[t]}, {pz}, {1}}
+                /// 
+                /// D[tran[cx, cy, cz].rotx[t].tran[-cx, -cy, -cz].pt, a]     =    {{0}, {cz Cos[a] - z Cos[a] + cy Sin[a] - y Sin[a]}, {-cy Cos[a] + y Cos[a] + cz Sin[a] - z Sin[a]}, {0}}
+                /// D[tran[cx, cy, cz].roty[t].tran[-cx, -cy, -cz].pt, a]     =    {{-cz Cos[a] + z Cos[a] + cx Sin[a] - x Sin[a]}, {0}, {cx Cos[a] - x Cos[a] + cz Sin[a] - z Sin[a]}, {0}}
+                /// D[tran[cx, cy, cz].rotz[t].tran[-cx, -cy, -cz].pt, a]     =    {{cy Cos[a] - y Cos[a] + cx Sin[a] - x Sin[a]}, {-cx Cos[a] + x Cos[a] + cy Sin[a] - y Sin[a]}, {0}, {0}}
+                /// 
+                /// D[tran[cx,cy,cz].rotx[a].tran[-cx,-cy,-cz].pt,a]/.a->0    =    {{0}, {cz - z}, {-cy + y}, {0}}
+                /// D[tran[cx,cy,cz].roty[a].tran[-cx,-cy,-cz].pt,a]/.a->0    =    {{-cz + z}, {0}, {cx - x}, {0}}
+                /// D[tran[cx,cy,cz].rotz[a].tran[-cx,-cy,-cz].pt,a]/.a->0    =    {{cy - y}, {-cx + x}, {0}, {0}}
+                ///     rotx of atom (px,py,pz) with center (cx,cy,cz): {{0}, {cz - z}, {-cy + y}, {0}}    =    { 0, cz - z, -cy + y, 0 }    =>    {       0,  cz - z, -cy + y }
+                ///     rotx of atom (px,py,pz) with center (cx,cy,cz): {{-cz + z}, {0}, {cx - x}, {0}}    =    { -cz + z, 0, cx - x, 0 }    =>    { -cz + z,       0,  cx - x }
+                ///     rotx of atom (px,py,pz) with center (cx,cy,cz): {{cy - y}, {-cx + x}, {0}, {0}}    =    { cy - y, -cx + x, 0, 0 }    =>    {  cy - y, -cx + x,       0 }
+                ///     
+
+
+
+
+
+
                 int leng = coords.Length;
                 Vector[] rotbyx = new Vector[leng];
                 Vector[] rotbyy = new Vector[leng];
