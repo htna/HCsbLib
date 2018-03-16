@@ -376,9 +376,9 @@ namespace HTLib2.Bioinfo
                 /// center : (cx,cy,cz)
                 /// angle  : t
                 /// 
-                /// MatrixForm[tran[cx, cy, cz].rotx[t].tran[-cx, -cy, -cz].pt]    =    {{px}, {cy - cy Cos[t] + py Cos[t] + cz Sin[t] - pz Sin[t]}, {cz - cz Cos[t] + pz Cos[t] - cy Sin[t] + py Sin[t]}, {1}}
-                /// MatrixForm[tran[cx, cy, cz].roty[t].tran[-cx, -cy, -cz].pt]    =    {{cx - cx Cos[t] + px Cos[t] - cz Sin[t] + pz Sin[t]}, {py}, {cz - cz Cos[t] + pz Cos[t] + cx Sin[t] - px Sin[t]}, {1}}
-                /// MatrixForm[tran[cx, cy, cz].rotz[t].tran[-cx, -cy, -cz].pt]    =    {{cx - cx Cos[t] + px Cos[t] + cy Sin[t] - py Sin[t]}, {cy - cy Cos[t] + py Cos[t] - cx Sin[t] + px Sin[t]}, {pz}, {1}}
+                /// tran[cx, cy, cz].rotx[t].tran[-cx, -cy, -cz].pt           =    {{px}, {cy - cy Cos[t] + py Cos[t] + cz Sin[t] - pz Sin[t]}, {cz - cz Cos[t] + pz Cos[t] - cy Sin[t] + py Sin[t]}, {1}}
+                /// tran[cx, cy, cz].roty[t].tran[-cx, -cy, -cz].pt           =    {{cx - cx Cos[t] + px Cos[t] - cz Sin[t] + pz Sin[t]}, {py}, {cz - cz Cos[t] + pz Cos[t] + cx Sin[t] - px Sin[t]}, {1}}
+                /// tran[cx, cy, cz].rotz[t].tran[-cx, -cy, -cz].pt           =    {{cx - cx Cos[t] + px Cos[t] + cy Sin[t] - py Sin[t]}, {cy - cy Cos[t] + py Cos[t] - cx Sin[t] + px Sin[t]}, {pz}, {1}}
                 /// 
                 /// D[tran[cx, cy, cz].rotx[t].tran[-cx, -cy, -cz].pt, a]     =    {{0}, {cz Cos[a] - z Cos[a] + cy Sin[a] - y Sin[a]}, {-cy Cos[a] + y Cos[a] + cz Sin[a] - z Sin[a]}, {0}}
                 /// D[tran[cx, cy, cz].roty[t].tran[-cx, -cy, -cz].pt, a]     =    {{-cz Cos[a] + z Cos[a] + cx Sin[a] - x Sin[a]}, {0}, {cx Cos[a] - x Cos[a] + cz Sin[a] - z Sin[a]}, {0}}
