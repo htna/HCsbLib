@@ -392,57 +392,91 @@ namespace HTLib2.Bioinfo
                 ///     rotx of atom (px,py,pz) with center (cx,cy,cz): {{cy - py}, {-cx + px}, {0}, {0}}    =    { cy - py, -cx + px, 0, 0 }    =>    {  cy - py, -cx + px,        0 }
                 ///     
 
-
-
-
-
-
                 int leng = coords.Length;
-                Vector[] rotbyx = new Vector[leng];
-                Vector[] rotbyy = new Vector[leng];
-                Vector[] rotbyz = new Vector[leng];
-                
-                Vector zeros = new double[3];
-                for(int i = 0; i<leng; i++) rotbyx[i] = rotbyy[i] = rotbyz[i] = zeros;
 
-                Vector rx = new double[3] { 1, 0, 0 };
-                Vector ry = new double[3] { 0, 1, 0 };
-                Vector rz = new double[3] { 0, 0, 1 };
-
-                Func<Vector, Vector, Vector> GetTangent = delegate(Vector pt, Vector axisdirect)
+                Vector[] rots;
                 {
-                    /// Magnitude of rotation tangent is proportional to the distance from the point to the axis.
-                    /// Ex) when a point is in x-axis (r,0), rotating along z-axis by θ is: (r*sin(θ), 0)
-                    /// 
-                    ///  |
-                    ///  |                 ^ sin(θ)
-                    ///  |                 |
-                    /// -+-----------------r----------
-                    /// 
-                    Vector rot1 = cent;
-                    Vector rot2 = cent + axisdirect;
-                    double dist = Geometry.DistancePointLine(pt, rot1, rot2);
-                    Vector tan  = Geometry.RotateTangentUnit(pt, rot1, rot2) * dist;
-                    return tan;
-                };
+                    Vector[] rotbyx = new Vector[leng];
+                    Vector[] rotbyy = new Vector[leng];
+                    Vector[] rotbyz = new Vector[leng];
 
-                IEnumerable<int> enumblock = block;
-                if(block != null) enumblock = block;
-                else              enumblock = HEnum.HEnumCount(leng);
-                foreach(int i in enumblock)
-                {
-                    Vector pt = coords[i];
-                    rotbyx[i] = GetTangent(pt, rx);
-                    rotbyy[i] = GetTangent(pt, ry);
-                    rotbyz[i] = GetTangent(pt, rz);
+                    double cx = cent[0];
+                    double cy = cent[1];
+                    double cz = cent[2];
+                    for(int i=0; i<leng; i++)
+                    {
+                        double px = coords[i][0];
+                        double py = coords[i][1];
+                        double pz = coords[i][2];
+
+                        rotbyx[i] = new double[] {        0,  cz - pz, -cy + py };
+                        rotbyy[i] = new double[] { -cz + pz,        0,  cx - px };
+                        rotbyz[i] = new double[] {  cy - py, -cx + px,        0 };
+                    }
+
+                    rots = new Vector[]
+                        {
+                            rotbyx.ToVector().UnitVector(),
+                            rotbyy.ToVector().UnitVector(),
+                            rotbyz.ToVector().UnitVector(),
+                        };
                 }
 
-                Vector[] rots = new Vector[3]
+                if(HDebug.IsDebuggerAttached)
+                {
+                    Vector[] rotbyx = new Vector[leng];
+                    Vector[] rotbyy = new Vector[leng];
+                    Vector[] rotbyz = new Vector[leng];
+
+                    Vector zeros = new double[3];
+                    for(int i = 0; i<leng; i++) rotbyx[i] = rotbyy[i] = rotbyz[i] = zeros;
+
+                    Vector rx = new double[3] { 1, 0, 0 };
+                    Vector ry = new double[3] { 0, 1, 0 };
+                    Vector rz = new double[3] { 0, 0, 1 };
+
+                    Func<Vector, Vector, Vector> GetTangent = delegate(Vector pt, Vector axisdirect)
                     {
-                        rotbyx.ToVector().UnitVector(),
-                        rotbyy.ToVector().UnitVector(),
-                        rotbyz.ToVector().UnitVector(),
+                        /// Magnitude of rotation tangent is proportional to the distance from the point to the axis.
+                        /// Ex) when a point is in x-axis (r,0), rotating along z-axis by θ is: (r*sin(θ), 0)
+                        /// 
+                        ///  |
+                        ///  |                 ^ sin(θ)
+                        ///  |                 |
+                        /// -+-----------------r----------
+                        /// 
+                        Vector rot1 = cent;
+                        Vector rot2 = cent + axisdirect;
+                        double dist = Geometry.DistancePointLine(pt, rot1, rot2);
+                        Vector tan  = Geometry.RotateTangentUnit(pt, rot1, rot2) * dist;
+                        return tan;
                     };
+
+                    IEnumerable<int> enumblock = block;
+                    if(block != null) enumblock = block;
+                    else              enumblock = HEnum.HEnumCount(leng);
+                    foreach(int i in enumblock)
+                    {
+                        Vector pt = coords[i];
+                        rotbyx[i] = GetTangent(pt, rx);
+                        rotbyy[i] = GetTangent(pt, ry);
+                        rotbyz[i] = GetTangent(pt, rz);
+                    }
+
+                    Vector[] trots = new Vector[3]
+                        {
+                            rotbyx.ToVector().UnitVector(),
+                            rotbyy.ToVector().UnitVector(),
+                            rotbyz.ToVector().UnitVector(),
+                        };
+
+                    double test0 = LinAlg.VtV(rots[0], trots[0]);
+                    double test1 = LinAlg.VtV(rots[1], trots[1]);
+                    double test2 = LinAlg.VtV(rots[2], trots[2]);
+                    HDebug.Assert(Math.Abs(test0 - 1) < 0.00000001);
+                    HDebug.Assert(Math.Abs(test1 - 1) < 0.00000001);
+                    HDebug.Assert(Math.Abs(test2 - 1) < 0.00000001);
+                }
                 return rots;
             }
             public static Vector[] GetTrans(Vector[] coords, double[] masses, int[] block)
