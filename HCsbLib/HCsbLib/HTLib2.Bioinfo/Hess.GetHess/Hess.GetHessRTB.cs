@@ -367,6 +367,104 @@ namespace HTLib2.Bioinfo
             public static Vector[] GetRotate(Vector[] coords, Vector cent, int[] block)
             {
                 throw new Exception("this implementation is wrong. Use the following algorithm to get rotation modes for RTB.");
+
+                double[] io_mass = null;
+                if(HDebug.IsDebuggerAttached)
+                {
+                    using(var temp = new HTempDirectory(@"K:\temp\", null))
+                    {
+                        temp.EnterTemp();
+                        HFile.WriteAllText("rtbProjection.m", @"
+function [P, xyz] = rtbProjection(xyz, mass)
+% the approach is to find the inertia. compute the principal axes. and then use them to determine directly translation or rotation. 
+
+n = size(xyz, 1); % n: the number of atoms
+if nargin == 1
+    mass = ones(n,1);
+end
+
+M = sum(mass);
+% find the mass center.
+m3 = repmat(mass, 1, 3);
+center = sum (xyz.*m3)/M;
+xyz = xyz - center(ones(n, 1), :);
+
+mwX = sqrt (m3).*xyz;
+inertia = sum(sum(mwX.^2))*eye(3) - mwX'*mwX;
+[V,D] = eig(inertia);
+tV = V'; % tV: transpose of V. Columns of V are principal axes. 
+for i=1:3
+    trans{i} = tV(ones(n,1)*i, :); % the 3 translations are along principal axes 
+end
+P = zeros(n*3, 6);
+for i=1:3
+    rotate{i} = cross(trans{i}, xyz);
+    temp = mat2vec(trans{i});
+    P(:,i) = temp/norm(temp);
+    temp = mat2vec(rotate{i});
+    P(:,i+3) = temp/norm(temp);
+end
+m3 = mat2vec(sqrt(m3));
+P = repmat (m3(:),1,size(P,2)).*P;
+% now normalize columns of P
+P = P*diag(1./normMat(P,1));
+
+function vec = mat2vec(mat)
+% convert a matrix to a vector, extracting data *row-wise*.
+vec = reshape(mat',1,prod(size(mat)));
+");
+                        Matlab.Execute("cd \'"+ temp .dirinfo.FullName+ "\'");
+                        Matlab.PutMatrix("xyz", coords.ToMatrix(false));
+                        Matlab.PutVector("mass", io_mass);
+                        temp.QuitTemp();
+                    }
+                }
+
+                HDebug.Assert(coords.Length == io_mass.Length);
+
+                Vector mwcenter = new double[3];
+                for(int i = 0; i < coords.Length; i++)
+                    mwcenter += (coords[i] * io_mass[i]);
+                mwcenter /= io_mass.Sum();
+
+                Vector[] mwcoords = new Vector[coords.Length];
+                for(int i = 0; i < coords.Length; i++)
+                    mwcoords[i] = (coords[i] - mwcenter) * io_mass[i];
+
+                Matrix mwPCA = new double[3,3];
+                for(int i = 0; i < coords.Length; i++)
+                    mwPCA += LinAlg.VVt(mwcoords[i], mwcoords[i]);
+
+                var V_D = LinAlg.Eig(mwPCA.ToArray());
+                var V   = V_D.Item1;
+
+                Vector[] rotvecs = new Vector[3];
+                for(int i=0; i<3; i++)
+                {
+                    Vector rotaxis = new double[] { V[0,i], V[1,i], V[2,i] };
+                    Vector[] rotveci = new Vector[coords.Length];
+                    for(int j = 0; j < coords.Length; j++)
+                        rotveci[j] = LinAlg.CrossProd(rotaxis, mwcoords[i]);
+                    rotvecs[i] = rotveci.ToVector().UnitVector();
+                }
+
+                if(HDebug.IsDebuggerAttached)
+                {
+                    double dot01 = LinAlg.VtV(rotvecs[0], rotvecs[1]);
+                    double dot02 = LinAlg.VtV(rotvecs[0], rotvecs[2]);
+                    double dot12 = LinAlg.VtV(rotvecs[1], rotvecs[2]);
+                    HDebug.Assert(Math.Abs(dot01) < 0.0000001);
+                    HDebug.Assert(Math.Abs(dot02) < 0.0000001);
+                    HDebug.Assert(Math.Abs(dot12) < 0.0000001);
+                }
+
+                return rotvecs;
+
+
+
+
+
+
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 /// from song: rtbProjection.m
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
