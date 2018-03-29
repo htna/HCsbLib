@@ -120,7 +120,7 @@ c
    10    continue
          write (iout,11)  n, maxhess0
    11    format (/,' Select Smaller Size for Sparse Hessian Matrix '
-     &             ' for ',i8,' Atoms [ <',i,'=3n(3n-1)/2 ] :  ',$)
+     &             ' for ',i8,' Atoms [ <',i8,'=3n(3n-1)/2 ] :  ',$)
          read (input,12,err=10)  maxhess
    12    format (i20)
 
