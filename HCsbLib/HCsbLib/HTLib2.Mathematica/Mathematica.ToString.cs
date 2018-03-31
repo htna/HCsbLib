@@ -89,7 +89,7 @@ namespace HTLib2
             text.Append("}");
             return text.ToString();
         }
-        protected static string _ToString<T, U>(string format, Pair<T, U> obj)
+        protected static string _ToString<T, U>(string format, Tuple<T, U> obj)
         {
             return _ToString(format, obj.Item1, obj.Item2);
         }
@@ -172,20 +172,20 @@ namespace HTLib2
                 return "";
             string name = obj.GetType().FullName;
 
-          //if(name==typeof(Pair<DoubleVector3,Pair<double,DoubleVector3>[]>     ).FullName) return _ToString                           (format, (Pair<DoubleVector3,Pair<double,DoubleVector3>[]>     )obj);
-          //if(name==typeof(Pair<double,DoubleVector3>[]                         ).FullName) return _ToString                           (format, (Pair<double,DoubleVector3>[]                         )obj);
-          //if(name==typeof(Pair<double,DoubleVector3>                           ).FullName) return _ToString                           (format, (Pair<double,DoubleVector3>                           )obj);
-          //if(name==typeof(Pair<DoubleVector3,Pair<DoubleVector3,DoubleVector3>>).FullName) return _ToString                           (format, (Pair<DoubleVector3,Pair<DoubleVector3,DoubleVector3>>)obj);
-          //if(name==typeof(Pair<DoubleVector3,DoubleVector3>                    ).FullName) return _ToString                           (format, (Pair<DoubleVector3,DoubleVector3>                    )obj);
-            if(name==typeof(Pair<double[],double[]>                              ).FullName) return _ToString                           (format, (Pair<double[],double[]>                              )obj);
-            if(name==typeof(Pair<double,double>                                  ).FullName) return _ToString                           (format, (Pair<double,double>                                  )obj);
-            if(name==typeof(Pair<double,int>                                     ).FullName) return _ToString                           (format, (Pair<double,int>                                     )obj);
-            if(name==typeof(Pair<int,double>                                     ).FullName) return _ToString                           (format, (Pair<int,double>                                     )obj);
-            if(name==typeof(Pair<double,Vector>                                  ).FullName) return _ToString                           (format, (Pair<double,Vector>                                  )obj);
-            if(name==typeof(Pair<Vector,Vector>                                  ).FullName) return _ToString                           (format, (Pair<Vector,Vector>                                  )obj);
-            if(name==typeof(List<Pair<double,int>>                               ).FullName) return _ToString                           (format, (List<Pair<double,int>>                               )obj);
-            if(name==typeof(List<Pair<int,double>>                               ).FullName) return _ToString                           (format, (List<Pair<int,double>>                               )obj);
-            if(name==typeof(List<Pair<double,double>>                            ).FullName) return _ToString                           (format, (List<Pair<double,double>>                            )obj);
+          //if(name==typeof(Tuple<DoubleVector3,Tuple<double,DoubleVector3>[]>     ).FullName) return _ToString                           (format, (Tuple<DoubleVector3,Tuple<double,DoubleVector3>[]>     )obj);
+          //if(name==typeof(Tuple<double,DoubleVector3>[]                          ).FullName) return _ToString                           (format, (Tuple<double,DoubleVector3>[]                          )obj);
+          //if(name==typeof(Tuple<double,DoubleVector3>                            ).FullName) return _ToString                           (format, (Tuple<double,DoubleVector3>                            )obj);
+          //if(name==typeof(Tuple<DoubleVector3,Tuple<DoubleVector3,DoubleVector3>>).FullName) return _ToString                           (format, (Tuple<DoubleVector3,Tuple<DoubleVector3,DoubleVector3>>)obj);
+          //if(name==typeof(Tuple<DoubleVector3,DoubleVector3>                     ).FullName) return _ToString                           (format, (Tuple<DoubleVector3,DoubleVector3>                     )obj);
+            if(name==typeof(Tuple<double[],double[]>                             ).FullName) return _ToString                           (format, (Tuple<double[],double[]>                             )obj);
+            if(name==typeof(Tuple<double,double>                                 ).FullName) return _ToString                           (format, (Tuple<double,double>                                 )obj);
+            if(name==typeof(Tuple<double,int>                                    ).FullName) return _ToString                           (format, (Tuple<double,int>                                    )obj);
+            if(name==typeof(Tuple<int,double>                                    ).FullName) return _ToString                           (format, (Tuple<int,double>                                    )obj);
+            if(name==typeof(Tuple<double,Vector>                                 ).FullName) return _ToString                           (format, (Tuple<double,Vector>                                 )obj);
+            if(name==typeof(Tuple<Vector,Vector>                                 ).FullName) return _ToString                           (format, (Tuple<Vector,Vector>                                 )obj);
+            if(name==typeof(List<Tuple<double,int>>                              ).FullName) return _ToString                           (format, (List<Tuple<double,int>>                              )obj);
+            if(name==typeof(List<Tuple<int,double>>                              ).FullName) return _ToString                           (format, (List<Tuple<int,double>>                              )obj);
+            if(name==typeof(List<Tuple<double,double>>                           ).FullName) return _ToString                           (format, (List<Tuple<double,double>>                           )obj);
             if(name==typeof(List<double>                                         ).FullName) return _ToString                           (format, (List<double>                                         )obj);
             if(name==typeof(List<Vector>                                         ).FullName) return _ToString                           (format, (List<Vector>                                         )obj);
           //if(name==typeof(List<DoubleVector3>                                  ).FullName) return _ToString                           (format, (List<DoubleVector3>                                  )obj);
@@ -215,7 +215,7 @@ namespace HTLib2
             if(name==typeof(KeyValuePair<double,Vector[]>                        ).FullName) return _ToString<double,Vector[]>          (format, (KeyValuePair<double,Vector[]>                        )obj);
             if(name==typeof(KeyValuePair<double,double[]>                        ).FullName) return _ToString<double,double[]>          (format, (KeyValuePair<double,double[]>                        )obj);
             if(name==typeof(KeyValuePair<double,string>                          ).FullName) return _ToString<double,string>            (format, (KeyValuePair<double,string>                          )obj);
-            if(name==typeof(KeyValuePair<int, Pair<Vector, Vector>>              ).FullName) return _ToString<int, Pair<Vector, Vector>>(format, (KeyValuePair<int, Pair<Vector, Vector>>              )obj);
+            if(name==typeof(KeyValuePair<int, Tuple<Vector, Vector>>             ).FullName) return _ToString<int, Tuple<Vector,Vector>>(format, (KeyValuePair<int, Tuple<Vector, Vector>>             )obj);
             if(name==typeof(Dictionary<double,double[]>                          ).FullName) return _ToString<double,double[]>          (format, (Dictionary<double,double[]>                          )obj);
 
             if(name==typeof(Tuple<int   , int           >).FullName) { var val=(Tuple<int   , int           >)obj; return _ToString(format, val.Item1, val.Item2); }
@@ -302,17 +302,17 @@ namespace HTLib2
             }
             HDebug.Exception("should not reach here");
             Type objtype = obj.GetType();
-            //if(objtype.FullName == typeof(Pair<DoubleVector3, Pair<double, DoubleVector3>[]>).FullName)
+            //if(objtype.FullName == typeof(Tuple<DoubleVector3, Tuple<double, DoubleVector3>[]>).FullName)
             //{
-            //    Pair<DoubleVector3, Pair<double, DoubleVector3>[]> data = (Pair<DoubleVector3, Pair<double, DoubleVector3>[]>)obj;
+            //    Tuple<DoubleVector3, Tuple<double, DoubleVector3>[]> data = (Tuple<DoubleVector3, Tuple<double, DoubleVector3>[]>)obj;
             //    return ToString(data);
             //}
-            //if(objtype.FullName == typeof(Pair<double, DoubleVector3>[]).FullName)
+            //if(objtype.FullName == typeof(Tuple<double, DoubleVector3>[]).FullName)
             //{
             //}
-            //if(objtype.FullName == typeof(Pair<double, DoubleVector3>).FullName)
+            //if(objtype.FullName == typeof(Tuple<double, DoubleVector3>).FullName)
             //{
-            //    Pair<double, DoubleVector3> data = (Pair<double, DoubleVector3>)obj;
+            //    Tuple<double, DoubleVector3> data = (Tuple<double, DoubleVector3>)obj;
             //    StringBuilder text = new StringBuilder();
             //    //data.first;
             //}
@@ -382,7 +382,7 @@ namespace HTLib2
         //    text.Append("}");
         //    return text.ToString();
         //}
-        //protected static string ToString(Pair<OFF.Vertex, double>[] map, Trans3 trans,
+        //protected static string ToString(Tuple<OFF.Vertex, double>[] map, Trans3 trans,
         //                                        int skip/*=5*/,
         //                                        string format/*="0.00000000"*/)
         //{
@@ -405,7 +405,7 @@ namespace HTLib2
         //    text.Append("}");
         //    return text.ToString();
         //}
-        //protected static string ToString(Pair<DoubleVector3, double>[] map, Trans3 trans,
+        //protected static string ToString(Tuple<DoubleVector3, double>[] map, Trans3 trans,
         //                                        int skip/*=5*/,
         //                                        string format/*="0.00000000"*/)
         //{
@@ -442,7 +442,7 @@ namespace HTLib2
             return text.ToString();
             //plots.Add("ListSurfacePlot3D[modelmesh,Mesh->None,MaxPlotPoints->50,PlotStyle -> Directive[Opacity[0.5]], PerformanceGoal -> \"Speed\",Axes -> False, Boxed -> False]");
         }
-        //public static void ToString_Graphics3DPolygon(System.IO.StreamWriter writer, OFF.Mesh mesh, Pair<OFF.Vertex, double>[] values, string name_prefix, Trans3 trans, string format/*=0.00000000*/)
+        //public static void ToString_Graphics3DPolygon(System.IO.StreamWriter writer, OFF.Mesh mesh, Tuple<OFF.Vertex, double>[] values, string name_prefix, Trans3 trans, string format/*=0.00000000*/)
         //{
         //    string name_verts  = name_prefix + "verts";
         //    string name_faces  = name_prefix + "faces";
