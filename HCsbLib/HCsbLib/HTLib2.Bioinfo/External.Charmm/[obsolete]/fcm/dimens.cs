@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+#pragma warning disable CS0169, CS0649
+
 namespace HTLib2.Bioinfo
 {
 public partial class Charmm
