@@ -225,6 +225,7 @@ namespace HTLib2
             if(name==typeof(Tuple<double, double, double>).FullName) { var val=(Tuple<double, double, double>)obj; return _ToString(format, val.Item1, val.Item2, val.Item3); }
             if(name==typeof(Tuple<double, int, int, int >).FullName) { var val=(Tuple<double, int, int, int >)obj; return _ToString(format, val.Item1, val.Item2, val.Item3, val.Item4); }
             if(name==typeof(Tuple<int   ,Vector         >).FullName) { var val=(Tuple<int   ,Vector         >)obj; return _ToString(format, val.Item1, val.Item2); }
+            if(name==typeof(Tuple<string,string         >).FullName) { var val=(Tuple<string,string         >)obj; return _ToString(format, val.Item1, val.Item2); }
 
             if(name==typeof(KeyValuePair<double, double>).FullName)
             {
