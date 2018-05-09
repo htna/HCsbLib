@@ -24,6 +24,29 @@ namespace HTLib2.Bioinfo
                                         , params string[] keys
                                         )
             {
+                return Minimize
+                    ( xyz
+                    , xyz.atoms_format
+                    , prm
+                    , tempbase
+                    , copytemp                   // = null
+                    , param
+                    , atomsToFix // = null
+                    , pause                        // = false
+                    , keys
+                    );
+            }
+            public static OMinimize Minimize(Tinker.Xyz xyz
+                                        , Tinker.Xyz.Atom.Format xyz_atoms_format
+                                        , Tinker.Prm prm
+                                        , string tempbase
+                                        , string copytemp                   // = null
+                                        , string param
+                                        , IList<Tinker.Xyz.Atom> atomsToFix // = null
+                                        , bool pause                        // = false
+                                        , params string[] keys
+                                        )
+            {
                 if(HDebug.IsDebuggerAttached && atomsToFix != null)
                 {
                     Dictionary<int,Tinker.Xyz.Atom> xyzatoms = xyz.atoms.ToIdDictionary();
