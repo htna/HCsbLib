@@ -27,19 +27,21 @@ namespace HTLib2.Bioinfo
                                         )
             {
                 return Newton
-                    ( tinkerpath : null
-                    , xyz        : xyz
-                    , prm        : prm
-                    , tempbase   : tempbase
-                    , copytemp   : copytemp
-                    , param      : param
-                    , atomsToFix : atomsToFix
-                    , pause      : pause
-                    , keys       : keys
+                    ( tinkerpath        : null
+                    , xyz               : xyz
+                    , xyz_atoms_format  : xyz.atoms_format
+                    , prm               : prm
+                    , tempbase          : tempbase
+                    , copytemp          : copytemp
+                    , param             : param
+                    , atomsToFix        : atomsToFix
+                    , pause             : pause
+                    , keys              : keys
                     );
             }
             public static ONewton Newton( string tinkerpath
                                         , Tinker.Xyz xyz
+                                        , Tinker.Xyz.Atom.Format xyz_atoms_format
                                         , Tinker.Prm prm
                                         , string tempbase
                                         , string copytemp                   // = null
@@ -97,7 +99,7 @@ namespace HTLib2.Bioinfo
                                                     );
                     HDebug.Assert(HFile.Exists("prot.xyz_2"));
                     HDebug.Assert(HFile.Exists("prot.xyz_3") == false);
-                    minxyz = Tinker.Xyz.FromFile("prot.xyz_2", false);
+                    minxyz = Tinker.Xyz.FromFile("prot.xyz_2", false, xyz_atoms_format);
                     minlog = HFile.ReadAllLines("prot.log");
                     temp.QuitTemp();
                 }
