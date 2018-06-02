@@ -209,7 +209,7 @@ namespace HTLib2
         }
         public static void WriteAllLines(string path, params string[] contents)
         {
-            WriteAllLines(path, contents);
+            WriteAllLines(path, (IEnumerable<string>)contents);
         }
         public static void WriteAllLines(Stream stream, params string[] contents)
         {
