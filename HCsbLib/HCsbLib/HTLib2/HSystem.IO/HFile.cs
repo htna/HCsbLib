@@ -207,6 +207,10 @@ namespace HTLib2
             }
             return lines.ToArray();
         }
+        public static void WriteAllLines(string path, params string[] contents)
+        {
+            WriteAllLines(path, contents);
+        }
         public static void WriteAllLines(Stream stream, params string[] contents)
         {
             stream.Seek(0, SeekOrigin.Begin);
