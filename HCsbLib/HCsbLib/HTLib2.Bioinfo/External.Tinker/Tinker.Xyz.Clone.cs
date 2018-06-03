@@ -174,7 +174,7 @@ namespace HTLib2.Bioinfo
 
                 return CloneByReindex(idsFromTo);
             }
-            public Xyz CloneByReindex(IList<int> idsSelect)
+            public Xyz CloneBySelectIds(IList<int> idsSelect)
             {
                 HashSet<int> lstAtomIdRemove = atoms.HListId().HToHashSet();
                 Tuple<int,int>[] idsFromTo = new Tuple<int, int>[idsSelect.Count];
