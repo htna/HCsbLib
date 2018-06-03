@@ -174,7 +174,38 @@ namespace HTLib2.Bioinfo
 
                 return CloneByReindex(idsFromTo);
             }
-            public Xyz CloneByReindex(IList<Tuple<int,int>> idsFromTo)
+            public Xyz CloneByReindex(IList<int> idsSelect)
+            {
+                HashSet<int> lstAtomIdRemove = atoms.HListId().HToHashSet();
+                Tuple<int,int>[] idsFromTo = new Tuple<int, int>[idsSelect.Count];
+                for(int i=0; i<idsSelect.Count; i++)
+                {
+                    idsFromTo[i] = new Tuple<int, int>(idsSelect[i], i+1);
+                    lstAtomIdRemove.Remove(idsSelect[i]);
+                }
+
+                Xyz newxyz;
+                newxyz = this.CloneByRemoveIds(lstAtomIdRemove.ToList());
+                newxyz = newxyz.CloneByReindex(idsFromTo);
+
+                if(HDebug.IsDebuggerAttached)
+                {
+                    var id2atoms = this.atoms.ToIdDictionary();
+                    var newatoms = newxyz.atoms;
+                    for(int i=0; i<idsSelect.Count; i++)
+                    {
+                        int id = idsSelect[i];
+                        var atom0 = id2atoms[id];
+                        var atom1 = newatoms[i];
+                        HDebug.Assert( atom0.AtomType         == atom1.AtomType);
+                        HDebug.Assert((atom0.Coord            -  atom1.Coord).Dist < 0.00000001);
+                        HDebug.Assert( atom0.BondedIds.Length == atom1.BondedIds.Length);
+                    }
+                }
+
+                return newxyz;
+            }
+            public Xyz CloneByReindex(IList<Tuple<int,int>> idsFromTo, bool allowresize=false)
             {
                 HashSet<int> setIdFrom = new HashSet<int>(idsFromTo.HListItem1());
                 HashSet<int> setIdTo   = new HashSet<int>(idsFromTo.HListItem2());
@@ -208,7 +239,7 @@ namespace HTLib2.Bioinfo
                                         nbondedids[i] = to;
                                     }
                                 }
-                                Xyz.Atom natom = Xyz.Atom.FromData(nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
+                                Xyz.Atom natom = Xyz.Atom.FromData(atom.format, nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
                                 natoms.Add(nid, natom);
                             }
                             break;
