@@ -155,7 +155,7 @@ public partial class Hess
                 Vector bfactors = atoms.ListTempFactor().ToArray();
 
                 Matrix hessANM = Hess.GetHessAnm(coords, 12);
-                Mode[] modeANM = Hess.GetModes(hessANM);
+                Mode[] modeANM = Hess.GetModesFromHess(hessANM);
                 modeANM = modeANM.SelectExceptSmallSix();
                 Vector bfactorANM = modeANM.GetBFactor().ToArray();
                 double corrANM = HBioinfo.BFactor.Corr(bfactors, bfactorANM);
@@ -167,7 +167,7 @@ public partial class Hess
 
                 HessMatrix hessSTeM = STeM.GetHessCa_matlab(coords);
                 //Matrix hessSTeM = STeM.GetHessCa(coords);
-                Mode[] modeSTeM = Hess.GetModes(hessSTeM);
+                Mode[] modeSTeM = Hess.GetModesFromHess(hessSTeM);
                 modeSTeM = modeSTeM.SelectExceptSmallSix();
                 Vector bfactorSTeM = modeSTeM.GetBFactor().ToArray();
                 double corrSTeM = HBioinfo.BFactor.Corr(bfactors, bfactorSTeM);
