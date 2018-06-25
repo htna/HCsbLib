@@ -67,21 +67,21 @@ namespace HTLib2.Bioinfo
         }
         public static Mode[] GetModesFromHess(Matrix hess)
         {
-            string cachepath = null;
-            HDebug.Depreciated("use Mode[] GetModesFromHess(Matrix hess, ILinAlg la)");
+            //string cachepath = null;
+            //HDebug.Depreciated("use Mode[] GetModesFromHess(Matrix hess, ILinAlg la)");
 
             Vector[] eigvec;
             double[] eigval;
-            if(cachepath != null && HFile.Exists(cachepath))
-            {
-                HSerialize.Deserialize(cachepath, null, out eigval, out eigvec);
-            }
-            else
-            {
+            //if(cachepath != null && HFile.Exists(cachepath))
+            //{
+            //    HSerialize.Deserialize(cachepath, null, out eigval, out eigvec);
+            //}
+            //else
+            //{
                 HDebug.Verify(NumericSolver.Eig(hess.ToArray(), out eigvec, out eigval));
-                if(cachepath != null)
-                    HSerialize.SerializeDepreciated(cachepath, null, eigval, eigvec);
-            }
+            //    if(cachepath != null)
+            //        HSerialize.SerializeDepreciated(cachepath, null, eigval, eigvec);
+            //}
 
             List<Mode> modes;
             {   // sort by eigenvalues
