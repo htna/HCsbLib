@@ -61,14 +61,14 @@ namespace HTLib2.Bioinfo
         {
             return GetModesFromHess(hess, la);
         }
-        public static Mode[] GetModes(Matrix hess)
-        {
-            return GetModesFromHess(hess);
-        }
+        //public static Mode[] GetModes(Matrix hess)
+        //{
+        //    return GetModesFromHess(hess);
+        //}
         public static Mode[] GetModesFromHess(Matrix hess)
         {
             //string cachepath = null;
-            //HDebug.Depreciated("use Mode[] GetModesFromHess(Matrix hess, ILinAlg la)");
+            HDebug.Depreciated("use Mode[] GetModesFromHess(Matrix hess, ILinAlg la)");
 
             Vector[] eigvec;
             double[] eigval;
