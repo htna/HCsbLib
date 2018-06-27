@@ -359,6 +359,109 @@ namespace HTLib2.Bioinfo
 
                 return PBlkOrth;
             }
+            public static Vector[] GetRotTran(Vector[] coords, double[] masses, int[] block)
+            {
+                Vector[] blkcoords = coords.HSelectByIndex(block);
+                double[] blkmasses = masses.HSelectByIndex(block);
+                Vector[] blkrottran = GetRotTran(blkcoords, blkmasses);
+                Vector[] rottran = new Vector[blkrottran.Length];
+                for(int i=0; i<rottran.Length; i++)
+                {
+                    HDebug.Assert(blkrottran[i].Size == block.Length*3);
+                    rottran[i] = new double[coords.Length*3];
+                    for(int j=0; j<block.Length; j++)
+                        rottran[i][block[j]] = blkrottran[i][j];
+                }
+                return rottran;
+            }
+            public static Vector[] GetRotTran(Vector[] coords, double[] masses)
+            {
+                if(HDebug.Selftest())
+                {
+                    // get test coords and masses
+                    Vector[] tcoords = Pdb.FromLines(SelftestData.lines_1EVC_pdb).atoms.ListCoord().ToArray();
+                    double[] tmasses = new double[tcoords.Length];
+                    for(int i=0; i<tmasses.Length; i++)
+                        tmasses[i] = 1;
+                    // get test rot/trans RTB vectors
+                    Vector[] trottra = GetRotTran(tcoords, tmasses);
+                    HDebug.Assert(trottra.Length == 6);
+                    // get test ANM
+                    var      tanm = Hess.GetHessAnm(tcoords);
+                    // vec_i' * ANM * vec_i == 0
+                    for(int i=0; i<trottra.Length; i++)
+                    {
+                        double eigi = LinAlg.VtMV(trottra[i], tanm, trottra[i]);
+                        HDebug.Assert(Math.Abs(eigi) < 0.00000001);
+                    }
+                    // size of vec_i == 1
+                    for(int i=0; i<trottra.Length; i++)
+                        HDebug.Assert(Math.Abs(trottra[i].Dist - 1) < 0.00000001);
+                    // vec_i and vec_j must be orthogonal
+                    for(int i=0; i<trottra.Length; i++)
+                        for(int j=i+1; j<trottra.Length; j++)
+                        {
+                            double dot = LinAlg.VtV(trottra[i], trottra[j]);
+                            HDebug.Assert(Math.Abs(dot) < 0.00000001);
+                        }
+                }
+
+                Vector[] rottran;
+                using(new Matlab.NamedLock(""))
+                {
+                    Matlab.PutMatrix("xyz", coords.ToMatrix(), true);
+                    Matlab.Execute  ("xyz = xyz';");
+                    Matlab.PutVector("mass", masses);
+                    //Matlab.Execute("function [P, xyz] = rtbProjection(xyz, mass)                                                                                        ");
+                    //Matlab.Execute("% the approach is to find the inertia. compute the principal axes. and then use them to determine directly translation or rotation. ");
+                    Matlab.Execute("                                                                                 ");
+                    Matlab.Execute("n = size(xyz, 1); % n: the number of atoms                                       ");
+                    //Matlab.Execute("if nargin == 1;                                                                  ");
+                    //Matlab.Execute("    mass = ones(n,1);                                                            ");
+                    //Matlab.Execute("end                                                                              ");
+                    Matlab.Execute("                                                                                 ");
+                    Matlab.Execute("M = sum(mass);                                                                   ");
+                    Matlab.Execute("% find the mass center.                                                          ");
+                    Matlab.Execute("m3 = repmat(mass, 1, 3);                                                         ");
+                    Matlab.Execute("center = sum (xyz.*m3)/M;                                                        ");
+                    Matlab.Execute("xyz = xyz - center(ones(n, 1), :);                                               ");
+                    Matlab.Execute("                                                                                 ");
+                    Matlab.Execute("mwX = sqrt (m3).*xyz;                                                            ");
+                    Matlab.Execute("inertia = sum(sum(mwX.^2))*eye(3) - mwX'*mwX;                                    ");
+                    Matlab.Execute("[V,D] = eig(inertia);                                                            ");
+                    Matlab.Execute("tV = V'; % tV: transpose of V. Columns of V are principal axes.                  ");
+                    Matlab.Execute("for i=1:3                                                                        \n"
+                                  +"    trans{i} = tV(ones(n,1)*i, :); % the 3 translations are along principal axes \n"
+                                  +"end                                                                              \n");
+                    Matlab.Execute("P = zeros(n*3, 6);                                                               ");
+                    Matlab.Execute("mat2vec = @(mat) reshape(mat',1,prod(size(mat)));                                ");
+                    Matlab.Execute("for i=1:3                                                                        \n"
+                                  +"    rotate{i} = cross(trans{i}, xyz);                                            \n"
+                                  +"    temp = mat2vec(trans{i});                                                    \n"
+                                  +"    P(:,i) = temp/norm(temp);                                                    \n"
+                                  +"    temp = mat2vec(rotate{i});                                                   \n"
+                                  +"    P(:,i+3) = temp/norm(temp);                                                  \n"
+                                  +"end                                                                              ");
+                    Matlab.Execute("m3 = mat2vec(sqrt(m3));                                                          ");
+                    Matlab.Execute("P = repmat (m3(:),1,size(P,2)).*P;                                               ");
+                    //Matlab.Execute("% now normalize columns of P                                                     "); // already normalized
+                    //Matlab.Execute("normMat = @(x) sqrt(sum(x.^2,2));                                                "); // already normalized
+                    //Matlab.Execute("P = P*diag(1./normMat(P,1));                                                     "); // already normalized
+                    //Matlab.Execute("                                                                                 "); // already normalized
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //Matlab.Execute("function vec = mat2vec(mat)                                                      ");
+                    //Matlab.Execute("% convert a matrix to a vector, extracting data *row-wise*.                      ");
+                    //Matlab.Execute("vec = reshape(mat',1,prod(size(mat)));                                           ");
+                    //////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //Matlab.Execute("function amp = normMat(x)                                                        ");
+                    //Matlab.Execute("amp = sqrt(sum(x.^2,2));                                                         ");
+
+                    Matrix xyz = Matlab.GetMatrix("xyz", true);
+                    Matrix P   = Matlab.GetMatrix("P", true);
+                    rottran = P.GetColVectorList();
+                }
+                return rottran;
+            }
             public static Vector[] GetRotate(Vector[] coords, double[] masses, int[] block)
             {
                 Vector cent = Geometry.CenterOfMass(coords, masses, block);
