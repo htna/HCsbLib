@@ -163,11 +163,11 @@ namespace HTLib2.Bioinfo
                 return _rtbmodes;
             }
         }
-        public static HessRTB GetHessRTB(HessMatrix hess, Vector[] coords, double[] masses, IList<int[]> blocks)
+        public static HessRTB GetHessRTB(HessMatrix hess, Vector[] coords, double[] masses, IList<int[]> blocks, string opt)
         {
-            return BuilderHessRTB.GetHessRTB(hess, coords, masses, blocks);
+            return BuilderHessRTB.GetHessRTB(hess, coords, masses, blocks, opt);
         }
-        public static HessRTB GetHessRTBByBlockAsResidue(HessMatrix hess, Vector[] coords, double[] masses, Universe.Atom[] atoms)
+        public static HessRTB GetHessRTBByBlockAsResidue(HessMatrix hess, Vector[] coords, double[] masses, Universe.Atom[] atoms, string opt)
         {
             int leng = coords.Length;
             HDebug.Exception
@@ -187,11 +187,11 @@ namespace HTLib2.Bioinfo
                 blocks.Add(block.ToArray());
             }
 
-            return BuilderHessRTB.GetHessRTB(hess, coords, masses, blocks);
+            return BuilderHessRTB.GetHessRTB(hess, coords, masses, blocks, opt);
         }
         public static class BuilderHessRTB
         {
-            public static HessRTB GetHessRTB(HessMatrix hess, Vector[] coords, double[] masses, IList<int[]> blocks)
+            public static HessRTB GetHessRTB(HessMatrix hess, Vector[] coords, double[] masses, IList<int[]> blocks, string opt)
             {
                 #region check pre-condition
                 {
@@ -206,6 +206,7 @@ namespace HTLib2.Bioinfo
                 foreach(int[] block in blocks)
                 {
                     List<Vector> PBlk = new List<Vector>();
+                    HDebug.Assert(opt == "v1");
                     PBlk.AddRange(GetTrans (coords, masses, block));
                     PBlk.AddRange(GetRotate(coords, masses, block));
                     {
