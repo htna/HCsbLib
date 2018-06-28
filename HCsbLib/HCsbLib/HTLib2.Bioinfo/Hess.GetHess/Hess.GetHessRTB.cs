@@ -391,7 +391,51 @@ namespace HTLib2.Bioinfo
             }
             public static Vector[] GetRotTran(Vector[] coords, double[] masses)
             {
+                #region source rtbProjection.m
+                /// rtbProjection.m
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                /// function [P, xyz] = rtbProjection(xyz, mass)
+                /// % the approach is to find the inertia. compute the principal axes. and then use them to determine directly translation or rotation. 
+                /// 
+                /// n = size(xyz, 1); % n: the number of atoms
+                /// if nargin == 1
+                ///     mass = ones(n,1);
+                /// end
+                /// 
+                /// M = sum(mass);
+                /// % find the mass center.
+                /// m3 = repmat(mass, 1, 3);
+                /// center = sum (xyz.*m3)/M;
+                /// xyz = xyz - center(ones(n, 1), :);
+                /// 
+                /// mwX = sqrt (m3).*xyz;
+                /// inertia = sum(sum(mwX.^2))*eye(3) - mwX'*mwX;
+                /// [V,D] = eig(inertia);
+                /// tV = V'; % tV: transpose of V. Columns of V are principal axes. 
+                /// for i=1:3
+                ///     trans{i} = tV(ones(n,1)*i, :); % the 3 translations are along principal axes 
+                /// end
+                /// P = zeros(n*3, 6);
+                /// for i=1:3
+                ///     rotate{i} = cross(trans{i}, xyz);
+                ///     temp = mat2vec(trans{i});
+                ///     P(:,i) = temp/norm(temp);
+                ///     temp = mat2vec(rotate{i});
+                ///     P(:,i+3) = temp/norm(temp);
+                /// end
+                /// m3 = mat2vec(sqrt(m3));
+                /// P = repmat (m3(:),1,size(P,2)).*P;
+                /// % now normalize columns of P
+                /// P = P*diag(1./normMat(P,1));
+                /// 
+                /// function vec = mat2vec(mat)
+                /// % convert a matrix to a vector, extracting data *row-wise*.
+                /// vec = reshape(mat',1,prod(size(mat)));
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                #endregion
+
                 if(HDebug.Selftest())
+                    #region selftest
                 {
                     // get test coords and masses
                     Vector[] tcoords = Pdb.FromLines(SelftestData.lines_1EVC_pdb).atoms.ListCoord().ToArray();
@@ -428,6 +472,7 @@ namespace HTLib2.Bioinfo
                         HDebug.Assert(Math.Abs(eigix) > 0.00000001);
                     }
                 }
+                    #endregion
 
                 Vector[] rottran;
                 using(new Matlab.NamedLock(""))
