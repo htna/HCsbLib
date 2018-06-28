@@ -105,13 +105,33 @@ namespace HTLib2.Bioinfo
         {
             List<Mode> modes;
             {
-                var H = la.ToILMat(hess);
-                H = (H + H.Tr)/2;
-                var VD = la.EigSymm(H);
-                Matrix V = VD.Item1.ToMatrix();
-                Vector D = VD.Item2;
-                H.Dispose();
-                VD.Item1.Dispose();
+                Matrix V;
+                Vector D;
+                switch(la)
+                {
+                    case null:
+                        using(new Matlab.NamedLock(""))
+                        {
+                            Matlab.PutMatrix("H", hess, true);
+                            Matlab.Execute("H = (H + H')/2;");
+                            Matlab.Execute("[V,D] = eig(H);");
+                            Matlab.Execute("D = diag(D);");
+                            V = Matlab.GetMatrix("V", true);
+                            D = Matlab.GetVector("D", true);
+                        }
+                        break;
+                    default:
+                        {
+                            var H = la.ToILMat(hess);
+                            H = (H + H.Tr)/2;
+                            var VD = la.EigSymm(H);
+                            V = VD.Item1.ToMatrix();
+                            D = VD.Item2;
+                            H.Dispose();
+                            VD.Item1.Dispose();
+                        }
+                        break;
+                }
 
                 int[] idxs = D.ToArray().HAbs().HIdxSorted();
                 modes = new List<Mode>(idxs.Length);
