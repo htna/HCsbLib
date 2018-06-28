@@ -74,8 +74,8 @@ namespace HTLib2.Bioinfo
                     Matrix PM = null;
                     using(new Matlab.NamedLock(""))
                     {
-                        Matlab.PutMatrix("P", P);
-                        Matlab.PutMatrix("M", M);
+                        Matlab.PutMatrix("P", P, true);
+                        Matlab.PutMatrix("M", M, true);
                         PM = Matlab.GetMatrix("P*M", true);
                     }
 
@@ -246,13 +246,13 @@ namespace HTLib2.Bioinfo
                     if     (hess is HessMatrixSparse) Matlab.PutSparseMatrix("H", hess.GetMatrixSparse(), 3, 3);
                     else if(hess is HessMatrixDense ) Matlab.PutMatrix("H", hess, true);
                     else HDebug.Exception();
-                    Matlab.PutMatrix("P", P);
+                    Matlab.PutMatrix("P", P, true);
                     Matlab.PutVector("M", masses);
                     Matlab.Execute("M=diag(reshape([M,M,M]',length(M)*3,1));");
                     Matlab.Execute("PHP = P'*H*P; PHP = (PHP + PHP')/2;");
                     Matlab.Execute("PMP = P'*M*P; PMP = (PMP + PMP')/2;");
-                    PHP = Matlab.GetMatrix("PHP");
-                    PMP = Matlab.GetMatrix("PMP");
+                    PHP = Matlab.GetMatrix("PHP", true);
+                    PMP = Matlab.GetMatrix("PMP", true);
                 }
 
                 return new HessRTB
@@ -370,7 +370,11 @@ namespace HTLib2.Bioinfo
                     HDebug.Assert(blkrottran[i].Size == block.Length*3);
                     rottran[i] = new double[coords.Length*3];
                     for(int j=0; j<block.Length; j++)
-                        rottran[i][block[j]] = blkrottran[i][j];
+                    {
+                        rottran[i][block[j]*3+0] = blkrottran[i][j*3+0];
+                        rottran[i][block[j]*3+1] = blkrottran[i][j*3+1];
+                        rottran[i][block[j]*3+2] = blkrottran[i][j*3+2];
+                    }
                 }
                 return rottran;
             }
@@ -388,15 +392,12 @@ namespace HTLib2.Bioinfo
                     HDebug.Assert(trottra.Length == 6);
                     // get test ANM
                     var      tanm = Hess.GetHessAnm(tcoords);
-                    // vec_i' * ANM * vec_i == 0
-                    for(int i=0; i<trottra.Length; i++)
-                    {
-                        double eigi = LinAlg.VtMV(trottra[i], tanm, trottra[i]);
-                        HDebug.Assert(Math.Abs(eigi) < 0.00000001);
-                    }
                     // size of vec_i == 1
                     for(int i=0; i<trottra.Length; i++)
-                        HDebug.Assert(Math.Abs(trottra[i].Dist - 1) < 0.00000001);
+                    {
+                        double dist = trottra[i].Dist;
+                        HDebug.Assert(Math.Abs(dist - 1) < 0.00000001);
+                    }
                     // vec_i and vec_j must be orthogonal
                     for(int i=0; i<trottra.Length; i++)
                         for(int j=i+1; j<trottra.Length; j++)
@@ -404,6 +405,17 @@ namespace HTLib2.Bioinfo
                             double dot = LinAlg.VtV(trottra[i], trottra[j]);
                             HDebug.Assert(Math.Abs(dot) < 0.00000001);
                         }
+                    // vec_i' * ANM * vec_i == 0
+                    for(int i=0; i<trottra.Length; i++)
+                    {
+                        double eigi = LinAlg.VtMV(trottra[i], tanm, trottra[i]);
+                        HDebug.Assert(Math.Abs(eigi) < 0.00000001);
+                        Vector tvecx = trottra[i].Clone();
+                        tvecx[1] += (1.0 / tvecx.Size) * Math.Sign(tvecx[1]);
+                        tvecx = tvecx.UnitVector();
+                        double eigix = LinAlg.VtMV(tvecx, tanm, tvecx);
+                        HDebug.Assert(Math.Abs(eigix) > 0.00000001);
+                    }
                 }
 
                 Vector[] rottran;
