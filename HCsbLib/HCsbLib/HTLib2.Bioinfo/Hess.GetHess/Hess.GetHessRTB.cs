@@ -206,9 +206,19 @@ namespace HTLib2.Bioinfo
                 foreach(int[] block in blocks)
                 {
                     List<Vector> PBlk = new List<Vector>();
-                    HDebug.Assert(opt == "v1");
-                    PBlk.AddRange(GetTrans (coords, masses, block));
-                    PBlk.AddRange(GetRotate(coords, masses, block));
+                    switch(opt)
+                    {
+                        case "v1":
+                            // GetRotate is incorrect
+                            PBlk.AddRange(GetTrans (coords, masses, block));
+                            PBlk.AddRange(GetRotate(coords, masses, block));
+                            break;
+                        case "v2":
+                            PBlk.AddRange(GetRotTran(coords, masses, block));
+                            break;
+                        case null:
+                            goto case "v2";
+                    }
                     {
                         // PBlk = ToOrthonormal   (coords, masses, block, PBlk.ToArray()).ToList();
                         ///
