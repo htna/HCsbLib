@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 //using Wolfram.NETLink;
 
+
 // C:\Program Files\Wolfram Research\Mathematica\7.0\SystemFiles\Links\NETLink
 
 namespace HTLib2
 {
-    using ITuple = System.Runtime.CompilerServices.ITuple;
-
     public partial class Mathematica
     {
         public static string ToString(params object[] objs)
@@ -91,10 +90,10 @@ namespace HTLib2
             text.Append("}");
             return text.ToString();
         }
-        //protected static string _ToString<T, U>(string format, Tuple<T, U> obj)
-        //{
-        //    return _ToString(format, obj.Item1, obj.Item2);
-        //}
+        protected static string _ToString_<T, U>(string format, Tuple<T, U> obj)
+        {
+            return _ToString(format, obj.Item1, obj.Item2);
+        }
         protected static string _ToString<OBJECT>(string format, OBJECT[,] objs)
         {
             StringBuilder text = new StringBuilder();
@@ -137,8 +136,23 @@ namespace HTLib2
             text.Append("}");
             return text.ToString();
         }
-        //protected static string _ToString<TYPE1, TYPE2>(string format, Dictionary<TYPE1, TYPE2> obj)
-        protected static string _ToString<TYPE1, TYPE2>(string format, IEnumerable<KeyValuePair<TYPE1, TYPE2>> obj)
+        protected static string _ToString(string format, System.Collections.IDictionary obj)
+        {
+            StringBuilder text = new StringBuilder();
+            text.Append("{");
+            int i = 0;
+            foreach (System.Collections.DictionaryEntry key_value in obj)
+            {
+                if (i != 0) text.Append(", ");
+                i++;
+                text.Append(_ToString(format, key_value.Key, key_value.Value));
+            }
+            text.Append("}");
+            return text.ToString();
+
+            throw new NotImplementedException();
+        }
+        protected static string _ToString_<TYPE1, TYPE2>(string format, IEnumerable<KeyValuePair<TYPE1, TYPE2>> obj)
         {
             StringBuilder text = new StringBuilder();
             text.Append("{");
@@ -152,7 +166,7 @@ namespace HTLib2
             text.Append("}");
             return text.ToString();
         }
-        protected static string _ToString<T, U>(string format, KeyValuePair<T, U> obj)
+        protected static string _ToString_<T, U>(string format, KeyValuePair<T, U> obj)
         {
             return _ToString<T, U>(format, obj, new string[]{"{", ",", "}"});
         }
@@ -167,7 +181,7 @@ namespace HTLib2
             text.Append(delims[2]);
             return text.ToString();
         }
-        protected static string _ToString(string format, ITuple obj)
+        protected static string _ToString(string format, System.Runtime.CompilerServices.ITuple obj)
         {
             int leng = obj.Length;
             object[] objs = new object[leng];
@@ -183,8 +197,8 @@ namespace HTLib2
                 return "";
             string name = obj.GetType().FullName;
 
-            if(obj is ITuple)
-                return _ToString(format, obj as ITuple);
+            if(obj is System.Runtime.CompilerServices.ITuple    ) return _ToString(format, obj as System.Runtime.CompilerServices.ITuple    );
+            if(obj is System.Collections.IDictionary            ) return _ToString(format, obj as System.Collections.IDictionary            );
 
           //if(name==typeof(Tuple<DoubleVector3,Tuple<double,DoubleVector3>[]>     ).FullName) return _ToString                           (format, (Tuple<DoubleVector3,Tuple<double,DoubleVector3>[]>     )obj);
           //if(name==typeof(Tuple<double,DoubleVector3>[]                          ).FullName) return _ToString                           (format, (Tuple<double,DoubleVector3>[]                          )obj);
@@ -224,13 +238,13 @@ namespace HTLib2
             if(name==typeof(List<List<double>>                                   ).FullName) return _ToString<List<double>>             (format, (IEnumerable<List<double>>                            )obj);
             if(name==typeof(List<List<string>>                                   ).FullName) return _ToString<List<string>>             (format, (IEnumerable<List<string>>                            )obj);
             if(name==typeof(List<List<Vector>>                                   ).FullName) return _ToString<List<Vector>>             (format, (IEnumerable<List<Vector>>                            )obj);
-            if(name==typeof(Dictionary<double,double>                            ).FullName) return _ToString<double,double>            (format, (Dictionary<double,double>                            )obj);
+          //if(name==typeof(Dictionary<double,double>                            ).FullName) return _ToString<double,double>            (format, (Dictionary<double,double>                            )obj);
 
-            if(name==typeof(KeyValuePair<double,Vector[]>                        ).FullName) return _ToString<double,Vector[]>          (format, (KeyValuePair<double,Vector[]>                        )obj);
-            if(name==typeof(KeyValuePair<double,double[]>                        ).FullName) return _ToString<double,double[]>          (format, (KeyValuePair<double,double[]>                        )obj);
-            if(name==typeof(KeyValuePair<double,string>                          ).FullName) return _ToString<double,string>            (format, (KeyValuePair<double,string>                          )obj);
-            if(name==typeof(KeyValuePair<int, Tuple<Vector, Vector>>             ).FullName) return _ToString<int, Tuple<Vector,Vector>>(format, (KeyValuePair<int, Tuple<Vector, Vector>>             )obj);
-            if(name==typeof(Dictionary<double,double[]>                          ).FullName) return _ToString<double,double[]>          (format, (Dictionary<double,double[]>                          )obj);
+          //if(name==typeof(KeyValuePair<double,Vector[]>                        ).FullName) return _ToString<double,Vector[]>          (format, (KeyValuePair<double,Vector[]>                        )obj);
+          //if(name==typeof(KeyValuePair<double,double[]>                        ).FullName) return _ToString<double,double[]>          (format, (KeyValuePair<double,double[]>                        )obj);
+          //if(name==typeof(KeyValuePair<double,string>                          ).FullName) return _ToString<double,string>            (format, (KeyValuePair<double,string>                          )obj);
+          //if(name==typeof(KeyValuePair<int, Tuple<Vector, Vector>>             ).FullName) return _ToString<int, Tuple<Vector,Vector>>(format, (KeyValuePair<int, Tuple<Vector, Vector>>             )obj);
+          //if(name==typeof(Dictionary<double,double[]>                          ).FullName) return _ToString<double,double[]>          (format, (Dictionary<double,double[]>                          )obj);
 
           //if(name==typeof(Tuple<int   , int           >).FullName) { var val=(Tuple<int   , int           >)obj; return _ToString(format, val.Item1, val.Item2); }
           //if(name==typeof(Tuple<int   , double        >).FullName) { var val=(Tuple<int   , double        >)obj; return _ToString(format, val.Item1, val.Item2); }
