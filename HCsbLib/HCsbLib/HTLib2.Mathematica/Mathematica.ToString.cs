@@ -90,10 +90,6 @@ namespace HTLib2
             text.Append("}");
             return text.ToString();
         }
-        protected static string _ToString_<T, U>(string format, Tuple<T, U> obj)
-        {
-            return _ToString(format, obj.Item1, obj.Item2);
-        }
         protected static string _ToString<OBJECT>(string format, OBJECT[,] objs)
         {
             StringBuilder text = new StringBuilder();
@@ -151,24 +147,6 @@ namespace HTLib2
             return text.ToString();
 
             throw new NotImplementedException();
-        }
-        protected static string _ToString_<TYPE1, TYPE2>(string format, IEnumerable<KeyValuePair<TYPE1, TYPE2>> obj)
-        {
-            StringBuilder text = new StringBuilder();
-            text.Append("{");
-            int i=0;
-            foreach(var key_value in obj)
-            {
-                if(i != 0) text.Append(", ");
-                i++;
-                text.Append(_ToString(format, key_value));
-            }
-            text.Append("}");
-            return text.ToString();
-        }
-        protected static string _ToString_<T, U>(string format, KeyValuePair<T, U> obj)
-        {
-            return _ToString<T, U>(format, obj, new string[]{"{", ",", "}"});
         }
         protected static string _ToString<T, U>(string format, KeyValuePair<T, U> obj, string[] delims)
         {
@@ -539,5 +517,30 @@ namespace HTLib2
         //    writer.Write("  ]\n");
         //    writer.Write("]\n");
         //}
+
+
+
+        protected static string _ToString_<T, U>(string format, Tuple<T, U> obj)
+        {
+            return _ToString(format, obj.Item1, obj.Item2);
+        }
+        protected static string _ToString_<TYPE1, TYPE2>(string format, IEnumerable<KeyValuePair<TYPE1, TYPE2>> obj)
+        {
+            StringBuilder text = new StringBuilder();
+            text.Append("{");
+            int i=0;
+            foreach(var key_value in obj)
+            {
+                if(i != 0) text.Append(", ");
+                i++;
+                text.Append(_ToString(format, key_value));
+            }
+            text.Append("}");
+            return text.ToString();
+        }
+        protected static string _ToString_<T, U>(string format, KeyValuePair<T, U> obj)
+        {
+            return _ToString<T, U>(format, obj, new string[]{"{", ",", "}"});
+        }
     }
 }
