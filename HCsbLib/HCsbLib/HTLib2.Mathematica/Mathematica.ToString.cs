@@ -137,17 +137,17 @@ namespace HTLib2
             text.Append("}");
             return text.ToString();
         }
-        protected static string _ToString<TYPE1, TYPE2>(string format, Dictionary<TYPE1, TYPE2> obj)
+        //protected static string _ToString<TYPE1, TYPE2>(string format, Dictionary<TYPE1, TYPE2> obj)
+        protected static string _ToString<TYPE1, TYPE2>(string format, IEnumerable<KeyValuePair<TYPE1, TYPE2>> obj)
         {
             StringBuilder text = new StringBuilder();
             text.Append("{");
             int i=0;
-            foreach(TYPE1 key in obj.Keys)
+            foreach(var key_value in obj)
             {
                 if(i != 0) text.Append(", ");
                 i++;
-                TYPE2 value = obj[key];
-                text.Append(_ToString(format, key, value));
+                text.Append(_ToString(format, key_value));
             }
             text.Append("}");
             return text.ToString();
