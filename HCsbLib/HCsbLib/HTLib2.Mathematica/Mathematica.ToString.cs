@@ -8,6 +8,8 @@ using System.Text;
 
 namespace HTLib2
 {
+    using ITuple = System.Runtime.CompilerServices.ITuple;
+
     public partial class Mathematica
     {
         public static string ToString(params object[] objs)
@@ -165,12 +167,24 @@ namespace HTLib2
             text.Append(delims[2]);
             return text.ToString();
         }
+        protected static string _ToString(string format, ITuple obj)
+        {
+            int leng = obj.Length;
+            object[] objs = new object[leng];
+            for(int i=0; i<leng; i++)
+                objs[i] = obj[i];
+
+            return _ToString(format, objs);
+        }
         protected static string _ToString(string format, object obj)
         {
         try{
             if(obj == null)
                 return "";
             string name = obj.GetType().FullName;
+
+            if(obj is ITuple)
+                return _ToString(format, obj as ITuple);
 
           //if(name==typeof(Tuple<DoubleVector3,Tuple<double,DoubleVector3>[]>     ).FullName) return _ToString                           (format, (Tuple<DoubleVector3,Tuple<double,DoubleVector3>[]>     )obj);
           //if(name==typeof(Tuple<double,DoubleVector3>[]                          ).FullName) return _ToString                           (format, (Tuple<double,DoubleVector3>[]                          )obj);
@@ -226,6 +240,7 @@ namespace HTLib2
             if(name==typeof(Tuple<double, int, int, int >).FullName) { var val=(Tuple<double, int, int, int >)obj; return _ToString(format, val.Item1, val.Item2, val.Item3, val.Item4); }
             if(name==typeof(Tuple<int   ,Vector         >).FullName) { var val=(Tuple<int   ,Vector         >)obj; return _ToString(format, val.Item1, val.Item2); }
             if(name==typeof(Tuple<string,string         >).FullName) { var val=(Tuple<string,string         >)obj; return _ToString(format, val.Item1, val.Item2); }
+            if(name==typeof(Tuple<string,int            >).FullName) { var val=(Tuple<string,int            >)obj; return _ToString(format, val.Item1, val.Item2); }
 
             if(name==typeof(KeyValuePair<double, double>).FullName)
             {
