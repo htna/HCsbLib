@@ -91,10 +91,10 @@ namespace HTLib2
             text.Append("}");
             return text.ToString();
         }
-        protected static string _ToString<T, U>(string format, Tuple<T, U> obj)
-        {
-            return _ToString(format, obj.Item1, obj.Item2);
-        }
+        //protected static string _ToString<T, U>(string format, Tuple<T, U> obj)
+        //{
+        //    return _ToString(format, obj.Item1, obj.Item2);
+        //}
         protected static string _ToString<OBJECT>(string format, OBJECT[,] objs)
         {
             StringBuilder text = new StringBuilder();
@@ -191,12 +191,12 @@ namespace HTLib2
           //if(name==typeof(Tuple<double,DoubleVector3>                            ).FullName) return _ToString                           (format, (Tuple<double,DoubleVector3>                            )obj);
           //if(name==typeof(Tuple<DoubleVector3,Tuple<DoubleVector3,DoubleVector3>>).FullName) return _ToString                           (format, (Tuple<DoubleVector3,Tuple<DoubleVector3,DoubleVector3>>)obj);
           //if(name==typeof(Tuple<DoubleVector3,DoubleVector3>                     ).FullName) return _ToString                           (format, (Tuple<DoubleVector3,DoubleVector3>                     )obj);
-            if(name==typeof(Tuple<double[],double[]>                             ).FullName) return _ToString                           (format, (Tuple<double[],double[]>                             )obj);
-            if(name==typeof(Tuple<double,double>                                 ).FullName) return _ToString                           (format, (Tuple<double,double>                                 )obj);
-            if(name==typeof(Tuple<double,int>                                    ).FullName) return _ToString                           (format, (Tuple<double,int>                                    )obj);
-            if(name==typeof(Tuple<int,double>                                    ).FullName) return _ToString                           (format, (Tuple<int,double>                                    )obj);
-            if(name==typeof(Tuple<double,Vector>                                 ).FullName) return _ToString                           (format, (Tuple<double,Vector>                                 )obj);
-            if(name==typeof(Tuple<Vector,Vector>                                 ).FullName) return _ToString                           (format, (Tuple<Vector,Vector>                                 )obj);
+          //if(name==typeof(Tuple<double[],double[]>                             ).FullName) return _ToString                           (format, (Tuple<double[],double[]>                             )obj);
+          //if(name==typeof(Tuple<double,double>                                 ).FullName) return _ToString                           (format, (Tuple<double,double>                                 )obj);
+          //if(name==typeof(Tuple<double,int>                                    ).FullName) return _ToString                           (format, (Tuple<double,int>                                    )obj);
+          //if(name==typeof(Tuple<int,double>                                    ).FullName) return _ToString                           (format, (Tuple<int,double>                                    )obj);
+          //if(name==typeof(Tuple<double,Vector>                                 ).FullName) return _ToString                           (format, (Tuple<double,Vector>                                 )obj);
+          //if(name==typeof(Tuple<Vector,Vector>                                 ).FullName) return _ToString                           (format, (Tuple<Vector,Vector>                                 )obj);
             if(name==typeof(List<Tuple<double,int>>                              ).FullName) return _ToString                           (format, (List<Tuple<double,int>>                              )obj);
             if(name==typeof(List<Tuple<int,double>>                              ).FullName) return _ToString                           (format, (List<Tuple<int,double>>                              )obj);
             if(name==typeof(List<Tuple<double,double>>                           ).FullName) return _ToString                           (format, (List<Tuple<double,double>>                           )obj);
@@ -232,15 +232,15 @@ namespace HTLib2
             if(name==typeof(KeyValuePair<int, Tuple<Vector, Vector>>             ).FullName) return _ToString<int, Tuple<Vector,Vector>>(format, (KeyValuePair<int, Tuple<Vector, Vector>>             )obj);
             if(name==typeof(Dictionary<double,double[]>                          ).FullName) return _ToString<double,double[]>          (format, (Dictionary<double,double[]>                          )obj);
 
-            if(name==typeof(Tuple<int   , int           >).FullName) { var val=(Tuple<int   , int           >)obj; return _ToString(format, val.Item1, val.Item2); }
-            if(name==typeof(Tuple<int   , double        >).FullName) { var val=(Tuple<int   , double        >)obj; return _ToString(format, val.Item1, val.Item2); }
-            if(name==typeof(Tuple<int   , double, double>).FullName) { var val=(Tuple<int   , double, double>)obj; return _ToString(format, val.Item1, val.Item2, val.Item3); }
-            if(name==typeof(Tuple<double, double        >).FullName) { var val=(Tuple<double, double        >)obj; return _ToString(format, val.Item1, val.Item2); }
-            if(name==typeof(Tuple<double, double, double>).FullName) { var val=(Tuple<double, double, double>)obj; return _ToString(format, val.Item1, val.Item2, val.Item3); }
-            if(name==typeof(Tuple<double, int, int, int >).FullName) { var val=(Tuple<double, int, int, int >)obj; return _ToString(format, val.Item1, val.Item2, val.Item3, val.Item4); }
-            if(name==typeof(Tuple<int   ,Vector         >).FullName) { var val=(Tuple<int   ,Vector         >)obj; return _ToString(format, val.Item1, val.Item2); }
-            if(name==typeof(Tuple<string,string         >).FullName) { var val=(Tuple<string,string         >)obj; return _ToString(format, val.Item1, val.Item2); }
-            if(name==typeof(Tuple<string,int            >).FullName) { var val=(Tuple<string,int            >)obj; return _ToString(format, val.Item1, val.Item2); }
+          //if(name==typeof(Tuple<int   , int           >).FullName) { var val=(Tuple<int   , int           >)obj; return _ToString(format, val.Item1, val.Item2); }
+          //if(name==typeof(Tuple<int   , double        >).FullName) { var val=(Tuple<int   , double        >)obj; return _ToString(format, val.Item1, val.Item2); }
+          //if(name==typeof(Tuple<int   , double, double>).FullName) { var val=(Tuple<int   , double, double>)obj; return _ToString(format, val.Item1, val.Item2, val.Item3); }
+          //if(name==typeof(Tuple<double, double        >).FullName) { var val=(Tuple<double, double        >)obj; return _ToString(format, val.Item1, val.Item2); }
+          //if(name==typeof(Tuple<double, double, double>).FullName) { var val=(Tuple<double, double, double>)obj; return _ToString(format, val.Item1, val.Item2, val.Item3); }
+          //if(name==typeof(Tuple<double, int, int, int >).FullName) { var val=(Tuple<double, int, int, int >)obj; return _ToString(format, val.Item1, val.Item2, val.Item3, val.Item4); }
+          //if(name==typeof(Tuple<int   ,Vector         >).FullName) { var val=(Tuple<int   ,Vector         >)obj; return _ToString(format, val.Item1, val.Item2); }
+          //if(name==typeof(Tuple<string,string         >).FullName) { var val=(Tuple<string,string         >)obj; return _ToString(format, val.Item1, val.Item2); }
+          //if(name==typeof(Tuple<string,int            >).FullName) { var val=(Tuple<string,int            >)obj; return _ToString(format, val.Item1, val.Item2); }
 
             if(name==typeof(KeyValuePair<double, double>).FullName)
             {
