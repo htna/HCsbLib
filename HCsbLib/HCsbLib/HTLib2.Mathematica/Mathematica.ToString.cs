@@ -284,8 +284,10 @@ namespace HTLib2
             }
             if(name == typeof(string).FullName)
             {
-                //return obj.ToString();
-                return "\"" + obj.ToString() + "\"";
+                string str = obj.ToString();
+                str = str.Replace("\\", "\\\\");
+                str = "\"" + str + "\"";
+                return str;
             }
             if(name == typeof(object[]).FullName)
             {
