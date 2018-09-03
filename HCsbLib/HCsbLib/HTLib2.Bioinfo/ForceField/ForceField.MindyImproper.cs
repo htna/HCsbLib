@@ -377,7 +377,7 @@ namespace HTLib2.Bioinfo
                 double ap = (a-p).Dist;
                 double pd = (p-d).Dist;
 
-                Pair<double,double> fij_kij = MindyAngle.GetFijKij(ap, pd, ad, Kchi, delta, -1, +1, -1);
+                ValueTuple<double,double> fij_kij = MindyAngle.GetFijKij(ap, pd, ad, Kchi, delta, -1, +1, -1);
                 double fij = fij_kij.Item1;
                 double kij = fij_kij.Item2;
 
