@@ -142,7 +142,7 @@ namespace HTLib2.Bioinfo
                 double a = (pos2-pos1).Dist;
                 double b = (pos3-pos2).Dist;
                 double c = (pos3-pos1).Dist;
-                Pair<double,double> fij_kij = GetFijKij(a, b, c, Ktheta, Theta0);
+                ValueTuple<double,double> fij_kij = GetFijKij(a, b, c, Ktheta, Theta0);
                 double fij = fij_kij.Item1;
                 double kij = fij_kij.Item2;
 
@@ -152,7 +152,7 @@ namespace HTLib2.Bioinfo
                 pwhessinfos = new PwIntrActInfo[1];
                 pwhessinfos[0] = new PwIntrActInfo(kij, fij);
             }
-            public static Pair<double, double> GetFijKij(double a, double b, double c, double K0, double T0, double fij_sign=+1, double kij_sign0=+1, double kij_sign1=+1)
+            public static ValueTuple<double, double> GetFijKij(double a, double b, double c, double K0, double T0, double fij_sign=+1, double kij_sign0=+1, double kij_sign1=+1)
             {
                 ///   +
                 ///   |\
@@ -187,7 +187,7 @@ namespace HTLib2.Bioinfo
                 double kij = d2V_dc2;
                 HDebug.AssertIf(fij>0,   T0<T); // positive force => attractive
                 HDebug.AssertIf(fij<0, T<T0  ); // negative force => repulsive
-                return new Pair<double, double>(fij, kij);
+                return new ValueTuple<double, double>(fij, kij);
             }
             public static double acos(double d)            { return Math.Acos(d);   }
             public static double sqrt(double d)            { return Math.Sqrt(d);   }
