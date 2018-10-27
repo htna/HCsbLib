@@ -17,7 +17,9 @@ namespace HTLib2
             ( IEnumerable<double> x
             , IEnumerable<double> y
             , IEnumerable<double> size = null
+            , double? sizeall = null
             , IEnumerable<ValueTuple<double, double, double>> RGB = null
+            , ValueTuple<double, double, double>? RGBall = null
             , string xlabel = null
             , string ylabel = null
             , string title  = null
@@ -36,13 +38,23 @@ namespace HTLib2
             if(RGB  != null) Matlab.Execute  ("htlib2_matlab_PlotScatter.RGB = [htlib2_matlab_PlotScatter.R; htlib2_matlab_PlotScatter.G; htlib2_matlab_PlotScatter.B];");
             if(init_figure ) Matlab.Execute("figure;" );
             if(init_holdon ) Matlab.Execute("hold on;");
-            string script = "scatter" +
-                "( htlib2_matlab_PlotScatter.x" +
-                ", htlib2_matlab_PlotScatter.y" +
-                ((size != null) ? ", htlib2_matlab_PlotScatter.sz" : ", []") +
-                ((RGB  != null) ? ", htlib2_matlab_PlotScatter.RGB" : "") +
-                (filled ? "'filled'" : "") +
-                ");";
+            string script;
+            {
+                script = "scatter" +
+                         "( htlib2_matlab_PlotScatter.x" +
+                         ", htlib2_matlab_PlotScatter.y";
+                // size
+                if  (sizeall != null) script += ", " + sizeall.Value;
+                else if(size != null) script += ", htlib2_matlab_PlotScatter.sz";
+                else                  script += ", []";
+                // color
+                if  (RGBall != null) script += string.Format(", [{0},{1},{2}]", RGBall.Value.Item1, RGBall.Value.Item2, RGBall.Value.Item3);
+                else if(RGB != null) script += ", htlib2_matlab_PlotScatter.RGB";
+                // filled
+                if(filled) script += ", 'filled'";
+                // close
+                script += ");";
+            }
             Matlab.Execute(script);
             if(xlabel != null) Matlab.Execute("xlabel('" + xlabel + "');");
             if(ylabel != null) Matlab.Execute("ylabel('" + ylabel + "');");
