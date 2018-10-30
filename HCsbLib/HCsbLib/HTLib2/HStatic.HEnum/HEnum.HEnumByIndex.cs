@@ -7,7 +7,7 @@ namespace HTLib2
 {
     public static partial class HEnum
     {
-        public static IEnumerable<T> HEnumByGroup<T>(this IMatrix<T> mat, IEnumerable<ValueTuple<int, int>> indices)
+        public static IEnumerable<T> HEnumByIndex<T>(this IMatrix<T> mat, IEnumerable<ValueTuple<int, int>> indices)
         {
             foreach(var index in indices)
             {
