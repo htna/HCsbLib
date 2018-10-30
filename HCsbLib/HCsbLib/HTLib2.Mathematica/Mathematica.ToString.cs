@@ -138,30 +138,16 @@ namespace HTLib2
         }
         protected static string _ToString(string format, System.Collections.IDictionary obj)
         {
-            //  StringBuilder text = new StringBuilder();
-            //  text.Append("{");
-            //  int i = 0;
-            //  foreach (System.Collections.DictionaryEntry key_value in obj)
-            //  {
-            //      if (i != 0) text.Append(", ");
-            //      i++;
-            //      text.Append(_ToString(format, key_value.Key, key_value.Value));
-            //  }
-            //  text.Append("}");
-            //  return text.ToString();
-
             StringBuilder text = new StringBuilder();
-            text.Append("<| ");
+            text.Append("{");
             int i = 0;
             foreach (System.Collections.DictionaryEntry key_value in obj)
             {
                 if (i != 0) text.Append(", ");
                 i++;
-                text.Append(_ToString(format, key_value.Key));
-                text.Append("->");
-                text.Append(_ToString(format, key_value.Value));
+                text.Append(_ToString(format, key_value.Key, key_value.Value));
             }
-            text.Append(" |>");
+            text.Append("}");
             return text.ToString();
 
             throw new NotImplementedException();
