@@ -71,6 +71,10 @@ namespace HTLib2
         {
             return _ToString(null, objs);
         }
+        public static string ToString<T,U>(IDictionary<T,U> objs)
+        {
+            return _ToString(null, (object)objs);
+        }
         protected static string _ToString(string format, params object[] objs)
         {
             return _ToString(format, (IEnumerable<object>)objs);
