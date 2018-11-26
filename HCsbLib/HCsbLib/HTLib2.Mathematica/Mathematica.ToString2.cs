@@ -138,6 +138,49 @@ namespace HTLib2
                     return;
                 string name = obj.GetType().FullName;
 
+                if(name == typeof(Vector).FullName)
+                {
+                    Vector data = (Vector)obj;
+                    _ToString2(text, format, data._data);
+                    return;
+                }
+                if(name == typeof(int).FullName)
+                {
+                    if(format == null) { text.Append(obj.ToString()                 ); return; }
+                    else               { text.Append(string.Format(format, (int)obj)); return; }
+                }
+                if(name == typeof(double).FullName)
+                {
+                    string str;
+                    if(format == null) str = ((double)obj).ToString();
+                    else               str = string.Format(format, (double)obj);
+
+                    if(str.Contains("E") || str.Contains("e"))
+                    {
+                        str = str.Replace("e", "*10^");
+                        str = str.Replace("E", "*10^");
+                    }
+
+                    text.Append(str);
+                    return;
+                }
+                if(name == typeof(string).FullName)
+                {
+                    string str = obj.ToString();
+                    str = str.Replace("\\", "\\\\");
+                    str = "\"" + str + "\"";
+
+                    text.Append(str);
+                    return;
+                }
+                if(name == typeof(char).FullName)
+                {
+                    string str = "\'" + (char)obj + "\'";
+
+                    text.Append(str);
+                    return;
+                }
+
                 if(obj is System.Runtime.CompilerServices.ITuple    ) { _ToString2(text, format, obj as System.Runtime.CompilerServices.ITuple    ); return; }
                 if(obj is System.Collections.IDictionary            ) { _ToString2(text, format, obj as System.Collections.IDictionary            ); return; }
                 if(obj is System.Collections.IEnumerable            ) { _ToString2(text, format, obj as System.Collections.IEnumerable            ); return; }
@@ -212,41 +255,6 @@ namespace HTLib2
                 //    DoubleMatrix3 data = (DoubleMatrix3)obj;
                 //    return _ToString2(data.ToArray());
                 //}
-                if(name == typeof(Vector).FullName)
-                {
-                    Vector data = (Vector)obj;
-                    _ToString2(text, format, data._data);
-                    return;
-                }
-                if(name == typeof(int).FullName)
-                {
-                    if(format == null) { text.Append(obj.ToString()                 ); return; }
-                    else               { text.Append(string.Format(format, (int)obj)); return; }
-                }
-                if(name == typeof(double).FullName)
-                {
-                    string str;
-                    if(format == null) str = ((double)obj).ToString();
-                    else               str = string.Format(format, (double)obj);
-
-                    if(str.Contains("E") || str.Contains("e"))
-                    {
-                        str = str.Replace("e", "*10^");
-                        str = str.Replace("E", "*10^");
-                    }
-
-                    text.Append(str);
-                    return;
-                }
-                if(name == typeof(string).FullName)
-                {
-                    string str = obj.ToString();
-                    str = str.Replace("\\", "\\\\");
-                    str = "\"" + str + "\"";
-
-                    text.Append(str);
-                    return;
-                }
                 if(name == typeof(object[]).FullName)
                 {
                     _ToString2(text, format, (object[])obj);
