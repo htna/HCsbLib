@@ -530,11 +530,10 @@ namespace HTLib2.Bioinfo
                 }
 
                 public Vector Coord    { get { return new double[3]{ X, Y, Z }; } }
-                public int[]  BondedIds
+                public void GetBondedIds(ref List<int> bondeds)
                 {
-                    get
                     {
-                        List<int> bondeds = new List<int>();
+                        bondeds.Clear();
                         for(int idx=1; idx<20; idx++)
                         {
                             int? bonded = GetBondedId(idx);
@@ -542,6 +541,14 @@ namespace HTLib2.Bioinfo
                                 break;
                             bondeds.Add(bonded.Value);
                         }
+                    }
+                }
+                public int[]  BondedIds
+                {
+                    get
+                    {
+                        List<int> bondeds = new List<int>();
+                        GetBondedIds(ref bondeds);
                         return bondeds.ToArray();
                     }
                 }

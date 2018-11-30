@@ -322,7 +322,7 @@ namespace HTLib2.Bioinfo
                             nelements[ie] = elements[ie];
                         else
                         {
-                            nelements[ie] = Atom.FromCoord(iatom, coords[icoords]);
+                            nelements[ie] = Atom.FromCoord(iatom, coords[icoords], format);
                             icoords++;
                         }
                     }
