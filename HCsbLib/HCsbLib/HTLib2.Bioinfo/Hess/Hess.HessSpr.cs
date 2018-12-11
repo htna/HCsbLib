@@ -446,7 +446,7 @@ namespace HTLib2.Bioinfo
             /// 
             /// charmm : V_nbnd   = epsilon_ij (              (r0ij / rij)^12  -       2  * (r0ij / rij)^6 )   +           (qi*qj)/(epsilon*rij)
             ///                   = epsilon_ij (             r0ij^12 * rij^-12 -       2  * r0ij^6 * rij^-6)   +           (qi*qj/epsilon) * rij^-1
-            ///          frc_nbnd = epsilon_ij (  -12      * r0ij^12 * rij^-13 -(-6*   2) * r0ij^6 * rij^-7)   +   (-1   )*(qi*qj/epsilon) * rij^-2
+            ///          frc_nbnd = epsilon_ij (       -12 * r0ij^12 * rij^-13 -   (-6*2) * r0ij^6 * rij^-7)   +      (-1)*(qi*qj/epsilon) * rij^-2
             ///                   = epsilon_ij (      -12  * r0ij^12 * rij^-13 +       12 * r0ij^6 * rij^-7)   +        -1*(qi*qj/epsilon) * rij^-2
             ///          spr_nbnd = epsilon_ij ( (-12*-13) * r0ij^12 * rij^-14 -(-6*-7*2) * r0ij^6 * rij^-8)   +   (-1*-2)*(qi*qj/epsilon) * rij^-3
             ///                   = epsilon_ij (      156  * r0ij^12 * rij^-14 +       84 * r0ij^6 * rij^-8)   +         2*(qi*qj/epsilon) * rij^-3
