@@ -127,7 +127,7 @@ namespace HTLib2.Bioinfo
                 lstHeavyIdxAtmPrm    = lstHeavyIdxAtmPrm   
             };
         }
-        public static KDTree.KDTree<Tinker.Xyz.Atom> HToKdtree(this IList<Tinker.Xyz.Atom> atoms)
+        public static KDTree.KDTree<Tinker.Xyz.Atom> HToKDTree(this IList<Tinker.Xyz.Atom> atoms)
         {
             KDTree.KDTree<Tinker.Xyz.Atom> kdtree = new KDTree.KDTree<Tinker.Xyz.Atom>(3);
             foreach(var atom in atoms)
