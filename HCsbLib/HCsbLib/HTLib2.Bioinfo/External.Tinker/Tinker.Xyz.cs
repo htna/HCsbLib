@@ -132,7 +132,7 @@ namespace HTLib2.Bioinfo
             KDTree.KDTree<Tinker.Xyz.Atom> kdtree = new KDTree.KDTree<Tinker.Xyz.Atom>(3);
             foreach(var atom in atoms)
                 kdtree.insert(atom.Coord, atom);
-            return ketree;
+            return kdtree;
         }
     }
     public partial class Tinker
