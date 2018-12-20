@@ -109,6 +109,13 @@ namespace HTLib2.Bioinfo
         public static IEnumerable<double> HEnumMass(this IEnumerable<Tinker.Xyz.Atom> atoms, Tinker.Prm prm)
         {
             Dictionary<int,Tinker.Prm.Atom> prm_id2atom = prm.atoms.ToIdDictionary();
+            return HEnumMass(atoms, prm_id2atom);
+        }
+        public static IEnumerable<double> HEnumMass
+            ( this IEnumerable<Tinker.Xyz.Atom> atoms
+            , Dictionary<int,Tinker.Prm.Atom> prm_id2atom
+            )
+        {
             foreach(var atom in atoms)
                 yield return atom.GetMass(prm_id2atom);
         }
