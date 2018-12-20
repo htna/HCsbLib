@@ -168,6 +168,11 @@ namespace HTLib2.Bioinfo
                 kdtree.insert(atom.Coord, atom);
             return kdtree;
         }
+        public static IEnumerable<string> EnumLines(this IEnumerable<Element> elems)
+        {
+            foreach(var elem in elems)
+                yield return elem.line;
+        }
     }
     public partial class Tinker
     {
