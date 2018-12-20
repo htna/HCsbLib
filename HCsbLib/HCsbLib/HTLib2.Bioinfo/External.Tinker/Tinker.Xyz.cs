@@ -119,6 +119,16 @@ namespace HTLib2.Bioinfo
             foreach(var atom in atoms)
                 yield return atom.GetMass(prm_id2atom);
         }
+        public static Dictionary<Tinker.Xyz.Atom, double> HToDictionaryAtomMass
+            ( this IEnumerable<Tinker.Xyz.Atom> atoms
+            , Dictionary<int,Tinker.Prm.Atom> prm_id2atom
+            )
+        {
+            Dictionary<Tinker.Xyz.Atom, double> dict = new Dictionary<Tinker.Xyz.Atom, double>();
+            foreach(var atom in atoms)
+                dict.Add(atom, atom.GetMass(prm_id2atom));
+            return dict;
+        }
         public class CDivideHeavyHydro
         {
             public IList<Tuple<int,Tinker.Xyz.Atom,Tinker.Prm.Atom>> lstHydrogenIdxAtmPrm;
