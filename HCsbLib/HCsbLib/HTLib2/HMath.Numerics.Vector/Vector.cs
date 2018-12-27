@@ -111,8 +111,8 @@ namespace HTLib2
         public void SetOne ()              { for(int i=0; i<Size; i++) this[i] = 1; }
         public void SetValue(double value) { for(int i=0; i<Size; i++) this[i] = value; }
 
-        public Vector Zeros(int size) { return new Vector(size, 0); }
-        public Vector Ones (int size) { return new Vector(size, 1); }
+        public static Vector Zeros(int size) { return new Vector(size, 0); }
+        public static Vector Ones (int size) { return new Vector(size, 1); }
 
 		////////////////////////////////////////////////////////////////////////////////////
 		// ToMatrix
