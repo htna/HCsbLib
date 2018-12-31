@@ -37,5 +37,26 @@ namespace HTLib2
                 list.Add(new Tuple<T2, T1>(item.Value, item.Key));
             return list.ToArray();
         }
+        public static List<(T1, T2)> HToListValueTuple<T1, T2>(this ValueTuple<T1[], T2[]> tuples)
+        {
+            int n = tuples.Item1.Length;
+            HDebug.Exception(n == tuples.Item1.Length);
+            HDebug.Exception(n == tuples.Item2.Length);
+            List<(T1, T2)> list = new List<(T1, T2)>();
+            for(int i=0; i<n; i++)
+                list.Add((tuples.Item1[i], tuples.Item2[i]));
+            return list;
+        }
+        public static List<(T1, T2, T3)> HToListValueTuple<T1, T2, T3>(this ValueTuple<T1[], T2[], T3[]> tuples)
+        {
+            int n = tuples.Item1.Length;
+            HDebug.Exception(n == tuples.Item1.Length);
+            HDebug.Exception(n == tuples.Item2.Length);
+            HDebug.Exception(n == tuples.Item3.Length);
+            List<(T1, T2, T3)> list = new List<(T1, T2, T3)>();
+            for(int i=0; i<n; i++)
+                list.Add((tuples.Item1[i], tuples.Item2[i], tuples.Item3[i]));
+            return list;
+        }
     }
 }
