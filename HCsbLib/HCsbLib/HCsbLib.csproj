@@ -645,6 +645,7 @@
     <Compile Include="HTLib2\HMath.Numerics.LinAlg\ILinAlg.cs" />
     <Compile Include="HTLib2\HMath.Numerics.LinAlg\ILinAlg.Extensions.cs" />
     <Compile Include="HTLib2\HMath.Numerics.LinAlg\ILinAlg.MatrixByArr.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.LeastSquare.cs" />
     <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.AlterDotProd.cs" />
     <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.CrossProd.cs" />
     <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.cs" />
