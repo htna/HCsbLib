@@ -14,7 +14,23 @@ namespace HTLib2
 		{
             if(HDebug.Selftest())
             {
-                Debug.Assert(false);
+                //  >>A = [ 1, 2 ; 3, 4 ];
+                //  >>invA = inv(A)
+                //  invA =
+                //     -2.0000    1.0000
+                //      1.5000   -0.5000
+                //  >> invA* A
+                //  ans =
+                //      1.0000         0
+                //      0.0000    1.0000
+                //  >> A*invA
+                //  ans =
+                //      1.0000         0
+                //      0.0000    1.0000
+                MatrixByArr _A = new double[2,2] { { 1, 2 }, { 3, 4 } };
+                MatrixByArr _invA = Inv2x2(_A);
+                HDebug.Assert(_invA[0,0] == -2 ); HDebug.Assert(_invA[0,1] == 1   );
+                HDebug.Assert(_invA[1,0] == 1.5); HDebug.Assert(_invA[1,1] == -0.5);
             }
             
             // http://www.cvl.iis.u-tokyo.ac.jp/~miyazaki/tech/teche23.html
