@@ -246,11 +246,18 @@ namespace HTLib2
         }
         public static MatrixByArr VVt(Vector lvec, Vector rvec)
         {
+            MatrixByArr outmat = new MatrixByArr(lvec.Size, rvec.Size);
+            VVt(lvec, rvec, outmat);
+            return outmat;
+        }
+        public static void VVt(Vector lvec, Vector rvec, MatrixByArr outmat)
+        {
+            HDebug.Assert(outmat.ColSize == lvec.Size);
+            HDebug.Assert(outmat.RowSize == rvec.Size);
             MatrixByArr mat = new MatrixByArr(lvec.Size, rvec.Size);
             for(int c = 0; c < lvec.Size; c++)
                 for(int r = 0; r < rvec.Size; r++)
-                    mat[c, r] = lvec[c] * rvec[r];
-            return mat;
+                    outmat[c, r] = lvec[c] * rvec[r];
         }
         public static bool   DMD_selftest = HDebug.IsDebuggerAttached;
         public static Matrix DMD(Vector diagmat1, Matrix mat,Vector diagmat2)
