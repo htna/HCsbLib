@@ -252,8 +252,8 @@ namespace HTLib2
         }
         public static void VVt(Vector lvec, Vector rvec, MatrixByArr outmat)
         {
-            HDebug.Assert(outmat.ColSize == lvec.Size);
-            HDebug.Assert(outmat.RowSize == rvec.Size);
+            HDebug.Exception(outmat.ColSize == lvec.Size);
+            HDebug.Exception(outmat.RowSize == rvec.Size);
             MatrixByArr mat = new MatrixByArr(lvec.Size, rvec.Size);
             for(int c = 0; c < lvec.Size; c++)
                 for(int r = 0; r < rvec.Size; r++)
