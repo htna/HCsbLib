@@ -200,10 +200,48 @@ namespace HTLib2
                //static bool   MtM_SelfTest = HDebug.IsDebuggerAttached;
         public static Matrix MtM(Matrix lmat, Matrix rmat)
         {
-            bool MtM_SelfTest = HDebug.IsDebuggerAttached;
+            bool MtM_SelfTest = false;//HDebug.IsDebuggerAttached;
             if(MtM_SelfTest)
             {
                 MtM_SelfTest = false;
+                /// >> A=[ 1,5 ; 2,6 ; 3,7 ; 4,8 ];
+                /// >> B=[ 1,2,3 ; 3,4,5 ; 5,6,7 ; 7,8,9 ];
+                /// >> A'*B
+                /// ans =
+                ///     50    60    70
+                ///    114   140   166
+                Matrix _A = new double[4, 2] {{ 1,5 },{ 2,6 },{ 3,7 },{ 4,8 }};
+                Matrix _B = new double[4, 3] {{ 1,2,3 },{ 3,4,5 },{ 5,6,7 },{ 7,8,9 }};
+                Matrix _AtB = MtM(_A, _B);
+                Matrix _AtB_sol = new double[2,3]
+                            { {  50,  60,  70 }
+                            , { 114, 140, 166 } };
+                double err = (_AtB - _AtB_sol).HAbsMax();
+                HDebug.Assert(err == 0);
+            }
+            HDebug.Assert(lmat.ColSize == rmat.ColSize);
+            int size1 = lmat.RowSize;
+            int size2 = rmat.ColSize;
+            int size3 = rmat.RowSize;
+            Matrix result = Matrix.Zeros(size1, size3);
+            for(int c=0; c<size1; c++)
+                for(int r=0; r<size3; r++)
+                {
+                    double sum = 0;
+                    for(int i=0; i<size2; i++)
+                        // tr(lmat[c,i]) * rmat[i,r] => lmat[i,c] * rmat[i,r]
+                        sum += lmat[i,c] * rmat[i,r];
+                    result[c, r] = sum;
+                }
+            return result;
+        }
+               //static bool   MMt_SelfTest = HDebug.IsDebuggerAttached;
+        public static Matrix MMt(Matrix lmat, Matrix rmat)
+        {
+            bool MMt_SelfTest = false;//HDebug.IsDebuggerAttached;
+            if(MMt_SelfTest)
+            {
+                MMt_SelfTest = false;
                 /// >> A=[ 1,2,3,4 ; 5,6,7,8 ];
                 /// >> B=[ 1,3,5,7 ; 2,4,6,8 ; 3,5,7,9 ];
                 /// >> A*B'
@@ -217,7 +255,7 @@ namespace HTLib2
                             { { 1, 3, 5, 7 }
                             , { 2, 4, 6, 8 }
                             , { 3, 5, 7, 9 } };
-                Matrix _AtB = MtM(_A, _B);
+                Matrix _AtB = MMt(_A, _B);
                 Matrix _AtB_sol = new double[2,3]
                             { {  50,  60,  70 }
                             , { 114, 140, 166 } };
@@ -234,7 +272,7 @@ namespace HTLib2
                 {
                     double sum = 0;
                     for(int i=0; i<size2; i++)
-                        // lmat[c,i] * tr(rmat[i,r]) => lmat[c,i] * rmat[i,r]
+                        // lmat[c,i] * tr(rmat[i,r]) => lmat[c,i] * rmat[r,i]
                         sum += lmat[c,i] * rmat[r,i];
                     result[c, r] = sum;
                 }
