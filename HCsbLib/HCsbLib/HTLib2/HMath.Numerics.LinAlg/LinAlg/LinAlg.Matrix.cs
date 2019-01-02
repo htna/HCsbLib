@@ -197,12 +197,62 @@ namespace HTLib2
                 });
             }
         }
+               //static bool   MtM_SelfTest = HDebug.IsDebuggerAttached;
+        public static Matrix MtM(Matrix lmat, Matrix rmat)
+        {
+            bool MtM_SelfTest = HDebug.IsDebuggerAttached;
+            if(MtM_SelfTest)
+            {
+                MtM_SelfTest = false;
+                /// >> A=[ 1,2,3,4 ; 5,6,7,8 ];
+                /// >> B=[ 1,3,5,7 ; 2,4,6,8 ; 3,5,7,9 ];
+                /// >> A*B'
+                /// ans =
+                ///     50    60    70
+                ///    114   140   166
+                Matrix _A = new double[2, 4]
+                            { { 1, 2, 3, 4 }
+                            , { 5, 6, 7, 8 } };
+                Matrix _B = new double[3, 4]
+                            { { 1, 3, 5, 7 }
+                            , { 2, 4, 6, 8 }
+                            , { 3, 5, 7, 9 } };
+                Matrix _AtB = MtM(_A, _B);
+                Matrix _AtB_sol = new double[2,3]
+                            { {  50,  60,  70 }
+                            , { 114, 140, 166 } };
+                double err = (_AtB - _AtB_sol).HAbsMax();
+                HDebug.Assert(err == 0);
+            }
+            HDebug.Assert(lmat.RowSize == rmat.RowSize);
+            int size1 = lmat.ColSize;
+            int size2 = lmat.RowSize;
+            int size3 = rmat.ColSize;
+            Matrix result = Matrix.Zeros(size1, size3);
+            for(int c=0; c<size1; c++)
+                for(int r=0; r<size3; r++)
+                {
+                    double sum = 0;
+                    for(int i=0; i<size2; i++)
+                        // lmat[c,i] * tr(rmat[i,r]) => lmat[c,i] * rmat[i,r]
+                        sum += lmat[c,i] * rmat[r,i];
+                    result[c, r] = sum;
+                }
+            return result;
+        }
                static bool   MtV_SelfTest = HDebug.IsDebuggerAttached;
         public static Vector MtV(Matrix lmat, Vector rvec)
         {
             if(MtV_SelfTest)
             {
                 MtV_SelfTest = false;
+                /// >> A = [ 1,2,3 ; 4,5,6 ; 7,8,9 ; 10,11,12 ];
+                /// >> B = [ 1; 2; 3; 4 ];
+                /// >> A'*B
+                /// ans =
+                ///     70
+                ///     80
+                ///     90
                 MatrixByArr tM = new double[4, 3] { {  1,  2,  3 }
                                              , {  4,  5,  6 }
                                              , {  7,  8,  9 }
