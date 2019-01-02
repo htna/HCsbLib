@@ -128,7 +128,36 @@ namespace HTLib2
 		{
             if(HDebug.Selftest())
             {
-                Debug.Assert(false);
+                /// >> A=[ 1,2,3,4 ; 5,7,9,10 ; 13,24,52,14 ; 12,43,73,28 ]
+                /// >> invA = inv(A)
+                ///    -0.5599    0.2942    0.0557   -0.0529
+                ///    -0.8416    0.2638   -0.1128    0.0824
+                ///     0.3886   -0.1754    0.0576   -0.0216
+                ///     0.5193   -0.0739   -0.0007   -0.0117
+                /// >> A*invA
+                ///     1.0000    0.0000         0   -0.0000
+                ///    -0.0000    1.0000   -0.0000    0.0000
+                ///          0    0.0000    1.0000    0.0000
+                ///          0    0.0000    0.0000    1.0000
+                MatrixByArr _A = new double[4,4] {{ 1,2,3,4 },{ 5,7,9,10 },{ 13,24,52,14 },{ 12,43,73,28 }};
+                MatrixByArr _invA_sol = new double[4,4]
+                    { { -0.5599,  0.2942,  0.0557, -0.0529 }
+                    , { -0.8416,  0.2638, -0.1128,  0.0824 }
+                    , {  0.3886, -0.1754,  0.0576, -0.0216 }
+                    , {  0.5193, -0.0739, -0.0007, -0.0117 } };
+                MatrixByArr _invA = Inv4x4(_A);
+                
+                double err1 = (_invA - _invA_sol).HAbsMax();
+                HDebug.Assert(err1 < 0.0001);
+
+                MatrixByArr _I = LinAlg.Eye(4);
+                MatrixByArr _AinvA = _A * _invA;
+                double err2 = (_I - _AinvA).HAbsMax();
+                HDebug.Assert(err2 < 0.000000001);
+
+                MatrixByArr _invAA = _invA * _A;
+                double err3 = (_I - _invAA).HAbsMax();
+                HDebug.Assert(err3 < 0.000000001);
             }
 
 			//////////////////////////////////////////////////////////////////////////
