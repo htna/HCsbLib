@@ -167,10 +167,18 @@ namespace HTLib2
                 if(name == typeof(string).FullName)
                 {
                     string str = obj.ToString();
-                    str = str.Replace("\\", "\\\\");
-                    str = "\"" + str + "\"";
+                    if(str.StartsWith("(* ") && str.EndsWith(" *)"))
+                    {
+                        // add comment as it is
+                        text.Append(str);
+                    }
+                    else
+                    {
+                        str = str.Replace("\\", "\\\\");
+                        str = "\"" + str + "\"";
 
-                    text.Append(str);
+                        text.Append(str);
+                    }
                     return;
                 }
                 if(name == typeof(char).FullName)
