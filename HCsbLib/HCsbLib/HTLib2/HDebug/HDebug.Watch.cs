@@ -30,6 +30,8 @@ namespace HTLib2
                 {
                     if(_watch == null)
                         return null;
+                    if(_watch.ContainsKey(key) == false)
+                        return null;
                     return _watch[key];
                 }
                 set
