@@ -9,6 +9,16 @@ namespace HTLib2
     public partial class HDebug
 	{
         static Dictionary<string,object> _watch = (IsDebuggerAttached) ? (new Dictionary<string, object>()) : (null);
+        static object _watch0 = null;
+        static object _watch1 = null;
+        static object _watch2 = null;
+        static object _watch3 = null;
+        static object _watch4 = null;
+        static object _watch5 = null;
+        static object _watch6 = null;
+        static object _watch7 = null;
+        static object _watch8 = null;
+        static object _watch9 = null;
 
         public static CWatch Watch = new CWatch();
 
