@@ -1411,6 +1411,7 @@
   <ItemGroup>
     <Content Include="External.NETLink\NETLink15\Wolfram.NETLink.dll" />
     <Content Include="External.NETLink\NETLink16\Wolfram.NETLink.dll" />
+    <Content Include="External.NETLink\NETLink17\Wolfram.NETLink.dll" />
     <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\1cbn-a.pdb" />
     <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Essential CHARMM Features.html" />
     <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Full example.html" />
