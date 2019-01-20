@@ -226,7 +226,7 @@ namespace HTLib2.Bioinfo
         public static HessInfo GetHessAnm(Universe univ, IList<Vector> coords, double cutoff)
         {
             // cutoff: 4.5    for all atomic model
-            //         7 or 8 for CA model
+            //         7 or 8 for CA model (Atilgan01-BiophysJ - Anisotropy of Fluctuation Dynamics of Proteins with an Elastic Network Model)
             HessMatrix hess = GetHessAnm(coords, cutoff);
 
             return new HessInfo
