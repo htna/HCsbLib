@@ -53,7 +53,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="Wolfram.NETLink, Version=1.5.4772.34337, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>External.NETLink\NETLink16\Wolfram.NETLink.dll</HintPath>
+      <HintPath>External.NETLink\NETLink17\Wolfram.NETLink.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
