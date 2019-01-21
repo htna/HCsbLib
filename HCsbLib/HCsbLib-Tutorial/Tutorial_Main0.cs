@@ -10,7 +10,7 @@ namespace Tutorial
 {
     partial class Program
     {
-        public class Program_Main0
+        public class Tutorial_Main0
         {
             public static void Main(string[] args)
             {

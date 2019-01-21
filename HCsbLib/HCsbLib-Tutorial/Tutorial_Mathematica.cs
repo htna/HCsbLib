@@ -10,7 +10,7 @@ namespace Tutorial
 {
     partial class Program
     {
-        public class Program_Mathematica
+        public class Tutorial_Mathematica
         {
             public static void Main(string[] args)
             {

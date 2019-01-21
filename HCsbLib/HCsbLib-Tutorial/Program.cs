@@ -12,8 +12,8 @@ namespace Tutorial
     {
         static void Main(string[] args)
         {
-            Program_Main0.Main(args);
-            Program_Mathematica.Main(args);
+            Tutorial_Main0.Main(args);
+            Tutorial_Mathematica.Main(args);
         }
     }
 }
