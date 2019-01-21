@@ -8,9 +8,9 @@ using HTLib2.Bioinfo;
 
 namespace Tutorial
 {
-    class Program_Main0
+    public class Program_Main0
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             // load a pdb file
             Pdb pdb = Pdb.FromFile("1l2y.pdb");

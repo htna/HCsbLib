@@ -8,9 +8,9 @@ using HTLib2.Bioinfo;
 
 namespace Tutorial
 {
-    class Program_Mathematica
+    public class Program_Mathematica
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
         }
     }
