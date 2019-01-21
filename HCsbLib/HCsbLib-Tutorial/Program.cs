@@ -8,7 +8,7 @@ using HTLib2.Bioinfo;
 
 namespace Tutorial
 {
-    class Program
+    partial class Program
     {
         static void Main(string[] args)
         {

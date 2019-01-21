@@ -8,10 +8,13 @@ using HTLib2.Bioinfo;
 
 namespace Tutorial
 {
-    public class Program_Mathematica
+    partial class Program
     {
-        public static void Main(string[] args)
+        public class Program_Mathematica
         {
+            public static void Main(string[] args)
+            {
+            }
         }
     }
 }
