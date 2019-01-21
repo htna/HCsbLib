@@ -53,7 +53,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HCsbLib\HCsbLib.csproj">
+    <ProjectReference Include="..\external-HCsbLib\HCsbLib.csproj">
       <Project>{0264d6b8-7241-428d-a6fa-74c2dcb4713d}</Project>
       <Name>HCsbLib</Name>
     </ProjectReference>
