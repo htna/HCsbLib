@@ -9,10 +9,19 @@ namespace HTLib2
 {
 	public partial class Mathematica
 	{
+        public static void RegisterMathLinkFactory
+            ( string dir_ml64_dll = @"C:\Program Files\Wolfram Research\Mathematica\11.3\SystemFiles\Links\MathLink\DeveloperKit\Windows-x86-64\SystemAdditions\"
+            )
+        {
+            HMathLinkFactory.RegisterMathLinkFactory
+                ( dir_ml64_dll
+                );
+        }
+
         public class HMathLinkFactory
         {
             static private bool _addpath = true;
-            static private void AddPath
+            static public void RegisterMathLinkFactory
                 ( string dir_ml64_dll = @"C:\Program Files\Wolfram Research\Mathematica\11.3\SystemFiles\Links\MathLink\DeveloperKit\Windows-x86-64\SystemAdditions\"
                 )
             {
@@ -34,20 +43,21 @@ namespace HTLib2
             Wolfram.NETLink.MathLinkFactory mathLinkFactory;
             public HMathLinkFactory() : base()
             {
-                AddPath();
+                RegisterMathLinkFactory();
                 mathLinkFactory = new MathLinkFactory();
             }
 
-            public static Wolfram.NETLink.IKernelLink   CreateKernelLink()               { AddPath(); return Wolfram.NETLink.MathLinkFactory.CreateKernelLink();        }
-            public static Wolfram.NETLink.IKernelLink   CreateKernelLink(string cmdLine) { AddPath(); return Wolfram.NETLink.MathLinkFactory.CreateKernelLink(cmdLine); }
-            public static Wolfram.NETLink.IKernelLink   CreateKernelLink(string[] argv)  { AddPath(); return Wolfram.NETLink.MathLinkFactory.CreateKernelLink(argv);    }
-            public static Wolfram.NETLink.IKernelLink   CreateKernelLink(IMathLink ml)   { AddPath(); return Wolfram.NETLink.MathLinkFactory.CreateKernelLink(ml);      }
-            public static Wolfram.NETLink.ILoopbackLink CreateLoopbackLink()             { AddPath(); return Wolfram.NETLink.MathLinkFactory.CreateLoopbackLink();      }
-            public static Wolfram.NETLink.IMathLink     CreateMathLink()                 { AddPath(); return Wolfram.NETLink.MathLinkFactory.CreateMathLink();          }
-            public static Wolfram.NETLink.IMathLink     CreateMathLink(string cmdLine)   { AddPath(); return Wolfram.NETLink.MathLinkFactory.CreateMathLink(cmdLine);   }
-            public static Wolfram.NETLink.IMathLink     CreateMathLink(string[] argv)    { AddPath(); return Wolfram.NETLink.MathLinkFactory.CreateMathLink(argv);      }
-
+            public static Wolfram.NETLink.IKernelLink   CreateKernelLink()               { RegisterMathLinkFactory(); return Wolfram.NETLink.MathLinkFactory.CreateKernelLink();        }
+            public static Wolfram.NETLink.IKernelLink   CreateKernelLink(string cmdLine) { RegisterMathLinkFactory(); return Wolfram.NETLink.MathLinkFactory.CreateKernelLink(cmdLine); }
+            public static Wolfram.NETLink.IKernelLink   CreateKernelLink(string[] argv)  { RegisterMathLinkFactory(); return Wolfram.NETLink.MathLinkFactory.CreateKernelLink(argv);    }
+            public static Wolfram.NETLink.IKernelLink   CreateKernelLink(IMathLink ml)   { RegisterMathLinkFactory(); return Wolfram.NETLink.MathLinkFactory.CreateKernelLink(ml);      }
+            public static Wolfram.NETLink.ILoopbackLink CreateLoopbackLink()             { RegisterMathLinkFactory(); return Wolfram.NETLink.MathLinkFactory.CreateLoopbackLink();      }
+            public static Wolfram.NETLink.IMathLink     CreateMathLink()                 { RegisterMathLinkFactory(); return Wolfram.NETLink.MathLinkFactory.CreateMathLink();          }
+            public static Wolfram.NETLink.IMathLink     CreateMathLink(string cmdLine)   { RegisterMathLinkFactory(); return Wolfram.NETLink.MathLinkFactory.CreateMathLink(cmdLine);   }
+            public static Wolfram.NETLink.IMathLink     CreateMathLink(string[] argv)    { RegisterMathLinkFactory(); return Wolfram.NETLink.MathLinkFactory.CreateMathLink(argv);      }
         }
+
+
 
         public static object   EvaluateObject     (string evaluate) { return Evaluate(evaluate, delegate(IKernelLink ml) { return ml.GetObject     (); }); }
         public static double   EvaluateDouble     (string evaluate) { return Evaluate(evaluate, delegate(IKernelLink ml) { return ml.GetDouble     (); }); }
