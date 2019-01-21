@@ -14,6 +14,23 @@ namespace Tutorial
         {
             public static void Main(string[] args)
             {
+                List<double> xs = new List<double>();
+                List<double> ys = new List<double>();
+                for(double x=0; x<=Math.PI*2; x+=0.1)
+                {
+                    xs.Add(x);
+                    ys.Add(Math.Sin(x));
+                }
+
+                string pathbase = Environment.CurrentDirectory + @"\test\";
+                HDirectory.CreateDirectory(pathbase);
+
+                string str_xs = Mathematica.ToString2(xs);
+                string str_ys = Mathematica.ToString2(ys);
+                string str_plot = "ListLinePlot[Transpose[{"+str_xs+","+str_ys+"}], PlotRange->All]";
+                Mathematica.EvaluatePng(str_plot, 300, pathbase+"test_mathematica.png");
+
+
             }
         }
     }
