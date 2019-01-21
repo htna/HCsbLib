@@ -12,7 +12,7 @@ namespace Tutorial
     {
         public class Tutorial_Main0
         {
-            public static void Main(string[] args)
+            public static void Main(string pathbase, string[] args)
             {
                 // load a pdb file
                 Pdb pdb = Pdb.FromFile("1l2y.pdb");

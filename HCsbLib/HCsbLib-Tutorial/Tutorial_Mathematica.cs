@@ -12,7 +12,7 @@ namespace Tutorial
     {
         public class Tutorial_Mathematica
         {
-            public static void Main(string[] args)
+            public static void Main(string pathbase, string[] args)
             {
                 List<double> xs = new List<double>();
                 List<double> ys = new List<double>();
@@ -21,9 +21,6 @@ namespace Tutorial
                     xs.Add(x);
                     ys.Add(Math.Sin(x));
                 }
-
-                string pathbase = Environment.CurrentDirectory + @"\test\";
-                HDirectory.CreateDirectory(pathbase);
 
                 string str_xs = Mathematica.ToString2(xs);
                 string str_ys = Mathematica.ToString2(ys);
