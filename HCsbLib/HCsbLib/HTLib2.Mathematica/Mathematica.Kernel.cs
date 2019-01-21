@@ -23,8 +23,11 @@ namespace HTLib2
             static private bool _addpath = true;
             static public void RegisterMathLinkFactory
                 ( string dir_ml64_dll = @"C:\Program Files\Wolfram Research\Mathematica\11.3\SystemFiles\Links\MathLink\DeveloperKit\Windows-x86-64\SystemAdditions\"
+                , string dir_ml32_dll = @"C:\Program Files\Wolfram Research\Mathematica\11.3\SystemFiles\Links\MathLink\DeveloperKit\Windows\SystemAdditions\"
                 )
             {
+                if(_addpath == false)
+                    return;
                 _addpath = false;
 
                 //  /// https://stackoverflow.com/questions/22093715/how-to-set-environment-variable-path-using-c-sharp
@@ -37,7 +40,10 @@ namespace HTLib2
                 //  /// https://stackoverflow.com/questions/1892492/set-custom-path-to-referenced-dlls
                 //  AppDomain.CurrentDomain.AppendPrivatePath(dir_ml64_dll);
 
-                Environment.SetEnvironmentVariable("PATH", Environment.GetEnvironmentVariable("PATH") + ";" + dir_ml64_dll);
+                Environment.SetEnvironmentVariable
+                    ( "PATH"
+                    , Environment.GetEnvironmentVariable("PATH") + ";" + dir_ml64_dll + ";" + dir_ml32_dll
+                    );
             }
 
             Wolfram.NETLink.MathLinkFactory mathLinkFactory;
@@ -88,6 +94,7 @@ namespace HTLib2
 
         public static void EvaluatePng(string evaluate, int width, int height, string pngpath)
         {
+            throw new NotImplementedException();
         }
         public static Image EvaluateImage(string evaluate, int width, int height)
         {
