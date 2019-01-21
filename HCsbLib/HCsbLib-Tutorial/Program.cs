@@ -15,8 +15,8 @@ namespace Tutorial
             string pathbase = Environment.CurrentDirectory + @"\test\";
             HDirectory.CreateDirectory(pathbase);
 
-            Tutorial_Mathematica.Main(args);
-            Tutorial_Main0.Main(args);
+            Tutorial_Mathematica.Main(pathbase, args);
+            Tutorial_Main0      .Main(pathbase, args);
         }
     }
 }
