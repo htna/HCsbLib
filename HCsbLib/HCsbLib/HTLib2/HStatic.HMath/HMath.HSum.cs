@@ -36,8 +36,7 @@ namespace HTLib2
                 }
             return sum;
         }
-        public static double HSum<MAT>(this MAT mat)
-            where MAT : IMatrix<double>
+        public static double HSum(this IMatrix<double> mat)
         {
             double sum = 0;
             for(int c=0; c<mat.ColSize; c++)
