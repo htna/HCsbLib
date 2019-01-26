@@ -36,5 +36,31 @@ namespace HTLib2
                 }
             return sum;
         }
+        public static double HSum<MAT>(this MAT mat)
+            where MAT : IMatrix<double>
+        {
+            double sum = 0;
+            for(int c=0; c<mat.ColSize; c++)
+                for(int r=0; r<mat.RowSize; r++)
+                    sum += mat[c, r];
+            return sum;
+        }
+        public static double HSumSub<MAT1, MAT2>(this (MAT1, MAT2) mat12)
+            where MAT1 : IMatrix<double>
+            where MAT2 : IMatrix<double>
+        {
+            IMatrix<double> mat1 = mat12.Item1;
+            IMatrix<double> mat2 = mat12.Item2;
+            HDebug.Exception(mat1.ColSize == mat2.ColSize);
+            HDebug.Exception(mat1.RowSize == mat2.RowSize);
+            double sum = 0;
+            for(int c=0; c<mat1.ColSize; c++)
+                for(int r=0; r<mat1.RowSize; r++)
+                {
+                    double v = (mat1[c, r] - mat2[c, r]);
+                    sum += v;
+                }
+            return sum;
+        }
     }
 }
