@@ -127,10 +127,25 @@ namespace HTLib2.Bioinfo
                         Matlab.Execute("bhess = A - B * D * C;");
                         break;
                     case "_eig" :
+                        bool bCheckInv = true;
+                        if(bCheckInv) Matlab.Execute("Dbak = D;");
                         Matlab.Execute("[D,DD] = eig(D);");
-                        Matlab.Execute("DD(abs(DD)<"+linvopt+") = 0;");
-                        Matlab.Execute("DD = pinv(DD);");
+                        if(HDebug.False)
+                        {
+                            Matlab.Execute("DD(abs(DD)<"+linvopt+") = 0;");
+                            Matlab.Execute("DD = pinv(DD);");
+                        } else {
+                            Matlab.Execute("DD = diag(DD);");
+                            Matlab.Execute("DDidx = abs(DD)<"+linvopt+";");
+                            Matlab.Execute("DD = 1./DD;");
+                            Matlab.Execute("DD(DDidx) = 0;");
+                            Matlab.Execute("DD = diag(DD);");
+                            Matlab.Execute("clear DDidx;");
+                        }
                         Matlab.Execute("D = D * DD * D';");
+                        if(bCheckInv) { double err0 = Matlab.GetValue("max(max(abs(eye(size(D)) - Dbak * D)))"); }
+                        if(bCheckInv) { double err1 = Matlab.GetValue("max(max(abs(eye(size(D)) - D * Dbak)))"); }
+                        if(bCheckInv) Matlab.Execute("clear Dbak;");
                         Matlab.Execute("clear DD;");
                         Matlab.Execute("bhess = A - B * D * C;");
                         break;
