@@ -201,7 +201,12 @@ namespace HTLib2.Bioinfo
             {
                 get
                 {
-                    var aminoacids = HBioinfo.AminoAcids.ToDictionaryBy3Letter(true);
+                    //var aminoacids = HBioinfo.AminoAcids.ToDictionaryBy3Letter(true);
+                    Func<string, HBioinfo.AminoAcid> aminoacids = delegate(string resn)
+                    {
+                        return HBioinfo.AminoAcid.From3Letter(resn);
+                    };
+
                     List<string> mutations = new List<string>();
                     foreach(var mutationinfo in mutationinfos)
                     {
@@ -213,13 +218,13 @@ namespace HTLib2.Bioinfo
                         string mutation;
                         switch(operation)
                         {
-                            case "replace": mutation = string.Format("{0}{1}{2}" , aminoacids[wt_resn].name1, wt_resi, aminoacids[mut_resn].name1); break;
-                            case "delete" : mutation = string.Format("del {0}{1}", aminoacids[wt_resn].name1, wt_resi                            ); break;
+                            case "replace": mutation = string.Format("{0}{1}{2}" , aminoacids(wt_resn).name1, wt_resi, aminoacids(mut_resn).name1); break;
+                            case "delete" : mutation = string.Format("del {0}{1}", aminoacids(wt_resn).name1, wt_resi                            ); break;
                             case "insert" :
                                 {
-                                    string resn_after = wt_resn; if(aminoacids.ContainsKey(resn_after)) resn_after = aminoacids[resn_after].name1.ToString();
+                                    string resn_after = wt_resn; if(aminoacids(resn_after) != null) resn_after = aminoacids(resn_after).name1.ToString();
                                     int    resi_after = wt_resi;
-                                    mutation         = string.Format("ins {0} after {1}{2}"   ,                        aminoacids[mut_resn].name1, resn_after, resi_after);
+                                    mutation         = string.Format("ins {0} after {1}{2}"   ,                  aminoacids(mut_resn).name1, resn_after, resi_after);
                                 }
                                 break;
                             default: throw new NotImplementedException();
@@ -233,8 +238,13 @@ namespace HTLib2.Bioinfo
             {
                 HDebug.Assert(GetMutationType("HIS", 64, "TRP") == "H64W"); // selftest
 
-                var aminoacids = HBioinfo.AminoAcids.ToDictionaryBy3Letter(true);
-                string muttype = string.Format("{0}{1}{2}", aminoacids[wt_resn].name1, wt_resi, aminoacids[mut_resn].name1);
+                //var aminoacids = HBioinfo.AminoAcids.ToDictionaryBy3Letter(true);
+                Func<string, HBioinfo.AminoAcid> aminoacids = delegate(string resn)
+                {
+                    return HBioinfo.AminoAcid.From3Letter(resn);
+                };
+
+                string muttype = string.Format("{0}{1}{2}", aminoacids(wt_resn).name1, wt_resi, aminoacids(mut_resn).name1);
                 return muttype;
             }
             static bool DecomposeMutationType_selftest = HDebug.IsDebuggerAttached;
@@ -250,9 +260,14 @@ namespace HTLib2.Bioinfo
                     HDebug.Exception(tdec.Item4.ToUpper() == "TRP");
                     HDebug.Exception(tdec.Item5           == 'W');
                 }
-                var aminoacids = HBioinfo.AminoAcids.ToDictionaryBy1Letter();
-                char    wt_resn1 = muttype.First(); string  wt_resn3 = aminoacids[ wt_resn1].name3;
-                char   mut_resn1 = muttype.Last (); string mut_resn3 = aminoacids[mut_resn1].name3;
+                //var aminoacids = HBioinfo.AminoAcids.ToDictionaryBy1Letter();
+                Func<char, HBioinfo.AminoAcid> aminoacids = delegate(char resn)
+                {
+                    return HBioinfo.AminoAcid.From1Letter(resn);
+                };
+
+                char    wt_resn1 = muttype.First(); string  wt_resn3 = aminoacids( wt_resn1).name3;
+                char   mut_resn1 = muttype.Last (); string mut_resn3 = aminoacids(mut_resn1).name3;
                 string lwt_resi  = muttype.Substring(1, muttype.Length-2);
                 int     wt_resi  = int.Parse(lwt_resi);
 
