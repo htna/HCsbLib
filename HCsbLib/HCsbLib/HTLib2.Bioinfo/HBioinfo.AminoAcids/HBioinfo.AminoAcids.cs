@@ -173,7 +173,7 @@ namespace HTLib2.Bioinfo
             public static readonly AminoAcid NamdAliasHSE = new AminoAcid ( name3:"HSE", name1:'H' ); // HIS -> HSE
             public static readonly AminoAcid NamdAliasHSP = new AminoAcid ( name3:"HSP", name1:'H' ); // HIS -> HSP
 
-            public static readonly AminoAcid[] AminoAcids = new AminoAcid[]
+            public static readonly IReadOnlyList<AminoAcid> AminoAcids = new AminoAcid[]
                 { Alanine, Arginine, Asparagine, AsparticAcid, Cysteine, GlutamicAcid, Glutamine, Glycine, Histidine, Isoleucine, Leucine, Lysine, Methionine, Phenylalanine, Proline, Serine, Threonine, Tryptophan, Tyrosine, Valine
                 // pdb
                 , AcidicUnknown, Acetyl, Hydroxylysine, BetaAlanine, AliphaticUnknown, GammaAminobutyricAcid, AromaticUnknown, AspAsnAmbiguous, BasicUnknown, Betaine, Taurine, Terminator, Formyl, Thyroxine, GluGlnAmbiguous, Unknown                  
@@ -183,16 +183,34 @@ namespace HTLib2.Bioinfo
                 };
 
             // https://www.sigmaaldrich.com/life-science/metabolomics/learning-center/amino-acid-reference-chart.html
-            public static readonly AminoAcid[] AminoAcidsWithHydrophobicSideChain_Aliphatic       = new AminoAcid[] { Alanine, Isoleucine, Leucine, Methionine, Valine, };
-            public static readonly AminoAcid[] AminoAcidsWithHydrophobicSideChain_Aromatic        = new AminoAcid[] { Phenylalanine, Tryptophan, Tyrosine, };
-            public static readonly AminoAcid[] AminoAcidsWithPolarNeutralSideChains               = new AminoAcid[] { Asparagine, Cysteine, Glutamine, Serine, Threonine, };
-            public static readonly AminoAcid[] AminoAcidsWithElectricallyChargedSideChains_Acidic = new AminoAcid[] { AsparticAcid,  AsparticAcid, GlutamicAcid, };
-            public static readonly AminoAcid[] AminoAcidsWithElectricallyChargedSideChains_Basic  = new AminoAcid[] { Arginine, Histidine, Lysine, };
-            public static readonly AminoAcid[] AminoAcidsUnique                                   = new AminoAcid[] { Glycine, Proline, };
+            public static readonly IReadOnlyList<AminoAcid> AminoAcidsWithHydrophobicSideChain_Aliphatic       = new AminoAcid[] { Alanine, Isoleucine, Leucine, Methionine, Valine, };
+            public static readonly IReadOnlyList<AminoAcid> AminoAcidsWithHydrophobicSideChain_Aromatic        = new AminoAcid[] { Phenylalanine, Tryptophan, Tyrosine, };
+            public static readonly IReadOnlyList<AminoAcid> AminoAcidsWithPolarNeutralSideChains               = new AminoAcid[] { Asparagine, Cysteine, Glutamine, Serine, Threonine, };
+            public static readonly IReadOnlyList<AminoAcid> AminoAcidsWithElectricallyChargedSideChains_Acidic = new AminoAcid[] { AsparticAcid,  AsparticAcid, GlutamicAcid, };
+            public static readonly IReadOnlyList<AminoAcid> AminoAcidsWithElectricallyChargedSideChains_Basic  = new AminoAcid[] { Arginine, Histidine, Lysine, };
+            public static readonly IReadOnlyList<AminoAcid> AminoAcidsUnique                                   = new AminoAcid[] { Glycine, Proline, };
 
-            public static readonly AminoAcid[] AminoAcidsHydrophobic = new AminoAcid[] { Glycine,     Alanine, Valine, Phenylalanine, Proline, Leucine, Isoleucine, };
-            public static readonly AminoAcid[] AminoAcidsHydrophilic = new AminoAcid[] { Arginine, AsparticAcid, GlutamicAcid, Serine, Cysteine, Asparagine, Glutamine, Histidine, };
-            public static readonly AminoAcid[] AminoAcidsAmphipathic = new AminoAcid[] { Threonine, Lysine, Tyrosine, Methionine, Tryptophan, };
+            public static readonly IReadOnlyList<AminoAcid> AminoAcidsHydrophobic = new AminoAcid[] { Glycine,     Alanine, Valine, Phenylalanine, Proline, Leucine, Isoleucine, };
+            public static readonly IReadOnlyList<AminoAcid> AminoAcidsHydrophilic = new AminoAcid[] { Arginine, AsparticAcid, GlutamicAcid, Serine, Cysteine, Asparagine, Glutamine, Histidine, };
+            public static readonly IReadOnlyList<AminoAcid> AminoAcidsAmphipathic = new AminoAcid[] { Threonine, Lysine, Tyrosine, Methionine, Tryptophan, };
+
+            public static IReadOnlyList<AminoAcid> GetAminoAcidsByType(string type)
+            {
+                switch(type)
+                {
+                    case "AminoAcidsWithHydrophobicSideChain_Aliphatic"       : return AminoAcidsWithHydrophobicSideChain_Aliphatic      ;
+                    case "AminoAcidsWithHydrophobicSideChain_Aromatic"        : return AminoAcidsWithHydrophobicSideChain_Aromatic       ;
+                    case "AminoAcidsWithPolarNeutralSideChains"               : return AminoAcidsWithPolarNeutralSideChains              ;
+                    case "AminoAcidsWithElectricallyChargedSideChains_Acidic" : return AminoAcidsWithElectricallyChargedSideChains_Acidic;
+                    case "AminoAcidsWithElectricallyChargedSideChains_Basic"  : return AminoAcidsWithElectricallyChargedSideChains_Basic ;
+                    case "AminoAcidsUnique"                                   : return AminoAcidsUnique                                  ;
+                    case "AminoAcidsHydrophobic"                              : return AminoAcidsHydrophobic                             ;
+                    case "AminoAcidsHydrophilic"                              : return AminoAcidsHydrophilic                             ;
+                    case "AminoAcidsAmphipathic"                              : return AminoAcidsAmphipathic                             ;
+                    default:
+                        return null;
+                }
+            }
 
             static Dictionary<string, AminoAcid> _distName3 = null;
             public static AminoAcid From3Letter(string name3)
