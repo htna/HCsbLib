@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HTLib2.Bioinfo
 {
-    using AminoAcid = HBioinfo.AminoAcid;
+    using Acid = HBioinfo.Acid;
     public static partial class HStaticBioinfo
     {
         //public static Dictionary<string,AminoAcid> ToDictionaryBy3Letter(this IList<AminoAcid> acids, bool toupper)
@@ -29,11 +29,11 @@ namespace HTLib2.Bioinfo
         //public static string[] HBioinfoConvertTo3Letter(              params char  [] resis1) { return HBioinfo.AminoAcids.Convert_1Letter_to_3Letter(         resis1); }
         //public static char  [] HBioinfoConvertTo1Letter(bool toupper, params string[] resis3) { return HBioinfo.AminoAcids.Convert_3Letter_to_1Letter(toupper, resis3); }
 
-        public static IReadOnlyList<AminoAcid> GerResAminoAcid(this Pdb.Atom atom)
+        public static IReadOnlyList<Acid> GerResAminoAcid(this Pdb.Atom atom)
         {
             string name3 = atom.resName;
             HDebug.Assert(name3.Length == 3);
-            return AminoAcid.From3Letter(name3);
+            return Acid.From3Letter(name3);
         }
         public static char? GetResNameSyn(this Pdb.Atom atom)
         {
@@ -47,7 +47,7 @@ namespace HTLib2.Bioinfo
     }
     public static partial class HBioinfo
     {
-        public class AminoAcid
+        public class Acid
         {
             public readonly string name;     // full name
             public readonly char?  name1;    // 1 letter
@@ -60,7 +60,7 @@ namespace HTLib2.Bioinfo
             {
                 return string.Format("{0} ({1}, {2})", name3, name1, name);
             }
-            protected AminoAcid
+            protected Acid
                 ( string name                         = null
                 , char?  name1                        = null
                 , string name3                        = null
@@ -101,26 +101,26 @@ namespace HTLib2.Bioinfo
             // | Tryptophan    | Trp      | W        | nonpolar      | neutral                    | -0.9       | 280, 219      | 5.6, 47.0         | 204        |
             // | Tyrosine      | Tyr      | Y        | polar         | neutral                    | -1.3       | 274, 222, 193 | 1.4, 8.0, 48.0    | 181        |
             // | Valine        | Val      | V        | nonpolar      | neutral                    |  4.2       |               |                   | 117        |
-            public static readonly AminoAcid Alanine       = new AminoAcid ( name:"Alanine"      , name3:"Ala", name1:'A', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 1.8, Weight:89  );
-            public static readonly AminoAcid Arginine      = new AminoAcid ( name:"Arginine"     , name3:"Arg", name1:'R', sidechainPolarity:SideChainPolarity.BasicPolar , HydropathyIndex:-4.5, Weight:174 );
-            public static readonly AminoAcid Asparagine    = new AminoAcid ( name:"Asparagine"   , name3:"Asn", name1:'N', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-3.5, Weight:132 );
-            public static readonly AminoAcid AsparticAcid  = new AminoAcid ( name:"Aspartic acid", name3:"Asp", name1:'D', sidechainPolarity:SideChainPolarity.AcidicPolar, HydropathyIndex:-3.5, Weight:133 );
-            public static readonly AminoAcid Cysteine      = new AminoAcid ( name:"Cysteine"     , name3:"Cys", name1:'C', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 2.5, Weight:121 );
-            public static readonly AminoAcid GlutamicAcid  = new AminoAcid ( name:"Glutamic acid", name3:"Glu", name1:'E', sidechainPolarity:SideChainPolarity.AcidicPolar, HydropathyIndex:-3.5, Weight:147 );
-            public static readonly AminoAcid Glutamine     = new AminoAcid ( name:"Glutamine"    , name3:"Gln", name1:'Q', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-3.5, Weight:146 );
-            public static readonly AminoAcid Glycine       = new AminoAcid ( name:"Glycine"      , name3:"Gly", name1:'G', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex:-0.4, Weight:75  );
-            public static readonly AminoAcid Histidine     = new AminoAcid ( name:"Histidine"    , name3:"His", name1:'H', sidechainPolarity:SideChainPolarity.BasicPolar , HydropathyIndex:-3.2, Weight:155 );
-            public static readonly AminoAcid Isoleucine    = new AminoAcid ( name:"Isoleucine"   , name3:"Ile", name1:'I', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 4.5, Weight:131 );
-            public static readonly AminoAcid Leucine       = new AminoAcid ( name:"Leucine"      , name3:"Leu", name1:'L', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 3.8, Weight:131 );
-            public static readonly AminoAcid Lysine        = new AminoAcid ( name:"Lysine"       , name3:"Lys", name1:'K', sidechainPolarity:SideChainPolarity.BasicPolar , HydropathyIndex:-3.9, Weight:146 );
-            public static readonly AminoAcid Methionine    = new AminoAcid ( name:"Methionine"   , name3:"Met", name1:'M', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 1.9, Weight:149 );
-            public static readonly AminoAcid Phenylalanine = new AminoAcid ( name:"Phenylalanine", name3:"Phe", name1:'F', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 2.8, Weight:165 );
-            public static readonly AminoAcid Proline       = new AminoAcid ( name:"Proline"      , name3:"Pro", name1:'P', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex:-1.6, Weight:115 );
-            public static readonly AminoAcid Serine        = new AminoAcid ( name:"Serine"       , name3:"Ser", name1:'S', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-0.8, Weight:105 );
-            public static readonly AminoAcid Threonine     = new AminoAcid ( name:"Threonine"    , name3:"Thr", name1:'T', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-0.7, Weight:119 );
-            public static readonly AminoAcid Tryptophan    = new AminoAcid ( name:"Tryptophan"   , name3:"Trp", name1:'W', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex:-0.9, Weight:204 );
-            public static readonly AminoAcid Tyrosine      = new AminoAcid ( name:"Tyrosine"     , name3:"Tyr", name1:'Y', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-1.3, Weight:181 );
-            public static readonly AminoAcid Valine        = new AminoAcid ( name:"Valine"       , name3:"Val", name1:'V', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 4.2, Weight:117 );
+            public static readonly Acid Alanine       = new Acid ( name:"Alanine"      , name3:"Ala", name1:'A', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 1.8, Weight:89  );
+            public static readonly Acid Arginine      = new Acid ( name:"Arginine"     , name3:"Arg", name1:'R', sidechainPolarity:SideChainPolarity.BasicPolar , HydropathyIndex:-4.5, Weight:174 );
+            public static readonly Acid Asparagine    = new Acid ( name:"Asparagine"   , name3:"Asn", name1:'N', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-3.5, Weight:132 );
+            public static readonly Acid AsparticAcid  = new Acid ( name:"Aspartic acid", name3:"Asp", name1:'D', sidechainPolarity:SideChainPolarity.AcidicPolar, HydropathyIndex:-3.5, Weight:133 );
+            public static readonly Acid Cysteine      = new Acid ( name:"Cysteine"     , name3:"Cys", name1:'C', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 2.5, Weight:121 );
+            public static readonly Acid GlutamicAcid  = new Acid ( name:"Glutamic acid", name3:"Glu", name1:'E', sidechainPolarity:SideChainPolarity.AcidicPolar, HydropathyIndex:-3.5, Weight:147 );
+            public static readonly Acid Glutamine     = new Acid ( name:"Glutamine"    , name3:"Gln", name1:'Q', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-3.5, Weight:146 );
+            public static readonly Acid Glycine       = new Acid ( name:"Glycine"      , name3:"Gly", name1:'G', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex:-0.4, Weight:75  );
+            public static readonly Acid Histidine     = new Acid ( name:"Histidine"    , name3:"His", name1:'H', sidechainPolarity:SideChainPolarity.BasicPolar , HydropathyIndex:-3.2, Weight:155 );
+            public static readonly Acid Isoleucine    = new Acid ( name:"Isoleucine"   , name3:"Ile", name1:'I', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 4.5, Weight:131 );
+            public static readonly Acid Leucine       = new Acid ( name:"Leucine"      , name3:"Leu", name1:'L', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 3.8, Weight:131 );
+            public static readonly Acid Lysine        = new Acid ( name:"Lysine"       , name3:"Lys", name1:'K', sidechainPolarity:SideChainPolarity.BasicPolar , HydropathyIndex:-3.9, Weight:146 );
+            public static readonly Acid Methionine    = new Acid ( name:"Methionine"   , name3:"Met", name1:'M', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 1.9, Weight:149 );
+            public static readonly Acid Phenylalanine = new Acid ( name:"Phenylalanine", name3:"Phe", name1:'F', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 2.8, Weight:165 );
+            public static readonly Acid Proline       = new Acid ( name:"Proline"      , name3:"Pro", name1:'P', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex:-1.6, Weight:115 );
+            public static readonly Acid Serine        = new Acid ( name:"Serine"       , name3:"Ser", name1:'S', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-0.8, Weight:105 );
+            public static readonly Acid Threonine     = new Acid ( name:"Threonine"    , name3:"Thr", name1:'T', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-0.7, Weight:119 );
+            public static readonly Acid Tryptophan    = new Acid ( name:"Tryptophan"   , name3:"Trp", name1:'W', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex:-0.9, Weight:204 );
+            public static readonly Acid Tyrosine      = new Acid ( name:"Tyrosine"     , name3:"Tyr", name1:'Y', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-1.3, Weight:181 );
+            public static readonly Acid Valine        = new Acid ( name:"Valine"       , name3:"Val", name1:'V', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 4.2, Weight:117 );
 
             // http://www.ccp4.ac.uk/html/pdbformat.html
             //  Acidic unknown              ACD         Homoserine                  HSE
@@ -145,36 +145,36 @@ namespace HTLib2.Bioinfo
             //  Glycine                     GLY *       Unknown                     UNK
             //  Heterogen                   HET         Valine                      VAL *
             //  Histidine                   HIS *       Water                       HOH
-            public static readonly AminoAcid AcidicUnknown              = new AminoAcid ( name:"Acidic unknown"             , name3:"ACD"               );
-            public static readonly AminoAcid Acetyl                     = new AminoAcid ( name:"Acetyl"                     , name3:"ACE"               );
-            public static readonly AminoAcid Hydroxylysine              = new AminoAcid ( name:"Hydroxylysine"              , name3:"HYL"               );
-            public static readonly AminoAcid BetaAlanine                = new AminoAcid ( name:"beta-Alanine"               , name3:"ALB"               );
-            public static readonly AminoAcid AliphaticUnknown           = new AminoAcid ( name:"Aliphatic unknown"          , name3:"ALI"               );
-            public static readonly AminoAcid GammaAminobutyricAcid      = new AminoAcid ( name:"gamma-Aminobutyric acid"    , name3:"ABU"               );
-            public static readonly AminoAcid AromaticUnknown            = new AminoAcid ( name:"Aromatic unknown"           , name3:"ARO"               );
-            public static readonly AminoAcid AspAsnAmbiguous            = new AminoAcid ( name:"ASP/ASN ambiguous"          , name3:"ASX", name1:'B'    );
-            public static readonly AminoAcid BasicUnknown               = new AminoAcid ( name:"Basic unknown"              , name3:"BAS"               );
-            public static readonly AminoAcid Betaine                    = new AminoAcid ( name:"Betaine"                    , name3:"BET"               );
-            public static readonly AminoAcid Taurine                    = new AminoAcid ( name:"Taurine"                    , name3:"TAU"               );
-            public static readonly AminoAcid Terminator                 = new AminoAcid ( name:"Terminator"                 , name3:"TER"               );
-            public static readonly AminoAcid Formyl                     = new AminoAcid ( name:"Formyl"                     , name3:"FOR"               );
-            public static readonly AminoAcid Thyroxine                  = new AminoAcid ( name:"Thyroxine"                  , name3:"THY"               );
-            public static readonly AminoAcid GluGlnAmbiguous            = new AminoAcid ( name:"GLU/GLN ambiguous"          , name3:"GLX", name1:'Z'    );
-            public static readonly AminoAcid Unknown                    = new AminoAcid ( name:"Unknown"                    , name3:"UNK"               );
-            public static readonly AminoAcid Heterogen                  = new AminoAcid ( name:"Heterogen"                  , name3:"HET"               );
-            public static readonly AminoAcid Water                      = new AminoAcid ( name:"Water"                      , name3:"HOH"               );
-            public static readonly AminoAcid Homoserine                 = new AminoAcid ( name:"Homoserine"                 , name3:"HSE"               );
-            public static readonly AminoAcid Hydroxyproline             = new AminoAcid ( name:"Hydroxyproline"             , name3:"HYP"               );
-            public static readonly AminoAcid Ornithine                  = new AminoAcid ( name:"Ornithine"                  , name3:"ORN"               );
-            public static readonly AminoAcid PyrollidoneCarboxylicAcid  = new AminoAcid ( name:"Pyrollidone carboxylic acid", name3:"PCA"               );
-            public static readonly AminoAcid Sarcosine                  = new AminoAcid ( name:"Sarcosine"                  , name3:"SAR"               );
+            public static readonly Acid AcidicUnknown              = new Acid ( name:"Acidic unknown"             , name3:"ACD"               );
+            public static readonly Acid Acetyl                     = new Acid ( name:"Acetyl"                     , name3:"ACE"               );
+            public static readonly Acid Hydroxylysine              = new Acid ( name:"Hydroxylysine"              , name3:"HYL"               );
+            public static readonly Acid BetaAlanine                = new Acid ( name:"beta-Alanine"               , name3:"ALB"               );
+            public static readonly Acid AliphaticUnknown           = new Acid ( name:"Aliphatic unknown"          , name3:"ALI"               );
+            public static readonly Acid GammaAminobutyricAcid      = new Acid ( name:"gamma-Aminobutyric acid"    , name3:"ABU"               );
+            public static readonly Acid AromaticUnknown            = new Acid ( name:"Aromatic unknown"           , name3:"ARO"               );
+            public static readonly Acid AspAsnAmbiguous            = new Acid ( name:"ASP/ASN ambiguous"          , name3:"ASX", name1:'B'    );
+            public static readonly Acid BasicUnknown               = new Acid ( name:"Basic unknown"              , name3:"BAS"               );
+            public static readonly Acid Betaine                    = new Acid ( name:"Betaine"                    , name3:"BET"               );
+            public static readonly Acid Taurine                    = new Acid ( name:"Taurine"                    , name3:"TAU"               );
+            public static readonly Acid Terminator                 = new Acid ( name:"Terminator"                 , name3:"TER"               );
+            public static readonly Acid Formyl                     = new Acid ( name:"Formyl"                     , name3:"FOR"               );
+            public static readonly Acid Thyroxine                  = new Acid ( name:"Thyroxine"                  , name3:"THY"               );
+            public static readonly Acid GluGlnAmbiguous            = new Acid ( name:"GLU/GLN ambiguous"          , name3:"GLX", name1:'Z'    );
+            public static readonly Acid Unknown                    = new Acid ( name:"Unknown"                    , name3:"UNK"               );
+            public static readonly Acid Heterogen                  = new Acid ( name:"Heterogen"                  , name3:"HET"               );
+            public static readonly Acid Water                      = new Acid ( name:"Water"                      , name3:"HOH"               );
+            public static readonly Acid Homoserine                 = new Acid ( name:"Homoserine"                 , name3:"HSE"               );
+            public static readonly Acid Hydroxyproline             = new Acid ( name:"Hydroxyproline"             , name3:"HYP"               );
+            public static readonly Acid Ornithine                  = new Acid ( name:"Ornithine"                  , name3:"ORN"               );
+            public static readonly Acid PyrollidoneCarboxylicAcid  = new Acid ( name:"Pyrollidone carboxylic acid", name3:"PCA"               );
+            public static readonly Acid Sarcosine                  = new Acid ( name:"Sarcosine"                  , name3:"SAR"               );
                     
             // NAMD pdbalias
-            public static readonly AminoAcid NamdAliasHSD = new AminoAcid ( name3:"HSD", name1:'H' ); // HIS -> HSD
-            public static readonly AminoAcid NamdAliasHSE = new AminoAcid ( name3:"HSE", name1:'H' ); // HIS -> HSE
-            public static readonly AminoAcid NamdAliasHSP = new AminoAcid ( name3:"HSP", name1:'H' ); // HIS -> HSP
+            public static readonly Acid NamdAliasHSD = new Acid ( name3:"HSD", name1:'H' ); // HIS -> HSD
+            public static readonly Acid NamdAliasHSE = new Acid ( name3:"HSE", name1:'H' ); // HIS -> HSE
+            public static readonly Acid NamdAliasHSP = new Acid ( name3:"HSP", name1:'H' ); // HIS -> HSP
 
-            public static readonly IReadOnlyList<AminoAcid> AminoAcids = new AminoAcid[]
+            public static readonly IReadOnlyList<Acid> AminoAcids = new Acid[]
                 { Alanine, Arginine, Asparagine, AsparticAcid, Cysteine, GlutamicAcid, Glutamine, Glycine, Histidine, Isoleucine, Leucine, Lysine, Methionine, Phenylalanine, Proline, Serine, Threonine, Tryptophan, Tyrosine, Valine
                 // pdb
                 , AcidicUnknown, Acetyl, Hydroxylysine, BetaAlanine, AliphaticUnknown, GammaAminobutyricAcid, AromaticUnknown, AspAsnAmbiguous, BasicUnknown, Betaine, Taurine, Terminator, Formyl, Thyroxine, GluGlnAmbiguous, Unknown                  
@@ -184,18 +184,18 @@ namespace HTLib2.Bioinfo
                 };
 
             // https://www.sigmaaldrich.com/life-science/metabolomics/learning-center/amino-acid-reference-chart.html
-            public static readonly IReadOnlyList<AminoAcid> AminoAcidsWithHydrophobicSideChain_Aliphatic       = new AminoAcid[] { Alanine, Isoleucine, Leucine, Methionine, Valine, };
-            public static readonly IReadOnlyList<AminoAcid> AminoAcidsWithHydrophobicSideChain_Aromatic        = new AminoAcid[] { Phenylalanine, Tryptophan, Tyrosine, };
-            public static readonly IReadOnlyList<AminoAcid> AminoAcidsWithPolarNeutralSideChains               = new AminoAcid[] { Asparagine, Cysteine, Glutamine, Serine, Threonine, };
-            public static readonly IReadOnlyList<AminoAcid> AminoAcidsWithElectricallyChargedSideChains_Acidic = new AminoAcid[] { AsparticAcid,  AsparticAcid, GlutamicAcid, };
-            public static readonly IReadOnlyList<AminoAcid> AminoAcidsWithElectricallyChargedSideChains_Basic  = new AminoAcid[] { Arginine, Histidine, Lysine, };
-            public static readonly IReadOnlyList<AminoAcid> AminoAcidsUnique                                   = new AminoAcid[] { Glycine, Proline, };
+            public static readonly IReadOnlyList<Acid> AminoAcidsWithHydrophobicSideChain_Aliphatic       = new Acid[] { Alanine, Isoleucine, Leucine, Methionine, Valine, };
+            public static readonly IReadOnlyList<Acid> AminoAcidsWithHydrophobicSideChain_Aromatic        = new Acid[] { Phenylalanine, Tryptophan, Tyrosine, };
+            public static readonly IReadOnlyList<Acid> AminoAcidsWithPolarNeutralSideChains               = new Acid[] { Asparagine, Cysteine, Glutamine, Serine, Threonine, };
+            public static readonly IReadOnlyList<Acid> AminoAcidsWithElectricallyChargedSideChains_Acidic = new Acid[] { AsparticAcid,  AsparticAcid, GlutamicAcid, };
+            public static readonly IReadOnlyList<Acid> AminoAcidsWithElectricallyChargedSideChains_Basic  = new Acid[] { Arginine, Histidine, Lysine, };
+            public static readonly IReadOnlyList<Acid> AminoAcidsUnique                                   = new Acid[] { Glycine, Proline, };
 
-            public static readonly IReadOnlyList<AminoAcid> AminoAcidsHydrophobic = new AminoAcid[] { Glycine,     Alanine, Valine, Phenylalanine, Proline, Leucine, Isoleucine, };
-            public static readonly IReadOnlyList<AminoAcid> AminoAcidsHydrophilic = new AminoAcid[] { Arginine, AsparticAcid, GlutamicAcid, Serine, Cysteine, Asparagine, Glutamine, Histidine, };
-            public static readonly IReadOnlyList<AminoAcid> AminoAcidsAmphipathic = new AminoAcid[] { Threonine, Lysine, Tyrosine, Methionine, Tryptophan, };
+            public static readonly IReadOnlyList<Acid> AminoAcidsHydrophobic = new Acid[] { Glycine,     Alanine, Valine, Phenylalanine, Proline, Leucine, Isoleucine, };
+            public static readonly IReadOnlyList<Acid> AminoAcidsHydrophilic = new Acid[] { Arginine, AsparticAcid, GlutamicAcid, Serine, Cysteine, Asparagine, Glutamine, Histidine, };
+            public static readonly IReadOnlyList<Acid> AminoAcidsAmphipathic = new Acid[] { Threonine, Lysine, Tyrosine, Methionine, Tryptophan, };
 
-            public static IReadOnlyList<AminoAcid> GetAminoAcidsByType(string type)
+            public static IReadOnlyList<Acid> GetAminoAcidsByType(string type)
             {
                 switch(type)
                 {
@@ -213,17 +213,17 @@ namespace HTLib2.Bioinfo
                 }
             }
 
-            static Dictionary<string, AminoAcid[]> _distName3 = null;
-            public static IReadOnlyList<AminoAcid> From3Letter(string name3)
+            static Dictionary<string, Acid[]> _distName3 = null;
+            public static IReadOnlyList<Acid> From3Letter(string name3)
             {
                 if(_distName3 == null)
                 {
-                    _distName3 = new Dictionary<string, AminoAcid[]>();
+                    _distName3 = new Dictionary<string, Acid[]>();
                     foreach(var aa in AminoAcids)
                     {
                         string aa_name3 = aa.name3.ToUpper().Trim();
                         if(_distName3.ContainsKey(aa_name3) == false)
-                            _distName3.Add(aa_name3, new AminoAcid[] { aa });
+                            _distName3.Add(aa_name3, new Acid[] { aa });
                         else
                             _distName3[aa_name3] = _distName3[aa_name3].HAdd(aa);
                     }
@@ -232,12 +232,12 @@ namespace HTLib2.Bioinfo
                     return _distName3[name3];
                 return null;
             }
-            static Dictionary<char, AminoAcid> _distName1 = null;
-            public static AminoAcid From1Letter(char name1)
+            static Dictionary<char, Acid> _distName1 = null;
+            public static Acid From1Letter(char name1)
             {
                 if(_distName1 == null)
                 {
-                    _distName1 = new Dictionary<char, AminoAcid>();
+                    _distName1 = new Dictionary<char, Acid>();
                     foreach(var aa in AminoAcids)
                         if(aa.name1 != null)
                             _distName1.Add(aa.name1.Value, aa);

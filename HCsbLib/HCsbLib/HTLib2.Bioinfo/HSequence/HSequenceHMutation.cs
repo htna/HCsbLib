@@ -202,9 +202,9 @@ namespace HTLib2.Bioinfo
                 get
                 {
                     //var aminoacids = HBioinfo.AminoAcids.ToDictionaryBy3Letter(true);
-                    Func<string, HBioinfo.AminoAcid> aminoacids = delegate(string resn)
+                    Func<string, HBioinfo.Acid> aminoacids = delegate(string resn)
                     {
-                        var aa = HBioinfo.AminoAcid.From3Letter(resn);
+                        var aa = HBioinfo.Acid.From3Letter(resn);
                         HDebug.Exception(aa.Count == 1);
                         return aa[0];
                     };
@@ -241,9 +241,9 @@ namespace HTLib2.Bioinfo
                 HDebug.Assert(GetMutationType("HIS", 64, "TRP") == "H64W"); // selftest
 
                 //var aminoacids = HBioinfo.AminoAcids.ToDictionaryBy3Letter(true);
-                Func<string, HBioinfo.AminoAcid> aminoacids = delegate(string resn)
+                Func<string, HBioinfo.Acid> aminoacids = delegate(string resn)
                 {
-                        var aa = HBioinfo.AminoAcid.From3Letter(resn);
+                        var aa = HBioinfo.Acid.From3Letter(resn);
                         HDebug.Exception(aa.Count == 1);
                         return aa[0];
                 };
@@ -265,9 +265,9 @@ namespace HTLib2.Bioinfo
                     HDebug.Exception(tdec.Item5           == 'W');
                 }
                 //var aminoacids = HBioinfo.AminoAcids.ToDictionaryBy1Letter();
-                Func<char, HBioinfo.AminoAcid> aminoacids = delegate(char resn)
+                Func<char, HBioinfo.Acid> aminoacids = delegate(char resn)
                 {
-                    return HBioinfo.AminoAcid.From1Letter(resn);
+                    return HBioinfo.Acid.From1Letter(resn);
                 };
 
                 char    wt_resn1 = muttype.First(); string  wt_resn3 = aminoacids( wt_resn1).name3;
