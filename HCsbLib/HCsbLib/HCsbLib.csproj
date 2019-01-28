@@ -1394,6 +1394,7 @@
     <None Include="HTLib2.Bioinfo\External.Tinker\tinker-8.4.3\source\testhesssparse-htna-v0.f" />
     <None Include="HTLib2.Bioinfo\External.Tinker\tinker-8.4.3\source\testhesssparse-htna-v1.f" />
     <None Include="HTLib2.Bioinfo\External.Tinker\tinker-8.4.3\source\testhesssparse-htna.f" />
+    <None Include="HTLib2.Bioinfo\HBioinfo.AminoAcids\Amino Acids Reference Chart _ Sigma-Aldrich.pdf" />
     <None Include="HTLib2.Bioinfo\HBioinfo.BFactor\BFactor.ModeContribToBFactorCorr.one" />
     <None Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessSbNMA_SelfTest.log" />
     <None Include="HTLib2.Bioinfo\Hess\Hess.GetSprScalar.one" />
