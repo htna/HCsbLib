@@ -221,16 +221,16 @@ namespace HTLib2.Bioinfo
                 };
             
             // https://www.sigmaaldrich.com/life-science/metabolomics/learning-center/amino-acid-reference-chart.html
-            static readonly HReadOnlyHashSet<Acid> AminoAcidsWithHydrophobicSideChain_Aliphatic       = (new Acid[] { Alanine, Isoleucine, Leucine, Methionine, Valine,   }).HToHashSet();
-            static readonly HReadOnlyHashSet<Acid> AminoAcidsWithHydrophobicSideChain_Aromatic        = (new Acid[] { Phenylalanine, Tryptophan, Tyrosine,                }).HToHashSet();
-            static readonly HReadOnlyHashSet<Acid> AminoAcidsWithPolarNeutralSideChains               = (new Acid[] { Asparagine, Cysteine, Glutamine, Serine, Threonine, }).HToHashSet();
-            static readonly HReadOnlyHashSet<Acid> AminoAcidsWithElectricallyChargedSideChains_Acidic = (new Acid[] { AsparticAcid,  AsparticAcid, GlutamicAcid,          }).HToHashSet();
-            static readonly HReadOnlyHashSet<Acid> AminoAcidsWithElectricallyChargedSideChains_Basic  = (new Acid[] { Arginine, Histidine, Lysine,                        }).HToHashSet();
-            static readonly HReadOnlyHashSet<Acid> AminoAcidsUnique                                   = (new Acid[] { Glycine, Proline,                                   }).HToHashSet();
+            public static readonly HReadOnlyHashSet<Acid> AminoAcidsWithHydrophobicSideChain_Aliphatic       = (new Acid[] { Alanine, Isoleucine, Leucine, Methionine, Valine,   }).HToHashSet();
+            public static readonly HReadOnlyHashSet<Acid> AminoAcidsWithHydrophobicSideChain_Aromatic        = (new Acid[] { Phenylalanine, Tryptophan, Tyrosine,                }).HToHashSet();
+            public static readonly HReadOnlyHashSet<Acid> AminoAcidsWithPolarNeutralSideChains               = (new Acid[] { Asparagine, Cysteine, Glutamine, Serine, Threonine, }).HToHashSet();
+            public static readonly HReadOnlyHashSet<Acid> AminoAcidsWithElectricallyChargedSideChains_Acidic = (new Acid[] { AsparticAcid,  AsparticAcid, GlutamicAcid,          }).HToHashSet();
+            public static readonly HReadOnlyHashSet<Acid> AminoAcidsWithElectricallyChargedSideChains_Basic  = (new Acid[] { Arginine, Histidine, Lysine,                        }).HToHashSet();
+            public static readonly HReadOnlyHashSet<Acid> AminoAcidsUnique                                   = (new Acid[] { Glycine, Proline,                                   }).HToHashSet();
 
-            static readonly HReadOnlyHashSet<Acid> AminoAcidsHydrophobic                              = (new Acid[] { Glycine, Alanine, Valine, Phenylalanine, Proline, Leucine, Isoleucine,                    }).HToHashSet();
-            static readonly HReadOnlyHashSet<Acid> AminoAcidsHydrophilic                              = (new Acid[] { Arginine, AsparticAcid, GlutamicAcid, Serine, Cysteine, Asparagine, Glutamine, Histidine, }).HToHashSet();
-            static readonly HReadOnlyHashSet<Acid> AminoAcidsAmphipathic                              = (new Acid[] { Threonine, Lysine, Tyrosine, Methionine, Tryptophan,                                      }).HToHashSet();
+            public static readonly HReadOnlyHashSet<Acid> AminoAcidsHydrophobic                              = (new Acid[] { Glycine, Alanine, Valine, Phenylalanine, Proline, Leucine, Isoleucine,                    }).HToHashSet();
+            public static readonly HReadOnlyHashSet<Acid> AminoAcidsHydrophilic                              = (new Acid[] { Arginine, AsparticAcid, GlutamicAcid, Serine, Cysteine, Asparagine, Glutamine, Histidine, }).HToHashSet();
+            public static readonly HReadOnlyHashSet<Acid> AminoAcidsAmphipathic                              = (new Acid[] { Threonine, Lysine, Tyrosine, Methionine, Tryptophan,                                      }).HToHashSet();
 
             public static HReadOnlyHashSet<Acid> GetAminoAcidsByType(string type)
             {
