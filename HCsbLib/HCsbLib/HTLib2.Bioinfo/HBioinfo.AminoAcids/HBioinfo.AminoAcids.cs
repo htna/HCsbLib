@@ -49,27 +49,6 @@ namespace HTLib2.Bioinfo
     {
         public class Acid
         {
-            public static readonly AcidType AminoAcid   = AcidType.AminoAcid  ;
-            public static readonly AcidType NucleicAcid = AcidType.NucleicAcid;
-            public static readonly SideChainPolarity NonPolar    = SideChainPolarity.NonPolar   ;
-            public static readonly SideChainPolarity BasicPolar  = SideChainPolarity.BasicPolar ;
-            public static readonly SideChainPolarity Polar       = SideChainPolarity.Polar      ;
-            public static readonly SideChainPolarity AcidicPolar = SideChainPolarity.AcidicPolar;
-            public static readonly SideChainClass AliphaticClass          = SideChainClass.Aliphatic         ;
-            public static readonly SideChainClass BasicClass              = SideChainClass.Basic             ;
-            public static readonly SideChainClass AmideClass              = SideChainClass.Amide             ;
-            public static readonly SideChainClass AcidClass               = SideChainClass.Acid              ;
-            public static readonly SideChainClass SulfurContainingClass   = SideChainClass.SulfurContaining  ;
-            public static readonly SideChainClass BasicAromaticClass      = SideChainClass.BasicAromatic     ;
-            public static readonly SideChainClass AromaticClass           = SideChainClass.Aromatic          ;
-            public static readonly SideChainClass CyclicClass             = SideChainClass.Cyclic            ;
-            public static readonly SideChainClass HydroxylContainingClass = SideChainClass.HydroxylContaining;
-            public static readonly SideChainCharge ChargeNeutral  = SideChainCharge.ChargeNeutral ;
-            public static readonly SideChainCharge ChargePositive = SideChainCharge.ChargePositive;
-            public static readonly SideChainCharge ChargeNegative = SideChainCharge.ChargeNegative;
-            public static readonly SideChainCharge ChargePosNeu   = SideChainCharge.ChargePosNeu  ;
-
-            //public enum { NA, NonPolar, BasicPolar, Polar, AcidicPolar };
             public readonly string name;                            // full name
             public readonly char?  name1;                           // 1 letter
             public readonly string name3;                           // 3 letters
@@ -80,8 +59,6 @@ namespace HTLib2.Bioinfo
             public readonly double HydropathyIndex;
             public readonly double Weight;
             public readonly double Occurrence;
-
-
 
             public override string ToString()
             {
@@ -111,6 +88,26 @@ namespace HTLib2.Bioinfo
                 this.Weight            = Weight           ;
                 this.Occurrence         = Occurrence      ;
             }
+
+            public static readonly AcidType AminoAcid   = AcidType.AminoAcid  ;
+            public static readonly AcidType NucleicAcid = AcidType.NucleicAcid;
+            public static readonly SideChainPolarity NonPolar    = SideChainPolarity.NonPolar   ;
+            public static readonly SideChainPolarity BasicPolar  = SideChainPolarity.BasicPolar ;
+            public static readonly SideChainPolarity Polar       = SideChainPolarity.Polar      ;
+            public static readonly SideChainPolarity AcidicPolar = SideChainPolarity.AcidicPolar;
+            public static readonly SideChainClass AliphaticClass          = SideChainClass.Aliphatic         ;
+            public static readonly SideChainClass BasicClass              = SideChainClass.Basic             ;
+            public static readonly SideChainClass AmideClass              = SideChainClass.Amide             ;
+            public static readonly SideChainClass AcidClass               = SideChainClass.Acid              ;
+            public static readonly SideChainClass SulfurContainingClass   = SideChainClass.SulfurContaining  ;
+            public static readonly SideChainClass BasicAromaticClass      = SideChainClass.BasicAromatic     ;
+            public static readonly SideChainClass AromaticClass           = SideChainClass.Aromatic          ;
+            public static readonly SideChainClass CyclicClass             = SideChainClass.Cyclic            ;
+            public static readonly SideChainClass HydroxylContainingClass = SideChainClass.HydroxylContaining;
+            public static readonly SideChainCharge ChargeNeutral  = SideChainCharge.ChargeNeutral ;
+            public static readonly SideChainCharge ChargePositive = SideChainCharge.ChargePositive;
+            public static readonly SideChainCharge ChargeNegative = SideChainCharge.ChargeNegative;
+            public static readonly SideChainCharge ChargePosNeu   = SideChainCharge.ChargePosNeu  ;
 
             // http://en.wikipedia.org/wiki/Amino_acid
             // | Amino acid    | 3-letter | 1-letter | Side-chain class    | Side-chain   | Side-chain charge       | Hydropathy | Molecular |Occurrence | Absorbance  | ε at λmax    | Coding in the Standard Genetic
