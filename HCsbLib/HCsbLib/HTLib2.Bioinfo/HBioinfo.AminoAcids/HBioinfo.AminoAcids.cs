@@ -207,9 +207,9 @@ namespace HTLib2.Bioinfo
             public static readonly Acid Sarcosine                  = new Acid ( name:"Sarcosine"                  , name3:"SAR"               );
                     
             // NAMD pdbalias
-            public static readonly Acid NamdAliasHSD = new Acid ( name3:"HSD", name1:'H' ); // HIS -> HSD
-            public static readonly Acid NamdAliasHSE = new Acid ( name3:"HSE", name1:'H' ); // HIS -> HSE
-            public static readonly Acid NamdAliasHSP = new Acid ( name3:"HSP", name1:'H' ); // HIS -> HSP
+            public static readonly Acid NamdAliasHSD = new Acid ( name3:"HSD", name1:'H', acidtype:AminoAcid, desc:"HIS -> HSD for NAMD pdbalias" ); // HIS -> HSD
+            public static readonly Acid NamdAliasHSE = new Acid ( name3:"HSE", name1:'H', acidtype:AminoAcid, desc:"HIS -> HSD for NAMD pdbalias" ); // HIS -> HSE
+            public static readonly Acid NamdAliasHSP = new Acid ( name3:"HSP", name1:'H', acidtype:AminoAcid, desc:"HIS -> HSD for NAMD pdbalias" ); // HIS -> HSP
 
             public static readonly IReadOnlyList<Acid> AminoAcids = new Acid[]
                 { Alanine, Arginine, Asparagine, AsparticAcid, Cysteine, GlutamicAcid, Glutamine, Glycine, Histidine, Isoleucine, Leucine, Lysine, Methionine, Phenylalanine, Proline, Serine, Threonine, Tryptophan, Tyrosine, Valine
