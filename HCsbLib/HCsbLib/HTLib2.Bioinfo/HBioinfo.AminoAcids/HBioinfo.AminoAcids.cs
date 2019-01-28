@@ -55,6 +55,10 @@ namespace HTLib2.Bioinfo
             public readonly SideChainPolarity sidechainPolarity;        public enum SideChainPolarity { NA, NonPolar, BasicPolar, Polar, AcidicPolar };
             public readonly double HydropathyIndex;
             public readonly double Weight;
+            public readonly AcidType acidtype;                          public enum AcidType { AminoAcid
+                                                                                             , NucleicAcid
+
+
 
             public override string ToString()
             {
@@ -101,6 +105,32 @@ namespace HTLib2.Bioinfo
             // | Tryptophan    | Trp      | W        | nonpolar      | neutral                    | -0.9       | 280, 219      | 5.6, 47.0         | 204        |
             // | Tyrosine      | Tyr      | Y        | polar         | neutral                    | -1.3       | 274, 222, 193 | 1.4, 8.0, 48.0    | 181        |
             // | Valine        | Val      | V        | nonpolar      | neutral                    |  4.2       |               |                   | 117        |
+
+            // | Amino acid    | 3-letter | 1-letter | Side-chain class    | Side-chain   | Side-chain charge       | Hydropathy | Molecular |Occurrence | Absorbance  | ε at λmax    | Coding in the Standard Genetic
+            // |               |          |          |                     | polarity     | (pH 7.4)                | index      | Weight    |in proteins| λmax(nm)    | (mM−1 cm−1)  | Code (using IUPAC notation)
+            // ==========================================================================================================================================================================================================
+            // | Alanine       | Ala      | A        | aliphatic           | nonpolar     | neutral                 |  1.8       |  89.094   | 8.76 (%)  |             |              | GCN
+            // | Arginine      | Arg      | R        | basic               | basic polar  | positive                | −4.5       | 174.203   | 5.78 (%)  |             |              | MGN, CGY (coding codons can also be expressed by: CGN, AGR)
+            // | Asparagine    | Asn      | N        | amide               | polar        | neutral                 | −3.5       | 132.119   | 3.93 (%)  |             |              | AAY
+            // | Aspartic acid | Asp      | D        | acid                | acidic polar | negative                | −3.5       | 133.104   | 5.49 (%)  |             |              | GAY
+            // | Cysteine      | Cys      | C        | sulfur-containing   | nonpolar     | neutral                 |  2.5       | 121.154   | 1.38 (%)  | 250         | 0.3          | UGY
+            // | Glutamic acid | Glu      | E        | acid                | acidic polar | negative                | −3.5       | 147.131   | 6.32 (%)  |             |              | GAR
+            // | Glutamine     | Gln      | Q        | amide               | polar        | neutral                 | −3.5       | 146.146   | 3.9  (%)  |             |              | CAR
+            // | Glycine       | Gly      | G        | aliphatic           | nonpolar     | neutral                 | −0.4       |  75.067   | 7.03 (%)  |             |              | GGN
+            // | Histidine     | His      | H        | basic aromatic      | basic polar  |positive(10%)neutral(90%)| −3.2       | 155.156   | 2.26 (%)  | 211         | 5.9          | CAY
+            // | Isoleucine    | Ile      | I        | aliphatic           | nonpolar     | neutral                 |  4.5       | 131.175   | 5.49 (%)  |             |              | AUH
+            // | Leucine       | Leu      | L        | aliphatic           | nonpolar     | neutral                 |  3.8       | 131.175   | 9.68 (%)  |             |              | YUR, CUY (coding codons can also be expressed by: CUN, UUR)
+            // | Lysine        | Lys      | K        | basic               | basic polar  | positive                | −3.9       | 146.189   | 5.19 (%)  |             |              | AAR
+            // | Methionine    | Met      | M        | sulfur-containing   | nonpolar     | neutral                 |  1.9       | 149.208   | 2.32 (%)  |             |              | AUG
+            // | Phenylalanine | Phe      | F        | aromatic            | nonpolar     | neutral                 |  2.8       | 165.192   | 3.87 (%)  |257, 206, 188|0.2, 9.3, 60.0| UUY
+            // | Proline       | Pro      | P        | cyclic              | nonpolar     | neutral                 | −1.6       | 115.132   | 5.02 (%)  |             |              | CCN
+            // | Serine        | Ser      | S        | hydroxyl-containing | polar        | neutral                 | −0.8       | 105.093   | 7.14 (%)  |             |              | UCN, AGY
+            // | Threonine     | Thr      | T        | hydroxyl-containing | polar        | neutral                 | −0.7       | 119.119   | 5.53 (%)  |             |              | ACN
+            // | Tryptophan    | Trp      | W        | aromatic            | nonpolar     | neutral                 | −0.9       | 204.228   | 1.25 (%)  | 280, 219    | 5.6, 47.0    | UGG
+            // | Tyrosine      | Tyr      | Y        | aromatic            | polar        | neutral                 | −1.3       | 181.191   | 2.91 (%)  |274, 222, 193|1.4, 8.0, 48.0| UAY
+            // | Valine        | Val      | V        | aliphatic           | nonpolar     | neutral                 |  4.2       | 117.148   | 6.73 (%)  |             |              | GUN
+
+
             public static readonly Acid Alanine       = new Acid ( name:"Alanine"      , name3:"Ala", name1:'A', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 1.8, Weight:89  );
             public static readonly Acid Arginine      = new Acid ( name:"Arginine"     , name3:"Arg", name1:'R', sidechainPolarity:SideChainPolarity.BasicPolar , HydropathyIndex:-4.5, Weight:174 );
             public static readonly Acid Asparagine    = new Acid ( name:"Asparagine"   , name3:"Asn", name1:'N', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-3.5, Weight:132 );
