@@ -25,6 +25,11 @@ namespace HTLib2
         public bool Overlaps(IEnumerable<T> other)                      { return hashset.Overlaps           (other); }
         public bool SetEquals(IEnumerable<T> other)                     { return hashset.SetEquals          (other); }
         
+		public static implicit operator HReadOnlyHashSet<T>(HashSet<T> hashset)
+		{
+			return new HReadOnlyHashSet<T>(hashset);
+		}
+
         public struct Enumerator : IEnumerator<T>, IDisposable, IEnumerator
         {
             HashSet<T>.Enumerator enumerator;
