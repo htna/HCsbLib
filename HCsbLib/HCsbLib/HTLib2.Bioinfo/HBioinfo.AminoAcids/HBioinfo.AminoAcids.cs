@@ -29,19 +29,20 @@ namespace HTLib2.Bioinfo
         //public static string[] HBioinfoConvertTo3Letter(              params char  [] resis1) { return HBioinfo.AminoAcids.Convert_1Letter_to_3Letter(         resis1); }
         //public static char  [] HBioinfoConvertTo1Letter(bool toupper, params string[] resis3) { return HBioinfo.AminoAcids.Convert_3Letter_to_1Letter(toupper, resis3); }
 
-        public static AminoAcid resAminoAcid(this Pdb.Atom atom)
+        public static IReadOnlyList<AminoAcid> GerResAminoAcid(this Pdb.Atom atom)
         {
             string name3 = atom.resName;
             HDebug.Assert(name3.Length == 3);
-            var aa = AminoAcid.From3Letter(name3);
-            return aa;
+            return AminoAcid.From3Letter(name3);
         }
         public static char? GetResNameSyn(this Pdb.Atom atom)
         {
-            var aa = atom.resAminoAcid();
+            var aa = atom.GerResAminoAcid();
             if(aa == null)
                 return null;
-            return aa.name1;
+            if(aa.Count == 1)
+                return aa[0].name1;
+            throw new NotImplementedException();
         }
     }
     public static partial class HBioinfo
@@ -212,14 +213,20 @@ namespace HTLib2.Bioinfo
                 }
             }
 
-            static Dictionary<string, AminoAcid> _distName3 = null;
-            public static AminoAcid From3Letter(string name3)
+            static Dictionary<string, AminoAcid[]> _distName3 = null;
+            public static IReadOnlyList<AminoAcid> From3Letter(string name3)
             {
                 if(_distName3 == null)
                 {
-                    _distName3 = new Dictionary<string, AminoAcid>();
+                    _distName3 = new Dictionary<string, AminoAcid[]>();
                     foreach(var aa in AminoAcids)
-                        _distName3.Add(aa.name3, aa);
+                    {
+                        string aa_name3 = aa.name3.ToUpper().Trim();
+                        if(_distName3.ContainsKey(aa_name3) == false)
+                            _distName3.Add(aa_name3, new AminoAcid[] { aa });
+                        else
+                            _distName3[aa_name3] = _distName3[aa_name3].HAdd(aa);
+                    }
                 }
                 if(_distName3.ContainsKey(name3))
                     return _distName3[name3];

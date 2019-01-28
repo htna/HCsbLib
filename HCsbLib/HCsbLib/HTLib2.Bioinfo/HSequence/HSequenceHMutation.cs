@@ -204,7 +204,9 @@ namespace HTLib2.Bioinfo
                     //var aminoacids = HBioinfo.AminoAcids.ToDictionaryBy3Letter(true);
                     Func<string, HBioinfo.AminoAcid> aminoacids = delegate(string resn)
                     {
-                        return HBioinfo.AminoAcid.From3Letter(resn);
+                        var aa = HBioinfo.AminoAcid.From3Letter(resn);
+                        HDebug.Exception(aa.Count == 1);
+                        return aa[0];
                     };
 
                     List<string> mutations = new List<string>();
@@ -241,7 +243,9 @@ namespace HTLib2.Bioinfo
                 //var aminoacids = HBioinfo.AminoAcids.ToDictionaryBy3Letter(true);
                 Func<string, HBioinfo.AminoAcid> aminoacids = delegate(string resn)
                 {
-                    return HBioinfo.AminoAcid.From3Letter(resn);
+                        var aa = HBioinfo.AminoAcid.From3Letter(resn);
+                        HDebug.Exception(aa.Count == 1);
+                        return aa[0];
                 };
 
                 string muttype = string.Format("{0}{1}{2}", aminoacids(wt_resn).name1, wt_resi, aminoacids(mut_resn).name1);
