@@ -127,7 +127,7 @@ namespace HTLib2.Bioinfo
                         Matlab.Execute("bhess = A - B * D * C;");
                         break;
                     case "_eig" :
-                        bool bCheckInv = true;
+                        bool bCheckInv = false;
                         if(bCheckInv) Matlab.Execute("Dbak = D;");
                         Matlab.Execute("[D,DD] = eig(D);");
                         if(HDebug.False)
