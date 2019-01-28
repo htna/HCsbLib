@@ -49,14 +49,37 @@ namespace HTLib2.Bioinfo
     {
         public class Acid
         {
-            public readonly string name;     // full name
-            public readonly char?  name1;    // 1 letter
-            public readonly string name3;    // 3 letters
-            public readonly SideChainPolarity sidechainPolarity;        public enum SideChainPolarity { NA, NonPolar, BasicPolar, Polar, AcidicPolar };
+            public static readonly AcidType AminoAcid   = AcidType.AminoAcid  ;
+            public static readonly AcidType NucleicAcid = AcidType.NucleicAcid;
+            public static readonly SideChainPolarity NonPolar    = SideChainPolarity.NonPolar   ;
+            public static readonly SideChainPolarity BasicPolar  = SideChainPolarity.BasicPolar ;
+            public static readonly SideChainPolarity Polar       = SideChainPolarity.Polar      ;
+            public static readonly SideChainPolarity AcidicPolar = SideChainPolarity.AcidicPolar;
+            public static readonly SideChainClass AliphaticClass          = SideChainClass.Aliphatic         ;
+            public static readonly SideChainClass BasicClass              = SideChainClass.Basic             ;
+            public static readonly SideChainClass AmideClass              = SideChainClass.Amide             ;
+            public static readonly SideChainClass AcidClass               = SideChainClass.Acid              ;
+            public static readonly SideChainClass SulfurContainingClass   = SideChainClass.SulfurContaining  ;
+            public static readonly SideChainClass BasicAromaticClass      = SideChainClass.BasicAromatic     ;
+            public static readonly SideChainClass AromaticClass           = SideChainClass.Aromatic          ;
+            public static readonly SideChainClass CyclicClass             = SideChainClass.Cyclic            ;
+            public static readonly SideChainClass HydroxylContainingClass = SideChainClass.HydroxylContaining;
+            public static readonly SideChainCharge ChargeNeutral  = SideChainCharge.ChargeNeutral ;
+            public static readonly SideChainCharge ChargePositive = SideChainCharge.ChargePositive;
+            public static readonly SideChainCharge ChargeNegative = SideChainCharge.ChargeNegative;
+            public static readonly SideChainCharge ChargePosNeu   = SideChainCharge.ChargePosNeu  ;
+
+            //public enum { NA, NonPolar, BasicPolar, Polar, AcidicPolar };
+            public readonly string name;                            // full name
+            public readonly char?  name1;                           // 1 letter
+            public readonly string name3;                           // 3 letters
+            public readonly AcidType type;                          public enum AcidType { NA, AminoAcid, NucleicAcid }
+            public readonly SideChainPolarity SidechainPolarity;    public enum SideChainPolarity { NA, NonPolar, BasicPolar, Polar, AcidicPolar };
+            public readonly SideChainClass SidechainClass;          public enum SideChainClass    { NA, Aliphatic, Basic, Amide, Acid, SulfurContaining, BasicAromatic, Aromatic, Cyclic, HydroxylContaining };
+            public readonly SideChainCharge SidechainCharge;        public enum SideChainCharge   { NA, ChargeNeutral, ChargePositive, ChargeNegative, ChargePosNeu };
             public readonly double HydropathyIndex;
             public readonly double Weight;
-            public readonly AcidType acidtype;                          public enum AcidType { AminoAcid
-                                                                                             , NucleicAcid
+            public readonly double Occurrence;
 
 
 
@@ -65,47 +88,31 @@ namespace HTLib2.Bioinfo
                 return string.Format("{0} ({1}, {2})", name3, name1, name);
             }
             protected Acid
-                ( string name                         = null
-                , char?  name1                        = null
-                , string name3                        = null
-                , SideChainPolarity sidechainPolarity = SideChainPolarity.NA
-                , double HydropathyIndex              = double.NaN
-                , double Weight                       = double.NaN
+                ( string            name                = null
+                , char?             name1               = null
+                , string            name3               = null
+                , AcidType          type                = AcidType.NA
+                , SideChainPolarity SidechainPolarity   = SideChainPolarity.NA
+                , SideChainClass    SidechainClass      = SideChainClass.NA
+                , SideChainCharge   SidechainCharge     = SideChainCharge.NA
+                , double            HydropathyIndex     = double.NaN
+                , double            Weight              = double.NaN
+                , double            Occurrence          = double.NaN
                 )
             {
                 this.name              = name             ;
                 this.name1             = name1            ;
                 this.name3             = name3            ;
-                this.sidechainPolarity = sidechainPolarity;
+                this.type              = type             ;
+                this.SidechainPolarity = SidechainPolarity;
+                this.SidechainClass    = SidechainClass   ;
+                this.SidechainCharge   = SidechainCharge  ;
                 this.HydropathyIndex   = HydropathyIndex  ;
                 this.Weight            = Weight           ;
+                this.Occurrence         = Occurrence      ;
             }
 
             // http://en.wikipedia.org/wiki/Amino_acid
-            // | Amino Acid    | 3-Letter | 1-Letter | Side-chain    | Side-chain charge(pH 7.4)  | Hydropathy | Absorbance    | ε at λmax         | MW(Weight) |
-            // |               | 3-Letter | 1-Letter | polarity      |                            | index      | λmax(nm)      | (mM-1 cm-1)       |            |
-            // ==================================================================================================================================================
-            // | Alanine       | Ala      | A        | nonpolar      | neutral                    |  1.8       |               |                   | 89         |
-            // | Arginine      | Arg      | R        | Basic polar   | positive                   | -4.5       |               |                   | 174        |
-            // | Asparagine    | Asn      | N        | polar         | neutral                    | -3.5       |               |                   | 132        |
-            // | Aspartic acid | Asp      | D        | acidic polar  | negative                   | -3.5       |               |                   | 133        |
-            // | Cysteine      | Cys      | C        | nonpolar      | neutral                    |  2.5       | 250           | 0.3               | 121        |
-            // | Glutamic acid | Glu      | E        | acidic polar  | negative                   | -3.5       |               |                   | 147        |
-            // | Glutamine     | Gln      | Q        | polar         | neutral                    | -3.5       |               |                   | 146        |
-            // | Glycine       | Gly      | G        | nonpolar      | neutral                    | -0.4       |               |                   | 75         |
-            // | Histidine     | His      | H        | Basic polar   | positive(10%),neutral(90%) | -3.2       | 211           | 5.9               | 155        |
-            // | Isoleucine    | Ile      | I        | nonpolar      | neutral                    |  4.5       |               |                   | 131        |
-            // | Leucine       | Leu      | L        | nonpolar      | neutral                    |  3.8       |               |                   | 131        |
-            // | Lysine        | Lys      | K        | Basic polar   | positive                   | -3.9       |               |                   | 146        |
-            // | Methionine    | Met      | M        | nonpolar      | neutral                    |  1.9       |               |                   | 149        |
-            // | Phenylalanine | Phe      | F        | nonpolar      | neutral                    |  2.8       | 257, 206, 188 | 0.2, 9.3, 60.0    | 165        |
-            // | Proline       | Pro      | P        | nonpolar      | neutral                    | -1.6       |               |                   | 115        |
-            // | Serine        | Ser      | S        | polar         | neutral                    | -0.8       |               |                   | 105        |
-            // | Threonine     | Thr      | T        | polar         | neutral                    | -0.7       |               |                   | 119        |
-            // | Tryptophan    | Trp      | W        | nonpolar      | neutral                    | -0.9       | 280, 219      | 5.6, 47.0         | 204        |
-            // | Tyrosine      | Tyr      | Y        | polar         | neutral                    | -1.3       | 274, 222, 193 | 1.4, 8.0, 48.0    | 181        |
-            // | Valine        | Val      | V        | nonpolar      | neutral                    |  4.2       |               |                   | 117        |
-
             // | Amino acid    | 3-letter | 1-letter | Side-chain class    | Side-chain   | Side-chain charge       | Hydropathy | Molecular |Occurrence | Absorbance  | ε at λmax    | Coding in the Standard Genetic
             // |               |          |          |                     | polarity     | (pH 7.4)                | index      | Weight    |in proteins| λmax(nm)    | (mM−1 cm−1)  | Code (using IUPAC notation)
             // ==========================================================================================================================================================================================================
@@ -131,26 +138,26 @@ namespace HTLib2.Bioinfo
             // | Valine        | Val      | V        | aliphatic           | nonpolar     | neutral                 |  4.2       | 117.148   | 6.73 (%)  |             |              | GUN
 
 
-            public static readonly Acid Alanine       = new Acid ( name:"Alanine"      , name3:"Ala", name1:'A', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 1.8, Weight:89  );
-            public static readonly Acid Arginine      = new Acid ( name:"Arginine"     , name3:"Arg", name1:'R', sidechainPolarity:SideChainPolarity.BasicPolar , HydropathyIndex:-4.5, Weight:174 );
-            public static readonly Acid Asparagine    = new Acid ( name:"Asparagine"   , name3:"Asn", name1:'N', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-3.5, Weight:132 );
-            public static readonly Acid AsparticAcid  = new Acid ( name:"Aspartic acid", name3:"Asp", name1:'D', sidechainPolarity:SideChainPolarity.AcidicPolar, HydropathyIndex:-3.5, Weight:133 );
-            public static readonly Acid Cysteine      = new Acid ( name:"Cysteine"     , name3:"Cys", name1:'C', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 2.5, Weight:121 );
-            public static readonly Acid GlutamicAcid  = new Acid ( name:"Glutamic acid", name3:"Glu", name1:'E', sidechainPolarity:SideChainPolarity.AcidicPolar, HydropathyIndex:-3.5, Weight:147 );
-            public static readonly Acid Glutamine     = new Acid ( name:"Glutamine"    , name3:"Gln", name1:'Q', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-3.5, Weight:146 );
-            public static readonly Acid Glycine       = new Acid ( name:"Glycine"      , name3:"Gly", name1:'G', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex:-0.4, Weight:75  );
-            public static readonly Acid Histidine     = new Acid ( name:"Histidine"    , name3:"His", name1:'H', sidechainPolarity:SideChainPolarity.BasicPolar , HydropathyIndex:-3.2, Weight:155 );
-            public static readonly Acid Isoleucine    = new Acid ( name:"Isoleucine"   , name3:"Ile", name1:'I', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 4.5, Weight:131 );
-            public static readonly Acid Leucine       = new Acid ( name:"Leucine"      , name3:"Leu", name1:'L', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 3.8, Weight:131 );
-            public static readonly Acid Lysine        = new Acid ( name:"Lysine"       , name3:"Lys", name1:'K', sidechainPolarity:SideChainPolarity.BasicPolar , HydropathyIndex:-3.9, Weight:146 );
-            public static readonly Acid Methionine    = new Acid ( name:"Methionine"   , name3:"Met", name1:'M', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 1.9, Weight:149 );
-            public static readonly Acid Phenylalanine = new Acid ( name:"Phenylalanine", name3:"Phe", name1:'F', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 2.8, Weight:165 );
-            public static readonly Acid Proline       = new Acid ( name:"Proline"      , name3:"Pro", name1:'P', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex:-1.6, Weight:115 );
-            public static readonly Acid Serine        = new Acid ( name:"Serine"       , name3:"Ser", name1:'S', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-0.8, Weight:105 );
-            public static readonly Acid Threonine     = new Acid ( name:"Threonine"    , name3:"Thr", name1:'T', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-0.7, Weight:119 );
-            public static readonly Acid Tryptophan    = new Acid ( name:"Tryptophan"   , name3:"Trp", name1:'W', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex:-0.9, Weight:204 );
-            public static readonly Acid Tyrosine      = new Acid ( name:"Tyrosine"     , name3:"Tyr", name1:'Y', sidechainPolarity:SideChainPolarity.Polar      , HydropathyIndex:-1.3, Weight:181 );
-            public static readonly Acid Valine        = new Acid ( name:"Valine"       , name3:"Val", name1:'V', sidechainPolarity:SideChainPolarity.NonPolar   , HydropathyIndex: 4.2, Weight:117 );
+            public static readonly Acid Alanine       = new Acid ( name:"Alanine"      , name3:"ALA", name1:'A', SidechainCharge:ChargeNeutral  , SidechainClass:AliphaticClass         , SidechainPolarity:NonPolar   , HydropathyIndex: 1.8, Weight: 89.094, Occurrence:8.76 );
+            public static readonly Acid Arginine      = new Acid ( name:"Arginine"     , name3:"ARG", name1:'R', SidechainCharge:ChargePositive , SidechainClass:BasicClass             , SidechainPolarity:BasicPolar , HydropathyIndex:-4.5, Weight:174.203, Occurrence:5.78 );
+            public static readonly Acid Asparagine    = new Acid ( name:"Asparagine"   , name3:"ASN", name1:'N', SidechainCharge:ChargeNeutral  , SidechainClass:AmideClass             , SidechainPolarity:Polar      , HydropathyIndex:-3.5, Weight:132.119, Occurrence:3.93 );
+            public static readonly Acid AsparticAcid  = new Acid ( name:"Aspartic acid", name3:"ASP", name1:'D', SidechainCharge:ChargeNegative , SidechainClass:AcidClass              , SidechainPolarity:AcidicPolar, HydropathyIndex:-3.5, Weight:133.104, Occurrence:5.49 );
+            public static readonly Acid Cysteine      = new Acid ( name:"Cysteine"     , name3:"CYS", name1:'C', SidechainCharge:ChargeNeutral  , SidechainClass:SulfurContainingClass  , SidechainPolarity:NonPolar   , HydropathyIndex: 2.5, Weight:121.154, Occurrence:1.38 );
+            public static readonly Acid GlutamicAcid  = new Acid ( name:"Glutamic acid", name3:"GLU", name1:'E', SidechainCharge:ChargeNegative , SidechainClass:AcidClass              , SidechainPolarity:AcidicPolar, HydropathyIndex:-3.5, Weight:147.131, Occurrence:6.32 );
+            public static readonly Acid Glutamine     = new Acid ( name:"Glutamine"    , name3:"GLN", name1:'Q', SidechainCharge:ChargeNeutral  , SidechainClass:AmideClass             , SidechainPolarity:Polar      , HydropathyIndex:-3.5, Weight:146.146, Occurrence:3.9  );
+            public static readonly Acid Glycine       = new Acid ( name:"Glycine"      , name3:"GLY", name1:'G', SidechainCharge:ChargeNeutral  , SidechainClass:AliphaticClass         , SidechainPolarity:NonPolar   , HydropathyIndex:-0.4, Weight: 75.067, Occurrence:7.03 );
+            public static readonly Acid Histidine     = new Acid ( name:"Histidine"    , name3:"HIS", name1:'H', SidechainCharge:ChargePosNeu   , SidechainClass:BasicAromaticClass     , SidechainPolarity:BasicPolar , HydropathyIndex:-3.2, Weight:155.156, Occurrence:2.26 );
+            public static readonly Acid Isoleucine    = new Acid ( name:"Isoleucine"   , name3:"ILE", name1:'I', SidechainCharge:ChargeNeutral  , SidechainClass:AliphaticClass         , SidechainPolarity:NonPolar   , HydropathyIndex: 4.5, Weight:131.175, Occurrence:5.49 );
+            public static readonly Acid Leucine       = new Acid ( name:"Leucine"      , name3:"LEU", name1:'L', SidechainCharge:ChargeNeutral  , SidechainClass:AliphaticClass         , SidechainPolarity:NonPolar   , HydropathyIndex: 3.8, Weight:131.175, Occurrence:9.68 );
+            public static readonly Acid Lysine        = new Acid ( name:"Lysine"       , name3:"LYS", name1:'K', SidechainCharge:ChargePositive , SidechainClass:BasicClass             , SidechainPolarity:BasicPolar , HydropathyIndex:-3.9, Weight:146.189, Occurrence:5.19 );
+            public static readonly Acid Methionine    = new Acid ( name:"Methionine"   , name3:"MET", name1:'M', SidechainCharge:ChargeNeutral  , SidechainClass:SulfurContainingClass  , SidechainPolarity:NonPolar   , HydropathyIndex: 1.9, Weight:149.208, Occurrence:2.32 );
+            public static readonly Acid Phenylalanine = new Acid ( name:"Phenylalanine", name3:"PHE", name1:'F', SidechainCharge:ChargeNeutral  , SidechainClass:AromaticClass          , SidechainPolarity:NonPolar   , HydropathyIndex: 2.8, Weight:165.192, Occurrence:3.87 );
+            public static readonly Acid Proline       = new Acid ( name:"Proline"      , name3:"PRO", name1:'P', SidechainCharge:ChargeNeutral  , SidechainClass:CyclicClass            , SidechainPolarity:NonPolar   , HydropathyIndex:-1.6, Weight:115.132, Occurrence:5.02 );
+            public static readonly Acid Serine        = new Acid ( name:"Serine"       , name3:"SER", name1:'S', SidechainCharge:ChargeNeutral  , SidechainClass:HydroxylContainingClass, SidechainPolarity:Polar      , HydropathyIndex:-0.8, Weight:105.093, Occurrence:7.14 );
+            public static readonly Acid Threonine     = new Acid ( name:"Threonine"    , name3:"THR", name1:'T', SidechainCharge:ChargeNeutral  , SidechainClass:HydroxylContainingClass, SidechainPolarity:Polar      , HydropathyIndex:-0.7, Weight:119.119, Occurrence:5.53 );
+            public static readonly Acid Tryptophan    = new Acid ( name:"Tryptophan"   , name3:"TRP", name1:'W', SidechainCharge:ChargeNeutral  , SidechainClass:AromaticClass          , SidechainPolarity:NonPolar   , HydropathyIndex:-0.9, Weight:204.228, Occurrence:1.25 );
+            public static readonly Acid Tyrosine      = new Acid ( name:"Tyrosine"     , name3:"TYR", name1:'Y', SidechainCharge:ChargeNeutral  , SidechainClass:AromaticClass          , SidechainPolarity:Polar      , HydropathyIndex:-1.3, Weight:181.191, Occurrence:2.91 );
+            public static readonly Acid Valine        = new Acid ( name:"Valine"       , name3:"VAL", name1:'V', SidechainCharge:ChargeNeutral  , SidechainClass:AliphaticClass         , SidechainPolarity:NonPolar   , HydropathyIndex: 4.2, Weight:117.148, Occurrence:6.73 );
 
             // http://www.ccp4.ac.uk/html/pdbformat.html
             //  Acidic unknown              ACD         Homoserine                  HSE
