@@ -191,6 +191,12 @@ namespace HTLib2
 
                 if(obj is System.Runtime.CompilerServices.ITuple    ) { _ToString2(text, format, obj as System.Runtime.CompilerServices.ITuple    ); return; }
                 if(obj is System.Collections.IDictionary            ) { _ToString2(text, format, obj as System.Collections.IDictionary            ); return; }
+                if(obj is System.Collections.IList                  )
+                {
+                    HDebug.ToDo();
+                    //var objs = obj as System.Collections.IList;
+                    //objs.getleng
+                }
                 if(obj is System.Collections.IEnumerable            ) { _ToString2(text, format, obj as System.Collections.IEnumerable            ); return; }
 
                 //if(name==typeof(List<Tuple<double,int>>                              ).FullName) return _ToString2                           (format, (List<Tuple<double,int>>                              )obj);
