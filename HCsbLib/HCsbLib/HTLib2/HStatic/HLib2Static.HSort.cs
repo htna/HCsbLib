@@ -35,11 +35,41 @@ namespace HTLib2
             };
             return values.HSort(comparison);
         }
+        public static bool HSortValueTupleTT_selftest = HDebug.IsDebuggerAttached;
+        public static ValueTuple<T, T> HSort<T>(this ValueTuple<T, T> values)
+            where T : IComparable<T>
+        {
+            if(HSortValueTupleTT_selftest)
+            {
+                HSortValueTupleTT_selftest = false;
+                (int,int) _test = (2, 1).HSort();
+                HDebug.Assert(_test.Item1 == 1);
+                HDebug.Assert(_test.Item2 == 2);
+            }
+
+            T v1 = values.Item1;
+            T v2 = values.Item2;
+            if(v1.CompareTo(v2) <= 0)
+                return (v1, v2);
+            return (v2, v1);
+        }
+        public static bool HSortTupleTT_selftest = HDebug.IsDebuggerAttached;
         public static Tuple<T, T> HSort<T>(this Tuple<T, T> values)
             where T : IComparable<T>
         {
-            IList<T> sort = values.HToArray().HSort();
-            return new Tuple<T, T>(sort[0], sort[1]);
+            if(HSortTupleTT_selftest)
+            {
+                HSortTupleTT_selftest = false;
+                var _test = (new Tuple<int, int>(2, 1)).HSort();
+                HDebug.Assert(_test.Item1 == 1);
+                HDebug.Assert(_test.Item2 == 2);
+            }
+
+            T v1 = values.Item1;
+            T v2 = values.Item2;
+            if(v1.CompareTo(v2) <= 0)
+                return new Tuple<T, T>(v1, v2);
+            return new Tuple<T, T>(v2, v1);
         }
         public static Tuple<T,T,T> HSort<T>(this Tuple<T,T,T> values)
             where T : IComparable<T>
