@@ -480,6 +480,7 @@
     <Compile Include="HTLib2.Bioinfo\[obsolete]\Topol\Topol.top_all27_prot_lipid.inp.cs" />
     <Compile Include="HTLib2.Mathematica\Mathematica.Kernel.cs" />
     <Compile Include="HTLib2.Mathematica\Mathematica.Run.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.EnumString.cs" />
     <Compile Include="HTLib2.Mathematica\Mathematica.ToString2.cs" />
     <Compile Include="HTLib2.Mathematica\Mathematica.ToString.cs" />
     <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\IMathematica.cs" />
