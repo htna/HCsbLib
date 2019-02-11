@@ -194,6 +194,11 @@ namespace HTLib2
 		public static void WriteAllText(string path, string contents)                                                                              {        System.IO.File.WriteAllText(path, contents); }
 		public static void WriteAllText(string path, string contents, Encoding encoding)                                                           {        System.IO.File.WriteAllText(path, contents, encoding); }
 
+        public static void WriteAllText(string path, IEnumerable<string> contents)
+        {
+            throw new NotImplementedException();
+        }
+
         public static string[] ReadAllLines(Stream stream)
         {
             stream.Seek(0, SeekOrigin.Begin);
