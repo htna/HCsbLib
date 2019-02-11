@@ -196,7 +196,13 @@ namespace HTLib2
 
         public static void WriteAllText(string path, IEnumerable<string> contents)
         {
-            throw new NotImplementedException();
+            using(StreamWriter file = new StreamWriter(path))
+            {
+                foreach(var str in contents)
+                {
+                    file.Write(str);
+                }
+            }
         }
 
         public static string[] ReadAllLines(Stream stream)
