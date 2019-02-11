@@ -719,6 +719,7 @@
     <Compile Include="HTLib2\HStatic.HMath\HMath.HMean.cs" />
     <Compile Include="HTLib2\HStatic.HMath\HMath.HMinMax.cs" />
     <Compile Include="HTLib2\HStatic.HMath\HMath.MeanVariance.cs" />
+    <Compile Include="HTLib2\HStatic.HValueTuple\HValueTuple.cs" />
     <Compile Include="HTLib2\HStatic\Depreciate.ListOper\ListOper.Common.cs" />
     <Compile Include="HTLib2\HStatic\Depreciate.ListOper\ListOper.TakeByIndex.cs" />
     <Compile Include="HTLib2\HStatic\Depreciate.ListOper\ListOper.Tuple.cs" />
