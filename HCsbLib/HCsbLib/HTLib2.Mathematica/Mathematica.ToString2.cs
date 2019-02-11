@@ -193,7 +193,7 @@ namespace HTLib2
                 if(obj is System.Collections.IDictionary            ) { _ToString2(text, format, obj as System.Collections.IDictionary            ); return; }
                 if(obj is System.Collections.IList                  )
                 {
-                    HDebug.ToDo();
+                    //HDebug.ToDo();
                     //var objs = obj as System.Collections.IList;
                     //objs.getleng
                 }
