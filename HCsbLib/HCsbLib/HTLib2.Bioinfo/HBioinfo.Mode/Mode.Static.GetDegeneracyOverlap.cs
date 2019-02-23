@@ -80,7 +80,7 @@ namespace HTLib2.Bioinfo
                 //     of the index of the next element that is larger than item or, if there is no
                 //     larger element, the bitwise complement of System.Collections.Generic.List`1.Count.
                 if(idx0 < 0) idx0 = Math.Abs(idx0);
-                if(idx1 < 0) idx1 = Math.Abs(idx1) - 1;
+                if(idx1 < 0) idx1 = Math.Min(Math.Abs(idx1) - 1, freqs2.Count-1);
 
                 double dovlp = 0;
                 for(int i2=idx0; i2<=idx1; i2++)
