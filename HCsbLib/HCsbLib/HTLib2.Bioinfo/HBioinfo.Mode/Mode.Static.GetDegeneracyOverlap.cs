@@ -33,9 +33,14 @@ namespace HTLib2.Bioinfo
         /// dovlp(a,V) = sqrt( sum_{v ∈ f(a,V)}  (a . v)^2 )
         /// f(a,V) = { v | v ∈ V and w_a - Δw ≤ w_v ≤ w_a + Δw }
 
-        public static Dictionary<double,double> GetDegeneracyOverlap(this (IList<Mode>,IList<Mode>) modes12, IList<double> masses, double domega)
+        public static Dictionary<double,double> GetDegeneracyOverlap<MODE1S,MODE2S>(this (MODE1S,MODE2S) modes12, IList<double> masses, double domega)
+            where MODE1S : IList<Mode>
+            where MODE2S : IList<Mode>
         {
-            return GetDegeneracyOverlap(modes12.Item1, modes12.Item2, masses, domega);
+            IList<Mode> modes1 = modes12.Item1;
+            IList<Mode> modes2 = modes12.Item2;
+            var freq1_dovlp = GetDegeneracyOverlap(modes1, modes2, masses, domega);
+            return freq1_dovlp;
         }
 
         public static Dictionary<double,double> GetDegeneracyOverlap(IList<Mode> modes1, IList<Mode> modes2, IList<double> masses, double domega)
