@@ -93,13 +93,13 @@ namespace HTLib2
             {
                 using(new Matlab.NamedLock("LA"))
                 {
-                    Matlab.PutMatrix("LA.mul", mats[0].ToArray());
+                    Matlab.PutMatrix("LA.mul", mats[0].ToArray(), true);
                     for(int i=1; i<mats.Length; i++)
                     {
                         Matlab.PutMatrix("LA.tmp", mats[i].ToArray());
                         Matlab.Execute("LA.mul = LA.mul * LA.tmp;");
                     }
-                    CMatrix mul = Matlab.GetMatrix("LA.mul",true);
+                    CMatrix mul = Matlab.GetMatrix("LA.mul", true);
                     Matlab.Clear();
                     return mul;
                 }
