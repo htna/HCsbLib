@@ -96,7 +96,7 @@ namespace HTLib2
                     Matlab.PutMatrix("LA.mul", mats[0].ToArray(), true);
                     for(int i=1; i<mats.Length; i++)
                     {
-                        Matlab.PutMatrix("LA.tmp", mats[i].ToArray());
+                        Matlab.PutMatrix("LA.tmp", mats[i].ToArray(), true);
                         Matlab.Execute("LA.mul = LA.mul * LA.tmp;");
                     }
                     CMatrix mul = Matlab.GetMatrix("LA.mul", true);
