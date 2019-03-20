@@ -129,7 +129,7 @@ namespace HTLib2.Bioinfo
         public static List<ATOM> SelectByAltLoc<ATOM>(this IList<ATOM> atoms)
             where ATOM : IAtom
         {
-            return SelectByAltLoc(atoms, ' ', 'A');
+            return SelectByAltLoc(atoms, ' ', 'A', '1');
         }
         public static List<ATOM> SelectByChainID<ATOM>(this IList<ATOM> atoms)
             where ATOM : IAtom
