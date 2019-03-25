@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace HTLib2.Bioinfo
 {
-	public partial class HStatic
+	public static partial class HStatic
 	{
 	}
 }
