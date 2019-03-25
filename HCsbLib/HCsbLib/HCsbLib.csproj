@@ -319,6 +319,7 @@
     <Compile Include="HTLib2.Bioinfo\HSequence\HSequence.LongCommSubseq.cs" />
     <Compile Include="HTLib2.Bioinfo\HSequence\HSequence.Nwalign.cs" />
     <Compile Include="HTLib2.Bioinfo\HSequence\HSequenceHMutation.cs" />
+    <Compile Include="HTLib2.Bioinfo\HStatic\HStatic.cs" />
     <Compile Include="HTLib2.Bioinfo\Paper.Arnaud96\Paper.Arnaud96.cs" />
     <Compile Include="HTLib2.Bioinfo\Paper.TNM\TNM.cs" />
     <Compile Include="HTLib2.Bioinfo\Paper.TNM\TNM.GetBFactor.cs" />
