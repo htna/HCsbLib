@@ -24,8 +24,33 @@ namespace HTLib2.Bioinfo
                                         , params string[] keys
                                         )
             {
+                string minimizepath = Tinker.Run.GetProgramPath("minimize");
                 return Minimize
-                    ( xyz
+                    ( minimizepath
+                    , xyz
+                    , prm
+                    , tempbase
+                    , copytemp
+                    , param
+                    , atomsToFix
+                    , pause
+                    , keys
+                    );
+            }
+            public static OMinimize Minimize(string minimizepath
+                                        , Tinker.Xyz xyz
+                                        , Tinker.Prm prm
+                                        , string tempbase
+                                        , string copytemp                   // = null
+                                        , string param
+                                        , IList<Tinker.Xyz.Atom> atomsToFix // = null
+                                        , bool pause                        // = false
+                                        , params string[] keys
+                                        )
+            {
+                return Minimize
+                    ( minimizepath
+                    , xyz
                     , xyz.atoms_format
                     , prm
                     , tempbase
@@ -37,6 +62,32 @@ namespace HTLib2.Bioinfo
                     );
             }
             public static OMinimize Minimize(Tinker.Xyz xyz
+                                        , Tinker.Xyz.Atom.Format xyz_atoms_format
+                                        , Tinker.Prm prm
+                                        , string tempbase
+                                        , string copytemp                   // = null
+                                        , string param
+                                        , IList<Tinker.Xyz.Atom> atomsToFix // = null
+                                        , bool pause                        // = false
+                                        , params string[] keys
+                                        )
+            {
+                string minimizepath = Tinker.Run.GetProgramPath("minimize");
+                return Minimize
+                    ( minimizepath
+                    , xyz
+                    , xyz_atoms_format
+                    , prm
+                    , tempbase
+                    , copytemp
+                    , param
+                    , atomsToFix
+                    , pause
+                    , keys
+                    );
+            }
+            public static OMinimize Minimize(string minimizepath
+                                        , Tinker.Xyz xyz
                                         , Tinker.Xyz.Atom.Format xyz_atoms_format
                                         , Tinker.Prm prm
                                         , string tempbase
@@ -80,7 +131,7 @@ namespace HTLib2.Bioinfo
                         keylines.AddRange(keys);
                     HFile.WriteAllLines("prot.key", keylines);
                     // Enter RMS Gradient per Atom Criterion [0.01] :
-                    string command = Tinker.Run.GetProgramPath("minimize");
+                    string command = minimizepath;
                     command += string.Format("  prot.xyz  prot.prm");
                     command += string.Format("  -k  prot.key");
                     command += string.Format("  {0}", param);
