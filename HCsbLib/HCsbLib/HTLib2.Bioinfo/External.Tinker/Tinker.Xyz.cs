@@ -520,6 +520,28 @@ namespace HTLib2.Bioinfo
                     formatAtomId   = "                          {0}",  // HSubEndStringCount
                     formatBondedId = "                          {0}",  // HSubEndStringCount
                 };
+                public static Format _defformat_digit2310_id6 = new Format // not-default
+                {
+                    ///  0         1         2         3         4         5         6         7         8         9         10        11
+                    ///  0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901
+                    ///  ==============================================================================================================
+                    /// "     1  NH3         -15.5539038615           0.5823770912           8.8675305868    65     2     5     6     7"
+                    idxId        = new int[]{ 0, 5},
+                    idxAtomType  = new int[]{ 8,10},
+                    idxX         = new int[]{11,33},
+                    idxY         = new int[]{34,56},
+                    idxZ         = new int[]{57,79},
+                    idxAtomId    = new int[]{80,85},
+                    idxBondedId  = new int[]{86,91},
+
+                    formatId       = "                           {0}",  // HSubEndStringCount
+                    formatAtomType = "{0}                           ",  // Substring
+                    formatX        = "              {0:0.0000000000}",  // HSubEndStringCount
+                    formatY        = "              {0:0.0000000000}",  // HSubEndStringCount
+                    formatZ        = "              {0:0.0000000000}",  // HSubEndStringCount
+                    formatAtomId   = "                           {0}",  // HSubEndStringCount
+                    formatBondedId = "                           {0}",  // HSubEndStringCount
+                };
 
                 public Atom(Format format, string line) : base(line) { CheckFormat(format, line); this.format = format; }
                 public Atom(               string line) : base(line) { CheckFormat(format, line); this.format = defformat_digit06; }
