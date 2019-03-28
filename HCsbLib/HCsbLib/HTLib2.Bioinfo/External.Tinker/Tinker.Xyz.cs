@@ -592,15 +592,15 @@ namespace HTLib2.Bioinfo
                     //return GetInt(GetIdxBondedId(idx));
                     switch(idx)
                     {
-                        case 1: return GetTokenInt( 6);
-                        case 2: return GetTokenInt( 7);
-                        case 3: return GetTokenInt( 8);
-                        case 4: return GetTokenInt( 9);
-                        case 5: return GetTokenInt(10);
-                        case 6: return GetTokenInt(11);
-                        case 7: return GetTokenInt(12);
-                        case 8: return GetTokenInt(13);
-                        case 9: return GetTokenInt(14);
+                        case 1: return GetInt(GetIdxBondedId(format,  0));
+                        case 2: return GetInt(GetIdxBondedId(format,  1));
+                        case 3: return GetInt(GetIdxBondedId(format,  2));
+                        case 4: return GetInt(GetIdxBondedId(format,  3));
+                        case 5: return GetInt(GetIdxBondedId(format,  4));
+                        case 6: return GetInt(GetIdxBondedId(format,  5));
+                        case 7: return GetInt(GetIdxBondedId(format,  6));
+                        case 8: return GetInt(GetIdxBondedId(format,  7));
+                        case 9: return GetInt(GetIdxBondedId(format,  8));
                     }
                     throw new NotImplementedException();
                 }

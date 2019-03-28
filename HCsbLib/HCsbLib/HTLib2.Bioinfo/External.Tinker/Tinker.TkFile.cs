@@ -69,9 +69,9 @@ namespace HTLib2.Bioinfo
                     tokens = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     return tokens;
                 }
-                public string  GetTokenString(int idx) { string[] tokens = GetTokens(); if(idx >= tokens.Length) return null;return              tokens[idx];  }
-                public int?    GetTokenInt   (int idx) { string[] tokens = GetTokens(); if(idx >= tokens.Length) return null;return    int.Parse(tokens[idx]); }
-                public double? GetTokenDouble(int idx) { string[] tokens = GetTokens(); if(idx >= tokens.Length) return null;return double.Parse(tokens[idx]); }
+                //public string  GetTokenString(int idx) { string[] tokens = GetTokens(); if(idx >= tokens.Length) return null;return              tokens[idx];  }
+                //public int?    GetTokenInt   (int idx) { string[] tokens = GetTokens(); if(idx >= tokens.Length) return null;return    int.Parse(tokens[idx]); }
+                //public double? GetTokenDouble(int idx) { string[] tokens = GetTokens(); if(idx >= tokens.Length) return null;return double.Parse(tokens[idx]); }
 
                 public string  GetString(int[] idx)
                 {
