@@ -132,9 +132,11 @@ namespace HTLib2.Bioinfo
                     HFile.WriteAllLines("prot.key", keylines);
                     // Enter RMS Gradient per Atom Criterion [0.01] :
                     string command = minimizepath;
-                    command += string.Format("  prot.xyz  prot.prm");
-                    command += string.Format("  -k  prot.key");
-                    command += string.Format("  {0}", param);
+                    command += "  prot.xyz  prot.prm";
+                    command += "  -k  prot.key  <  param.txt";
+
+                    HFile.WriteAllLines("param.txt", param.HSplit());
+
                     //command += string.Format("  >> prot.log");
                     HProcess.StartAsBatchInConsole("minimize.bat", pause
                                                     , "time /t >> prot.log"
