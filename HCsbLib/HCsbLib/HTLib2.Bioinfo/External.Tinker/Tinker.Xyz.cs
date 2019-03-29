@@ -204,9 +204,84 @@ namespace HTLib2.Bioinfo
                 Atom.Format format = new Atom.Format();
                 return FromFile(path, loadLatest, format);
             }
+            public static Atom.Format DetermineFormat(string path, bool loadLatest)
+            {
+                string[] lines = TkFile.LinesFromFile(path, loadLatest);
+                return DetermineFormat(lines);
+            }
+            public static Atom.Format DetermineFormat(string[] lines)
+            {
+                string line0 = lines[0];
+                string line1 = lines[1];
+
+                int[] idxId = new int[] { 0, line0.Length-1 };
+                int   idxId_length = idxId[1] - idxId[0] + 1;
+
+                int[] idxAtomType  = null;
+                {
+                    for(int i=0; i<line1.Length; i++)
+                    {
+                        char ch = line1[i];
+                        if((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
+                        {
+                            idxAtomType = new int[2] { i, i+2 };
+                            break;
+                        }
+                    }
+                    HDebug.Exception(idxAtomType != null);
+                }
+
+                int[] idxX;
+                int   nDecimalPlaces = -1;
+                {
+                    int idxX0 = idxAtomType[1]+1;
+                    int i = idxX0;
+                    int idxDecimalPoint = -1;
+                    while(line1[i] == ' ') i++;
+                    while(line1[i] != ' ')
+                    {
+                        if(line1[i] == '.')
+                            idxDecimalPoint = i;
+                        i++;
+                    }
+                    int idxX1 = i-1;
+                    idxX = new int[] { idxX0, idxX1 };
+                    nDecimalPlaces = idxX1 - idxDecimalPoint;
+                }
+                int idxX_length = idxX[1] - idxX[0] + 1;
+
+                int[] idxY        = new int[2]; idxY       [0] = idxX     [1] + 1; idxY       [1] = idxY       [0] + idxX_length  - 1;
+                int[] idxZ        = new int[2]; idxZ       [0] = idxY     [1] + 1; idxZ       [1] = idxZ       [0] + idxX_length  - 1;
+                int[] idxAtomId   = new int[2]; idxAtomId  [0] = idxZ     [1] + 1; idxAtomId  [1] = idxAtomId  [0] + 5;
+                int[] idxBondedId = new int[2]; idxBondedId[0] = idxAtomId[1] + 1; idxBondedId[1] = idxBondedId[0] + idxId_length - 1;
+
+                string formatId       = "                                            {0}";  // HSubEndStringCount
+                string formatAtomType = "{0}                                            ";  // Substring
+              //string formatX        = "                               {0:0.0000000000}";  // HSubEndStringCount
+              //string formatY        = "                               {0:0.0000000000}";  // HSubEndStringCount
+              //string formatZ        = "                               {0:0.0000000000}";  // HSubEndStringCount
+                string formatXYZ      = "                               {0:0."; for(int i=0; i<nDecimalPlaces; i++) formatXYZ += "0"; formatXYZ+="}";
+                string formatAtomId   = "                                            {0}";  // HSubEndStringCount
+                string formatBondedId = "                                            {0}";  // HSubEndStringCount
+
+                Atom.Format format = new Atom.Format
+                {
+                    idxId       = idxId      ,    formatId       = formatId      ,
+                    idxAtomType = idxAtomType,    formatAtomType = formatAtomType,
+                    idxX        = idxX       ,    formatX        = formatXYZ     ,
+                    idxY        = idxY       ,    formatY        = formatXYZ     ,
+                    idxZ        = idxZ       ,    formatZ        = formatXYZ     ,
+                    idxAtomId   = idxAtomId  ,    formatAtomId   = formatAtomId  ,
+                    idxBondedId = idxBondedId,    formatBondedId = formatBondedId,
+                };
+
+                return format;
+            }
             public static Xyz FromFile(string path, bool loadLatest, Atom.Format format)
             {
                 string[] lines = TkFile.LinesFromFile(path, loadLatest);
+                if(format == null)
+                    format = DetermineFormat(lines);
                 return FromLines(format, lines);
             }
             public void ToFile(string path, bool saveAsNext)
