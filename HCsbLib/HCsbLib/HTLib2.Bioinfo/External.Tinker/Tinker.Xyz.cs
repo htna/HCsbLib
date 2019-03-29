@@ -704,7 +704,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                public static Atom FromData(int id, string atomtype, double x, double y, double z, int atomid, params int[] bondedids)
+                public static Atom FromData(int id, string atomtype, double x, double y, double z, int atomid, int[] bondedids)
                 {
                     if(HDebug.Selftest())
                     {
@@ -713,16 +713,18 @@ namespace HTLib2.Bioinfo
                         ///  ================================================================================
                         /// "     1  NH3   -4.040000   15.048000   13.602000    65     2     5     6     7"
                         /// "     1  NH3   -7.403641    7.761010   19.275393    65     2     5     6     7"
-                        line0 = "     1  NH3   -7.403641    7.761010   19.275393    65     2     5     6     7";
-                        line1 = FromData(1, "NH3", -7.403641, 7.761010, 19.275393, 65,    2, 5, 6, 7).line;
+                        line0 =    "     1  NH3   -7.403641    7.761010   19.275393    65     2     5     6     7";
+                        line1 = FromData(1,"NH3", -7.403641,   7.761010,  19.275393,   65,
+                                                                                  new int[] { 2,    5,    6,    7 } ).line;
                         HDebug.Exception(line0 == line1);
                         line0 = "    41  O      0.845971   11.532886   21.390802    74    40";
-                        line1 = FromData(41, "O", 0.845971, 11.532886, 21.390802, 74, 40).line;
+                        line1 = FromData(41, "O", 0.845971, 11.532886, 21.390802,   74,
+                                                                              new int[] { 40 } ).line;
                         HDebug.Exception(line0 == line1);
                     }
                     return FromData(defformat_digit06, id, atomtype, x, y, z, atomid, bondedids);
                 }
-                public static Atom FromData(Format format, int id, string atomtype, double x, double y, double z, int atomid, params int[] bondedids)
+                public static Atom FromData(Format format, int id, string atomtype, double x, double y, double z, int atomid, int[] bondedids)
                 {
                     if(HDebug.Selftest())
                     {
@@ -732,14 +734,16 @@ namespace HTLib2.Bioinfo
                         /// "     1  NH3   -4.040000   15.048000   13.602000    65     2     5     6     7"
                         /// "     1  NH3   -7.403641    7.761010   19.275393    65     2     5     6     7"
                         line0 =                       "     1  NH3   -7.403641    7.761010   19.275393    65     2     5     6     7";
-                        line1 = FromData(defformat_digit06, 1,"NH3", -7.403641,   7.761010,  19.275393,   65,    2,    5,    6,    7).line;
+                        line1 = FromData(defformat_digit06, 1,"NH3", -7.403641,   7.761010,  19.275393,   65,
+                                                                                                     new int[] { 2,    5,    6,    7 } ).line;
                         HDebug.Exception(line0 == line1);
                         line0 =                        "    41  O      0.845971   11.532886   21.390802    74    40";
-                        line1 = FromData(defformat_digit06, 41,"O",    0.845971,  11.532886,  21.390802,   74,   40).line;
+                        line1 = FromData(defformat_digit06, 41,"O",    0.845971,  11.532886,  21.390802,   74,new int[]{40 }).line;
                         HDebug.Exception(line0 == line1);
 
                         line0 =                            "     13  OT         -85.4401110000        -18.6572660000         -9.9272310000   101     14     15";
-                        line1 = FromData(_defformat_digit10_id7, 13, "OT",       -85.4401110000,       -18.6572660000,        -9.9272310000,  101,    14,    15).line;
+                        line1 = FromData(_defformat_digit10_id7, 13, "OT",      -85.4401110000,       -18.6572660000,        -9.9272310000,  101,
+                                                                                                                                         new int[] { 14,    15 } ).line;
                         HDebug.Exception(line0 == line1);
                     }
 

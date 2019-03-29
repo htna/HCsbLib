@@ -361,7 +361,7 @@ namespace HTLib2.Bioinfo
                               bond = Atom.FromData(bond.Id, bond.AtomType, bond.X, bond.Y, bond.Z, bond.AtomId, bond_bondids);
                         nelements[bondidx] = bond;
                     }
-                    atom = Atom.FromData(atom.Id, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId);
+                    atom = Atom.FromData(atom.Id, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, new int[] { });
                     nelements[idx] = atom;
                     nelements[idx] = null;
                 }
