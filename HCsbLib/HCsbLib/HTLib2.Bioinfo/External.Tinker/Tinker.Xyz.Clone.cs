@@ -151,7 +151,7 @@ namespace HTLib2.Bioinfo
                         int[] nbondedids = idxinfo.Item3.HToVectorT() * -1; // convert negative to positive index
                         HDebug.Assert(nid > 0, nbondedids.HToVectorT() > 0); // check positive
 
-                        Xyz.Atom natom = Xyz.Atom.FromData(nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
+                        Xyz.Atom natom = Xyz.Atom.FromData(atom.format, nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
                         nelements[nid] = natom;
                     }
 
