@@ -181,12 +181,12 @@ namespace HTLib2.Bioinfo
         {
             public Element[] elements;
             public Atom[]    atoms { get { return elements.HSelectByType<Element,Atom>().ToArray(); } }
-            public Format    atoms_format
+            public Atom.Format    atoms_format
             {
                 get
                 {
                     Atom[] atoms = this.atoms;
-                    Format format = atoms[0].format;
+                    Atom.Format format = atoms[0].format;
                     if(HDebug.IsDebuggerAttached)
                     {
                         foreach(var atom in atoms)
@@ -201,15 +201,15 @@ namespace HTLib2.Bioinfo
             ///   3  C    -12.800000  -14.020000  -23.500000    20     2     4    25
             public static Xyz FromFile(string path, bool loadLatest)
             {
-                Format format = new Format();
+                Atom.Format format = new Atom.Format();
                 return FromFile(path, loadLatest, format);
             }
-            public static Format DetermineFormat(string path, bool loadLatest)
+            public static Atom.Format DetermineFormat(string path, bool loadLatest)
             {
                 string[] lines = TkFile.LinesFromFile(path, loadLatest);
                 return DetermineFormat(lines);
             }
-            public static Format DetermineFormat(string[] lines)
+            public static Atom.Format DetermineFormat(string[] lines)
             {
                 string line0 = lines[0];
                 string line1 = lines[1];
@@ -264,7 +264,7 @@ namespace HTLib2.Bioinfo
                 string formatAtomId   = "                                            {0}";  // HSubEndStringCount
                 string formatBondedId = "                                            {0}";  // HSubEndStringCount
 
-                Format format = new Format
+                Atom.Format format = new Atom.Format
                 {
                     idxId       = idxId      ,    formatId       = formatId      ,
                     idxAtomType = idxAtomType,    formatAtomType = formatAtomType,
@@ -277,7 +277,7 @@ namespace HTLib2.Bioinfo
 
                 return format;
             }
-            public static Xyz FromFile(string path, bool loadLatest, Format format)
+            public static Xyz FromFile(string path, bool loadLatest, Atom.Format format)
             {
                 string[] lines = TkFile.LinesFromFile(path, loadLatest);
                 if(format == null)
@@ -288,7 +288,7 @@ namespace HTLib2.Bioinfo
             {
                 TkFile.ElementsToFile(path, saveAsNext, elements);
             }
-            public void ToFile(string path, bool saveAsNext, Format format, bool autoAdjustCoord=false)
+            public void ToFile(string path, bool saveAsNext, Atom.Format format, bool autoAdjustCoord=false)
             {
                 if(format == null)
                     format = atoms_format;
@@ -324,10 +324,10 @@ namespace HTLib2.Bioinfo
             }
             public static Xyz FromLines(IList<string> lines)
             {
-                Format format = new Format();
+                Atom.Format format = new Atom.Format();
                 return FromLines(format, lines);
             }
-            public static Xyz FromLines(Format format, IList<string> lines)
+            public static Xyz FromLines(Atom.Format format, IList<string> lines)
             {
                 if(HDebug.Selftest())
                     #region MyRegion
@@ -498,9 +498,9 @@ namespace HTLib2.Bioinfo
             //}
             public class Header : Element
             {
-                public readonly Format format;
-                public Header(Format format, string line) : base(line) { this.format = format                  ; }
-                public Header(               string line) : base(line) { this.format = Format.defformat_digit06; }
+                public readonly Atom.Format format;
+                public Header(Atom.Format format, string line) : base(line) { this.format = format                  ; }
+                public Header(               string line) : base(line) { this.format = Atom.Format.defformat_digit06; }
                 public override string type { get { return "Header"; } }
                 ///  num atoms
                 ///  0-5
@@ -513,9 +513,9 @@ namespace HTLib2.Bioinfo
                 public int NumAtoms { get { return GetInt(format.idxId).Value; } }
                 public static Header FromData(int numatoms, string description="", string date="", string pdbid="")
                 {
-                    return FromData(Format.defformat_digit06, numatoms, description, date, pdbid);
+                    return FromData(Atom.Format.defformat_digit06, numatoms, description, date, pdbid);
                 }
-                public static Header FromData(Format format, int numatoms, string description="", string date="", string pdbid="")
+                public static Header FromData(Atom.Format format, int numatoms, string description="", string date="", string pdbid="")
                 {
                     if(HDebug.Selftest())
                     {
@@ -536,112 +536,113 @@ namespace HTLib2.Bioinfo
                 }
             }
             [Serializable]
-            public class Format
-            {
-                public int[] idxId       = new int[]{ 0, 5};    public string formatId       = "                     {0}";  // HSubEndStringCount
-                public int[] idxAtomType = new int[]{ 8,10};    public string formatAtomType = "{0}                     ";  // Substring
-                public int[] idxX        = new int[]{11,22};    public string formatX        = "            {0:0.000000}";  // HSubEndStringCount
-                public int[] idxY        = new int[]{23,34};    public string formatY        = "            {0:0.000000}";  // HSubEndStringCount
-                public int[] idxZ        = new int[]{35,46};    public string formatZ        = "            {0:0.000000}";  // HSubEndStringCount
-                public int[] idxAtomId   = new int[]{47,52};    public string formatAtomId   = "                     {0}";  // HSubEndStringCount
-                public int[] idxBondedId = new int[]{53,58};    public string formatBondedId = "                     {0}";  // HSubEndStringCount
-
-                public static Format defformat_digit06 = new Format
-                {
-                    ///  id  (atom type in prm)   x     y      z        (atom-id in prm)  bonds, ...
-                    ///  0-5 8-10                11-22  23-34  35-46    47-52             53-58(6), 59-64(6), ...
-                    ///   
-                    ///  0        1         2         3         4         5         6         7         8
-                    ///  012345678901234567890123456789012345678901234567890123456789012345678901234567890
-                    ///  ================================================================================
-                    ///       1  NH3   -4.040000   15.048000   13.602000    65     2     5     6     7
-                    idxId        = new int[]{ 0, 5},
-                    idxAtomType  = new int[]{ 8,10},
-                    idxX         = new int[]{11,22},
-                    idxY         = new int[]{23,34},
-                    idxZ         = new int[]{35,46},
-                    idxAtomId    = new int[]{47,52},
-                    idxBondedId  = new int[]{53,58},
-
-                    formatId       = "                     {0}",  // HSubEndStringCount
-                    formatAtomType = "{0}                     ",  // Substring
-                    formatX        = "            {0:0.000000}",  // HSubEndStringCount
-                    formatY        = "            {0:0.000000}",  // HSubEndStringCount
-                    formatZ        = "            {0:0.000000}",  // HSubEndStringCount
-                    formatAtomId   = "                     {0}",  // HSubEndStringCount
-                    formatBondedId = "                     {0}",  // HSubEndStringCount
-                };
-
-                public static Format defformat_digit10_id6 = new Format // default
-                {
-                    ///  0         1         2         3         4         5         6         7         8         9
-                    ///  01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567
-                    ///  ==================================================================================================
-                    /// "     3  C           -3.3566390770         -2.5341116969        -12.3096330214    20     2     4    20"
-                    idxId        = new int[]{ 0-0, 6-1},
-                    idxAtomType  = new int[]{ 9-1,11-1},
-                    idxX         = new int[]{12-1,33-1},
-                    idxY         = new int[]{34-1,55-1},
-                    idxZ         = new int[]{56-1,77-1},
-                    idxAtomId    = new int[]{78-1,83-1},
-                    idxBondedId  = new int[]{84-1,90-2},
-                
-                    formatId       = "                          {0}",  // HSubEndStringCount
-                    formatAtomType = "{0}                          ",  // Substring
-                    formatX        = "             {0:0.0000000000}",  // HSubEndStringCount
-                    formatY        = "             {0:0.0000000000}",  // HSubEndStringCount
-                    formatZ        = "             {0:0.0000000000}",  // HSubEndStringCount
-                    formatAtomId   = "                          {0}",  // HSubEndStringCount
-                    formatBondedId = "                          {0}",  // HSubEndStringCount
-                };
-                public static Format _defformat_digit10_id7 = new Format // not-default
-                {
-                    ///  0         1         2         3         4         5         6         7         8         9
-                    ///  01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567
-                    ///  ==================================================================================================
-                    /// "     13  OT         -85.4401110000        -18.6572660000         -9.9272310000   101     14     15"
-                    idxId        = new int[]{ 0, 6},
-                    idxAtomType  = new int[]{ 9,11},
-                    idxX         = new int[]{12,33},
-                    idxY         = new int[]{34,55},
-                    idxZ         = new int[]{56,77},
-                    idxAtomId    = new int[]{78,83},
-                    idxBondedId  = new int[]{84,90},
-
-                    formatId       = "                          {0}",  // HSubEndStringCount
-                    formatAtomType = "{0}                          ",  // Substring
-                    formatX        = "             {0:0.0000000000}",  // HSubEndStringCount
-                    formatY        = "             {0:0.0000000000}",  // HSubEndStringCount
-                    formatZ        = "             {0:0.0000000000}",  // HSubEndStringCount
-                    formatAtomId   = "                          {0}",  // HSubEndStringCount
-                    formatBondedId = "                          {0}",  // HSubEndStringCount
-                };
-                public static Format _defformat_digit2310_id6 = new Format // not-default
-                {
-                    ///  0         1         2         3         4         5         6         7         8         9         10        11
-                    ///  0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901
-                    ///  ==============================================================================================================
-                    /// "     1  NH3         -15.5539038615           0.5823770912           8.8675305868    65     2     5     6     7"
-                    idxId        = new int[]{ 0, 5},
-                    idxAtomType  = new int[]{ 8,10},
-                    idxX         = new int[]{11,33},
-                    idxY         = new int[]{34,56},
-                    idxZ         = new int[]{57,79},
-                    idxAtomId    = new int[]{80,85},
-                    idxBondedId  = new int[]{86,91},
-
-                    formatId       = "                           {0}",  // HSubEndStringCount
-                    formatAtomType = "{0}                           ",  // Substring
-                    formatX        = "              {0:0.0000000000}",  // HSubEndStringCount
-                    formatY        = "              {0:0.0000000000}",  // HSubEndStringCount
-                    formatZ        = "              {0:0.0000000000}",  // HSubEndStringCount
-                    formatAtomId   = "                           {0}",  // HSubEndStringCount
-                    formatBondedId = "                           {0}",  // HSubEndStringCount
-                };
-            }
-            [Serializable]
             public class Atom : Element
             {
+                [Serializable]
+                public class Format
+                {
+                    public int[] idxId       = new int[]{ 0, 5};    public string formatId       = "                     {0}";  // HSubEndStringCount
+                    public int[] idxAtomType = new int[]{ 8,10};    public string formatAtomType = "{0}                     ";  // Substring
+                    public int[] idxX        = new int[]{11,22};    public string formatX        = "            {0:0.000000}";  // HSubEndStringCount
+                    public int[] idxY        = new int[]{23,34};    public string formatY        = "            {0:0.000000}";  // HSubEndStringCount
+                    public int[] idxZ        = new int[]{35,46};    public string formatZ        = "            {0:0.000000}";  // HSubEndStringCount
+                    public int[] idxAtomId   = new int[]{47,52};    public string formatAtomId   = "                     {0}";  // HSubEndStringCount
+                    public int[] idxBondedId = new int[]{53,58};    public string formatBondedId = "                     {0}";  // HSubEndStringCount
+
+                    public static Format defformat_digit06 = new Format
+                    {
+                        ///  id  (atom type in prm)   x     y      z        (atom-id in prm)  bonds, ...
+                        ///  0-5 8-10                11-22  23-34  35-46    47-52             53-58(6), 59-64(6), ...
+                        ///   
+                        ///  0        1         2         3         4         5         6         7         8
+                        ///  012345678901234567890123456789012345678901234567890123456789012345678901234567890
+                        ///  ================================================================================
+                        ///       1  NH3   -4.040000   15.048000   13.602000    65     2     5     6     7
+                        idxId        = new int[]{ 0, 5},
+                        idxAtomType  = new int[]{ 8,10},
+                        idxX         = new int[]{11,22},
+                        idxY         = new int[]{23,34},
+                        idxZ         = new int[]{35,46},
+                        idxAtomId    = new int[]{47,52},
+                        idxBondedId  = new int[]{53,58},
+
+                        formatId       = "                     {0}",  // HSubEndStringCount
+                        formatAtomType = "{0}                     ",  // Substring
+                        formatX        = "            {0:0.000000}",  // HSubEndStringCount
+                        formatY        = "            {0:0.000000}",  // HSubEndStringCount
+                        formatZ        = "            {0:0.000000}",  // HSubEndStringCount
+                        formatAtomId   = "                     {0}",  // HSubEndStringCount
+                        formatBondedId = "                     {0}",  // HSubEndStringCount
+                    };
+
+                    public static Format defformat_digit10_id6 = new Format // default
+                    {
+                        ///  0         1         2         3         4         5         6         7         8         9
+                        ///  01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567
+                        ///  ==================================================================================================
+                        /// "     3  C           -3.3566390770         -2.5341116969        -12.3096330214    20     2     4    20"
+                        idxId        = new int[]{ 0-0, 6-1},
+                        idxAtomType  = new int[]{ 9-1,11-1},
+                        idxX         = new int[]{12-1,33-1},
+                        idxY         = new int[]{34-1,55-1},
+                        idxZ         = new int[]{56-1,77-1},
+                        idxAtomId    = new int[]{78-1,83-1},
+                        idxBondedId  = new int[]{84-1,90-2},
+                
+                        formatId       = "                          {0}",  // HSubEndStringCount
+                        formatAtomType = "{0}                          ",  // Substring
+                        formatX        = "             {0:0.0000000000}",  // HSubEndStringCount
+                        formatY        = "             {0:0.0000000000}",  // HSubEndStringCount
+                        formatZ        = "             {0:0.0000000000}",  // HSubEndStringCount
+                        formatAtomId   = "                          {0}",  // HSubEndStringCount
+                        formatBondedId = "                          {0}",  // HSubEndStringCount
+                    };
+                    public static Format _defformat_digit10_id7 = new Format // not-default
+                    {
+                        ///  0         1         2         3         4         5         6         7         8         9
+                        ///  01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567
+                        ///  ==================================================================================================
+                        /// "     13  OT         -85.4401110000        -18.6572660000         -9.9272310000   101     14     15"
+                        idxId        = new int[]{ 0, 6},
+                        idxAtomType  = new int[]{ 9,11},
+                        idxX         = new int[]{12,33},
+                        idxY         = new int[]{34,55},
+                        idxZ         = new int[]{56,77},
+                        idxAtomId    = new int[]{78,83},
+                        idxBondedId  = new int[]{84,90},
+
+                        formatId       = "                          {0}",  // HSubEndStringCount
+                        formatAtomType = "{0}                          ",  // Substring
+                        formatX        = "             {0:0.0000000000}",  // HSubEndStringCount
+                        formatY        = "             {0:0.0000000000}",  // HSubEndStringCount
+                        formatZ        = "             {0:0.0000000000}",  // HSubEndStringCount
+                        formatAtomId   = "                          {0}",  // HSubEndStringCount
+                        formatBondedId = "                          {0}",  // HSubEndStringCount
+                    };
+                    public static Format _defformat_digit2310_id6 = new Format // not-default
+                    {
+                        ///  0         1         2         3         4         5         6         7         8         9         10        11
+                        ///  0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901
+                        ///  ==============================================================================================================
+                        /// "     1  NH3         -15.5539038615           0.5823770912           8.8675305868    65     2     5     6     7"
+                        idxId        = new int[]{ 0, 5},
+                        idxAtomType  = new int[]{ 8,10},
+                        idxX         = new int[]{11,33},
+                        idxY         = new int[]{34,56},
+                        idxZ         = new int[]{57,79},
+                        idxAtomId    = new int[]{80,85},
+                        idxBondedId  = new int[]{86,91},
+
+                        formatId       = "                           {0}",  // HSubEndStringCount
+                        formatAtomType = "{0}                           ",  // Substring
+                        formatX        = "              {0:0.0000000000}",  // HSubEndStringCount
+                        formatY        = "              {0:0.0000000000}",  // HSubEndStringCount
+                        formatZ        = "              {0:0.0000000000}",  // HSubEndStringCount
+                        formatAtomId   = "                           {0}",  // HSubEndStringCount
+                        formatBondedId = "                           {0}",  // HSubEndStringCount
+                    };
+                }
+
                 public readonly Format format;
                 public Atom(Format format, string line) : base(line) { this.format = format                  ; CheckFormat(format, line); }
                 public Atom(               string line) : base(line) { this.format = Format.defformat_digit06; CheckFormat(format, line); }

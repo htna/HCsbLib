@@ -41,7 +41,7 @@ namespace HTLib2.Bioinfo
             }
             public static ONewton Newton( string tinkerpath
                                         , Tinker.Xyz xyz
-                                        , Tinker.Xyz.Format xyz_atoms_format
+                                        , Tinker.Xyz.Atom.Format xyz_atoms_format
                                         , Tinker.Prm prm
                                         , string tempbase
                                         , string copytemp                   // = null
