@@ -743,7 +743,7 @@ namespace HTLib2.Bioinfo
                     }
                     return FromData(defformat_digit06, id, atomtype, x, y, z, atomid, bondedids);
                 }
-                public static Atom FromData(Format format, int id, string atomtype, double x, double y, double z, int atomid, int[] bondedids)
+                public static Atom FromData(Format format, int id, string atomtype, double x, double y, double z, int atomid, int[] bondedids) //, bool autoAdjustCoord=false)
                 {
                     if(HDebug.Selftest())
                     {
@@ -786,9 +786,9 @@ namespace HTLib2.Bioinfo
                     HDebug.Assert(atomtype.Trim() == atom.AtomType.Trim() );
                     HDebug.Assert(atomid          == atom.AtomId          );
                     HDebug.Assert(bondedids.HToVectorT() == atom.BondedIds);
-                    HDebug.AssertTolerance(0.000001, x-atom.X);
-                    HDebug.AssertTolerance(0.000001, y-atom.Y);
-                    HDebug.AssertTolerance(0.000001, z-atom.Z);
+                    HDebug.AssertTolerance(0.000001, x-atom.X); //if(Math.Abs(x-atom.X) > 0.000001) { if(autoAdjustCoord == false) HDebug.Assert(false); else return FromData(format, id, atomtype, x/10, y, z, atomid, bondedids); } // exceptional case that the atom is out of available number range
+                    HDebug.AssertTolerance(0.000001, y-atom.Y); //if(Math.Abs(y-atom.Y) > 0.000001) { if(autoAdjustCoord == false) HDebug.Assert(false); else return FromData(format, id, atomtype, x, y/10, z, atomid, bondedids); } // exceptional case that the atom is out of available number range
+                    HDebug.AssertTolerance(0.000001, z-atom.Z); //if(Math.Abs(z-atom.Z) > 0.000001) { if(autoAdjustCoord == false) HDebug.Assert(false); else return FromData(format, id, atomtype, x, y, z/10, atomid, bondedids); } // exceptional case that the atom is out of available number range
                     return atom;
                 }
                 public static Atom FromCoord(Atom src, Vector coord)
