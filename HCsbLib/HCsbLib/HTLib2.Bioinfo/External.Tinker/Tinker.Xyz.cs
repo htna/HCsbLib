@@ -206,7 +206,7 @@ namespace HTLib2.Bioinfo
             }
             public static Atom.Format DetermineFormat(string path, bool loadLatest)
             {
-                string[] lines = TkFile.Element.LinesFromFile(path, loadLatest);
+                string[] lines = TkFile.LinesFromFile(path, loadLatest);
                 return DetermineFormat(lines);
             }
             public static Atom.Format DetermineFormat(string[] lines)
@@ -279,14 +279,14 @@ namespace HTLib2.Bioinfo
             }
             public static Xyz FromFile(string path, bool loadLatest, Atom.Format format)
             {
-                string[] lines = TkFile.Element.LinesFromFile(path, loadLatest);
+                string[] lines = TkFile.LinesFromFile(path, loadLatest);
                 if(format == null)
                     format = DetermineFormat(lines);
                 return FromLines(format, lines);
             }
             public void ToFile(string path, bool saveAsNext)
             {
-                TkFile.Element.ElementsToFile(path, saveAsNext, elements);
+                TkFile.ElementsToFile(path, saveAsNext, elements);
             }
             public void ToFile(string path, bool saveAsNext, Atom.Format format)
             {
@@ -320,7 +320,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                TkFile.Element.ElementsToFile(path, saveAsNext, nelems);
+                TkFile.ElementsToFile(path, saveAsNext, nelems);
             }
             public static Xyz FromLines(IList<string> lines)
             {

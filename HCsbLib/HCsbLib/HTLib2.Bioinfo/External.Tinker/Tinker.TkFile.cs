@@ -9,49 +9,49 @@ namespace HTLib2.Bioinfo
     {
         public class TkFile
         {
+            public static string[] LinesFromFile(string path, bool loadLatest)
+            {
+                string loadpath = path;
+                if(loadLatest)
+                {
+                    System.IO.FileInfo   fileinfo  = HFile.GetFileInfo(path);
+                    System.IO.FileInfo[] fileinfos = fileinfo.Directory.GetFiles(fileinfo.Name+"*");
+                    if(fileinfos.Length != 0)
+                    {
+                        List<string> filepaths = new List<string>();
+                        foreach(System.IO.FileInfo lfileinfo in fileinfos)
+                            filepaths.Add(lfileinfo.FullName);
+                        filepaths.Sort();
+                        loadpath = filepaths.Last();
+                    }
+                }
+                if(HFile.Exists(loadpath) == false)
+                    return null;
+                string[] lines = HFile.ReadAllLines(loadpath);
+                return lines;
+            }
+            public static void ElementsToFile(string path, bool saveAsNext, IList<Element> elements)
+            {
+                string writepath = path;
+                if(saveAsNext)
+                {
+                    int idx=2;
+                    while(HFile.Exists(writepath))
+                    {
+                        writepath = string.Format("{0}_{1}", path, idx);
+                        idx++;
+                    }
+                }
+
+                List<string> lines = new List<string>();
+                foreach(Element element in elements)
+                    lines.Add(element.line);
+                HFile.WriteAllLines(writepath, lines);
+            }
+
             [Serializable]
             public class Element
             {
-                public static string[] LinesFromFile(string path, bool loadLatest)
-                {
-                    string loadpath = path;
-                    if(loadLatest)
-                    {
-                        System.IO.FileInfo   fileinfo  = HFile.GetFileInfo(path);
-                        System.IO.FileInfo[] fileinfos = fileinfo.Directory.GetFiles(fileinfo.Name+"*");
-                        if(fileinfos.Length != 0)
-                        {
-                            List<string> filepaths = new List<string>();
-                            foreach(System.IO.FileInfo lfileinfo in fileinfos)
-                                filepaths.Add(lfileinfo.FullName);
-                            filepaths.Sort();
-                            loadpath = filepaths.Last();
-                        }
-                    }
-                    if(HFile.Exists(loadpath) == false)
-                        return null;
-                    string[] lines = HFile.ReadAllLines(loadpath);
-                    return lines;
-                }
-                public static void ElementsToFile(string path, bool saveAsNext, IList<Element> elements)
-                {
-                    string writepath = path;
-                    if(saveAsNext)
-                    {
-                        int idx=2;
-                        while(HFile.Exists(writepath))
-                        {
-                            writepath = string.Format("{0}_{1}", path, idx);
-                            idx++;
-                        }
-                    }
-
-                    List<string> lines = new List<string>();
-                    foreach(Element element in elements)
-                        lines.Add(element.line);
-                    HFile.WriteAllLines(writepath, lines);
-                }
-
                 public readonly string line;
                 public Element(string line) { this.line = line; }
                 public virtual string type { get { throw new NotImplementedException(); } }
