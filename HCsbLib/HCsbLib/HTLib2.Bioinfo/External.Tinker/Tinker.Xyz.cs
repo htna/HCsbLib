@@ -793,9 +793,9 @@ namespace HTLib2.Bioinfo
                     HDebug.Assert(atomid          == atom.AtomId          );
                     HDebug.Assert(bondedids.HToVectorT() == atom.BondedIds);
                     // exceptional case that the atom is out of available number range
-                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, x-atom.X); } else { if(Math.Abs(x-atom.X) > 0.000001) return FromData(format, id, atomtype, x/10, y, z, atomid, bondedids, autoAdjustCoord); }
-                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, y-atom.Y); } else { if(Math.Abs(y-atom.Y) > 0.000001) return FromData(format, id, atomtype, x, y/10, z, atomid, bondedids, autoAdjustCoord); }
-                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, z-atom.Z); } else { if(Math.Abs(z-atom.Z) > 0.000001) return FromData(format, id, atomtype, x, y, z/10, atomid, bondedids, autoAdjustCoord); }
+                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, x-atom.X); } else { if(Math.Abs(x-atom.X) > 0.000001) return FromData(format, id, atomtype, x/2, y, z, atomid, bondedids, autoAdjustCoord); }
+                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, y-atom.Y); } else { if(Math.Abs(y-atom.Y) > 0.000001) return FromData(format, id, atomtype, x, y/2, z, atomid, bondedids, autoAdjustCoord); }
+                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, z-atom.Z); } else { if(Math.Abs(z-atom.Z) > 0.000001) return FromData(format, id, atomtype, x, y, z/2, atomid, bondedids, autoAdjustCoord); }
                     return atom;
                 }
                 public static Atom FromCoord(Atom src, Vector coord)
