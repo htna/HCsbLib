@@ -510,7 +510,7 @@ namespace HTLib2.Bioinfo
                 ///  ================================================================================
                 ///    3138  HYDROLASE/HYDROLASE INHIBITOR           02-OCT-12   4HDB
                 /// "  2521  HEME PROTEIN                            25-FEB-98   1A6G"
-                public int NumAtoms { get { return GetInt(idxNumAtoms).Value; } } static readonly int[] idxNumAtoms = new int[] { 0, 5 };
+                public int NumAtoms { get { return GetInt(format.idxId).Value; } }
                 public static Header FromData(int numatoms, string description="", string date="", string pdbid="")
                 {
                     return FromData(Format.defformat_digit06, numatoms, description, date, pdbid);
@@ -524,13 +524,13 @@ namespace HTLib2.Bioinfo
                         HDebug.Exception(line0 == line1);
                     }
                     string line = "";
-                    line += string.Format("                    {0}", numatoms).HSubEndStringCount(idxNumAtoms[1]-idxNumAtoms[0]+1);
+                    line += string.Format("                    {0}", numatoms).HSubEndStringCount(format.idxId[1]-format.idxId[0]+1);
                     line += "  ";
                     if(description != null) line += (description + "                                        ").Substring(0, 40);
                     if(date        != null) line += (date        + "                                        ").Substring(0, 12);
                     if(pdbid       != null) line += (pdbid       + "                                        ").Substring(0,  4);
                     line = line.TrimEnd();
-                    Header header = new Header(line);
+                    Header header = new Header(format, line);
                     HDebug.Assert(numatoms == header.NumAtoms);
                     return header;
                 }
