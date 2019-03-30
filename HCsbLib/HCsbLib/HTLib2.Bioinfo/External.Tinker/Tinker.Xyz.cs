@@ -288,7 +288,7 @@ namespace HTLib2.Bioinfo
             {
                 TkFile.ElementsToFile(path, saveAsNext, elements);
             }
-            public void ToFile(string path, bool saveAsNext, Format format)
+            public void ToFile(string path, bool saveAsNext, Format format, bool autoAdjustCoord=false)
             {
                 if(format == null)
                     format = atoms_format;
@@ -299,7 +299,7 @@ namespace HTLib2.Bioinfo
                     if(elem is Atom)
                     {
                         var atom = elem as Atom;
-                        var natom = Atom.FromData(format, atom.Id, atom.AtomType.Trim(), atom.X, atom.Y, atom.Z, atom.AtomId, atom.BondedIds);
+                        var natom = Atom.FromData(format, atom.Id, atom.AtomType.Trim(), atom.X, atom.Y, atom.Z, atom.AtomId, atom.BondedIds, autoAdjustCoord);
                         nelems.Add(natom);
                     }
                     else if(elem is Header)
@@ -728,7 +728,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                public static Atom FromData(int id, string atomtype, double x, double y, double z, int atomid, int[] bondedids)
+                public static Atom FromData(int id, string atomtype, double x, double y, double z, int atomid, int[] bondedids, bool autoAdjustCoord=false)
                 {
                     if(HDebug.Selftest())
                     {
@@ -741,14 +741,14 @@ namespace HTLib2.Bioinfo
                         line1 = FromData(1,"NH3", -7.403641,   7.761010,  19.275393,   65,
                                                                                   new int[] { 2,    5,    6,    7 } ).line;
                         HDebug.Exception(line0 == line1);
-                        line0 = "    41  O      0.845971   11.532886   21.390802    74    40";
-                        line1 = FromData(41, "O", 0.845971, 11.532886, 21.390802,   74,
-                                                                              new int[] { 40 } ).line;
+                        line0 =     "    41  O      0.845971   11.532886   21.390802    74    40";
+                        line1 = FromData(41, "O",   0.845971,  11.532886,  21.390802,   74,
+                                                                                  new int[] { 40 } ).line;
                         HDebug.Exception(line0 == line1);
                     }
-                    return FromData(Format.defformat_digit06, id, atomtype, x, y, z, atomid, bondedids);
+                    return FromData(Format.defformat_digit06, id, atomtype, x, y, z, atomid, bondedids, autoAdjustCoord);
                 }
-                public static Atom FromData(Format format, int id, string atomtype, double x, double y, double z, int atomid, int[] bondedids) //, bool autoAdjustCoord=false)
+                public static Atom FromData(Format format, int id, string atomtype, double x, double y, double z, int atomid, int[] bondedids, bool autoAdjustCoord=false)
                 {
                     if(HDebug.Selftest())
                     {
@@ -759,15 +759,16 @@ namespace HTLib2.Bioinfo
                         /// "     1  NH3   -7.403641    7.761010   19.275393    65     2     5     6     7"
                         line0 =                              "     1  NH3   -7.403641    7.761010   19.275393    65     2     5     6     7";
                         line1 = FromData(Format.defformat_digit06, 1,"NH3", -7.403641,   7.761010,  19.275393,   65,
-                                                                                                     new int[] { 2,    5,    6,    7 } ).line;
+                                                                                                            new int[] { 2,    5,    6,    7 } ).line;
                         HDebug.Exception(line0 == line1);
                         line0 =                               "    41  O      0.845971   11.532886   21.390802    74    40";
-                        line1 = FromData(Format.defformat_digit06, 41,"O",    0.845971,  11.532886,  21.390802,   74,new int[]{40 }).line;
+                        line1 = FromData(Format.defformat_digit06, 41,"O",    0.845971,  11.532886,  21.390802,   74
+                                                                                                            ,new int[]{ 40 } ).line;
                         HDebug.Exception(line0 == line1);
 
-                        line0 =                                    "     13  OT         -85.4401110000        -18.6572660000         -9.9272310000   101     14     15";
+                        line0 =                                   "     13  OT         -85.4401110000        -18.6572660000         -9.9272310000   101     14     15";
                         line1 = FromData(Format._defformat_digit10_id7, 13, "OT",      -85.4401110000,       -18.6572660000,        -9.9272310000,  101,
-                                                                                                                                         new int[] { 14,    15 } ).line;
+                                                                                                                                                new int[] { 14,    15 } ).line;
                         HDebug.Exception(line0 == line1);
                     }
 
@@ -791,9 +792,10 @@ namespace HTLib2.Bioinfo
                     HDebug.Assert(atomtype.Trim() == atom.AtomType.Trim() );
                     HDebug.Assert(atomid          == atom.AtomId          );
                     HDebug.Assert(bondedids.HToVectorT() == atom.BondedIds);
-                    HDebug.AssertTolerance(0.000001, x-atom.X); //if(Math.Abs(x-atom.X) > 0.000001) { if(autoAdjustCoord == false) HDebug.Assert(false); else return FromData(format, id, atomtype, x/10, y, z, atomid, bondedids); } // exceptional case that the atom is out of available number range
-                    HDebug.AssertTolerance(0.000001, y-atom.Y); //if(Math.Abs(y-atom.Y) > 0.000001) { if(autoAdjustCoord == false) HDebug.Assert(false); else return FromData(format, id, atomtype, x, y/10, z, atomid, bondedids); } // exceptional case that the atom is out of available number range
-                    HDebug.AssertTolerance(0.000001, z-atom.Z); //if(Math.Abs(z-atom.Z) > 0.000001) { if(autoAdjustCoord == false) HDebug.Assert(false); else return FromData(format, id, atomtype, x, y, z/10, atomid, bondedids); } // exceptional case that the atom is out of available number range
+                    // exceptional case that the atom is out of available number range
+                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, x-atom.X); } else { if(Math.Abs(x-atom.X) > 0.000001) return FromData(format, id, atomtype, x/10, y, z, atomid, bondedids, autoAdjustCoord); }
+                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, y-atom.Y); } else { if(Math.Abs(y-atom.Y) > 0.000001) return FromData(format, id, atomtype, x, y/10, z, atomid, bondedids, autoAdjustCoord); }
+                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, z-atom.Z); } else { if(Math.Abs(z-atom.Z) > 0.000001) return FromData(format, id, atomtype, x, y, z/10, atomid, bondedids, autoAdjustCoord); }
                     return atom;
                 }
                 public static Atom FromCoord(Atom src, Vector coord)
