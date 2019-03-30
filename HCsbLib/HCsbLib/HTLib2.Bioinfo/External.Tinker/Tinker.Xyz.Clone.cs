@@ -358,10 +358,10 @@ namespace HTLib2.Bioinfo
                         Atom  bond    = nelements[bondidx] as Atom;
                         int[] bond_bondids = bond.BondedIds;
                               bond_bondids = bond_bondids.HRemoveAll(id);
-                              bond = Atom.FromData(bond.Id, bond.AtomType, bond.X, bond.Y, bond.Z, bond.AtomId, bond_bondids);
+                              bond = Atom.FromData(atoms_format, bond.Id, bond.AtomType, bond.X, bond.Y, bond.Z, bond.AtomId, bond_bondids);
                         nelements[bondidx] = bond;
                     }
-                    atom = Atom.FromData(atom.Id, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, new int[] { });
+                    atom = Atom.FromData(atoms_format, atom.Id, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, new int[] { });
                     nelements[idx] = atom;
                     nelements[idx] = null;
                 }
