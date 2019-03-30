@@ -30,8 +30,7 @@ namespace HTLib2.Bioinfo
                 string[] lines = HFile.ReadAllLines(loadpath);
                 return lines;
             }
-            public static void ElementsToFile<ELEMENT>(string path, bool saveAsNext, IList<ELEMENT> elements)
-                where ELEMENT : Element
+            public static void ElementsToFile(string path, bool saveAsNext, IList<Element> elements)
             {
                 string writepath = path;
                 if(saveAsNext)

@@ -142,7 +142,7 @@ namespace HTLib2.Bioinfo
                 {
                     // copy header
                     HDebug.Assert((elements[0] as Xyz.Header) != null);
-                    nelements[0] = new Xyz.Header(elements[0].format, elements[0].line);
+                    nelements[0] = new Xyz.Header((elements[0] as Xyz.Header).format, elements[0].line);
 
                     foreach(var idxinfo in idxinfos)
                     {

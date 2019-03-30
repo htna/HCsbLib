@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HTLib2.Bioinfo
 {
-    using Element = Tinker.Xyz.Element;
+    using Element = Tinker.TkFile.Element;
     public static partial class TinkerStatic
     {
         public static bool IsInter12(this Tinker.Xyz.Atom atom0, Tinker.Xyz.Atom atom1)
@@ -491,15 +491,16 @@ namespace HTLib2.Bioinfo
                 univ.SetCoords(newcoords);
                 return true;
             }
-            public class Element : Tinker.TkFile.Element
-            {
-                public readonly Format format;
-                public Element(Format format, string line) : base(line) { this.format = format; }
-            }
+            //public class Element : Tinker.TkFile.Element
+            //{
+            //    public readonly Format format;
+            //    public Element(Format format, string line) : base(line) { this.format = format; }
+            //}
             public class Header : Element
             {
-                public Header(Format format, string line) : base(format                  , line) { }
-                public Header(               string line) : base(Format.defformat_digit06, line) { }
+                public readonly Format format;
+                public Header(Format format, string line) : base(line) { this.format = format                  ; }
+                public Header(               string line) : base(line) { this.format = Format.defformat_digit06; }
                 public override string type { get { return "Header"; } }
                 ///  num atoms
                 ///  0-5
@@ -641,8 +642,9 @@ namespace HTLib2.Bioinfo
             [Serializable]
             public class Atom : Element
             {
-                public Atom(Format format, string line) : base(format                  , line) { CheckFormat(format, line); }
-                public Atom(               string line) : base(Format.defformat_digit06, line) { CheckFormat(format, line); }
+                public readonly Format format;
+                public Atom(Format format, string line) : base(line) { this.format = format                  ; CheckFormat(format, line); }
+                public Atom(               string line) : base(line) { this.format = Format.defformat_digit06; CheckFormat(format, line); }
                 static void CheckFormat(Format format, string line)
                 {
                     for(int i=1+format.idxId      [1]; i<format.idxAtomType[0]; i++) HDebug.Assert(line[i] == ' ');
