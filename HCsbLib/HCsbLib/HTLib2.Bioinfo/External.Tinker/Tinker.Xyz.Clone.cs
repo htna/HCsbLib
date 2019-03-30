@@ -308,9 +308,9 @@ namespace HTLib2.Bioinfo
             }
             public Xyz CloneByCoords(IList<Vector> coords)
             {
-                return CloneByCoords(coords, Atom.defformat_digit06);
+                return CloneByCoords(coords, Format.defformat_digit06);
             }
-            public Xyz CloneByCoords(IList<Vector> coords, Atom.Format format)
+            public Xyz CloneByCoords(IList<Vector> coords, Format format)
             {
                 Element[] nelements = new Element[elements.Length];
                 {

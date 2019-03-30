@@ -62,7 +62,7 @@ namespace HTLib2.Bioinfo
                     );
             }
             public static OMinimize Minimize(Tinker.Xyz xyz
-                                        , Tinker.Xyz.Atom.Format xyz_atoms_format
+                                        , Tinker.Xyz.Format xyz_atoms_format
                                         , Tinker.Prm prm
                                         , string tempbase
                                         , string copytemp                   // = null
@@ -88,7 +88,7 @@ namespace HTLib2.Bioinfo
             }
             public static OMinimize Minimize(string minimizepath
                                         , Tinker.Xyz xyz
-                                        , Tinker.Xyz.Atom.Format xyz_atoms_format
+                                        , Tinker.Xyz.Format xyz_atoms_format
                                         , Tinker.Prm prm
                                         , string tempbase
                                         , string copytemp                   // = null
