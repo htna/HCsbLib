@@ -370,7 +370,7 @@ namespace HTLib2.Bioinfo
                 int maxid = nelements.HSelectByType((Atom)null).HListId().Max();
                 int[] idxhdr = nelements.HIndexByType((Header)null).ToArray();
                 HDebug.Assert(idxhdr.Length == 1);
-                nelements[idxhdr[0]] = Header.FromData(maxid);
+                nelements[idxhdr[0]] = Header.FromData(atoms_format, maxid);
 
                 return new Xyz
                 {
