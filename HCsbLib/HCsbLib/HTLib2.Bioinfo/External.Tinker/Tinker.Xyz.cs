@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HTLib2.Bioinfo
 {
-    using Element = Tinker.TkFile.Element;
+    using Element = Tinker.Xyz.Element;
     public static partial class TinkerStatic
     {
         public static bool IsInter12(this Tinker.Xyz.Atom atom0, Tinker.Xyz.Atom atom1)
@@ -490,6 +490,10 @@ namespace HTLib2.Bioinfo
 
                 univ.SetCoords(newcoords);
                 return true;
+            }
+            public class Element : Tinker.TkFile.Element
+            {
+                public Element(string line) : base(line) { }
             }
             [Serializable]
             public class Header : Element

@@ -154,7 +154,7 @@ namespace HTLib2.Bioinfo
 
             Tinker.Xyz xyz;
             {
-                List<Tinker.TkFile.Element> elements = new List<Tinker.TkFile.Element>();
+                List<Tinker.Xyz.Element> elements = new List<Tinker.Xyz.Element>();
                 elements.AddRange(univ1.refs["xyz"].Get<Tinker.Xyz>().elements);
                 elements.AddRange(univ2.refs["xyz"].Get<Tinker.Xyz>().elements);
                 xyz = new Tinker.Xyz
