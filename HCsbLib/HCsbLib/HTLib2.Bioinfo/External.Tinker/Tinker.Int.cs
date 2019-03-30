@@ -13,12 +13,12 @@ namespace HTLib2.Bioinfo
             public Element[] elements;
             public static Int FromFile(string path, bool loadLatest)
             {
-                string[] lines = TkFile.LinesFromFile(path, loadLatest);
+                string[] lines = TkFile.Element.LinesFromFile(path, loadLatest);
                 return FromLines(lines);
             }
             public void ToFile(string path, bool saveAsNext)
             {
-                TkFile.ElementsToFile(path, saveAsNext, elements);
+                TkFile.Element.ElementsToFile(path, saveAsNext, elements);
             }
             public static Int FromLines(IList<string> lines)
             {
