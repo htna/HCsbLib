@@ -496,7 +496,6 @@ namespace HTLib2.Bioinfo
                 public readonly Format format;
                 public Element(Format format, string line) : base(line) { this.format = format; }
             }
-            [Serializable]
             public class Header : Element
             {
                 public Header(Format format, string line) : base(format                  , line) { }
