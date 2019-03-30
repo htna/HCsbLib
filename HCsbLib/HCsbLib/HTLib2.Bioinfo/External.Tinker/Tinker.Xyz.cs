@@ -493,12 +493,14 @@ namespace HTLib2.Bioinfo
             }
             public class Element : Tinker.TkFile.Element
             {
-                public Element(string line) : base(line) { }
+                public readonly Format format;
+                public Element(Format format, string line) : base(line) { this.format = format; }
             }
             [Serializable]
             public class Header : Element
             {
-                public Header(string line) : base(line) { }
+                public Header(Format format, string line) : base(format                  , line) { }
+                public Header(               string line) : base(Format.defformat_digit06, line) { }
                 public override string type { get { return "Header"; } }
                 ///  num atoms
                 ///  0-5
@@ -640,10 +642,8 @@ namespace HTLib2.Bioinfo
             [Serializable]
             public class Atom : Element
             {
-                public readonly Format format;
-
-                public Atom(Format format, string line) : base(line) { CheckFormat(format, line); this.format = format; }
-                public Atom(               string line) : base(line) { CheckFormat(format, line); this.format = Format.defformat_digit06; }
+                public Atom(Format format, string line) : base(format                  , line) { CheckFormat(format, line); }
+                public Atom(               string line) : base(Format.defformat_digit06, line) { CheckFormat(format, line); }
                 static void CheckFormat(Format format, string line)
                 {
                     for(int i=1+format.idxId      [1]; i<format.idxAtomType[0]; i++) HDebug.Assert(line[i] == ' ');
