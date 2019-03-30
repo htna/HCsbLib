@@ -290,6 +290,9 @@ namespace HTLib2.Bioinfo
             }
             public void ToFile(string path, bool saveAsNext, Atom.Format format)
             {
+                if(format == null)
+                    format = atoms_format;
+
                 List<Element> nelems = new List<Element>();
                 foreach(var elem in elements)
                 {
@@ -298,6 +301,18 @@ namespace HTLib2.Bioinfo
                         var atom = elem as Atom;
                         var natom = Atom.FromData(format, atom.Id, atom.AtomType.Trim(), atom.X, atom.Y, atom.Z, atom.AtomId, atom.BondedIds);
                         nelems.Add(natom);
+                    }
+                    else if(elem is Header)
+                    {
+                        var header = elem as Header;
+                        var nheader = Header.FromData(format, header.NumAtoms);
+                        //{
+                        //    string line = "";
+                        //    line += string.Format("                    {0}", header.NumAtoms).HSubEndStringCount(format.idxId[1]-format.idxId[0]+1);
+                        //    line += "  ";
+                        //    header.line = line;
+                        //}
+                        nelems.Add(nheader);
                     }
                     else
                     {
@@ -491,6 +506,10 @@ namespace HTLib2.Bioinfo
                 /// "  2521  HEME PROTEIN                            25-FEB-98   1A6G"
                 public int NumAtoms { get { return GetInt(idxNumAtoms).Value; } } static readonly int[] idxNumAtoms = new int[] { 0, 5 };
                 public static Header FromData(int numatoms, string description="", string date="", string pdbid="")
+                {
+                    return FromData(Atom.defformat_digit06, numatoms, description, date, pdbid);
+                }
+                public static Header FromData(Atom.Format format, int numatoms, string description="", string date="", string pdbid="")
                 {
                     if(HDebug.Selftest())
                     {
