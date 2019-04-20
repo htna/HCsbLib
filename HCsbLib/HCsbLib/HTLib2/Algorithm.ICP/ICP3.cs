@@ -8,6 +8,7 @@ namespace HTLib2
 {
     public abstract partial class ICP3
     {
+        static bool OptimalTransform_selftest = HDebug.IsDebuggerAttached;
         public static Trans3 OptimalTransform(IList<Vector> source, IList<Vector> target)
         {
             //int size = source.Count;
@@ -26,10 +27,55 @@ namespace HTLib2
             //HTLib.Trans3 trans = HTLib.ICP3.OptimalTransform(p, x);
             //return new Trans3(trans);
 
-            if(HDebug.Selftest())
-                HDebug.Assert(false); // check!!
-            //if(HDebug.Selftest())
-            //    HDebug.ToDo("check");
+            if(OptimalTransform_selftest)
+                #region selftest
+            {
+                OptimalTransform_selftest = false;
+                {
+                    Vector[] _source = new Vector[]
+                        {
+                            new double[] {0, 0, 0},
+                            new double[] {1, 0, 0},
+                            new double[] {0, 1, 0},
+                            new double[] {0, 0, 1},
+                        };
+                    Vector[] _target = new Vector[]
+                        {
+                            new double[] {0, 0, 0},
+                            new double[] {0, 1, 0},
+                            new double[] {0, 0, 1},
+                            new double[] {1, 0, 0},
+                        };
+                    Trans3 _trans = OptimalTransform(_source, _target);
+                    Vector[] _moved = _trans.GetTransformed(_source);
+                    double err2 = 0;
+                    for(int i=0; i<_source.Length; i++)
+                        err2 = (_target[i] - _moved[i]).Dist2;
+                    HDebug.Assert(err2 < 0.00000001);
+                }
+                {
+                    Vector[] _source = new Vector[]
+                        {
+                            new double[] {1, 0, 0},
+                            new double[] {0, 1, 0},
+                            new double[] {0, 0, 1},
+                        };
+                    Vector[] _target = new Vector[]
+                        {
+                            new double[] {0, 1, 0},
+                            new double[] {0, 0, 1},
+                            new double[] {1, 0, 0},
+                        };
+                    Trans3 _trans = OptimalTransform(_source, _target);
+                    Vector[] _moved = _trans.GetTransformed(_source);
+                    double err2 = 0;
+                    for(int i=0; i<_source.Length; i++)
+                        err2 = (_target[i] - _moved[i]).Dist2;
+                    HDebug.Assert(err2 < 0.00000001);
+                }
+            }
+                #endregion
+
             double[] weight = new double[source.Count];
             for(int i=0; i<weight.Length; i++)
                 weight[i] = 1;
