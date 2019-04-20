@@ -8,10 +8,62 @@ namespace HTLib2
 {
     public abstract partial class ICP3
     {
+               static bool   OptimalTransformWeighted_selftest = HDebug.IsDebuggerAttached;
         public static Trans3 OptimalTransformWeighted(IList<Vector> source, IList<Vector> target, IList<double> weight
                                                      , double? rotateRatio=null
                                                      )
         {
+            if(OptimalTransformWeighted_selftest)
+                #region selftest
+            {
+                OptimalTransformWeighted_selftest = false;
+                {
+                    Vector[] _source = new Vector[]
+                        {
+                            new double[] {0, 0, 0},
+                            new double[] {1, 0, 0},
+                            new double[] {0, 1, 0},
+                            new double[] {0, 0, 1},
+                        };
+                    Vector[] _target = new Vector[]
+                        {
+                            new double[] {0, 0, 0},
+                            new double[] {0, 1, 0},
+                            new double[] {0, 0, 1},
+                            new double[] {1, 0, 0},
+                        };
+                    double[] _weight = new double[] { 1, 1, 1, 1 };
+                    Trans3 _trans = OptimalTransformWeighted(_source, _target, _weight, null);
+                    Vector[] _moved = _trans.GetTransformed(_source);
+                    double _err2 = 0;
+                    for(int i=0; i<_source.Length; i++)
+                        _err2 = (_target[i] - _moved[i]).Dist2;
+                    HDebug.Assert(_err2 < 0.00000001);
+                }
+                {
+                    Vector[] _source = new Vector[]
+                        {
+                            new double[] {1, 0, 0},
+                            new double[] {0, 1, 0},
+                            new double[] {0, 0, 1},
+                        };
+                    Vector[] _target = new Vector[]
+                        {
+                            new double[] {0, 1, 0},
+                            new double[] {0, 0, 1},
+                            new double[] {1, 0, 0},
+                        };
+                    double[] _weight = new double[] { 1, 1, 1 };
+                    Trans3 _trans = OptimalTransformWeighted(_source, _target, _weight, null);
+                    Vector[] _moved = _trans.GetTransformed(_source);
+                    double _err2 = 0;
+                    for(int i=0; i<_source.Length; i++)
+                        _err2 = (_target[i] - _moved[i]).Dist2;
+                    HDebug.Assert(_err2 < 0.00000001);
+                }
+            }
+                #endregion
+
             if(HDebug.IsDebuggerAttached) foreach(double _w in weight) HDebug.Assert(_w >= 0);
             Vector[] p = source.ToArray();
             Vector[] x = target.ToArray();
