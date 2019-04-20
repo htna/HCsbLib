@@ -91,7 +91,7 @@ namespace HTLib2
         }
         public static MatrixByArr CovarianceWeighted(Vector[] p, Vector[] x, Vector up, Vector ux, double[] w)
         {
-            MatrixByArr cov  = new double[3, 3]; cov[0, 0] = cov[1, 1] = cov[2, 2] = 1;
+            MatrixByArr cov  = new double[3, 3];
             for(int i=0; i<p.Length; i++)
             {
                 Vector pi = p[i] - up;
