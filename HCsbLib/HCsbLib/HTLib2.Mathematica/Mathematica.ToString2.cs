@@ -23,6 +23,15 @@ namespace HTLib2
             _ToString2(text, format, obj);
             return text.ToString();
         }
+        public static string ToString2(string format, object obj, params object[] objs)
+        {
+            StringBuilder text = new StringBuilder();
+            List<object> list = new List<object>(objs.Length+1);
+            list.Add(obj);
+            list.AddRange(objs);
+            _ToString2(text, format, list);
+            return text.ToString();
+        }
         //public static string ToString2<T>(T[] objs)
         //{
         //    return _ToString2(null, objs);
