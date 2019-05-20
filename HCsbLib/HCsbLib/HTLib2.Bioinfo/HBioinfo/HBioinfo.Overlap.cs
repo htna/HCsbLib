@@ -8,6 +8,62 @@ namespace HTLib2.Bioinfo
 {
     public static partial class HBioinfo
     {
+        public static (Dictionary<double, double> dovlp1, Dictionary<double, double> dovlp2) DegeneratcyOverlap
+                ( IList<Mode> modes1, double[] mass1, double[] mass2, IList<Mode> modes2
+                , ILinAlg ila, bool bResetUnitVector
+                , double degeneracy_tolerance // 3.0
+                , Matrix overlapsigned = null
+                )
+        {
+            if(overlapsigned == null)
+                overlapsigned = HBioinfo.OverlapSigned(modes1, mass1, mass2, modes2, ila, bResetUnitVector);
+
+            double[] freqs1 = modes1.ListFreq();
+            double[] freqs2 = modes2.ListFreq();
+
+            if(HDebug.IsDebuggerAttached)
+            {
+                for(int i=1; i<freqs1.Length; i++) HDebug.Assert(freqs1[i-1] <= freqs1[i]);
+                for(int i=1; i<freqs2.Length; i++) HDebug.Assert(freqs2[i-1] <= freqs2[i]);
+            }
+
+            Dictionary<double, double> dovlp1 = new Dictionary<double, double>();
+            for(int i1=0; i1<modes1.Count; i1++)
+            {
+                double freq = freqs1[i1];
+                int i2a = Array.BinarySearch(freqs2, freq-degeneracy_tolerance);
+                int i2b = Array.BinarySearch(freqs2, freq+degeneracy_tolerance);
+                if(i2a == i2b) continue;
+                if(i2a < 0) { i2a = ~i2a; }
+                if(i2b < 0) { i2b = ~i2b; }
+
+                HDebug.Assert(i2a < i2b);
+
+                double dovlp = 0;
+                for(int i2=i2a; i2<i2b; i2++)
+                    dovlp += overlapsigned[i1,i2] * overlapsigned[i1,i2];
+                dovlp1.Add(freqs1[i1], dovlp);
+            }
+
+            Dictionary<double, double> dovlp2 = new Dictionary<double, double>();
+            for(int i2=0; i2<modes1.Count; i2++)
+            {
+                double freq = freqs2[i2];
+                int i1a = Array.BinarySearch(freqs1, freq-degeneracy_tolerance);
+                int i1b = Array.BinarySearch(freqs1, freq+degeneracy_tolerance);
+                if(i1a == i1b) continue;
+                if(i1a < 0) { i1a = ~i1a; }
+                if(i1b < 0) { i1b = ~i1b; }
+
+                HDebug.Assert(i1a < i1b);
+
+                double dovlp = 0;
+                for(int i1=i1a; i1<i1b; i1++)
+                    dovlp += overlapsigned[i1,i2] * overlapsigned[i1,i2];
+                dovlp2.Add(freqs2[i2], dovlp);
+            }
+            return (dovlp1, dovlp2);
+        }
         public static Matrix OverlapSigned(IList<Mode> modes1, IList<Mode> modes2, ILinAlg ila, bool bResetUnitVector)
         {
             return OverlapSigned(modes1, null, null, modes2, ila, bResetUnitVector);
