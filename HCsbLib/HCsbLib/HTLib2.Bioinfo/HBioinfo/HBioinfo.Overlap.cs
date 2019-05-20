@@ -8,7 +8,7 @@ namespace HTLib2.Bioinfo
 {
     public static partial class HBioinfo
     {
-        public static (Dictionary<double, double> dovlp1, Dictionary<double, double> dovlp2) DegeneratcyOverlap
+        public static (List<(double, double)> freq1_dovlp, List<(double, double)> freq2_dovlp) DegeneratcyOverlap
                 ( IList<Mode> modes1, double[] mass1, double[] mass2, IList<Mode> modes2
                 , ILinAlg ila, bool bResetUnitVector
                 , double degeneracy_tolerance // 3.0
@@ -27,7 +27,7 @@ namespace HTLib2.Bioinfo
                 for(int i=1; i<freqs2.Length; i++) HDebug.Assert(freqs2[i-1] <= freqs2[i]);
             }
 
-            Dictionary<double, double> dovlp1 = new Dictionary<double, double>();
+            List<(double, double)> freq1_dovlp = new List<(double, double)>();
             for(int i1=0; i1<modes1.Count; i1++)
             {
                 double freq = freqs1[i1];
@@ -42,10 +42,10 @@ namespace HTLib2.Bioinfo
                 double dovlp = 0;
                 for(int i2=i2a; i2<i2b; i2++)
                     dovlp += overlapsigned[i1,i2] * overlapsigned[i1,i2];
-                dovlp1.Add(freqs1[i1], dovlp);
+                freq1_dovlp.Add((freqs1[i1], dovlp));
             }
 
-            Dictionary<double, double> dovlp2 = new Dictionary<double, double>();
+            List<(double, double)> freq2_dovlp = new List<(double, double)>();
             for(int i2=0; i2<modes1.Count; i2++)
             {
                 double freq = freqs2[i2];
@@ -60,9 +60,9 @@ namespace HTLib2.Bioinfo
                 double dovlp = 0;
                 for(int i1=i1a; i1<i1b; i1++)
                     dovlp += overlapsigned[i1,i2] * overlapsigned[i1,i2];
-                dovlp2.Add(freqs2[i2], dovlp);
+                freq2_dovlp.Add((freqs2[i2], dovlp));
             }
-            return (dovlp1, dovlp2);
+            return (freq1_dovlp, freq2_dovlp);
         }
         public static Matrix OverlapSigned(IList<Mode> modes1, IList<Mode> modes2, ILinAlg ila, bool bResetUnitVector)
         {
