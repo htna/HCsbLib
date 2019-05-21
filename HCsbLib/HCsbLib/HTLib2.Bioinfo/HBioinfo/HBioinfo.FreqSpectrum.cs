@@ -19,7 +19,6 @@ namespace HTLib2.Bioinfo
                 , double freq_delta = 5
                 )
             {
-                HDebug.ToDo("check");
                 int idx_max = (int)Math.Round((freq_upto - freq_from) / freq_delta);
 
                 List<(double freq, List<int> idxs)> freq_idxs = new List<(double freq, List<int> idxs)>(idx_max + 1);
