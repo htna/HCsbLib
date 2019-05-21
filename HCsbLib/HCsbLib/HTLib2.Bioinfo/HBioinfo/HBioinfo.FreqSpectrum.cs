@@ -34,6 +34,7 @@ namespace HTLib2.Bioinfo
                 {
                     double freq = freqs[i];
                     int idx = (int)Math.Round((freq - freq_from) / freq_delta);
+                    double freqto = freq_from + freq_delta * idx;
                     if(idx < 0      ) continue;
                     if(idx > idx_max) continue;
                     freq_idxs[idx].Item2.Add(i);
