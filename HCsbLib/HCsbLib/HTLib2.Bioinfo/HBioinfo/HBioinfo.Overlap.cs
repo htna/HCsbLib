@@ -33,7 +33,11 @@ namespace HTLib2.Bioinfo
                 double freq = freqs1[i1];
                 int i2a = Array.BinarySearch(freqs2, freq-degeneracy_tolerance);
                 int i2b = Array.BinarySearch(freqs2, freq+degeneracy_tolerance);
-                if(i2a == i2b) continue;
+                if(i2a == i2b)
+                {
+                    freq1_dovlp.Add((freqs1[i1], 0));
+                    continue;
+                }
                 if(i2a < 0) { i2a = ~i2a; }
                 if(i2b < 0) { i2b = ~i2b; }
 
@@ -51,7 +55,11 @@ namespace HTLib2.Bioinfo
                 double freq = freqs2[i2];
                 int i1a = Array.BinarySearch(freqs1, freq-degeneracy_tolerance);
                 int i1b = Array.BinarySearch(freqs1, freq+degeneracy_tolerance);
-                if(i1a == i1b) continue;
+                if(i1a == i1b)
+                {
+                    freq2_dovlp.Add((freqs2[i2], 0));
+                    continue;
+                }
                 if(i1a < 0) { i1a = ~i1a; }
                 if(i1b < 0) { i1b = ~i1b; }
 
