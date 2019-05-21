@@ -19,6 +19,7 @@ namespace HTLib2.Bioinfo
                 , double freq_delta = 5
                 )
             {
+                HDebug.ToDo("check");
                 int idx_max = (int)Math.Round((freq_upto - freq_from) / freq_delta);
 
                 List<(double freq, List<int> idxs)> freq_idxs = new List<(double freq, List<int> idxs)>(idx_max + 1);
@@ -46,6 +47,8 @@ namespace HTLib2.Bioinfo
                 , double freq_delta
                 )
             {
+                HDebug.ToDo("check");
+
                 List<(double freq, double prob)> spectrum = new List<(double freq, double prob)>(freq_idxs.Count);
 
                 for(int i=0; i<freq_idxs.Count; i++)
