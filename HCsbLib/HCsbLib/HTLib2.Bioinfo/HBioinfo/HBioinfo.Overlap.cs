@@ -8,7 +8,7 @@ namespace HTLib2.Bioinfo
 {
     public static partial class HBioinfo
     {
-        public static (List<(double, double)> freq1_dovlp, List<(double, double)> freq2_dovlp) DegeneratcyOverlap
+        public static (List<(double freq, double dovlp)> freq1_dovlp, List<(double freq, double dovlp)> freq2_dovlp) DegeneratcyOverlap
                 ( IList<Mode> modes1, double[] mass1, double[] mass2, IList<Mode> modes2
                 , ILinAlg ila, bool bResetUnitVector
                 , double degeneracy_tolerance // 3.0
@@ -27,7 +27,7 @@ namespace HTLib2.Bioinfo
                 for(int i=1; i<freqs2.Length; i++) HDebug.Assert(freqs2[i-1] <= freqs2[i]);
             }
 
-            List<(double, double)> freq1_dovlp = new List<(double, double)>();
+            List<(double freq, double dovlp)> freq1_dovlp = new List<(double, double)>();
             for(int i1=0; i1<modes1.Count; i1++)
             {
                 double freq = freqs1[i1];
@@ -49,7 +49,7 @@ namespace HTLib2.Bioinfo
                 freq1_dovlp.Add((freqs1[i1], dovlp));
             }
 
-            List<(double, double)> freq2_dovlp = new List<(double, double)>();
+            List<(double freq, double dovlp)> freq2_dovlp = new List<(double, double)>();
             for(int i2=0; i2<modes1.Count; i2++)
             {
                 double freq = freqs2[i2];
@@ -70,6 +70,15 @@ namespace HTLib2.Bioinfo
                     dovlp += overlapsigned[i1,i2] * overlapsigned[i1,i2];
                 freq2_dovlp.Add((freqs2[i2], dovlp));
             }
+
+            if(HDebug.IsDebuggerAttached)
+            {
+                HDebug.Assert(freqs1.Length == freq1_dovlp.Count);
+                HDebug.Assert(freqs2.Length == freq2_dovlp.Count);
+                for(int i=0; i<freqs1.Length; i++) HDebug.Assert(freqs1[i] == freq1_dovlp[i].freq);
+                for(int i=0; i<freqs2.Length; i++) HDebug.Assert(freqs2[i] == freq2_dovlp[i].freq);
+            }
+
             return (freq1_dovlp, freq2_dovlp);
         }
         public static Matrix OverlapSigned(IList<Mode> modes1, IList<Mode> modes2, ILinAlg ila, bool bResetUnitVector)
