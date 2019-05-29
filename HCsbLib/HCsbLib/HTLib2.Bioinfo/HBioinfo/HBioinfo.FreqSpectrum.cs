@@ -47,14 +47,23 @@ namespace HTLib2.Bioinfo
                 , double freq_delta
                 )
             {
-                HDebug.ToDo("check");
+                //HDebug.ToDo("check");
+                freq_delta = freq_idxs[1].freq - freq_idxs[0].freq;
+                HDebug.Assert(freq_delta > 0);
+                if(HDebug.IsDebuggerAttached)
+                {
+                    for(int i=1; i<freq_idxs.Count; i++)
+                        HDebug.Assert(freq_delta == freq_idxs[i].freq - freq_idxs[i-1].freq);
+                }
+
+                double freqs_Count = freqs.Count();
 
                 List<(double freq, double prob)> spectrum = new List<(double freq, double prob)>(freq_idxs.Count);
 
                 for(int i=0; i<freq_idxs.Count; i++)
                 {
                     double freq =  freq_idxs[i].freq;
-                    double prob = (freq_idxs[i].idxs.Count() / freqs.Count()) / freq_delta;
+                    double prob = (freq_idxs[i].idxs.Count() / freqs_Count) / freq_delta;
                     spectrum.Add((freq, prob));
                 }
 
