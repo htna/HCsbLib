@@ -44,11 +44,9 @@ namespace HTLib2.Bioinfo
             public static List<(double freq, double prob)> GetFreqSpectrum
                 ( IList<double> freqs
                 , List<(double freq, List<int> idxs)> freq_idxs
-                , double freq_delta
                 )
             {
-                //HDebug.ToDo("check");
-                freq_delta = freq_idxs[1].freq - freq_idxs[0].freq;
+                double freq_delta = freq_idxs[1].freq - freq_idxs[0].freq;
                 HDebug.Assert(freq_delta > 0);
                 if(HDebug.IsDebuggerAttached)
                 {
@@ -77,7 +75,7 @@ namespace HTLib2.Bioinfo
                 )
             {
                 List<(double freq, List<int> idxs)> freq_idxs = GetIdxFreqSpectrum(freqs, freq_from, freq_upto, freq_delta);
-                return GetFreqSpectrum(freqs, freq_idxs, freq_delta);
+                return GetFreqSpectrum(freqs, freq_idxs);
             }
         }
     }
