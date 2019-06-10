@@ -28,7 +28,7 @@ namespace HTLib2.Bioinfo
             }
 
             List<(double freq, double dovlp)> freq1_dovlp = new List<(double, double)>();
-            for(int i1=0; i1<modes1.Count; i1++)
+            for(int i1=0; i1<freqs1.Length; i1++)
             {
                 double freq = freqs1[i1];
                 int i2a = Array.BinarySearch(freqs2, freq-degeneracy_tolerance);
@@ -50,7 +50,7 @@ namespace HTLib2.Bioinfo
             }
 
             List<(double freq, double dovlp)> freq2_dovlp = new List<(double, double)>();
-            for(int i2=0; i2<modes1.Count; i2++)
+            for(int i2=0; i2<freqs2.Length; i2++)
             {
                 double freq = freqs2[i2];
                 int i1a = Array.BinarySearch(freqs1, freq-degeneracy_tolerance);
