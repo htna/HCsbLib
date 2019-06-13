@@ -9,5 +9,6 @@ namespace HTLib2
 {
     public interface IMatrixSparse<T> : IMatrix<T>
     {
+        IEnumerable<Tuple<int, int, T>> EnumElements();
     }
 }
