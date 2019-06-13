@@ -14,6 +14,7 @@ namespace HTLib2.Bioinfo
                                          , IList<Vector> coords = null
                                          , IList<double> bfactors = null
                                          , IList<Element> headers = null
+                                         , int? modelidx = null
                                          )
         {
             if(coords == null)
@@ -32,7 +33,9 @@ namespace HTLib2.Bioinfo
                 List<string> lheaders = null;
                 if((append == false) && (headers != null))
                     lheaders = headers.ToLines();
-                Pdb.ToFile(filepath, atoms, coords: lcoords, append: append, headers: lheaders, bfactors: bfactors);
+                Pdb.ToFile(filepath, atoms, coords: lcoords, append: append, headers: lheaders, bfactors: bfactors
+                    , modelidx: modelidx
+                    );
                 append = true;
             }
         }

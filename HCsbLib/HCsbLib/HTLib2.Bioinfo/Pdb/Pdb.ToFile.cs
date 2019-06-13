@@ -39,6 +39,7 @@ namespace HTLib2.Bioinfo
                                  , IList<double> bfactors = null
                                  , bool append = false
                                  , IList<string> headers = null
+                                 , int? modelidx = null
                                  )
         {
             List<string> lines = new List<string>();
@@ -48,7 +49,17 @@ namespace HTLib2.Bioinfo
             //if(anisouScale != null) Debug.Assert(size == anisouScale.Count);
             if(headers     != null)
                 lines.AddRange(headers);
-            lines.Add("MODEL        1                                                                  ");
+            {
+                //           1         2         3         4         5         6         7         8
+                //  12345678901234567890123456789012345678901234567890123456789012345678901234567890
+                // "MODEL        1                                                                  "
+                string line = "MODEL        1                                                                  ";
+                if(modelidx != null)
+                    line.Replace("1", modelidx.Value.ToString());
+                line = line.Substring(0, 80);
+                lines.Add(line);
+            }
+
             for(int i=0; i<size; i++)
             {
                 Atom atom = atoms[i];
