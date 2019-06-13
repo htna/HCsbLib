@@ -8,17 +8,19 @@ namespace HTLib2
 	{
         /// Matlab.PutSparseMatrix("H", H.GetMatrixSparse(), 3, 3);
         //public static void PutSparseMatrix<MATRIX>(string name, MatrixSparse<MATRIX> real, int elemColSize, int elemRowSize)
-        public static void PutSparseMatrix<MATRIX>(string name, IMatrixSparse<MATRIX> real, int elemColSize, int elemRowSize)
-            where MATRIX : Matrix
+        //public static void PutSparseMatrix<MATRIX>(string name, IMatrixSparse<MATRIX> real, int elemColSize, int elemRowSize)
+        //    where MATRIX : Matrix
+        public static void PutSparseMatrix(string name, IMatrixSparse<MatrixByArr> real, int elemColSize, int elemRowSize, string opt=null)
 		{
+            /// http://www.mathworks.com/help/matlab/ref/sparse.html
+            /// S = sparse(i,j,s,m,n)
+            /// * create m-by-n sparse matrix
+            /// * where S(i(k),j(k)) = s(k)
+            /// * Vectors i, j, and s are all the same length.
+            /// * Any elements of s that are zero are ignored.
+            /// * Any elementsof s that have duplicate values of i and j are added together. 
+            if(opt == null)
             {
-                /// http://www.mathworks.com/help/matlab/ref/sparse.html
-                /// S = sparse(i,j,s,m,n)
-                /// * create m-by-n sparse matrix
-                /// * where S(i(k),j(k)) = s(k)
-                /// * Vectors i, j, and s are all the same length.
-                /// * Any elements of s that are zero are ignored.
-                /// * Any elementsof s that have duplicate values of i and j are added together. 
                 int m = real.ColSize * elemColSize;
                 int n = real.RowSize * elemRowSize;
                 List<int> i = new List<int>();
@@ -53,6 +55,62 @@ namespace HTLib2
                 Execute(name+" = htlib2_matlab_PutSparseMatrix;");
                 Execute("clear htlib2_matlab_PutSparseMatrix;");
             }
-		}
+            else if(opt == "use file")
+            {
+                string i_path = HFile.GetTempPath(_path_temporary, ".dat");
+                string j_path = HFile.GetTempPath(_path_temporary, ".dat");
+                string s_path = HFile.GetTempPath(_path_temporary, ".dat");
+                ulong count = 0;
+                {
+                    System.IO.BinaryWriter i_writer = new System.IO.BinaryWriter(new System.IO.FileStream(i_path, System.IO.FileMode.CreateNew));
+                    System.IO.BinaryWriter j_writer = new System.IO.BinaryWriter(new System.IO.FileStream(j_path, System.IO.FileMode.CreateNew));
+                    System.IO.BinaryWriter s_writer = new System.IO.BinaryWriter(new System.IO.FileStream(s_path, System.IO.FileMode.CreateNew));
+                    foreach (var c_r_val in real.EnumElements())
+                    {
+                        int c = c_r_val.Item1;
+                        int r = c_r_val.Item2;
+                        Matrix hesscr = c_r_val.Item3;
+                        HDebug.Assert(hesscr != null);
+                        HDebug.Assert(hesscr.ColSize == elemColSize, hesscr.RowSize == elemRowSize);
+                        for (int dc = 0; dc < elemColSize; dc++)
+                            for (int dr = 0; dr < elemRowSize; dr++)
+                            {
+                                count ++;
+                                double i = (c * elemColSize + dc);
+                                double j = (r * elemRowSize + dr);
+                                double s = (hesscr[dc, dr]);
+                                i_writer.Write(i);
+                                j_writer.Write(j);
+                                s_writer.Write(s);
+                            }
+                    }
+                    i_writer.Flush(); i_writer.Close();
+                    j_writer.Flush(); j_writer.Close();
+                    s_writer.Flush(); s_writer.Close();
+                }
+                {
+                    int m = real.ColSize * elemColSize;
+                    int n = real.RowSize * elemRowSize;
+                    PutValue("htlib2_matlab_PutSparseMatrix.m", m);
+                    PutValue("htlib2_matlab_PutSparseMatrix.n", n);
+                    Execute("htlib2_matlab_PutSparseMatrix.ifid=fopen('" + i_path + "','r');");
+                    Execute("htlib2_matlab_PutSparseMatrix.jfid=fopen('" + j_path + "','r');");
+                    Execute("htlib2_matlab_PutSparseMatrix.sfid=fopen('" + s_path + "','r');");
+                    // A = fread(fileID) reads all the data in the file into a vector of class double. By default, fread reads a file 1 byte at a time, interprets each byte as an 8-bit unsigned integer (uint8), and returns a double array.
+                    Execute("htlib2_matlab_PutSparseMatrix.imat=fread(htlib2_matlab_PutSparseMatrix.ifid, ["+count+"],'*double')';");
+                    Execute("htlib2_matlab_PutSparseMatrix.jmat=fread(htlib2_matlab_PutSparseMatrix.jfid, ["+count+"],'*double')';");
+                    Execute("htlib2_matlab_PutSparseMatrix.smat=fread(htlib2_matlab_PutSparseMatrix.sfid, ["+count+"],'*double')';");
+                    Execute("fclose(htlib2_matlab_PutSparseMatrix.ifid);");
+                    Execute("fclose(htlib2_matlab_PutSparseMatrix.jfid);");
+                    Execute("fclose(htlib2_matlab_PutSparseMatrix.sfid);");
+                    Execute("htlib2_matlab_PutSparseMatrix = sparse(htlib2_matlab_PutSparseMatrix.imat+1, htlib2_matlab_PutSparseMatrix.jmat+1, htlib2_matlab_PutSparseMatrix.smat, htlib2_matlab_PutSparseMatrix.m, htlib2_matlab_PutSparseMatrix.n);");
+                    Execute(name + " = htlib2_matlab_PutSparseMatrix;");
+                    Execute("clear htlib2_matlab_PutSparseMatrix;");
+                }
+                HFile.Delete(i_path);
+                HFile.Delete(j_path);
+                HFile.Delete(s_path);
+            }
+        }
 	}
 }
