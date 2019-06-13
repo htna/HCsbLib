@@ -102,10 +102,11 @@ namespace HTLib2.Bioinfo
             return HessMatrixDense.FromMatrix(hess);
         }
 
-        public MatrixSparse<MatrixByArr> GetMatrixSparse()
+        public IMatrixSparse<MatrixByArr> GetMatrixSparse()
         {
             if(this is HessMatrixSparse) return (this as HessMatrixSparse).GetMatrixSparse();
             if(this is HessMatrixDense ) return HessMatrixSparse.FromMatrix(this).GetMatrixSparse();
+            if(this is HessMatrixLayeredArray) return (this as IMatrixSparse<MatrixByArr>);
             throw new NotImplementedException();
         }
     }

@@ -9,6 +9,7 @@ namespace HTLib2.Bioinfo
 {
     [Serializable]
     public partial class HessMatrixLayeredArray : HessMatrix, ISerializable
+        , IMatrixSparse<MatrixByArr>
     {
         List<double    [,]>     diag;
         List<double[][][,]>  offdiag;
@@ -411,6 +412,42 @@ namespace HTLib2.Bioinfo
         {
             throw new NotImplementedException();
         }
+        //////////////////////////////////////////////////////////////
+        // IMatrixSparse<MatrixByArr>
+        IEnumerable<ValueTuple<int, int, MatrixByArr>> IMatrixSparse<MatrixByArr>.EnumElements()
+        {
+            return EnumBlocks();
+        }
+        // IMatrixSparse<MatrixByArr>
+        //////////////////////////////////////////////////////////////
+        // IMatrix<MatrixByArr>
+        int IMatrix<MatrixByArr>.ColSize{ get { return ColBlockSize; } }
+        int IMatrix<MatrixByArr>.RowSize{ get { return RowBlockSize; } }
+        MatrixByArr IMatrix<MatrixByArr>.this[int  bc, int  br]
+        {
+            get { return GetBlock(bc, br); }
+            set { SetBlock(bc, br, value); }
+        }
+        MatrixByArr IMatrix<MatrixByArr>.this[long bc, long br]
+        {
+            get { HDebug.Assert(false); return GetBlock((int)bc, (int)br); }
+            set { HDebug.Assert(false); SetBlock((int)bc, (int)br, value); }
+        }
+        MatrixByArr[,] IMatrix<MatrixByArr>.ToArray()
+        {
+            MatrixByArr[,] arr = new MatrixByArr[ColBlockSize, RowBlockSize];
+            foreach (var (bc, br, bval) in _EnumBlocks())
+            {
+                arr[bc, br] = bval;
+            }
+            for(int bc=0; bc<arr.GetLength(0); bc++)
+                for(int br=0; br<arr.GetLength(1); br++)
+                    if(arr[bc,br] == null)
+                        arr[bc, br] = new double[3,3];
+            return arr;
+        }
+        // IMatrix<MatrixByArr>
+        //////////////////////////////////////////////////////////////
 
         public override HessMatrix Zeros(int colsize, int rowsize)
         {
