@@ -124,8 +124,9 @@ namespace HTLib2.Bioinfo
         }
         public override IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks()
         {
-            foreach(var item in hess.EnumBlocks())
-                yield return item.ToValueTuple();
+            return hess.EnumBlocks();
+            //foreach(var item in hess.EnumBlocks())
+            //    yield return item.ToValueTuple();
         }
         //public override IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocksInCols_dep(int[] lstBlkCol)
         //{

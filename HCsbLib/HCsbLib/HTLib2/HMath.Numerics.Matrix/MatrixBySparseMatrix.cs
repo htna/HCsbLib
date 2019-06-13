@@ -185,7 +185,7 @@ namespace HTLib2
         {
             return blkmatrix.HasElementLock(bc, br);
         }
-        public IEnumerable<Tuple<int,int,MatrixByArr>> EnumBlocks()
+        public IEnumerable<ValueTuple<int,int,MatrixByArr>> EnumBlocks()
         {
             return blkmatrix.EnumElements();
         }
@@ -303,7 +303,7 @@ namespace HTLib2
             int[]       block_Item2 = new int[block_num];
             double[,][] block_Item3 = new double[BlkSize, BlkSize][]; for(int c=0; c<BlkSize; c++) for(int r=0; r<BlkSize; r++) block_Item3[c, r] = new double[block_num];
             int i = 0;
-            foreach(Tuple<int,int,MatrixByArr> block in blkmatrix.EnumElements())
+            foreach(ValueTuple<int,int,MatrixByArr> block in blkmatrix.EnumElements())
             {
                 block_Item1[i] = block.Item1;
                 block_Item2[i] = block.Item2;

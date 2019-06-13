@@ -188,10 +188,10 @@ namespace HTLib2
             return false;
         }
 
-        public IEnumerable<Tuple<int,int,T>> EnumElements()
+        public IEnumerable<ValueTuple<int,int,T>> EnumElements()
         {
             int[] cols = HEnum.HEnumCount(ColSize).ToArray();
-            return EnumElements_dep(cols);
+            return EnumElements(cols);
         }
         public IEnumerable<Tuple<int,int,T>> EnumElements_dep(params int[] cols)
         {
