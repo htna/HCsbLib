@@ -7,7 +7,8 @@ namespace HTLib2
 	public partial class Matlab
 	{
         /// Matlab.PutSparseMatrix("H", H.GetMatrixSparse(), 3, 3);
-        public static void PutSparseMatrix<MATRIX>(string name, MatrixSparse<MATRIX> real, int elemColSize, int elemRowSize)
+        //public static void PutSparseMatrix<MATRIX>(string name, MatrixSparse<MATRIX> real, int elemColSize, int elemRowSize)
+        public static void PutSparseMatrix<MATRIX>(string name, IMatrixSparse<MATRIX> real, int elemColSize, int elemRowSize)
             where MATRIX : Matrix
 		{
             {
