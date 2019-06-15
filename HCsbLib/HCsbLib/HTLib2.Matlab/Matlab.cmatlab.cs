@@ -107,7 +107,7 @@ namespace HTLib2
         {
             // static MLApp.MLApp _matlab = new MLApp.MLApp();
 
-            class matlabimpl
+            class matlabimpl : IDisposable
             {
                 dynamic _matlab;    //MLApp.MLApp _matlab;
                 public static dynamic CreateMatlabInstance()    //public static MLApp.MLApp CreateMatlabInstance()
@@ -148,6 +148,10 @@ namespace HTLib2
                         _matlab.Quit();
                         _matlab = null;
                     }
+                }
+                void IDisposable.Dispose()
+                {
+                    _matlab.Execute("exit;");
                 }
             }
 
