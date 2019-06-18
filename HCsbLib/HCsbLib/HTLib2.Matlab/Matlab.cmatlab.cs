@@ -113,6 +113,7 @@ namespace HTLib2
                 public static dynamic CreateMatlabInstance()    //public static MLApp.MLApp CreateMatlabInstance()
                 {
                     var acCtx = Type.GetTypeFromProgID("matlab.application.single");
+                    //var acCtx = Type.GetTypeFromProgID("matlab.application");
                     dynamic _matlab = Activator.CreateInstance(acCtx); //MLApp.MLApp _matlab = (MLApp.MLApp)Activator.CreateInstance(acCtx);
                     return _matlab;
                 }
