@@ -21,6 +21,26 @@ namespace HTLib2.Bioinfo
             double[] freqs1 = modes1.ListFreq();
             double[] freqs2 = modes2.ListFreq();
 
+            bool isfreqssorted = true;
+            {
+                for(int i=1; i<freqs1.Length; i++) isfreqssorted = isfreqssorted && (freqs1[i-1] <= freqs1[i]); // ( sorted ) or ( freqs1[i-1] is close to zero )
+                for(int i=1; i<freqs2.Length; i++) isfreqssorted = isfreqssorted && (freqs2[i-1] <= freqs2[i]); // ( sorted ) or ( freqs2[i-1] is close to zero )
+            }
+            int[] idx1sorted = null;
+            int[] idx2sorted = null;
+            if (isfreqssorted == false)
+            {
+                idx1sorted = freqs1.HIdxSorted();
+                idx2sorted = freqs2.HIdxSorted();
+                modes1 = modes1.HSelectByIndex(idx1sorted);
+                modes2 = modes2.HSelectByIndex(idx2sorted);
+                if(mass1 != null) { HDebug.Assert(mass1.Length == idx1sorted.Length); mass1 = mass1.HSelectByIndex(idx1sorted); }
+                if(mass2 != null) { HDebug.Assert(mass2.Length == idx2sorted.Length); mass2 = mass2.HSelectByIndex(idx2sorted); }
+                freqs1 = modes1.ListFreq();
+                freqs2 = modes2.ListFreq();
+                overlapsigned = HBioinfo.OverlapSigned(modes1, mass1, mass2, modes2, ila, bResetUnitVector);
+            }
+
             if(HDebug.IsDebuggerAttached)
             {
                 for(int i=1; i<freqs1.Length; i++) HDebug.Assert(freqs1[i-1] <= freqs1[i]);
