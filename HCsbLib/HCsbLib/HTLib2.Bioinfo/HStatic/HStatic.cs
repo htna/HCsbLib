@@ -6,8 +6,8 @@ using System.Runtime.Serialization;
 
 namespace HTLib2.Bioinfo
 {
-	public static partial class HStatic
-	{
+	public static partial class HBioinfoStatic
+    {
         public static Dictionary<object, Tuple<Pdb.Atom, Tinker.Xyz.Atom>> GetAtomMatchingpair
             ( this (IList<Pdb.Atom>, IList<Tinker.Xyz.Atom>) pdbatoms_xyzatoms
             , double tolerance = 0.1
