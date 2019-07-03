@@ -21,5 +21,13 @@ namespace HTLib2
                 }
             return idxwithin.ToArray();
         }
+        public static int[] HListLength<T,U>(this IList<T> list)
+            where T: IList<U>
+        {
+            List<int> listlength = new List<int>();
+            foreach(var item in list)
+                listlength.Add(item.Count);
+            return listlength.ToArray();
+        }
     }
 }
