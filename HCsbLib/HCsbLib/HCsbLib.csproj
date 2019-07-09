@@ -207,11 +207,11 @@
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Vibrate.Validate.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.Clone.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.cs" />
-    <Compile Include="HTLib2.Bioinfo\External.UnitConversion\UnitConversion.tinker.cs" />
-    <Compile Include="HTLib2.Bioinfo\External.UnitConversion\UnitConversion.monique.cs" />
-    <Compile Include="HTLib2.Bioinfo\External.UnitConversion\UnitConversion.ksu_cdlin.cs" />
-    <Compile Include="HTLib2.Bioinfo\External.UnitConversion\UnitConversion.rice_halas.cs" />
-    <Compile Include="HTLib2.Bioinfo\External.UnitConversion\UnitConversion.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.ksu_cdlin.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.monique.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.rice_halas.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.tinker.cs" />
     <Compile Include="HTLib2.Bioinfo\ForceField\ForceField.cs" />
     <Compile Include="HTLib2.Bioinfo\ForceField\ForceField.MindyAngle.cs" />
     <Compile Include="HTLib2.Bioinfo\ForceField\ForceField.MindyBond.cs" />
