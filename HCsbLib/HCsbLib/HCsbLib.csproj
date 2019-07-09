@@ -207,6 +207,7 @@
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Vibrate.Validate.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.Clone.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\Unit.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.ksu_cdlin.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.monique.cs" />
