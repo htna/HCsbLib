@@ -139,6 +139,24 @@ namespace HTLib2
 
             _ToString2(text, format, objs);
         }
+        protected static void _ToString2<T>(StringBuilder text, string format, IMatrix<T> obj)
+        //protected static void _ToString2(StringBuilder text, string format, IMatrix<double> obj)
+        {
+            text.Append("{");
+            for(int c=0; c<obj.ColSize; c++)
+            {
+                if(c != 0) text.Append(", ");
+
+                text.Append("{");
+                for(int r=0; r<obj.RowSize; r++)
+                {
+                    if(r != 0) text.Append(",");
+                    _ToString2(text, format, obj[c,r]);
+                }
+                text.Append("}");
+            }
+            text.Append("}");
+        }
         protected static void _ToString2(StringBuilder text, string format, object obj)
         {
             try
@@ -200,6 +218,7 @@ namespace HTLib2
 
                 if(obj is System.Runtime.CompilerServices.ITuple    ) { _ToString2(text, format, obj as System.Runtime.CompilerServices.ITuple    ); return; }
                 if(obj is System.Collections.IDictionary            ) { _ToString2(text, format, obj as System.Collections.IDictionary            ); return; }
+                if(obj is IMatrix<double>                           ) { _ToString2(text, format, obj as IMatrix<double>                           ); return; }
                 if(obj is System.Collections.IList                  )
                 {
                     //HDebug.ToDo();
