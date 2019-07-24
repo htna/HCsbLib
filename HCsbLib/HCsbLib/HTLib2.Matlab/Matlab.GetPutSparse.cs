@@ -23,6 +23,7 @@ namespace HTLib2
             {
                 int m = real.ColSize * elemColSize;
                 int n = real.RowSize * elemRowSize;
+                //if(opt == null)
                 {
                     List<int   > i = new List<int   >();
                     List<int   > j = new List<int   >();
@@ -51,6 +52,65 @@ namespace HTLib2
                     PutVector("htlib2_matlab_PutSparseMatrix.j", j.ToArray());
                     PutVector("htlib2_matlab_PutSparseMatrix.s", s.ToArray());
                 }
+                //else
+                //{
+                //    Execute("htlib2_matlab_PutSparseMatrix.i = [];");
+                //    Execute("htlib2_matlab_PutSparseMatrix.j = [];");
+                //    Execute("htlib2_matlab_PutSparseMatrix.s = [];");
+                //
+                //    int maxleng = 10_000_000; // Count = 134217728 (maximum)
+                //    List<int   > i = new List<int   >(maxleng);
+                //    List<int   > j = new List<int   >(maxleng);
+                //    List<double> s = new List<double>(maxleng);
+                //    foreach(var c_r_val in real.EnumElements())
+                //    {
+                //        int c = c_r_val.Item1;
+                //        int r = c_r_val.Item2;
+                //        Matrix hesscr = c_r_val.Item3;
+                //        HDebug.Assert(hesscr != null);
+                //        HDebug.Assert(hesscr.ColSize == elemColSize, hesscr.RowSize == elemRowSize);
+                //        for(int dc=0; dc<elemColSize; dc++)
+                //            for(int dr=0; dr<elemRowSize; dr++)
+                //            {
+                //                if(i.Count == maxleng)
+                //                {
+                //                    PutVector("htlib2_matlab_PutSparseMatrix.ix", i.ToArray());
+                //                    PutVector("htlib2_matlab_PutSparseMatrix.jx", j.ToArray());
+                //                    PutVector("htlib2_matlab_PutSparseMatrix.sx", s.ToArray());
+                //                    Execute("htlib2_matlab_PutSparseMatrix.i = [htlib2_matlab_PutSparseMatrix.i; htlib2_matlab_PutSparseMatrix.ix];");
+                //                    Execute("htlib2_matlab_PutSparseMatrix.j = [htlib2_matlab_PutSparseMatrix.j; htlib2_matlab_PutSparseMatrix.jx];");
+                //                    Execute("htlib2_matlab_PutSparseMatrix.s = [htlib2_matlab_PutSparseMatrix.s; htlib2_matlab_PutSparseMatrix.sx];");
+                //                    Execute("clear htlib2_matlab_PutSparseMatrix.ix;");
+                //                    Execute("clear htlib2_matlab_PutSparseMatrix.jx;");
+                //                    Execute("clear htlib2_matlab_PutSparseMatrix.sx;");
+                //                    i.Clear();
+                //                    j.Clear();
+                //                    s.Clear();
+                //                }
+                //                i.Add(c*elemColSize+dc);
+                //                j.Add(r*elemRowSize+dr);
+                //                s.Add(hesscr[dc, dr]);
+                //            }
+                //    }
+                //    if(i.Count != 0)
+                //    {
+                //        PutVector("htlib2_matlab_PutSparseMatrix.ix", i.ToArray());
+                //        PutVector("htlib2_matlab_PutSparseMatrix.jx", j.ToArray());
+                //        PutVector("htlib2_matlab_PutSparseMatrix.sx", s.ToArray());
+                //        Execute("htlib2_matlab_PutSparseMatrix.i = [htlib2_matlab_PutSparseMatrix.i; htlib2_matlab_PutSparseMatrix.ix];");
+                //        Execute("htlib2_matlab_PutSparseMatrix.j = [htlib2_matlab_PutSparseMatrix.j; htlib2_matlab_PutSparseMatrix.jx];");
+                //        Execute("htlib2_matlab_PutSparseMatrix.s = [htlib2_matlab_PutSparseMatrix.s; htlib2_matlab_PutSparseMatrix.sx];");
+                //        Execute("htlib2_matlab_PutSparseMatrix.ix = [];");
+                //        Execute("htlib2_matlab_PutSparseMatrix.jx = [];");
+                //        Execute("htlib2_matlab_PutSparseMatrix.sx = [];");
+                //        i.Clear();
+                //        j.Clear();
+                //        s.Clear();
+                //    }
+                //    HDebug.Assert(i.Count == 0);
+                //    HDebug.Assert(j.Count == 0);
+                //    HDebug.Assert(s.Count == 0);
+                //}
                 PutValue("htlib2_matlab_PutSparseMatrix.m", m);
                 PutValue("htlib2_matlab_PutSparseMatrix.n", n);
                 Execute("htlib2_matlab_PutSparseMatrix = sparse(htlib2_matlab_PutSparseMatrix.i+1, htlib2_matlab_PutSparseMatrix.j+1, htlib2_matlab_PutSparseMatrix.s, htlib2_matlab_PutSparseMatrix.m, htlib2_matlab_PutSparseMatrix.n);");
@@ -84,6 +144,7 @@ namespace HTLib2
                                 i_writer.Write(i);
                                 j_writer.Write(j);
                                 s_writer.Write(s);
+                                HDebug.Exception(count > 0);
                             }
                     }
                     i_writer.Flush(); i_writer.Close();
