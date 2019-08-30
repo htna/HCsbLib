@@ -151,14 +151,14 @@ namespace HTLib2
         public static FileStream Create(string path)                                                                                               { return System.IO.File.Create(path); }
         public static FileStream Create(string path, int bufferSize)                                                                               { return System.IO.File.Create(path, bufferSize); }
         public static FileStream Create(string path, int bufferSize, FileOptions options)                                                          { return System.IO.File.Create(path, bufferSize, options); }
-        public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)                               { return System.IO.File.Create(path, bufferSize, options, fileSecurity); }
+      //public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)                               { return System.IO.File.Create(path, bufferSize, options, fileSecurity); }
         public static StreamWriter CreateText(string path)                                                                                         { return System.IO.File.CreateText(path); }
         public static void Decrypt(string path)                                                                                                    {        System.IO.File.Decrypt(path); }
         public static void Delete(string path)                                                                                                     {        System.IO.File.Delete(path); }
         public static void Encrypt(string path)                                                                                                    {        System.IO.File.Encrypt(path); }
         public static bool Exists(string path)                                                                                                     { return System.IO.File.Exists(path); }
-        public static FileSecurity GetAccessControl(string path)                                                                                   { return System.IO.File.GetAccessControl(path); }
-        public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections)                                            { return System.IO.File.GetAccessControl(path, includeSections); }
+      //public static FileSecurity GetAccessControl(string path)                                                                                   { return System.IO.File.GetAccessControl(path); }
+      //public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections)                                            { return System.IO.File.GetAccessControl(path, includeSections); }
         public static FileAttributes GetAttributes(string path)                                                                                    { return System.IO.File.GetAttributes(path); }
         public static DateTime GetCreationTime(string path)                                                                                        { return System.IO.File.GetCreationTime(path); }
         public static DateTime GetCreationTimeUtc(string path)                                                                                     { return System.IO.File.GetCreationTimeUtc(path); }
@@ -180,7 +180,7 @@ namespace HTLib2
         public static string ReadAllText(string path, Encoding encoding)                                                                           { return System.IO.File.ReadAllText(path, encoding); }
         public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName)                            {        System.IO.File.Replace(sourceFileName, destinationFileName, destinationBackupFileName); }
         public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors) {        System.IO.File.Replace(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors); }
-        public static void SetAccessControl(string path, FileSecurity fileSecurity)                                                                {        System.IO.File.SetAccessControl(path, fileSecurity); }
+      //public static void SetAccessControl(string path, FileSecurity fileSecurity)                                                                {        System.IO.File.SetAccessControl(path, fileSecurity); }
         public static void SetAttributes(string path, FileAttributes fileAttributes)                                                               {        System.IO.File.SetAttributes(path, fileAttributes); }
         public static void SetCreationTime(string path, DateTime creationTime)                                                                     {        System.IO.File.SetCreationTime(path, creationTime); }
         public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc)                                                               {        System.IO.File.SetCreationTimeUtc(path, creationTimeUtc); }
