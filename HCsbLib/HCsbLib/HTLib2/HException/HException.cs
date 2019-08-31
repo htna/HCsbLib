@@ -9,7 +9,7 @@ namespace HTLib2
 {
     [Serializable]
     [ClassInterface(ClassInterfaceType.None)]
-    [ComDefaultInterface(typeof(_Exception))]
+    [ComDefaultInterface(typeof(Exception))]    // [ComDefaultInterface(typeof(_Exception))]
     [ComVisible(true)]
     public class HException : Exception
     {
