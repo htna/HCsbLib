@@ -96,6 +96,7 @@ namespace HTLib2
         {
             throw new NotImplementedException();
         }
+        public class Image { };
         public static Image EvaluateImage(string evaluate, int width, int height)
         {
             throw new NotImplementedException();
