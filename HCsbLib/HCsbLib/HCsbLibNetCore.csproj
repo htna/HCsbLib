@@ -4,4 +4,21 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="dnAnalytics">
+      <HintPath>HTLib2\External.dnAnalytics\dnAnalytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Wolfram.NETLink">
+      <HintPath>External.NETLink\NETLink17\Wolfram.NETLink.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
