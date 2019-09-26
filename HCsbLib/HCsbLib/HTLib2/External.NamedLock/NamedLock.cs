@@ -36,7 +36,7 @@ namespace HTLib2
                     var mutex = new Mutex(false, name);
                     mutex.WaitOne();
                     HDebug.Assert(_lstNamedLock.ContainsKey(name) == false);
-                    _lstNamedLock.Add(name, mutex);
+                    lock(_lstNamedLock) _lstNamedLock.Add(name, mutex);
                     break;
                 }
                 catch(AbandonedMutexException)
@@ -57,7 +57,13 @@ namespace HTLib2
             {
                 HDebug.Assert(false);
             }
-            HDebug.Verify(_lstNamedLock.Remove(name));
+
+            //HDebug.Verify(_lstNamedLock.Remove(name));
+            lock(_lstNamedLock)
+            {
+                bool verify = _lstNamedLock.Remove(name);
+                HDebug.Assert(verify);
+            }
         }
     }
 }
