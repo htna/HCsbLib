@@ -8,23 +8,23 @@ using System.Collections;
 namespace HTLib2
 {
     [Serializable]
-    public class HLargeList<T> : IList<T>, ICollection<T>, IEnumerable<T>, IEnumerable, IList, ICollection
+    public class HLongList<T> : IList<T>, ICollection<T>, IEnumerable<T>, IEnumerable, IList, ICollection
         where T : IEquatable<T>
     {
         List<List<T>> list;
         int listi_maxcapacity = int.MaxValue - 10;
 
-        public HLargeList()
+        public HLongList()
         {
             list = new List<List<T>>();
             list.Add(new List<T>());
         }
-        public HLargeList(int capacity)
+        public HLongList(int capacity)
         {
             list = new List<List<T>>();
             list.Add(new List<T>(capacity));
         }
-        public HLargeList(IEnumerable<T> collection)
+        public HLongList(IEnumerable<T> collection)
         {
             list = new List<List<T>>();
 

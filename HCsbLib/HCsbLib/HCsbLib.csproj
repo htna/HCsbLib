@@ -582,7 +582,7 @@
     <Compile Include="HTLib2\External.NamedLock\NamedLock.cs" />
     <Compile Include="HTLib2\External.NamedLock\NamedLock.LockedCall.cs" />
     <Compile Include="HTLib2\External.NamedLock\NamedLock.SelfTest.cs" />
-    <Compile Include="HTLib2\HDataStruc.Collections\HLayeredList2.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HLongList.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\HReadOnlyHashSet.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\EmptyList.cs" />
     <Compile Include="HTLib2\HDataStruc.Collections\HDictionary.cs" />
