@@ -9,7 +9,6 @@ namespace HTLib2
 {
     [Serializable]
     public class HLongList<T> : IList<T>, ICollection<T>, IEnumerable<T>, IEnumerable, IList, ICollection
-        where T : IEquatable<T>
     {
         List<List<T>> list;
         int listi_maxcapacity = int.MaxValue - 10;
