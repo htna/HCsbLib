@@ -56,7 +56,7 @@ namespace HTLib2
             }
         }
 
-        T this[long index]
+        public T this[long index]
         {
             get
             {
@@ -87,7 +87,7 @@ namespace HTLib2
         //
         // Returns:
         //     The index of item if found in the list; otherwise, -1.
-        long IndexOf(T item)
+        public long IndexOf(T item)
         {
             foreach(var listi in list)
             {
@@ -106,7 +106,7 @@ namespace HTLib2
         void IList<T>.Insert(int index, T item) { throw new NotImplementedException(); }
         void IList<T>.RemoveAt(int index)       { throw new NotImplementedException(); }
 
-        long Count
+        public long LongCount
         {
             get
             {
@@ -121,7 +121,7 @@ namespace HTLib2
         {
             get
             {
-                long count = Count;
+                long count = LongCount;
                 HDebug.Assert(count <= int.MaxValue);
                 return (int)count;
             }
