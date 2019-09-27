@@ -7,11 +7,12 @@ using System.Collections;
 
 namespace HTLib2
 {
+    [Serializable]
     public class HLargeList<T> : IList<T>, ICollection<T>, IEnumerable<T>, IEnumerable, IList, ICollection
         where T : IEquatable<T>
     {
         List<List<T>> list;
-        int listi_maxcapacity = int.MaxValue;
+        int listi_maxcapacity = int.MaxValue - 10;
 
         public HLargeList()
         {
