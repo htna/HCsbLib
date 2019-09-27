@@ -8,10 +8,11 @@ namespace HTLib2
 {
     public partial class HMath
 	{
-		public static double Between(double min, double value, double max)
-		{
-			return Math.Max(min, Math.Min(value, max));
-		}
+		public static int     Between(int     min, int     value, int     max) { return Math.Max(min, Math.Min(value, max)); }
+		public static long    Between(long    min, long    value, long    max) { return Math.Max(min, Math.Min(value, max)); }
+		public static double  Between(double  min, double  value, double  max) { return Math.Max(min, Math.Min(value, max)); }
+		public static decimal Between(decimal min, decimal value, decimal max) { return Math.Max(min, Math.Min(value, max)); }
+
 		public static double[] Between(double[] mins, double[] values, double[] maxs)
 		{
 			double[] between = new double[values.Length];
