@@ -71,7 +71,7 @@ namespace HTLib2
                 list[(int)idx0][(int)idx1] = value;
             }
         }
-        T IList<T>.this[int index]
+        public T this[int index]
         {
             get { return this[index]; }
             set {        this[index] = value; }
@@ -117,7 +117,7 @@ namespace HTLib2
             }
         }
         
-        int ICollection<T>.Count
+        public int Count
         {
             get
             {
@@ -126,8 +126,8 @@ namespace HTLib2
                 return (int)count;
             }
         }
-        bool ICollection<T>.IsReadOnly { get { return false; } }
-        void ICollection<T>.Add(T item)
+        public bool IsReadOnly { get { return false; } }
+        public void Add(T item)
         {
             List<T> listi = list.Last();
             if(listi.Count == listi_maxcapacity)
@@ -138,11 +138,11 @@ namespace HTLib2
 
             listi.Add(item);
         }
-        void ICollection<T>.Clear()
+        public void Clear()
         {
             list.Clear();
         }
-        bool ICollection<T>.Contains(T item)
+        public bool Contains(T item)
         {
             bool   contains = ((this as IList<T>).IndexOf(item) != -1);
             return contains;
@@ -156,7 +156,7 @@ namespace HTLib2
                 foreach(var item in listi)
                     yield return item;
         }
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
             return Enum().GetEnumerator();
         }
