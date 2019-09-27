@@ -40,6 +40,22 @@ namespace HTLib2
             list.Add(listi);
         }
 
+        public void AddRange(IEnumerable<T> collection)
+        {
+            List<T> listi = list.Last();
+
+            foreach(var item in collection)
+            {
+                if(listi.Count == listi_maxcapacity)
+                {
+                    listi = new List<T>();
+                    list.Add(listi);
+                }
+
+                listi.Add(item);
+            }
+        }
+
         T this[long index]
         {
             get
