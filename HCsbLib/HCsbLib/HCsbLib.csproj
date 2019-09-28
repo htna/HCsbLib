@@ -610,6 +610,7 @@
     <Compile Include="HTLib2\HDataStruc.Graph\GraphT.BuildTree.cs" />
     <Compile Include="HTLib2\HDataStruc.Graph\GraphT.cs" />
     <Compile Include="HTLib2\HDataStruc.Graph\GraphT.Etc.cs" />
+    <Compile Include="HTLib2\HDataStruc.Tree\BTree\BTree_BST.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\BTree\BTree_Node.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\BTree\BTree.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\Tree.cs" />
