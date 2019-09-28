@@ -36,6 +36,9 @@ namespace HTLib2
         }
         void DSW_TreeToBackbone(ref Node<T> node)
         {
+            if(node == null)
+                return;
+
             while(node.left != null)
             {                           //string s1 = ToString();
                 RotateRight(ref node);  //string s2 = ToString();
