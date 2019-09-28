@@ -6,9 +6,31 @@ using System.Text;
 namespace HTLib2
 {
     public partial class BTree<T>
+        where T : class
     {
+        ///////////////////////////////////////////////////////////////////////
+        /// BST Search
+        ///////////////////////////////////////////////////////////////////////
+        static bool BstSearch_selftest = true;
         public T BstSearch(T query)
         {
+            if(BstSearch_selftest)
+            {
+                BstSearch_selftest = false;
+                Comparison<object> _compare = delegate(object a, object b) { return (int)a - (int)b; };
+                BTree<object> _bst = new BTree<object>(_compare);
+                _bst.BstInsertRange(new object[] { 10, 5, 20, 2, 7, 4, 6, 30, 3, 25 });
+                HDebug.Assert(_bst.ToString() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,(25,30,_)))");
+                HDebug.Assert((_bst.BstSearch(10) != null) ==  true);
+                HDebug.Assert((_bst.BstSearch(25) != null) ==  true);
+                HDebug.Assert((_bst.BstSearch( 4) != null) ==  true);
+                HDebug.Assert((_bst.BstSearch( 7) != null) ==  true);
+                HDebug.Assert((_bst.BstSearch( 0) != null) == false);
+                HDebug.Assert((_bst.BstSearch( 9) != null) == false);
+                HDebug.Assert((_bst.BstSearch(15) != null) == false);
+                HDebug.Assert((_bst.BstSearch(50) != null) == false);
+            }
+
             Node<T> node = BstSearch(root, query);
             if(node == null)
                 return default(T);
@@ -69,8 +91,10 @@ namespace HTLib2
         }
         public IEnumerable<Node<T>> BstInsertRange(IEnumerable<T> values)
         {
+            List<Node<T>> nodes = new List<Node<T>>();
             foreach(T value in values)
-                yield return BstInsert(value);
+                nodes.Add(BstInsert(value));
+            return nodes;
         }
 
         ///////////////////////////////////////////////////////////////////////
