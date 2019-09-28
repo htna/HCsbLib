@@ -43,7 +43,10 @@ namespace HTLib2
             AssertAnd(conditions);
             foreach(bool cond in conditions)
                 if(cond == false)
-                    throw new HException("AssertException");
+                {
+                    if(HDebug.True)
+                        throw new HException("AssertException");
+                }
         }
 
         //[System.Diagnostics.DebuggerHiddenAttribute()]
@@ -65,7 +68,8 @@ namespace HTLib2
                 if(cond == false)
                 {
                     Assert(false);
-                    throw new HException(message);
+                    if(HDebug.True)
+                            throw new HException(message);
                 }
             }
         }
