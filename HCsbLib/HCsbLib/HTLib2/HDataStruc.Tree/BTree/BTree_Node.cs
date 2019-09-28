@@ -40,7 +40,23 @@ namespace HTLib2
                     return this;
                 return left.MinNode();
             }
+            public int Height()
+            {
+                return Height(this);
 
+                int Height(Node<T> n)
+                {
+                    if(n == null)
+                        return 0;
+                    int lh = Height(n.left);
+                    int rh = Height(n.right);
+                    return Math.Max(lh, rh) + 1;
+                }
+            }
+
+            ///////////////////////////////////////////////////////////////////////
+            /// ToString()
+            ///////////////////////////////////////////////////////////////////////
             public override string ToString()
             {
                 return ToString(this);
