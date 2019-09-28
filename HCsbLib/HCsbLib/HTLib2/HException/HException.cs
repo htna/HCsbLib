@@ -50,7 +50,8 @@ namespace HTLib2
         public static void Exception(string message=null)
         {
             Assert(false);
-            throw new HException(message);
+            if(HDebug.True)
+                throw new HException(message);
         }
         public static void Exception(Exception exception)
         {
