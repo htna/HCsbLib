@@ -10,7 +10,6 @@ namespace HTLib2
         static bool RotateLeft_selftest = true;
         void RotateLeft<T>(ref Node<T> grandparent_child)
         {
-            HDebug.Exception("Check !!");
             if(RotateLeft_selftest)
             {
                 RotateLeft_selftest = false;
@@ -20,9 +19,10 @@ namespace HTLib2
                 _root.right.right       = Node<string>.New("curr"   , null, null, null);
                 _root.right.right.left  = Node<string>.New("T2"     , null, null, null);
                 _root.right.right.right = Node<string>.New("T3"     , null, null, null);
-                HDebug.Assert(ToString(_root) == "(_,grandparent_child,(T1,prnt,(T2,curr,T3)))");
-                RotateLeft(ref _root);
-                HDebug.Assert(ToString(_root) == "(_,grandparent_child,((T1,prnt,T2),curr,T3))");
+                string _msg;
+                _msg = ToString(_root); HDebug.Assert(_msg == "(_,grandparent_child,(T1,prnt,(T2,curr,T3)))");
+                RotateLeft(ref _root.right);
+                _msg = ToString(_root); HDebug.Assert(_msg == "(_,grandparent_child,((T1,prnt,T2),curr,T3))");
             }
             ////////////////////////////////////////////////////////////////////////
             // grandparent_child                        grandparent_child         //
@@ -47,9 +47,8 @@ namespace HTLib2
         }
 
         static bool RotateRight_selftest = true;
-        void RotateRight(ref Node<T> grandparent_child)
+        void RotateRight<T>(ref Node<T> grandparent_child)
         {
-            HDebug.Exception("Check !!");
             if(RotateRight_selftest)
             {
                 RotateRight_selftest = false;
@@ -59,9 +58,10 @@ namespace HTLib2
                 _root.right.right       = Node<string>.New("T3"     , null, null, null);
                 _root.right.left.left   = Node<string>.New("T1"     , null, null, null);
                 _root.right.left.right  = Node<string>.New("T2"     , null, null, null);
-                HDebug.Assert(ToString(_root) == "(_,grandparent_child,((T1,prnt,T2),curr,T3))");
-                RotateLeft(ref _root);
-                HDebug.Assert(ToString(_root) == "(_,grandparent_child,(T1,prnt,(T2,curr,T3)))");
+                string _msg;
+                _msg = ToString(_root); HDebug.Assert(_msg == "(_,grandparent_child,((T1,curr,T2),prnt,T3))");
+                RotateRight(ref _root.right);
+                _msg = ToString(_root); HDebug.Assert(_msg == "(_,grandparent_child,(T1,curr,(T2,prnt,T3)))");
             }
             ////////////////////////////////////////////////////////////////////////
             // grandparent_child                  grandparent_child               //
