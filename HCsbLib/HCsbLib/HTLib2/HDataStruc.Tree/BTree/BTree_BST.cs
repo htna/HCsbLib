@@ -67,6 +67,11 @@ namespace HTLib2
                 return BstInsert(node, ref node.left, value);
             }
         }
+        public IEnumerable<Node<T>> BstInsertRange(IEnumerable<T> values)
+        {
+            foreach(T value in values)
+                yield return BstInsert(value);
+        }
 
         ///////////////////////////////////////////////////////////////////////
         /// BST Delete
