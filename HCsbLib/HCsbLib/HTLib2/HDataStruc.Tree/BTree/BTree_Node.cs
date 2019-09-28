@@ -47,7 +47,7 @@ namespace HTLib2
                 int Count(Node<T> n)
                 {
                     if(n == null)
-                        return -1; // height of leaf is 0
+                        return 0;
                     int lc = Count(n.left);
                     int rc = Count(n.right);
                     return (1 + lc + rc);
@@ -60,7 +60,7 @@ namespace HTLib2
                 int Height(Node<T> n)
                 {
                     if(n == null)
-                        return 0;
+                        return -1; // height of leaf is 0
                     int lh = Height(n.left);
                     int rh = Height(n.right);
                     return Math.Max(lh, rh) + 1;
@@ -72,10 +72,12 @@ namespace HTLib2
 
                 bool IsBalanced(Node<T> n)
                 {
+                    if(n == null)
+                        return true;
                     int diff = left.Height() - right.Height();
-                    if(Math.Abs(diff) > 1        ) return false;
-                    if(IsBalanced(left ) == false) return false;
-                    if(IsBalanced(right) == false) return false;
+                    if(Math.Abs(diff) > 1          ) return false;
+                    if(IsBalanced(n.left ) == false) return false;
+                    if(IsBalanced(n.right) == false) return false;
                     return true;
                 }
             }
@@ -90,11 +92,17 @@ namespace HTLib2
                 sb.Insert(0, "val:"+value+", cnt:"+Count().ToString()+", ");
                 return sb.ToString();
             }
+            public string ToStringSimple()
+            {
+                StringBuilder sb = new StringBuilder();
+                ToString(sb, this);
+                return sb.ToString();
+            }
             public static void ToString<T>(StringBuilder sb, Node<T> node)
             {
                 if(node == null)
                 {
-                    sb.Append("");
+                    sb.Append("()");
                 }
                 else
                 {
