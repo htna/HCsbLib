@@ -11,20 +11,17 @@ namespace HTLib2
     public class HLongList<T> : IList<T>, ICollection<T>, IEnumerable<T>, IEnumerable, IList, ICollection
     {
         List<List<T>> list;
-        int listi_maxcapacity = int.MaxValue - 10;
+        int listi_maxcapacity = 1000000; //int.MaxValue - 10;
 
-        public HLongList()
+        public HLongList(int listi_maxcapacity)
         {
-            list = new List<List<T>>();
-            list.Add(new List<T>());
+            this.listi_maxcapacity = listi_maxcapacity; // 1000000
+            this.list = new List<List<T>>();
+            this.list.Add(new List<T>());
         }
-        public HLongList(int capacity)
+        public HLongList(int listi_maxcapacity, IEnumerable<T> collection)
         {
-            list = new List<List<T>>();
-            list.Add(new List<T>(capacity));
-        }
-        public HLongList(IEnumerable<T> collection)
-        {
+            this.listi_maxcapacity = listi_maxcapacity; // 1000000
             list = new List<List<T>>();
 
             List<T> listi = new List<T>();
