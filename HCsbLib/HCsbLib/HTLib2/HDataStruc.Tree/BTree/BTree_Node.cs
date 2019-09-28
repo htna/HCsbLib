@@ -26,11 +26,6 @@ namespace HTLib2
                     right  = right ,
                 };
             }
-            public override string ToString()
-            {
-                return "";
-                //return id.ToString() + "," + nexts.Count + " edgs";
-            }
             public Node<T> MaxNode()
             {
                 HDebug.Assert(parent != null);
@@ -44,6 +39,48 @@ namespace HTLib2
                 if(left == null)
                     return this;
                 return left.MinNode();
+            }
+
+            public override string ToString()
+            {
+                return ToString(this);
+            }
+            public static string ToString<T>(Node<T> node)
+            {
+                if(node == null)
+                    return "()";
+                StringBuilder sb = new StringBuilder();
+                ToString(sb, node);
+                if(node.IsLeaf)
+                {
+                    sb.Insert(0, "(");
+                    sb.Append(")");
+                }
+                return sb.ToString();
+            }
+            static void ToString<T>(StringBuilder sb, Node<T> node)
+            {
+                if(node == null)
+                {
+                    sb.Append("_");
+                    return;
+                }
+                else if(node.IsLeaf)
+                {
+                    sb.Append(node.value);
+                    return;
+                }
+                else
+                {
+                    sb.Append("(");
+                    ToString(sb, node.left);
+                    sb.Append(",");
+                    sb.Append(node.value);
+                    sb.Append(",");
+                    ToString(sb, node.right);
+                    sb.Append(")");
+                    return;
+                }
             }
         }
     }
