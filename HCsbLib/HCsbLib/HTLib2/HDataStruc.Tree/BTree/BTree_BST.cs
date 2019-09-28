@@ -7,6 +7,22 @@ namespace HTLib2
 {
     public partial class BTree<T>
     {
+        public T BstSearch(T query)
+        {
+            Node<T> node = BstSearch(root, query);
+            if(node == null)
+                return default(T);
+            return node.value;
+        }
+        Node<T> BstSearch(Node<T> node, T query)
+        {
+            if(node == null)
+                return null;
+            int query_node = compare(query, node.value);
+            if     (query_node <  0) return BstSearch(node.left , query);
+            else if(query_node >  0) return BstSearch(node.right, query);
+            else                     return node;
+        }
         ///////////////////////////////////////////////////////////////////////
         /// BST Insert
         /// 
@@ -19,8 +35,8 @@ namespace HTLib2
             if(BstInsert_selftest)
             {
                 BstInsert_selftest = false;
-                Comparison<int> _compare = delegate(int a, int b) { return a - b; };
-                BTree<int> _bst = new BTree<int>(_compare);
+                Comparison<object> _compare = delegate(object a, object b) { return (int)a - (int)b; };
+                BTree<object> _bst = new BTree<object>(_compare);
                                     HDebug.Assert(_bst.ToString() == "()"                                             );
                 _bst.BstInsert(10); HDebug.Assert(_bst.ToString() == "(10)"                                           );
                 _bst.BstInsert( 5); HDebug.Assert(_bst.ToString() == "(5,10,_)"                                       );

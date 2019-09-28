@@ -31,13 +31,21 @@ namespace HTLib2
                 return "()";
             StringBuilder sb = new StringBuilder();
             ToString(sb, node);
+            if(node.IsLeaf)
+            {
+                sb.Insert(0, "(");
+                sb.Append(")");
+            }
             return sb.ToString();
         }
         static void ToString<T>(StringBuilder sb, Node<T> node)
         {
             if(node == null)
+            {
+                sb.Append("_");
                 return;
-            if(node.IsLeaf)
+            }
+            else if(node.IsLeaf)
             {
                 sb.Append(node.value);
                 return;
@@ -51,6 +59,7 @@ namespace HTLib2
                 sb.Append(",");
                 ToString(sb, node.right);
                 sb.Append(")");
+                return;
             }
         }
 
