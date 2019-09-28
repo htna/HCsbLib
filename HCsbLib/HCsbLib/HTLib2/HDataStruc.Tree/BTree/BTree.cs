@@ -23,7 +23,9 @@ namespace HTLib2
 
         public override string ToString()
         {
-            return Node<T>.ToString(root);
+            StringBuilder sb = new StringBuilder();
+            Node<T>.ToString(sb, root);
+            return sb.ToString();
         }
 
         public int Count()

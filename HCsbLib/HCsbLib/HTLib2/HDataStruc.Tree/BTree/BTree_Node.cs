@@ -85,22 +85,28 @@ namespace HTLib2
             ///////////////////////////////////////////////////////////////////////
             public override string ToString()
             {
-                return ToString(this);
-            }
-            public static string ToString<T>(Node<T> node)
-            {
-                if(node == null)
-                    return "()";
                 StringBuilder sb = new StringBuilder();
-                ToString(sb, node);
-                if(node.IsLeaf)
-                {
-                    sb.Insert(0, "(");
-                    sb.Append(")");
-                }
+                ToString(sb, this);
+                sb.Insert(0, "val:"+value+", cnt:"+Count().ToString()+", ");
                 return sb.ToString();
             }
-            static void ToString<T>(StringBuilder sb, Node<T> node)
+            public static void ToString<T>(StringBuilder sb, Node<T> node)
+            {
+                if(node == null)
+                {
+                    sb.Append("");
+                }
+                else
+                {
+                    ToStringRec(sb, node);
+                    if(node.IsLeaf)
+                    {
+                        sb.Insert(0, "(");
+                        sb.Append(")");
+                    }
+                }
+            }
+            static void ToStringRec<T>(StringBuilder sb, Node<T> node)
             {
                 if(node == null)
                 {
@@ -115,11 +121,11 @@ namespace HTLib2
                 else
                 {
                     sb.Append("(");
-                    ToString(sb, node.left);
+                    ToStringRec(sb, node.left);
                     sb.Append(",");
                     sb.Append(node.value);
                     sb.Append(",");
-                    ToString(sb, node.right);
+                    ToStringRec(sb, node.right);
                     sb.Append(")");
                     return;
                 }
