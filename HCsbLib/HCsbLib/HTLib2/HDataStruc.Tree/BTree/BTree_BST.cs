@@ -13,8 +13,26 @@ namespace HTLib2
         /// 1. Insert value into BST
         /// 2. Return the inserted node
         ///////////////////////////////////////////////////////////////////////
+        static bool BstInsert_selftest = true;
         public Node<T> BstInsert(T value)
         {
+            if(BstInsert_selftest)
+            {
+                BstInsert_selftest = false;
+                Comparison<int> _compare = delegate(int a, int b) { return a - b; };
+                BTree<int> _bst = new BTree<int>(_compare);
+                                    HDebug.Assert(_bst.ToString() == "()"                                             );
+                _bst.BstInsert(10); HDebug.Assert(_bst.ToString() == "(10)"                                           );
+                _bst.BstInsert( 5); HDebug.Assert(_bst.ToString() == "(5,10,_)"                                       );
+                _bst.BstInsert(20); HDebug.Assert(_bst.ToString() == "(5,10,20)"                                      );
+                _bst.BstInsert( 2); HDebug.Assert(_bst.ToString() == "((2,5,_),10,20)"                                );
+                _bst.BstInsert( 7); HDebug.Assert(_bst.ToString() == "((2,5,7),10,20)"                                );
+                _bst.BstInsert( 4); HDebug.Assert(_bst.ToString() == "(((_,2,4),5,7),10,20)"                          );
+                _bst.BstInsert( 6); HDebug.Assert(_bst.ToString() == "(((_,2,4),5,(6,7,_)),10,20)"                    );
+                _bst.BstInsert(30); HDebug.Assert(_bst.ToString() == "(((_,2,4),5,(6,7,_)),10,(_,20,30))"             );
+                _bst.BstInsert( 3); HDebug.Assert(_bst.ToString() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,30))"       );
+                _bst.BstInsert(25); HDebug.Assert(_bst.ToString() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,(25,30,_)))");
+            }
             return BstInsert(null, ref root, value);
         }
         Node<T> BstInsert(Node<T> parent, ref Node<T> node, T value)
@@ -24,7 +42,7 @@ namespace HTLib2
                 node = Node<T>.New(value, parent, null, null);
                 return node;
             }
-            if(comp.Compare(node.value, value) < 0)
+            if(compare(node.value, value) < 0)
             {
                 return BstInsert(node, ref node.right, value);
             }
@@ -48,7 +66,7 @@ namespace HTLib2
         {
             // find node to delete
             HDebug.Assert(node != null);
-            int query_node = comp.Compare(query, node.value);
+            int query_node = compare(query, node.value);
             if     (query_node <  0) return BstDelete(ref node.left , query);
             else if(query_node >  0) return BstDelete(ref node.right, query);
             else                     return BstDelete(ref node);

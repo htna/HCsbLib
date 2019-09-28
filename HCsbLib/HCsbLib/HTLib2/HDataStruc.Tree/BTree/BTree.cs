@@ -8,11 +8,13 @@ namespace HTLib2
     public partial class BTree<T>
     {
         protected Node<T> root;
-        IComparer<T>   comp;
-        public BTree(IComparer<T> comp)
+        Comparison<T>     compare;
+        public BTree
+            ( Comparison<T> comp // = delegate(T a, T b) { return (int)a - (int)b; }
+            )
         {
             this.root = null;
-            this.comp = comp;
+            this.compare = comp;
         }
         public Node<T> Root
         {
