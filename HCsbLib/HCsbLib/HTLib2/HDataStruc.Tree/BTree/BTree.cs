@@ -10,7 +10,7 @@ namespace HTLib2
         protected Node<T> root;
         Comparison<T>     compare;
         public BTree
-            ( Comparison<T> comp // = delegate(T a, T b) { return (int)a - (int)b; }
+            ( Comparison<T> comp // = delegate(int a, int b) { return a - b; }
             )
         {
             this.root = null;
