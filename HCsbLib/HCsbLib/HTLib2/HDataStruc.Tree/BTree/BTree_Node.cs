@@ -13,9 +13,8 @@ namespace HTLib2
             public Node<T> parent;
             public Node<T> left;
             public Node<T> right;
-            public bool IsRoot     { get { return (parent == null); } }
-            public bool IsLeaf     { get { return (left == null && right == null); } }
-            public bool IsBalanced { get { return (Math.Abs(left.Height() - right.Height()) <= 1) } }
+            public bool IsRoot { get { return (parent == null); } }
+            public bool IsLeaf { get { return (left == null && right == null); } }
 
             public static Node<T> New(T value, Node<T> parent, Node<T> left, Node<T> right)
             {
@@ -65,6 +64,19 @@ namespace HTLib2
                     int lh = Height(n.left);
                     int rh = Height(n.right);
                     return Math.Max(lh, rh) + 1;
+                }
+            }
+            public bool IsBalanced()
+            {
+                return IsBalanced(this);
+
+                bool IsBalanced(Node<T> n)
+                {
+                    int diff = left.Height() - right.Height();
+                    if(Math.Abs(diff) > 1        ) return false;
+                    if(IsBalanced(left ) == false) return false;
+                    if(IsBalanced(right) == false) return false;
+                    return true;
                 }
             }
 
