@@ -17,7 +17,7 @@ namespace HTLib2
         {
             DSW_TreeToBackbone(ref root);
         }
-        void DSW_TreeToBackbone(ref Node node)
+        void DSW_TreeToBackbone(ref Node<T> node)
         {
             while(node.left != null)
             {                           //string s1 = ToString();
@@ -39,7 +39,7 @@ namespace HTLib2
                 DSW_BackboneToACBTRotN(ref root, m);
             }
         }
-        void DSW_BackboneToACBTRotN(ref Node node, int n)
+        void DSW_BackboneToACBTRotN(ref Node<T> node, int n)
         {
             if(n == 0)
                 return;

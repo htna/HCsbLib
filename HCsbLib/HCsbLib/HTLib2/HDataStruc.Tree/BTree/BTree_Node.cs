@@ -7,18 +7,18 @@ namespace HTLib2
 {
     public partial class BTree<T>
     {
-        public class Node
+        public class Node<T>
         {
-            public T    value;
-            public Node parent;
-            public Node left;
-            public Node right;
+            public T       value;
+            public Node<T> parent;
+            public Node<T> left;
+            public Node<T> right;
             public bool IsRoot { get { return (parent == null); } }
             public bool IsLeaf { get { return (left == null && right == null); } }
 
-            public static Node New(T value, Node parent, Node left, Node right)
+            public static Node<T> New(T value, Node<T> parent, Node<T> left, Node<T> right)
             {
-                return new Node
+                return new Node<T>
                 {
                     value  = value ,
                     parent = parent,
@@ -31,14 +31,14 @@ namespace HTLib2
                 return "";
                 //return id.ToString() + "," + nexts.Count + " edgs";
             }
-            public Node MaxNode()
+            public Node<T> MaxNode()
             {
                 HDebug.Assert(parent != null);
                 if(right == null)
                     return this;
                 return right.MaxNode();
             }
-            public Node MinNode()
+            public Node<T> MinNode()
             {
                 HDebug.Assert(parent != null);
                 if(left == null)

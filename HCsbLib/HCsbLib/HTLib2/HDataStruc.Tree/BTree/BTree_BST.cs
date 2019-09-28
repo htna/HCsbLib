@@ -13,15 +13,15 @@ namespace HTLib2
         /// 1. Insert value into BST
         /// 2. Return the inserted node
         ///////////////////////////////////////////////////////////////////////
-        public Node BstInsert(T value)
+        public Node<T> BstInsert(T value)
         {
             return BstInsert(null, ref root, value);
         }
-        Node BstInsert(Node parent, ref Node node, T value)
+        Node<T> BstInsert(Node<T> parent, ref Node<T> node, T value)
         {
             if(node == null)
             {
-                node = Node.New(value, parent, null, null);
+                node = Node<T>.New(value, parent, null, null);
                 return node;
             }
             if(comp.Compare(node.value, value) < 0)
@@ -44,7 +44,7 @@ namespace HTLib2
         {
             return BstDelete(ref root, query);
         }
-        T BstDelete(ref Node node, T query)
+        T BstDelete(ref Node<T> node, T query)
         {
             // find node to delete
             HDebug.Assert(node != null);
@@ -53,7 +53,7 @@ namespace HTLib2
             else if(query_node >  0) return BstDelete(ref node.right, query);
             else                     return BstDelete(ref node);
         }
-        T BstDelete(ref Node node)
+        T BstDelete(ref Node<T> node)
         {
             if(node.left == null && node.right == null)
             {
@@ -85,7 +85,7 @@ namespace HTLib2
                 return value;
             }
         }
-        T BstDeleteMax(ref Node node)
+        T BstDeleteMax(ref Node<T> node)
         {
             if(node.right != null)
                 return BstDeleteMax(ref node.right);
