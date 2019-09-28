@@ -47,5 +47,19 @@ namespace HTLib2
                 sb.Append(")");
             }
         }
+
+        public int Count()
+        {
+            return Count(root);
+        }
+
+        int Count(Node node)
+        {
+            if(node == null)
+                return 0;
+            int l = Count(node.left);
+            int r = Count(node.right);
+            return (1+l+r);
+        }
     }
 }
