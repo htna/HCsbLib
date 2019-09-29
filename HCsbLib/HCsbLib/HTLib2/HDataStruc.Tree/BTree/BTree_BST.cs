@@ -142,19 +142,24 @@ namespace HTLib2
             else
             {
                 // has both left and right children
+                // 1. find predecessor reference
+                ref Node<T> Pred(ref Node<T> lnode)
+                {
+                    if(lnode.right == null)
+                        return ref lnode;
+                    return ref Pred(ref lnode.right);
+                };
+                ref Node<T> pred = ref Pred(ref node.left);
+
+                // 2. backup value to return
                 T value = node.value;
-                T pred_value = BstDeleteMax(ref node.left);
-                node.value = pred_value;
+                // 3. copy pred.value to node
+                node.value = pred.value;
+                // 4. delete pred; since (*pred).right == null, make pred = (*pred).left
+                pred = pred.left;
+
                 return value;
             }
-        }
-        T BstDeleteMax(ref Node<T> node)
-        {
-            if(node.right != null)
-                return BstDeleteMax(ref node.right);
-            T value = node.value;
-            node = node.left;
-            return value;
         }
     }
 }
