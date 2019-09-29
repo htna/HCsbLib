@@ -103,11 +103,11 @@ namespace HTLib2
         /// 1. Delete node whose value is same to query
         /// 2. Return the value in the deleted node
         ///////////////////////////////////////////////////////////////////////
-        public T BstDelete(T query)
+        public (T value, Node<T> node_updated) BstDelete(T query)
         {
             return BstDelete(ref root, query);
         }
-        T BstDelete(ref Node<T> node, T query)
+        (T value, Node<T> node_updated) BstDelete(ref Node<T> node, T query)
         {
             // find node to delete
             HDebug.Assert(node != null);
@@ -116,28 +116,28 @@ namespace HTLib2
             else if(query_node >  0) return BstDelete(ref node.right, query);
             else                     return BstDelete(ref node);
         }
-        T BstDelete(ref Node<T> node)
+        (T value, Node<T> node_updated) BstDelete(ref Node<T> node)
         {
             if(node.left == null && node.right == null)
             {
                 // delete a leaf
                 T value = node.value;
                 node = null;
-                return value;
+                return (value, null);
             }
             else if(node.left != null && node.right == null)
             {
                 // has left child
                 T value = node.value;
                 node = node.left;
-                return value;
+                return (value, node);
             }
             else if(node.left == null && node.right != null)
             {
                 // has right child
                 T value = node.value;
                 node = node.right;
-                return value;
+                return (value, node);
             }
             else
             {
@@ -158,7 +158,7 @@ namespace HTLib2
                 // 4. delete pred; since (*pred).right == null, make pred = (*pred).left
                 pred = pred.left;
 
-                return value;
+                return (value, pred);
             }
         }
     }
