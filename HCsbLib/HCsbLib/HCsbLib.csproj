@@ -777,6 +777,7 @@
     <Compile Include="HTLib2\HStatic\HLib2Static.HSort.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HSplit.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HStrcat.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HToLinkedList.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HToArray.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HToArrayArray.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HToDictionary.cs" />
