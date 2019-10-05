@@ -48,30 +48,43 @@ namespace HTLib2
             int idx = list.BinarySearch(item);
 
             if(idx >= 0)
-            {
-                // return found
-                //HDebug.Assert(item == list[idx]);
+                // found
                 return (true, idx, idx);
-            }
 
             idx = ~idx;
-
             if(idx == 0)
-            {
                 // item is smaller than all
-                //HDebug.Assert(item < list[0]);
                 return (false, -1, 0);
-            }
             if(idx == list.Count)
-            {
                 // item is larger than all
-                //HDebug.Assert(list[list.Count-1] < item);
                 return (false, list.Count-1, list.Count);
-            }
-            {
-                // item is in-between idx-1, 
-                return (false, idx-1, idx);
-            }
+            // item is in-between idx-1, 
+            return (false, idx-1, idx);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static (bool found, int idx_leq, int idx_geq) HBinarySearch<T>(this List<T> list, T item, IComparer<T> comparer)
+        {
+            HBinarySearchSelftest();
+            /// Returns:
+            ///     if item is found, return the zero-based index of item in the sorted System.Collections.Generic.List`1, ;
+            ///     if there is no larger element, return the bitwise complement of System.Collections.Generic.List`1.Count.
+            ///     otherwise, return a negative number that is the bitwise complement of the index of the next element that is larger than item or
+            int idx = list.BinarySearch(item, comparer);
+
+            if(idx >= 0)
+                // found
+                return (true, idx, idx);
+
+            idx = ~idx;
+            if(idx == 0)
+                // item is smaller than all
+                return (false, -1, 0);
+            if(idx == list.Count)
+                // item is larger than all
+                return (false, list.Count-1, list.Count);
+            // item is in-between idx-1, 
+            return (false, idx-1, idx);
         }
     }
 }
