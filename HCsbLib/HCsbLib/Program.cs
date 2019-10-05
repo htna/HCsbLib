@@ -11,7 +11,7 @@ namespace HCsbLib
     {
         static void Main(string[] args)
         {
-            HTLib2.HLib2Static.HBinarySearchSelftest();
+            //HTLib2.HLib2Static.HBinarySearchSelftest();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] 
