@@ -40,7 +40,7 @@ namespace HTLib2
                 val ++;
             }
 
-            list.HAddFirstRange(new int[] { 7, 8, 9 });
+            list.HAddLastRange(new int[] { 7, 8, 9 });
 
             val = 0;
             foreach(var item in list)
