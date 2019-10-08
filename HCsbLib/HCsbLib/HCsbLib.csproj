@@ -743,6 +743,7 @@
     <Compile Include="HTLib2\HStatic\Depreciate.ListOper\ListOper.Common.cs" />
     <Compile Include="HTLib2\HStatic\Depreciate.ListOper\ListOper.TakeByIndex.cs" />
     <Compile Include="HTLib2\HStatic\Depreciate.ListOper\ListOper.Tuple.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HAdd.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HBinarySearch.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.Depreciate.HSelectByType.cs" />
