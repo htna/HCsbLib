@@ -63,7 +63,47 @@ namespace HTLib2
             public static Wolfram.NETLink.IMathLink     CreateMathLink(string[] argv)    { RegisterMathLinkFactory(); return Wolfram.NETLink.MathLinkFactory.CreateMathLink(argv);      }
         }
 
+        public class KernelLinkDelegate
+        {
+            Wolfram.NETLink.IKernelLink ml;
 
+            public Exception LastError                                          { get { return ml.LastError          ; } }
+            public bool TypesetStandardForm                                     { get { return ml.TypesetStandardForm; } set { value = ml.TypesetStandardForm; } }
+            public string GraphicsFormat                                        { get { return ml.GraphicsFormat     ; } set { value = ml.GraphicsFormat     ; } }
+            public bool UseFrontEnd                                             { get { return ml.UseFrontEnd        ; } set { value = ml.UseFrontEnd        ; } }
+            public bool WasInterrupted                                          { get { return ml.WasInterrupted     ; } set { value = ml.WasInterrupted     ; } }
+          //public event PacketHandler PacketArrived                            { get { return ml.PacketArrived; } }
+            public void AbandonEvaluation()                                     {        ml.AbandonEvaluation()                         ; }
+            public void AbortEvaluation()                                       {        ml.AbortEvaluation()                           ; }
+            public void BeginManual()                                           {        ml.BeginManual()                               ; }
+            public void EnableObjectReferences()                                {        ml.EnableObjectReferences()                    ; }
+            public void Evaluate(string s)                                      {        ml.Evaluate(s)                                 ; }
+            public void Evaluate(Expr e)                                        {        ml.Evaluate(e)                                 ; }
+            public Image EvaluateToImage(Expr e, int width, int height)         { return new Image(ml.EvaluateToImage(e, width, height)); }
+            public Image EvaluateToImage(string s, int width, int height)       { return new Image(ml.EvaluateToImage(s, width, height)); }
+            public string EvaluateToInputForm(string s, int pageWidth)          { return ml.EvaluateToInputForm(s, pageWidth)           ; }
+            public string EvaluateToInputForm(Expr e, int pageWidth)            { return ml.EvaluateToInputForm(e, pageWidth)           ; }
+            public string EvaluateToOutputForm(string s, int pageWidth)         { return ml.EvaluateToOutputForm(s, pageWidth)          ; }
+            public string EvaluateToOutputForm(Expr e, int pageWidth)           { return ml.EvaluateToOutputForm(e, pageWidth)          ; }
+            public Image EvaluateToTypeset(Expr e, int width)                   { return new Image(ml.EvaluateToTypeset(e, width))      ; }
+            public Image EvaluateToTypeset(string s, int width)                 { return new Image(ml.EvaluateToTypeset(s, width))      ; }
+            public Array GetArray(Type leafType, int depth)                     { return ml.GetArray(leafType, depth)                   ; }
+            public Array GetArray(Type leafType, int depth, out string[] heads) { return ml.GetArray(leafType, depth, out heads)        ; }
+            public ExpressionType GetExpressionType()                           { return ml.GetExpressionType()                         ; }
+            public ExpressionType GetNextExpressionType()                       { return ml.GetNextExpressionType()                     ; }
+            public object GetObject()                                           { return ml.GetObject()                                 ; }
+            public void HandlePacket(PacketType pkt)                            {        ml.HandlePacket(pkt)                           ; }
+            public void InterruptEvaluation()                                   {        ml.InterruptEvaluation()                       ; }
+            public void Message(string symtag, params string[] args)            {        ml.Message(symtag, args)                       ; }
+            public bool OnPacketArrived(PacketType pkt)                         { return ml.OnPacketArrived(pkt)                        ; }
+            public void Print(string s)                                         {        ml.Print(s)                                    ; }
+            public void Put(object obj)                                         {        ml.Put(obj)                                    ; }
+            public void PutReference(object obj, Type t)                        {        ml.PutReference(obj, t)                        ; }
+            public void PutReference(object obj)                                {        ml.PutReference(obj)                           ; }
+            public void TerminateKernel()                                       {        ml.TerminateKernel()                           ; }
+            public void WaitAndDiscardAnswer()                                  {        ml.WaitAndDiscardAnswer()                      ; }
+            public PacketType WaitForAnswer()                                   { return ml.WaitForAnswer()                             ; }
+        }
 
         public static object   EvaluateObject     (string evaluate) { return Evaluate(evaluate, delegate(IKernelLink ml) { return ml.GetObject     (); }); }
         public static double   EvaluateDouble     (string evaluate) { return Evaluate(evaluate, delegate(IKernelLink ml) { return ml.GetDouble     (); }); }
@@ -96,7 +136,14 @@ namespace HTLib2
         {
             throw new NotImplementedException();
         }
-        public class Image { };
+        public class Image
+        {
+            public System.Drawing.Image image;
+            public Image(System.Drawing.Image image)
+            {
+                this.image = image;
+            }
+        };
         public static Image EvaluateImage(string evaluate, int width, int height)
         {
             throw new NotImplementedException();
