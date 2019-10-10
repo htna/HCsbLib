@@ -63,9 +63,18 @@ namespace HTLib2
             public static Wolfram.NETLink.IMathLink     CreateMathLink(string[] argv)    { RegisterMathLinkFactory(); return Wolfram.NETLink.MathLinkFactory.CreateMathLink(argv);      }
         }
 
+        public static KernelLinkDelegate CreateKernelLinkDelegate()
+        {
+            IKernelLink ml = HMathLinkFactory.CreateKernelLink();
+            ml.WaitAndDiscardAnswer();
+            return new KernelLinkDelegate
+            {
+                ml = ml,
+            };
+        }
         public class KernelLinkDelegate
         {
-            Wolfram.NETLink.IKernelLink ml;
+            public Wolfram.NETLink.IKernelLink ml;
 
             public Exception LastError                                          { get { return ml.LastError          ; } }
             public bool TypesetStandardForm                                     { get { return ml.TypesetStandardForm; } set { value = ml.TypesetStandardForm; } }
