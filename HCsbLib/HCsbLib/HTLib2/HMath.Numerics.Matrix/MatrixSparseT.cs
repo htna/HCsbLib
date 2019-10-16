@@ -8,8 +8,8 @@ namespace HTLib2
     [Serializable]
     public class MatrixSparse<T> : IMatrixSparse<T>
     {
-        int IMatrix<T>.ColSize { get { return ColSize; } }
-        int IMatrix<T>.RowSize { get { return RowSize; } }
+        int IMatrix<T>.ColSize { get { return ColSize; } } int IMatrix<T>.NumRows { get { return ColSize; } }
+        int IMatrix<T>.RowSize { get { return RowSize; } } int IMatrix<T>.NumCols { get { return RowSize; } }
         public readonly int ColSize;
         public readonly int RowSize;
         T[]                 diagonal;

@@ -13,8 +13,8 @@ namespace HTLib2
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // IMatrix
 
-        public abstract int ColSize { get; }
-        public abstract int RowSize { get; }
+        public abstract int ColSize { get; } public int NumRows { get { return ColSize; } }
+        public abstract int RowSize { get; } public int NumCols { get { return RowSize; } }
         public abstract double this[int c, int r] { get; set; }
         public abstract double this[long c, long r] { get; set; }
 
