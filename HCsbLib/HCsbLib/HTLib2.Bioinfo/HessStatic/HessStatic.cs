@@ -72,6 +72,7 @@ namespace HTLib2.Bioinfo
             {
                 selftest_HessGetSumSpringBwAtoms_hess_atomi_atomj = false;
                 double _spr_ij =  HessGetSumSpringBwAtoms(hess as Matrix, atomi, atomj);
+                HDebug.Assert(Math.Abs(spr_ij - _spr_ij) < threshold);
             }
 
             return spr_ij;
@@ -117,7 +118,7 @@ namespace HTLib2.Bioinfo
             double threshold = 0.00001;
             HDebug.Assert(Math.Abs(anm_spr_ij - anm_spr_ji) < threshold);
 
-            double spr_ij = -1 * (anm_spr_ij - anm_spr_ji)/2;
+            double spr_ij = -1 * (anm_spr_ij + anm_spr_ji)/2;
             return spr_ij;
         }
         static bool selftest_HessGetAnmSpringBwAtoms_hess_coords_atomi_atomj = HDebug.IsDebuggerAttached;
@@ -142,28 +143,16 @@ namespace HTLib2.Bioinfo
             double anm_spr_ij = LinAlg.VtMV(coordij, hess_ij, coordij);
             double anm_spr_ji = LinAlg.VtMV(coordij, hess_ji, coordij);
 
-            double bibj_trace = 0;
-            {
-                bibj_trace += hess_ij[0, 0];
-                bibj_trace += hess_ij[1, 1];
-                bibj_trace += hess_ij[2, 2];
-            }
-            double bjbi_trace = 0;
-            {
-                bjbi_trace += hess_ji[0, 0];
-                bjbi_trace += hess_ji[1, 1];
-                bjbi_trace += hess_ji[2, 2];
-            }
-
             double threshold = 0.00001;
-            HDebug.Assert(Math.Abs(bibj_trace - bjbi_trace) < threshold);
+            HDebug.Assert(Math.Abs(anm_spr_ij - anm_spr_ji) < threshold);
 
-            double spr_ij = -1 * (anm_spr_ij - anm_spr_ji)/2;
+            double spr_ij = -1 * (anm_spr_ij + anm_spr_ji)/2;
 
             if(selftest_HessGetAnmSpringBwAtoms_hess_coords_atomi_atomj)
             {
                 selftest_HessGetAnmSpringBwAtoms_hess_coords_atomi_atomj = false;
                 double _spr_ij =  HessGetAnmSpringBwAtoms(hess as Matrix, coords, atomi, atomj);
+                HDebug.Assert(Math.Abs(spr_ij - _spr_ij) < threshold);
             }
 
             return spr_ij;
