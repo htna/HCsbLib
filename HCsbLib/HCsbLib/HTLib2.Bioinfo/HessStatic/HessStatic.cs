@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 {
     public static partial class HessStatic
     {
-        public static double HessGetSumSpringBwAtoms(this Matrix hess, int atomi, int atomj)
+        public static double GetHessTraceSpringBwAtoms(this Matrix hess, int atomi, int atomj)
         {
             HDebug.Assert(hess.ColSize == hess.RowSize);
             HDebug.Assert(hess.ColSize % 3 == 0);
@@ -36,8 +36,8 @@ namespace HTLib2.Bioinfo
             double spr_ij = -1 * (bibj_trace + bjbi_trace)/2;
             return spr_ij;
         }
-        static bool selftest_HessGetSumSpringBwAtoms_hess_atomi_atomj = HDebug.IsDebuggerAttached;
-        public static double HessGetSumSpringBwAtoms(this HessMatrix hess, int atomi, int atomj)
+        static bool selftest_GetHessTraceSpringBwAtoms_hess_atomi_atomj = HDebug.IsDebuggerAttached;
+        public static double GetHessTraceSpringBwAtoms(this HessMatrix hess, int atomi, int atomj)
         {
             HDebug.Assert(hess.ColSize == hess.RowSize);
             HDebug.Assert(hess.ColSize % 3 == 0);
@@ -68,10 +68,10 @@ namespace HTLib2.Bioinfo
 
             double spr_ij = -1 * (bibj_trace + bjbi_trace)/2;
 
-            if(selftest_HessGetSumSpringBwAtoms_hess_atomi_atomj)
+            if(selftest_GetHessTraceSpringBwAtoms_hess_atomi_atomj)
             {
-                selftest_HessGetSumSpringBwAtoms_hess_atomi_atomj = false;
-                double _spr_ij =  HessGetSumSpringBwAtoms(hess as Matrix, atomi, atomj);
+                selftest_GetHessTraceSpringBwAtoms_hess_atomi_atomj = false;
+                double _spr_ij =  GetHessTraceSpringBwAtoms(hess as Matrix, atomi, atomj);
                 HDebug.Assert(Math.Abs(spr_ij - _spr_ij) < threshold);
             }
 
@@ -84,7 +84,7 @@ namespace HTLib2.Bioinfo
         ///                                     [yj - yi] [xj - xi,  yj - yi,  zj - zi]
         ///                                     [zj - zi]
         ///      = - spring_constant * (vj - vi).UnitVector * (vj - vi).UnitVector.Tr
-        public static double HessGetAnmSpringBwAtoms(this Matrix hess, IList<Vector> coords, int atomi, int atomj)
+        public static double GetHessAnmSpringBwAtoms(this Matrix hess, IList<Vector> coords, int atomi, int atomj)
         {
 
             HDebug.Assert(hess.ColSize == hess.RowSize);
@@ -121,8 +121,8 @@ namespace HTLib2.Bioinfo
             double spr_ij = -1 * (anm_spr_ij + anm_spr_ji)/2;
             return spr_ij;
         }
-        static bool selftest_HessGetAnmSpringBwAtoms_hess_coords_atomi_atomj = HDebug.IsDebuggerAttached;
-        public static double HessGetAnmSpringBwAtoms(this HessMatrix hess, IList<Vector> coords, int atomi, int atomj)
+        static bool selftest_GetHessAnmSpringBwAtoms_hess_coords_atomi_atomj = HDebug.IsDebuggerAttached;
+        public static double GetHessAnmSpringBwAtoms(this HessMatrix hess, IList<Vector> coords, int atomi, int atomj)
         {
             HDebug.Assert(hess.ColSize == hess.RowSize);
             HDebug.Assert(hess.ColSize % 3 == 0);
@@ -148,10 +148,10 @@ namespace HTLib2.Bioinfo
 
             double spr_ij = -1 * (anm_spr_ij + anm_spr_ji)/2;
 
-            if(selftest_HessGetAnmSpringBwAtoms_hess_coords_atomi_atomj)
+            if(selftest_GetHessAnmSpringBwAtoms_hess_coords_atomi_atomj)
             {
-                selftest_HessGetAnmSpringBwAtoms_hess_coords_atomi_atomj = false;
-                double _spr_ij =  HessGetAnmSpringBwAtoms(hess as Matrix, coords, atomi, atomj);
+                selftest_GetHessAnmSpringBwAtoms_hess_coords_atomi_atomj = false;
+                double _spr_ij =  GetHessAnmSpringBwAtoms(hess as Matrix, coords, atomi, atomj);
                 HDebug.Assert(Math.Abs(spr_ij - _spr_ij) < threshold);
             }
 
