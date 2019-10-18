@@ -294,6 +294,7 @@
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixDense.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixSparse.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixSparse.LinAlg.cs" />
+    <Compile Include="HTLib2.Bioinfo\HessStatic\HessStatic.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess\HBioinfo.GetFrcByFij.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess\HBioinfo.GetHessByKijFij.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess\HBioinfo.GetPwEnrgFrcSpr.cs" />
