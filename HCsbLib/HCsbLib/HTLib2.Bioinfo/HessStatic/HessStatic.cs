@@ -51,16 +51,22 @@ namespace HTLib2.Bioinfo
             double bibj_trace = 0;
             {
                 MatrixByArr hess_ij = hess.GetBlock(atomi, atomj);
-                bibj_trace += hess_ij[0, 0];
-                bibj_trace += hess_ij[1, 1];
-                bibj_trace += hess_ij[2, 2];
+                if(hess_ij != null)
+                {
+                    bibj_trace += hess_ij[0, 0];
+                    bibj_trace += hess_ij[1, 1];
+                    bibj_trace += hess_ij[2, 2];
+                }
             }
             double bjbi_trace = 0;
             {
                 MatrixByArr hess_ji = hess.GetBlock(atomj, atomi);
-                bjbi_trace += hess_ji[0, 0];
-                bjbi_trace += hess_ji[1, 1];
-                bjbi_trace += hess_ji[2, 2];
+                if(hess_ji != null)
+                {
+                    bjbi_trace += hess_ji[0, 0];
+                    bjbi_trace += hess_ji[1, 1];
+                    bjbi_trace += hess_ji[2, 2];
+                }
             }
 
             double threshold = 0.00001;
@@ -135,13 +141,21 @@ namespace HTLib2.Bioinfo
             HDebug.Assert(atomj         < hess.ColBlockSize);
             HDebug.Assert(coords.Count == hess.ColBlockSize);
 
-            MatrixByArr hess_ij = hess.GetBlock(atomi, atomj);
-            MatrixByArr hess_ji = hess.GetBlock(atomj, atomi);
-
             Vector coordij = (coords[atomj] - coords[atomi]).UnitVector();
 
-            double anm_spr_ij = LinAlg.VtMV(coordij, hess_ij, coordij);
-            double anm_spr_ji = LinAlg.VtMV(coordij, hess_ji, coordij);
+            double anm_spr_ij = 0;
+            {
+                MatrixByArr hess_ij = hess.GetBlock(atomi, atomj);
+                if(hess_ij != null)
+                    anm_spr_ij = LinAlg.VtMV(coordij, hess_ij, coordij);
+            }
+
+            double anm_spr_ji = 0;
+            {
+                MatrixByArr hess_ji = hess.GetBlock(atomj, atomi);
+                if(hess_ji != null)
+                    anm_spr_ji = LinAlg.VtMV(coordij, hess_ji, coordij);
+            }
 
             double threshold = 0.00001;
             HDebug.Assert(Math.Abs(anm_spr_ij - anm_spr_ji) < threshold);
