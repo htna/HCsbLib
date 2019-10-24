@@ -34,12 +34,12 @@ namespace HTLib2
                 HDebug.Assert(height == base.Height());
                 return height;
             }
-            public new bool IsBalanced()
-            {
-                bool isbalanced = Math.Abs(left_height - right_height) <= 1;
-                HDebug.Assert(isbalanced == base.IsBalanced());
-                return isbalanced;
-            }
+            //  public new bool IsBalanced()
+            //  {
+            //      bool isbalanced = Math.Abs(left_height - right_height) <= 1;
+            //      HDebug.Assert(isbalanced == base.IsBalanced());
+            //      return isbalanced;
+            //  }
 
             ///////////////////////////////////////////////////////////////////////
             /// ToString()
