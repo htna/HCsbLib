@@ -8,6 +8,30 @@ namespace HTLib2
     public partial class BTree
     {
         ///////////////////////////////////////////////////////////////////////
+        /// Binar Search Tree
+        ///////////////////////////////////////////////////////////////////////
+        public class BST<T>
+        {
+            Node<T> root;
+            Comparison<T> comp;
+
+            public static BST<T> NewBST<T>(Comparison<T> comp)
+            {
+                return new BST<T>
+                {
+                    root = null,
+                    comp = comp,
+                };
+            }
+            public Node<T> Search(T query) { return BstSearch(root, query, comp); }
+            public Node<T> Insert(T value) { return BstInsert(ref root, value, comp); }
+            public      T  Delete(T query) { return BstDelete(ref root, query, comp).value; }
+        }
+        public static BST<T> NewBST<T>(Comparison<T> comp)
+        {
+            return BST<T>.NewBST(comp);
+        }
+        ///////////////////////////////////////////////////////////////////////
         /// BST Search
         ///////////////////////////////////////////////////////////////////////
         static bool BstSearch_selftest = true;
@@ -18,7 +42,7 @@ namespace HTLib2
         //        return default(T);
         //    return node.value;
         //}
-        Node<T> BstSearch<T>(Node<T> node, T query, Comparison<T> compare)
+        static Node<T> BstSearch<T>(Node<T> node, T query, Comparison<T> compare)
         {
             if(BstSearch_selftest)
             {
@@ -51,12 +75,12 @@ namespace HTLib2
         /// 2. Return the inserted node
         ///////////////////////////////////////////////////////////////////////
         static bool BstInsert_selftest = true;
-        public static Node<T> BstInsert<T>(ref Node<T> root, T value, Comparison<T> compare)
+        static Node<T> BstInsert<T>(ref Node<T> root, T value, Comparison<T> compare)
         {
             HDebug.Assert(root.IsRoot());
             return BstInsert(null, ref root, value, compare);
         }
-        public static Node<T> BstInsert<T>(Node<T> parent, ref Node<T> node, T value, Comparison<T> compare)
+        static Node<T> BstInsert<T>(Node<T> parent, ref Node<T> node, T value, Comparison<T> compare)
         {
             if(BstInsert_selftest)
             {
@@ -89,7 +113,7 @@ namespace HTLib2
                 return BstInsert(node, ref node.left, value, compare);
             }
         }
-        public IEnumerable<Node<T>> BstInsertRange<T>(ref Node<T> root, IEnumerable<T> values, Comparison<T> compare)
+        static IEnumerable<Node<T>> BstInsertRange<T>(ref Node<T> root, IEnumerable<T> values, Comparison<T> compare)
         {
             List<Node<T>> nodes = new List<Node<T>>();
             foreach(T value in values)
@@ -103,11 +127,11 @@ namespace HTLib2
         /// 1. Delete node whose value is same to query
         /// 2. Return the value in the deleted node
         ///////////////////////////////////////////////////////////////////////
-        public (T value, Node<T> node_updated) BstDelete<T>(ref Node<T> root, T query, Comparison<T> compare)
+        static (T value, Node<T> node_updated) BstDelete<T>(ref Node<T> root, T query, Comparison<T> compare)
         {
             return BstDeleteImpl(ref root, query, compare);
         }
-        (T value, Node<T> node_updated) BstDeleteImpl<T>(ref Node<T> node, T query, Comparison<T> compare)
+        static (T value, Node<T> node_updated) BstDeleteImpl<T>(ref Node<T> node, T query, Comparison<T> compare)
         {
             // find node to delete
             HDebug.Assert(node != null);
@@ -116,7 +140,7 @@ namespace HTLib2
             else if(query_node >  0) return BstDeleteImpl(ref node.right, query, compare);
             else                     return BstDeleteImpl(ref node);
         }
-        (T value, Node<T> node_updated) BstDeleteImpl<T>(ref Node<T> node)
+        static (T value, Node<T> node_updated) BstDeleteImpl<T>(ref Node<T> node)
         {
             if(node.left == null && node.right == null)
             {
