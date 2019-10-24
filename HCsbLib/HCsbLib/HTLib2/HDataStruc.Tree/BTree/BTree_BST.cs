@@ -23,7 +23,7 @@ namespace HTLib2
                     comp = comp,
                 };
             }
-            public Node<T> Search(T query) { return BstSearch(root, query, comp); }
+            public (T,Node<T>) Search(T query) { Node<T> node = BstSearch(root, query, comp); return (node.value,node); }
             public Node<T> Insert(T value) { return BstInsert(ref root, value, comp); }
             public      T  Delete(T query) { return BstDelete(ref root, query, comp).value; }
             public    void Balance()       { DSW(ref root); }
