@@ -9,7 +9,7 @@ namespace HTLib2
     {
         public class Node
         {
-            public T       value;
+            public T    value;
             public Node parent;
             public Node left;
             public Node right;
