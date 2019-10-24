@@ -13,6 +13,14 @@ namespace HTLib2
             public Node left;
             public Node right;
 
+            public bool Root()
+            {
+                return (parent == null);
+            }
+            public bool Leaf()
+            {
+                return (left == null && right == null);
+            }
             public int Count()
             {
                 return Count(this);
