@@ -5,23 +5,23 @@ using System.Text;
 
 namespace HTLib2
 {
-    public partial class BSTree<T>
+    public partial class BSTree
     {
         static bool DSW_selftest = true;
-        public void DSW()
+        public void DSW<T>(ref Node<T> root)
         {
             if(DSW_selftest)
             {
                 DSW_selftest = false;
-                Comparison<object> _compare = delegate(object a, object b) { return (int)a - (int)b; };
-                BSTree<object> _bst = new BSTree<object>(_compare);
-                _bst.BstInsertRange(new object[] { 43,10,12,1,49,27,40,39,30,29,18,15,2,9,44,24,3,5,37,38,34,0,35,16,21,36,23,31,19,20,42,17,11,25,47,41,48,26,14,46 });
+                Comparison<int> _compare = delegate(int a, int b) { return a - b; };
+                Node<int> _root = null;
+                BstInsertRange(ref _root, new int[] { 43,10,12,1,49,27,40,39,30,29,18,15,2,9,44,24,3,5,37,38,34,0,35,16,21,36,23,31,19,20,42,17,11,25,47,41,48,26,14,46 }, _compare);
 
-                HDebug.Assert(_bst.root.IsBalanced() == false);
-                HDebug.Assert(_bst.ToString() == "(((0,1,(_,2,((_,3,5),9,_))),10,(11,12,(((14,15,(_,16,17)),18,(((_,19,20),21,23),24,(_,25,26))),27,(((29,30,((31,34,(_,35,36)),37,38)),39,_),40,(41,42,_))))),43,((_,44,(46,47,48)),49,_))");
-                _bst.DSW();
-                HDebug.Assert(_bst.root.IsBalanced() == true);
-                HDebug.Assert(_bst.ToString() == "(((((0,1,2),3,(5,9,10)),11,((12,14,15),16,(17,18,19))),20,(((21,23,_),24,25),26,(27,29,30))),31,(((34,35,36),37,(38,39,40)),41,((42,43,44),46,(47,48,49))))");
+                HDebug.Assert(_root.IsBalanced() == false);
+                HDebug.Assert(_root.ToString() == "(((0,1,(_,2,((_,3,5),9,_))),10,(11,12,(((14,15,(_,16,17)),18,(((_,19,20),21,23),24,(_,25,26))),27,(((29,30,((31,34,(_,35,36)),37,38)),39,_),40,(41,42,_))))),43,((_,44,(46,47,48)),49,_))");
+                DSW(ref _root);
+                HDebug.Assert(_root.IsBalanced() == true);
+                HDebug.Assert(_root.ToString() == "(((((0,1,2),3,(5,9,10)),11,((12,14,15),16,(17,18,19))),20,(((21,23,_),24,25),26,(27,29,30))),31,(((34,35,36),37,(38,39,40)),41,((42,43,44),46,(47,48,49))))");
 
                 //cout << "    7) BST built with values : 43,10,12,1,49,27,40,39,30,29,18,15,2,9,44,24,3,5,37,38,34,0,35,16,21,36,23,31,19,20,42,17,11,25,47,41,48,26,14,46" << endl;
                 //int array[40] = { 43,10,12,1,49,27,40,39,30,29,18,15,2,9,44,24,3,5,37,38,34,0,35,16,21,36,23,31,19,20,42,17,11,25,47,41,48,26,14,46 };
@@ -30,14 +30,14 @@ namespace HTLib2
                 //string dsw_string      = "(((((0,1,2),3,(5,9,10)),11,((12,14,15),16,(17,18,19))),20,(((21,23,_),24,25),26,(27,29,30))),31,(((34,35,36),37,(38,39,40)),41,((42,43,44),46,(47,48,49))))";
             }
 
-            DSW_TreeToBackbone();
-            DSW_BackboneToACBT();
-        }
-        void DSW_TreeToBackbone()
-        {
             DSW_TreeToBackbone(ref root);
+            DSW_BackboneToACBT(ref root);
         }
-        void DSW_TreeToBackbone(ref Node node)
+        //void DSW_TreeToBackbone()
+        //{
+        //    DSW_TreeToBackbone(ref root);
+        //}
+        void DSW_TreeToBackbone<T>(ref Node<T> node)
         {
             if(node == null)
                 return;
@@ -49,9 +49,9 @@ namespace HTLib2
 
             DSW_TreeToBackbone(ref node.right);
         }
-        void DSW_BackboneToACBT()
+        void DSW_BackboneToACBT<T>(ref Node<T> root)
         {
-            int n = Count();
+            int n = root.Count();
             int m = (int)Math.Log(n+1, 2);
                 m = (int)Math.Pow(2, m) - 1;
 
@@ -62,7 +62,7 @@ namespace HTLib2
                 DSW_BackboneToACBTRotN(ref root, m);
             }
         }
-        void DSW_BackboneToACBTRotN(ref Node node, int n)
+        void DSW_BackboneToACBTRotN<T>(ref Node<T> node, int n)
         {
             if(n == 0)
                 return;
