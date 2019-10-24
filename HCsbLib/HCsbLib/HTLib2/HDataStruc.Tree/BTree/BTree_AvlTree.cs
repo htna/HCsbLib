@@ -24,6 +24,15 @@ namespace HTLib2
 
             public static AvlTree<T> NewAvlTree<T>(Comparison<T> comp)
             {
+                if(comp == null)
+                {
+                    var compr = Comparer<T>.Default;
+                    comp = delegate(T x, T y)
+                    {
+                        return compr.Compare(x,y);
+                    };
+                }
+
                 return new AvlTree<T>
                 {
                     root = null,
@@ -31,11 +40,11 @@ namespace HTLib2
                 };
             }
             public (T,Node) Search(T query) { var node = BstSearch<AvlNodeInfo>(root, new AvlNodeInfo{value = query}, avlcomp); return (node.value.value, node); }
-            //public Node<T> Insert(T value) { return BstInsert(ref root, value, comp); }
+            public Node     Insert(T value) { var node = AvlInsert(ref root, value, avlcomp); return node; }
             //public      T  Delete(T query) { return BstDelete(ref root, query, comp).value; }
             //public    void Balance()       { DSW(ref root); }
         }
-        public static AvlTree<T> NewAvlTree<T>(Comparison<T> comp)
+        public static AvlTree<T> NewAvlTree<T>(Comparison<T> comp=null)
         {
             return AvlTree<T>.NewAvlTree(comp);
         }
@@ -49,9 +58,24 @@ namespace HTLib2
         static bool AvlInsert_selftest = true;
         static Node<AvlTree<T>.AvlNodeInfo> AvlInsert<T>(ref Node<AvlTree<T>.AvlNodeInfo> root, T value, Comparison<AvlTree<T>.AvlNodeInfo> compare)
         {
-            HDebug.Assert(root.IsRoot());
-            AvlTree<T>.AvlNodeInfo       avlvalue = new AvlTree<T>.AvlNodeInfo{ value = value };
-            Node<AvlTree<T>.AvlNodeInfo> node     = BstInsert<AvlTree<T>.AvlNodeInfo>(null, ref root, avlvalue, compare);
+            HDebug.Assert(root == null || root.IsRoot());
+            AvlTree<T>.AvlNodeInfo avlvalue = new AvlTree<T>.AvlNodeInfo{ value = value };
+
+            if(root == null)
+            {
+                Node<AvlTree<T>.AvlNodeInfo> node = BstInsert<AvlTree<T>.AvlNodeInfo>(null, ref root, avlvalue, compare);
+                HDebug.Assert(root == node);
+                HDebug.Assert(root.left  == null);
+                HDebug.Assert(root.right == null);
+                node.value.left_height  = 0;
+                node.value.right_height = 0;
+                return node;
+            }
+            else
+            {
+                Node<AvlTree<T>.AvlNodeInfo> node = BstInsert<AvlTree<T>.AvlNodeInfo>(null, ref root, avlvalue, compare);
+            }
+            
             throw new NotImplementedException();
         }
         

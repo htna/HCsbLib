@@ -78,7 +78,7 @@ namespace HTLib2
         static bool BstInsert_selftest = true;
         static Node<T> BstInsert<T>(ref Node<T> root, T value, Comparison<T> compare)
         {
-            HDebug.Assert(root.IsRoot());
+            HDebug.Assert(root == null || root.IsRoot());
             return BstInsert(null, ref root, value, compare);
         }
         static Node<T> BstInsert<T>(Node<T> parent, ref Node<T> node, T value, Comparison<T> compare)
@@ -88,16 +88,16 @@ namespace HTLib2
                 BstInsert_selftest = false;
                 Comparison<int> _compare = delegate(int a, int b) { return a - b; };
                 Node<int> _root = null;
-                BstInsert(ref _root, 10, _compare); HDebug.Assert(_root.ToString() == "(10)"                                           );
-                BstInsert(ref _root,  5, _compare); HDebug.Assert(_root.ToString() == "(5,10,_)"                                       );
-                BstInsert(ref _root, 20, _compare); HDebug.Assert(_root.ToString() == "(5,10,20)"                                      );
-                BstInsert(ref _root,  2, _compare); HDebug.Assert(_root.ToString() == "((2,5,_),10,20)"                                );
-                BstInsert(ref _root,  7, _compare); HDebug.Assert(_root.ToString() == "((2,5,7),10,20)"                                );
-                BstInsert(ref _root,  4, _compare); HDebug.Assert(_root.ToString() == "(((_,2,4),5,7),10,20)"                          );
-                BstInsert(ref _root,  6, _compare); HDebug.Assert(_root.ToString() == "(((_,2,4),5,(6,7,_)),10,20)"                    );
-                BstInsert(ref _root, 30, _compare); HDebug.Assert(_root.ToString() == "(((_,2,4),5,(6,7,_)),10,(_,20,30))"             );
-                BstInsert(ref _root,  3, _compare); HDebug.Assert(_root.ToString() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,30))"       );
-                BstInsert(ref _root, 25, _compare); HDebug.Assert(_root.ToString() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,(25,30,_)))");
+                BstInsert(ref _root, 10, _compare); HDebug.Assert(_root.ToStringSimple() == "(10)"                                           );
+                BstInsert(ref _root,  5, _compare); HDebug.Assert(_root.ToStringSimple() == "(5,10,_)"                                       );
+                BstInsert(ref _root, 20, _compare); HDebug.Assert(_root.ToStringSimple() == "(5,10,20)"                                      );
+                BstInsert(ref _root,  2, _compare); HDebug.Assert(_root.ToStringSimple() == "((2,5,_),10,20)"                                );
+                BstInsert(ref _root,  7, _compare); HDebug.Assert(_root.ToStringSimple() == "((2,5,7),10,20)"                                );
+                BstInsert(ref _root,  4, _compare); HDebug.Assert(_root.ToStringSimple() == "(((_,2,4),5,7),10,20)"                          );
+                BstInsert(ref _root,  6, _compare); HDebug.Assert(_root.ToStringSimple() == "(((_,2,4),5,(6,7,_)),10,20)"                    );
+                BstInsert(ref _root, 30, _compare); HDebug.Assert(_root.ToStringSimple() == "(((_,2,4),5,(6,7,_)),10,(_,20,30))"             );
+                BstInsert(ref _root,  3, _compare); HDebug.Assert(_root.ToStringSimple() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,30))"       );
+                BstInsert(ref _root, 25, _compare); HDebug.Assert(_root.ToStringSimple() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,(25,30,_)))");
             }
 
             if(node == null)
