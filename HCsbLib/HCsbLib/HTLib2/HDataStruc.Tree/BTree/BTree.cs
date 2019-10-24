@@ -20,22 +20,14 @@ namespace HTLib2
             }
             int Count(Node n)
             {
-                if(n == null)
-                    return 0;
-                int lc = Count(n.left);
-                int rc = Count(n.right);
+                int lc = (right == null) ? 0 : left .Count();
+                int rc = (right == null) ? 0 : right.Count();
                 return (1 + lc + rc);
             }
             public int Height()
             {
-                return Height(this);
-            }
-            int Height(Node n)
-            {
-                if(n == null)
-                    return -1; // height of leaf is 0
-                int lh = Height(n.left);
-                int rh = Height(n.right);
+                int lh = (right == null) ? 0 : left .Height();
+                int rh = (right == null) ? 0 : right.Height();
                 return Math.Max(lh, rh) + 1;
             }
         }
