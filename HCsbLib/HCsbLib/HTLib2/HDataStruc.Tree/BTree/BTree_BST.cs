@@ -71,9 +71,9 @@ namespace HTLib2
                 _bst.BstInsert( 3); HDebug.Assert(_bst.ToString() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,30))"       );
                 _bst.BstInsert(25); HDebug.Assert(_bst.ToString() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,(25,30,_)))");
             }
-            return BstInsert(null, ref root, value);
+            return BstInsert(null, ref root, value, compare);
         }
-        Node BstInsert(Node parent, ref Node node, T value)
+        public static Node BstInsert(Node parent, ref Node node, T value, Comparison<T> compare)
         {
             if(node == null)
             {
@@ -82,11 +82,11 @@ namespace HTLib2
             }
             if(compare(node.value, value) < 0)
             {
-                return BstInsert(node, ref node.right, value);
+                return BstInsert(node, ref node.right, value, compare);
             }
             else
             {
-                return BstInsert(node, ref node.left, value);
+                return BstInsert(node, ref node.left, value, compare);
             }
         }
         public IEnumerable<Node> BstInsertRange(IEnumerable<T> values)
