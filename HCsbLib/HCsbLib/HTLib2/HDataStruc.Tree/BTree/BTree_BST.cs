@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HTLib2
 {
-    public partial class BTree<T>
+    public partial class BSTree<T>
     {
         ///////////////////////////////////////////////////////////////////////
         /// BST Search
@@ -17,7 +17,7 @@ namespace HTLib2
             {
                 BstSearch_selftest = false;
                 Comparison<object> _compare = delegate(object a, object b) { return (int)a - (int)b; };
-                BTree<object> _bst = new BTree<object>(_compare);
+                BSTree<object> _bst = new BSTree<object>(_compare);
                 _bst.BstInsertRange(new object[] { 10, 5, 20, 2, 7, 4, 6, 30, 3, 25 });
                 HDebug.Assert(_bst.ToString() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,(25,30,_)))");
                 HDebug.Assert((_bst.BstSearch(10) != null) ==  true);
@@ -57,7 +57,7 @@ namespace HTLib2
             {
                 BstInsert_selftest = false;
                 Comparison<object> _compare = delegate(object a, object b) { return (int)a - (int)b; };
-                BTree<object> _bst = new BTree<object>(_compare);
+                BSTree<object> _bst = new BSTree<object>(_compare);
                                     HDebug.Assert(_bst.ToString() == "()"                                             );
                 _bst.BstInsert(10); HDebug.Assert(_bst.ToString() == "(10)"                                           );
                 _bst.BstInsert( 5); HDebug.Assert(_bst.ToString() == "(5,10,_)"                                       );

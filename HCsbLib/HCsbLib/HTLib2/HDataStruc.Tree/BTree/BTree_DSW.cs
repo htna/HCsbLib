@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HTLib2
 {
-    public partial class BTree<T>
+    public partial class BSTree<T>
     {
         static bool DSW_selftest = true;
         public void DSW()
@@ -14,7 +14,7 @@ namespace HTLib2
             {
                 DSW_selftest = false;
                 Comparison<object> _compare = delegate(object a, object b) { return (int)a - (int)b; };
-                BTree<object> _bst = new BTree<object>(_compare);
+                BSTree<object> _bst = new BSTree<object>(_compare);
                 _bst.BstInsertRange(new object[] { 43,10,12,1,49,27,40,39,30,29,18,15,2,9,44,24,3,5,37,38,34,0,35,16,21,36,23,31,19,20,42,17,11,25,47,41,48,26,14,46 });
 
                 HDebug.Assert(_bst.root.IsBalanced() == false);

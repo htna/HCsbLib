@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HTLib2
 {
-    public partial class BTree<T>
+    public partial class BSTree<T>
     {
         static bool RotateLeft_selftest = true;
         static void RotateLeft(ref Node grandparent_child)
@@ -13,15 +13,15 @@ namespace HTLib2
             if(RotateLeft_selftest)
             {
                 RotateLeft_selftest = false;
-                BTree<string>.Node _root = BTree<string>.Node.New("grandparent_child", null, null, null);
-                _root.right              = BTree<string>.Node.New("prnt" , null, null, null);
-                _root.right.left         = BTree<string>.Node.New("T1"     , null, null, null);
-                _root.right.right        = BTree<string>.Node.New("curr"   , null, null, null);
-                _root.right.right.left   = BTree<string>.Node.New("T2"     , null, null, null);
-                _root.right.right.right  = BTree<string>.Node.New("T3"     , null, null, null);
+                BSTree<string>.Node _root = BSTree<string>.Node.New("grandparent_child", null, null, null);
+                _root.right              = BSTree<string>.Node.New("prnt" , null, null, null);
+                _root.right.left         = BSTree<string>.Node.New("T1"     , null, null, null);
+                _root.right.right        = BSTree<string>.Node.New("curr"   , null, null, null);
+                _root.right.right.left   = BSTree<string>.Node.New("T2"     , null, null, null);
+                _root.right.right.right  = BSTree<string>.Node.New("T3"     , null, null, null);
                 string _msg;
                 _msg = _root.ToStringSimple(); HDebug.Assert(_msg == "(_,grandparent_child,(T1,prnt,(T2,curr,T3)))");
-                BTree<string>.RotateLeft(ref _root.right);
+                BSTree<string>.RotateLeft(ref _root.right);
                 _msg = _root.ToStringSimple(); HDebug.Assert(_msg == "(_,grandparent_child,((T1,prnt,T2),curr,T3))");
             }
             ////////////////////////////////////////////////////////////////////////
@@ -52,15 +52,15 @@ namespace HTLib2
             if(RotateRight_selftest)
             {
                 RotateRight_selftest = false;
-                BTree<string>.Node _root = BTree<string>.Node.New("grandparent_child", null, null, null);
-                _root.right              = BTree<string>.Node.New("prnt"   , null, null, null);
-                _root.right.left         = BTree<string>.Node.New("curr"   , null, null, null);
-                _root.right.right        = BTree<string>.Node.New("T3"     , null, null, null);
-                _root.right.left.left    = BTree<string>.Node.New("T1"     , null, null, null);
-                _root.right.left.right   = BTree<string>.Node.New("T2"     , null, null, null);
+                BSTree<string>.Node _root = BSTree<string>.Node.New("grandparent_child", null, null, null);
+                _root.right              = BSTree<string>.Node.New("prnt"   , null, null, null);
+                _root.right.left         = BSTree<string>.Node.New("curr"   , null, null, null);
+                _root.right.right        = BSTree<string>.Node.New("T3"     , null, null, null);
+                _root.right.left.left    = BSTree<string>.Node.New("T1"     , null, null, null);
+                _root.right.left.right   = BSTree<string>.Node.New("T2"     , null, null, null);
                 string _msg;
                 _msg = _root.ToStringSimple(); HDebug.Assert(_msg == "(_,grandparent_child,((T1,curr,T2),prnt,T3))");
-                BTree<string>.RotateRight(ref _root.right);
+                BSTree<string>.RotateRight(ref _root.right);
                 _msg = _root.ToStringSimple(); HDebug.Assert(_msg == "(_,grandparent_child,(T1,curr,(T2,prnt,T3)))");
             }
             ////////////////////////////////////////////////////////////////////////

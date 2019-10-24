@@ -7,7 +7,7 @@ namespace HTLib2
 {
     public partial class AvlTree<T>
     {
-        public class Node : BTree<T>.Node
+        public class Node : BSTree<T>.Node
         {
             public new Node parent { get { return (Node)base.parent; } set { base.parent = value; } }
             public new Node left   { get { return (Node)base.left  ; } set { base.left   = value; } }
