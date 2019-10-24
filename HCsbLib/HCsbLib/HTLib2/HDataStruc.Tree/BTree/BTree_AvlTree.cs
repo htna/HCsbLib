@@ -30,7 +30,7 @@ namespace HTLib2
                     comp = comp,
                 };
             }
-            public (T,Node) Search(T query) { var node = BstSearch<AvlNodeInfo>(root, new AvlNodeInfo{value = query }, avlcomp); return (node.value.value, node); }
+            public (T,Node) Search(T query) { var node = BstSearch<AvlNodeInfo>(root, new AvlNodeInfo{value = query}, avlcomp); return (node.value.value, node); }
             //public Node<T> Insert(T value) { return BstInsert(ref root, value, comp); }
             //public      T  Delete(T query) { return BstDelete(ref root, query, comp).value; }
             //public    void Balance()       { DSW(ref root); }
@@ -39,6 +39,22 @@ namespace HTLib2
         {
             return AvlTree<T>.NewAvlTree(comp);
         }
+        ///////////////////////////////////////////////////////////////////////
+        /// AVL Insert
+        /// 
+        /// 1. Insert value into BST
+        /// 2. Rebalance
+        /// 3. Return the inserted node
+        ///////////////////////////////////////////////////////////////////////
+        static bool AvlInsert_selftest = true;
+        static Node<AvlTree<T>.AvlNodeInfo> AvlInsert<T>(ref Node<AvlTree<T>.AvlNodeInfo> root, T value, Comparison<AvlTree<T>.AvlNodeInfo> compare)
+        {
+            HDebug.Assert(root.IsRoot());
+            AvlTree<T>.AvlNodeInfo       avlvalue = new AvlTree<T>.AvlNodeInfo{ value = value };
+            Node<AvlTree<T>.AvlNodeInfo> node     = BstInsert<AvlTree<T>.AvlNodeInfo>(null, ref root, avlvalue, compare);
+            throw new NotImplementedException();
+        }
+        
         //  public BTree
         //      ( Comparison<T> comp // = delegate(int a, int b) { return a - b; }
         //      )
