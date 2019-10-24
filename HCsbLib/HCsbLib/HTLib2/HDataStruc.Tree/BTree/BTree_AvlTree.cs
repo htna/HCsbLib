@@ -1,15 +1,44 @@
-﻿/*
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace HTLib2
 {
-    public partial class AvlTree<T>
+    public partial class BTree
     {
-        protected Node root;
-        Comparison<T>     compare;
+        ///////////////////////////////////////////////////////////////////////
+        /// Binar Search Tree
+        ///////////////////////////////////////////////////////////////////////
+        public class AvlTree<T>
+        {
+            public struct AvlNodeInfo
+            {
+                public T   value;
+                public int left_height;
+                public int right_height;
+            }
+            Node<AvlNodeInfo> root;
+            Comparison<T> comp;
+            public int avlcomp(AvlNodeInfo x, AvlNodeInfo y) { return comp(x.value, y.value); }
+
+            public static AvlTree<T> NewAvlTree<T>(Comparison<T> comp)
+            {
+                return new AvlTree<T>
+                {
+                    root = null,
+                    comp = comp,
+                };
+            }
+            public (T,Node) Search(T query) { var node = BstSearch<AvlNodeInfo>(root, new AvlNodeInfo{value = query }, avlcomp); return (node.value.value, node); }
+            //public Node<T> Insert(T value) { return BstInsert(ref root, value, comp); }
+            //public      T  Delete(T query) { return BstDelete(ref root, query, comp).value; }
+            //public    void Balance()       { DSW(ref root); }
+        }
+        public static AvlTree<T> NewAvlTree<T>(Comparison<T> comp)
+        {
+            return AvlTree<T>.NewAvlTree(comp);
+        }
         //  public BTree
         //      ( Comparison<T> comp // = delegate(int a, int b) { return a - b; }
         //      )
@@ -70,4 +99,3 @@ namespace HTLib2
 
     }
 }
-*/
