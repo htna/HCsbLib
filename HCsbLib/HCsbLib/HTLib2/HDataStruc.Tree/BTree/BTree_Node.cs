@@ -7,7 +7,10 @@ namespace HTLib2
 {
     public partial class BTree
     {
-        public class Node<T>
+        public class Node
+        {
+        }
+        public class Node<T> : Node
         {
             public T       value ;
             public Node<T> parent;
