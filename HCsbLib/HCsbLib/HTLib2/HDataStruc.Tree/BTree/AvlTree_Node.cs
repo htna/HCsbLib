@@ -6,7 +6,6 @@ using System.Text;
 namespace HTLib2
 {
     public partial class AvlTree<T>
-        where T : class
     {
         public class Node : BTree<T>.Node
         {
