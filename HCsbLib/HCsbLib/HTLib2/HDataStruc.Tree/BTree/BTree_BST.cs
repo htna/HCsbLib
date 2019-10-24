@@ -26,6 +26,7 @@ namespace HTLib2
             public Node<T> Search(T query) { return BstSearch(root, query, comp); }
             public Node<T> Insert(T value) { return BstInsert(ref root, value, comp); }
             public      T  Delete(T query) { return BstDelete(ref root, query, comp).value; }
+            public    void Balance()       { DSW(ref root); }
         }
         public static BST<T> NewBST<T>(Comparison<T> comp)
         {

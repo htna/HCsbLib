@@ -8,7 +8,7 @@ namespace HTLib2
     public partial class BTree
     {
         static bool DSW_selftest = true;
-        public void DSW<T>(ref Node<T> root)
+        public static void DSW<T>(ref Node<T> root)
         {
             if(DSW_selftest)
             {
@@ -37,7 +37,7 @@ namespace HTLib2
         //{
         //    DSW_TreeToBackbone(ref root);
         //}
-        void DSW_TreeToBackbone<T>(ref Node<T> node)
+        static void DSW_TreeToBackbone<T>(ref Node<T> node)
         {
             if(node == null)
                 return;
@@ -49,7 +49,7 @@ namespace HTLib2
 
             DSW_TreeToBackbone(ref node.right);
         }
-        void DSW_BackboneToACBT<T>(ref Node<T> root)
+        static void DSW_BackboneToACBT<T>(ref Node<T> root)
         {
             int n = root.Count();
             int m = (int)Math.Log(n+1, 2);
@@ -62,7 +62,7 @@ namespace HTLib2
                 DSW_BackboneToACBTRotN(ref root, m);
             }
         }
-        void DSW_BackboneToACBTRotN<T>(ref Node<T> node, int n)
+        static void DSW_BackboneToACBTRotN<T>(ref Node<T> node, int n)
         {
             if(n == 0)
                 return;
