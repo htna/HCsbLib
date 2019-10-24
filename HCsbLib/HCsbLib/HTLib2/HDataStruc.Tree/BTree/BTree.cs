@@ -7,8 +7,8 @@ namespace HTLib2
 {
     public partial class BTree<T>
     {
-        protected Node<T> root;
-        Comparison<T>     compare;
+        protected Node root;
+        Comparison<T>  compare;
         public BTree
             ( Comparison<T> comp // = delegate(int a, int b) { return a - b; }
             )
@@ -16,7 +16,7 @@ namespace HTLib2
             this.root = null;
             this.compare = comp;
         }
-        public Node<T> Root
+        public Node Root
         {
             get { return root; }
         }
@@ -24,7 +24,7 @@ namespace HTLib2
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            Node<T>.ToString(sb, root);
+            Node.ToString(sb, root);
             return sb.ToString();
         }
 
@@ -33,7 +33,7 @@ namespace HTLib2
             return Count(root);
         }
 
-        int Count(Node<T> node)
+        int Count(Node node)
         {
             if(node == null)
                 return 0;

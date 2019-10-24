@@ -31,12 +31,12 @@ namespace HTLib2
                 HDebug.Assert((_bst.BstSearch(50) != null) == false);
             }
 
-            Node<T> node = BstSearch(root, query);
+            Node node = BstSearch(root, query);
             if(node == null)
                 return default(T);
             return node.value;
         }
-        Node<T> BstSearch(Node<T> node, T query)
+        Node BstSearch(Node node, T query)
         {
             if(node == null)
                 return null;
@@ -52,7 +52,7 @@ namespace HTLib2
         /// 2. Return the inserted node
         ///////////////////////////////////////////////////////////////////////
         static bool BstInsert_selftest = true;
-        public Node<T> BstInsert(T value)
+        public Node BstInsert(T value)
         {
             if(BstInsert_selftest)
             {
@@ -73,11 +73,11 @@ namespace HTLib2
             }
             return BstInsert(null, ref root, value);
         }
-        Node<T> BstInsert(Node<T> parent, ref Node<T> node, T value)
+        Node BstInsert(Node parent, ref Node node, T value)
         {
             if(node == null)
             {
-                node = Node<T>.New(value, parent, null, null);
+                node = Node.New(value, parent, null, null);
                 return node;
             }
             if(compare(node.value, value) < 0)
@@ -89,9 +89,9 @@ namespace HTLib2
                 return BstInsert(node, ref node.left, value);
             }
         }
-        public IEnumerable<Node<T>> BstInsertRange(IEnumerable<T> values)
+        public IEnumerable<Node> BstInsertRange(IEnumerable<T> values)
         {
-            List<Node<T>> nodes = new List<Node<T>>();
+            List<Node> nodes = new List<Node>();
             foreach(T value in values)
                 nodes.Add(BstInsert(value));
             return nodes;
@@ -103,11 +103,11 @@ namespace HTLib2
         /// 1. Delete node whose value is same to query
         /// 2. Return the value in the deleted node
         ///////////////////////////////////////////////////////////////////////
-        public (T value, Node<T> node_updated) BstDelete(T query)
+        public (T value, Node node_updated) BstDelete(T query)
         {
             return BstDelete(ref root, query);
         }
-        (T value, Node<T> node_updated) BstDelete(ref Node<T> node, T query)
+        (T value, Node node_updated) BstDelete(ref Node node, T query)
         {
             // find node to delete
             HDebug.Assert(node != null);
@@ -116,7 +116,7 @@ namespace HTLib2
             else if(query_node >  0) return BstDelete(ref node.right, query);
             else                     return BstDelete(ref node);
         }
-        (T value, Node<T> node_updated) BstDelete(ref Node<T> node)
+        (T value, Node node_updated) BstDelete(ref Node node)
         {
             if(node.left == null && node.right == null)
             {
@@ -143,13 +143,13 @@ namespace HTLib2
             {
                 // has both left and right children
                 // 1. find predecessor reference
-                ref Node<T> Pred(ref Node<T> lnode)
+                ref Node Pred(ref Node lnode)
                 {
                     if(lnode.right == null)
                         return ref lnode;
                     return ref Pred(ref lnode.right);
                 };
-                ref Node<T> pred = ref Pred(ref node.left);
+                ref Node pred = ref Pred(ref node.left);
 
                 // 2. backup value to return
                 T value = node.value;

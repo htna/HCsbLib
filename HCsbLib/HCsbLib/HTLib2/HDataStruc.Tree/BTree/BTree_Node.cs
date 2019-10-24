@@ -7,18 +7,18 @@ namespace HTLib2
 {
     public partial class BTree<T>
     {
-        public class Node<T>
+        public class Node
         {
             public T       value;
-            public Node<T> parent;
-            public Node<T> left;
-            public Node<T> right;
+            public Node parent;
+            public Node left;
+            public Node right;
             public bool IsRoot { get { return (parent == null); } }
             public bool IsLeaf { get { return (left == null && right == null); } }
 
-            public static Node<T> New(T value, Node<T> parent, Node<T> left, Node<T> right)
+            public static Node New(T value, Node parent, Node left, Node right)
             {
-                return new Node<T>
+                return new Node
                 {
                     value  = value ,
                     parent = parent,
@@ -26,14 +26,14 @@ namespace HTLib2
                     right  = right ,
                 };
             }
-            public Node<T> MaxNode()
+            public Node MaxNode()
             {
                 HDebug.Assert(parent != null);
                 if(right == null)
                     return this;
                 return right.MaxNode();
             }
-            public Node<T> MinNode()
+            public Node MinNode()
             {
                 HDebug.Assert(parent != null);
                 if(left == null)
@@ -44,7 +44,7 @@ namespace HTLib2
             {
                 return Count(this);
 
-                int Count(Node<T> n)
+                int Count(Node n)
                 {
                     if(n == null)
                         return 0;
@@ -57,7 +57,7 @@ namespace HTLib2
             {
                 return Height(this);
 
-                int Height(Node<T> n)
+                int Height(Node n)
                 {
                     if(n == null)
                         return -1; // height of leaf is 0
@@ -70,7 +70,7 @@ namespace HTLib2
             {
                 return IsBalanced(this);
 
-                bool IsBalanced(Node<T> n)
+                bool IsBalanced(Node n)
                 {
                     if(n == null)
                         return true;
@@ -98,7 +98,7 @@ namespace HTLib2
                 ToString(sb, this);
                 return sb.ToString();
             }
-            public static void ToString<T>(StringBuilder sb, Node<T> node)
+            public static void ToString(StringBuilder sb, Node node)
             {
                 if(node == null)
                 {
@@ -114,7 +114,7 @@ namespace HTLib2
                     }
                 }
             }
-            static void ToStringRec<T>(StringBuilder sb, Node<T> node)
+            static void ToStringRec(StringBuilder sb, Node node)
             {
                 if(node == null)
                 {
