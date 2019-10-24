@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HTLib2
 {
-    public partial class BSTree
+    public partial class BTree
     {
         static bool DSW_selftest = true;
         public void DSW<T>(ref Node<T> root)

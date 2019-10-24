@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HTLib2
 {
-    public partial class BSTree
+    public partial class BTree
     {
         ///////////////////////////////////////////////////////////////////////
         /// BST Search

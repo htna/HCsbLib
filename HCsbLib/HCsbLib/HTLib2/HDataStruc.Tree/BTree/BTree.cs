@@ -1,5 +1,4 @@
-﻿/*
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,28 +7,27 @@ namespace HTLib2
 {
     public partial class BTree
     {
-        public class Node<T>
-        {
-            public T    value;
-            public Node parent;
-            public Node left;
-            public Node right;
-
-        }
-
-        public Node root;
-        public BTree()
-        {
-            root = null;
-        }
+        //  Node<T> root;
+        //  Comparison<T>  compare;
+        //  public BSTree
+        //      ( Comparison<T> comp // = delegate(int a, int b) { return a - b; }
+        //      )
+        //  {
+        //      this.root = null;
+        //      this.compare = comp;
+        //  }
+        //  public Node Root
+        //  {
+        //      get { return root; }
+        //  }
 
         //  public override string ToString()
         //  {
         //      StringBuilder sb = new StringBuilder();
-        //      Node.ToString(sb, root);
+        //      Node<T>.ToString(sb, root);
         //      return sb.ToString();
         //  }
-        //  
+
         //  public int Count()
         //  {
         //      return Count(root);
@@ -45,4 +43,3 @@ namespace HTLib2
         //  }
     }
 }
-*/
