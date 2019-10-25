@@ -33,6 +33,31 @@ namespace HTLib2
             return BST<T>.NewBST(comp);
         }
         ///////////////////////////////////////////////////////////////////////
+        /// Validate order
+        ///////////////////////////////////////////////////////////////////////
+        static bool BstValidateOrder<T>(Node<T> root, Comparison<T> compare)
+        {
+            if(root == null)
+                return true;
+            int    count = root.Count();
+            Node<T> node = root.MinNode();
+            Node<T> next = node.Successor();
+            if(next == null)
+                return true;
+            int num_compare = 0;
+            while(next != null)
+            {
+                if(compare(node.value, next.value) > 0)
+                    return false;
+                num_compare ++;
+                node = next;
+                next = next.Successor();
+            }
+            if(num_compare != count-1)
+                return false;
+            return true;
+        }
+        ///////////////////////////////////////////////////////////////////////
         /// BST Search
         ///////////////////////////////////////////////////////////////////////
         static bool BstSearch_selftest = true;
