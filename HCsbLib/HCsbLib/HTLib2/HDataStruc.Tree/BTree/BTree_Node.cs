@@ -88,6 +88,19 @@ namespace HTLib2
                 HDebug.Assert(false);
                 throw new Exception();
             }
+
+            public virtual bool Validate()
+            {
+                return ValidateConnection();
+            }
+            public bool ValidateConnection()
+            {
+                if(left .Validate() == false) return false;
+                if(right.Validate() == false) return false;
+                if(this != left .parent) return false;
+                if(this != right.parent) return false;
+                return true;
+            }
             ///////////////////////////////////////////////////////////////////////
             /// ToString()
             ///////////////////////////////////////////////////////////////////////
