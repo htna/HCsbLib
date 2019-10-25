@@ -89,24 +89,21 @@ namespace HTLib2
                     return node;
                 }
             }
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] 
             static int GetHeight(Node<AvlNodeInfo> node)
             {
                 if(node == null)
                     return -1;
                 return node.value.height;
             }
-            ref Node<AvlNodeInfo> GetNodeRef(Node<AvlNodeInfo> node)
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] 
+            static int UpdateHeight(Node<AvlNodeInfo> node)
             {
-                if(node == root)
-                {
-                    return ref root;
-                }
-
-                var parent = node.parent;
-                if(parent.left  == node) return ref parent.left ;
-                if(parent.right == node) return ref parent.right;
-                HDebug.Assert(false);
-                throw new Exception();
+                int left_height  = GetHeight(node.left );
+                int right_height = GetHeight(node.right);
+                node.value.height = Math.Max(left_height, right_height) + 1;
+                int bf = right_height - left_height;
+                return bf;
             }
             void UpdateParentBalance(Node<AvlNodeInfo> node, int node_bf)
             {
@@ -122,11 +119,12 @@ namespace HTLib2
 
                 if(parent_bf <= -2)
                 {
-                    ref Node<AvlNodeInfo> parent_ref = ref GetNodeRef(parent);
+                    ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
                     HDebug.Assert(parent_bf == -2);
                     if(node_bf == -1)
                     {
                         BTree.RotateRight<AvlNodeInfo>(ref parent_ref);
+                        throw new NotImplementedException();
                     }
                     else if(node_bf == 1)
                     {
