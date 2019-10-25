@@ -36,10 +36,32 @@ namespace HTLib2
             }
             public Node<T> MinNode()
             {
-                HDebug.Assert(parent != null);
-                if(left == null)
-                    return this;
-                return left.MinNode();
+                Node<T> node = this;
+                while(node.left != null)
+                    node = node.left;
+                return node;
+                //HDebug.Assert(parent != null);
+                //if(left == null)
+                //    return this;
+                //return left.MinNode();
+            }
+            public Node<T> Successor()
+            {
+                return Successor(this);
+
+                Node<T> Successor(Node<T> node)
+                {
+                    if(node.right != null)
+                        return node.right.MinNode();
+                    while(true)
+                    {
+                        if(node == null)
+                            return null;
+                        if(node.parent.left == node)
+                            return node.parent;
+                        node = node.parent;
+                    }
+                }
             }
 
             public bool IsRoot()
@@ -89,7 +111,7 @@ namespace HTLib2
                 throw new Exception();
             }
 
-            public virtual bool Validate()
+            public bool Validate()
             {
                 return ValidateConnection();
             }
