@@ -20,7 +20,10 @@ namespace HTLib2
             public struct AvlNodeInfo
             {
                 public T   value;
-                public int height;
+                public int left_height;
+                public int right_height;
+                public int height { get { return Math.Max(left_height, right_height) + 1; } }
+                public int bf     { get { return right_height - left_height; } }
                 public override string ToString() { return value.ToString(); }
             }
             Node<AvlNodeInfo> root;
@@ -69,7 +72,8 @@ namespace HTLib2
                 AvlNodeInfo avlvalue = new AvlNodeInfo
                 {
                     value  = value,
-                    height = 0,
+                    left_height  = -1, // height of null node is -1
+                    right_height = -1, // height of null node is -1
                 };
 
                 if(root == null)
@@ -85,38 +89,36 @@ namespace HTLib2
                 {
                     Node<AvlNodeInfo> node = BstInsert<AvlNodeInfo>(null, ref root, avlvalue, avlcomp);
                     HDebug.Assert(node.value.height == 0);
-                    UpdateParentBalance(node, 0);
+                    UpdateParentBalance(node);
                     return node;
                 }
             }
             [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] 
-            static int GetHeight(Node<AvlNodeInfo> node)
+            static void UpdateParentHeight(Node<AvlNodeInfo> node)
             {
-                if(node == null)
-                    return -1;
-                return node.value.height;
+                Node<AvlNodeInfo> parent = node.parent;
+                HDebug.Assert(parent != null);
+                HDebug.Assert((node == parent.left ) || (node == parent.right));
+
+                if(node == parent.left ) parent.value.left_height  = node.value.height;
+                if(node == parent.right) parent.value.right_height = node.value.height;
             }
-            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] 
-            static int UpdateHeight(Node<AvlNodeInfo> node)
+            static void UpdateHeight(Node<AvlNodeInfo> node)
             {
-                int left_height  = GetHeight(node.left );
-                int right_height = GetHeight(node.right);
-                node.value.height = Math.Max(left_height, right_height) + 1;
-                int bf = right_height - left_height;
-                return bf;
+                node.value.left_height  = (node.left  == null) ? -1 : node.left .value.height;
+                node.value.right_height = (node.right == null) ? -1 : node.right.value.height;
             }
-            void UpdateParentBalance(Node<AvlNodeInfo> node, int node_bf)
+            void UpdateParentBalance(Node<AvlNodeInfo> node)
             {
                 HDebug.Assert(node != null);
                 Node<AvlNodeInfo> parent = node.parent;
                 if(parent == null)
                     return;
 
-                int parent_left_height  = GetHeight(parent.left );
-                int parent_right_height = GetHeight(parent.right);
-                parent.value.height = Math.Max(parent_left_height, parent_right_height) + 1;
-                int parent_bf = parent_right_height - parent_left_height;
+                UpdateParentHeight(node);
 
+                int   node_bf =   node.value.bf;
+                int parent_bf = parent.value.bf;
                 if(parent_bf <= -2)
                 {
                     ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
@@ -124,7 +126,14 @@ namespace HTLib2
                     if(node_bf == -1)
                     {
                         BTree.RotateRight<AvlNodeInfo>(ref parent_ref);
-                        throw new NotImplementedException();
+
+                        UpdateHeight(parent);
+                        UpdateHeight(node  );
+
+                        HDebug.Assert(parent.parent == node);
+                        UpdateParentBalance(node);
+
+                        return;
                     }
                     else if(node_bf == 1)
                     {
@@ -137,8 +146,10 @@ namespace HTLib2
                 {
                     throw new NotImplementedException();
                 }
-
-                UpdateParentBalance(parent, parent_bf);
+                else
+                {
+                    UpdateParentBalance(parent);
+                }
             }
         
             //  public BTree
