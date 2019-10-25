@@ -40,10 +40,10 @@ namespace HTLib2
             Node<T> t3   = curr.right;
 
             grandparent_child = curr;
-            curr.left  = prnt;
-            curr.right = t3;
-            prnt.left  = t1;
-            prnt.right = t2;
+            curr.left  = prnt;               prnt.parent = curr;
+            curr.right = t3;    if(t3 != null) t3.parent = curr;
+            prnt.left  = t1;    if(t1 != null) t1.parent = prnt;
+            prnt.right = t2;    if(t2 != null) t2.parent = prnt;
         }
 
         static bool RotateRight_selftest = true;
@@ -79,10 +79,10 @@ namespace HTLib2
             Node<T> t3   = prnt.right;
 
             grandparent_child = curr;
-            curr.left  = t1;
-            curr.right = prnt;
-            prnt.left  = t2;
-            prnt.right = t3;
+            curr.left  = t1;    if(t1 != null) t1.parent = curr;
+            curr.right = prnt;               prnt.parent = curr;
+            prnt.left  = t2;    if(t2 != null) t2.parent = prnt;
+            prnt.right = t3;    if(t3 != null) t3.parent = prnt;
         }
     }
 }
