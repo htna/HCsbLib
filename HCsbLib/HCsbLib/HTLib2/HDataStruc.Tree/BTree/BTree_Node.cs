@@ -121,7 +121,7 @@ namespace HTLib2
                 }
                 else if (node.IsLeaf())
                 {
-                    sb.Append(node.value);
+                    sb.Append(node.value.ToString());
                     return;
                 }
                 else
@@ -129,7 +129,7 @@ namespace HTLib2
                     sb.Append("(");
                     ToStringRec(sb, node.left);
                     sb.Append(",");
-                    sb.Append(node.value);
+                    sb.Append(node.value.ToString());
                     sb.Append(",");
                     ToStringRec(sb, node.right);
                     sb.Append(")");

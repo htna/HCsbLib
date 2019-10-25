@@ -5,24 +5,25 @@ using System.Text;
 
 namespace HTLib2
 {
-    public partial class BTree
+    using T = System.Int32;
+    public static partial class BTree
     {
         ///////////////////////////////////////////////////////////////////////
         /// Binar Search Tree
         ///////////////////////////////////////////////////////////////////////
-        public class AvlTree<T>
+        public class AvlTree
         {
             public struct AvlNodeInfo
             {
                 public T   value;
-                public int left_height;
-                public int right_height;
+                public int height;
+                public override string ToString() { return value.ToString(); }
             }
             Node<AvlNodeInfo> root;
             Comparison<T> comp;
             public int avlcomp(AvlNodeInfo x, AvlNodeInfo y) { return comp(x.value, y.value); }
 
-            public static AvlTree<T> NewAvlTree<T>(Comparison<T> comp)
+            public static AvlTree NewAvlTree(Comparison<T> comp)
             {
                 if(comp == null)
                 {
@@ -33,7 +34,7 @@ namespace HTLib2
                     };
                 }
 
-                return new AvlTree<T>
+                return new AvlTree
                 {
                     root = null,
                     comp = comp,
@@ -43,10 +44,16 @@ namespace HTLib2
             public Node     Insert(T value) { var node = AvlInsert(ref root, value, avlcomp); return node; }
             //public      T  Delete(T query) { return BstDelete(ref root, query, comp).value; }
             //public    void Balance()       { DSW(ref root); }
+
+            public override string ToString()
+            {
+                string str = root.ToStringSimple();
+                return str;
+            }
         }
-        public static AvlTree<T> NewAvlTree<T>(Comparison<T> comp=null)
+        public static AvlTree NewAvlTree(Comparison<T> comp=null)
         {
-            return AvlTree<T>.NewAvlTree(comp);
+            return AvlTree.NewAvlTree(comp);
         }
         ///////////////////////////////////////////////////////////////////////
         /// AVL Insert
@@ -56,27 +63,60 @@ namespace HTLib2
         /// 3. Return the inserted node
         ///////////////////////////////////////////////////////////////////////
         static bool AvlInsert_selftest = true;
-        static Node<AvlTree<T>.AvlNodeInfo> AvlInsert<T>(ref Node<AvlTree<T>.AvlNodeInfo> root, T value, Comparison<AvlTree<T>.AvlNodeInfo> compare)
+        static Node<AvlTree.AvlNodeInfo> AvlInsert(ref Node<AvlTree.AvlNodeInfo> root, T value, Comparison<AvlTree.AvlNodeInfo> compare)
         {
             HDebug.Assert(root == null || root.IsRoot());
-            AvlTree<T>.AvlNodeInfo avlvalue = new AvlTree<T>.AvlNodeInfo{ value = value };
+            AvlTree.AvlNodeInfo avlvalue = new AvlTree.AvlNodeInfo
+            {
+                value  = value,
+                height = 0,
+            };
 
             if(root == null)
             {
-                Node<AvlTree<T>.AvlNodeInfo> node = BstInsert<AvlTree<T>.AvlNodeInfo>(null, ref root, avlvalue, compare);
+                ref Node<AvlTree.AvlNodeInfo> node = ref BstInsert<AvlTree.AvlNodeInfo>(null, ref root, avlvalue, compare);
                 HDebug.Assert(root == node);
                 HDebug.Assert(root.left  == null);
                 HDebug.Assert(root.right == null);
-                node.value.left_height  = 0;
-                node.value.right_height = 0;
+                HDebug.Assert(root.value.height == 0);
                 return node;
             }
             else
             {
-                Node<AvlTree<T>.AvlNodeInfo> node = BstInsert<AvlTree<T>.AvlNodeInfo>(null, ref root, avlvalue, compare);
+                Node<AvlTree.AvlNodeInfo> node = BstInsert<AvlTree.AvlNodeInfo>(null, ref root, avlvalue, compare);
+                HDebug.Assert(node.value.height == 0);
+                AvlUpdateParentBalance(node, 0);
+                return node;
             }
-            
-            throw new NotImplementedException();
+        }
+        static int GetHeight(this Node<AvlTree.AvlNodeInfo> node)
+        {
+            if(node == null)
+                return -1;
+            return node.value.height;
+        }
+        static void AvlUpdateParentBalance(Node<AvlTree.AvlNodeInfo> node, int node_bf)
+        {
+            HDebug.Assert(node != null);
+            Node<AvlTree.AvlNodeInfo> parent = node.parent;
+            if(parent == null)
+                return;
+
+            int parent_left_height  = parent.left .GetHeight();
+            int parent_right_height = parent.right.GetHeight();
+            parent.value.height = Math.Max(parent_left_height, parent_right_height) + 1;
+            int parent_bf = parent_right_height - parent_left_height;
+
+            if(parent_bf < -1)
+            {
+                throw new NotImplementedException();
+            }
+            else if(parent_bf > 2)
+            {
+                throw new NotImplementedException();
+            }
+
+            AvlUpdateParentBalance(parent, parent_bf);
         }
         
         //  public BTree
