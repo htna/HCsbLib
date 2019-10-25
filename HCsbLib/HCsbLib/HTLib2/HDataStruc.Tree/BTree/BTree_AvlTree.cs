@@ -65,7 +65,40 @@ namespace HTLib2
             /// 2. Rebalance
             /// 3. Return the inserted node
             ///////////////////////////////////////////////////////////////////////
-            static bool AvlInsert_selftest = true;
+            static bool Insert_selftest = HDebug.IsDebuggerAttached;
+            public static void InsertSelftest()
+            {
+                if(Insert_selftest == false)
+                    return;
+
+                Insert_selftest = false;
+                {
+                    var avltree = BTree.NewAvlTree();
+                    avltree.Insert( 4); HDebug.Assert(avltree.ToString() == "(4)");
+                    avltree.Insert( 3); HDebug.Assert(avltree.ToString() == "(3,4,_)");
+                    avltree.Insert( 9); HDebug.Assert(avltree.ToString() == "(3,4,9)");
+                    avltree.Insert( 2); HDebug.Assert(avltree.ToString() == "((2,3,_),4,9)");
+                    avltree.Insert(11); HDebug.Assert(avltree.ToString() == "((2,3,_),4,(_,9,11))");
+                    avltree.Insert( 0); HDebug.Assert(avltree.ToString() == "((0,2,3),4,(_,9,11))");
+                    avltree.Insert(15); HDebug.Assert(avltree.ToString() == "((0,2,3),4,(9,11,15))");
+                    avltree.Insert(17); HDebug.Assert(avltree.ToString() == "((0,2,3),4,(9,11,(_,15,17)))");
+                    avltree.Insert(14); HDebug.Assert(avltree.ToString() == "((0,2,3),4,(9,11,(14,15,17)))");
+                    avltree.Insert(12); HDebug.Assert(avltree.ToString() == "((0,2,3),4,((9,11,12),14,(_,15,17)))");
+                }
+                {
+                    var avltree = BTree.NewAvlTree();
+                    avltree.Insert( 4); HDebug.Assert(avltree.ToString() == "(4)");
+                    avltree.Insert( 3); HDebug.Assert(avltree.ToString() == "(3,4,_)");
+                    avltree.Insert( 9); HDebug.Assert(avltree.ToString() == "(3,4,9)");
+                    avltree.Insert( 2); HDebug.Assert(avltree.ToString() == "((2,3,_),4,9)");
+                    avltree.Insert(11); HDebug.Assert(avltree.ToString() == "((2,3,_),4,(_,9,11))");
+                    avltree.Insert(-1); HDebug.Assert(avltree.ToString() == "((-1,2,3),4,(_,9,11))");
+                    avltree.Insert(15); HDebug.Assert(avltree.ToString() == "((-1,2,3),4,(9,11,15))");
+                    avltree.Insert( 0); HDebug.Assert(avltree.ToString() == "(((_,-1,0),2,3),4,(9,11,15))");
+                    avltree.Insert(-2); HDebug.Assert(avltree.ToString() == "(((-2,-1,0),2,3),4,(9,11,15))");
+                    avltree.Insert( 1); HDebug.Assert(avltree.ToString() == "(((-2,-1,_),0,(1,2,3)),4,(9,11,15))");
+                }
+            }
             public Node<AvlNodeInfo> Insert(T value)
             {
                 HDebug.Assert(root == null || root.IsRoot());
