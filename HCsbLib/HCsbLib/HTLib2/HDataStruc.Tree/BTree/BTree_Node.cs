@@ -93,6 +93,10 @@ namespace HTLib2
             ///////////////////////////////////////////////////////////////////////
             public override string ToString()
             {
+                return ToStringSimple();
+            }
+            public string ToStringDetail()
+            {
                 StringBuilder sb = new StringBuilder();
                 ToString(sb, this);
                 sb.Insert(0, "val:" + value + ", cnt:" + Count().ToString() + ", ");
