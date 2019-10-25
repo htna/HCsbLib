@@ -80,7 +80,7 @@ namespace HTLib2
                 }
             }
 
-            ref Node<T> GetThisRef(ref Node<T> root)
+            public ref Node<T> GetThisRef(ref Node<T> root)
             {
                 if(this == root        ) return ref root;
                 if(this == parent.left ) return ref parent.left ;
