@@ -76,12 +76,12 @@ namespace HTLib2
         /// 2. Return the inserted node
         ///////////////////////////////////////////////////////////////////////
         static bool BstInsert_selftest = true;
-        static ref Node<T> BstInsert<T>(ref Node<T> root, T value, Comparison<T> compare)
+        static Node<T> BstInsert<T>(ref Node<T> root, T value, Comparison<T> compare)
         {
             HDebug.Assert(root == null || root.IsRoot());
-            return ref BstInsert(null, ref root, value, compare);
+            return BstInsert(null, ref root, value, compare);
         }
-        static ref Node<T> BstInsert<T>(Node<T> parent, ref Node<T> node, T value, Comparison<T> compare)
+        static Node<T> BstInsert<T>(Node<T> parent, ref Node<T> node, T value, Comparison<T> compare)
         {
             if(BstInsert_selftest)
             {
@@ -103,15 +103,15 @@ namespace HTLib2
             if(node == null)
             {
                 node = Node<T>.New(value, parent, null, null);
-                return ref node;
+                return node;
             }
             if(compare(node.value, value) < 0)
             {
-                return ref BstInsert(node, ref node.right, value, compare);
+                return BstInsert(node, ref node.right, value, compare);
             }
             else
             {
-                return ref BstInsert(node, ref node.left, value, compare);
+                return BstInsert(node, ref node.left, value, compare);
             }
         }
         static IEnumerable<Node<T>> BstInsertRange<T>(ref Node<T> root, IEnumerable<T> values, Comparison<T> compare)
