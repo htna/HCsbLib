@@ -57,6 +57,8 @@ namespace HTLib2
                     {
                         if(node == null)
                             return null;
+                        if(node.parent == null)
+                            return null;
                         if(node.parent.left == node)
                             return node.parent;
                         node = node.parent;
@@ -74,13 +76,13 @@ namespace HTLib2
             }
             public int Count()
             {
-                int lc = (right == null) ? 0 : left .Count();
+                int lc = (left  == null) ? 0 : left .Count();
                 int rc = (right == null) ? 0 : right.Count();
                 return (1 + lc + rc);
             }
             public int Height()
             {
-                int lh = (right == null) ? 0 : left .Height();
+                int lh = (left  == null) ? 0 : left .Height();
                 int rh = (right == null) ? 0 : right.Height();
                 return Math.Max(lh, rh) + 1;
             }
@@ -117,10 +119,16 @@ namespace HTLib2
             }
             public bool ValidateConnection()
             {
-                if(left .Validate() == false) return false;
-                if(right.Validate() == false) return false;
-                if(this != left .parent) return false;
-                if(this != right.parent) return false;
+                if(left != null)
+                {
+                    if(left.Validate() == false) return false;
+                    if(this != left.parent) return false;
+                }
+                if(right != null)
+                {
+                    if(right.Validate() == false) return false;
+                    if(this != right.parent) return false;
+                }
                 return true;
             }
             ///////////////////////////////////////////////////////////////////////
