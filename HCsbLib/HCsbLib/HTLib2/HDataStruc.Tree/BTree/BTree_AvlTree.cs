@@ -121,10 +121,10 @@ namespace HTLib2
                 int parent_bf = parent.value.bf;
                 if(parent_bf <= -2)
                 {
-                    ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
                     HDebug.Assert(parent_bf == -2);
                     if(node_bf == -1)
                     {
+                        ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
                         BTree.RotateRight<AvlNodeInfo>(ref parent_ref);
                         UpdateHeight(parent);
                         UpdateHeight(node  );
@@ -134,17 +134,26 @@ namespace HTLib2
                     }
                     else if(node_bf == 1)
                     {
-                        throw new NotImplementedException();
+                        ref Node<AvlNodeInfo> node_ref = ref node.GetThisRef(ref root);
+                        BTree.RotateLeft<AvlNodeInfo>(ref node_ref);
+                        ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
+                        BTree.RotateRight<AvlNodeInfo>(ref parent_ref);
+                        HDebug.Assert(node.parent == parent.parent);
+                        UpdateHeight(parent);
+                        UpdateHeight(node  );
+                        UpdateHeight(node.parent);
+                        UpdateParentBalance(parent);
+                        return;
                     }
                     else
                         throw new NotImplementedException();
                 }
                 else if(parent_bf >= 2)
                 {
-                    ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
                     HDebug.Assert(parent_bf == 2);
                     if(node_bf == 1)
                     {
+                        ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
                         BTree.RotateLeft<AvlNodeInfo>(ref parent_ref);
                         UpdateHeight(parent);
                         UpdateHeight(node  );
@@ -154,7 +163,16 @@ namespace HTLib2
                     }
                     else if(node_bf == -1)
                     {
-                        throw new NotImplementedException();
+                        ref Node<AvlNodeInfo> node_ref = ref node.GetThisRef(ref root);
+                        BTree.RotateRight<AvlNodeInfo>(ref node_ref);
+                        ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
+                        BTree.RotateLeft<AvlNodeInfo>(ref parent_ref);
+                        HDebug.Assert(node.parent == parent.parent);
+                        UpdateHeight(parent);
+                        UpdateHeight(node  );
+                        UpdateHeight(node.parent);
+                        UpdateParentBalance(parent);
+                        return;
                     }
                     else
                         throw new NotImplementedException();
