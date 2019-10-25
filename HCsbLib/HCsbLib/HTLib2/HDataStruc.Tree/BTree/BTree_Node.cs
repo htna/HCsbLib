@@ -80,6 +80,14 @@ namespace HTLib2
                 }
             }
 
+            ref Node<T> GetThisRef(ref Node<T> root)
+            {
+                if(this == root        ) return ref root;
+                if(this == parent.left ) return ref parent.left ;
+                if(this == parent.right) return ref parent.right;
+                HDebug.Assert(false);
+                throw new Exception();
+            }
             ///////////////////////////////////////////////////////////////////////
             /// ToString()
             ///////////////////////////////////////////////////////////////////////
