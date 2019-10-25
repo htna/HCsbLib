@@ -60,6 +60,38 @@ namespace HTLib2
 
             ///////////////////////////////////////////////////////////////////////
             /// AVL Insert
+            ///////////////////////////////////////////////////////////////////////
+            public bool Validate()
+            {
+                if(ValidateBalance() == null) return false;
+                if(root.ValidateConnection() == false) return false;
+                if(BTree.BstValidateOrder(root, avlcomp) == false) return false;
+                return true;
+            }
+            bool ValidateBalance()
+            {
+                if(ValidateBalance(root) == null)
+                    return false;
+                return true;
+
+                int? ValidateBalance(Node<AvlNodeInfo> node)
+                {
+                    if(node == null)
+                        return -1;
+                    int? lh = ValidateBalance(node.left);
+                    int? rh = ValidateBalance(node.right);
+                    if(lh == null) return null;
+                    if(rh == null) return null;
+                    if(lh.Value != node.value.left_height ) { HDebug.Assert(false); return null; }
+                    if(rh.Value != node.value.right_height) { HDebug.Assert(false); return null; }
+                    if(Math.Abs(rh.Value - lh.Value) >= 2 ) { HDebug.Assert(false); return null; }
+                    int h = Math.Max(lh.Value, rh.Value) + 1;
+                    return h;
+                }
+            }
+
+            ///////////////////////////////////////////////////////////////////////
+            /// AVL Insert
             /// 
             /// 1. Insert value into BST
             /// 2. Rebalance
