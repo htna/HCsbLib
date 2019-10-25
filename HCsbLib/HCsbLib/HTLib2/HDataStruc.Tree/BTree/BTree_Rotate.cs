@@ -38,8 +38,9 @@ namespace HTLib2
             Node<T> t1   = prnt.left;
             Node<T> t2   = curr.left;
             Node<T> t3   = curr.right;
+            Node<T> grandparent = prnt.parent;
 
-            grandparent_child = curr;
+            grandparent_child = curr;        curr.parent = grandparent;
             curr.left  = prnt;               prnt.parent = curr;
             curr.right = t3;    if(t3 != null) t3.parent = curr;
             prnt.left  = t1;    if(t1 != null) t1.parent = prnt;
@@ -77,8 +78,9 @@ namespace HTLib2
             Node<T> t1   = curr.left;
             Node<T> t2   = curr.right;
             Node<T> t3   = prnt.right;
+            Node<T> grandparent = prnt.parent;
 
-            grandparent_child = curr;
+            grandparent_child = curr;        curr.parent = grandparent;
             curr.left  = t1;    if(t1 != null) t1.parent = curr;
             curr.right = prnt;               prnt.parent = curr;
             prnt.left  = t2;    if(t2 != null) t2.parent = prnt;
