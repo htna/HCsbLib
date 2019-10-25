@@ -74,6 +74,12 @@ namespace HTLib2
                 Insert_selftest = false;
                 {
                     var avltree = BTree.NewAvlTree();
+                    avltree.Insert( 1); HDebug.Assert(avltree.ToString() == "(1)");
+                    avltree.Insert( 2); HDebug.Assert(avltree.ToString() == "(_,1,2)");
+                    avltree.Insert( 3); HDebug.Assert(avltree.ToString() == "(1,2,3)");
+                }
+                {
+                    var avltree = BTree.NewAvlTree();
                     avltree.Insert( 4); HDebug.Assert(avltree.ToString() == "(4)");
                     avltree.Insert( 3); HDebug.Assert(avltree.ToString() == "(3,4,_)");
                     avltree.Insert( 9); HDebug.Assert(avltree.ToString() == "(3,4,9)");
