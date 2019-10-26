@@ -154,11 +154,11 @@ namespace HTLib2
         /// 1. Delete node whose value is same to query
         /// 2. Return the value in the deleted node
         ///////////////////////////////////////////////////////////////////////
-        static (T value, Node<T> node_updated) BstDelete<T>(ref Node<T> root, T query, Comparison<T> compare)
+        static (T value, Node<T> deleted_parent) BstDelete<T>(ref Node<T> root, T query, Comparison<T> compare)
         {
             return BstDeleteImpl(ref root, query, compare);
         }
-        static (T value, Node<T> node_updated) BstDeleteImpl<T>(ref Node<T> node, T query, Comparison<T> compare)
+        static (T value, Node<T> deleted_parent) BstDeleteImpl<T>(ref Node<T> node, T query, Comparison<T> compare)
         {
             // find node to delete
             HDebug.Assert(node != null);
@@ -167,7 +167,7 @@ namespace HTLib2
             else if(query_node >  0) return BstDeleteImpl(ref node.right, query, compare);
             else                     return BstDeleteImpl(ref node);
         }
-        static (T value, Node<T> node_updated) BstDeleteImpl<T>(ref Node<T> node)
+        static (T value, Node<T> deleted_parent) BstDeleteImpl<T>(ref Node<T> node)
         {
             if(node.left == null && node.right == null)
             {
@@ -206,10 +206,13 @@ namespace HTLib2
                 T value = node.value;
                 // 3. copy pred.value to node
                 node.value = pred.value;
+                // 4. node updated
+                Node<T> pred_parent = pred.parent;
                 // 4. delete pred; since (*pred).right == null, make pred = (*pred).left
+
                 pred = pred.left;
 
-                return (value, pred);
+                return (value, pred_parent);
             }
         }
     }
