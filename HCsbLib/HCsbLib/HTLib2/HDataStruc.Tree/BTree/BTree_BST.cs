@@ -172,23 +172,26 @@ namespace HTLib2
             if(node.left == null && node.right == null)
             {
                 // delete a leaf
-                T value = node.value;
+                T       value  = node.value;
+                Node<T> parent = node.parent;
                 node = null;
-                return (value, null);
+                return (value, parent);
             }
             else if(node.left != null && node.right == null)
             {
                 // has left child
-                T value = node.value;
+                T       value  = node.value;
+                Node<T> parent = node.parent;
                 node = node.left;
-                return (value, node);
+                return (value, parent);
             }
             else if(node.left == null && node.right != null)
             {
                 // has right child
-                T value = node.value;
+                T       value  = node.value;
+                Node<T> parent = node.parent;
                 node = node.right;
-                return (value, node);
+                return (value, parent);
             }
             else
             {
