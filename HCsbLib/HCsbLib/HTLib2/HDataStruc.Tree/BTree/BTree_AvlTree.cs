@@ -219,7 +219,7 @@ namespace HTLib2
                 HDebug.Assert(parent != null);
                 HDebug.Assert(parent == node.parent);
 
-                UpdateParentHeight(node);
+                UpdateHeight(parent);
 
                 int   node_bf =   node.value.bf;
                 int parent_bf = parent.value.bf;
@@ -327,7 +327,9 @@ namespace HTLib2
                 };
                 (AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent) = BstDelete<AvlNodeInfo>(ref root, avlquery, avlcomp);
 
-                throw new NotImplementedException();
+                HDebug.Assert(deleted_parent.left == null || deleted_parent.right == null);
+                Node<AvlNodeInfo> deleted_sibling = (deleted_parent.left != null) ? deleted_parent.left : deleted_parent.right;
+                UpdateBalance(deleted_sibling, ref root);
             }        
             //  public BTree
             //      ( Comparison<T> comp // = delegate(int a, int b) { return a - b; }
