@@ -143,6 +143,24 @@ namespace HTLib2
                     avltree.Insert( 1); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(((-2,-1,_),0,(1,2,3)),4,(9,11,15))");
                 }
             }
+            public Node<AvlNodeInfo>[] InsertRange(params T[] values)
+            {
+                return _InsertRange(values);
+            }
+            public Node<AvlNodeInfo>[] InsertRange(IEnumerable<T> values)
+            {
+                return _InsertRange(values);
+            }
+            Node<AvlNodeInfo>[] _InsertRange(IEnumerable<T> values)
+            {
+                List<Node<AvlNodeInfo>> inserteds = new List<Node<AvlNodeInfo>>();
+                foreach(var value in values)
+                {
+                    Node<AvlNodeInfo> node = Insert(value);
+                    inserteds.Add(node);
+                }
+                return inserteds.ToArray();
+            }
             public Node<AvlNodeInfo> Insert(T value)
             {
                 HDebug.Assert(root == null || root.IsRoot());
@@ -166,7 +184,7 @@ namespace HTLib2
                 {
                     Node<AvlNodeInfo> node = BstInsert<AvlNodeInfo>(null, ref root, avlvalue, avlcomp);
                     HDebug.Assert(node.value.height == 0);
-                    UpdateParentBalance(node);
+                    UpdateBalance(node, ref root);
                     return node;
                 }
             }
@@ -185,81 +203,132 @@ namespace HTLib2
                 node.value.left_height  = (node.left  == null) ? -1 : node.left .value.height;
                 node.value.right_height = (node.right == null) ? -1 : node.right.value.height;
             }
-            void UpdateParentBalance(Node<AvlNodeInfo> node)
+            static void UpdateBalance(Node<AvlNodeInfo> node, ref Node<AvlNodeInfo> root)
             {
-                HDebug.Assert(node != null);
                 Node<AvlNodeInfo> parent = node.parent;
-                if(parent == null)
-                    return;
+                while(parent != null)
+                {
+                    (node, parent) = UpdateBalance(node, parent, ref root);
+                    node   = parent;
+                    parent = node.parent;
+                }
+            }
+            static (Node<AvlNodeInfo> nnode, Node<AvlNodeInfo> nparent) UpdateBalance(Node<AvlNodeInfo> node, Node<AvlNodeInfo> parent, ref Node<AvlNodeInfo> root)
+            {
+                HDebug.Assert(node   != null);
+                HDebug.Assert(parent != null);
+                HDebug.Assert(parent == node.parent);
 
                 UpdateParentHeight(node);
 
                 int   node_bf =   node.value.bf;
                 int parent_bf = parent.value.bf;
-                if(parent_bf <= -2)
+
+                Node<AvlNodeInfo> nnode   = null;
+                Node<AvlNodeInfo> nparent = null;
+
+                if((Math.Abs(node_bf) <= 1) && (Math.Abs(parent_bf) <= 1))
                 {
-                    HDebug.Assert(parent_bf == -2);
-                    if(node_bf == -1)
-                    {
-                        ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
-                        BTree.RotateRight<AvlNodeInfo>(ref parent_ref);
-                        UpdateHeight(parent);
-                        UpdateHeight(node  );
-                        HDebug.Assert(parent.parent == node);
-                        UpdateParentBalance(node);
-                        return;
-                    }
-                    else if(node_bf == 1)
-                    {
-                        ref Node<AvlNodeInfo> node_ref = ref node.GetThisRef(ref root);
-                        BTree.RotateLeft<AvlNodeInfo>(ref node_ref);
-                        ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
-                        BTree.RotateRight<AvlNodeInfo>(ref parent_ref);
-                        HDebug.Assert(node.parent == parent.parent);
-                        UpdateHeight(parent);
-                        UpdateHeight(node  );
-                        UpdateHeight(node.parent);
-                        UpdateParentBalance(parent);
-                        return;
-                    }
-                    else
-                        throw new NotImplementedException();
+                    nnode   = node  ;
+                    nparent = parent;
                 }
-                else if(parent_bf >= 2)
+                else if((node_bf == -1) && (parent_bf == -2))
                 {
-                    HDebug.Assert(parent_bf == 2);
-                    if(node_bf == 1)
-                    {
-                        ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
-                        BTree.RotateLeft<AvlNodeInfo>(ref parent_ref);
-                        UpdateHeight(parent);
-                        UpdateHeight(node  );
-                        HDebug.Assert(parent.parent == node);
-                        UpdateParentBalance(node);
-                        return;
-                    }
-                    else if(node_bf == -1)
-                    {
-                        ref Node<AvlNodeInfo> node_ref = ref node.GetThisRef(ref root);
-                        BTree.RotateRight<AvlNodeInfo>(ref node_ref);
-                        ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
-                        BTree.RotateLeft<AvlNodeInfo>(ref parent_ref);
-                        HDebug.Assert(node.parent == parent.parent);
-                        UpdateHeight(parent);
-                        UpdateHeight(node  );
-                        UpdateHeight(node.parent);
-                        UpdateParentBalance(parent);
-                        return;
-                    }
-                    else
-                        throw new NotImplementedException();
+                    //HDebug.Assert(parent_bf == -2);
+                    ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
+                    BTree.RotateRight<AvlNodeInfo>(ref parent_ref);
+                    UpdateHeight(parent);
+                    UpdateHeight(node  );
+                    HDebug.Assert(parent.parent == node);
+
+                    nnode   = parent;
+                    nparent = node;
+                }
+                else if((node_bf == 1) && (parent_bf == -2))
+                {
+                    //HDebug.Assert(parent_bf == -2);
+                    ref Node<AvlNodeInfo> node_ref = ref node.GetThisRef(ref root);
+                    BTree.RotateLeft<AvlNodeInfo>(ref node_ref);
+                    ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
+                    BTree.RotateRight<AvlNodeInfo>(ref parent_ref);
+                    HDebug.Assert(node.parent == parent.parent);
+                    UpdateHeight(parent);
+                    UpdateHeight(node  );
+                    UpdateHeight(node.parent);
+
+                    nnode   = node;
+                    nparent = node.parent;
+                }
+                else if((node_bf == 1) && (parent_bf == 2))
+                {
+                    //HDebug.Assert(parent_bf == 2);
+                    ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
+                    BTree.RotateLeft<AvlNodeInfo>(ref parent_ref);
+                    UpdateHeight(parent);
+                    UpdateHeight(node  );
+                    HDebug.Assert(parent.parent == node);
+
+                    nnode   = parent;
+                    nparent = node;
+                }
+                else if((node_bf == -1) && (parent_bf == 2))
+                {
+                    //HDebug.Assert(parent_bf == 2);
+                    ref Node<AvlNodeInfo> node_ref = ref node.GetThisRef(ref root);
+                    BTree.RotateRight<AvlNodeInfo>(ref node_ref);
+                    ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
+                    BTree.RotateLeft<AvlNodeInfo>(ref parent_ref);
+                    HDebug.Assert(node.parent == parent.parent);
+                    UpdateHeight(parent);
+                    UpdateHeight(node  );
+                    UpdateHeight(node.parent);
+
+                    nnode   = node;
+                    nparent = node.parent;
                 }
                 else
                 {
-                    UpdateParentBalance(parent);
+                    throw new NotImplementedException();
+                }
+
+                HDebug.Assert(nnode   != null);
+                HDebug.Assert(nparent != null);
+                HDebug.Assert(nnode.parent == nparent);
+                return (nnode, nparent);
+            }
+            ///////////////////////////////////////////////////////////////////////
+            /// AVL Delete
+            /// 
+            /// 1. Delete node from BST
+            /// 2. Rebalance
+            /// 3. Return the deleted value
+            ///////////////////////////////////////////////////////////////////////
+            static bool Delete_selftest = HDebug.IsDebuggerAttached;
+            public static void DeleteSelftest()
+            {
+                if(Delete_selftest == false)
+                    return;
+
+                Delete_selftest = false;
+                {
+                    var avltree = BTree.NewAvlTree();
+                    HDebug.Assert(avltree.Validate()); 
+                    avltree.InsertRange( 10, 5, 17, 2, 7, 20, 3 );
+                    HDebug.Assert(avltree.Validate());
+                    HDebug.Assert(avltree.ToString() == "(((_,2,3),5,7),10,(_,17,20))");
+                    avltree.Delete(10);
                 }
             }
-        
+            public T Delete(T query)
+            {
+                AvlNodeInfo avlquery = new AvlNodeInfo
+                {
+                    value  = query,
+                };
+                (AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent) = BstDelete<AvlNodeInfo>(ref root, avlquery, avlcomp);
+
+                throw new NotImplementedException();
+            }        
             //  public BTree
             //      ( Comparison<T> comp // = delegate(int a, int b) { return a - b; }
             //      )
