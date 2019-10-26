@@ -330,6 +330,8 @@ namespace HTLib2
                 HDebug.Assert(deleted_parent.left == null || deleted_parent.right == null);
                 Node<AvlNodeInfo> deleted_sibling = (deleted_parent.left != null) ? deleted_parent.left : deleted_parent.right;
                 UpdateBalance(deleted_sibling, ref root);
+
+                return value.value;
             }        
             //  public BTree
             //      ( Comparison<T> comp // = delegate(int a, int b) { return a - b; }
