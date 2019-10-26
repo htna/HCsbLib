@@ -183,6 +183,7 @@ namespace HTLib2
                 T       value  = node.value;
                 Node<T> parent = node.parent;
                 node = node.left;
+                node.parent = parent;
                 return (value, parent);
             }
             else if(node.left == null && node.right != null)
@@ -191,6 +192,7 @@ namespace HTLib2
                 T       value  = node.value;
                 Node<T> parent = node.parent;
                 node = node.right;
+                node.parent = parent;
                 return (value, parent);
             }
             else
@@ -214,6 +216,8 @@ namespace HTLib2
                 // 4. delete pred; since (*pred).right == null, make pred = (*pred).left
 
                 pred = pred.left;
+                if(pred != null)
+                    pred.parent = pred_parent;
 
                 return (value, pred_parent);
             }

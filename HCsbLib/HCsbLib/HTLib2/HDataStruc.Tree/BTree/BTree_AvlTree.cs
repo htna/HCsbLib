@@ -50,6 +50,8 @@ namespace HTLib2
 
             public override string ToString()
             {
+                if(root == null)
+                    return "()";
                 string str = root.ToStringSimple();
                 return str;
             }
@@ -67,6 +69,7 @@ namespace HTLib2
                     return true;
 
                 if(ValidateBalance() == null) return false;
+                if(root.parent != null) return false;
                 if(root.ValidateConnection() == false) return false;
                 if(BTree.BstValidateOrder(root, avlcomp) == false) return false;
                 return true;
@@ -325,10 +328,10 @@ namespace HTLib2
                 {
                     var avltree = BTree.NewAvlTree();
                     HDebug.Assert(avltree.Validate()); 
-                    avltree.InsertRange( 10, 5, 17, 2, 7, 20, 3 );
-                    HDebug.Assert(avltree.Validate());
-                    HDebug.Assert(avltree.ToString() == "(((_,2,3),5,7),10,(_,17,20))");
-                    avltree.Delete(10); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "((2,3,5),7,(_,17,20))");
+                    avltree.InsertRange( 10, 5, 17, 2, 8, 20, 3, 7 );
+                                        HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(((_,2,3),5,(7,8,_)),10,(_,17,20))");
+                    avltree.Delete(10); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(((_,2,3),5,7),8,(_,17,20))");
+                    avltree.Delete( 8); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "((2,3,5),7,(_,17,20))");
                     avltree.Delete( 2); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "((_,3,5),7,(_,17,20))");
                     avltree.Delete( 7); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(3,5,(_,17,20))");
                     avltree.Delete( 3); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(5,17,20)");
@@ -345,28 +348,42 @@ namespace HTLib2
                 };
                 (AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent) = BstDelete<AvlNodeInfo>(ref root, avlquery, avlcomp);
 
-                if(deleted_parent != null)
+                if(root != null)
                 {
-                    HDebug.Assert(deleted_parent.left == null || deleted_parent.right == null);
-                    Node<AvlNodeInfo> deleted_sibling = (deleted_parent.left != null) ? deleted_parent.left : deleted_parent.right;
-
-                    if(deleted_sibling == null)
+                    if(deleted_parent != null)
                     {
-                        // need to update hight of parent, then update balance
-                        UpdateHeight(deleted_parent);
-                        UpdateBalance(deleted_parent, ref root);
+                        if(deleted_parent.left == null && deleted_parent.right == null)
+                        {
+                            // need to update hight of parent, then update balance
+                            UpdateHeight(deleted_parent);
+                            UpdateBalance(deleted_parent, ref root);
+                        }
+                        else if(deleted_parent.left != null && deleted_parent.right == null)
+                        {
+                            // do not need to update hight of sibling
+                            UpdateBalance(deleted_parent.left, ref root);
+                        }
+                        else if(deleted_parent.left == null && deleted_parent.right != null)
+                        {
+                            // do not need to update hight of sibling
+                            UpdateBalance(deleted_parent.right, ref root);
+                        }
+                        else
+                        {
+                            HDebug.Assert(deleted_parent.left != null && deleted_parent.right != null);
+                            // case of deleting predecessor, and the predecessor has one left child, and the predecessor put parent.right
+                            // Both parent.left and parent.right are balanced, and their height is correct
+                            // However, maybe parent.left could be highter than parent.right (just deleted one node)
+                            // Therefore, balance starts from parent.left
+                            UpdateBalance(deleted_parent.left, ref root);
+                        }
                     }
                     else
                     {
-                        // do not need to update hight of sibling
-                        UpdateBalance(deleted_sibling, ref root);
+                        // This is the case that tree has only root, or only two elements
+                        HDebug.Assert(root.Count() <= 2);
+                        UpdateHeightRec(root);
                     }
-                }
-                else
-                {
-                    // This is the case that tree has only root, or only two elements
-                    HDebug.Assert(root.Count() <= 2);
-                    UpdateHeightRec(root);
                 }
 
                 return value.value;
