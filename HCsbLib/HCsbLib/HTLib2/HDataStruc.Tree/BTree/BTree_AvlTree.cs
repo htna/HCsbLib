@@ -59,7 +59,7 @@ namespace HTLib2
             //public    void Balance()       { DSW(ref root); }
 
             ///////////////////////////////////////////////////////////////////////
-            /// AVL Insert
+            /// AVL Validate
             ///////////////////////////////////////////////////////////////////////
             public bool Validate()
             {
@@ -188,16 +188,20 @@ namespace HTLib2
                     return node;
                 }
             }
-            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] 
-            static void UpdateParentHeight(Node<AvlNodeInfo> node)
-            {
-                Node<AvlNodeInfo> parent = node.parent;
-                HDebug.Assert(parent != null);
-                HDebug.Assert((node == parent.left ) || (node == parent.right));
-
-                if(node == parent.left ) parent.value.left_height  = node.value.height;
-                if(node == parent.right) parent.value.right_height = node.value.height;
-            }
+            //[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] 
+            //static void UpdateParentHeight(Node<AvlNodeInfo> node)
+            //{
+            //    Node<AvlNodeInfo> parent = node.parent;
+            //    HDebug.Assert(parent != null);
+            //    HDebug.Assert((node == parent.left ) || (node == parent.right));
+            //
+            //    if(node == parent.left ) parent.value.left_height  = node.value.height;
+            //    if(node == parent.right) parent.value.right_height = node.value.height;
+            //}
+            ///////////////////////////////////////////////////////////////////////
+            /// AVL Update height
+            /// AVL Update Balance (rebalance)
+            ///////////////////////////////////////////////////////////////////////
             static void UpdateHeight(Node<AvlNodeInfo> node)
             {
                 node.value.left_height  = (node.left  == null) ? -1 : node.left .value.height;
@@ -213,6 +217,7 @@ namespace HTLib2
                     parent = node.parent;
                 }
             }
+            // update balance of (node, parent), and return (redetermined node, redetermined parent)
             static (Node<AvlNodeInfo> nnode, Node<AvlNodeInfo> nparent) UpdateBalance(Node<AvlNodeInfo> node, Node<AvlNodeInfo> parent, ref Node<AvlNodeInfo> root)
             {
                 HDebug.Assert(node   != null);
@@ -332,64 +337,7 @@ namespace HTLib2
                 UpdateBalance(deleted_sibling, ref root);
 
                 return value.value;
-            }        
-            //  public BTree
-            //      ( Comparison<T> comp // = delegate(int a, int b) { return a - b; }
-            //      )
-            //  {
-            //      this.root = null;
-            //      this.compare = comp;
-            //  }
-            //  public Node<T> Root
-            //  {
-            //      get { return root; }
-            //  }
-            //  
-            //  public override string ToString()
-            //  {
-            //      StringBuilder sb = new StringBuilder();
-            //      Node<T>.ToString(sb, root);
-            //      return sb.ToString();
-            //  }
-            //  
-            //  public int Count()
-            //  {
-            //      return Count(root);
-            //  }
-            //  
-            //  int Count(Node<T> node)
-            //  {
-            //      if(node == null)
-            //          return 0;
-            //      int l = Count(node.left);
-            //      int r = Count(node.right);
-            //      return (1+l+r);
-            //  }
-        
-            //  static bool Insert_selftest = true;
-            //  public Node Insert(T value)
-            //  {
-            //      if(Insert_selftest)
-            //      {
-            //          Insert_selftest = false;
-            //          //  Comparison<object> _compare = delegate(object a, object b) { return (int)a - (int)b; };
-            //          //  BTree<object> _bst = new BTree<object>(_compare);
-            //          //                      HDebug.Assert(_bst.ToString() == "()"                                             );
-            //          //  _bst.BstInsert(10); HDebug.Assert(_bst.ToString() == "(10)"                                           );
-            //          //  _bst.BstInsert( 5); HDebug.Assert(_bst.ToString() == "(5,10,_)"                                       );
-            //          //  _bst.BstInsert(20); HDebug.Assert(_bst.ToString() == "(5,10,20)"                                      );
-            //          //  _bst.BstInsert( 2); HDebug.Assert(_bst.ToString() == "((2,5,_),10,20)"                                );
-            //          //  _bst.BstInsert( 7); HDebug.Assert(_bst.ToString() == "((2,5,7),10,20)"                                );
-            //          //  _bst.BstInsert( 4); HDebug.Assert(_bst.ToString() == "(((_,2,4),5,7),10,20)"                          );
-            //          //  _bst.BstInsert( 6); HDebug.Assert(_bst.ToString() == "(((_,2,4),5,(6,7,_)),10,20)"                    );
-            //          //  _bst.BstInsert(30); HDebug.Assert(_bst.ToString() == "(((_,2,4),5,(6,7,_)),10,(_,20,30))"             );
-            //          //  _bst.BstInsert( 3); HDebug.Assert(_bst.ToString() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,30))"       );
-            //          //  _bst.BstInsert(25); HDebug.Assert(_bst.ToString() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,(25,30,_)))");
-            //      }
-            //      BTree<T>.Node _root = root;
-            //      return BTree<T>.BstInsert(null, ref _root, value, compare);
-            //  }
-            //  //public static Node BstInsert(Node parent, ref Node node, T value, Comparison<T> compare)
+            }
         }
     }
 }
