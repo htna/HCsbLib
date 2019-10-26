@@ -202,6 +202,13 @@ namespace HTLib2
             /// AVL Update height
             /// AVL Update Balance (rebalance)
             ///////////////////////////////////////////////////////////////////////
+            static void UpdateHeightRec(Node<AvlNodeInfo> node)
+            {
+                if(node == null) return;
+                if(node.left  != null) UpdateHeightRec(node.left );
+                if(node.right != null) UpdateHeightRec(node.right);
+                UpdateHeight(node);
+            }
             static void UpdateHeight(Node<AvlNodeInfo> node)
             {
                 node.value.left_height  = (node.left  == null) ? -1 : node.left .value.height;
@@ -321,7 +328,13 @@ namespace HTLib2
                     avltree.InsertRange( 10, 5, 17, 2, 7, 20, 3 );
                     HDebug.Assert(avltree.Validate());
                     HDebug.Assert(avltree.ToString() == "(((_,2,3),5,7),10,(_,17,20))");
-                    avltree.Delete(10);
+                    avltree.Delete(10); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "((2,3,5),7,(_,17,20))");
+                    avltree.Delete( 2); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "((_,3,5),7,(_,17,20))");
+                    avltree.Delete( 7); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(3,5,(_,17,20))");
+                    avltree.Delete( 3); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(5,17,20)");
+                    avltree.Delete(17); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(_,5,20)");
+                    avltree.Delete( 5); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(20)");
+                    avltree.Delete(20); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "()");
                 }
             }
             public T Delete(T query)
@@ -332,9 +345,29 @@ namespace HTLib2
                 };
                 (AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent) = BstDelete<AvlNodeInfo>(ref root, avlquery, avlcomp);
 
-                HDebug.Assert(deleted_parent.left == null || deleted_parent.right == null);
-                Node<AvlNodeInfo> deleted_sibling = (deleted_parent.left != null) ? deleted_parent.left : deleted_parent.right;
-                UpdateBalance(deleted_sibling, ref root);
+                if(deleted_parent != null)
+                {
+                    HDebug.Assert(deleted_parent.left == null || deleted_parent.right == null);
+                    Node<AvlNodeInfo> deleted_sibling = (deleted_parent.left != null) ? deleted_parent.left : deleted_parent.right;
+
+                    if(deleted_sibling == null)
+                    {
+                        // need to update hight of parent, then update balance
+                        UpdateHeight(deleted_parent);
+                        UpdateBalance(deleted_parent, ref root);
+                    }
+                    else
+                    {
+                        // do not need to update hight of sibling
+                        UpdateBalance(deleted_sibling, ref root);
+                    }
+                }
+                else
+                {
+                    // This is the case that tree has only root, or only two elements
+                    HDebug.Assert(root.Count() <= 2);
+                    UpdateHeightRec(root);
+                }
 
                 return value.value;
             }

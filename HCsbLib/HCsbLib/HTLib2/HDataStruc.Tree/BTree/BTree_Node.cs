@@ -113,20 +113,16 @@ namespace HTLib2
                 throw new Exception();
             }
 
-            public bool Validate()
-            {
-                return ValidateConnection();
-            }
             public bool ValidateConnection()
             {
                 if(left != null)
                 {
-                    if(left.Validate() == false) return false;
+                    if(left.ValidateConnection() == false) return false;
                     if(this != left.parent) return false;
                 }
                 if(right != null)
                 {
-                    if(right.Validate() == false) return false;
+                    if(right.ValidateConnection() == false) return false;
                     if(this != right.parent) return false;
                 }
                 return true;
