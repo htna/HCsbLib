@@ -23,7 +23,7 @@ namespace HTLib2
                 public static RetT New(T val) { return new RetT { value = val }; }
             }
 
-            struct AvlNodeInfo
+            internal struct AvlNodeInfo
             {
                 public T   value;
                 public int left_height;
@@ -85,7 +85,7 @@ namespace HTLib2
                 if(root == null)
                     return true;
 
-                if(ValidateBalance() == null) return false;
+                if(ValidateBalance() == false) return false;
                 if(BTree.BstValidateConnection(root) == false) return false;
                 if(BTree.BstValidateOrder(root, avlcomp) == false) return false;
                 return true;
@@ -191,7 +191,7 @@ namespace HTLib2
                 }
                 return inserteds;
             }
-            Node<AvlNodeInfo> AvlInsert(T value)
+            internal Node<AvlNodeInfo> AvlInsert(T value)
             {
                 HDebug.Assert(root == null || root.IsRoot());
                 AvlNodeInfo avlvalue = new AvlNodeInfo
