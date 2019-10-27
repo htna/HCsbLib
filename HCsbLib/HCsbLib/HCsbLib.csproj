@@ -613,6 +613,7 @@
     <Compile Include="HTLib2\HDataStruc.Graph\GraphT.BuildTree.cs" />
     <Compile Include="HTLib2\HDataStruc.Graph\GraphT.cs" />
     <Compile Include="HTLib2\HDataStruc.Graph\GraphT.Etc.cs" />
+    <Compile Include="HTLib2\HDataStruc.Tree\LinkedAvlTree.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\BTree\BTree_AvlTree.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\BTree\BTree_DSW.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\BTree\BTree_Rotate.cs" />
