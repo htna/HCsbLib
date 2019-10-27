@@ -124,5 +124,45 @@ namespace HTLib2
             }
             return nodes;
         }
+        public Node Delete(T query)
+        {
+            var nodequery = new Node(query, null, null);;
+
+            var del = avl.Delete(nodequery);
+            if(del == null)
+                return null;
+
+            Node node = del.Value.value;
+
+            if(avl.IsEmpty())
+            {
+                HDebug.Assert(node == head);
+                HDebug.Assert(node == tail);
+                head = tail = null;
+            }
+            else if(node == head)
+            {
+                head = node.next;
+                node._next = null;
+            }
+            else if(node == tail)
+            {
+                tail = node.prev;
+                node._prev = null;
+            }
+            else
+            {
+                Node node_prev = node.prev;
+                Node node_next = node.next;
+                node_prev._next = node_next;
+                node_next._prev = node_prev;
+                node._next = null;
+                node._prev = null;
+            }
+
+            HDebug.Assert(node.prev == null);
+            HDebug.Assert(node.next == null);
+            return node;
+        }
     }
 }
