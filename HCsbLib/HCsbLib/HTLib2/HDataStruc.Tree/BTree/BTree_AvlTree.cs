@@ -17,6 +17,12 @@ namespace HTLib2
         ///////////////////////////////////////////////////////////////////////
         public class AvlTree
         {
+            public struct RetT
+            {
+                public T value;
+                public static RetT New(T val) { return new RetT { value = val }; }
+            }
+
             public struct AvlNodeInfo
             {
                 public T   value;
@@ -340,13 +346,18 @@ namespace HTLib2
                     avltree.Delete(20); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "()");
                 }
             }
-            public T Delete(T query)
+            public RetT? Delete(T query)
             {
                 AvlNodeInfo avlquery = new AvlNodeInfo
                 {
                     value  = query,
                 };
-                (AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent) = BstDelete<AvlNodeInfo>(ref root, avlquery, avlcomp);
+                var del = BstDelete<AvlNodeInfo>(ref root, avlquery, avlcomp);
+                if(del == null)
+                    return null;
+                
+                AvlNodeInfo       value          = del.Value.value;
+                Node<AvlNodeInfo> deleted_parent = del.Value.deleted_parent;
 
                 if(root != null)
                 {
@@ -386,7 +397,7 @@ namespace HTLib2
                     }
                 }
 
-                return value.value;
+                return RetT.New(value.value);
             }
         }
     }

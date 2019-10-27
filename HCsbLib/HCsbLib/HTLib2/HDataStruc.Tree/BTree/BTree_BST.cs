@@ -12,6 +12,12 @@ namespace HTLib2
         ///////////////////////////////////////////////////////////////////////
         public class BST<T>
         {
+            public struct RetT
+            {
+                public T value;
+                public static RetT New(T val) { return new RetT { value = val }; }
+            }
+
             Node<T> root;
             Comparison<T> comp;
 
@@ -23,11 +29,13 @@ namespace HTLib2
                     comp = comp,
                 };
             }
-            public (T,Node) Search(T query) { Node<T> node = BstSearch(root, query, comp); return (node.value,node); }
-            public    Node  Insert(T value) { return BstInsert(ref root, value, comp); }
-            public  T       Delete(T query) { return BstDelete(ref root, query, comp).value; }
-            public    void  MakeACBT()      { DSW(ref root); }
-            public    bool  ValidateOrder() { return BstValidateOrder(root, comp); }
+
+            public bool  Contains(T query) { return (Search(query) != null); }
+            public RetT? Search  (T query) { Node<T> node = BstSearch(    root, query, comp); if(node == null) return null; return RetT.New(node.value); }
+            public bool  Insert  (T value) { Node<T> node = BstInsert(ref root, value, comp); if(node == null) return false; return true; }
+            public RetT? Delete  (T query) { var     del  = BstDelete(ref root, query, comp); if(del  == null) return null ; return RetT.New(del.Value.value); }
+            public void  MakeACBT()        { DSW(ref root); }
+            public bool  Validate()        { return BstValidateOrder(root, comp); }
         }
         public static BST<T> NewBST<T>(Comparison<T> comp)
         {
@@ -154,18 +162,19 @@ namespace HTLib2
         /// 1. Delete node whose value is same to query
         /// 2. Return the value in the deleted node
         ///////////////////////////////////////////////////////////////////////
-        static (T value, Node<T> deleted_parent) BstDelete<T>(ref Node<T> root, T query, Comparison<T> compare)
+        static (T value, Node<T> deleted_parent)? BstDelete<T>(ref Node<T> root, T query, Comparison<T> compare)
         {
             return BstDeleteImpl(ref root, query, compare);
         }
-        static (T value, Node<T> deleted_parent) BstDeleteImpl<T>(ref Node<T> node, T query, Comparison<T> compare)
+        static (T value, Node<T> deleted_parent)? BstDeleteImpl<T>(ref Node<T> node, T query, Comparison<T> compare)
         {
             // find node to delete
             HDebug.Assert(node != null);
             int query_node = compare(query, node.value);
             if     (query_node <  0) return BstDeleteImpl(ref node.left , query, compare);
             else if(query_node >  0) return BstDeleteImpl(ref node.right, query, compare);
-            else                     return BstDeleteImpl(ref node);
+            else if(query_node == 0) return BstDeleteImpl(ref node);
+            else                     return null;
         }
         static (T value, Node<T> deleted_parent) BstDeleteImpl<T>(ref Node<T> node)
         {
