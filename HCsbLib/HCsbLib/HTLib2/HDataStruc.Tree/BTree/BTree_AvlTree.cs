@@ -23,7 +23,7 @@ namespace HTLib2
                 public static RetT New(T val) { return new RetT { value = val }; }
             }
 
-            public struct AvlNodeInfo
+            struct AvlNodeInfo
             {
                 public T   value;
                 public int left_height;
@@ -34,7 +34,7 @@ namespace HTLib2
             }
             Node<AvlNodeInfo> root;
             Comparison<T> comp;
-            public int avlcomp(AvlNodeInfo x, AvlNodeInfo y) { return comp(x.value, y.value); }
+            int avlcomp(AvlNodeInfo x, AvlNodeInfo y) { return comp(x.value, y.value); }
 
             public static AvlTree NewAvlTree(Comparison<T> comp)
             {
@@ -62,9 +62,20 @@ namespace HTLib2
                 return str;
             }
             
-            public (T,Node) Search(T query) { var node = BstSearch<AvlNodeInfo>(root, new AvlNodeInfo{value = query}, avlcomp); return (node.value.value, node); }
-            //public      T  Delete(T query) { return BstDelete(ref root, query, comp).value; }
-            //public    void Balance()       { DSW(ref root); }
+            ///////////////////////////////////////////////////////////////////////
+            /// AVL Search
+            ///////////////////////////////////////////////////////////////////////
+            public bool Contains(T query)
+            {
+                return (Search(query) != null);
+            }
+            public RetT? Search(T query)
+            {
+                var node = BstSearch<AvlNodeInfo>(root, new AvlNodeInfo{value = query}, avlcomp);
+                if(node == null)
+                    return null;
+                return RetT.New(node.value.value);
+            }
 
             ///////////////////////////////////////////////////////////////////////
             /// AVL Validate
@@ -152,25 +163,36 @@ namespace HTLib2
                     avltree.Insert( 1); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(((-2,-1,_),0,(1,2,3)),4,(9,11,15))");
                 }
             }
-            public Node<AvlNodeInfo>[] InsertRange(params T[] values)
+            public bool Insert(T value)
             {
-                return _InsertRange(values);
+                Node<AvlNodeInfo> node = AvlInsert(value);
+                if(node == null)
+                    return false;
+                return true;
             }
-            public Node<AvlNodeInfo>[] InsertRange(IEnumerable<T> values)
+            public bool[] InsertRange(params T[] values)
             {
-                return _InsertRange(values);
+                return InsertRange(values as IEnumerable<T>);
             }
-            Node<AvlNodeInfo>[] _InsertRange(IEnumerable<T> values)
+            public bool[] InsertRange(IEnumerable<T> values)
+            {
+                List<Node<AvlNodeInfo>> inserteds = AvlInsertRange(values);
+                bool[] results = new bool[inserteds.Count];
+                for(int i=0; i<results.Length; i++)
+                    results[i] = (inserteds[i] != null);
+                return results;
+            }
+            List<Node<AvlNodeInfo>> AvlInsertRange(IEnumerable<T> values)
             {
                 List<Node<AvlNodeInfo>> inserteds = new List<Node<AvlNodeInfo>>();
                 foreach(var value in values)
                 {
-                    Node<AvlNodeInfo> node = Insert(value);
+                    Node<AvlNodeInfo> node = AvlInsert(value);
                     inserteds.Add(node);
                 }
-                return inserteds.ToArray();
+                return inserteds;
             }
-            public Node<AvlNodeInfo> Insert(T value)
+            Node<AvlNodeInfo> AvlInsert(T value)
             {
                 HDebug.Assert(root == null || root.IsRoot());
                 AvlNodeInfo avlvalue = new AvlNodeInfo
