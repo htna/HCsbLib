@@ -65,6 +65,10 @@ namespace HTLib2
             ///////////////////////////////////////////////////////////////////////
             /// AVL Search
             ///////////////////////////////////////////////////////////////////////
+            public bool IsEmpty()
+            {
+                return (root == null);
+            }
             public bool Contains(T query)
             {
                 return (Search(query) != null);
