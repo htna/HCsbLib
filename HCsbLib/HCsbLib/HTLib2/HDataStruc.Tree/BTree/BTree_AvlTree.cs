@@ -75,10 +75,15 @@ namespace HTLib2
             }
             public RetT? Search(T query)
             {
-                var node = BstSearch<AvlNodeInfo>(root, new AvlNodeInfo{value = query}, avlcomp);
+                Node<AvlNodeInfo> node = AvlSearch(query);
                 if(node == null)
                     return null;
                 return RetT.New(node.value.value);
+            }
+            internal Node<AvlNodeInfo> AvlSearch(T query)
+            {
+                Node<AvlNodeInfo> node = BstSearch<AvlNodeInfo>(root, new AvlNodeInfo{value = query}, avlcomp);
+                return node;
             }
 
             ///////////////////////////////////////////////////////////////////////
