@@ -86,8 +86,7 @@ namespace HTLib2
                     return true;
 
                 if(ValidateBalance() == null) return false;
-                if(root.parent != null) return false;
-                if(root.ValidateConnection() == false) return false;
+                if(BTree.BstValidateConnection(root) == false) return false;
                 if(BTree.BstValidateOrder(root, avlcomp) == false) return false;
                 return true;
             }

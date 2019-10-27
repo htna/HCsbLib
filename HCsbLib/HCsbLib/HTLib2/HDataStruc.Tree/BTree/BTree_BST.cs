@@ -35,11 +35,27 @@ namespace HTLib2
             public bool  Insert  (T value) { Node<T> node = BstInsert(ref root, value, comp); if(node == null) return false; return true; }
             public RetT? Delete  (T query) { var     del  = BstDelete(ref root, query, comp); if(del  == null) return null ; return RetT.New(del.Value.value); }
             public void  MakeACBT()        { DSW(ref root); }
-            public bool  Validate()        { return BstValidateOrder(root, comp); }
+            public bool  Validate()
+            {
+                if(BstValidateConnection(root) == false) return false;
+                if(BstValidateOrder(root, comp) == false) return false;
+                return true;
+            }
         }
         public static BST<T> NewBST<T>(Comparison<T> comp)
         {
             return BST<T>.NewBST(comp);
+        }
+        ///////////////////////////////////////////////////////////////////////
+        /// Validate connections
+        ///////////////////////////////////////////////////////////////////////
+        static bool BstValidateConnection<T>(Node<T> root)
+        {
+            if(root.parent != null)
+                return false;
+            if(root.ValidateConnection() == false)
+                return false;
+            return true;
         }
         ///////////////////////////////////////////////////////////////////////
         /// Validate order
