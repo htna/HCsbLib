@@ -5,17 +5,17 @@ using System.Text;
 
 namespace HTLib2
 {
-    using T = System.Int32;
+    //using T = System.Int32;
     public static partial class BTree
     {
-        public static AvlTree NewAvlTree(Comparison<T> comp=null)
+        public static AvlTree<T> NewAvlTree<T>(Comparison<T> comp=null)
         {
-            return AvlTree.NewAvlTree(comp);
+            return AvlTree<T>.NewAvlTree(comp);
         }
         ///////////////////////////////////////////////////////////////////////
         /// AVL Tree
         ///////////////////////////////////////////////////////////////////////
-        public class AvlTree
+        public class AvlTree<T>
         {
             public struct RetT
             {
@@ -36,7 +36,7 @@ namespace HTLib2
             Comparison<T> comp;
             int avlcomp(AvlNodeInfo x, AvlNodeInfo y) { return comp(x.value, y.value); }
 
-            public static AvlTree NewAvlTree(Comparison<T> comp)
+            public static AvlTree<T> NewAvlTree(Comparison<T> comp)
             {
                 if(comp == null)
                 {
@@ -47,7 +47,7 @@ namespace HTLib2
                     };
                 }
 
-                return new AvlTree
+                return new AvlTree<T>
                 {
                     root = null,
                     comp = comp,
@@ -127,14 +127,14 @@ namespace HTLib2
 
                 Insert_selftest = false;
                 {
-                    var avltree = BTree.NewAvlTree();
+                    var avltree = BTree.NewAvlTree<int>();
                     HDebug.Assert(avltree.Validate()); 
                     avltree.Insert( 1); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(1)");
                     avltree.Insert( 2); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(_,1,2)");
                     avltree.Insert( 3); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(1,2,3)");
                 }
                 {
-                    var avltree = BTree.NewAvlTree();
+                    var avltree = BTree.NewAvlTree<int>();
                     HDebug.Assert(avltree.Validate()); 
                     avltree.Insert( 4); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(4)");
                     avltree.Insert( 3); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(3,4,_)");
@@ -148,7 +148,7 @@ namespace HTLib2
                     avltree.Insert(12); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "((0,2,3),4,((9,11,12),14,(_,15,17)))");
                 }
                 {
-                    var avltree = BTree.NewAvlTree();
+                    var avltree = BTree.NewAvlTree<int>();
                     HDebug.Assert(avltree.Validate()); 
                     avltree.Insert( 4); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(4)");
                     avltree.Insert( 3); HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(3,4,_)");
@@ -353,7 +353,7 @@ namespace HTLib2
 
                 Delete_selftest = false;
                 {
-                    var avltree = BTree.NewAvlTree();
+                    var avltree = BTree.NewAvlTree<int>();
                     HDebug.Assert(avltree.Validate()); 
                     avltree.InsertRange( 10, 5, 17, 2, 8, 20, 3, 7 );
                                         HDebug.Assert(avltree.Validate()); HDebug.Assert(avltree.ToString() == "(((_,2,3),5,(7,8,_)),10,(_,17,20))");
