@@ -16,6 +16,7 @@ namespace HCsbLib
             HLib2Static.HLinkedList_SelfTest();
 
             BTree.AvlTree.InsertSelftest();
+            BTree.AvlTree.DeleteSelftest();
         }
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] 

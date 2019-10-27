@@ -615,7 +615,6 @@
     <Compile Include="HTLib2\HDataStruc.Graph\GraphT.Etc.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\BTree\BTree_AvlTree.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\BTree\BTree_DSW.cs" />
-    <Compile Include="HTLib2\HDataStruc.Tree\BTree\AvlTree_Node.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\BTree\BTree_Rotate.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\BTree\BTree_BST.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\BTree\BTree_Node.cs" />
