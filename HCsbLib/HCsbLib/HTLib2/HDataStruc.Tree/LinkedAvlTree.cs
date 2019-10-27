@@ -16,8 +16,8 @@ namespace HTLib2
             public Node prev { get { return _prev; } }
             public Node next { get { return _next; } }
 
-            Node _prev;
-            Node _next;
+            internal Node _prev;
+            internal Node _next;
             internal Node(T value, Node prev, Node next)
             {
                 this.value = value;
@@ -57,27 +57,72 @@ namespace HTLib2
                 return null;
             return value.Value.value;
         }
-        //  public bool Insert(T value)
-        //  {
-        //      Node node = new Node(value, null, null);
-        //      avl.Insert(node);
-        //  
-        //      Node<AvlNodeInfo> node = AvlInsert(value);
-        //      if(node == null)
-        //          return false;
-        //      return true;
-        //  }
-        //  public bool[] InsertRange(params T[] values)
-        //  {
-        //      return InsertRange(values as IEnumerable<T>);
-        //  }
-        //  public bool[] InsertRange(IEnumerable<T> values)
-        //  {
-        //      List<Node<AvlNodeInfo>> inserteds = AvlInsertRange(values);
-        //      bool[] results = new bool[inserteds.Count];
-        //      for(int i=0; i<results.Length; i++)
-        //          results[i] = (inserteds[i] != null);
-        //      return results;
-        //  }
+        public Node Insert(T value)
+        {
+            Node node = new Node(value, null, null);
+
+            if(avl.IsEmpty() == true)
+            {
+                var avlnode = avl.AvlInsert(node);
+                HDebug.Assert(avlnode.value.value == node);
+
+                node._prev = null;
+                node._next = null;
+                head = tail = node;
+            }
+            else
+            {
+                var avlnode = avl.AvlInsert(node);
+                HDebug.Assert(avlnode.value.value == node);
+
+                var avlnode_successor = avlnode.Successor();
+                if(avlnode_successor.value.value == head)
+                {
+                    // added to head
+                    HDebug.Assert(nodecomp(node, head) < 0);
+                    head._prev = node;
+                    node._next = head;
+                    head = node;
+                }
+                else if(avlnode_successor == null)
+                {
+                    // added to tail
+                    HDebug.Assert(avl.AvlSearch(tail).Successor().value.value == node);
+                    HDebug.Assert(nodecomp(tail, node) < 0);
+                    tail._next = node;
+                    node._prev = tail;
+                    tail = node;
+                }
+                else
+                {
+                    Node node_next = avlnode_successor.value.value;
+                    Node node_prev = node_next.prev;
+                    HDebug.Assert(node_prev.next == node_next);
+                    HDebug.Assert(node_next.prev == node_prev);
+                    HDebug.Assert(nodecomp(node_prev, node_next) < 0);
+                    HDebug.Assert(nodecomp(node_prev, node     ) < 0);
+                    HDebug.Assert(nodecomp(node     , node_next) < 0);
+                    node._next = node_next;
+                    node._prev = node_prev;
+                    node_prev._next = node;
+                    node_next._prev = node;
+                }
+            }
+            return node;
+        }
+        public List<Node> InsertRange(params T[] values)
+        {
+            return InsertRange(values as IEnumerable<T>);
+        }
+        public List<Node> InsertRange(IEnumerable<T> values)
+        {
+            List<Node> nodes = new List<Node>();
+            foreach(var value in values)
+            {
+                Node node = Insert(value);
+                nodes.Add(node);
+            }
+            return nodes;
+        }
     }
 }
