@@ -229,12 +229,29 @@ namespace HTLib2.Bioinfo
             //         7 or 8 for CA model (Atilgan01-BiophysJ - Anisotropy of Fluctuation Dynamics of Proteins with an Elastic Network Model)
             HessMatrix hess = GetHessAnm(coords, cutoff);
 
+            Vector   lmass   = null;
+            object[] latoms  = null;
+            Vector[] lcoords = null;
+
+            if(univ == null)
+            {
+                lmass   = Vector.Ones(coords.Count);
+                latoms  = null;
+                lcoords = coords.HCloneVectors().ToArray();
+            }
+            else
+            {
+                lmass   = univ.GetMasses();
+                latoms  = univ.atoms.ToArray();
+                lcoords = coords.HCloneVectors().ToArray();
+            }
+
             return new HessInfo
             {
                 hess   = hess,
-                mass   = univ.GetMasses(),
-                atoms  = univ.atoms.ToArray(),
-                coords = coords.HCloneVectors().ToArray(),
+                mass   = lmass,
+                atoms  = latoms,
+                coords = lcoords,
                 numZeroEigval = 6,
             };
         }
