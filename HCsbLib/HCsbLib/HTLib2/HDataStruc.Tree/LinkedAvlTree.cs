@@ -43,6 +43,29 @@ namespace HTLib2
         {
             return new LinkedAvlTree<T>(comp);
         }
+        public Node GetHead()
+        {
+            return head;
+        }
+        public Node GetTail()
+        {
+            return tail;
+        }
+        public bool IsEmpty()
+        {
+            if(avl.IsEmpty() == true)
+            {
+                HDebug.Assert(head == null);
+                HDebug.Assert(tail == null);
+                return true;
+            }
+            else
+            {
+                HDebug.Assert(head != null);
+                HDebug.Assert(tail != null);
+                return false;
+            }
+        }
         public bool Contains(T query)
         {
             return (Search(query) != null);
