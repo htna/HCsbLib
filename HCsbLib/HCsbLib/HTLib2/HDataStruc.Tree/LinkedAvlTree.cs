@@ -99,15 +99,7 @@ namespace HTLib2
                 HDebug.Assert(avlnode.value.value == node);
 
                 var avlnode_successor = avlnode.Successor();
-                if(avlnode_successor.value.value == head)
-                {
-                    // added to head
-                    HDebug.Assert(nodecomp(node, head) < 0);
-                    head._prev = node;
-                    node._next = head;
-                    head = node;
-                }
-                else if(avlnode_successor == null)
+                if (avlnode_successor == null)
                 {
                     // added to tail
                     HDebug.Assert(avl.AvlSearch(tail).Successor().value.value == node);
@@ -115,6 +107,14 @@ namespace HTLib2
                     tail._next = node;
                     node._prev = tail;
                     tail = node;
+                }
+                else if (avlnode_successor.value.value == head)
+                {
+                    // added to head
+                    HDebug.Assert(nodecomp(node, head) < 0);
+                    head._prev = node;
+                    node._next = head;
+                    head = node;
                 }
                 else
                 {
