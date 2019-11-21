@@ -187,5 +187,22 @@ namespace HTLib2
             HDebug.Assert(node.next == null);
             return node;
         }
+        public bool Validate()
+        {
+            // check AVL validate
+            if(avl.Validate() == false) return false;
+
+            // check linked-list validate
+            Node n = head;
+            while(n != null)
+            {
+                Node n_next = n.next;
+                if ((nodecomp(n, n_next) <= 0) == false)
+                    return false;
+                n = n_next;
+            }
+
+            return true;
+        }
     }
 }
