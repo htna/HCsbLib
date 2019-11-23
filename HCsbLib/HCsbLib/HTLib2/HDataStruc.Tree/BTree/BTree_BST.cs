@@ -19,26 +19,26 @@ namespace HTLib2
             }
 
             Node<T> root;
-            Comparison<T> comp;
+            Comparison<T> _comp;
 
             public static BST<T> NewBST<T>(Comparison<T> comp)
             {
                 return new BST<T>
                 {
                     root = null,
-                    comp = comp,
+                    _comp = comp,
                 };
             }
 
             public bool  Contains(T query) { return (Search(query) != null); }
-            public RetT? Search  (T query) { Node<T> node = BstSearch(    root, query, comp); if(node == null) return null; return RetT.New(node.value); }
-            public bool  Insert  (T value) { Node<T> node = BstInsert(ref root, value, comp); if(node == null) return false; return true; }
-            public RetT? Delete  (T query) { var     del  = BstDelete(ref root, query, comp); if(del  == null) return null ; return RetT.New(del.Value.value); }
+            public RetT? Search  (T query) { Node<T> node = BstSearch(    root, query, _comp); if(node == null) return null; return RetT.New(node.value); }
+            public bool  Insert  (T value) { Node<T> node = BstInsert(ref root, value, _comp); if(node == null) return false; return true; }
+            public RetT? Delete  (T query) { var     del  = BstDelete(ref root, query, _comp); if(del  == null) return null ; return RetT.New(del.Value.value); }
             public void  MakeACBT()        { DSW(ref root); }
             public bool  Validate()
             {
                 if(BstValidateConnection(root) == false) return false;
-                if(BstValidateOrder(root, comp) == false) return false;
+                if(BstValidateOrder(root, _comp) == false) return false;
                 return true;
             }
         }
