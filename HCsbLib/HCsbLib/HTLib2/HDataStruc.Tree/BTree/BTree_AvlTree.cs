@@ -33,8 +33,8 @@ namespace HTLib2
                 public override string ToString() { return value.ToString(); }
             }
             Node<AvlNodeInfo> root;
-            Comparison<T> comp;
-            int avlcomp(AvlNodeInfo x, AvlNodeInfo y) { return comp(x.value, y.value); }
+            Comparison<T> _comp;
+            int avlcomp(AvlNodeInfo x, AvlNodeInfo y) { return _comp(x.value, y.value); }
 
             public static AvlTree<T> NewAvlTree(Comparison<T> comp)
             {
@@ -50,7 +50,7 @@ namespace HTLib2
                 return new AvlTree<T>
                 {
                     root = null,
-                    comp = comp,
+                    _comp = comp,
                 };
             }
 
