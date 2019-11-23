@@ -21,6 +21,12 @@ namespace HTLib2
             Node<T> root;
             Comparison<T> _comp;
             public Comparison<T> comp{ get { return _comp; } }
+            public void ChangeComp(Comparison<T> comp)
+            {
+                Comparison<T> comp0 = _comp;
+                _comp = comp;
+                HDebug.Assert(Validate());
+            }
 
             public static BST<T> NewBST<T>(Comparison<T> comp)
             {
