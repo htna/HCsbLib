@@ -20,6 +20,7 @@ namespace HTLib2
 
             Node<T> root;
             Comparison<T> _comp;
+            public Comparison<T> comp{ get { return _comp; } }
 
             public static BST<T> NewBST<T>(Comparison<T> comp)
             {
