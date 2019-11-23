@@ -34,7 +34,16 @@ namespace HTLib2
             }
             Node<AvlNodeInfo> root;
             Comparison<T> _comp;
+            public Comparison<T> comp { get { return _comp; } }
             int avlcomp(AvlNodeInfo x, AvlNodeInfo y) { return _comp(x.value, y.value); }
+
+            public void ChangeComp(Comparison<T> comp)
+            {
+                Comparison<T> comp0 = _comp;
+                _comp = comp;
+                HDebug.Assert(Validate());
+            }
+
 
             public static AvlTree<T> NewAvlTree(Comparison<T> comp)
             {
