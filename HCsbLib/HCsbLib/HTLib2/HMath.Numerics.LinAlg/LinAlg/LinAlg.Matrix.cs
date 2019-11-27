@@ -147,15 +147,16 @@ namespace HTLib2
             return lMD;
         }
                static bool   MV_SelfTest = HDebug.IsDebuggerAttached;
-               static bool   MV_HDebug_IsDebuggerAttached = HDebug.IsDebuggerAttached;
+               static bool   MV_SelfTest_lmat_rvec = HDebug.IsDebuggerAttached;
         public static Vector MV<MATRIX>(MATRIX lmat, Vector rvec, string options="")
             where MATRIX : IMatrix<double>
         {
             Vector result = new Vector(lmat.ColSize);
             MV(lmat, rvec, result, options);
-            if(MV_HDebug_IsDebuggerAttached)
+            if(MV_SelfTest_lmat_rvec)
             {
-			    HDebug.Assert(lmat.RowSize == rvec.Size);
+                MV_SelfTest_lmat_rvec = false;
+                HDebug.Assert(lmat.RowSize == rvec.Size);
 			    Vector lresult = new Vector(lmat.ColSize);
 			    for(int c=0; c<lmat.ColSize; c++)
 				    for(int r=0; r<lmat.RowSize; r++)
