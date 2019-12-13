@@ -292,7 +292,7 @@ namespace HTLib2
                     nnode   = node  ;
                     nparent = parent;
                 }
-                else if((node_bf == -1) && (parent_bf == -2))
+                else if( ((node_bf == -1) && (parent_bf == -2)) || ((node_bf == 0) && (parent_bf == -2)) )
                 {
                     //HDebug.Assert(parent_bf == -2);
                     ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
@@ -319,7 +319,7 @@ namespace HTLib2
                     nnode   = node;
                     nparent = node.parent;
                 }
-                else if((node_bf == 1) && (parent_bf == 2))
+                else if( ((node_bf == 1) && (parent_bf == 2)) || ((node_bf == 0) && (parent_bf == 2)) )
                 {
                     //HDebug.Assert(parent_bf == 2);
                     ref Node<AvlNodeInfo> parent_ref = ref parent.GetThisRef(ref root);
