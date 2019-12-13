@@ -24,6 +24,11 @@ namespace HTLib2
                 this._prev = prev ;
                 this._next = next ;
             }
+
+            public override string ToString()
+            {
+                return value.ToString();
+            }
         }
 
         Node head;
@@ -197,7 +202,7 @@ namespace HTLib2
             while(n != null)
             {
                 Node n_next = n.next;
-                if ((nodecomp(n, n_next) <= 0) == false)
+                if(n_next != null && (nodecomp(n, n_next) <= 0) == false)
                     return false;
                 n = n_next;
             }
