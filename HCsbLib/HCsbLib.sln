@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCsbLib", "HCsbLib\HCsbLib.csproj", "{0264D6B8-7241-428D-A6FA-74C2DCB4713D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCsbLib-Tutorial", "HCsbLib-Tutorial\HCsbLib-Tutorial.csproj", "{A9B3B926-605C-4270-94B6-96894399CCD7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCsbLibTutorial", "HCsbLibTutorial\HCsbLibTutorial.csproj", "{A9B3B926-605C-4270-94B6-96894399CCD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
