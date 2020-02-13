@@ -96,6 +96,52 @@ namespace HTLib2
 
             return (value, parent_value);
         }
+        public (Node value, (Node left_value, Node right_value)) SearchRange(T query)
+        {
+            var nodequery = new Node(query, null, null); ;
+
+            var (val, parent_val) = avl.SearchWithParent(nodequery);
+
+            if(val == null)
+            {
+                HDebug.Assert(parent_val != null);
+                Node parent_value = parent_val.Value.value;
+                int cmp = comp(query, parent_value.value);
+                HDebug.Assert(cmp != 0);
+                if(cmp < 0)
+                {
+                    HDebug.Assert(false);
+                    //  parent->prev < query:null < parent)
+                    return (null, (parent_value.prev, parent_value));
+                }
+                else
+                {
+                    HDebug.Assert(false);
+                    //  parent < query:null < parent->next
+                    return (null, (parent_value, parent_value.next));
+                }
+            }
+            else
+            {
+                HDebug.Assert(parent_val != null);
+                Node value        = val       .Value.value;
+                Node parent_value = parent_val.Value.value;
+                int cmp = comp(value.value, parent_value.value);
+                HDebug.Assert(cmp != 0);
+                if (cmp < 0)
+                {
+                    HDebug.Assert(false);
+                    //  value->prev < value < parent)
+                    return (value, (value.prev, parent_value));
+                }
+                else
+                {
+                    HDebug.Assert(false);
+                    //  parent < value < value->next
+                    return (value, (parent_value, value.next));
+                }
+            }
+        }
         public Node Insert(T value)
         {
             Node node = new Node(value, null, null);
