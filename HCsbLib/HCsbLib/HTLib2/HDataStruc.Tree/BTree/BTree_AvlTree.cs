@@ -84,10 +84,19 @@ namespace HTLib2
             }
             public RetT? Search(T query)
             {
-                Node<AvlNodeInfo> node = AvlSearch(query).node;
+                Node<AvlNodeInfo> node = AvlSearch(query);
                 if(node == null)
                     return null;
                 return RetT.New(node.value.value);
+            }
+            public (RetT? val, RetT? parent_val) SearchWithParent(T query)
+            {
+                (Node<AvlNodeInfo> node, Node<AvlNodeInfo> node_parent) = AvlSearchWithParent(query);
+
+                RetT? val        = null; if(node        != null) val        = RetT.New(node       .value.value);
+                RetT? parent_val = null; if(node_parent != null) parent_val = RetT.New(node_parent.value.value);
+
+                return (val, parent_val);
             }
             //public (RetT? val,(RetT? left, RetT? right)) SearchRange(T query)
             //{
@@ -96,9 +105,14 @@ namespace HTLib2
             //        return null;
             //    return RetT.New(node.value.value);
             //}
-            internal (Node<AvlNodeInfo> node, Node<AvlNodeInfo> node_parent) AvlSearch(T query)
+            internal Node<AvlNodeInfo> AvlSearch(T query)
             {
-                (Node<AvlNodeInfo> node, Node<AvlNodeInfo> node_parent) = BstSearch<AvlNodeInfo>(root, null, new AvlNodeInfo{value = query}, avlcomp);
+                Node<AvlNodeInfo> node = BstSearch<AvlNodeInfo>(root, new AvlNodeInfo{value = query}, avlcomp);
+                return node;
+            }
+            internal (Node<AvlNodeInfo> node, Node<AvlNodeInfo> node_parent) AvlSearchWithParent(T query)
+            {
+                (Node<AvlNodeInfo> node, Node<AvlNodeInfo> node_parent) = BstSearchWithParent<AvlNodeInfo>(root, null, new AvlNodeInfo { value = query }, avlcomp);
                 return (node, node_parent);
             }
 
