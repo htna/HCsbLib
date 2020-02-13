@@ -12,7 +12,7 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForcExt
         {
-            public static Tuple<int[], int[][]> GetIdxKeepListRemv(object[] atoms, Vector[] coords)
+            public static Tuple<int[], int[][]> GetIdxKeepListRemv_RemoveHOH(object[] atoms, Vector[] coords)
             {
                 Tinker.Xyz.Atom[] xyzatoms = atoms as Tinker.Xyz.Atom[];
                 Dictionary<Tinker.Xyz.Atom, int> xyzatom_idx = xyzatoms.HToDictionaryAsValueIndex();
