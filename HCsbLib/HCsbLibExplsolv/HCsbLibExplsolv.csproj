@@ -45,6 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Explsolv.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForcSubIter.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForcSubSimple.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.Get_BInvDC_BInvDG.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.Get_BInvDC_BInvDG_Simple.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.Get_BInvDC_BInvDG_WithSqueeze.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.IterInfo.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.SelfTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -53,8 +62,6 @@
       <Name>HCsbLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HTLib2.Bioinfo\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
