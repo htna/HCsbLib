@@ -107,7 +107,7 @@ namespace HTLib2
                 if (avlnode_successor == null)
                 {
                     // added to tail
-                    HDebug.Assert(avl.AvlSearch(tail).Successor().value.value == node);
+                    HDebug.Assert(avl.AvlSearch(tail).node.Successor().value.value == node);
                     HDebug.Assert(nodecomp(tail, node) < 0);
                     tail._next = node;
                     node._prev = tail;

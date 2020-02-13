@@ -84,15 +84,22 @@ namespace HTLib2
             }
             public RetT? Search(T query)
             {
-                Node<AvlNodeInfo> node = AvlSearch(query);
+                Node<AvlNodeInfo> node = AvlSearch(query).node;
                 if(node == null)
                     return null;
                 return RetT.New(node.value.value);
             }
-            internal Node<AvlNodeInfo> AvlSearch(T query)
+            //public (RetT? val,(RetT? left, RetT? right)) SearchRange(T query)
+            //{
+            //    (Node<AvlNodeInfo> node, Node<AvlNodeInfo> node_parent) = AvlSearch(query);
+            //    if (node == null)
+            //        return null;
+            //    return RetT.New(node.value.value);
+            //}
+            internal (Node<AvlNodeInfo> node, Node<AvlNodeInfo> node_parent) AvlSearch(T query)
             {
-                Node<AvlNodeInfo> node = BstSearch<AvlNodeInfo>(root, new AvlNodeInfo{value = query}, avlcomp);
-                return node;
+                (Node<AvlNodeInfo> node, Node<AvlNodeInfo> node_parent) = BstSearch<AvlNodeInfo>(root, null, new AvlNodeInfo{value = query}, avlcomp);
+                return (node, node_parent);
             }
 
             ///////////////////////////////////////////////////////////////////////

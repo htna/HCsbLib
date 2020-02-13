@@ -38,9 +38,9 @@ namespace HTLib2
             }
 
             public bool  Contains(T query) { return (Search(query) != null); }
-            public RetT? Search  (T query) { Node<T> node = BstSearch(    root, query, _comp); if(node == null) return null; return RetT.New(node.value); }
-            public bool  Insert  (T value) { Node<T> node = BstInsert(ref root, value, _comp); if(node == null) return false; return true; }
-            public RetT? Delete  (T query) { var     del  = BstDelete(ref root, query, _comp); if(del  == null) return null ; return RetT.New(del.Value.value); }
+            public RetT? Search  (T query) { Node<T> node = BstSearch(    root, null, query, _comp).ret; if(node == null) return null; return RetT.New(node.value); }
+            public bool  Insert  (T value) { Node<T> node = BstInsert(ref root      , value, _comp)    ; if(node == null) return false; return true; }
+            public RetT? Delete  (T query) { var     del  = BstDelete(ref root      , query, _comp)    ; if(del  == null) return null ; return RetT.New(del.Value.value); }
             public void  MakeACBT()        { DSW(ref root); }
             public bool  Validate()
             {
@@ -100,7 +100,7 @@ namespace HTLib2
         //        return default(T);
         //    return node.value;
         //}
-        static Node<T> BstSearch<T>(Node<T> node, T query, Comparison<T> compare)
+        static (Node<T> ret, Node<T> ret_parent) BstSearch<T>(Node<T> node, Node<T> node_parent, T query, Comparison<T> compare)
         {
             if(BstSearch_selftest)
             {
@@ -109,22 +109,22 @@ namespace HTLib2
                 Node<int> _root = null;
                 BstInsertRange(ref _root, new int[] { 10, 5, 20, 2, 7, 4, 6, 30, 3, 25 }, _compare);
                 HDebug.Assert(_root.ToString() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,(25,30,_)))");
-                HDebug.Assert((BstSearch(_root, 10, _compare) != null) ==  true);
-                HDebug.Assert((BstSearch(_root, 25, _compare) != null) ==  true);
-                HDebug.Assert((BstSearch(_root,  4, _compare) != null) ==  true);
-                HDebug.Assert((BstSearch(_root,  7, _compare) != null) ==  true);
-                HDebug.Assert((BstSearch(_root,  0, _compare) != null) == false);
-                HDebug.Assert((BstSearch(_root,  9, _compare) != null) == false);
-                HDebug.Assert((BstSearch(_root, 15, _compare) != null) == false);
-                HDebug.Assert((BstSearch(_root, 50, _compare) != null) == false);
+                HDebug.Assert((BstSearch(_root, null, 10, _compare).ret != null) ==  true);
+                HDebug.Assert((BstSearch(_root, null, 25, _compare).ret != null) ==  true);
+                HDebug.Assert((BstSearch(_root, null,  4, _compare).ret != null) ==  true);
+                HDebug.Assert((BstSearch(_root, null,  7, _compare).ret != null) ==  true);
+                HDebug.Assert((BstSearch(_root, null,  0, _compare).ret != null) == false);
+                HDebug.Assert((BstSearch(_root, null,  9, _compare).ret != null) == false);
+                HDebug.Assert((BstSearch(_root, null, 15, _compare).ret != null) == false);
+                HDebug.Assert((BstSearch(_root, null, 50, _compare).ret != null) == false);
             }
 
             if(node == null)
-                return null;
+                return (null, node_parent);
             int query_node = compare(query, node.value);
-            if     (query_node <  0) return BstSearch(node.left , query, compare);
-            else if(query_node >  0) return BstSearch(node.right, query, compare);
-            else                     return node;
+            if     (query_node <  0) return BstSearch(node.left , node, query, compare);
+            else if(query_node >  0) return BstSearch(node.right, node, query, compare);
+            else                     return (node, node_parent);
         }
         ///////////////////////////////////////////////////////////////////////
         /// BST Insert
