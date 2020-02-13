@@ -20,45 +20,13 @@ namespace HTLib2.Bioinfo
 
                 Vector center = coords.Average();
                 Vector min    = new double[]{ double.PositiveInfinity, double.PositiveInfinity, double.PositiveInfinity };
-                double radius = 0;                                      // 41.58
+                double radius = 0;
                 foreach(var coord in coords)
                 {
                     radius = Math.Max(radius, (center - coord).Dist);
                     min[0] = Math.Min(min[0], coord[0]);
                     min[1] = Math.Min(min[1], coord[1]);
                     min[2] = Math.Min(min[2], coord[2]);
-                }
-                {
-                    double atomdensity
-                        = coords.Length                                 // number of atoms
-                        / (4.0/3.0 * Math.PI * radius*radius*radius);   // volume : 4/3 Pi r^3
-                    double cutoff = 12;
-
-                    // when reducing a single atom
-                    double reduceatm_numAtom       = Math.Pow(cutoff*2, 3) * atomdensity;
-                    double reduceatm_hesssize_byte = Math.Pow(reduceatm_numAtom*3, 2) * 8;
-                    double reduceatm_hesssize_Gb   = reduceatm_hesssize_byte / 1000 / 1000 / 1000;
-
-                    // when reducing a box
-                    {                                                                         //atomdensity //              // 0.112// 0.112//
-                        double box_size = 12;                                                               // 10   // 20   // 16   // 18   //
-                        double box_numatom = Math.Pow(box_size, 3) * atomdensity;                           // 112  // 896  // 458  // 653  //
-                        double reducebox_numAtom       = Math.Pow(cutoff*2 + box_size, 3) * atomdensity;    // 4404 // 9545 // 7171 // 8302 //
-                        double reducebox_hesssize_byte = Math.Pow(reducebox_numAtom*3, 2) * 8;              //      //      //      //      //
-                        double reducebox_hesssize_Gb   = reducebox_hesssize_byte / 1000 / 1000 / 1000;      // 1.4  // 6.6  // 3.7  // 5.0  //
-
-
-
-                        // n=  100; H=rand(n*3); H=H+H'; tic; pinv(H); toc  =>    0.025914 seconds
-                        // n= 1000; H=rand(n*3); H=H+H'; tic; pinv(H); toc  =>    5.922386 seconds
-                        // n= 5000; H=rand(n*3); H=H+H'; tic; pinv(H); toc  =>  788.346814 seconds,  13.1391 minutes
-                        // n= 7000; H=rand(n*3); H=H+H'; tic; pinv(H); toc  => 2117.486240 seconds,  35.2833 minutes
-                        // n=16000; H=rand(n*3); H=H+H'; tic; pinv(H); toc  =>
-
-                        /// box size | atoms in box | atoms in invD | size invD (Gb) | invD time | total invD time
-                        /// 10       | 112          | 4404          | 1.4            | ~ 13 mins | n/122 * 13 = 0.106557 n
-                        /// 16       | 458          | 7171          | 3.7            | 
-                    }
                 }
 
                 // determine protein and solvent atoms
