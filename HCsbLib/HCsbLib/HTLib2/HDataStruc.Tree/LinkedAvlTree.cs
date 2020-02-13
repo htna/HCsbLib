@@ -85,6 +85,17 @@ namespace HTLib2
                 return null;
             return value.Value.value;
         }
+        public (Node value, Node parent_value) SearchWithParent(T query)
+        {
+            var nodequery = new Node(query, null, null);;
+
+            var (val, parent_val) = avl.SearchWithParent(nodequery);
+
+            Node value        = null; if(val        != null) value        = val       .Value.value;
+            Node parent_value = null; if(parent_val != null) parent_value = parent_val.Value.value;
+
+            return (value, parent_value);
+        }
         public Node Insert(T value)
         {
             Node node = new Node(value, null, null);
