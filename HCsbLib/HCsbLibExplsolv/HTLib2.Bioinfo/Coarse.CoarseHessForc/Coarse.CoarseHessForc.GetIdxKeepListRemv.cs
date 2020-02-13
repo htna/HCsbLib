@@ -18,6 +18,8 @@ namespace HTLib2.Bioinfo
                 Dictionary<Tinker.Xyz.Atom, int> xyzatom_idx = xyzatoms.HToDictionaryAsValueIndex();
                 Dictionary<int, Tinker.Xyz.Atom> ID_xyzatom = xyzatoms.ToIdDictionary();
 
+                //////////////////////////////////////////////////////////////////////////////////////////////
+                // 1. find left bottom corner of solvent sphere
                 Vector center = coords.Average();
                 Vector min    = new double[]{ double.PositiveInfinity, double.PositiveInfinity, double.PositiveInfinity };
                 double radius = 0;
@@ -29,7 +31,8 @@ namespace HTLib2.Bioinfo
                     min[2] = Math.Min(min[2], coord[2]);
                 }
 
-                // determine protein and solvent atoms
+                //////////////////////////////////////////////////////////////////////////////////////////////
+                // 2. determine protein and solvent atoms
                 HashSet<Tinker.Xyz.Atom> solv = new HashSet<Tinker.Xyz.Atom>();
                 foreach(var xyzatom in xyzatoms)
                 {
@@ -47,6 +50,10 @@ namespace HTLib2.Bioinfo
                 HashSet<Tinker.Xyz.Atom> prot = xyzatoms.HSetDiff(solv).HToHashSet();
                 HDebug.Assert(xyzatoms.Length == prot.Count + solv.Count);
 
+                //////////////////////////////////////////////////////////////////////////////////////////////
+                // 3. put solvent atoms in blocks whose size is box_size x box_size x box_size
+                //
+                // bx_by_bz_atoms[i,j,k] is the (i-th, j-th, k-th) box that contains solvent atoms within the box
                 HDictionary3<int, int, int, HashSet<Tinker.Xyz.Atom>> bx_by_bz_atoms = new HDictionary3<int, int, int, HashSet<Tinker.Xyz.Atom>>();
                 int maxbx = 0;
                 int maxby = 0;
@@ -72,6 +79,14 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
+                //////////////////////////////////////////////////////////////////////////////////////////////
+                // 3. put protein atom indices into idxProt
+                //    and solvent atom indices of each box into idxListRemv.
+                //    idxListRemv[k-1] is the first atoms to be removed
+                //    idxListRemv[k-2] is the second atoms to be removed
+                //    ..
+                //    idxListRemv[  1] is the last second atoms to be removed
+                //    idxListRemv[  0] is the last atoms to be removed
                 List<int[]> idxListRemv = new List<int[]>();
                 List<int>   idxProt = new List<int>();
                 {
