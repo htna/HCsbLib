@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Explsolv.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForc.cs" />
     <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForcSubIter.cs" />
