@@ -102,6 +102,7 @@ namespace HTLib2
 
             var (val, parent_val) = avl.SearchWithParent(nodequery);
 
+            Node value, left_value, right_value;
             if(val == null)
             {
                 HDebug.Assert(parent_val != null);
@@ -112,35 +113,35 @@ namespace HTLib2
                 {
                     HDebug.Assert(false);
                     //  parent->prev < query:null < parent)
-                    return (null, (parent_value.prev, parent_value));
+                    //return (null, (parent_value.prev, parent_value));
+                    value = null;
+                    left_value = parent_value.prev;
+                    right_value = parent_value;
                 }
                 else
                 {
                     HDebug.Assert(false);
                     //  parent < query:null < parent->next
-                    return (null, (parent_value, parent_value.next));
+                    //return (null, (parent_value, parent_value.next));
+                    value = null;
+                    left_value = parent_value;
+                    right_value = parent_value.next;
                 }
             }
             else
             {
-                HDebug.Assert(parent_val != null);
-                Node value        = val       .Value.value;
-                Node parent_value = parent_val.Value.value;
-                int cmp = comp(value.value, parent_value.value);
-                HDebug.Assert(cmp != 0);
-                if (cmp < 0)
-                {
-                    HDebug.Assert(false);
-                    //  value->prev < value < parent)
-                    return (value, (value.prev, parent_value));
-                }
-                else
-                {
-                    HDebug.Assert(false);
-                    //  parent < value < value->next
-                    return (value, (parent_value, value.next));
-                }
+                value       = val       .Value.value;
+                left_value  = value.prev;
+                right_value = value.next;
             }
+
+            if(HDebug.IsDebuggerAttached)
+            {
+                if(left_value.value != null &&       value != null) HDebug.Assert(comp(left_value.value,       value.value) <= 0);
+                if(     value.value != null && right_value != null) HDebug.Assert(comp(     value.value, right_value.value) <= 0);
+                if(left_value.value != null && right_value != null) HDebug.Assert(comp(left_value.value, right_value.value) <= 0);
+                }
+            return (value, (left_value, right_value));
         }
         public Node Insert(T value)
         {
