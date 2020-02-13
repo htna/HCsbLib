@@ -10,7 +10,7 @@ namespace HCsbLibExplsolv
 {
     class Program
     {
-        public static HessMatrix LoadHessMatrix(string path)
+        public static HessMatrix LoadHess(string path)
         {
             HessMatrix hess = null;
 
@@ -42,7 +42,32 @@ namespace HCsbLibExplsolv
 
             return hess;
         }
-        
+        public static Vector[] LoadForce(string path)
+        {
+            List<Vector> forc = new List<Vector>();
+
+            int i = 0;
+            Vector iatom_forc = null;
+            foreach(string line in HFile.ReadLines(path))
+            {
+                int iatom  = i / 3;
+                int icoord = i % 3;
+                i++;
+
+                double value = double.Parse(line);
+                if(icoord == 0)
+                {
+                    HDebug.Assert(forc.Count == iatom);
+                    iatom_forc = new double[3];
+                    forc.Add(iatom_forc);
+                }
+
+                iatom_forc[icoord] = value;
+                HDebug.Assert(forc[iatom][icoord] == iatom_forc[icoord]);
+            }
+
+            return forc.ToArray();
+        }
 
         static void Main(string[] args)
         {
