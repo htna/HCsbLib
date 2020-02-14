@@ -115,6 +115,9 @@ namespace HTLib2.Bioinfo
                             }
                 }
 
+                //////////////////////////////////////////////////////////////////////////////////////////////
+                // 4. return indices of atoms to keep (protein)
+                //       and a set of indices of atoms to remove iteratively (waters)
                 return new Tuple<int[], int[][]>
                     ( idxProt.ToArray()
                     , idxListRemv.ToArray()
