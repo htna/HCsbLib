@@ -12,7 +12,11 @@ namespace HTLib2.Bioinfo
     {
         public static partial class CoarseHessForcExt
         {
-            public static Tuple<int[], int[][]> GetIdxKeepListRemv_RemoveHOH(object[] atoms, Vector[] coords)
+            public static Tuple<int[], int[][]> GetIdxKeepListRemv_RemoveHOH
+                ( object[] atoms
+                , Vector[] coords
+                , int box_size // = 20 A (default)
+                )
             {
                 Tinker.Xyz.Atom[] xyzatoms = atoms as Tinker.Xyz.Atom[];
                 Dictionary<Tinker.Xyz.Atom, int> xyzatom_idx = xyzatoms.HToDictionaryAsValueIndex();
@@ -62,7 +66,7 @@ namespace HTLib2.Bioinfo
                 {
                     if(atom.AtomType == "OT ")
                     {
-                        int box_size = 20;
+                        //int box_size = 20;
                         int bx = (int)(atom.X - min[0]) / box_size; HDebug.Assert(bx >= 0); maxbx = Math.Max(maxbx, bx);
                         int by = (int)(atom.Y - min[1]) / box_size; HDebug.Assert(by >= 0); maxby = Math.Max(maxby, by);
                         int bz = (int)(atom.Z - min[2]) / box_size; HDebug.Assert(bz >= 0); maxbz = Math.Max(maxbz, bz);
