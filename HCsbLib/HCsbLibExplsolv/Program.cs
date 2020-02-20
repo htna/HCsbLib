@@ -68,9 +68,25 @@ namespace HCsbLibExplsolv
 
             return forc.ToArray();
         }
-
+        public static void PrintUsage()
+        {
+            System.Console.WriteLine("HCsbLibExplsolv.exe   hessian-path  force-path  [options]");
+            System.Console.WriteLine("    hessian-path: path of a file containing the Hessian matrix");
+            System.Console.WriteLine("    force-path  : path of a file containing the force vector");
+            System.Console.WriteLine("    ");
+            System.Console.WriteLine("    ");
+            System.Console.WriteLine("    ");
+            System.Console.WriteLine("    ");
+            System.Console.WriteLine("    ");
+        }
         static void Main(string[] args)
         {
+            if(args.Length != 2)
+            {
+                PrintUsage();
+                return;
+            }
+
         }
     }
 }
