@@ -44,17 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetIdxKeepListRemv.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.HessForc.GetIdxKeepListRemv.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.cs" />
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForc.cs" />
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForcSubIter.cs" />
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.GetCoarseHessForcSubSimple.cs" />
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.Get_BInvDC_BInvDG.cs" />
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.Get_BInvDC_BInvDG_Simple.cs" />
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.Get_BInvDC_BInvDG_WithSqueeze.cs" />
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.IterInfo.cs" />
-    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.CoarseHessForc.SelfTest.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.HessForc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.HessForc.GetCoarseHessForc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.HessForc.GetCoarseHessForcSubIter.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.HessForc.GetCoarseHessForcSubSimple.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.HessForc.Get_BInvDC_BInvDG.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.HessForc.Get_BInvDC_BInvDG_Simple.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.HessForc.Get_BInvDC_BInvDG_WithSqueeze.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.HessForc.IterInfo.cs" />
+    <Compile Include="HTLib2.Bioinfo\Coarse.CoarseHessForc\Coarse.HessForc.SelfTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
