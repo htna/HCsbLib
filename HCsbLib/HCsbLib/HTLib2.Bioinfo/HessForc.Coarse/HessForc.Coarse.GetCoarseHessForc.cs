@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace HTLib2.Bioinfo
 {
-    public partial class Coarse
+    public partial class HessForc
     {
-        public static partial class CoarseHessForc
+        public static partial class Coarse
         {
             public static HessForcInfo GetCoarseHessForc
                 ( HessForcInfo hessforc

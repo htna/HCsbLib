@@ -8,9 +8,9 @@ using HTLib2.Bioinfo;
 
 namespace HTLib2.Bioinfo
 {
-    public partial class Coarse
+    public partial class HessForc
     {
-        public static partial class CoarseHessForc
+        public static partial class Coarse
         {
             public static void SelfTest()
             {
@@ -37,9 +37,9 @@ namespace HTLib2.Bioinfo
                     var testgrad = Tinker.Run.Testgrad(tinkerpath_testgrad, xyz, prm, temppath);
                     var hessinfo = Hess.HessInfo.FromTinker(xyz, prm, testhess.hess);
 
-                    var hessforcinfo = Coarse.CoarseHessForc.HessForcInfo.From(hessinfo);
+                    var hessforcinfo = HessForc.Coarse.HessForcInfo.From(hessinfo);
                         hessforcinfo.forc = testgrad.anlyts.GetForces(xyz.atoms);
-                    var coarseinfo_debug = Coarse.CoarseHessForc.GetCoarseHessForc
+                    var coarseinfo_debug = HessForc.Coarse.GetCoarseHessForc
                     ( hessforcinfo
                     , coords            : hessinfo.coords
                     , GetIdxKeepListRemv: GetIdxKeepListRemv
@@ -48,7 +48,7 @@ namespace HTLib2.Bioinfo
                     , options           : new string[] { "Debug" }
                     );
 
-                    var coarseinfo_simple = Coarse.CoarseHessForc.GetCoarseHessForc
+                    var coarseinfo_simple = HessForc.Coarse.GetCoarseHessForc
                     ( hessforcinfo
                     , coords            : hessinfo.coords
                     , GetIdxKeepListRemv: GetIdxKeepListRemv
@@ -61,7 +61,7 @@ namespace HTLib2.Bioinfo
                     double absmax_simple_forc = (coarseinfo_debug.forc.ToVector() - coarseinfo_simple.forc.ToVector()).ToArray().MaxAbs();
                     HDebug.Assert(Math.Abs(absmax_simple_forc) < 0.00000001);
 
-                    var coarseinfo_1iter = Coarse.CoarseHessForc.GetCoarseHessForc
+                    var coarseinfo_1iter = HessForc.Coarse.GetCoarseHessForc
                     ( hessforcinfo
                     , coords            : hessinfo.coords
                     , GetIdxKeepListRemv: GetIdxKeepListRemv
@@ -74,7 +74,7 @@ namespace HTLib2.Bioinfo
                     double absmax_1iter_forc = (coarseinfo_debug.forc.ToVector() - coarseinfo_1iter.forc.ToVector()).ToArray().MaxAbs();
                     HDebug.Assert(Math.Abs(absmax_1iter_forc) < 0.00000001);
 
-                    var coarseinfo_iter = Coarse.CoarseHessForc.GetCoarseHessForc
+                    var coarseinfo_iter = HessForc.Coarse.GetCoarseHessForc
                     ( hessforcinfo
                     , coords            : hessinfo.coords
                     , GetIdxKeepListRemv: GetIdxKeepListRemv
@@ -88,7 +88,7 @@ namespace HTLib2.Bioinfo
                     HDebug.Assert(Math.Abs(absmax_iter_forc) < 0.00000001);
 
                     double tolerance = 1.0E-6; // 0.00001;
-                    var coarseinfo_1iter_tolerant = Coarse.CoarseHessForc.GetCoarseHessForc
+                    var coarseinfo_1iter_tolerant = HessForc.Coarse.GetCoarseHessForc
                     ( hessforcinfo
                     , coords            : hessinfo.coords
                     , GetIdxKeepListRemv: GetIdxKeepListRemv
@@ -101,7 +101,7 @@ namespace HTLib2.Bioinfo
                     double absmax_1iter_tolerant_forc = (coarseinfo_debug.forc.ToVector() - coarseinfo_1iter_tolerant.forc.ToVector()).ToArray().MaxAbs();
                     HDebug.Assert(Math.Abs(absmax_1iter_tolerant_forc) < tolerance * 10);
 
-                    var coarseinfo_iter_tolerant = Coarse.CoarseHessForc.GetCoarseHessForc
+                    var coarseinfo_iter_tolerant = HessForc.Coarse.GetCoarseHessForc
                     ( hessforcinfo
                     , coords            : hessinfo.coords
                     , GetIdxKeepListRemv: GetIdxKeepListRemv

@@ -8,9 +8,9 @@ using HTLib2.Bioinfo;
 
 namespace HTLib2.Bioinfo
 {
-    public partial class Coarse
+    public partial class HessForc
     {
-        public static partial class CoarseHessForcExt
+        public static partial class Coarse
         {
             public static Tuple<int[], int[][]> GetIdxKeepListRemv_RemoveHOH
                 ( object[] atoms
