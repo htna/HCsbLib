@@ -294,6 +294,16 @@
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixDense.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixSparse.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixSparse.LinAlg.cs" />
+    <Compile Include="HTLib2.Bioinfo\HessForc.Coarse\Coarse.HessForc.cs" />
+    <Compile Include="HTLib2.Bioinfo\HessForc.Coarse\Coarse.HessForc.GetCoarseHessForc.cs" />
+    <Compile Include="HTLib2.Bioinfo\HessForc.Coarse\Coarse.HessForc.GetCoarseHessForcSubIter.cs" />
+    <Compile Include="HTLib2.Bioinfo\HessForc.Coarse\Coarse.HessForc.GetCoarseHessForcSubSimple.cs" />
+    <Compile Include="HTLib2.Bioinfo\HessForc.Coarse\Coarse.HessForc.GetIdxKeepListRemv.cs" />
+    <Compile Include="HTLib2.Bioinfo\HessForc.Coarse\Coarse.HessForc.Get_BInvDC_BInvDG.cs" />
+    <Compile Include="HTLib2.Bioinfo\HessForc.Coarse\Coarse.HessForc.Get_BInvDC_BInvDG_Simple.cs" />
+    <Compile Include="HTLib2.Bioinfo\HessForc.Coarse\Coarse.HessForc.Get_BInvDC_BInvDG_WithSqueeze.cs" />
+    <Compile Include="HTLib2.Bioinfo\HessForc.Coarse\Coarse.HessForc.IterInfo.cs" />
+    <Compile Include="HTLib2.Bioinfo\HessForc.Coarse\Coarse.HessForc.SelfTest.cs" />
     <Compile Include="HTLib2.Bioinfo\HessStatic\HessStatic.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess\HBioinfo.GetFrcByFij.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess\HBioinfo.GetHessByKijFij.cs" />
