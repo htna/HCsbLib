@@ -109,38 +109,31 @@ namespace HCsbLibExplsolv
 
             return forc.ToArray();
         }
-        public static Vector[] LoadCoord(string coordpath)
+
+        public static void SaveForce(string forcpath, Vector[] forc)
         {
-            List<Vector> coords = new List<Vector>();
+            List<string> lines = new List<string>();
 
-            int i = 0;
-            Vector iatom_coord = null;
-            foreach(string line in HFile.ReadLines(coordpath))
+            for(int i=0; i<forc.Length; i++)
             {
-                int iatom  = i / 3;
-                int icoord = i % 3;
-                i++;
-
-                double value = double.Parse(line);
-                if(icoord == 0)
-                {
-                    HDebug.Assert(coords.Count == iatom);
-                    iatom_coord = new double[3];
-                    coords.Add(iatom_coord);
-                }
-
-                iatom_coord[icoord] = value;
-                HDebug.Assert(coords[iatom][icoord] == iatom_coord[icoord]);
+                string forcx = string.Format("{0,16:0.0000000000}", forc[i][0]);
+                string forcy = string.Format("{0,16:0.0000000000}", forc[i][1]);
+                string forcz = string.Format("{0,16:0.0000000000}", forc[i][2]);
+                lines.Add(forcx);
+                lines.Add(forcy);
+                lines.Add(forcz);
             }
 
-            return coords.ToArray();
+            HFile.WriteAllLines(forcpath, lines);
         }
+
         public static void PrintUsage()
         {
             System.Console.WriteLine("HCsbLibExplsolv.exe   hessian-path  force-path  [options]");
             System.Console.WriteLine("    hessian-path: path of a file containing the Hessian matrix");
             System.Console.WriteLine("    force-path  : path of a file containing the force vector");
         }
+
         static void Main(string[] args)
         {
             if(args.Length < 4)
@@ -255,7 +248,14 @@ namespace HCsbLibExplsolv
             );
 
 
-            SaveHess(outPathHess, hessforcinfo_prot_exsolv.hess);
+            SaveHess (outPathHess, hessforcinfo_prot_exsolv.hess);
+            SaveForce(outPathForc, hessforcinfo_prot_exsolv.forc);
+            {
+                Tinker.Xyz.Atom[] hessforcinfo_prot_exsolv_atoms = hessforcinfo_prot_exsolv.atoms.HToType((Tinker.Xyz.Atom[])null);
+                var hessforcinfo_prot_exsolv_xyz = Tinker.Xyz.FromAtoms(hessforcinfo_prot_exsolv_atoms);
+                hessforcinfo_prot_exsolv_xyz = hessforcinfo_prot_exsolv_xyz.CloneByReindex();
+                hessforcinfo_prot_exsolv_xyz.ToFile(outPathXyz, false);
+            }
         }
     }
 }
