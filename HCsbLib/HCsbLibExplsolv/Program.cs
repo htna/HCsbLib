@@ -42,6 +42,47 @@ namespace HCsbLibExplsolv
 
             return hess;
         }
+
+        public static void SaveHess(string hesspath, HessMatrix hess)
+        {
+            int colVecSize = hess.ColSize;
+            int rowVecSize = hess.ColSize;
+            HDebug.Assert(colVecSize == rowVecSize);
+
+            string idxFormat;
+            {
+                int digit = 0;
+                int size = Math.Max(colVecSize, rowVecSize);
+                while(size > 0)
+                {
+                    digit ++;
+                    size /= 10;
+                }
+                idxFormat = "{0,"+digit+"}";
+                //idxFormat = string.Format(idxFormat, 125);
+            }
+
+            List<string> lines = new List<string>();
+            for(int c=0; c<colVecSize; c++)
+            {
+                for(int r=c; r<rowVecSize; r++)
+                {
+                    double v = hess[c,r];
+                    string line
+                        = " "
+                        + string.Format(idxFormat, c)
+                        + " "
+                        + string.Format(idxFormat, r)
+                        + " "
+                        + string.Format("{0,16:0.0000000000}", v)
+                        ;
+                    lines.Add(line);
+                }
+            }
+
+            HFile.WriteAllLines(hesspath, lines);
+        }
+
         public static Vector[] LoadForce(string forcpath)
         {
             List<Vector> forc = new List<Vector>();
@@ -102,41 +143,45 @@ namespace HCsbLibExplsolv
         }
         static void Main(string[] args)
         {
-            if(args.Length != 2)
+            if(args.Length < 4)
             {
                 PrintUsage();
                 return;
             }
 
+            string inPathHess  = args[0];
+            string inPathForc  = args[1];
+            string inPathXyz   = args[2];
+            string outPathHess = args[3];
+            string outPathForc = args[4];
+            string outPathXyz  = args[5];
+
             //////////////////////////////////////////////////////////////////////
             // read hessian matrix
-            string hesspath = args[0];
-            if(HFile.Exists(hesspath))
+            if(HFile.Exists(inPathHess))
             {
-                System.Console.WriteLine("Cannot find hessian file: "+hesspath);
+                System.Console.WriteLine("Cannot find hessian file: "+inPathHess);
                 return;
             }
-            HessMatrix hess = LoadHess(hesspath);
+            HessMatrix hess = LoadHess(inPathHess);
 
             //////////////////////////////////////////////////////////////////////
             // read force vector
-            string forcpath = args[1];
-            if(HFile.Exists(forcpath))
+            if(HFile.Exists(inPathForc))
             {
-                System.Console.WriteLine("Cannot find force file: "+forcpath);
+                System.Console.WriteLine("Cannot find force file: "+inPathForc);
                 return;
             }
-            Vector[] forc = LoadForce(forcpath);
+            Vector[] forc = LoadForce(inPathForc);
 
             //////////////////////////////////////////////////////////////////////
             // read xyz file (atom types and atom coordinates)
-            string xyzpath = args[1];
-            if(HFile.Exists(xyzpath))
+            if(HFile.Exists(inPathXyz))
             {
-                System.Console.WriteLine("Cannot find tinker xyz file: "+xyzpath);
+                System.Console.WriteLine("Cannot find tinker xyz file: "+inPathXyz);
                 return;
             }
-            Tinker.Xyz xyz = Tinker.Xyz.FromFile(xyzpath, false);
+            Tinker.Xyz xyz = Tinker.Xyz.FromFile(inPathXyz, false);
 
             //////////////////////////////////////////////////////////////////////
             // threshold to make a non-zero block as a zero block
@@ -197,6 +242,8 @@ namespace HCsbLibExplsolv
                 forc   = forc,
             };
 
+            //////////////////////////////////////////////////////////////////////
+            // coarse-graining Hess/Force
             HessForc.Coarse.HessForcInfo hessforcinfo_prot_exsolv;
             hessforcinfo_prot_exsolv = HessForc.Coarse.GetCoarseHessForc
             (hessforcinfo_prot_solv
@@ -207,6 +254,8 @@ namespace HCsbLibExplsolv
             , options: coarse_options           // new string[] { "/D -> pinv(D)" } // new string[] { "pinv(D)" }
             );
 
+
+            SaveHess(outPathHess, hessforcinfo_prot_exsolv.hess);
         }
     }
 }
