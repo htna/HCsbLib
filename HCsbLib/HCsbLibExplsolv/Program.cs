@@ -129,9 +129,19 @@ namespace HCsbLibExplsolv
 
         public static void PrintUsage()
         {
-            System.Console.WriteLine("HCsbLibExplsolv.exe   hessian-path  force-path  [options]");
-            System.Console.WriteLine("    hessian-path: path of a file containing the Hessian matrix");
-            System.Console.WriteLine("    force-path  : path of a file containing the force vector");
+            System.Console.WriteLine("HCsbLibExplsolv.exe   hess-path  force-path  xyz-path  out-hess-path  out-force-path  out-xyz-path  [options]");
+            System.Console.WriteLine("    hess-path     : path of a file containing the Hessian matrix");
+            System.Console.WriteLine("    force-path    : path of a file containing the force vector");
+            System.Console.WriteLine("    xyz-path      : xyz file path that shows the coordinates of atoms and their corresponding types");
+            System.Console.WriteLine("    out-hess-path : path of a file containing the Hessian matrix");
+            System.Console.WriteLine("    out-force-path: path of a file containing the force vector");
+            System.Console.WriteLine("    out-xyz-path  : xyz file path that shows the coordinates of atoms and their corresponding types");
+            System.Console.WriteLine("    [option] ThresZeroBlock : the threshold value to make an element of hessian matrix as zero (double format)");
+            System.Console.WriteLine("    [option] CoarseBlockSize: the size of each water block that will be iteratively projected into protein in angstrom (int format)");
+            System.Console.WriteLine("example)");
+            System.Console.WriteLine("    HCsbLibExplsolv.exe   inhess.text  inforce.txt  in.xyz  outhess.txt  outforce.txt  out.xyz"
+                                      +"  ThresZeroBlock:1.0E-07  CoarseBlockSize:20"
+                                    );
         }
 
         static void Main(string[] args)
