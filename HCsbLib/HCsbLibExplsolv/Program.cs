@@ -10,12 +10,12 @@ namespace HCsbLibExplsolv
 {
     class Program
     {
-        public static HessMatrix LoadHess(string path)
+        public static HessMatrix LoadHess(string hesspath)
         {
             HessMatrix hess = null;
 
             int numlines = 0;
-            foreach(string line in HFile.ReadLines(path))
+            foreach(string line in HFile.ReadLines(hesspath))
             {
                 numlines ++;
                 if(numlines == 1)
@@ -42,13 +42,13 @@ namespace HCsbLibExplsolv
 
             return hess;
         }
-        public static Vector[] LoadForce(string path)
+        public static Vector[] LoadForce(string forcpath)
         {
             List<Vector> forc = new List<Vector>();
 
             int i = 0;
             Vector iatom_forc = null;
-            foreach(string line in HFile.ReadLines(path))
+            foreach(string line in HFile.ReadLines(forcpath))
             {
                 int iatom  = i / 3;
                 int icoord = i % 3;
@@ -73,11 +73,6 @@ namespace HCsbLibExplsolv
             System.Console.WriteLine("HCsbLibExplsolv.exe   hessian-path  force-path  [options]");
             System.Console.WriteLine("    hessian-path: path of a file containing the Hessian matrix");
             System.Console.WriteLine("    force-path  : path of a file containing the force vector");
-            System.Console.WriteLine("    ");
-            System.Console.WriteLine("    ");
-            System.Console.WriteLine("    ");
-            System.Console.WriteLine("    ");
-            System.Console.WriteLine("    ");
         }
         static void Main(string[] args)
         {
@@ -86,6 +81,21 @@ namespace HCsbLibExplsolv
                 PrintUsage();
                 return;
             }
+
+            string hesspath = args[0];
+            if(HFile.Exists(hesspath))
+            {
+                System.Console.WriteLine("Cannot find hessian-path: "+hesspath);
+                return;
+            }
+
+            string forcpath = args[1];
+            if(HFile.Exists(forcpath))
+            {
+                System.Console.WriteLine("Cannot find force-path: "+forcpath);
+                return;
+            }
+
 
         }
     }
