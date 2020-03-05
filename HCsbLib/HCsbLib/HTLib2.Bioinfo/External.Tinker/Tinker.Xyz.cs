@@ -322,6 +322,18 @@ namespace HTLib2.Bioinfo
 
                 TkFile.ElementsToFile(path, saveAsNext, nelems);
             }
+            public static Xyz FromAtoms(IList<Xyz.Atom> atoms)
+            {
+                Header header = Header.FromData(atoms.Count);
+
+                List<string> lines = new List<string>(atoms.Count+1);
+
+                lines.Add(header.line);
+                foreach(var atom in atoms)
+                    lines.Add(atom.line);
+
+                return FromLines(lines);
+            }
             public static Xyz FromLines(IList<string> lines)
             {
                 Atom.Format format = new Atom.Format();
