@@ -310,21 +310,13 @@ namespace HTLib2
                 {
                     if(parent_bf == 2)
                     {
-                        int parent_right_bf = parent.right.value.bf;
-                        if (parent_right_bf == -1)
-                        {
-                            node = parent.right;
-                            node_bf = node.value.bf;
-                        }
+                        node = parent.right;
+                        node_bf = node.value.bf;
                     }
                     else if(parent_bf == -2)
                     {
-                        int parent_left_bf = parent.left.value.bf;
-                        if (parent_left_bf == 1)
-                        {
-                            node = parent.left;
-                            node_bf = node.value.bf;
-                        }
+                        node = parent.left;
+                        node_bf = node.value.bf;
                     }
                 }
 
