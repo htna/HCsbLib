@@ -8,6 +8,7 @@ namespace HTLib2
     //using T = System.Int32;
     public static partial class BTree
     {
+        static int _debug = 0;
         public static AvlTree<T> NewAvlTree<T>(Comparison<T> comp=null)
         {
             return AvlTree<T>.NewAvlTree(comp);
@@ -304,6 +305,28 @@ namespace HTLib2
 
                 int   node_bf =   node.value.bf;
                 int parent_bf = parent.value.bf;
+                HDebug.Assert(Math.Abs(parent_bf) <= 2);
+
+                {
+                    if(parent_bf == 2)
+                    {
+                        int parent_right_bf = parent.right.value.bf;
+                        if (parent_right_bf == -1)
+                        {
+                            node = parent.right;
+                            node_bf = node.value.bf;
+                        }
+                    }
+                    else if(parent_bf == -2)
+                    {
+                        int parent_left_bf = parent.left.value.bf;
+                        if (parent_left_bf == 1)
+                        {
+                            node = parent.left;
+                            node_bf = node.value.bf;
+                        }
+                    }
+                }
 
                 Node<AvlNodeInfo> nnode   = null;
                 Node<AvlNodeInfo> nparent = null;
