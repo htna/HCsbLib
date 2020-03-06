@@ -252,8 +252,8 @@ namespace HTLib2
 
             if(HDebug.IsDebuggerAttached)
             {
-                HDebug.AssertIf(head != null, head.prev == null);
-                HDebug.AssertIf(tail != null, tail.next == null);
+                HDebug.Assert(head != null && head.prev == null);
+                HDebug.Assert(tail != null && tail.next == null);
             }
             HDebug.Assert(node.prev == null);
             HDebug.Assert(node.next == null);
