@@ -10,6 +10,8 @@ namespace HTLib2
     /// </summary>
     public partial class LinkedAvlTree<T>
     {
+        static int _debug = 0;
+
         public class Node
         {
             public T    value;
@@ -96,7 +98,7 @@ namespace HTLib2
 
             return (value, parent_value);
         }
-        public (Node value, (Node left_value, Node right_value)) SearchRange(T query)
+        public (Node value, (Node left_value, Node right_value)) SearchRange(T query, bool doassert=true)
         {
             var nodequery = new Node(query, null, null); ;
 
@@ -111,7 +113,7 @@ namespace HTLib2
                 HDebug.Assert(cmp != 0);
                 if(cmp < 0)
                 {
-                    HDebug.Assert(false);
+                    //HDebug.Assert(false);
                     //  parent->prev < query:null < parent)
                     //return (null, (parent_value.prev, parent_value));
                     value = null;
@@ -120,7 +122,7 @@ namespace HTLib2
                 }
                 else
                 {
-                    HDebug.Assert(false);
+                    //HDebug.Assert(false);
                     //  parent < query:null < parent->next
                     //return (null, (parent_value, parent_value.next));
                     value = null;
@@ -135,12 +137,12 @@ namespace HTLib2
                 right_value = value.next;
             }
 
-            if(HDebug.IsDebuggerAttached)
+            if(doassert && HDebug.IsDebuggerAttached)
             {
-                if(left_value.value != null &&       value != null) HDebug.Assert(comp(left_value.value,       value.value) <= 0);
-                if(     value.value != null && right_value != null) HDebug.Assert(comp(     value.value, right_value.value) <= 0);
-                if(left_value.value != null && right_value != null) HDebug.Assert(comp(left_value.value, right_value.value) <= 0);
-                }
+                if(left_value != null && left_value.value != null &&       value != null) HDebug.Assert(comp(left_value.value,       value.value) <= 0);
+                if(     value != null &&      value.value != null && right_value != null) HDebug.Assert(comp(     value.value, right_value.value) <= 0);
+                if(left_value != null && left_value.value != null && right_value != null) HDebug.Assert(comp(left_value.value, right_value.value) <= 0);
+            }
             return (value, (left_value, right_value));
         }
         public Node Insert(T value)
@@ -229,11 +231,13 @@ namespace HTLib2
             else if(node == head)
             {
                 head = node.next;
+                head._prev = null;
                 node._next = null;
             }
             else if(node == tail)
             {
                 tail = node.prev;
+                tail._next = null;
                 node._prev = null;
             }
             else
@@ -246,6 +250,11 @@ namespace HTLib2
                 node._prev = null;
             }
 
+            if(HDebug.IsDebuggerAttached)
+            {
+                HDebug.AssertIf(head != null, head.prev == null);
+                HDebug.AssertIf(tail != null, tail.next == null);
+            }
             HDebug.Assert(node.prev == null);
             HDebug.Assert(node.next == null);
             return node;
