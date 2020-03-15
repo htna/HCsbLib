@@ -198,7 +198,7 @@ namespace HTLib2.Bioinfo
                 return energy;
             }
 
-            public void BuildHess4PwIntrAct(Universe.AtomPack info, Vector[] coords, out Pair<int, int>[] pwidxs, out PwIntrActInfo[] pwhessinfos)
+            public void BuildHess4PwIntrAct(Universe.AtomPack info, Vector[] coords, out ValueTuple<int, int>[] pwidxs, out PwIntrActInfo[] pwhessinfos)
             {
                 Universe.Angle angle = (Universe.Angle)info;
                 double Ktheta = angle.Ktheta;
@@ -217,8 +217,8 @@ namespace HTLib2.Bioinfo
                 double kij = fij_kij.Item2;
 
                 HDebug.Assert(coords.Length == 3);
-                pwidxs = new Pair<int,int>[1];
-                pwidxs[0] = new Pair<int,int>(0,2);
+                pwidxs = new ValueTuple<int,int>[1];
+                pwidxs[0] = new ValueTuple<int,int>(0,2);
                 pwhessinfos = new PwIntrActInfo[1];
                 pwhessinfos[0] = new PwIntrActInfo(kij, fij);
             }

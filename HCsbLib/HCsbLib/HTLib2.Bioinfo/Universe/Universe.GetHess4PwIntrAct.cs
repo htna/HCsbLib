@@ -51,10 +51,10 @@ namespace HTLib2.Bioinfo
             }
 
             Vector[] coords = GetCoords();
-            Dictionary<Pair<int,int>,ForceField.PwIntrActInfo> pwintractinfos = new Dictionary<Pair<int,int>,ForceField.PwIntrActInfo>();
+            Dictionary<ValueTuple<int,int>,ForceField.PwIntrActInfo> pwintractinfos = new Dictionary<ValueTuple<int,int>,ForceField.PwIntrActInfo>();
             for(int i=0; i<size-1; i++)
                 for(int j=i+1; j<size; j++)
-                    pwintractinfos.Add(new Pair<int, int>(i, j), new ForceField.PwIntrActInfo());
+                    pwintractinfos.Add(new ValueTuple<int, int>(i, j), new ForceField.PwIntrActInfo());
             GetHess4PwIntrActBonds(frcflds, coords, pwintractinfos);
             GetHess4PwIntrActAngles(frcflds, coords, pwintractinfos);
             GetHess4PwIntrActImpropers(frcflds, coords, pwintractinfos);
@@ -67,7 +67,7 @@ namespace HTLib2.Bioinfo
                 hessblk[i, i] = new double[3, 3];
                 frcs[i] = new double[3];
             }
-            foreach(Pair<int,int> key in pwintractinfos.Keys)
+            foreach(ValueTuple<int,int> key in pwintractinfos.Keys)
             {
                 int i = key.Item1;
                 int j = key.Item2;
@@ -93,7 +93,7 @@ namespace HTLib2.Bioinfo
 
             return hessblk;
         }
-        public void GetHess4PwIntrActBonds(List<ForceField.IForceField> frcflds, Vector[] coords, Dictionary<Pair<int,int>,ForceField.PwIntrActInfo> pwintractinfos)
+        public void GetHess4PwIntrActBonds(List<ForceField.IForceField> frcflds, Vector[] coords, Dictionary<ValueTuple<int,int>,ForceField.PwIntrActInfo> pwintractinfos)
         {
             List<ForceField.IBond> frcfld_bonds = SelectInFrcflds(frcflds, new List<ForceField.IBond>());
 
@@ -106,7 +106,7 @@ namespace HTLib2.Bioinfo
                 int[] ids = new int[] { id0, id1 };
                 foreach(ForceField.IHessBuilder4PwIntrAct frcfld in frcfld_bonds)
                 {
-                    Pair<int, int>[] lpwidxs;
+                    ValueTuple<int, int>[] lpwidxs;
                     ForceField.PwIntrActInfo[] lpwintractinfos;
                     frcfld.BuildHess4PwIntrAct(bonds[i], lcoords, out lpwidxs, out lpwintractinfos);
                     // rearrange index as {(min1,max1), (min2,max2), ... }
@@ -114,13 +114,13 @@ namespace HTLib2.Bioinfo
                     {
                         int idxmin = Math.Min(ids[lpwidxs[j].Item1], ids[lpwidxs[j].Item2]);
                         int idxmax = Math.Max(ids[lpwidxs[j].Item1], ids[lpwidxs[j].Item2]);
-                        Pair<int, int> key = new Pair<int, int>(idxmin, idxmax);
+                        ValueTuple<int, int> key = new ValueTuple<int, int>(idxmin, idxmax);
                         pwintractinfos[key] += lpwintractinfos[j];
                     }
                 }
             }
         }
-        public void GetHess4PwIntrActAngles(List<ForceField.IForceField> frcflds, Vector[] coords, Dictionary<Pair<int, int>, ForceField.PwIntrActInfo> pwintractinfos)
+        public void GetHess4PwIntrActAngles(List<ForceField.IForceField> frcflds, Vector[] coords, Dictionary<ValueTuple<int, int>, ForceField.PwIntrActInfo> pwintractinfos)
         {
             List<ForceField.IAngle> frcfld_angles = SelectInFrcflds(frcflds, new List<ForceField.IAngle>());
 
@@ -134,7 +134,7 @@ namespace HTLib2.Bioinfo
                 int[] ids = new int[] { id0, id1, id2 };
                 foreach(ForceField.IHessBuilder4PwIntrAct frcfld in frcfld_angles)
                 {
-                    Pair<int, int>[] lpwidxs;
+                    ValueTuple<int, int>[] lpwidxs;
                     ForceField.PwIntrActInfo[] lpwintractinfos;
                     frcfld.BuildHess4PwIntrAct(angles[i], lcoords, out lpwidxs, out lpwintractinfos);
                     // rearrange index as {(min1,max1), (min2,max2), ... }
@@ -142,13 +142,13 @@ namespace HTLib2.Bioinfo
                     {
                         int idxmin = Math.Min(ids[lpwidxs[j].Item1], ids[lpwidxs[j].Item2]);
                         int idxmax = Math.Max(ids[lpwidxs[j].Item1], ids[lpwidxs[j].Item2]);
-                        Pair<int, int> key = new Pair<int, int>(idxmin, idxmax);
+                        ValueTuple<int, int> key = new ValueTuple<int, int>(idxmin, idxmax);
                         pwintractinfos[key] += lpwintractinfos[j];
                     }
                 }
             }
         }
-        public void GetHess4PwIntrActImpropers(List<ForceField.IForceField> frcflds, Vector[] coords, Dictionary<Pair<int, int>, ForceField.PwIntrActInfo> pwintractinfos)
+        public void GetHess4PwIntrActImpropers(List<ForceField.IForceField> frcflds, Vector[] coords, Dictionary<ValueTuple<int, int>, ForceField.PwIntrActInfo> pwintractinfos)
         {
             List<ForceField.IImproper> frcfld_impropers = SelectInFrcflds(frcflds, new List<ForceField.IImproper>());
 
@@ -163,7 +163,7 @@ namespace HTLib2.Bioinfo
                 int[] ids = new int[] { id0, id1, id2, id3 };
                 foreach(ForceField.IHessBuilder4PwIntrAct frcfld in frcfld_impropers)
                 {
-                    Pair<int, int>[] lpwidxs;
+                    ValueTuple<int, int>[] lpwidxs;
                     ForceField.PwIntrActInfo[] lpwintractinfos;
                     frcfld.BuildHess4PwIntrAct(impropers[i], lcoords, out lpwidxs, out lpwintractinfos);
                     // rearrange index as {(min1,max1), (min2,max2), ... }
@@ -171,13 +171,13 @@ namespace HTLib2.Bioinfo
                     {
                         int idxmin = Math.Min(ids[lpwidxs[j].Item1], ids[lpwidxs[j].Item2]);
                         int idxmax = Math.Max(ids[lpwidxs[j].Item1], ids[lpwidxs[j].Item2]);
-                        Pair<int, int> key = new Pair<int, int>(idxmin, idxmax);
+                        ValueTuple<int, int> key = new ValueTuple<int, int>(idxmin, idxmax);
                         pwintractinfos[key] += lpwintractinfos[j];
                     }
                 }
             }
         }
-        public void GetHess4PwIntrActNonbondeds(List<ForceField.IForceField> frcflds, Vector[] coords, Dictionary<Pair<int, int>, ForceField.PwIntrActInfo> pwintractinfos)
+        public void GetHess4PwIntrActNonbondeds(List<ForceField.IForceField> frcflds, Vector[] coords, Dictionary<ValueTuple<int, int>, ForceField.PwIntrActInfo> pwintractinfos)
         {
             List<ForceField.INonbonded> frcfld_nonbondeds = SelectInFrcflds(frcflds, new List<ForceField.INonbonded>());
 
@@ -198,7 +198,7 @@ namespace HTLib2.Bioinfo
                 int[] ids = new int[] { id0, id1 };
                 foreach(ForceField.IHessBuilder4PwIntrAct frcfld in frcfld_nonbondeds)
                 {
-                    Pair<int, int>[] lpwidxs;
+                    ValueTuple<int, int>[] lpwidxs;
                     ForceField.PwIntrActInfo[] lpwintractinfos;
                     frcfld.BuildHess4PwIntrAct(nonbond, lcoords, out lpwidxs, out lpwintractinfos);
                     // rearrange index as {(min1,max1), (min2,max2), ... }
@@ -206,7 +206,7 @@ namespace HTLib2.Bioinfo
                     {
                         int idxmin = Math.Min(ids[lpwidxs[j].Item1], ids[lpwidxs[j].Item2]);
                         int idxmax = Math.Max(ids[lpwidxs[j].Item1], ids[lpwidxs[j].Item2]);
-                        Pair<int, int> key = new Pair<int, int>(idxmin, idxmax);
+                        ValueTuple<int, int> key = new ValueTuple<int, int>(idxmin, idxmax);
                         pwintractinfos[key] += lpwintractinfos[j];
                     }
                 }

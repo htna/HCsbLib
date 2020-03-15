@@ -78,7 +78,7 @@ namespace HTLib2.Bioinfo
                 HDebug.AssertIf(forceij>0, pchij<0); // positive force => attractive
                 HDebug.AssertIf(forceij<0, pchij>0); // negative force => repulsive
             }
-            public void BuildHess4PwIntrAct(Universe.AtomPack info, Vector[] coords, out Pair<int, int>[] pwidxs, out PwIntrActInfo[] pwhessinfos)
+            public void BuildHess4PwIntrAct(Universe.AtomPack info, Vector[] coords, out ValueTuple<int, int>[] pwidxs, out PwIntrActInfo[] pwhessinfos)
             {
                 Universe.Nonbonded nonbonded = (Universe.Nonbonded)info;
 
@@ -117,8 +117,8 @@ namespace HTLib2.Bioinfo
                 double fij = (   -1) * (332 * pchij / ee) / rij2;
                 double kij = (-2*-1) * (332 * pchij / ee) / rij3;
 
-                pwidxs = new Pair<int, int>[1];
-                pwidxs[0] = new Pair<int, int>(0, 1);
+                pwidxs = new ValueTuple<int, int>[1];
+                pwidxs[0] = new ValueTuple<int, int>(0, 1);
                 pwhessinfos = new PwIntrActInfo[1];
                 pwhessinfos[0] = new PwIntrActInfo(kij, fij);
             }

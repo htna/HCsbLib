@@ -106,7 +106,7 @@ namespace HTLib2.Bioinfo
                 Compute(coords, ref energy, ref forces, ref hessian, info[0], info[1]);
                 return energy;
             }
-            public void BuildHess4PwIntrAct(Universe.AtomPack info, Vector[] coords, out Pair<int, int>[] pwidxs, out PwIntrActInfo[] pwhessinfos)
+            public void BuildHess4PwIntrAct(Universe.AtomPack info, Vector[] coords, out ValueTuple<int, int>[] pwidxs, out PwIntrActInfo[] pwhessinfos)
             {
                 Universe.Bond bond = (Universe.Bond)info;
                 double Kb = bond.Kb;
@@ -121,8 +121,8 @@ namespace HTLib2.Bioinfo
                 double kij = 2 * Kb;
                 double fij = (2*Kb) * (r - b0);
 
-                pwidxs = new Pair<int, int>[1];
-                pwidxs[0] = new Pair<int, int>(0, 1);
+                pwidxs = new ValueTuple<int, int>[1];
+                pwidxs[0] = new ValueTuple<int, int>(0, 1);
                 pwhessinfos = new PwIntrActInfo[1];
                 pwhessinfos[0] = new PwIntrActInfo(kij, fij);
             }

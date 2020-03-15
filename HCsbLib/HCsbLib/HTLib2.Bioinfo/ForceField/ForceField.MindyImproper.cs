@@ -315,7 +315,7 @@ namespace HTLib2.Bioinfo
                 Compute(coords, ref energy, ref forces, ref hessian, info[0], (int)info[1], info[2]);
                 return energy;
             }
-            public void BuildHess4PwIntrAct(Universe.AtomPack info, Vector[] coords, out Pair<int, int>[] pwidxs, out PwIntrActInfo[] pwhessinfos)
+            public void BuildHess4PwIntrAct(Universe.AtomPack info, Vector[] coords, out ValueTuple<int, int>[] pwidxs, out PwIntrActInfo[] pwhessinfos)
             {
                 Universe.Improper improper = (Universe.Improper)info;
                 double Kchi  = improper.Kpsi;
@@ -382,8 +382,8 @@ namespace HTLib2.Bioinfo
                 double kij = fij_kij.Item2;
 
                 HDebug.Assert(coords.Length == 4);
-                pwidxs = new Pair<int, int>[1];
-                pwidxs[0] = new Pair<int, int>(0, 3);
+                pwidxs = new ValueTuple<int, int>[1];
+                pwidxs[0] = new ValueTuple<int, int>(0, 3);
                 pwhessinfos = new PwIntrActInfo[1];
                 pwhessinfos[0] = new PwIntrActInfo(kij, fij);
             }

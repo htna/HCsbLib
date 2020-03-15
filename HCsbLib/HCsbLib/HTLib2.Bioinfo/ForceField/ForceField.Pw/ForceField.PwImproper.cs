@@ -150,7 +150,7 @@ namespace HTLib2.Bioinfo
                 force03  = dV_dψ * dψ_de;                       // force  = {d_V / d_ψ} * {d_ψ / d_e}
                 spring03 = d2V_dψ2*dψ_de*dψ_de + dV_dψ*d2ψ_de2; // spring = {d2_V / d_ψ2}*{d_ψ / d_e}*{d_ψ / d_e}      +      {d_V / d_ψ}*{d2_ψ / d_e2}
             }
-            public void BuildHess4PwIntrAct(Universe.AtomPack info, Vector[] coords, out Pair<int, int>[] pwidxs, out PwIntrActInfo[] pwhessinfos)
+            public void BuildHess4PwIntrAct(Universe.AtomPack info, Vector[] coords, out ValueTuple<int, int>[] pwidxs, out PwIntrActInfo[] pwhessinfos)
             {
                 pwidxs = null;
                 pwhessinfos = null;

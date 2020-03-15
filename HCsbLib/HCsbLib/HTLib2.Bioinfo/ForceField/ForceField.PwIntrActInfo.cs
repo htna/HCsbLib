@@ -17,7 +17,7 @@ namespace HTLib2.Bioinfo
                 return new PwIntrActInfo(l.Kij+r.Kij, l.Fij+r.Fij);
             }
         }
-        public interface IHessBuilder4PwIntrAct { void BuildHess4PwIntrAct(Universe.AtomPack info, Vector[] coords, out Pair<int, int>[] pwidxs, out PwIntrActInfo[] pwintractinfos); }
+        public interface IHessBuilder4PwIntrAct { void BuildHess4PwIntrAct(Universe.AtomPack info, Vector[] coords, out ValueTuple<int, int>[] pwidxs, out PwIntrActInfo[] pwintractinfos); }
 
         public static void GetForceVector(Vector coord1, Vector coord2, double Fij, out Vector frc1, out Vector frc2)
         {
