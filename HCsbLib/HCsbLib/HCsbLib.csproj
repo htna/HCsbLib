@@ -235,6 +235,8 @@
     <Compile Include="HTLib2.Bioinfo\HBioinfo.BFactor\BFactor.cs" />
     <Compile Include="HTLib2.Bioinfo\HBioinfo.BFactor\BFactor.ModeContribToBFactorCorr.cs" />
     <Compile Include="HTLib2.Bioinfo\HBioinfo.Mode\Mode.Static.ToPdbFileAnimated.cs" />
+    <Compile Include="HTLib2.Bioinfo\HBioinfo.Static\HBioinfoStatic.cs" />
+    <Compile Include="HTLib2.Bioinfo\HBioinfo.Static\HBioinfoStatic.GetResiPdbatom.cs" />
     <Compile Include="HTLib2.Bioinfo\HBioinfo\HBioinfo.FreqSpectrum.cs" />
     <Compile Include="HTLib2.Bioinfo\HBioinfo.Mode\Mode.Static2.cs" />
     <Compile Include="HTLib2.Bioinfo\HBioinfo.Mode\Mode.cs" />
