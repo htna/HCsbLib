@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace HTLib2.Bioinfo
 {
-    public static partial class HStaticBioinfo
+    public static partial class HBioinfoStatic
     {
         public static string[] ListLine<T>(this IList<T> elements)
             where T : Pdb.Element
