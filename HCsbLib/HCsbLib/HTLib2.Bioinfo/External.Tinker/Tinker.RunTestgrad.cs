@@ -196,6 +196,29 @@ namespace HTLib2.Bioinfo
                 //, "IMPROPTERM   NONE"
                 //, "TORSIONTERM  NONE"
             }
+            public static Tinker.Run.CTestgrad TestgradCached
+                ( Tinker.Xyz xyz
+                , Tinker.Prm prm
+                , string[] keys
+                , string xyzgradpath_txt     //= cachebase + "prot_solv_testgrad_output.txt";
+                , string tinkerpath_testgrad //= "\"" + @"C:\Program Files\Tinker\bin-win64-8.2.1\testgrad.exe" + "\"";
+                , string tempbase            //=null
+                )
+            {
+                Tinker.Run.CTestgrad testgrad;
+
+                if(HFile.Exists(xyzgradpath_txt) == false)
+                {
+                    Dictionary<string, string[]> optOutSource = new Dictionary<string, string[]>();
+                    testgrad = Tinker.Run.Testgrad(tinkerpath_testgrad, xyz, prm, tempbase, keys
+                        , optOutSource: optOutSource
+                        );
+                    HFile.WriteAllLines(xyzgradpath_txt, optOutSource["output.txt"]);
+                }
+                testgrad = Tinker.Run.ReadGrad(xyzgradpath_txt, null);
+
+                return testgrad;
+            }
             public static CTestgrad Testgrad(Tinker.Xyz xyz
                                             , Tinker.Prm prm
                                             , string tempbase //=null
