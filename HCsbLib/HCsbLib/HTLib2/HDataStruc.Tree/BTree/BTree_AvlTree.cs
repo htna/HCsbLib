@@ -8,7 +8,10 @@ namespace HTLib2
     //using T = System.Int32;
     public static partial class BTree
     {
+#pragma warning disable 414
         static int _debug = 0;
+#pragma warning restore 414
+
         public static AvlTree<T> NewAvlTree<T>(Comparison<T> comp=null)
         {
             return AvlTree<T>.NewAvlTree(comp);
