@@ -174,7 +174,7 @@ namespace HTLib2.Bioinfo
                     new double[]{0.000000, 0.000000, 0.957200},
                     new double[]{0.926627, 0.000000, 0.239987},
                 };
-                if(randOrient != null)
+                if(randOrient)
                 {
                     Vector axis = new double[]
                     { (rand.NextDouble()*10)%5
