@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable CS0162
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -535,6 +537,7 @@ namespace HTLib2.Bioinfo
                 Vector cent = Geometry.CenterOfMass(coords, masses, block);
                 return GetRotate(coords, cent, block);
             }
+            //[System.Diagnostics.CodeAnalysis.SuppressMessage
             public static Vector[] GetRotate(Vector[] coords, Vector cent, int[] block)
             {
                 throw new Exception("this implementation is wrong. Use the following algorithm to get rotation modes for RTB.");
