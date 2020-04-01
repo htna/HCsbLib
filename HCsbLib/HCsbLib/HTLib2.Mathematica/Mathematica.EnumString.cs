@@ -155,9 +155,7 @@ namespace HTLib2
                     yield break;
             }
 
-
-            HDebug.Assert(false);
-            HDebug.Break();
+            throw new Exception();
         }
     }
 }
