@@ -28,7 +28,7 @@ namespace HTLib2
                 HDebug.Assert(Validate());
             }
 
-            public static BST<T> NewBST<T>(Comparison<T> comp)
+            public static BST<T> NewBST(Comparison<T> comp)
             {
                 return new BST<T>
                 {

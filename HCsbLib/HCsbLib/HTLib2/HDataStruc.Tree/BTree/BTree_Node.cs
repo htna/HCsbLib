@@ -17,7 +17,7 @@ namespace HTLib2
             public Node<T> left  ;
             public Node<T> right ;
 
-            public static Node<T> New<T>(T value, Node<T> parent, Node<T> left, Node<T> right)
+            public static Node<T> New(T value, Node<T> parent, Node<T> left, Node<T> right)
             {
                 return new Node<T>
                 {
@@ -147,7 +147,7 @@ namespace HTLib2
                 ToString(sb, this);
                 return sb.ToString();
             }
-            public static void ToString<T>(StringBuilder sb, Node<T> node)
+            public static void ToString(StringBuilder sb, Node<T> node)
             {
                 if (node == null)
                 {
@@ -163,7 +163,7 @@ namespace HTLib2
                     }
                 }
             }
-            static void ToStringRec<T>(StringBuilder sb, Node<T> node)
+            static void ToStringRec(StringBuilder sb, Node<T> node)
             {
                 if (node == null)
                 {

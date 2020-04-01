@@ -10,7 +10,9 @@ namespace HTLib2
     /// </summary>
     public partial class LinkedAvlTree<T>
     {
+#pragma warning disable 414
         static int _debug = 0;
+#pragma warning restore 414
 
         public class Node
         {
