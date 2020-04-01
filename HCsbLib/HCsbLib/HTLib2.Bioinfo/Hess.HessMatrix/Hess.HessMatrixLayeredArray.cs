@@ -31,8 +31,8 @@ namespace HTLib2.Bioinfo
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // Matrix
-        public override int ColSize       { get { return colblksize * 3; } }    public int NumRows { get { return ColSize; } }
-        public override int RowSize       { get { return rowblksize * 3; } }    public int NumCols { get { return RowSize; } }
+        public override int ColSize       { get { return colblksize * 3; } }    //public int NumRows { get { return ColSize; } }
+        public override int RowSize       { get { return rowblksize * 3; } }    //public int NumCols { get { return RowSize; } }
         public override int NumUsedBlocks
         {
             get

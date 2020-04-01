@@ -12,8 +12,8 @@ namespace HTLib2
         double v10, v11, v12;
         double v20, v21, v22;
 
-        public int ColSize { get { return 3; } }    public int NumRows { get { return ColSize; } }
-        public int RowSize { get { return 3; } }    public int NumCols { get { return RowSize; } }
+        public int ColSize { get { return 3; } }    //public int NumRows { get { return ColSize; } }
+        public int RowSize { get { return 3; } }    //public int NumCols { get { return RowSize; } }
         public double this[int  c, int  r] { get { return GetAt(c, r); } set { SetAt(c, r, value); } }
         public double this[long c, long r] { get { return GetAt(c, r); } set { SetAt(c, r, value); } }
         public double[,] ToArray()

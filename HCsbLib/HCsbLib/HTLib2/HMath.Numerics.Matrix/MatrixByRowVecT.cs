@@ -8,8 +8,8 @@ namespace HTLib2
     [Serializable]
     public class MatrixByRowVec<T> : IMatrix<T>
     {
-        int IMatrix<T>.ColSize { get { return (int)ColSize; } } int IMatrix<T>.NumRows { get { return (int)ColSize; } }
-        int IMatrix<T>.RowSize { get { return (int)RowSize; } } int IMatrix<T>.NumCols { get { return (int)RowSize; } }
+        int IMatrix<T>.ColSize { get { return (int)ColSize; } } //int IMatrix<T>.NumRows { get { return (int)ColSize; } }
+        int IMatrix<T>.RowSize { get { return (int)RowSize; } } //int IMatrix<T>.NumCols { get { return (int)RowSize; } }
         public readonly long ColSize;
         public readonly long RowSize;
         public T[][] valColRow;

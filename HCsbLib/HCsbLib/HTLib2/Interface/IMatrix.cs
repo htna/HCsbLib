@@ -9,8 +9,8 @@ namespace HTLib2
 {
     public interface IMatrix<T>
     {
-        int ColSize { get; }        int NumRows { get; }
-        int RowSize { get; }        int NumCols { get; }
+        int ColSize { get; }        //int NumRows { get; }
+        int RowSize { get; }        //int NumCols { get; }
         T this[int  c, int r] { get; set; }
         T this[long c, long r] { get; set; }
         T[,] ToArray();
