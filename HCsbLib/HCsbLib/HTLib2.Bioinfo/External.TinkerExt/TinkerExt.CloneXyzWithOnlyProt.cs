@@ -7,7 +7,7 @@ namespace HTLib2.Bioinfo
 {
     public static partial class TinkerExt
     {
-        public static Tinker.Xyz CloneXyzWithOnlyProt(this Tinker.Xyz xyz)
+        public static Tinker.Xyz CreateXyzWithProtOnly(this Tinker.Xyz xyz)
         {
             List<Tinker.Xyz.Atom> protein = new List<Tinker.Xyz.Atom>();
             List<Tinker.Xyz.Atom> waters  = new List<Tinker.Xyz.Atom>();
