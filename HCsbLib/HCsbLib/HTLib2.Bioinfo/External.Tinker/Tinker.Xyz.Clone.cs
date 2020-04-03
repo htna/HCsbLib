@@ -347,6 +347,7 @@ namespace HTLib2.Bioinfo
                     throw new Exception();
                 }
 
+                var atoms_format = this.atoms_format;
                 // remove bonds
                 foreach(var id in lstAtomIdRemove)
                 {
