@@ -223,13 +223,14 @@ namespace HTLib2.Bioinfo
                                 double assert;
                                 Matlab.Execute("clear");
                                 Matlab.PutMatrix("HH", H, true);
+                                Matlab.Execute("HH = sparse(HH);");
                                 Matlab.PutVector("FF", F.ToVector());
                                 Matlab.PutValue("n", idxKeep.Count*3);
                                 Matlab.PutValue("N", coords.Length*3);
-                                Matlab.Execute("A = HH(1:n  ,1:n  );");
-                                Matlab.Execute("B = HH(1:n  ,n+1:N);");
-                                Matlab.Execute("C = HH(n+1:N,1:n  );");
-                                Matlab.Execute("D = HH(n+1:N,n+1:N);");
+                                Matlab.Execute("A = HH(1:n  ,1:n  ); A = full(A);");
+                                Matlab.Execute("B = HH(1:n  ,n+1:N); B = full(B);");
+                                Matlab.Execute("C = HH(n+1:N,1:n  ); C = full(C);");
+                                Matlab.Execute("D = HH(n+1:N,n+1:N); D = full(D);");
                                 Matlab.Execute("F = FF(1:n  );");
                                 Matlab.Execute("G = FF(n+1:N);");
                                 assert = Matlab.GetValue("max(max(abs(B-C')))");    HDebug.Assert(assert == 0);
