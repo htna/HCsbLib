@@ -13,13 +13,14 @@ namespace HTLib2
         }
         public static void Register(string path_temporary /*=null*/)
         {
+            _path_temporary = path_temporary;
+
             if(_registrated == true)
             {
                 //HDebug.Assert(false);
                 return;
             }
             _registrated = true;
-            _path_temporary = path_temporary;
             Matlab.NumericSolver.Register();
         }
         public static void Unregister()
