@@ -16,44 +16,49 @@ namespace HTLib2.Bioinfo
                 foreach(var atom in prot_solv.atoms)
                 {
                     if(atom.AtomType == "HT ")
-                        continue;
+                    {
+                    }
                     else if(atom.AtomType == "OT ")
                     {
                         HDebug.Assert(atom.BondedIds.Length == 2);
                         Tinker.Xyz.Atom OT  = atom;
                         Tinker.Xyz.Atom HT1 = id_atom[atom.BondedId1.Value];
                         Tinker.Xyz.Atom HT2 = id_atom[atom.BondedId2.Value];
-
-                        id_atom.Remove(OT .Id);
-                        id_atom.Remove(HT1.Id);
-                        id_atom.Remove(HT2.Id);
-
                         HDebug.Assert(HT1.BondedIds.Contains(OT.Id) && HT1.AtomType == "HT ");
                         HDebug.Assert(HT2.BondedIds.Contains(OT.Id) && HT2.AtomType == "HT ");
                         solvs.Add((OT, HT1, HT2));
 
-                        continue;
+                        // remove from id_atom
+                        id_atom.Remove(OT .Id);
+                        id_atom.Remove(HT1.Id);
+                        id_atom.Remove(HT2.Id);
                     }
                     else
                     {
                         // add atom in prot_gat
                         prot_atoms.Add(atom);
+                        // remove from id_atom
+                        id_atom.Remove(atom.Id);
                     }
                 }
                 HDebug.Assert(id_atom.Count == 0);
             }
 
-            KDTreeDLL.KDTree<Tinker.Xyz.Atom> kdtree = new KDTreeDLL.KDTree<Tinker.Xyz.Atom>(3);
+            KDTreeDLL.KDTree<Tinker.Xyz.Atom> kdtree_prot = new KDTreeDLL.KDTree<Tinker.Xyz.Atom>(3);
             foreach(var atom in prot_atoms)
             {
                 // add atom into kdtree, in order to check the distance between protein and a solvent atom
-                kdtree.insert(atom.Coord, atom);
+                kdtree_prot.insert(atom.Coord, atom);
             }
 
+            // list atoms to select
             List<int> lstIdToSelect = new List<int>();
+
+            // add protein into select list
             foreach(var atom in prot_atoms)
                 lstIdToSelect.Add(atom.Id);
 
+            // add solv if OT-prot dist is <= solvgap
             foreach(var solv in solvs)
             {
                 HDebug.Assert(solv.OT .AtomType == "OT ");
@@ -61,7 +66,7 @@ namespace HTLib2.Bioinfo
                 HDebug.Assert(solv.HT2.AtomType == "HT ");
                 HDebug.Assert(solv.HT1.Id != solv.HT2.Id);
 
-                var near = kdtree.nearest(solv.OT.Coord);
+                var near = kdtree_prot.nearest(solv.OT.Coord);
                 double dist = (solv.OT.Coord  - near.Coord).Dist;
                 if(dist <= solvgap)
                 {
