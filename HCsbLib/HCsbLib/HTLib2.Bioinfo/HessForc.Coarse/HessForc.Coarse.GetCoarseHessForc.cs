@@ -234,7 +234,10 @@ namespace HTLib2.Bioinfo
                                 Matlab.Execute("G = FF(n+1:N);");
                                 assert = Matlab.GetValue("max(max(abs(B-C')))");    HDebug.Assert(assert == 0);
                                 // compute coarse hess/forc
-                                Matlab.Execute("BinvD = B * inv(D);");
+                                //if(options.Contains("pinv(D)"))
+                                //    Matlab.Execute("BinvD = B * pinv(D);");
+                                //else
+                                    Matlab.Execute("BinvD = B * inv(D);");
                                 Matlab.Execute("HHH = A - BinvD * C;");
                                 Matlab.Execute("FFF = F - BinvD * G;");
                                 // return
