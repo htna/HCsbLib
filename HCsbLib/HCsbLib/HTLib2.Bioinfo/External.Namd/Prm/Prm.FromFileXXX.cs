@@ -163,7 +163,12 @@ public partial class Namd
             bool skip = false;
             foreach(string line in lines)
             {
-                if(line.Split(separator).First().ToUpper() == "NONBONDED") { skip = true; continue; }
+                if(line.Split(separator).First().ToUpper() == "NONBONDED")
+                {
+                    if(line.EndsWith(" -"))
+                        skip = true;
+                    continue;
+                }
                 if(skip)                                                   { skip = false; continue; }
 				nonbondeds.Add(Nonbonded.FromString(line, logger));
             }
