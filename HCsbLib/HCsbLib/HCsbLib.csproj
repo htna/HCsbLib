@@ -735,7 +735,7 @@
     <Compile Include="HTLib2\HMath.Numerics\NumericSolver.Derivative.cs" />
     <Compile Include="HTLib2\HMath.Numerics\Quaternion.cs" />
     <Compile Include="HTLib2\HMath.Random\Random.cs" />
-    <Compile Include="HTLib2\HObjectDynamic\HDynamicObject.cs" />
+    <Compile Include="HTLib2\HDynamicObject\HDynamicObject.cs" />
     <Compile Include="HTLib2\HOption\HOptions.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.String.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumQuantileElements.cs" />
