@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace HTLib2
 {
-    public static partial class HObjectDynamic
+    public static partial class HDynamicObject
     {
         // https://stackoverflow.com/questions/8631546/get-property-value-from-c-sharp-dynamic-object-by-string-reflection/14011692
         public static string GetPropertyString(dynamic o, string member) { return (string)GetProperty(o, member);  }
