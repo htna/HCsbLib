@@ -13,10 +13,10 @@ namespace HTLib2
     public static partial class HDynamicObject
     {
         // https://stackoverflow.com/questions/8631546/get-property-value-from-c-sharp-dynamic-object-by-string-reflection/14011692
-        public static string GetPropertyString(this dynamic o, string member) { return (string)GetProperty(o, member);  }
-        public static int    GetPropertyInt   (this dynamic o, string member) { return (int   )GetProperty(o, member);  }
-        public static double GetPropertyDouble(this dynamic o, string member) { return (double)GetProperty(o, member);  }
-        public static object GetProperty      (this dynamic o, string member)
+        public static string HGetPropertyString(this object o, string member) { return (string)HGetProperty(o, member);  }
+        public static int    HGetPropertyInt   (this object o, string member) { return (int   )HGetProperty(o, member);  }
+        public static double HGetPropertyDouble(this object o, string member) { return (double)HGetProperty(o, member);  }
+        public static object HGetProperty      (this object o, string member)
         {
             if(o == null) throw new ArgumentNullException("o");
             if(member == null) throw new ArgumentNullException("member");
