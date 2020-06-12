@@ -293,6 +293,7 @@ namespace HTLib2.Bioinfo
         }
         public static partial class HessSbNMA
         {
+            public static object _debug = null;
             public static HessInfo GetHessSbNMA
                 ( Universe univ
                 , IList<Vector> coords
