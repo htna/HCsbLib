@@ -187,7 +187,7 @@ namespace HTLib2
                 Execute("htlib2_matlab_GetGetMatrix = "+name+";");
                 int colsize = GetValueInt("size(htlib2_matlab_GetGetMatrix, 1)");
                 int rowsize = GetValueInt("size(htlib2_matlab_GetGetMatrix, 2)");
-                HDebug.Assert(colsize*rowsize < 2000*2000);
+                HDebug.Assert(colsize*rowsize < 3000*3000);
                 real = new double[colsize, rowsize];
                 imag = new double[colsize, rowsize];
                 matlab.GetFullMatrix("htlib2_matlab_GetGetMatrix", "base", ref real, ref imag);
