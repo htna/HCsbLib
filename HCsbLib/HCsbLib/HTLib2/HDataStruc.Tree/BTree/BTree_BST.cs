@@ -37,9 +37,10 @@ namespace HTLib2
                 };
             }
 
+            public bool  IsEmpty ()        { return (root == null); }
             public bool  Contains(T query) { return (Search(query) != null); }
             public RetT? Search  (T query) { Node<T> node = BstSearchWithParent(    root, null, query, _comp).ret; if(node == null) return null; return RetT.New(node.value); }
-            public bool  Insert  (T value) { Node<T> node = BstInsert          (ref root      , value, _comp)    ; if(node == null) return false; return true; }
+            public RetT? Insert  (T value) { Node<T> node = BstInsert          (ref root      , value, _comp)    ; if(node == null) return null; return RetT.New(node.value); }
             public RetT? Delete  (T query) { var     del  = BstDelete          (ref root      , query, _comp)    ; if(del  == null) return null ; return RetT.New(del.Value.value); }
             public void  MakeACBT()        { DSW(ref root); }
             public bool  Validate()
