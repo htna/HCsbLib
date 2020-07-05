@@ -8,6 +8,29 @@ namespace HTLib2
 {
     public static partial class HStatic
     {
+        public static double Dist(this (Vector, Vector) pt1_pt2)
+        {
+            return Math.Sqrt(Dist2(pt1_pt2));
+        }
+
+        public static double Dist2(this (Vector, Vector) pt1_pt2)
+        {
+            Vector pt1 = pt1_pt2.Item1;
+            Vector pt2 = pt1_pt2.Item2;
+
+            if(pt1.Size != pt2.Size)
+                throw new Exception();
+
+            double dist2 = 0;
+            for(int i=0; i<pt1.Size; i++)
+            {
+                double disti = pt1[i] - pt2[i];
+                dist2 += disti * disti;
+            }
+
+            return dist2;
+        }
+
         public static double[] HToArrayOfIndex(this IList<Vector> vecs, int idx)
         {
             int count = vecs.Count;
