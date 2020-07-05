@@ -74,7 +74,7 @@ namespace HTLib2.Bioinfo
                 ids[i] = atoms[i].Id;
             return ids;
         }
-        public static IEnumerable<Tinker.Prm.Vdw> HEnumVdw(this IEnumerable<Tinker.Xyz.Atom> atoms, Tinker.Prm prm)
+        public static IEnumerable<Tinker.Prm.Vdw> HEnumPrmVdw(this IEnumerable<Tinker.Xyz.Atom> atoms, Tinker.Prm prm)
         {
             Dictionary<int,Tinker.Prm.Atom> prm_id2atom = prm.atoms.ToIdDictionary();
             Dictionary<int,Tinker.Prm.Vdw > prm_cls2vdw = prm.vdws .ToClassDictionary();
@@ -87,15 +87,15 @@ namespace HTLib2.Bioinfo
             )
         {
             foreach(var atom in atoms)
-                yield return atom.GetVdw(prm_id2atom, prm_cls2vdw);
+                yield return atom.GetPrmVdw(prm_id2atom, prm_cls2vdw);
         }
-        public static Dictionary<Tinker.Xyz.Atom, Tinker.Prm.Vdw> HToDictionaryAtomVdw(this IEnumerable<Tinker.Xyz.Atom> atoms, Tinker.Prm prm)
+        public static Dictionary<Tinker.Xyz.Atom, Tinker.Prm.Vdw> HToDictionaryAtomPrmVdw(this IEnumerable<Tinker.Xyz.Atom> atoms, Tinker.Prm prm)
         {
             Dictionary<int,Tinker.Prm.Atom> prm_id2atom = prm.atoms.ToIdDictionary();
             Dictionary<int,Tinker.Prm.Vdw > prm_cls2vdw = prm.vdws .ToClassDictionary();
-            return HToDictionaryAtomVdw(atoms, prm_id2atom, prm_cls2vdw);
+            return HToDictionaryAtomPrmVdw(atoms, prm_id2atom, prm_cls2vdw);
         }
-        public static Dictionary<Tinker.Xyz.Atom, Tinker.Prm.Vdw> HToDictionaryAtomVdw
+        public static Dictionary<Tinker.Xyz.Atom, Tinker.Prm.Vdw> HToDictionaryAtomPrmVdw
             ( this IEnumerable<Tinker.Xyz.Atom> atoms
             , Dictionary<int,Tinker.Prm.Atom> prm_id2atom
             , Dictionary<int,Tinker.Prm.Vdw > prm_cls2vdw
@@ -103,7 +103,7 @@ namespace HTLib2.Bioinfo
         {
             Dictionary<Tinker.Xyz.Atom, Tinker.Prm.Vdw> dict = new Dictionary<Tinker.Xyz.Atom, Tinker.Prm.Vdw>();
             foreach(var atom in atoms)
-                dict.Add(atom, atom.GetVdw(prm_id2atom, prm_cls2vdw));
+                dict.Add(atom, atom.GetPrmVdw(prm_id2atom, prm_cls2vdw));
             return dict;
         }
         public static IEnumerable<double> HEnumMass(this IEnumerable<Tinker.Xyz.Atom> atoms, Tinker.Prm prm)
@@ -119,13 +119,13 @@ namespace HTLib2.Bioinfo
             foreach(var atom in atoms)
                 yield return atom.GetMass(prm_id2atom);
         }
-        public static IEnumerable<double> HEnumPrmAtom
+        public static IEnumerable<Tinker.Prm.Atom> HEnumPrmAtom
             ( this IEnumerable<Tinker.Xyz.Atom> atoms
             , Dictionary<int,Tinker.Prm.Atom> prm_id2atom
             )
         {
             foreach(var atom in atoms)
-                yield return atom.GetMass(prm_id2atom);
+                yield return atom.GetPrmAtom(prm_id2atom);
         }
         public static Dictionary<Tinker.Xyz.Atom, double> HToDictionaryAtomMass
             ( this IEnumerable<Tinker.Xyz.Atom> atoms
@@ -839,16 +839,16 @@ namespace HTLib2.Bioinfo
                 //      Prm.Charge prm_charge = prm_id2charge[AtomId];
                 //      return prm_charge;
                 //  }
-                public Prm.Charge GetCharge(Prm prm)
+                public Prm.Charge GetPrmCharge(Prm prm)
                 {
-                    return GetCharge(prm.charges);
+                    return GetPrmCharge(prm.charges);
                 }
-                public Prm.Charge GetCharge(Prm.Charge[] prm_charges)
+                public Prm.Charge GetPrmCharge(Prm.Charge[] prm_charges)
                 {
                     Dictionary<int, Prm.Charge> prm_id2charge = prm_charges.ToIdDictionary();
-                    return GetCharge(prm_id2charge);
+                    return GetPrmCharge(prm_id2charge);
                 }
-                public Prm.Charge GetCharge(Dictionary<int, Prm.Charge> prm_id2charge)
+                public Prm.Charge GetPrmCharge(Dictionary<int, Prm.Charge> prm_id2charge)
                 {
                     Prm.Charge prm_charge = prm_id2charge[AtomId];
                     return prm_charge;
@@ -899,13 +899,13 @@ namespace HTLib2.Bioinfo
                 //      Prm.Vdw    prm_vdw  = prm_cls2vdw[prm_atom.Class];
                 //      return prm_vdw;
                 //  }
-                public Prm.Vdw GetVdw(Prm prm)
+                public Prm.Vdw GetPrmVdw(Prm prm)
                 {
                     Dictionary<int,Prm.Atom> prm_id2atom = prm.atoms.ToIdDictionary();
                     Dictionary<int,Prm.Vdw > prm_cls2vdw = prm.vdws .ToClassDictionary();
-                    return GetVdw(prm_id2atom, prm_cls2vdw);
+                    return GetPrmVdw(prm_id2atom, prm_cls2vdw);
                 }
-                public Prm.Vdw GetVdw
+                public Prm.Vdw GetPrmVdw
                     ( Dictionary<int, Prm.Atom> prm_id2atom
                     , Dictionary<int, Prm.Vdw > prm_cls2vdw
                     )
