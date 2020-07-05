@@ -236,6 +236,7 @@ namespace HTLib2
 		// Functions
 		public double Dist2
 		{
+	        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 			get
 			{
 				double result = 0;
@@ -247,6 +248,7 @@ namespace HTLib2
 		}
 		public double Dist
 		{
+	        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
 			get
 			{
                 double dist = Math.Sqrt(Dist2);

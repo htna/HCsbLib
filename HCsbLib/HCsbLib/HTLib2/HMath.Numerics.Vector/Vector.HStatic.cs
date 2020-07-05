@@ -8,11 +8,13 @@ namespace HTLib2
 {
     public static partial class HStatic
     {
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static double Dist(this (Vector, Vector) pt1_pt2)
         {
             return Math.Sqrt(Dist2(pt1_pt2));
         }
 
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         public static double Dist2(this (Vector, Vector) pt1_pt2)
         {
             Vector pt1 = pt1_pt2.Item1;
