@@ -119,6 +119,14 @@ namespace HTLib2.Bioinfo
             foreach(var atom in atoms)
                 yield return atom.GetMass(prm_id2atom);
         }
+        public static IEnumerable<double> HEnumPrmAtom
+            ( this IEnumerable<Tinker.Xyz.Atom> atoms
+            , Dictionary<int,Tinker.Prm.Atom> prm_id2atom
+            )
+        {
+            foreach(var atom in atoms)
+                yield return atom.GetMass(prm_id2atom);
+        }
         public static Dictionary<Tinker.Xyz.Atom, double> HToDictionaryAtomMass
             ( this IEnumerable<Tinker.Xyz.Atom> atoms
             , Dictionary<int,Tinker.Prm.Atom> prm_id2atom
@@ -867,6 +875,20 @@ namespace HTLib2.Bioinfo
                     Prm.Atom prm_atom = prm_id2atom[AtomId];
                     double mass = prm_atom.Mass;
                     return mass;
+                }
+                public Prm.Atom GetPrmAtom(Prm prm)
+                {
+                    return GetPrmAtom(prm.atoms);
+                }
+                public Prm.Atom GetPrmAtom(Prm.Atom[] prm_atoms)
+                {
+                    Dictionary<int,Prm.Atom> prm_id2atom = prm_atoms.ToIdDictionary();
+                    return GetPrmAtom(prm_id2atom);
+                }
+                public Prm.Atom GetPrmAtom(Dictionary<int, Prm.Atom> prm_id2atom)
+                {
+                    Prm.Atom prm_atom = prm_id2atom[AtomId];
+                    return prm_atom;
                 }
 
                 //  public Prm.Vdw GetVdw(Prm prm)
