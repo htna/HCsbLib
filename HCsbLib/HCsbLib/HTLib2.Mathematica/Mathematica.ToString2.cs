@@ -90,6 +90,39 @@ namespace HTLib2
         //    text.Append("}");
         //    return text.ToString();
         //}
+        protected static void _ToString2(StringBuilder text, string format, System.Array arr, int[] idxs, int dim, int rank)
+        {
+            if(dim == rank)
+            {
+                object obj = arr.GetValue(idxs);
+                _ToString2(text, format, obj);
+                return;
+            }
+
+            text.Append("{");
+            int leng = arr.GetLength(dim);
+            string delim = (dim == 0) ? ", " : ",";
+            for(int i=0; i<leng; i++)
+            {
+                if(i != 0)
+                    text.Append(delim);
+                idxs[dim] = i;
+                _ToString2(text, format, arr, idxs, dim+1, rank);
+            }
+            text.Append("}");
+        }
+        protected static void _ToString2(StringBuilder text, string format, System.Array arr)
+        {
+            if(arr == null)
+            {
+                text.Append("{}");
+                return;
+            }
+
+            int rank  = arr.Rank;
+            int[] idxs = new int[rank];
+            _ToString2(text, format, arr, idxs, 0, rank);
+        }
         protected static void _ToString2(StringBuilder text, string format, System.Collections.IEnumerable objs)
         {
             text.Append("{");
@@ -219,6 +252,7 @@ namespace HTLib2
                 if(obj is System.Runtime.CompilerServices.ITuple    ) { _ToString2(text, format, obj as System.Runtime.CompilerServices.ITuple    ); return; }
                 if(obj is System.Collections.IDictionary            ) { _ToString2(text, format, obj as System.Collections.IDictionary            ); return; }
                 if(obj is IMatrix<double>                           ) { _ToString2(text, format, obj as IMatrix<double>                           ); return; }
+                if(obj is System.Array                              ) { _ToString2(text, format, obj as System.Array                              ); return; }
                 if(obj is System.Collections.IList                  )
                 {
                     //HDebug.ToDo();
