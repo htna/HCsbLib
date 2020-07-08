@@ -739,6 +739,7 @@
     <Compile Include="HTLib2\HMath.Random\Random.cs" />
     <Compile Include="HTLib2\HDynamicObject\HDynamicObject.cs" />
     <Compile Include="HTLib2\HOption\HOptions.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumItemN.Tuple.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.String.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumQuantileElements.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumByIndex.cs" />
@@ -787,6 +788,7 @@
     <Compile Include="HTLib2\HStatic\HLib2Static.HListIndexCommon.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HListIndexEqualTo.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HListIndexOf.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumItemN.ValueTuple.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HListItemN.ValueTuple.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HListItemN.Tuple.cs" />
     <Compile Include="HTLib2\HStatic\HLib2Static.HParseT.cs" />
