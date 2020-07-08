@@ -7,6 +7,28 @@ namespace HTLib2
 {
     public static partial class HStatic
     {
+        public static string HTemp1(this string value)
+        {
+            throw new Exception();
+            return null;
+        }
+        public static string HTemp2(this string value)
+        {
+            throw new Exception();
+            return null;
+        }
+        public static string HTemp3(this string value)
+        {
+            throw new Exception();
+            return null;
+        }
+        public static string HToUpperLowers(this string value)
+        {
+            string first = value.Substring(0,1).ToUpper();
+            string other = value.Substring(1  ).ToLower();
+            string result = first + other;
+            return result;
+        }
         public static Tuple<string, string>[] HTrim(this IList<Tuple<string, string>> values)
         {
             Tuple<string, string>[] trims = new Tuple<string, string>[values.Count];
