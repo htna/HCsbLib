@@ -13,10 +13,11 @@ namespace Tutorial
         static void Main(string[] args)
         {
             string pathbase = Environment.CurrentDirectory + @"\test\";
+            string pdbbase = @"C:\Users\hzn17\svn\HCsbLib.git\trunk\HCsbLib\HCsbLib-Tutorial\";
             HDirectory.CreateDirectory(pathbase);
 
             Tutorial_Mathematica.Main(pathbase, args);
-            Tutorial_Main0      .Main(pathbase, args);
+            Tutorial_Pdb        .Main(pathbase, pdbbase, args);
         }
     }
 }

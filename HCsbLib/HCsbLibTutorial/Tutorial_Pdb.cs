@@ -10,12 +10,12 @@ namespace Tutorial
 {
     partial class Program
     {
-        public class Tutorial_Main0
+        public class Tutorial_Pdb
         {
-            public static void Main(string pathbase, string[] args)
+            public static void Main(string pathbase, string pdbbase, string[] args)
             {
                 // load a pdb file
-                Pdb pdb = Pdb.FromFile("1l2y.pdb");
+                Pdb pdb = Pdb.FromFile(pdbbase+"1l2y.pdb");
 
                 // get coordinates
                 List<Vector> coords = new List<Vector>();
