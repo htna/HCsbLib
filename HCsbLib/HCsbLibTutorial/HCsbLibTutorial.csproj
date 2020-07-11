@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tutorial_Main0.cs" />
+    <Compile Include="Tutorial_Pdb.cs" />
     <Compile Include="Tutorial_Mathematica.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
