@@ -125,12 +125,18 @@ namespace HTLib2
             ///////////////////////////////////////////////////////////////////////
             public bool Validate()
             {
+                return Validate(_comp);
+            }
+            public bool Validate(Comparison<T> comp_validate)
+            {
                 if(root == null)
                     return true;
 
+                int avlcomp_validate(AvlNodeInfo x, AvlNodeInfo y) { return comp_validate(x.value, y.value); }
+
                 if(ValidateBalance() == false) return false;
                 if(BTree.BstValidateConnection(root) == false) return false;
-                if(BTree.BstValidateOrder(root, avlcomp) == false) return false;
+                if(BTree.BstValidateOrder(root, avlcomp_validate) == false) return false;
                 return true;
             }
             bool ValidateBalance()

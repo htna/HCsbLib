@@ -263,15 +263,21 @@ namespace HTLib2
         }
         public bool Validate()
         {
+            return Validate(comp);
+        }
+        public bool Validate(Comparison<T> comp_validate)
+        {
+            int nodecomp_validate(Node x, Node y) { return comp_validate(x.value, y.value); }
+
             // check AVL validate
-            if(avl.Validate() == false) return false;
+            if(avl.Validate(nodecomp_validate) == false) return false;
 
             // check linked-list validate
             Node n = head;
             while(n != null)
             {
                 Node n_next = n.next;
-                if(n_next != null && (nodecomp(n, n_next) <= 0) == false)
+                if(n_next != null && (nodecomp_validate(n, n_next) <= 0) == false)
                     return false;
                 n = n_next;
             }
