@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ * This does not work because Xyzedit requires keyboard input to add solvent box.
+ * Finally, automatically handling is not possible using xyzedit.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -76,3 +80,4 @@ namespace HTLib2.Bioinfo
         }
     }
 }
+*/
