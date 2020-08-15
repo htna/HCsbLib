@@ -15,13 +15,15 @@ namespace HTLib2.Bioinfo
                 public string[]   capture;
             };
 
-            public static CXyzedit Xyzedit
+            public static CXyzedit XyzeditSolvate
                 ( string xyzeditpath
                 , Tinker.Xyz xyz
                 , Tinker.Prm prm
+                , Tinker.Xyz solv_box_xyz
                 , string tempbase //=null
                 , string[] keys //=null
-                , params string[] parameters
+                , string[] parameters
+                , int num_Soak_Current_Molecule_in_Box_of_Solvent
                 )
             {
                 var tmpdir = HDirectory.CreateTempDirectory(tempbase);
@@ -31,6 +33,7 @@ namespace HTLib2.Bioinfo
                 {
                     xyz.ToFile("prot.xyz", false);
                     prm.ToFile("prot.prm");
+                    solv_box_xyz.ToFile("solv_box.xyz", false);
                     string keypath = null;
                     if((keys != null) && (keys.Length > 0))
                     {
@@ -49,6 +52,8 @@ namespace HTLib2.Bioinfo
                         if(keypath != null) command += " -k "+keypath;
                         foreach(string parameter in parameters)
                             command += " " + parameter;
+                        command += " " + num_Soak_Current_Molecule_in_Box_of_Solvent;
+                        command += " solv_box.xyz";
                         command += " > output.txt";
                         List<string> errors = new List<string>();
                         int exitcode = HProcess.StartAsBatchSilent(null, null, errors, command);

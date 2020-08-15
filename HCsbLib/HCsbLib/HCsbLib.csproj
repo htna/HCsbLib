@@ -191,7 +191,7 @@
     <Compile Include="HTLib2.Bioinfo\External.Tinker\src\i_urypot.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\src\i_usage.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\src\i_virial.cs" />
-    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.RunXyzedit.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.RunXyzeditSolvate.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Tools.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Energy.Charmm22.cs" />
