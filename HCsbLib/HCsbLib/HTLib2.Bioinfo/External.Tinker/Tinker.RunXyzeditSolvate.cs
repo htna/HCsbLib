@@ -51,8 +51,9 @@ namespace HTLib2.Bioinfo
                         command += " prot.xyz";
                         command += " prot.prm";
                         if(keypath != null) command += " -k "+keypath;
-                        foreach(string parameter in parameters)
-                            command += " " + parameter;
+                        if(parameters != null)
+                            foreach(string parameter in parameters)
+                                command += " " + parameter;
                         command += " " + num_Soak_Current_Molecule_in_Box_of_Solvent;
                         command += " solv_box.xyz";
                         command += " > output.txt";
