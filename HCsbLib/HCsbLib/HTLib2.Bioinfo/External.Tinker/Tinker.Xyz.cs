@@ -591,6 +591,24 @@ namespace HTLib2.Bioinfo
                     public int[] idxAtomId   = new int[]{47,52};    public string formatAtomId   = "                     {0}";  // HSubEndStringCount
                     public int[] idxBondedId = new int[]{53,58};    public string formatBondedId = "                     {0}";  // HSubEndStringCount
 
+                    public Format(int IdSize=5, int CoordSize=11, string CoordFormat="{0:0.000000}")
+                    {
+                        UpdateFormat(IdSize, CoordSize, CoordFormat);
+                    }
+                    public void UpdateFormat(int IdSize=5, int CoordSize=11, string CoordFormat="{0:0.000000}")
+                    {
+                        //IdSize    =  5- 0;
+                        //CoordSize = 22-11;
+                        int i = 0;
+                        idxId       = new int[]{ i, i+IdSize    };    i+=3+IdSize   ;    formatId       = "                     {0}";  // HSubEndStringCount
+                        idxAtomType = new int[]{ i, i+2         };    i+=3          ;    formatAtomType = "{0}                     ";  // Substring
+                        idxX        = new int[]{ i, i+CoordSize };    i+=1+CoordSize;    formatX        = "            "+CoordFormat;  // HSubEndStringCount
+                        idxY        = new int[]{ i, i+CoordSize };    i+=1+CoordSize;    formatY        = "            "+CoordFormat;  // HSubEndStringCount
+                        idxZ        = new int[]{ i, i+CoordSize };    i+=1+CoordSize;    formatZ        = "            "+CoordFormat;  // HSubEndStringCount
+                        idxAtomId   = new int[]{ i, i+5         };    i+=6          ;    formatAtomId   = "                     {0}";  // HSubEndStringCount
+                        idxBondedId = new int[]{ i, i+IdSize    };    i+=1+CoordSize;    formatBondedId = "                     {0}";  // HSubEndStringCount
+                    }
+
                     public static Format defformat_digit06 = new Format
                     {
                         ///  id  (atom type in prm)   x     y      z        (atom-id in prm)  bonds, ...
