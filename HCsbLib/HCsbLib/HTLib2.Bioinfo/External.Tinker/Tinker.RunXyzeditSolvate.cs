@@ -31,6 +31,7 @@ namespace HTLib2.Bioinfo
                 Tinker.Xyz xyz_2;
                 string[] capture;
                 {
+                    HEnvironment.CurrentDirectory = tmpdir.FullName;
                     xyz.ToFile("prot.xyz", false);
                     prm.ToFile("prot.prm");
                     solv_box_xyz.ToFile("solv_box.xyz", false);
