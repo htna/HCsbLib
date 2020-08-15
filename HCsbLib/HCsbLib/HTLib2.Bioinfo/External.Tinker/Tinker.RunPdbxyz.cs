@@ -25,6 +25,26 @@ namespace HTLib2.Bioinfo
                 , params string[] keys
                 )
             {
+                return Pdbxyz
+                ( pdbxyzpath    : null
+                , pdb           : pdb
+                , prm           : prm
+                , tempbase      : tempbase 
+                , parameters    : parameters 
+                , tinkerversion : tinkerversion 
+                , keys          : keys
+                );
+            }
+            public static CPdbxyz Pdbxyz
+                ( string pdbxyzpath
+                , Pdb pdb
+                , Tinker.Prm prm
+                , string tempbase //=null
+                , string parameters //=null
+                , string tinkerversion //="6.2.1"
+                , params string[] keys
+                )
+            {
                 var tmpdir = HDirectory.CreateTempDirectory(tempbase);
                 string currpath = HEnvironment.CurrentDirectory;
                 Tinker.Xyz xyz;
@@ -33,11 +53,15 @@ namespace HTLib2.Bioinfo
                 {
                     HEnvironment.CurrentDirectory = tmpdir.FullName;
                     {
-                        foreach(var respath_filename in GetResourcePaths("6.2.1", "pdbxyz"))
+                        if(pdbxyzpath == null)
                         {
-                            string respath  = respath_filename.Item1;
-                            string filename = respath_filename.Item2;
-                            HResource.CopyResourceTo<Tinker>(respath, filename);
+                            foreach(var respath_filename in GetResourcePaths("6.2.1", "pdbxyz"))
+                            {
+                                string respath  = respath_filename.Item1;
+                                string filename = respath_filename.Item2;
+                                HResource.CopyResourceTo<Tinker>(respath, filename);
+                            }
+                            pdbxyzpath = "pdbxyz.exe";
                         }
                     }
                     pdb.ToFile("prot.pdb");
@@ -54,7 +78,7 @@ namespace HTLib2.Bioinfo
                       //bool ComputeNumericalGradientVector     = false;
                       //bool OutputBreakdownByGradientComponent = false;
                         string command = "";
-                        command += "pdbxyz.exe";
+                        command += pdbxyzpath;
                         command += " prot.pdb";
                         command += " prot.prm";
                         if(keypath != null) command += " -k "+keypath;
