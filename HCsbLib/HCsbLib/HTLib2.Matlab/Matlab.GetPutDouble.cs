@@ -118,60 +118,9 @@ namespace HTLib2
         }
         public static double[,] GetMatrix(string name, bool bUseFile=false)
         {
-            double[,] Zeros(int colsize, int rowsize)
-            {
-                return new double[colsize, rowsize];
-            }
             const bool clear_var = false;
-
-            if((bUseFile == false) || (_path_temporary == null))
-            {
-                System.Array real;
-                System.Array imag;
-                Execute("htlib2_matlab_GetGetMatrix = "+name+";");
-                int colsize = GetValueInt("size(htlib2_matlab_GetGetMatrix, 1)");
-                int rowsize = GetValueInt("size(htlib2_matlab_GetGetMatrix, 2)");
-                HDebug.Assert(colsize*rowsize < 3000*3000);
-                real = new double[colsize, rowsize];
-                imag = new double[colsize, rowsize];
-                matlab.GetFullMatrix("htlib2_matlab_GetGetMatrix", "base", ref real, ref imag);
-                Execute("clear htlib2_matlab_GetGetMatrix;");
-                double[,] matrix = Zeros(colsize, rowsize);
-                for(int c=0; c<colsize; c++)
-                    for(int r=0; r<rowsize; r++)
-                        matrix[c, r] = (double)real.GetValue(c, r);
-                real = null;
-                imag = null;
-                return matrix;
-            }
-            else
-            {
-                HDebug.Assert(bUseFile, _path_temporary != null);
-                string tmppath = HFile.GetTempPath(_path_temporary, ".dat");
-                Execute("clear htlib2_matlab_GetGetMatrix;");
-                Execute("htlib2_matlab_GetGetMatrix.mat = 0;");
-                Execute("htlib2_matlab_GetGetMatrix.mat = "+name+";");
-                int colsize = GetValueInt("size(htlib2_matlab_GetGetMatrix.mat, 1)");
-                int rowsize = GetValueInt("size(htlib2_matlab_GetGetMatrix.mat, 2)");
-                {
-                    Execute("htlib2_matlab_GetGetMatrix.fid=fopen('"+tmppath+"','w');");
-                    Execute("htlib2_matlab_GetGetMatrix.mat=fwrite(htlib2_matlab_GetGetMatrix.fid,htlib2_matlab_GetGetMatrix.mat','double');");
-                    Execute("fclose(htlib2_matlab_GetGetMatrix.fid);");
-                    Execute("clear htlib2_matlab_GetGetMatrix;");
-                }
-                if(clear_var)
-                    Execute("clear "+name+";");
-                double[,] matrix = Zeros(colsize, rowsize);
-                {
-                    System.IO.BinaryReader reader = new System.IO.BinaryReader(new System.IO.FileStream(tmppath, System.IO.FileMode.Open));
-                    for(int c=0; c<colsize; c++)
-                        for(int r=0; r<rowsize; r++)
-                            matrix[c, r] = reader.ReadDouble();
-                    reader.Close();
-                }
-                HFile.Delete(tmppath);
-                return matrix;
-            }
+            MATRIX matrix = GetMatrix(name, MATRIX.Zeros, bUseFile, clear_var);
+            return matrix._data;
         }
         public static IMATRIX GetMatrix<IMATRIX>(string name, Func<int, int, IMATRIX> Zeros, bool bUseFile)
             where IMATRIX : IMatrix<double>
