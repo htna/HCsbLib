@@ -205,6 +205,63 @@ namespace HTLib2.Bioinfo
 
                 return newxyz;
             }
+            //  public Xyz CloneByReindex(IList<Tuple<int,int>> idsFromTo, bool allowresize=false)
+            //  {
+            //      HashSet<int> setIdFrom = new HashSet<int>(idsFromTo.HListItem1());
+            //      HashSet<int> setIdTo   = new HashSet<int>(idsFromTo.HListItem2());
+            //      if(setIdFrom.Count != atoms.Length ) { HDebug.Assert(false); return null; }
+            //      if(setIdFrom.Count != setIdTo.Count) { HDebug.Assert(false); return null; }
+            //  
+            //      Dictionary<int, Tuple<int, int>> idFrom2To = idsFromTo.HToDictionaryWithKeyItem1();
+            //  
+            //      List<Element>           nheaders = new List<Element>();
+            //      Dictionary<int,Element> natoms   = new Dictionary<int, Element>();
+            //      for(int ie=0; ie<elements.Length; ie++)
+            //      {
+            //          switch(elements[ie].type)
+            //          {
+            //              case "Header":
+            //                  nheaders.Add(elements[ie]);
+            //                  break;
+            //              case "Atom":
+            //                  {
+            //                      Atom atom = elements[ie] as Atom;
+            //                      HDebug.Assert(idFrom2To[atom.Id].Item1 == atom.Id);
+            //                      int nid = idFrom2To[atom.Id].Item2;
+            //                      int[] nbondedids = atom.BondedIds;
+            //                      for(int i=0; i<nbondedids.Length; i++)
+            //                      {
+            //                          int from = nbondedids[i];
+            //                          if(idFrom2To.ContainsKey(from))
+            //                          {
+            //                              HDebug.Assert(idFrom2To[from].Item1 == from);
+            //                              int to = idFrom2To[from].Item2;
+            //                              nbondedids[i] = to;
+            //                          }
+            //                      }
+            //                      Xyz.Atom natom = Xyz.Atom.FromData(atom.format, nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
+            //                      natoms.Add(nid, natom);
+            //                  }
+            //                  break;
+            //              default:
+            //                  HDebug.Assert(false);
+            //                  return null;
+            //          }
+            //      }
+            //  
+            //      List<Element> nelements = new List<Element>(nheaders);
+            //      foreach(int nid in natoms.Keys.ToArray().HSort())
+            //          nelements.Add(natoms[nid]);
+            //  
+            //      {
+            //          int maxid = nelements.HSelectByType((Atom)null).HListId().Max();
+            //          int[] idxhdr = nelements.HIndexByType((Header)null).ToArray();
+            //          HDebug.Assert(idxhdr.Length == 1);
+            //          nelements[idxhdr[0]] = Header.FromData(maxid);
+            //      }
+            //  
+            //      return new Xyz { elements = nelements.ToArray() };
+            //  }
             public Xyz CloneByReindex(IList<Tuple<int,int>> idsFromTo, bool allowresize=false)
             {
                 if(HDebug.IsDebuggerAttached)
@@ -226,7 +283,7 @@ namespace HTLib2.Bioinfo
 
                 return new Xyz { elements = nelements.ToArray() };
             }
-            public static List<Element> CloneByReindex(Element[] elements, IList<Tuple<int,int>> idsFromTo, bool allowresize=false)
+            public static List<Element> CloneByReindex(IList<Element> elements, IList<Tuple<int,int>> idsFromTo, bool allowresize=false)
             {
                 if(HDebug.IsDebuggerAttached)
                 {
@@ -237,39 +294,33 @@ namespace HTLib2.Bioinfo
 
                 Dictionary<int, Tuple<int, int>> idFrom2To = idsFromTo.HToDictionaryWithKeyItem1();
 
-                List<Element>           nheaders = new List<Element>();
-                Dictionary<int,Element> natoms   = new Dictionary<int, Element>();
-                for(int ie=0; ie<elements.Length; ie++)
+                //List<Element>           nheaders = new List<Element>();
+                (List<Xyz.Header> headers, List<Xyz.Atom> atoms, List<Element> unknown) = elements.GroupByHeaderAtom();
+                if(unknown.Count != 0)
                 {
-                    switch(elements[ie].type)
+                    throw new Exception();
+                }
+
+                List<Xyz.Header>        nheaders = headers;
+                Dictionary<int,Element> natoms   = new Dictionary<int, Element>();
+                foreach(Atom atom in atoms)
+                {
+                    //Atom atom = elements[ie] as Atom;
+                    HDebug.Assert(idFrom2To[atom.Id].Item1 == atom.Id);
+                    int nid = idFrom2To[atom.Id].Item2;
+                    int[] nbondedids = atom.BondedIds;
+                    for(int i=0; i<nbondedids.Length; i++)
                     {
-                        case "Header":
-                            nheaders.Add(elements[ie]);
-                            break;
-                        case "Atom":
-                            {
-                                Atom atom = elements[ie] as Atom;
-                                HDebug.Assert(idFrom2To[atom.Id].Item1 == atom.Id);
-                                int nid = idFrom2To[atom.Id].Item2;
-                                int[] nbondedids = atom.BondedIds;
-                                for(int i=0; i<nbondedids.Length; i++)
-                                {
-                                    int from = nbondedids[i];
-                                    if(idFrom2To.ContainsKey(from))
-                                    {
-                                        HDebug.Assert(idFrom2To[from].Item1 == from);
-                                        int to = idFrom2To[from].Item2;
-                                        nbondedids[i] = to;
-                                    }
-                                }
-                                Xyz.Atom natom = Xyz.Atom.FromData(atom.format, nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
-                                natoms.Add(nid, natom);
-                            }
-                            break;
-                        default:
-                            HDebug.Assert(false);
-                            return null;
+                        int from = nbondedids[i];
+                        if(idFrom2To.ContainsKey(from))
+                        {
+                            HDebug.Assert(idFrom2To[from].Item1 == from);
+                            int to = idFrom2To[from].Item2;
+                            nbondedids[i] = to;
+                        }
                     }
+                    Xyz.Atom natom = Xyz.Atom.FromData(atom.format, nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
+                    natoms.Add(nid, natom);
                 }
 
                 List<Element> nelements = new List<Element>(nheaders);
