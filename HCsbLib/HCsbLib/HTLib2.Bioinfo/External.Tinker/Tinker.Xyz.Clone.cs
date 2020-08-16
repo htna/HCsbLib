@@ -207,10 +207,33 @@ namespace HTLib2.Bioinfo
             }
             public Xyz CloneByReindex(IList<Tuple<int,int>> idsFromTo, bool allowresize=false)
             {
-                HashSet<int> setIdFrom = new HashSet<int>(idsFromTo.HListItem1());
-                HashSet<int> setIdTo   = new HashSet<int>(idsFromTo.HListItem2());
-                if(setIdFrom.Count != atoms.Length ) { HDebug.Assert(false); return null; }
-                if(setIdFrom.Count != setIdTo.Count) { HDebug.Assert(false); return null; }
+                if(HDebug.IsDebuggerAttached)
+                {
+                    HashSet<int> setIdFrom = new HashSet<int>(idsFromTo.HListItem1());
+                    HashSet<int> setIdTo   = new HashSet<int>(idsFromTo.HListItem2());
+                    if(setIdFrom.Count != atoms.Length ) { HDebug.Assert(false); return null; }
+                    if(setIdFrom.Count != setIdTo.Count) { HDebug.Assert(false); return null; }
+                }
+
+                List<Element> nelements = CloneByReindex(elements, idsFromTo, allowresize);
+
+                {
+                    int maxid = nelements.HSelectByType((Atom)null).HListId().Max();
+                    int[] idxhdr = nelements.HIndexByType((Header)null).ToArray();
+                    HDebug.Assert(idxhdr.Length == 1);
+                    nelements[idxhdr[0]] = Header.FromData(maxid);
+                }
+
+                return new Xyz { elements = nelements.ToArray() };
+            }
+            public static List<Element> CloneByReindex(Element[] elements, IList<Tuple<int,int>> idsFromTo, bool allowresize=false)
+            {
+                if(HDebug.IsDebuggerAttached)
+                {
+                    HashSet<int> setIdFrom = new HashSet<int>(idsFromTo.HListItem1());
+                    HashSet<int> setIdTo   = new HashSet<int>(idsFromTo.HListItem2());
+                    if(setIdFrom.Count != setIdTo.Count) { HDebug.Assert(false); return null; }
+                }
 
                 Dictionary<int, Tuple<int, int>> idFrom2To = idsFromTo.HToDictionaryWithKeyItem1();
 
@@ -253,14 +276,7 @@ namespace HTLib2.Bioinfo
                 foreach(int nid in natoms.Keys.ToArray().HSort())
                     nelements.Add(natoms[nid]);
 
-                {
-                    int maxid = nelements.HSelectByType((Atom)null).HListId().Max();
-                    int[] idxhdr = nelements.HIndexByType((Header)null).ToArray();
-                    HDebug.Assert(idxhdr.Length == 1);
-                    nelements[idxhdr[0]] = Header.FromData(maxid);
-                }
-
-                return new Xyz { elements = nelements.ToArray() };
+                return nelements;
             }
             public Xyz CloneByAlign(Xyz xyzToAlign)
             {
