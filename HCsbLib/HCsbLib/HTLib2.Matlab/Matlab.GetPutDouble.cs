@@ -4,43 +4,43 @@ using System.Text;
 
 namespace HTLib2
 {
-	public partial class Matlab
-	{
-		public static double GetValue(string name)
-		{
-			double value;
-			try
-			{
-				Execute("htlib2_matlab_GetValue = "+name+";");
-				System.Array real = new double[1, 1];
-				System.Array imag = new double[1, 1];
-				matlab.GetFullMatrix("htlib2_matlab_GetValue", "base", ref real, ref imag);
-				Execute("clear htlib2_matlab_GetValue;");
-				value = (double)real.GetValue(0, 0);
-			}
-			catch(System.Runtime.InteropServices.COMException)
-			{
-				HDebug.Assert(false);
-				value = double.NaN;
-			}
-			return value;
-		}
-		public static double[] GetVector(string name, bool bUseFile=false)
-		{
-			double[] vector;
-			try
-			{
-				Execute("htlib2_matlab_GetVector = "+name+";");
-				int size = GetValueInt("length(htlib2_matlab_GetVector)");
+    public partial class Matlab
+    {
+        public static double GetValue(string name)
+        {
+            double value;
+            try
+            {
+                Execute("htlib2_matlab_GetValue = "+name+";");
+                System.Array real = new double[1, 1];
+                System.Array imag = new double[1, 1];
+                matlab.GetFullMatrix("htlib2_matlab_GetValue", "base", ref real, ref imag);
+                Execute("clear htlib2_matlab_GetValue;");
+                value = (double)real.GetValue(0, 0);
+            }
+            catch(System.Runtime.InteropServices.COMException)
+            {
+                HDebug.Assert(false);
+                value = double.NaN;
+            }
+            return value;
+        }
+        public static double[] GetVector(string name, bool bUseFile=false)
+        {
+            double[] vector;
+            try
+            {
+                Execute("htlib2_matlab_GetVector = "+name+";");
+                int size = GetValueInt("length(htlib2_matlab_GetVector)");
                 if(size < 10000_0000)
                 {
-				    System.Array real = new double[size];
-				    System.Array imag = new double[size];
-				    matlab.GetFullMatrix("htlib2_matlab_GetVector", "base", ref real, ref imag);
-				    Execute("clear htlib2_matlab_GetVector;");
-				    vector = new double[size];
-				    for(int i=0; i<size; i++)
-					    vector[i] = (double)real.GetValue(i);
+                    System.Array real = new double[size];
+                    System.Array imag = new double[size];
+                    matlab.GetFullMatrix("htlib2_matlab_GetVector", "base", ref real, ref imag);
+                    Execute("clear htlib2_matlab_GetVector;");
+                    vector = new double[size];
+                    for(int i=0; i<size; i++)
+                        vector[i] = (double)real.GetValue(i);
                 }
                 else
                 {
@@ -51,30 +51,30 @@ namespace HTLib2
                     for(int i = 0; i < size; i++)
                         vector[i] = mat[i, 0];
                 }
-			}
-			catch(System.Runtime.InteropServices.COMException)
-			{
-				HDebug.Assert(false);
-				vector = null;
-			}
-			return vector;
-		}
+            }
+            catch(System.Runtime.InteropServices.COMException)
+            {
+                HDebug.Assert(false);
+                vector = null;
+            }
+            return vector;
+        }
         public static TVector<double> GetVectorLarge(string name, bool bUseFile=false)
-		{
+        {
             TVector<double> vector;
-			try
-			{
-				Execute("htlib2_matlab_GetVector = "+name+";");
-				int size = GetValueInt("length(htlib2_matlab_GetVector)");
+            try
+            {
+                Execute("htlib2_matlab_GetVector = "+name+";");
+                int size = GetValueInt("length(htlib2_matlab_GetVector)");
                 if(size < TVector<double>.MaxBlockCapacity)
                 {
-				    System.Array real = new double[size];
-				    System.Array imag = new double[size];
-				    matlab.GetFullMatrix("htlib2_matlab_GetVector", "base", ref real, ref imag);
-				    Execute("clear htlib2_matlab_GetVector;");
+                    System.Array real = new double[size];
+                    System.Array imag = new double[size];
+                    matlab.GetFullMatrix("htlib2_matlab_GetVector", "base", ref real, ref imag);
+                    Execute("clear htlib2_matlab_GetVector;");
                     vector = new TVector<double>(size);
                     for(int i=0; i<size; i++)
-					    vector[i] = (double)real.GetValue(i);
+                        vector[i] = (double)real.GetValue(i);
                 }
                 else
                 {
@@ -102,22 +102,22 @@ namespace HTLib2
                     HFile.Delete(tmppath);
                     return vector;
                 }
-			}
-			catch(System.Runtime.InteropServices.COMException)
-			{
-				HDebug.Assert(false);
-				vector = null;
-			}
-			return vector;
-		}
-		public static double[] GetVector(string name, int size)
-		{
-			double[] vector = GetVector(name);
-			HDebug.Assert(vector.Length == size);
-			return vector;
-		}
-		public static double[,] GetMatrix(string name, bool bUseFile=false)
-		{
+            }
+            catch(System.Runtime.InteropServices.COMException)
+            {
+                HDebug.Assert(false);
+                vector = null;
+            }
+            return vector;
+        }
+        public static double[] GetVector(string name, int size)
+        {
+            double[] vector = GetVector(name);
+            HDebug.Assert(vector.Length == size);
+            return vector;
+        }
+        public static double[,] GetMatrix(string name, bool bUseFile=false)
+        {
             if((bUseFile == false) || (_path_temporary == null))
             {
                 double[,] matrix;
@@ -137,7 +137,7 @@ namespace HTLib2
                         matrix[c, r] = (double)real.GetValue(c, r);
                 real = null;
                 imag = null;
-    			return matrix;
+                return matrix;
             }
             //else
             //{
@@ -170,7 +170,7 @@ namespace HTLib2
                 HFile.Delete(tmppath);
                 return matrix;
             }
-		}
+        }
         public static IMATRIX GetMatrix<IMATRIX>(string name, Func<int, int, IMATRIX> Zeros, bool bUseFile)
             where IMATRIX : IMatrix<double>
         {
@@ -198,7 +198,7 @@ namespace HTLib2
                         matrix[c, r] = (double)real.GetValue(c, r);
                 real = null;
                 imag = null;
-    			return matrix;
+                return matrix;
             }
             else
             {
@@ -227,7 +227,7 @@ namespace HTLib2
                 HFile.Delete(tmppath);
                 return matrix;
             }
-		}
+        }
         public static void GetMatrix(string name, out List<Vector> matrix)
         {
             double[,] _matrix = GetMatrix(name);
@@ -241,35 +241,35 @@ namespace HTLib2
             }
         }
         public static double[,] GetMatrix(string name, int colsize, int rowsize)
-		{
-			double[,] matrix = GetMatrix(name);
-			HDebug.Assert(matrix.GetLength(0) == colsize);
-			HDebug.Assert(matrix.GetLength(1) == rowsize);
-			return matrix;
-		}
-		public static void PutValue(string name, double real)
-		{
-			System.Array arr_real = new double[1] { real };
-			System.Array arr_imag = new double[1];
-			matlab.PutFullMatrix("htlib2_matlab_PutValue", "base", arr_real, arr_imag);
-			Execute(name+" = htlib2_matlab_PutValue;");
-			Execute("clear htlib2_matlab_PutValue;");
-		}
-		public static void PutVector(string name, double[] real)
-		{
-			System.Array arr_real = real;
-			System.Array arr_imag = new double[real.GetLength(0)];
-			matlab.PutFullMatrix("htlib2_matlab_PutVector", "base", arr_real, arr_imag);
-			Execute(name+" = htlib2_matlab_PutVector;");
-			Execute("clear htlib2_matlab_PutVector;");
-		}
+        {
+            double[,] matrix = GetMatrix(name);
+            HDebug.Assert(matrix.GetLength(0) == colsize);
+            HDebug.Assert(matrix.GetLength(1) == rowsize);
+            return matrix;
+        }
+        public static void PutValue(string name, double real)
+        {
+            System.Array arr_real = new double[1] { real };
+            System.Array arr_imag = new double[1];
+            matlab.PutFullMatrix("htlib2_matlab_PutValue", "base", arr_real, arr_imag);
+            Execute(name+" = htlib2_matlab_PutValue;");
+            Execute("clear htlib2_matlab_PutValue;");
+        }
+        public static void PutVector(string name, double[] real)
+        {
+            System.Array arr_real = real;
+            System.Array arr_imag = new double[real.GetLength(0)];
+            matlab.PutFullMatrix("htlib2_matlab_PutVector", "base", arr_real, arr_imag);
+            Execute(name+" = htlib2_matlab_PutVector;");
+            Execute("clear htlib2_matlab_PutVector;");
+        }
         public static void PutMatrix(string name, IMatrix<double> real)
-		{
+        {
             bool bUseFile = false;
             PutMatrix(name, real.ToArray(), bUseFile);
         }
         public static void PutMatrix(string name, double[,] real, bool bUseFile=false)
-		{
+        {
             if((bUseFile == false) || (_path_temporary == null))
             {
                 HDebug.Assert(real.Length < 2000*2000);
@@ -302,14 +302,14 @@ namespace HTLib2
                 }
                 HFile.Delete(tmppath);
             }
-		}
+        }
         public static void PutMatrix(string name, IMatrix<double> real, bool bUseFile)
-		{
+        {
             bool call_GC = false;
             PutMatrix(name, ref real, bUseFile, call_GC);
         }
         public static void PutMatrix(string name, ref IMatrix<double> real, bool bUseFile, bool call_GC)
-		{
+        {
             if((bUseFile == false) || (_path_temporary == null))
             {
                 HDebug.Assert(real.RowSize * real.ColSize < 2000*2000);
@@ -347,7 +347,7 @@ namespace HTLib2
                 }
                 HFile.Delete(tmppath);
             }
-		}
+        }
         public static void PutMatrix(string name, IList<Vector> value)
         {
             int col = value.Count;
@@ -358,5 +358,5 @@ namespace HTLib2
                     real[c, r] = value[c][r];
             PutMatrix(name, real);
         }
-	}
+    }
 }
