@@ -204,7 +204,8 @@ namespace HTLib2
             {
                 HDebug.Assert(bUseFile, _path_temporary != null);
                 string tmppath = HFile.GetTempPath(_path_temporary, ".dat");
-                Execute("htlib2_matlab_GetGetMatrix.test = 0;");
+                Execute("clear htlib2_matlab_GetGetMatrix;");
+                Execute("htlib2_matlab_GetGetMatrix.mat = 0;");
                 Execute("htlib2_matlab_GetGetMatrix.mat = "+name+";");
                 int colsize = GetValueInt("size(htlib2_matlab_GetGetMatrix.mat, 1)");
                 int rowsize = GetValueInt("size(htlib2_matlab_GetGetMatrix.mat, 2)");
