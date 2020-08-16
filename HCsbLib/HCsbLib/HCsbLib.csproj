@@ -191,6 +191,7 @@
     <Compile Include="HTLib2.Bioinfo\External.Tinker\src\i_urypot.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\src\i_usage.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\src\i_virial.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.SockInSolv.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.Static.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.Merge.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.RunXyzeditSolvate.cs" />
