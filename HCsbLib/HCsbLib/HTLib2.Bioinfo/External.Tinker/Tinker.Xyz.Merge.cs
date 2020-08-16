@@ -10,11 +10,11 @@ namespace HTLib2.Bioinfo
     using HOH     = TinkerStatic.SockInSolvLayer_HOH;
     public static partial class TinkerStatic
     {
-        public static Xyz Merge( (Xyz xyz1, Xyz xyz2) xyzs, Xyz.Atom.Format format=null)
+        public static Xyz Merge( (Xyz xyz1, Xyz xyz2) xyzs, Xyz.Atom.Format format)
         {
             return null;
         }
-        public static Xyz Merge(IEnumerable<Xyz.Atom> atoms1, IEnumerable<Xyz.Atom> atoms2, Xyz.Atom.Format format=null)
+        public static Xyz Merge(IEnumerable<Xyz.Atom> atoms1, IEnumerable<Xyz.Atom> atoms2, Xyz.Atom.Format format)
         {
             List<Xyz.Atom> natoms1;
             {
@@ -76,7 +76,7 @@ namespace HTLib2.Bioinfo
 
             return new Xyz { elements = nelements.ToArray() };
         }
-        public static Xyz SockInSolvBox(Xyz prot, Xyz solvbox, Xyz.Atom.Format format=null)
+        public static Xyz SockInSolvBox(Xyz prot, Xyz solvbox, Xyz.Atom.Format format)
         {
             return null;
         }
@@ -137,7 +137,7 @@ namespace HTLib2.Bioinfo
 
             return list;
         }
-        public static Xyz SockInSolvLayer(Xyz prot, Xyz solvbox, double thickSolvLayer, Prm prm, Xyz.Atom.Format format=null)
+        public static Xyz SockInSolvLayer(Xyz prot, Xyz solvbox, double thickSolvLayer, Prm prm, Xyz.Atom.Format format)
         {
             Xyz.Atom[] prot_atoms = prot.atoms;
             KDTree.KDTree<Xyz.Atom> prot_kdtree = prot_atoms.HToKDTree();
@@ -214,11 +214,11 @@ namespace HTLib2.Bioinfo
     {
         public partial class Xyz
         {
-            public Xyz SockInSolvBox(Xyz solvbox, Atom.Format format=null)
+            public Xyz SockInSolvBox(Xyz solvbox, Atom.Format format)
             {
                 return null;
             }
-            public Xyz SockInSolvLayer(Xyz solvbox, double thickSolvLayer, Prm prm, Atom.Format format=null)
+            public Xyz SockInSolvLayer(Xyz solvbox, double thickSolvLayer, Prm prm, Atom.Format format)
             {
                 return TinkerStatic.SockInSolvLayer(this, solvbox, thickSolvLayer, prm, format);
             }
