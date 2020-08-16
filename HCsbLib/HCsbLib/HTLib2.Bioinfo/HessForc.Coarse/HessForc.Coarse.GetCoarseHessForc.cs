@@ -303,12 +303,17 @@ namespace HTLib2.Bioinfo
                                 Matlab.Execute("A = full(HH(1:n  ,1:n  ));                  ");
                                 Matlab.Execute("B = full(HH(1:n  ,n+1:N));                  ");
                                 Matlab.Execute("C = full(HH(n+1:N,1:n  ));                  ");
-                                Matlab.Execute("D = full(HH(n+1:N,n+1:N));                  ");
+                                Matlab.Execute("BinvD = full(HH(n+1:N,n+1:N));              ");
+                                // make symmetric
+                                Matlab.Execute("A = (A + A')/2;                             ");
+                                Matlab.Execute("C = B';                                     ");
+                                Matlab.Execute("BinvD = (BinvD + BinvD')/2;                 ");
+                                // calculate
                                 Matlab.Execute("F = FF(1:n  );                              ");
                                 Matlab.Execute("G = FF(n+1:N);                              ");
                                 Matlab.Execute("assert ( max(max(abs(B-C'))) < 0.00000001 );");
-                                Matlab.Execute("BinvD = inv(D);                             ");
-                                Matlab.Execute("BinvD = B * BinvD;                          ");
+                                Matlab.Execute("BinvD = inv(BinvD);                         "); //  invD = inv(D)
+                                Matlab.Execute("BinvD = B * BinvD;                          "); // BinvD = B * invD
                                 Matlab.Execute("HHH = A - BinvD * C;                        ");
                                 Matlab.Execute("FFF = F - BinvD * G;                        ");
                                 // load matrix
@@ -321,7 +326,7 @@ namespace HTLib2.Bioinfo
                                   //Matlab.Execute("load('HHH.mat'   ,'FFF');           ");
                                 }
 
-                                HHH = Matlab.GetMatrix("HHH", true);
+                                HHH = Matlab.GetMatrix<HessMatrixLayeredArray>("HHH", HessMatrixLayeredArray.ZerosHessMatrixLayeredArray, true);
                                 FFF = Matlab.GetVector("FFF");
                                 Matlab.Execute("clear");
                             }
