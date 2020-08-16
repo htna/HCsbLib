@@ -605,6 +605,9 @@ namespace HTLib2.Bioinfo
                     public int[] idxAtomId   = new int[]{47,52};    public string formatAtomId   = "                     {0}";  // HSubEndStringCount
                     public int[] idxBondedId = new int[]{53,58};    public string formatBondedId = "                     {0}";  // HSubEndStringCount
 
+                    public int IdSize    { get { return (idxId[1] - idxId[0]); } }
+                    public int CoordSize { get { return (idxX [1] - idxX [0]); } }
+
                     public Format(int IdSize=5, int CoordSize=11, string CoordFormat="{0:0.000000}")
                     {
                         UpdateFormat(IdSize, CoordSize, CoordFormat);
