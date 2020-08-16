@@ -741,6 +741,7 @@
     <Compile Include="HTLib2\HMath.Random\Random.cs" />
     <Compile Include="HTLib2\HDynamicObject\HDynamicObject.cs" />
     <Compile Include="HTLib2\HOption\HOptions.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumNonNull.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumItemN.Tuple.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.String.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumQuantileElements.cs" />
