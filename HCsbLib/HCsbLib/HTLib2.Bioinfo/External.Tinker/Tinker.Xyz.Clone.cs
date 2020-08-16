@@ -271,7 +271,7 @@ namespace HTLib2.Bioinfo
                 }
 
                 List<Xyz.Header> nheaders = headers;
-                List<Xyz.Atom  > natoms   = CloneByReindex(atoms, idsFromTo, allowresize);
+                List<Xyz.Atom  > natoms   = CloneByReindex(atoms, idsFromTo, null, allowresize);
 
                 List<Element> nelements = new List<Element>();
                 nelements.AddRange(nheaders);
@@ -286,7 +286,7 @@ namespace HTLib2.Bioinfo
 
                 return new Xyz { elements = nelements.ToArray() };
             }
-            public static List<Atom> CloneByReindex(IEnumerable<Xyz.Atom> atoms, IList<Tuple<int,int>> idsFromTo, bool allowresize=false)
+            public static List<Atom> CloneByReindex(IEnumerable<Xyz.Atom> atoms, IList<Tuple<int,int>> idsFromTo, Xyz.Atom.Format format, bool allowresize=false)
             {
                 if(HDebug.IsDebuggerAttached)
                 {
@@ -315,7 +315,11 @@ namespace HTLib2.Bioinfo
                             nbondedids[i] = to;
                         }
                     }
-                    Xyz.Atom natom = Xyz.Atom.FromData(atom.format, nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
+
+                    Atom.Format atom_format = format;
+                    if(atom_format == null) atom_format = atom.format;
+
+                    Xyz.Atom natom = Xyz.Atom.FromData(atom_format, nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
                     nid_natoms.Add(nid, natom);
                 }
 
