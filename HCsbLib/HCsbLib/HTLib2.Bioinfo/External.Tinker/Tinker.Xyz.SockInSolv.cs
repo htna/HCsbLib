@@ -10,10 +10,6 @@ namespace HTLib2.Bioinfo
     using HOH     = TinkerStatic.SockInSolvLayer_HOH;
     public static partial class TinkerStatic
     {
-        public static Xyz SockInSolvBox(Xyz prot, Xyz solvbox, Xyz.Atom.Format format)
-        {
-            return null;
-        }
         internal class SockInSolvLayer_HOH
         {
             public Xyz.Atom O;
@@ -71,7 +67,7 @@ namespace HTLib2.Bioinfo
 
             return list;
         }
-        public static Xyz SockInSolvLayer(Xyz prot, Xyz solvbox, double thickSolvLayer, Prm prm, Xyz.Atom.Format format)
+        public static Xyz SockInSolv(Xyz prot, Xyz solvbox, double? thickSolvLayer, Prm prm, Xyz.Atom.Format format)
         {
             Xyz.Atom[] prot_atoms = prot.atoms;
             KDTree.KDTree<Xyz.Atom> prot_kdtree = prot_atoms.HToKDTree();
@@ -90,12 +86,18 @@ namespace HTLib2.Bioinfo
                 Xyz.Atom closeO = prot_kdtree.nearest(hoh.O.Coord);
                 double distO = (closeO.Coord, hoh.O.Coord).Dist();
 
-                if(distO > thickSolvLayer)
+                // check thickness
+                if(thickSolvLayer != null)
                 {
-                    cntOutSolvLayer ++;
-                    hohs[i] = null;
-                    continue;
+                    if(distO > thickSolvLayer)
+                    {
+                        cntOutSolvLayer ++;
+                        hohs[i] = null;
+                        continue;
+                    }
                 }
+
+                // check collision
                 Xyz.Atom closeH1 = prot_kdtree.nearest(hoh.H1.Coord);
                 Xyz.Atom closeH2 = prot_kdtree.nearest(hoh.H2.Coord);
                 double distH1 = (closeH1.Coord, hoh.H1.Coord).Dist();
@@ -148,13 +150,9 @@ namespace HTLib2.Bioinfo
     {
         public partial class Xyz
         {
-            public Xyz SockInSolvBox(Xyz solvbox, Atom.Format format)
+            public Xyz SockInSolv(Xyz solvbox, double? thickSolvLayer, Prm prm, Atom.Format format)
             {
-                return null;
-            }
-            public Xyz SockInSolvLayer(Xyz solvbox, double thickSolvLayer, Prm prm, Atom.Format format)
-            {
-                return TinkerStatic.SockInSolvLayer(this, solvbox, thickSolvLayer, prm, format);
+                return TinkerStatic.SockInSolv(this, solvbox, thickSolvLayer, prm, format);
             }
         }
     }
