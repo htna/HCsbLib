@@ -118,20 +118,25 @@ namespace HTLib2
         }
         public static double[,] GetMatrix(string name, bool bUseFile=false)
         {
+            double[,] Zeros(int colsize, int rowsize)
+            {
+                return new double[colsize, rowsize];
+            }
+            const bool clear_var = false;
+
             if((bUseFile == false) || (_path_temporary == null))
             {
-                double[,] matrix;
                 System.Array real;
                 System.Array imag;
                 Execute("htlib2_matlab_GetGetMatrix = "+name+";");
                 int colsize = GetValueInt("size(htlib2_matlab_GetGetMatrix, 1)");
                 int rowsize = GetValueInt("size(htlib2_matlab_GetGetMatrix, 2)");
-                HDebug.Assert(colsize*rowsize < 2000*2000);
+                HDebug.Assert(colsize*rowsize < 3000*3000);
                 real = new double[colsize, rowsize];
                 imag = new double[colsize, rowsize];
                 matlab.GetFullMatrix("htlib2_matlab_GetGetMatrix", "base", ref real, ref imag);
                 Execute("clear htlib2_matlab_GetGetMatrix;");
-                matrix = new double[colsize, rowsize];
+                double[,] matrix = Zeros(colsize, rowsize);
                 for(int c=0; c<colsize; c++)
                     for(int r=0; r<rowsize; r++)
                         matrix[c, r] = (double)real.GetValue(c, r);
@@ -139,11 +144,6 @@ namespace HTLib2
                 imag = null;
                 return matrix;
             }
-            //else
-            //{
-            //    Debug.Assert(false);
-            //    return null;
-            //}
             else
             {
                 HDebug.Assert(bUseFile, _path_temporary != null);
@@ -159,7 +159,9 @@ namespace HTLib2
                     Execute("fclose(htlib2_matlab_GetGetMatrix.fid);");
                     Execute("clear htlib2_matlab_GetGetMatrix;");
                 }
-                double[,] matrix = new double[colsize, rowsize];
+                if(clear_var)
+                    Execute("clear "+name+";");
+                double[,] matrix = Zeros(colsize, rowsize);
                 {
                     System.IO.BinaryReader reader = new System.IO.BinaryReader(new System.IO.FileStream(tmppath, System.IO.FileMode.Open));
                     for(int c=0; c<colsize; c++)
