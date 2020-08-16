@@ -264,15 +264,18 @@ namespace HTLib2.Bioinfo
             //  }
             public Xyz CloneByReindex(IList<Tuple<int,int>> idsFromTo, bool allowresize=false)
             {
-                if(HDebug.IsDebuggerAttached)
+                (List<Xyz.Header> headers, List<Xyz.Atom> atoms, List<Element> unknown) = elements.GroupByHeaderAtom();
+                if(unknown.Count != 0)
                 {
-                    HashSet<int> setIdFrom = new HashSet<int>(idsFromTo.HListItem1());
-                    HashSet<int> setIdTo   = new HashSet<int>(idsFromTo.HListItem2());
-                    if(setIdFrom.Count != atoms.Length ) { HDebug.Assert(false); return null; }
-                    if(setIdFrom.Count != setIdTo.Count) { HDebug.Assert(false); return null; }
+                    throw new Exception();
                 }
 
-                List<Element> nelements = CloneByReindex(elements, idsFromTo, allowresize);
+                List<Xyz.Header> nheaders = headers;
+                List<Xyz.Atom  > natoms   = CloneByReindex(atoms, idsFromTo, allowresize);
+
+                List<Element> nelements = new List<Element>();
+                nelements.AddRange(nheaders);
+                nelements.AddRange(natoms  );
 
                 {
                     int maxid = nelements.HSelectByType((Atom)null).HListId().Max();
@@ -283,26 +286,19 @@ namespace HTLib2.Bioinfo
 
                 return new Xyz { elements = nelements.ToArray() };
             }
-            public static List<Element> CloneByReindex(IList<Element> elements, IList<Tuple<int,int>> idsFromTo, bool allowresize=false)
+            public static List<Atom> CloneByReindex(IEnumerable<Xyz.Atom> atoms, IList<Tuple<int,int>> idsFromTo, bool allowresize=false)
             {
                 if(HDebug.IsDebuggerAttached)
                 {
                     HashSet<int> setIdFrom = new HashSet<int>(idsFromTo.HListItem1());
                     HashSet<int> setIdTo   = new HashSet<int>(idsFromTo.HListItem2());
+                    if(setIdFrom.Count != atoms.Count()) { HDebug.Assert(false); return null; }
                     if(setIdFrom.Count != setIdTo.Count) { HDebug.Assert(false); return null; }
                 }
 
                 Dictionary<int, Tuple<int, int>> idFrom2To = idsFromTo.HToDictionaryWithKeyItem1();
 
-                //List<Element>           nheaders = new List<Element>();
-                (List<Xyz.Header> headers, List<Xyz.Atom> atoms, List<Element> unknown) = elements.GroupByHeaderAtom();
-                if(unknown.Count != 0)
-                {
-                    throw new Exception();
-                }
-
-                List<Xyz.Header>        nheaders = headers;
-                Dictionary<int,Element> natoms   = new Dictionary<int, Element>();
+                Dictionary<int, Atom> nid_natoms   = new Dictionary<int, Atom>();
                 foreach(Atom atom in atoms)
                 {
                     //Atom atom = elements[ie] as Atom;
@@ -320,14 +316,14 @@ namespace HTLib2.Bioinfo
                         }
                     }
                     Xyz.Atom natom = Xyz.Atom.FromData(atom.format, nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
-                    natoms.Add(nid, natom);
+                    nid_natoms.Add(nid, natom);
                 }
 
-                List<Element> nelements = new List<Element>(nheaders);
-                foreach(int nid in natoms.Keys.ToArray().HSort())
-                    nelements.Add(natoms[nid]);
+                List<Atom> natoms = new List<Atom>(nid_natoms.Count);
+                foreach(int nid in nid_natoms.Keys.ToArray().HSort())
+                    natoms.Add(nid_natoms[nid]);
 
-                return nelements;
+                return natoms;
             }
             public Xyz CloneByAlign(Xyz xyzToAlign)
             {
