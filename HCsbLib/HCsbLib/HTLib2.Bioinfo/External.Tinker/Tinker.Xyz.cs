@@ -74,6 +74,11 @@ namespace HTLib2.Bioinfo
                 ids[i] = atoms[i].Id;
             return ids;
         }
+        public static IEnumerable<int> HListId(this IEnumerable<Tinker.Xyz.Atom> atoms)
+        {
+            foreach(var atom in atoms)
+                yield return atom.Id;
+        }
         public static IEnumerable<Tinker.Prm.Vdw> HEnumPrmVdw(this IEnumerable<Tinker.Xyz.Atom> atoms, Tinker.Prm prm)
         {
             Dictionary<int,Tinker.Prm.Atom> prm_id2atom = prm.atoms.ToIdDictionary();
