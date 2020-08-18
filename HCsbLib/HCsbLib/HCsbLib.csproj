@@ -535,6 +535,7 @@
     </Compile>
     <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Sample\Form1.cs" />
     <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Sample\SimpleLink.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Ext.GetMaxAbs.cs" />
     <Compile Include="HTLib2.Matlab\Matlab.MATRIX.cs" />
     <Compile Include="HTLib2.Matlab\Matlab.Plot.cs" />
     <Compile Include="HTLib2.Matlab\Matlab.cmatlab.cs" />
