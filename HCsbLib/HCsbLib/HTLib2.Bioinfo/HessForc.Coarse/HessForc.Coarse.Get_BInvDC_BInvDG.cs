@@ -87,8 +87,8 @@ namespace HTLib2.Bioinfo
                             Matlab.Execute("BinvDC  = BinvDC * C;");
                             if(HDebug.IsDebuggerAttached)
                             {
-                                double absmax_BinvD_G = Matlab.GetValue("max(max(abs(BinvD_G)))");
-                                double absmax_BinvDC  = Matlab.GetValue("max(max(abs(BinvDC )))");
+                                double absmax_BinvD_G = Matlab.GetMaxAbs("BinvD_G"); // Matlab.GetValue("max(max(abs(BinvD_G)))");
+                                double absmax_BinvDC  = Matlab.GetMaxAbs("BinvDC "); // Matlab.GetValue("max(max(abs(BinvDC )))");
                                 if(absmax_BinvD_G > 10e10) HDebug.Assert(false);
                                 if(absmax_BinvDC  > 10e10) HDebug.Assert(false);
                             }
