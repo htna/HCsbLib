@@ -51,21 +51,5 @@ namespace HTLib2
                     submats[mc, mr] = _this.SubMatrix(idxcolss[mc], idxrowss[mr]);
             return submats;
         }
-        public static Matrix SubMatrix(this Matrix _this, (int from, int count) cols, (int from, int count) rows)
-        {
-            HDebug.Assert( cols.from >= 0 && cols.from+cols.count-1 < _this.ColSize-1 );
-            HDebug.Assert( rows.from >= 0 && rows.from+rows.count-1 < _this.RowSize-1 );
-
-            Matrix submat = Matrix.Zeros(cols.count, rows.count);
-            for(int nc=0; nc<cols.count; nc++)
-                for(int nr=0; nr<rows.count; nr++)
-                {
-                    int c = cols.from + nc;
-                    int r = rows.from + nr;
-
-                    submat[nc, nr] = _this[c, r];
-                }
-            return submat;
-        }
     }
 }

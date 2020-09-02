@@ -12,13 +12,5 @@ namespace HTLib2
         {
             return values.Mean();
         }
-        public static double HMean(this System.Runtime.CompilerServices.ITuple values)
-        {
-            double mean = 0;
-            for(int i=0; i<values.Length; i++)
-                mean += (double)values[i];
-            mean /= values.Length;
-            return mean;
-        }
     }
 }
