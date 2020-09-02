@@ -12,12 +12,8 @@ namespace HCsbLib
     {
         static void Main(string[] args)
         {
-            string pathbase = Environment.CurrentDirectory + @"\test\";
-            string pdbbase = @"HCsbLib-Tutorial\";
-            HDirectory.CreateDirectory(pathbase);
-
-            Tutorial_Matlab.Main(pathbase, pdbbase, args);
-            Tutorial_Pdb.Main(pathbase, pdbbase, args);
+            string pdbpath = @"C:\1l2y.pdb";
+            Tutorial_Pdb.Main(pdbpath, args);
         }
     }
 }

@@ -409,7 +409,6 @@
     <Compile Include="HTLib2\External.dnAnalytics\dnAnalytics.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tutorial_Matlab.cs" />
     <Compile Include="Tutorial_Pdb.cs" />
   </ItemGroup>
   <ItemGroup>

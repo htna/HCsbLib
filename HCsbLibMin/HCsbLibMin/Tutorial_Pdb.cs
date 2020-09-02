@@ -12,10 +12,10 @@ namespace HCsbLib
     {
         public class Tutorial_Pdb
         {
-            public static void Main(string pathbase, string pdbbase, string[] args)
+            public static void Main(string pdbpath, string[] args)
             {
                 // load a pdb file
-                Pdb pdb = Pdb.FromFile(pdbbase+"1l2y.pdb");
+                Pdb pdb = Pdb.FromFile(pdbpath);
 
                 // get coordinates
                 List<Vector> coords = new List<Vector>();
