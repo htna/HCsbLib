@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>dnAnalytics.fsharp</name></assembly>
+<members>
+<member name="M:dnAnalytics.FSharp.matrix(Microsoft.FSharp.Collections.FSharpList`1{Microsoft.FSharp.Collections.FSharpList`1{System.Double}})">
+<summary>
+ Construct a dense matrix from a list of floating point numbers.
+ <include file='../../../../FSharpExamples/MultiVariateNormal.xml' path='example'/> 
+</summary>
+</member>
+<member name="M:dnAnalytics.FSharp.vector(Microsoft.FSharp.Collections.FSharpList`1{System.Double})">
+<summary>
+ Construct a dense vector from a list of floating point numbers.
+ <include file='../../../../FSharpExamples/MultiVariateNormal.xml' path='example'/> 
+</summary>
+</member>
+<member name="T:dnAnalytics.FSharp">
+<summary>
+ A module which implements some essential F# utility functions.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseMatrix.constDiag(System.Int32,System.Double)">
+<summary>
+ Create a square matrix with constant diagonal entries.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseMatrix.diag``1(``0)">
+<summary>
+ Create a square matrix with the vector elements on the diagonal.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseMatrix.identity(System.Int32)">
+<summary>
+ Create the identity matrix.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseMatrix.init(System.Int32,System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Int32,System.Double}})">
+<summary>
+ Initialize a matrix by calling a construction function for every element.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseMatrix.init_col``1(System.Int32,System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Int32,``0})">
+<summary>
+ Initialize a matrix by calling a construction function for every column.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseMatrix.init_dense``1(System.Int32,System.Int32,``0)">
+<summary>
+ Create a matrix with the given entries.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseMatrix.init_row``1(System.Int32,System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Int32,``0})">
+<summary>
+ Initialize a matrix by calling a construction function for every row.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseMatrix.of_array2(System.Double[,]`1)">
+<summary>
+ Create a matrix from a 2D array of floating point numbers.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseMatrix.of_list(Microsoft.FSharp.Collections.FSharpList`1{Microsoft.FSharp.Collections.FSharpList`1{System.Double}})">
+<summary>
+ Create a matrix from a list of float lists. Every list in the master list specifies a row.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseMatrix.of_rowvector``1(``0)">
+<summary>
+ Create a 1xn dimensional matrix from a row vector.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseMatrix.of_seq``2(``0)">
+<summary>
+ Create a matrix from a list of sequences. Every sequence in the master sequence specifies a row.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseMatrix.of_vector``1(``0)">
+<summary>
+ Create an nx1 dimensional matrix from a column vector.
+</summary>
+</member>
+<member name="T:dnAnalytics.LinearAlgebra.DenseMatrix">
+<summary>
+ A module which implements functional dense vector operations.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseVector.init(System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Int32,System.Double})">
+<summary>
+ Initialize a vector by calling a construction function for every element.
+ <include file='../../../../FSharpExamples/DenseVector.xml' path='example'/> 
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseVector.of_list(Microsoft.FSharp.Collections.FSharpList`1{System.Double})">
+<summary>
+ Create a vector from a float list.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseVector.of_seq``1(``0)">
+<summary>
+ Create a vector from a sequences.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseVector.range(System.Int32,System.Int32)">
+<summary>
+ Create a vector with integer entries in the given range.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.DenseVector.rangef(System.Double,System.Double,System.Double)">
+<summary>
+ Create a vector with evenly spaced entries: e.g. rangef -1.0 0.5 1.0 = [-1.0 -0.5 0.0 0.5 1.0]
+</summary>
+</member>
+<member name="T:dnAnalytics.LinearAlgebra.DenseVector">
+<summary>
+ A module which implements functional dense vector operations.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.exists``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Boolean},``0)">
+<summary>
+ Chechks whether a predicate holds for at least one element of a matrix.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.existsi``1(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Boolean}}},``0)">
+<summary>
+ Checks whether a position dependent predicate holds for at least one element of a matrix.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.fold``2(Microsoft.FSharp.Core.FastFunc`2{``0,Microsoft.FSharp.Core.FastFunc`2{System.Double,``0}},``0,``1)">
+<summary>
+ Fold a function over all matrix elements.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.foldByCol``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double}},System.Double,``0)">
+<summary>
+ Fold all columns into one row vector.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.foldByRow``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double}},System.Double,``0)">
+<summary>
+ Fold all rows into one column vector.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.foldCol``2(Microsoft.FSharp.Core.FastFunc`2{``0,Microsoft.FSharp.Core.FastFunc`2{System.Double,``0}},``0,``1,System.Int32)">
+<summary>
+ Fold one column.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.foldRow``2(Microsoft.FSharp.Core.FastFunc`2{``0,Microsoft.FSharp.Core.FastFunc`2{System.Double,``0}},``0,``1,System.Int32)">
+<summary>
+ Fold one row.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.foldi``2(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{``0,Microsoft.FSharp.Core.FastFunc`2{System.Double,``0}}}},``0,``1)">
+<summary>
+ Fold a matrix by applying a given function to all matrix elements.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.forall``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Boolean},``0)">
+<summary>
+ Checks whether a predicate holds for all elements of a matrix.  
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.foralli``1(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Boolean}}},``0)">
+<summary>
+ Checks whether a position dependent predicate holds for all elements of a matrix.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.inplace_add``2(``0,``1)">
+<summary>
+ In-place addition of two matrices.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.inplace_assign``1(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Int32,System.Double}},``0)">
+<summary>
+ In-place assignment.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.inplace_cptMul``2(``0,``1)">
+<summary>
+ In-place componentwise multiplication of two matrices.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.inplace_mapi``1(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double}}},``0)">
+<summary>
+ In-place map of every matrix element using a position dependent function.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.inplace_scale``1(System.Double,``0)">
+<summary>
+ In-place scaling of every matrix element by a scalar.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.inplace_sub``2(``0,``1)">
+<summary>
+ In-place subtraction of two matrices.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.iter``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,Microsoft.FSharp.Core.Unit},``0)">
+<summary>
+ Iterates over all elements of a matrix.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.iteri``1(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Double,Microsoft.FSharp.Core.Unit}}},``0)">
+<summary>
+ Iterates over all elements of a matrix using the element indices.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.map``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double},``0)">
+<summary>
+ Map every matrix element using the given function.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.mapi``1(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double}}},``0)">
+<summary>
+ Map every matrix element using the given position dependent function.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.nonzero_entries``1(``0)">
+<summary>
+ Creates a sequence that iterates the non-zero entries in the matrix.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.sum``1(``0)">
+<summary>
+ Returns the sum of all elements of a matrix.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Matrix.to_array2``1(``0)">
+<summary>
+ Create a 2D array from a matrix.
+</summary>
+</member>
+<member name="T:dnAnalytics.LinearAlgebra.Matrix">
+<summary>
+ A module which implements functional matrix operations.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.SparseMatrix.identity(System.Int32)">
+<summary>
+ Create the identity matrix.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.SparseMatrix.of_list(System.Int32,System.Int32,Microsoft.FSharp.Collections.FSharpList`1{Microsoft.FSharp.Core.Tuple`3{System.Int32,System.Int32,System.Double}})">
+<summary>
+ Create a matrix from a list of float lists. Every list in the master list specifies a row.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.SparseMatrix.of_seq``1(System.Int32,System.Int32,``0)">
+<summary>
+ Create a matrix from a list of sequences. Every sequence in the master sequence specifies a row.
+</summary>
+</member>
+<member name="T:dnAnalytics.LinearAlgebra.SparseMatrix">
+<summary>
+ A module which implements functional sparse vector operations.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.SparseVector.of_list(System.Int32,Microsoft.FSharp.Collections.FSharpList`1{Microsoft.FSharp.Core.Tuple`2{System.Int32,System.Double}})">
+<summary>
+ Create a sparse vector with a given dimension from a list of entry, value pairs.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.SparseVector.of_seq``1(System.Int32,``0)">
+<summary>
+ Create a sparse vector with a given dimension from a sequence of entry, value pairs.
+</summary>
+</member>
+<member name="T:dnAnalytics.LinearAlgebra.SparseVector">
+<summary>
+ A module which implements functional sparse vector operations.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.exists``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Boolean},``0)">
+<summary>
+ Checks whether there is an entry in the vector that satisfies a given predicate.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.existsi``1(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Boolean}},``0)">
+<summary>
+ Checks whether there is an entry in the vector that satisfies a given position dependent predicate.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.fold``2(Microsoft.FSharp.Core.FastFunc`2{``0,Microsoft.FSharp.Core.FastFunc`2{System.Double,``0}},``0,``1)">
+<summary>
+ Fold all entries of a vector.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.foldi``2(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{``0,Microsoft.FSharp.Core.FastFunc`2{System.Double,``0}}},``0,``1)">
+<summary>
+ Fold all entries of a vector using a position dependent folding function.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.forall``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Boolean},``0)">
+<summary>
+ Checks whether a predicate is satisfied for every element in the vector.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.foralli``1(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Boolean}},``0)">
+<summary>
+ Checks whether a predicate is true for all entries in a vector.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.inplace_add``2(``0,``1)">
+<summary>
+ In-place vector addition.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.inplace_assign``1(Microsoft.FSharp.Core.FastFunc`2{System.Int32,System.Double},``0)">
+<summary>
+ In-place assignment.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.inplace_map``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double},``0)">
+<summary>
+ In-place mutation by applying a function to every element of the vector.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.inplace_mapi``1(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double}},``0)">
+<summary>
+ In-place mutation by applying a function to every element of the vector.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.inplace_scale``1(System.Double,``0)">
+<summary>
+ In-place scaling of vector components.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.inplace_sub``2(``0,``1)">
+<summary>
+ In place vector subtraction.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.iter``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,Microsoft.FSharp.Core.Unit},``0)">
+<summary>
+ Applies a function to all elements of the vector.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.iteri``1(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Double,Microsoft.FSharp.Core.Unit}},``0)">
+<summary>
+ Applies a function to all elements of the vector.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.map``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double},``0)">
+<summary>
+ Functional map operator for vectors.
+ <include file='../../../../FSharpExamples/DenseVector.xml' path='example'/> 
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.mapi``1(Microsoft.FSharp.Core.FastFunc`2{System.Int32,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double}},``0)">
+<summary>
+ Maps a vector to a new vector by applying a function to every element.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.reduce_left``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double}},``0)">
+<summary>
+ Reduces a vector: the result of this function will be f(...f(f(v[0],v[1]), v[2]),..., v[n]).
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.reduce_right``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double}},``0)">
+<summary>
+ Reduces a vector: the result of this function will be f(v[1], ..., f(v[n-2], f(v[n-1],v[n]))...).
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.scan_left``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double}},``0)">
+<summary>
+ Scans a vector; like fold but returns the intermediate result.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.scan_right``1(Microsoft.FSharp.Core.FastFunc`2{System.Double,Microsoft.FSharp.Core.FastFunc`2{System.Double,System.Double}},``0)">
+<summary>
+ Scans a vector; like fold but returns the intermediate result.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.to_array``1(``0)">
+<summary>
+ Transform a vector into an array.
+</summary>
+</member>
+<member name="M:dnAnalytics.LinearAlgebra.Vector.to_list``1(``0)">
+<summary>
+ Transform a vector into an array.
+</summary>
+</member>
+<member name="T:dnAnalytics.LinearAlgebra.Vector">
+<summary>
+ A module which implements functional vector operations.
+</summary>
+</member>
+</members>
+</doc>

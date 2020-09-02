@@ -1,0 +1,511 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{99ED5DFF-B886-46B9-A561-6CEFE2E6677F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HCsbLib</RootNamespace>
+    <AssemblyName>HCsbLib</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>HCsbLib.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="dnAnalytics, Version=2009.8.0.0, Culture=neutral, PublicKeyToken=47f8433cf19ffb12, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>HTLib2\External.dnAnalytics\dnAnalytics.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="Wolfram.NETLink, Version=1.5.4772.34337, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>External.NETLink\NETLink17\Wolfram.NETLink.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Prm.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Prm.Ext.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Run.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.TkFile.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.Clone.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.Merge.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.SockInSolv.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.Static.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\Unit.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.ksu_cdlin.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.monique.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.rice_halas.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.table.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Unit\UnitConversion.tinker.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Clone.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.CloneSelectType.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.CloneWithFix.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Collection\Pdb.Collection.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Collection\Pdb.Collection.Etc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Collection\Pdb.Collection.Keywds.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.CollectResidues.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\BookkeepingSection\PDB.End.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\BookkeepingSection\PDB.Master.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\ConnectivitySection\Pdb.Conect.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Anisou.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Atom.Compare.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Atom.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Endmdl.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Hetatm.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.IAtom.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Model.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.SIGUIJ.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CoordinateSection\Pdb.Ter.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\CrystallographicAndCoordinateTransformationSection\Pdb.Cryst1.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\MiscellaneousFeaturesSection\Pdb.Site.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\MiscellaneousFeaturesSection\Pdb.Site.PdbStatic.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Pdb.Element.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Pdb.Element.UpdateElement.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Primary Structure Section\Pdb.Seqadv.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Primary Structure Section\Pdb.Seqres.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\SecondaryStructureSection\Pdb.Helix.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\SecondaryStructureSection\Pdb.Sheet.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Author.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Compnd.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Expdta.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Header.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Jrnl.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Keywds.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Nummdl.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Remark.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Revdat.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Source.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Title.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Etc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.FromAtoms.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.FromFile.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.FromPdbid.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.FromStream.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.GetAltloc.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.GetEnsemblecs.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Residue.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.SelfTest.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.ToFile.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.ToFileAnimated.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\PdbStatic\PdbStatic.Pdb.Atom.CloneByUpdate.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\PdbStatic\PdbStatic.Pdb.Atom.Common.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\PdbStatic\PdbStatic.Pdb.Atom.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\PdbStatic\PdbStatic.Pdb.Atom.ToIAtom.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\PdbStatic\PdbStatic.ToLines.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.Kernel.KernelLinkDelegate.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.Kernel.Expr.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.Kernel.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.Run.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.EnumString.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.ToString2.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.ToString.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\IMathematica.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.DelaunayTriangulation.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.Kernel.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.ListPlot.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.NETLink.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.Notebook.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.Package.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.Stat.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.ToInt.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.ToString.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\MathematicaPlotForm.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\MathematicaPlotForm.Designer.cs">
+      <DependentUpon>MathematicaPlotForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Sample\Form1.cs" />
+    <Compile Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Sample\SimpleLink.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Ext.GetMaxAbs.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.MATRIX.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.NumericSolver.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Plot.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.cmatlab.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.cmatlab_locked.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Environment.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Etc.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Func.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.GetILinAlg.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.GetPutBool.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.GetPutChar.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.GetPutDouble.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.GetPutInt.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.GetPutSparse.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Interface.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Lock.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.Register.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.SaveLoad.cs" />
+    <Compile Include="HTLib2.Matlab\Matlab.SelfTest.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\HPoint.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\HRect.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KDTree.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KeyDuplicateException.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KeyMissingException.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KeySizeException.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\NearestNeighborList.cs" />
+    <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\PriorityQueue.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\alglibinternal.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\alglibmisc.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\ap.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\dataanalysis.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\diffequations.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\fasttransforms.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\integration.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\interpolation.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\linalg.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\optimization.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\solvers.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\specialfunctions.cs" />
+    <Compile Include="HTLib2\External.alglib381\src\statistics.cs" />
+    <Compile Include="HTLib2\External.bungee.lbfgs\LBFGS.cs" />
+    <Compile Include="HTLib2\External.bungee.lbfgs\Mcsrch.cs" />
+    <Compile Include="HTLib2\External.KDTree\HPoint.cs" />
+    <Compile Include="HTLib2\External.KDTree\HRect.cs" />
+    <Compile Include="HTLib2\External.KDTree\HStaticKDTree.cs" />
+    <Compile Include="HTLib2\External.KDTree\KDTree.cs" />
+    <Compile Include="HTLib2\External.KDTree\KeyDuplicateException.cs" />
+    <Compile Include="HTLib2\External.KDTree\KeyMissingException.cs" />
+    <Compile Include="HTLib2\External.KDTree\KeySizeException.cs" />
+    <Compile Include="HTLib2\External.KDTree\NearestNeighborList.cs" />
+    <Compile Include="HTLib2\External.KDTree\PriorityQueue.cs" />
+    <Compile Include="HTLib2\External.NamedLock\NamedLock.cs" />
+    <Compile Include="HTLib2\External.NamedLock\NamedLock.LockedCall.cs" />
+    <Compile Include="HTLib2\External.NamedLock\NamedLock.SelfTest.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\EmptyList.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HDictionary.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HDictionary2.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HDictionary2_v0.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HDictionary3.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HDynamic.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HLayeredArray1.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HLayeredArray2.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HLayeredArray3.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HLongList.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HPack.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\HReadOnlyHashSet.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\InfoPack.cs" />
+    <Compile Include="HTLib2\HDataStruc.Collections\Pair.cs" />
+    <Compile Include="HTLib2\HDebug\HDebug.cs" />
+    <Compile Include="HTLib2\HDebug\HDebug.Selftest.cs" />
+    <Compile Include="HTLib2\HDebug\HDebug.Static.cs" />
+    <Compile Include="HTLib2\HDebug\HDebug.Watch.cs" />
+    <Compile Include="HTLib2\HException\HException.cs" />
+    <Compile Include="HTLib2\HDebug\HDebug.IMatrix.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlgSparse\LinAlgSparse.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\ILinAlg.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\ILinAlg.Extensions.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\ILinAlg.MatrixByArr.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.LeastSquare.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.AlterDotProd.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.CrossProd.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Det.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Eig.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Eigen.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Flatten.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Inv.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Inverse.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.InvN.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.IsZero.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.KroneckerProduct.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Matrix.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.MatrixArray.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.PwOper.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.SubMatrix.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.SubMatrixOfInv.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.ToMatrix.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.ToVector.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Trace.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Vector.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\Matrix.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\Matrix.HStatic.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixByArr.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixByArr.FromT.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixByArr.operator.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixByColRow.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixByRowCol.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixBySparseMatrix.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixSparseT.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixByRowVecT.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\StackMatrix.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\TMatrix.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Vector\TVector.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Vector\Vector.Block.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Vector\Vector.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Vector\Vector.From.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Vector\Vector.HStatic.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Vector\Vector.Norm.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Vector\Vector.Ptwise.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Vector\Vector.Stat.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Vector\Vector.SubVector.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Vector\Vectors.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Vector\Vectors.Static.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Vector\VectorSparseT.cs" />
+    <Compile Include="HTLib2\HMath.Numerics\NumericSolver.cs" />
+    <Compile Include="HTLib2\HMath.Numerics\NumericSolver.Derivative.cs" />
+    <Compile Include="HTLib2\HMath.Numerics\Quaternion.cs" />
+    <Compile Include="HTLib2\HMath.Random\Random.cs" />
+    <Compile Include="HTLib2\HDynamicObject\HDynamicObject.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumSorted.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumNonNull.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumItemN.Tuple.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.String.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumQuantileElements.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumByIndex.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumCall.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumByGroup.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumCombination.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumExcept.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumNonZeros.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumSequence.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.Tuple.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.Quantile.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HSum.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HPow.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.Between.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HAbs.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HAccDiff.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HAvgVar.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HCorrCov.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HInv.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HMean.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HMinMax.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.MeanVariance.cs" />
+    <Compile Include="HTLib2\HStatic.HValueTuple\HValueTuple.cs" />
+    <Compile Include="HTLib2\HStatic\Depreciate.ListOper\ListOper.Common.cs" />
+    <Compile Include="HTLib2\HStatic\Depreciate.ListOper\ListOper.TakeByIndex.cs" />
+    <Compile Include="HTLib2\HStatic\Depreciate.ListOper\ListOper.Tuple.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HAdd.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HBinarySearch.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.Depreciate.HSelectByType.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.Depreciate.HTake.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HClone.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HCloneDeep.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HContains.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HCount.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HGetItem.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HGroupBySequence.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HIdxSorted.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HIndexLaTeX.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HIndexOf.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HItemNNN.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HLastNth.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HListCount.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HListIndexCommon.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HListIndexEqualTo.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HListIndexOf.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumItemN.ValueTuple.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HListItemN.ValueTuple.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HListItemN.Tuple.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HParseT.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HQuery.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HQuery.Ineql.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HQuery.Sort.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HRemoveAt.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HRemoveIndexe.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HRemoveNulls.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HReplace.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HReverse.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HSelect%28Double%29.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HSetBy.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HSort.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HSplit.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HStrcat.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HToLinkedList.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HToArray.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HToArrayArray.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HToDictionary.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HToHashSet.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HToIListTuple.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HToMatrixT.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HToString.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HToTupleN.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HToUpper.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HToVectorT.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.HUpdateN.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HAdd.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HAddItem.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HAddTuple.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HCompEqual.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HContains.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HContainsKey.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HContainsObject.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HCopyIdx.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HDyn.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HGroupByBins.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HInsert.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HIsComputable.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HListValueOf.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HMerge.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HNumT.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HOptions.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HParse.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HRank.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSelect.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSelectBetween.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSelectBy.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSelectByIndex.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSelectByItemN.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSelectByType.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSelectEqual.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSelectFromCount.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSelectLargest.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSelect_InStrings.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSetDiff.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSetValueAll.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HSum.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HToArray.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HToArrayByIdxN.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HToInt.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HToString.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HToTuple.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HToTupleArray.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HToType.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HTupleSorted.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HUnion.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HUpdateValueAll.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HWithin.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.ListVector.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.NewArray.cs" />
+    <Compile Include="HTLib2\HStatic\Obsolete\HStatic.ObjectAs.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.String.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.String.HSubEndStringFromCount.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.String.HSubstring.cs" />
+    <Compile Include="HTLib2\HSystem.HConsole\HConsole.cs" />
+    <Compile Include="HTLib2\HSystem.HParallel\HParallel.cs" />
+    <Compile Include="HTLib2\HSystem.HProcess\HProcess.cs" />
+    <Compile Include="HTLib2\HSystem.HResource\HResource.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HDirectory.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HFile.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HGlobal.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HSerialize.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HSerialize.text.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HSerialize.text2d.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HStream.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HTempDictionary.cs" />
+    <Compile Include="HTLib2\HSystem.System\HEnvironment.cs" />
+    <Compile Include="HTLib2\HSystem.System\HEnvironment.Is64Bit.cs" />
+    <Compile Include="HTLib2\HSystem.System\HGC.cs" />
+    <Compile Include="HTLib2\HSystem.System\HReflection.cs" />
+    <Compile Include="HTLib2\Interface\INewDelete.cs" />
+    <Compile Include="HTLib2\Interface\IMatrix.Static.cs" />
+    <Compile Include="HTLib2\Interface\IMatrixSparse.cs" />
+    <Compile Include="HTLib2\Interface\IMatrix.cs" />
+    <Compile Include="HTLib2\Interface\IVectorSparse.cs" />
+    <Compile Include="HTLib2\Interface\IVector.cs" />
+    <Compile Include="HTLib2\HDebug\HDebug.IVector.cs" />
+    <Compile Include="HTLib2\HStatic\HLib2Static.ListCommonT.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\daDenseMatrix.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\daDenseVector.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\daMatrix.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\daSparseMatrix.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\daSparseVector.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\daVector.cs" />
+    <Compile Include="HTLib2\External.dnAnalytics\dnAnalytics.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tutorial_Matlab.cs" />
+    <Compile Include="Tutorial_Pdb.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Pdb.Format_v33_Letter.pdf" />
+    <None Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Mathematica.NETLink.nb" />
+    <None Include="HTLib2\Algorithm.KDTree\KDTreeDLL\KDTreeDLL.zip" />
+    <None Include="HTLib2\External.alglib381\alglib-3.8.1.csharp.zip" />
+    <None Include="HTLib2\External.KDTree\KDTreeDLL.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="External.NETLink\NETLink15\Wolfram.NETLink.dll" />
+    <Content Include="External.NETLink\NETLink16\Wolfram.NETLink.dll" />
+    <Content Include="External.NETLink\NETLink17\Wolfram.NETLink.dll" />
+    <Content Include="HTLib2\Algorithm.KDTree\KDTreeDLL\readme.txt" />
+    <Content Include="HTLib2\External.alglib381\manual.csharp.html" />
+    <Content Include="HTLib2\External.bungee.lbfgs\Readme.txt" />
+    <Content Include="HTLib2\External.KDTree\readme.txt" />
+    <Content Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Eigen_src.h" />
+    <Content Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Inverse_src.h" />
+    <Content Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.InvN_src.cpp" />
+    <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.dll" />
+    <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.fsharp.dll" />
+    <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.fsharp.xml" />
+    <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.xml" />
+    <Content Include="HTLib2\External.dnAnalytics\zlib.net.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HTLib2\Numerics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="MLApp">
+      <Guid>{C36E46AB-6A81-457B-9F91-A7719A06287F}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\MathematicaPlotForm.resx">
+      <DependentUpon>MathematicaPlotForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Sample\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
