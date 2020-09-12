@@ -759,6 +759,7 @@
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumNonZeros.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumSequence.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.Tuple.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HStatistics.cs" />
     <Compile Include="HTLib2\HStatic.HMath\HMath.Quantile.cs" />
     <Compile Include="HTLib2\HStatic.HMath\HMath.HSum.cs" />
     <Compile Include="HTLib2\HStatic.HMath\HMath.HPow.cs" />
