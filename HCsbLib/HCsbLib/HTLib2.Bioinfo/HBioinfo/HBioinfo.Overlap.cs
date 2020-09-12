@@ -10,7 +10,8 @@ namespace HTLib2.Bioinfo
     {
         public static (List<(double freq, double dovlp)> freq1_dovlp, List<(double freq, double dovlp)> freq2_dovlp) DegeneratcyOverlap
                 ( IList<Mode> modes1, double[] mass1, double[] mass2, IList<Mode> modes2
-                , ILinAlg ila, bool bResetUnitVector
+                , ILinAlg ila
+                , bool bResetUnitVector       // [default] false
                 , double degeneracy_tolerance // 3.0
                 , Matrix overlapsigned = null
                 )
