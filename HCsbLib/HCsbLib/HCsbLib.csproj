@@ -420,6 +420,7 @@
     <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Jrnl.cs" />
     <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Keywds.cs" />
     <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Nummdl.cs" />
+    <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Remark2.cs" />
     <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Remark.cs" />
     <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Revdat.cs" />
     <Compile Include="HTLib2.Bioinfo\Pdb\Pdb.Element\Title Section\PDB.Source.cs" />
