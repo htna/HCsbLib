@@ -74,7 +74,7 @@ namespace HTLib2.Bioinfo
 
             public double? TryResolution()
             {
-                if( '2'           != String(idxs__REMARKNUM) ) return null;
+                if( '2'           != Char  (idxs__REMARKNUM) ) return null;
                 if( "RESOLUTION." != String(idxs__RESOLUTIO) ) return null;
                 if( "ANGSTROMS."  != String(idxs__ANGSTROMS) ) return null;
                 double? resolution = Double(idxs_resolution);
