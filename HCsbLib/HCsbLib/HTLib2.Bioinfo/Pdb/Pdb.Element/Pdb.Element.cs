@@ -26,6 +26,7 @@ namespace HTLib2.Bioinfo
             public readonly string line;
             protected string  String (int begin, int end) { string substr = line.Substring(begin-1, end-begin+1); return substr; }
             protected char    Char   (int index         ) { return line[index-1]; }
+            protected int?    Integer(int index         ) { char   cval   = line[index-1]; int val = cval - '0';              if(0 <= val && val <= 9           ) return val; return null; }
             protected int?    Integer(int begin, int end) { string substr = line.Substring(begin-1, end-begin+1); int    val; if(int   .TryParse(substr,out val)) return val; return null; }
             protected double? Double (int begin, int end) { string substr = line.Substring(begin-1, end-begin+1); double val; if(double.TryParse(substr,out val)) return val; return null; }
 
