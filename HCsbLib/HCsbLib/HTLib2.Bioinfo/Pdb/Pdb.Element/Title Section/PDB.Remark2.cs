@@ -67,10 +67,19 @@ namespace HTLib2.Bioinfo
                 return new Remark2(line);
             }
             public static bool IsRemark2(string line) { return (line.Substring(0,10) == "REMARK   2"); }
-            public    int _remarknum  { get { return Integer(idxs__remarknum).Value; } } int[] idxs__remarknum= new int[]{10   }; // 10         LString(1)     "2"
+            public string _REMARKNUM  { get { return String (idxs__REMARKNUM);       } } int[] idxs__REMARKNUM= new int[]{10   }; // 10         LString(1)     "2"
             public string _RESOLUTION { get { return String (idxs__RESOLUTIO);       } } int[] idxs__RESOLUTIO= new int[]{12,22}; // 12 - 22    LString(11)    "RESOLUTION."
             public double resolution  { get { return Double (idxs_resolution).Value; } } int[] idxs_resolution= new int[]{24,30}; // 24 - 30    Real(7.2)      resolution   Resolution.
             public string _ANGSTROMS  { get { return String (idxs__ANGSTROMS);       } } int[] idxs__ANGSTROMS= new int[]{32,41}; // 32 - 41    LString(10)    "ANGSTROMS."
+
+            public double? TryResolution()
+            {
+                if( "2"           != String(idxs__REMARKNUM) ) return null;
+                if( "RESOLUTION." != String(idxs__RESOLUTIO) ) return null;
+                if( "ANGSTROMS."  != String(idxs__ANGSTROMS) ) return null;
+                double? resolution = Double(idxs_resolution);
+                return  resolution;
+            }
 
             // IComparable<Atom>
             //int IComparable<Atom>.CompareTo(Atom other)
