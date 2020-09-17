@@ -19,6 +19,39 @@ namespace HTLib2.Bioinfo
         }
         public static List<string> GetPdbLines(string pdbid, bool forceToRedownload=false)
         {
+            pdbid = pdbid.Trim();
+            
+            List<string> pdblines;
+            {
+                try
+                {
+                    string pdbpath = RootPath+pdbid+".pdb";
+
+                    if(forceToRedownload || HFile.Exists(pdbpath) == false)
+                    {
+                        System.Net.WebClient webClient = new System.Net.WebClient();
+                        string address = string.Format(@"http://www.pdb.org/pdb/files/{0}.pdb", pdbid.ToUpper());
+                        System.IO.Stream webstream = webClient.OpenRead(address);
+
+                        System.IO.Stream pdbstream = HFile.GetFileStream(pdbpath, "CreateNew", "ReadWrite", null);
+                        webstream.CopyTo(pdbstream);
+                        pdbstream.Close();
+                        webstream.Close();
+                        webClient.Dispose();
+                    }
+                    {
+                        pdblines = HFile.ReadAllLines(pdbpath).ToList();
+                    }
+                }
+                catch(Exception)
+                {
+                    pdblines = null;
+                }
+                HDebug.Assert(pdblines != null);
+            }
+            return pdblines;
+
+
             throw new NotImplementedException();
             /// pdbid = pdbid.Trim();
             /// List<string> pdblines;
