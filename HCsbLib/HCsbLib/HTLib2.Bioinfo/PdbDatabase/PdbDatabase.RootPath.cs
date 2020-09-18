@@ -12,7 +12,7 @@ namespace HTLib2.Bioinfo
         //static string _RootPath = @"\\songlab1.student.iastate.edu\k\PdbPackage\";
         //static string _RootPath = @"\\songlab1.cs.iastate.edu\k\PdbPackage\";
         //static string _RootPath = @"K:\PdbPackage\";
-        static string _RootPath = @"K:\ProtDataBank\pdb\";
+        static string _RootPath = @"D:\ProtDataBank\pdb\";
         public static string RootPath
         {
             get
