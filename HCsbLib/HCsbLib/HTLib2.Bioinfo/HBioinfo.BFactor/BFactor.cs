@@ -179,6 +179,7 @@ public static partial class HBioinfo
             /////////////////////////////////////////////////////////////////////
             // this has been tested enough
             if(HDebug.False && HDebug.IsDebuggerAttached)
+            #region selftest
             {
                 double corr = double.NaN;
                 using(new Matlab.NamedLock("CORR"))
@@ -200,6 +201,7 @@ public static partial class HBioinfo
                     HDebug.AssertTolerance(0.00000001, hcorr-corr);
                 //HDebug.ToDo("use HMath.HCorr(...) instead");
             }
+            #endregion
             // this has been tested enough
             /////////////////////////////////////////////////////////////////////
             return hcorr;
