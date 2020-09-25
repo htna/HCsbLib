@@ -92,10 +92,12 @@ namespace HTLib2.Bioinfo
                 {
                     List<string> lines = new List<string>();
 
-                    lines.Add("obj = [");
+                    StringBuilder obj = new StringBuilder();
+                    obj.Append("obj = [");
                     foreach(var cgoline in cgoelems.lines)
-                        lines.Add("    " + cgoline);
-                    lines.Add("]");
+                        obj.Append("    " + cgoline);
+                    obj.Append("]");
+                    lines.Add(obj.ToString());
                     lines.Add("cmd.load_cgo(obj,\"" + objname + "\")");
 
                     HFile.AppendAllLines(pypath, lines);
