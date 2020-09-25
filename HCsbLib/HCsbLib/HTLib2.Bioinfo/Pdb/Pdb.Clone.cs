@@ -63,6 +63,55 @@ namespace HTLib2.Bioinfo
             }
             return new Pdb(newelements);
         }
+
+        public Pdb CloneUpdateTempFactor(IList<double> tempFactors)
+        {
+            Atom[] latoms = this.atoms;
+            if(latoms.Length != tempFactors.Count)
+            {
+                throw new ArgumentException();
+            }
+            int leng = latoms.Length;
+
+            Dictionary<IAtom, double> iatom2tempFactor = new Dictionary<IAtom, double>();
+            for(int i=0; i<leng; i++)
+                iatom2tempFactor.Add(latoms[i], tempFactors[i]);
+
+            return CloneUpdateTempFactor(iatom2tempFactor);
+        }
+        public Pdb CloneUpdateTempFactor(Dictionary<IAtom,double> iatom2tempFactor)
+        {
+            Element[] newelements = new Element[elements.Length];
+            for(int i=0; i<elements.Length; i++)
+            {
+                Element elem = elements[i];
+                if(elem is IAtom)
+                {
+                    if(iatom2tempFactor.ContainsKey(elem as IAtom))
+                    {
+                        double tempFactor = iatom2tempFactor[elem as IAtom];
+                        Element nelem = null;
+                        if(elem is Atom)
+                        {
+                            if(nelem != null) throw new HException("(nelem != null)");
+                            Atom atom = elem as Atom;
+                            nelem = Atom.FromString(atom.GetUpdatedLineTempFactor(tempFactor));
+                        }
+                        if(elem is Hetatm)
+                        {
+                            if(nelem != null) throw new HException("(nelem != null)");
+                            Hetatm hetatm = elem as Hetatm;
+                            nelem = Hetatm.FromString(hetatm.GetUpdatedLineTempFactor(tempFactor));
+                        }
+                        if(nelem == null) throw new NotImplementedException();
+                        elem = nelem;
+                    }
+                }
+                newelements[i] = elem.UpdateElement();
+            }
+            return new Pdb(newelements);
+        }
+
         public Dictionary<char, char> GetPairChainID(string IDfrom, string IDto)
         {
             /// chain ' ' in from/to will be ignored. Use this only for aligning domain of chains
