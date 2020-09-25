@@ -217,6 +217,14 @@ namespace HTLib2.Bioinfo
             foreach(var elem in elems)
                 yield return elem.line;
         }
+        public static IEnumerable<Tinker.Xyz.Atom> HSelectByAtomType(this IList<Tinker.Xyz.Atom> atoms, string AtomType)
+        {
+            foreach(var atom in atoms)
+            {
+                if(atom.AtomType == AtomType)
+                    yield return atom;
+            }
+        }
     }
     public partial class Tinker
     {
