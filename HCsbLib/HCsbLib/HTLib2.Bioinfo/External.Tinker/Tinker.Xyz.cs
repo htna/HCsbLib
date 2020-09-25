@@ -217,13 +217,20 @@ namespace HTLib2.Bioinfo
             foreach(var elem in elems)
                 yield return elem.line;
         }
-        public static IEnumerable<Tinker.Xyz.Atom> HSelectByAtomType(this IList<Tinker.Xyz.Atom> atoms, string AtomType)
+        public static IEnumerable<Tinker.Xyz.Atom> HSelectByAtomType(this IEnumerable<Tinker.Xyz.Atom> atoms, string AtomType)
         {
             foreach(var atom in atoms)
             {
                 if(atom.AtomType == AtomType)
                     yield return atom;
             }
+        }
+        public static KDTreeDLL.KDTree<Tinker.Xyz.Atom> HToKDTreeByCoord(this IEnumerable<Tinker.Xyz.Atom> atoms)
+        {
+            KDTreeDLL.KDTree<Tinker.Xyz.Atom> kdtree = new KDTreeDLL.KDTree<Tinker.Xyz.Atom>(3);
+            foreach(var atom in atoms)
+                kdtree.insert(atom.Coord, atom);
+            return kdtree;
         }
     }
     public partial class Tinker
