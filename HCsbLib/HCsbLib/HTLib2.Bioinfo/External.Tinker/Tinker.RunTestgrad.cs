@@ -207,15 +207,19 @@ namespace HTLib2.Bioinfo
             {
                 Tinker.Run.CTestgrad testgrad;
 
+                if(xyzgradpath_txt == null)
+                {
+                    return Tinker.Run.Testgrad(tinkerpath_testgrad, xyz, prm, tempbase, keys
+                        , optOutSource: null
+                        );
+                }
+
                 if(HFile.Exists(xyzgradpath_txt) == false)
                 {
                     Dictionary<string, string[]> optOutSource = new Dictionary<string, string[]>();
                     testgrad = Tinker.Run.Testgrad(tinkerpath_testgrad, xyz, prm, tempbase, keys
                         , optOutSource: optOutSource
                         );
-                    if(xyzgradpath_txt == null)
-                        return Tinker.Run.ReadGrad(optOutSource["output.txt"]);
-
                     HFile.WriteAllLines(xyzgradpath_txt, optOutSource["output.txt"]);
                 }
                 testgrad = Tinker.Run.ReadGrad(xyzgradpath_txt, null);
