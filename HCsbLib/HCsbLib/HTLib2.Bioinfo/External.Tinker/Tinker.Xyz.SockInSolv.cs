@@ -66,8 +66,9 @@ namespace HTLib2.Bioinfo
                     HDebug.Assert(false);
             }
 
-            foreach(int id in id_atom.Keys)
-                HDebug.Assert(id_atom[id] == null);
+            if(assertHasNonHOH)
+                foreach(int id in id_atom.Keys)
+                    HDebug.Assert(id_atom[id] == null);
 
             return list;
         }
