@@ -213,6 +213,9 @@ namespace HTLib2.Bioinfo
                     testgrad = Tinker.Run.Testgrad(tinkerpath_testgrad, xyz, prm, tempbase, keys
                         , optOutSource: optOutSource
                         );
+                    if(xyzgradpath_txt == null)
+                        return Tinker.Run.ReadGrad(optOutSource["output.txt"]);
+
                     HFile.WriteAllLines(xyzgradpath_txt, optOutSource["output.txt"]);
                 }
                 testgrad = Tinker.Run.ReadGrad(xyzgradpath_txt, null);
@@ -304,7 +307,10 @@ namespace HTLib2.Bioinfo
                 string[] lines = HFile.ReadAllLines(outputpath);
                 if(optOutSource != null)
                     optOutSource.Add("output.txt", lines);
-
+                return ReadGrad(lines);
+            }
+            public static CTestgrad ReadGrad( string[] lines )
+            {
                 #region output.txt
                     ///      ######################################################################
                     ///    ##########################################################################
