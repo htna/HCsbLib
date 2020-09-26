@@ -7,7 +7,6 @@ namespace HTLib2.Bioinfo
 {
     using Xyz     = Tinker.Xyz;
     using Prm     = Tinker.Prm;
-    using HOH     = TinkerStatic.SockInSolvLayer_HOH;
     public static partial class TinkerStatic
     {
         public static Xyz Merge( (Xyz xyz1, Xyz xyz2) xyzs, Xyz.Atom.Format format)
