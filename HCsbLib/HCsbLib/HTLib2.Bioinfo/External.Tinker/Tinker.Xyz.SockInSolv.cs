@@ -7,16 +7,16 @@ namespace HTLib2.Bioinfo
 {
     using Xyz     = Tinker.Xyz;
     using Prm     = Tinker.Prm;
-    using HOH     = TinkerStatic.SockInSolvLayer_HOH;
+    using HOH     = TinkerStatic.TinkerXyzAtom_HOH;
     public static partial class TinkerStatic
     {
-        internal class SockInSolvLayer_HOH
+        public class TinkerXyzAtom_HOH
         {
             public Xyz.Atom O;
             public Xyz.Atom H1;
             public Xyz.Atom H2;
         }
-        internal static KDTree.KDTree<HOH> HToKdTree(this IEnumerable<HOH> hohs)
+        public static KDTree.KDTree<HOH> HToKdTree(this IEnumerable<HOH> hohs)
         {
             KDTree.KDTree<HOH> kdtree = new KDTree.KDTree<HOH>(3);
             foreach(var hoh in hohs)
@@ -27,7 +27,10 @@ namespace HTLib2.Bioinfo
             }
             return kdtree;
         }
-        internal static List<HOH> HToListHOH(this Xyz solvs)
+        public static List<HOH> HSelectListHOH
+            ( this Xyz solvs
+            , bool assertHasNonHOH = true
+            )
         {
             Dictionary<int, Xyz.Atom> id_atom = solvs.atoms.HToDictionaryIdAtom();
             List<HOH> list = new List<HOH>();
@@ -59,7 +62,8 @@ namespace HTLib2.Bioinfo
                     id_atom[H2_id] = null;
                     continue;
                 }
-                HDebug.Assert(false);
+                if(assertHasNonHOH)
+                    HDebug.Assert(false);
             }
 
             foreach(int id in id_atom.Keys)
@@ -75,7 +79,7 @@ namespace HTLib2.Bioinfo
             Dictionary<int,Prm.Atom> prm_id2atom = prm.atoms.ToIdDictionary();
             Dictionary<int,Prm.Vdw > prm_cls2vdw = prm.vdws .ToClassDictionary();
 
-            List<HOH> hohs = solvbox.HToListHOH();
+            List<HOH> hohs = solvbox.HSelectListHOH();
             int cntOutSolvLayer = 0;
             int cntCrash        = 0;
             int cntSelected     = 0;
