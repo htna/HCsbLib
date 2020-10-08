@@ -60,6 +60,23 @@ namespace HTLib2.Bioinfo
 
             return k_i;
         }
+        public static void GetDegreeOfCollectivity(string matV, string vecD, string vecM)
+        {
+            /// n = length(vecM);
+            //  assert(matV = 3n x 3n);
+            //  assert(vecD = 3n x 1 );
+            //  assert(vecM =  n x 1 );
+            /// doc.u2  = (matV(1:3:end,:) .^ 2);               // (n x 3n) u2 = x^2
+            /// doc.u2  = doc.u2 + (matV(2:3:end,:) .^ 2);      // (n x 3n) u2 = x^2 + y^2
+            /// doc.u2  = doc.u2 + (matV(3:3:end,:) .^ 2);      // (n x 3n) u2 = x^2 + y^2 + z^3
+            /// doc.m   = vecM * ones(1,3*n);                   // (n x 3n)
+            /// doc.u2  = doc.u2 ./ doc.m;                      // (n x 3n) u2 = (x^2 + y^2 + z^3) / m
+            /// doc.div = sum(doc.u2);                          // (1 x 3n) alpha = sum[ (x^2 + y^2 + z^3) / m ]
+            /// doc.div = ones(n,1) * doc.div;                  // (n x 3n)
+            /// doc.u2  = doc.u2 ./ doc.div;                    // (n x 3n) u2 = 1/alpha * (x^2 + y^2 + z^3) / m
+            /// doc.ki  = sum( -1 * doc.u2 .* log(doc.u2) );    // (1 x 3n) ki = sum[ -1 * u2 * log(u2) ]
+            /// doc.ki  = exp(doc.ki) / n;                      // (1 x 3n) ki = 1/n * exp[ sum[ -1 * u2 * log(u2) ] ]
+        }
         public static IEnumerable<double> GetDegreeOfCollectivity(this IEnumerable<Mode> modes, double[] masses)
         {
             double[] buff_u2_ij = null;
