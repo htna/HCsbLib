@@ -8,6 +8,10 @@ namespace HTLib2
 {
 	public partial class Geometry
 	{
+        public static (double[], double[], double[]) MomentOfInertiaTensor(IList<Vector> points, IList<double> masses)
+        {
+            return CMomentOfInertiaTensor.MomentOfInertiaTensor(points, masses);
+        }
         public partial class CMomentOfInertiaTensor
         {
             public static void AddToI(double[,] I, double mi, double[] dveci)
