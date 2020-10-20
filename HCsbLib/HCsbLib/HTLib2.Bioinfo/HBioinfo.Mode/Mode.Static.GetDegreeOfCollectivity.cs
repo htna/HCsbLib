@@ -62,10 +62,10 @@ namespace HTLib2.Bioinfo
         }
         public static void GetDegreeOfCollectivity(string matV, string vecD, string vecM)
         {
-            /// doc.n   = length(vecM);
             //  assert(matV = 3n x 3n);
             //  assert(vecD = 3n x 1 );
             //  assert(vecM =  n x 1 );
+            /// doc.n   = length(vecM);
             /// doc.u2  = (matV(1:3:end,:) .^ 2);               // (n x 3n) u2 = x^2
             /// doc.u2  = doc.u2 + (matV(2:3:end,:) .^ 2);      // (n x 3n) u2 = x^2 + y^2
             /// doc.u2  = doc.u2 + (matV(3:3:end,:) .^ 2);      // (n x 3n) u2 = x^2 + y^2 + z^3
