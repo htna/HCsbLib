@@ -96,18 +96,29 @@ namespace HTLib2.Bioinfo
                 double   eigval = eigvals[i];
                 for(int c=0; c<size; c++)
                 {
-                    for(int r=0; r<size; r++)
-                        Dij[c, r] += (LinAlg.VtV(eigvec[c], eigvec[r]) / eigval);
+                    {
+                        /// for(int r=0; r<size; r++)
+                        ///     Dij[c, r] += (LinAlg.VtV(eigvec[c], eigvec[r]) / eigval);
+                        Dij[c, c] += (LinAlg.VtV(eigvec[c], eigvec[c]) / eigval);
+                        for(int r=c+1; r<size; r++)
+                        {
+                            double dDij_cr = (LinAlg.VtV(eigvec[c], eigvec[r]) / eigval);;
+                            Dij[c, r] += dDij_cr;
+                            Dij[r, c] += dDij_cr;
+                        }
+                    }
                     Dii[c] += (LinAlg.VtV(eigvec[c], eigvec[c]) / eigval);
                 }
             }
             Dij = Dij / modes.Count;
             Dii = Dii / modes.Count;
 
+            double[] sqrt_Dii = Dii.ToArray().HSqrt();
             // Cij
             for(int c=0; c<size; c++)
                 for(int r=0; r<size; r++)
-                    Dij[c, r] /= Math.Sqrt(Dii[c] * Dii[r]);
+                    //Dij[c, r] /= Math.Sqrt(Dii[c] * Dii[r]);
+                    Dij[c, r] /= (sqrt_Dii[c] * sqrt_Dii[r]);
 
             return Dij;
         }
