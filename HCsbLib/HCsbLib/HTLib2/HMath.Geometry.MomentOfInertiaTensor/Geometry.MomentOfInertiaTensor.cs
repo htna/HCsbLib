@@ -12,6 +12,61 @@ namespace HTLib2
         {
             return CMomentOfInertiaTensor.MomentOfInertiaTensor(points, masses);
         }
+        public static Vector[] RotationalDegreesOfFreedom(IList<Vector> points, IList<double> masses)
+        {
+            Vector[] rotdof = new Vector[3];
+            rotdof[0] = new double[points.Count*3];
+            rotdof[1] = new double[points.Count*3];
+            rotdof[2] = new double[points.Count*3];
+            RotationalDegreesOfFreedom(points, masses, rotdof);
+
+            if(HDebug.IsDebuggerAttached)
+            {
+                double dot01 = LinAlg.DotProd(rotdof[0], rotdof[1]);
+                double dot02 = LinAlg.DotProd(rotdof[0], rotdof[2]);
+                double dot12 = LinAlg.DotProd(rotdof[1], rotdof[2]);
+            }
+
+            return rotdof;
+        }
+        public static void RotationalDegreesOfFreedom_sub(IList<Vector> points, Vector axis, Vector mc, Vector rotdof)
+        {
+            for(int i=0; i<points.Count; i++)
+            {
+                Vector pt = points[i] - mc;
+                Vector cross = LinAlg.CrossProd3(axis, pt);
+                double pt_axis0_dist = Geometry.DistancePointLine(points[i], mc, mc+axis);
+                HDebug.Assert(pt_axis0_dist >= 0);
+                rotdof[i*3+0] = pt_axis0_dist * cross[0];
+                rotdof[i*3+1] = pt_axis0_dist * cross[1];
+                rotdof[i*3+2] = pt_axis0_dist * cross[2];
+            }
+            rotdof = rotdof.UnitVector();
+        }
+        public static void RotationalDegreesOfFreedom(IList<Vector> points, IList<double> masses, Vector[] rotdof)
+        {
+            // mass center
+            Vector mc = new double[3];
+            for(int i=0; i<points.Count; i++)
+            {
+                Vector pi = points[i];
+                double mi = masses[i];
+                mc[0] += pi[0]*mi;
+                mc[1] += pi[1]*mi;
+                mc[2] += pi[2]*mi;
+            }
+            mc[0] /= points.Count;
+            mc[1] /= points.Count;
+            mc[2] /= points.Count;
+
+            var axis012 = CMomentOfInertiaTensor.MomentOfInertiaTensor(points, masses, mc);
+
+            RotationalDegreesOfFreedom_sub(points, axis012.Item1, mc, rotdof[0]);
+            RotationalDegreesOfFreedom_sub(points, axis012.Item2, mc, rotdof[1]);
+            RotationalDegreesOfFreedom_sub(points, axis012.Item3, mc, rotdof[2]);
+
+            return;
+        }
         public partial class CMomentOfInertiaTensor
         {
             public static void AddToI(double[,] I, double mi, double[] dveci)
@@ -39,27 +94,32 @@ namespace HTLib2
             }
             public static (double[], double[], double[]) MomentOfInertiaTensor(IList<Vector> points, IList<double> masses)
             {
-                int count = points.Count;
-
                 // mass center
-                double mc0 = 0;
-                double mc1 = 0;
-                double mc2 = 0;
-                for(int i=0; i<count; i++)
+                Vector mc = new double[3];
+                for(int i=0; i<points.Count; i++)
                 {
                     Vector pi = points[i];
                     double mi = masses[i];
-                    mc0 += pi[0]*mi;
-                    mc1 += pi[1]*mi;
-                    mc2 += pi[2]*mi;
+                    mc[0] += pi[0]*mi;
+                    mc[1] += pi[1]*mi;
+                    mc[2] += pi[2]*mi;
                 }
+                mc[0] /= points.Count;
+                mc[1] /= points.Count;
+                mc[2] /= points.Count;
+
+                return MomentOfInertiaTensor(points, masses, mc);
+            }
+            public static (double[], double[], double[]) MomentOfInertiaTensor(IList<Vector> points, IList<double> masses, Vector mc)
+            {
+                int count = points.Count;
 
                 double[,] I = new double[3,3];
                 for(int i=0; i<count; i++)
                 {
                     Vector pi = points[i];
                     double mi = masses[i];
-                    AddToI(I, mi, pi[0]-mc0, pi[1]-mc1, pi[2]-mc2);
+                    AddToI(I, mi, pi[0]-mc[0], pi[1]-mc[1], pi[2]-mc[2]);
                 }
 
                 double[] eigval;
