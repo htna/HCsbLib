@@ -61,7 +61,7 @@ namespace HTLib2.Bioinfo
             UpdateMassWeightedHess(mwhess, mass3);
             return mwhess;
         }
-        static void UpdateMassWeightedHess(Matrix hess, Vector mass)
+        public static void UpdateMassWeightedHess(Matrix hess, Vector mass)
         {
             if(HDebug.Selftest())
             //if(GetMassWeightedHess_selftest1)
@@ -106,7 +106,7 @@ namespace HTLib2.Bioinfo
                 }
             }
         }
-        static void UpdateMassWeightedHess(HessMatrix hess, Vector mass)
+        public static void UpdateMassWeightedHess(HessMatrix hess, Vector mass)
         {
             if(hess.ColSize < 15000)
                 if(HDebug.Selftest())
@@ -139,7 +139,7 @@ namespace HTLib2.Bioinfo
                 hess.SetBlock(bc, br, bval);
             }
         }
-        private static MatrixByArr[,] GetMassWeightedHess(MatrixByArr[,] hess, Vector mass, InfoPack extra=null)
+        public static MatrixByArr[,] GetMassWeightedHess(MatrixByArr[,] hess, Vector mass, InfoPack extra=null)
         {
             //HDebug.Depreciated();
             HDebug.Assert(hess.GetLength(0) == hess.GetLength(1));
