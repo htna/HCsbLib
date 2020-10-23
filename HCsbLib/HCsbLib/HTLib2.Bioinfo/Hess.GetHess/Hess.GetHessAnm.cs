@@ -264,6 +264,15 @@ namespace HTLib2.Bioinfo
         }
         public static HessMatrix GetHessAnm(IList<Vector> coords, IList<double> cutoffs, string options="")
         {
+            int n = coords.Count;
+            HessMatrix hess = null;
+            if(n < 100) hess = HessMatrixDense .ZerosDense (n*3, n*3);
+            else        hess = HessMatrixSparse.ZerosSparse(n*3, n*3);
+            GetHessAnm(coords, cutoffs, hess, options);
+            return hess;
+        }
+        public static void GetHessAnm(IList<Vector> coords, IList<double> cutoffs, HessMatrix hess, string options="")
+        {
             if(coords.Count > 10000)
                 HDebug.ToDo("System size is too big. Use EnumHessAnmSpr() and other GetHessAnm()");
 
@@ -278,9 +287,9 @@ namespace HTLib2.Bioinfo
             double Epsilon = 0;// double.Epsilon;
 
             int n = coords.Count;
-            HessMatrix hess = null;
-            if(n < 100) hess = HessMatrixDense .ZerosDense (n*3, n*3);
-            else        hess = HessMatrixSparse.ZerosSparse(n*3, n*3);
+            if(hess.RowSize != 3*n || hess.ColSize != 3*n)
+                throw new Exception();
+
             Action<int> comp_hess_i = delegate(int i)
             {
                 if(coords[i] == null)
@@ -333,8 +342,6 @@ namespace HTLib2.Bioinfo
                 for(int i=0; i<n; i++)
                     comp_hess_i(i);
             }
-
-            return hess;
         }
         //public static void GetHessAnm(IList<Vector> coords, double cutoff, MatrixSparse<MatrixByArr> hess)
         //{
