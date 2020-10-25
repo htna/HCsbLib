@@ -344,10 +344,18 @@ namespace HTLib2
         {
             HDebug.Exception(outmat.ColSize == lvec.Size);
             HDebug.Exception(outmat.RowSize == rvec.Size);
-            MatrixByArr mat = new MatrixByArr(lvec.Size, rvec.Size);
+            //MatrixByArr mat = new MatrixByArr(lvec.Size, rvec.Size);
             for(int c = 0; c < lvec.Size; c++)
                 for(int r = 0; r < rvec.Size; r++)
                     outmat[c, r] = lvec[c] * rvec[r];
+        }
+        public static void VVt_AddTo(Vector lvec, Vector rvec, MatrixByArr mat)
+        {
+            HDebug.Exception(mat.ColSize == lvec.Size);
+            HDebug.Exception(mat.RowSize == rvec.Size);
+            for(int c = 0; c < lvec.Size; c++)
+                for(int r = 0; r < rvec.Size; r++)
+                    mat[c, r] += lvec[c] * rvec[r];
         }
         public static bool   DMD_selftest = HDebug.IsDebuggerAttached;
         public static Matrix DMD(Vector diagmat1, Matrix mat,Vector diagmat2)
