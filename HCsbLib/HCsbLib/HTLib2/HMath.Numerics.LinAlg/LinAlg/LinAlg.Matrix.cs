@@ -385,12 +385,33 @@ namespace HTLib2
                 }
             return DMD;
         }
+        //public static bool VtMV_selftest = HDebug.IsDebuggerAttached;
         public static double VtMV(Vector lvec, Matrix mat, Vector rvec, string options="")
         {
-            Vector MV = LinAlg.MV(mat, rvec, options);
-            double VMV = LinAlg.VtV(lvec, MV);
-            //Debug.AssertToleranceIf(lvec.Size<100, 0.00000001, Vector.VtV(lvec, Vector.MV(mat, rvec)) - VMV);
-            return VMV;
+            if(HDebug.Selftest())
+            {
+                Vector _lvec = new double[3] { 1, 2, 3 };
+                Matrix _mat = new double[3,4] { {  4,  5,  6,  7 }
+                                              , {  8,  9, 10, 11 }
+                                              , { 12, 13, 14, 15 }
+                                              };
+                Vector _rvec = new double[4] { 16, 17, 18, 19 };
+                double _v0 = VtMV(_lvec,_mat,_rvec);
+                double _v1 = 4580;
+                HDebug.Assert(_v0 == _v1);
+            }
+
+            HDebug.Assert(lvec.Size == mat.ColSize);
+            HDebug.Assert(mat.RowSize == rvec.Size);
+            double ret = 0;
+            for(int c=0; c<lvec.Size; c++)
+                for(int r=0; r<rvec.Size; r++)
+                    ret += lvec[c] * mat[c,r] * rvec[r];
+            return ret;
+            //  Vector MV = LinAlg.MV(mat, rvec, options);
+            //  double VMV = LinAlg.VtV(lvec, MV);
+            //  //Debug.AssertToleranceIf(lvec.Size<100, 0.00000001, Vector.VtV(lvec, Vector.MV(mat, rvec)) - VMV);
+            //  return VMV;
         }
         public static MatrixByArr M_Mt(MatrixByArr lmat, MatrixByArr rmat)
         {
