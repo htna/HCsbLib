@@ -260,6 +260,12 @@ namespace HTLib2
 			double length = 1.0 / Math.Sqrt(_VtV(this, this));
 			return this * length;
 		}
+		public static void UnitVector(Vector vec)
+		{
+			double length = 1.0 / Math.Sqrt(_VtV(vec, vec));
+			for(int i=0; i<vec.Size; i++)
+				vec[i] *= length;
+		}
 		public static void AddTo(IList<Vector> dest, IList<Vector> add)
 		{
 			HDebug.Assert(dest.Count == add.Count);
