@@ -22,9 +22,12 @@ namespace HTLib2
         public static bool CrossProd3_SelfTest = HDebug.IsDebuggerAttached;
         public static Vector CrossProd3(Vector v1, Vector v2)
         {
-            // http://en.wikipedia.org/wiki/Cross_product
-            HDebug.Assert(v1.Size == 3);
-            HDebug.Assert(v2.Size == 3);
+            Vector cross = new double[3];
+            CrossProd3(v1, v2, cross);
+            return cross;
+        }
+        public static void CrossProd3(Vector v1, Vector v2, Vector cross)
+        {
             if(CrossProd3_SelfTest)
             {
                 CrossProd3_SelfTest = false;
@@ -33,11 +36,15 @@ namespace HTLib2
                 Vector tv  = CrossProd3(tv1, tv2);
                 HDebug.AssertTolerance(0, tv - new Vector(-3, 6, -3));
             }
-            Vector cross = new double[3];
+            // http://en.wikipedia.org/wiki/Cross_product
+            HDebug.Assert(v1.Size == 3);
+            HDebug.Assert(v2.Size == 3);
+            //Vector cross = new double[3];
+            HDebug.Assert(cross.Size == 3);
             cross[0] = v1[1]*v2[2] - v1[2]*v2[1];
             cross[1] = v1[2]*v2[0] - v1[0]*v2[2];
             cross[2] = v1[0]*v2[1] - v1[1]*v2[0];
-            return cross;
+
             //HDebug.Assert(left.Size == 3, right.Size == 3);
             //return new double[]{
             //                left[1]*right[2] - left[2]*right[1],
