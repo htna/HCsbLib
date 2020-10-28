@@ -357,6 +357,14 @@ namespace HTLib2
                 for(int r = 0; r < rvec.Size; r++)
                     mat[c, r] += lvec[c] * rvec[r];
         }
+        public static void sVVt_AddTo(double scale, Vector lvec, Vector rvec, MatrixByArr mat)
+        {
+            HDebug.Exception(mat.ColSize == lvec.Size);
+            HDebug.Exception(mat.RowSize == rvec.Size);
+            for(int c = 0; c < lvec.Size; c++)
+                for(int r = 0; r < rvec.Size; r++)
+                    mat[c, r] += lvec[c] * rvec[r] * scale;
+        }
         public static bool   DMD_selftest = HDebug.IsDebuggerAttached;
         public static Matrix DMD(Vector diagmat1, Matrix mat,Vector diagmat2)
         {
