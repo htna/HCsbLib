@@ -18,7 +18,7 @@ namespace HTLib2
                 public static RetT New(T val) { return new RetT { value = val }; }
             }
 
-            Node<T> root;
+            internal Node<T> root;
             Comparison<T> _comp;
             public Comparison<T> comp{ get { return _comp; } }
             public void ChangeComp(Comparison<T> comp)
@@ -39,15 +39,29 @@ namespace HTLib2
 
             public bool  IsEmpty ()        { return (root == null); }
             public bool  Contains(T query) { return (Search(query) != null); }
-            public RetT? Search  (T query) { Node<T> node = BstSearchWithParent(    root, null, query, _comp).ret; if(node == null) return null; return RetT.New(node.value); }
-            public RetT? Insert  (T value) { Node<T> node = BstInsert          (ref root      , value, _comp)    ; if(node == null) return null; return RetT.New(node.value); }
-            public RetT? Delete  (T query) { var     del  = BstDelete          (ref root      , query, _comp)    ; if(del  == null) return null ; return RetT.New(del.Value.value); }
+            public RetT? Search  (T query) { Node<T> node = BstSearchWithParent(query).ret; if(node == null) return null; return RetT.New(node.value); }
+            public RetT? Insert  (T value) { Node<T> node = BstInsert(value);               if(node == null) return null; return RetT.New(node.value); }
+            public RetT? Delete  (T query) { var     del  = BstDelete(query);               if(del  == null) return null; return RetT.New(del.Value.value); }
             public void  MakeACBT()        { DSW(ref root); }
             public bool  Validate()
             {
                 if(BstValidateConnection(root) == false) return false;
                 if(BstValidateOrder(root, _comp) == false) return false;
                 return true;
+            }
+
+            internal (Node<T> ret, Node<T> ret_parent) BstSearchWithParent(T query)
+            {
+                return BTree.BstSearchWithParent(root, null, query, _comp);
+            }
+            internal Node<T> BstInsert(T value)
+            {
+                return BTree.BstInsert(ref root, value, _comp);
+            }
+            internal (T value, Node<T> deleted_parent)? BstDelete(T query)
+            {
+                (T value, Node<T> deleted_parent)? del = BTree.BstDelete(ref root, query, _comp);
+                return del;
             }
         }
         public static BST<T> NewBST<T>(Comparison<T> comp)
@@ -139,7 +153,7 @@ namespace HTLib2
         /// 2. Return the inserted node
         ///////////////////////////////////////////////////////////////////////
         static bool BstInsert_selftest = true;
-        static Node<T> BstInsert<T>(ref Node<T> root, T value, Comparison<T> compare)
+        internal static Node<T> BstInsert<T>(ref Node<T> root, T value, Comparison<T> compare)
         {
             HDebug.Assert(root == null || root.IsRoot());
             return BstInsert(null, ref root, value, compare);
