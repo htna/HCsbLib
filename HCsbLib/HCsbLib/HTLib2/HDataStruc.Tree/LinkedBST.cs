@@ -28,6 +28,19 @@ namespace HTLib2
             public Node right ;
             public Node prev  ;
             public Node next  ;
+
+            public static Node New(T value,Node parent,Node left, Node right, Node prev, Node next)
+            {
+                return new Node
+                {
+                    value  = value ,
+                    parent = parent,
+                    left   = left  ,
+                    right  = right ,
+                    prev   = prev  ,
+                    next   = next  ,
+                };
+            }
         }
 
         Node          root;
@@ -131,15 +144,7 @@ namespace HTLib2
                     {
                         if(p.left == null)
                         {
-                            Node node = new Node
-                            {
-                                value  = value,
-                                parent = p,
-                                left   = null,
-                                right  = null,
-                                prev   = p.prev,
-                                next   = p,
-                            };
+                            Node node = Node.New(value, p, null, null, p.prev, p);
                             p.prev.next = node;
                             p.prev      = node;
                             p.left      = node;
@@ -154,15 +159,7 @@ namespace HTLib2
                     {
                         if(p.right == null)
                         {
-                            Node node = new Node
-                            {
-                                value  = value,
-                                parent = p,
-                                left   = null,
-                                right  = null,
-                                prev   = p,
-                                next   = p.next,
-                            };
+                            Node node = Node.New(value, p, null, null, p, p.next);
                             p.next.prev = node;
                             p.next      = node;
                             p.right     = node;
@@ -182,11 +179,11 @@ namespace HTLib2
         /// 1. Delete node whose value is same to query
         /// 2. Return the value in the deleted node
         ///////////////////////////////////////////////////////////////////////
-        (T value, Node deleted_parent)? DeleteNode(ref Node root, T query)
+        T DeleteNode(ref Node root, T query)
         {
             return DeleteNodeImpl(ref root, query);
         }
-        (T value, Node deleted_parent)? DeleteNodeImpl(ref Node node, T query)
+        T DeleteNodeImpl(ref Node node, T query)
         {
             // find node to delete
             HDebug.Assert(node != null);
@@ -194,9 +191,9 @@ namespace HTLib2
             if     (query_node <  0) return DeleteNodeImpl(ref node.left , query);
             else if(query_node >  0) return DeleteNodeImpl(ref node.right, query);
             else if(query_node == 0) return DeleteNodeImpl(ref node);
-            else                     return null;
+            else                     throw new Exception();
         }
-        (T value, Node deleted_parent) DeleteNodeImpl(ref Node node)
+        T DeleteNodeImpl(ref Node node)
         {
             if(node.left == null && node.right == null)
             {
