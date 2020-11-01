@@ -9,282 +9,327 @@ namespace HTLib2
     /// <summary>
     /// AVL tree whose nodes are linked as a linked-list in increasing order
     /// </summary>
-    public partial class LinkedBST<T>
+    ///////////////////////////////////////////////////////////////////////
+    /// Binar Search Tree
+    ///////////////////////////////////////////////////////////////////////
+    public class LinkedBST<T>
     {
-#pragma warning disable 414
-        static int _debug = 0;
-#pragma warning restore 414
-
-        public class Node
+        public struct RetT
         {
-            public T    value;
-            public Node prev { get { return _prev; } }
-            public Node next { get { return _next; } }
-
-            internal Node _prev;
-            internal Node _next;
-            internal Node(T value, Node prev, Node next)
-            {
-                this.value = value;
-                this._prev = prev ;
-                this._next = next ;
-            }
-
-            public override string ToString()
-            {
-                return value.ToString();
-            }
+            public T value;
+            public static RetT New(T val) { return new RetT { value = val }; }
         }
 
-        Node head;
-        Node tail;
-        BTree.BST<Node> bst;
+        public class Node : BTree.Node
+        {
+            public T    value ;
+            public Node parent;
+            public Node left  ;
+            public Node right ;
+            public Node prev  ;
+            public Node next  ;
+        }
+
+        Node          root;
+        int           cont;
         Comparison<T> comp;
-        int nodecomp(Node x, Node y) { return comp(x.value, y.value); }
+        public Comparison<T> Comp { get { return comp; } }
+        public void ChangeComp(Comparison<T> comp)
+        {
+            this.comp = comp;
+            HDebug.Assert(Validate());
+        }
 
         public LinkedBST(Comparison<T> comp)
         {
-            this.head = null;
-            this.tail = null;
+            this.root = null;
+            this.cont = 0;
             this.comp = comp;
-            this.bst  = BTree.BST<Node>.NewBST(nodecomp);
         }
-        public static LinkedBST<T> New(Comparison<T> comp)
-        {
-            return new LinkedBST<T>(comp);
-        }
-        public Node GetHead()
-        {
-            return head;
-        }
-        public Node GetTail()
-        {
-            return tail;
-        }
-        public bool IsEmpty()
-        {
-            if(bst.IsEmpty() == true)
-            {
-                HDebug.Assert(head == null);
-                HDebug.Assert(tail == null);
-                return true;
-            }
-            else
-            {
-                HDebug.Assert(head != null);
-                HDebug.Assert(tail != null);
-                return false;
-            }
-        }
-        public bool Contains(T query)
-        {
-            return (Search(query) != null);
-        }
-        public Node Search(T query)
-        {
-            var nodequery = new Node(query, null, null);;
 
-            var value = bst.Search(nodequery);
-
-            if(value == null)
-                return null;
-            return value.Value.value;
-        }
-        public (Node value, Node parent_value) SearchWithParent(T query)
+        public bool  IsEmpty ()        { return (root == null); }
+        public bool  Contains(T query) { return (Search(query) != null); }
+        public T?    Search  (T query) { Node<T> node = BstSearchWithParent(    root, null, query, _comp).ret; if(node == null) return null; return RetT.New(node.value); }
+        public void  Insert  (T value) { Node<T> node = BstInsert          (ref root      , value, _comp)    ; if(node == null) return null; return RetT.New(node.value); }
+        public void  Delete  (T query) { var     del  = BstDelete          (ref root      , query, _comp)    ; if(del  == null) return null ; return RetT.New(del.Value.value); }
+        public bool  Validate()
         {
-            var nodequery = new Node(query, null, null);;
-        
-            var (val, parent_val) = bst.BstSearchWithParent(nodequery);
-        
-            Node value        = null; if(val        != null) value        = val       .value;
-            Node parent_value = null; if(parent_val != null) parent_value = parent_val.value;
-        
-            return (value, parent_value);
-        }
-        public (Node value, (Node left_value, Node right_value)) SearchRange(T query, bool doassert=true)
-        {
-            var nodequery = new Node(query, null, null); ;
-        
-            var (val, parent_val) = bst.BstSearchWithParent(nodequery);
-        
-            Node value, left_value, right_value;
-            if(val == null)
-            {
-                HDebug.Assert(parent_val != null);
-                Node parent_value = parent_val.Value.value;
-                int cmp = comp(query, parent_value.value);
-                HDebug.Assert(cmp != 0);
-                if(cmp < 0)
-                {
-                    //HDebug.Assert(false);
-                    //  parent->prev < query:null < parent)
-                    //return (null, (parent_value.prev, parent_value));
-                    value = null;
-                    left_value = parent_value.prev;
-                    right_value = parent_value;
-                }
-                else
-                {
-                    //HDebug.Assert(false);
-                    //  parent < query:null < parent->next
-                    //return (null, (parent_value, parent_value.next));
-                    value = null;
-                    left_value = parent_value;
-                    right_value = parent_value.next;
-                }
-            }
-            else
-            {
-                value       = val  .value;
-                left_value  = value.prev;
-                right_value = value.next;
-            }
-        
-            if(doassert && HDebug.IsDebuggerAttached)
-            {
-                if(left_value != null && left_value.value != null &&       value != null) HDebug.Assert(comp(left_value.value,       value.value) <= 0);
-                if(     value != null &&      value.value != null && right_value != null) HDebug.Assert(comp(     value.value, right_value.value) <= 0);
-                if(left_value != null && left_value.value != null && right_value != null) HDebug.Assert(comp(left_value.value, right_value.value) <= 0);
-            }
-            return (value, (left_value, right_value));
-        }
-        public Node Insert(T value)
-        {
-            Node node = new Node(value, null, null);
-
-            if(bst.IsEmpty() == true)
-            {
-                var bstnode = bst.Insert(node);
-                HDebug.Assert(bstnode.Value.value == node);
-
-                node._prev = null;
-                node._next = null;
-                head = tail = node;
-            }
-            else
-            {
-                var bstnode = bst.BstInsert(node);
-                HDebug.Assert(bstnode.value == node);
-
-                var bstnode_successor = bstnode.Successor();
-                if (bstnode_successor == null)
-                {
-                    // added to tail
-                    HDebug.Assert(bst.BstSearch(tail).Successor().value.value == node);
-                    HDebug.Assert(nodecomp(tail, node) < 0);
-                    tail._next = node;
-                    node._prev = tail;
-                    tail = node;
-                }
-                else if (bstnode_successor.value.value == head)
-                {
-                    // added to head
-                    HDebug.Assert(nodecomp(node, head) < 0);
-                    head._prev = node;
-                    node._next = head;
-                    head = node;
-                }
-                else
-                {
-                    Node node_next = bstnode_successor.value.value;
-                    Node node_prev = node_next.prev;
-                    HDebug.Assert(node_prev.next == node_next);
-                    HDebug.Assert(node_next.prev == node_prev);
-                    HDebug.Assert(nodecomp(node_prev, node_next) < 0);
-                    HDebug.Assert(nodecomp(node_prev, node     ) < 0);
-                    HDebug.Assert(nodecomp(node     , node_next) < 0);
-                    node._next = node_next;
-                    node._prev = node_prev;
-                    node_prev._next = node;
-                    node_next._prev = node;
-                }
-            }
-            return node;
-        }
-        public List<Node> InsertRange(params T[] values)
-        {
-            return InsertRange(values as IEnumerable<T>);
-        }
-        public List<Node> InsertRange(IEnumerable<T> values)
-        {
-            List<Node> nodes = new List<Node>();
-            foreach(var value in values)
-            {
-                Node node = Insert(value);
-                nodes.Add(node);
-            }
-            return nodes;
-        }
-        public Node Delete(T query)
-        {
-            var nodequery = new Node(query, null, null);;
-
-            var del = bst.Delete(nodequery);
-            if(del == null)
-                return null;
-
-            Node node = del.Value.value;
-
-            if(bst.IsEmpty())
-            {
-                HDebug.Assert(node == head);
-                HDebug.Assert(node == tail);
-                head = tail = null;
-            }
-            else if(node == head)
-            {
-                head = node.next;
-                head._prev = null;
-                node._next = null;
-            }
-            else if(node == tail)
-            {
-                tail = node.prev;
-                tail._next = null;
-                node._prev = null;
-            }
-            else
-            {
-                Node node_prev = node.prev;
-                Node node_next = node.next;
-                node_prev._next = node_next;
-                node_next._prev = node_prev;
-                node._next = null;
-                node._prev = null;
-            }
-
-            if(HDebug.IsDebuggerAttached)
-            {
-                if(head != null) HDebug.Assert(head.prev == null);
-                if(tail != null) HDebug.Assert(tail.next == null);
-            }
-            HDebug.Assert(node.prev == null);
-            HDebug.Assert(node.next == null);
-            return node;
-        }
-        public bool Validate()
-        {
-            return Validate(comp);
-        }
-        public bool Validate(Comparison<T> comp_validate)
-        {
-            int nodecomp_validate(Node x, Node y) { return comp_validate(x.value, y.value); }
-
-            // check AVL validate
-            if(bst.Validate(nodecomp_validate) == false) return false;
-
-            // check linked-list validate
-            Node n = head;
-            while(n != null)
-            {
-                Node n_next = n.next;
-                if(n_next != null && (nodecomp_validate(n, n_next) <= 0) == false)
-                    return false;
-                n = n_next;
-            }
-
+            if(BstValidateConnection(root) == false) return false;
+            if(BstValidateOrder(root, _comp) == false) return false;
             return true;
         }
+
+        public Node SearchNode(T query)
+        {
+            Node node = root;
+            while(node != null)
+            {
+                int cmp = comp(query, node.value);
+                if(cmp == 0)
+                {
+                    return node;
+                }
+                else if(cmp < 0)
+                {
+                    // query < node
+                    node = node.left;
+                }
+                else
+                {
+                    // node < query
+                    node = node.right;
+                }
+            }
+            return null;
+        }
+        ///////////////////////////////////////////////////////////////////////
+        /// BST Insert
+        /// 
+        /// 1. Insert value into BST
+        /// 2. Return the inserted node
+        ///////////////////////////////////////////////////////////////////////
+        static bool InsertNode_selftest = true;
+        public Node InsertNode(T value)
+        {
+            if(InsertNode_selftest)
+            {
+                InsertNode_selftest = false;
+                Comparison<int> _compare = delegate(int a, int b) { return a - b; };
+                //Node<int> _root = null;
+                //BstInsert(ref _root, 10, _compare); HDebug.Assert(_root.ToStringSimple() == "(10)"                                           );
+                //BstInsert(ref _root,  5, _compare); HDebug.Assert(_root.ToStringSimple() == "(5,10,_)"                                       );
+                //BstInsert(ref _root, 20, _compare); HDebug.Assert(_root.ToStringSimple() == "(5,10,20)"                                      );
+                //BstInsert(ref _root,  2, _compare); HDebug.Assert(_root.ToStringSimple() == "((2,5,_),10,20)"                                );
+                //BstInsert(ref _root,  7, _compare); HDebug.Assert(_root.ToStringSimple() == "((2,5,7),10,20)"                                );
+                //BstInsert(ref _root,  4, _compare); HDebug.Assert(_root.ToStringSimple() == "(((_,2,4),5,7),10,20)"                          );
+                //BstInsert(ref _root,  6, _compare); HDebug.Assert(_root.ToStringSimple() == "(((_,2,4),5,(6,7,_)),10,20)"                    );
+                //BstInsert(ref _root, 30, _compare); HDebug.Assert(_root.ToStringSimple() == "(((_,2,4),5,(6,7,_)),10,(_,20,30))"             );
+                //BstInsert(ref _root,  3, _compare); HDebug.Assert(_root.ToStringSimple() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,30))"       );
+                //BstInsert(ref _root, 25, _compare); HDebug.Assert(_root.ToStringSimple() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,(25,30,_)))");
+            }
+
+            if(root == null)
+            {
+                root = new Node
+                {
+                    value  = value,
+                    parent = null,
+                    left   = null,
+                    right  = null,
+                    prev   = null,
+                    next   = null,
+                };
+                return root;
+            }
+            else
+            {
+                Node p = root;
+                while(true)
+                {
+                    int cmp = comp(value, p.value);
+                    if(cmp < 0)
+                    {
+                        if(p.left == null)
+                        {
+                            Node node = new Node
+                            {
+                                value  = value,
+                                parent = p,
+                                left   = null,
+                                right  = null,
+                                prev   = p.prev,
+                                next   = p,
+                            };
+                            p.prev.next = node;
+                            p.prev      = node;
+                            p.left      = node;
+                            return node;
+                        }
+                        else
+                        {
+                            p = p.left;
+                        }
+                    }
+                    else
+                    {
+                        if(p.right == null)
+                        {
+                            Node node = new Node
+                            {
+                                value  = value,
+                                parent = p,
+                                left   = null,
+                                right  = null,
+                                prev   = p,
+                                next   = p.next,
+                            };
+                            p.next.prev = node;
+                            p.next      = node;
+                            p.right     = node;
+                            return node;
+                        }
+                        else
+                        {
+                            p = p.right;
+                        }
+                    }
+                }
+            }
+        }
+        ///////////////////////////////////////////////////////////////////////
+        /// BST Delete
+        /// 
+        /// 1. Delete node whose value is same to query
+        /// 2. Return the value in the deleted node
+        ///////////////////////////////////////////////////////////////////////
+        (T value, Node deleted_parent)? DeleteNode(ref Node root, T query)
+        {
+            return DeleteNodeImpl(ref root, query);
+        }
+        (T value, Node deleted_parent)? DeleteNodeImpl(ref Node node, T query)
+        {
+            // find node to delete
+            HDebug.Assert(node != null);
+            int query_node = comp(query, node.value);
+            if     (query_node <  0) return DeleteNodeImpl(ref node.left , query);
+            else if(query_node >  0) return DeleteNodeImpl(ref node.right, query);
+            else if(query_node == 0) return DeleteNodeImpl(ref node);
+            else                     return null;
+        }
+        (T value, Node deleted_parent) DeleteNodeImpl(ref Node node)
+        {
+            if(node.left == null && node.right == null)
+            {
+                // delete a leaf
+                T    value  = node.value;
+                Node parent = node.parent;
+                node = null;
+                return (value, parent);
+            }
+            else if(node.left != null && node.right == null)
+            {
+                // has left child
+                T    value  = node.value;
+                Node parent = node.parent;
+                node = node.left;
+                node.parent = parent;
+                return (value, parent);
+            }
+            else if(node.left == null && node.right != null)
+            {
+                // has right child
+                T    value  = node.value;
+                Node parent = node.parent;
+                node = node.right;
+                node.parent = parent;
+                return (value, parent);
+            }
+            else
+            {
+                // has both left and right children
+                // 1. find predecessor reference
+                ref Node Pred(ref Node lnode)
+                {
+                    if(lnode.right == null)
+                        return ref lnode;
+                    return ref Pred(ref lnode.right);
+                };
+                ref Node pred = ref Pred(ref node.left);
+
+                // 2. backup value to return
+                T value = node.value;
+                // 3. copy pred.value to node
+                node.value = pred.value;
+                // 4. node updated
+                Node pred_parent = pred.parent;
+                // 4. delete pred; since (*pred).right == null, make pred = (*pred).left
+
+                pred = pred.left;
+                if(pred != null)
+                    pred.parent = pred_parent;
+
+                return (value, pred_parent);
+            }
+        }
     }
+    ///////////////////////////////////////////////////////////////////////
+    /// Validate connections
+    ///////////////////////////////////////////////////////////////////////
+    static bool BstValidateConnection<T>(Node<T> root)
+    {
+        if(root.parent != null)
+            return false;
+        if(root.ValidateConnection() == false)
+            return false;
+        return true;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    /// Validate order
+    ///////////////////////////////////////////////////////////////////////
+    static bool BstValidateOrder<T>(Node<T> root, Comparison<T> compare)
+    {
+        if(root == null)
+            return true;
+        int    count = root.Count();
+        Node<T> node = root.MinNode();
+        Node<T> next = node.Successor();
+        if(next == null)
+            return true;
+        int num_compare = 0;
+        while(next != null)
+        {
+            if(compare(node.value, next.value) > 0)
+                return false;
+            num_compare ++;
+            node = next;
+            next = next.Successor();
+        }
+        if(num_compare != count-1)
+            return false;
+        return true;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    /// BST Search
+    ///////////////////////////////////////////////////////////////////////
+    static bool BstSearch_selftest = true;
+    //public T BstSearch(T query)
+    //{
+    //    Node node = BstSearch(root, query);
+    //    if(node == null)
+    //        return default(T);
+    //    return node.value;
+    //}
+    static Node<T> BstSearch<T>(Node<T> node, T query, Comparison<T> compare)
+    {
+        (Node<T> ret, Node<T> ret_parent) = BstSearchWithParent(node, null, query, compare);
+        return ret;
+    }
+    static (Node<T> ret, Node<T> ret_parent) BstSearchWithParent<T>(Node<T> node, Node<T> node_parent, T query, Comparison<T> compare)
+    {
+        if(BstSearch_selftest)
+        {
+            BstSearch_selftest = false;
+            Comparison<int> _compare = delegate(int a, int b) { return a - b; };
+            Node<int> _root = null;
+            BstInsertRange(ref _root, new int[] { 10, 5, 20, 2, 7, 4, 6, 30, 3, 25 }, _compare);
+            HDebug.Assert(_root.ToString() == "(((_,2,(3,4,_)),5,(6,7,_)),10,(_,20,(25,30,_)))");
+            HDebug.Assert((BstSearchWithParent(_root, null, 10, _compare).ret != null) ==  true);
+            HDebug.Assert((BstSearchWithParent(_root, null, 25, _compare).ret != null) ==  true);
+            HDebug.Assert((BstSearchWithParent(_root, null,  4, _compare).ret != null) ==  true);
+            HDebug.Assert((BstSearchWithParent(_root, null,  7, _compare).ret != null) ==  true);
+            HDebug.Assert((BstSearchWithParent(_root, null,  0, _compare).ret != null) == false);
+            HDebug.Assert((BstSearchWithParent(_root, null,  9, _compare).ret != null) == false);
+            HDebug.Assert((BstSearchWithParent(_root, null, 15, _compare).ret != null) == false);
+            HDebug.Assert((BstSearchWithParent(_root, null, 50, _compare).ret != null) == false);
+        }
+
+        if(node == null)
+            return (null, node_parent);
+        int query_node = compare(query, node.value);
+        if     (query_node <  0) return BstSearchWithParent(node.left , node, query, compare);
+        else if(query_node >  0) return BstSearchWithParent(node.right, node, query, compare);
+        else                     return (node, node_parent);
+    }
+
 }
 */
