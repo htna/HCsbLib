@@ -93,20 +93,20 @@ namespace HTLib2
         public (Node value, Node parent_value) SearchWithParent(T query)
         {
             var nodequery = new Node(query, null, null);;
-
-            var (val, parent_val) = bst.SearchWithParent(nodequery);
-
-            Node value        = null; if(val        != null) value        = val       .Value.value;
-            Node parent_value = null; if(parent_val != null) parent_value = parent_val.Value.value;
-
+        
+            var (val, parent_val) = bst.BstSearchWithParent(nodequery);
+        
+            Node value        = null; if(val        != null) value        = val       .value;
+            Node parent_value = null; if(parent_val != null) parent_value = parent_val.value;
+        
             return (value, parent_value);
         }
         public (Node value, (Node left_value, Node right_value)) SearchRange(T query, bool doassert=true)
         {
             var nodequery = new Node(query, null, null); ;
-
-            var (val, parent_val) = bst.SearchWithParent(nodequery);
-
+        
+            var (val, parent_val) = bst.BstSearchWithParent(nodequery);
+        
             Node value, left_value, right_value;
             if(val == null)
             {
@@ -135,11 +135,11 @@ namespace HTLib2
             }
             else
             {
-                value       = val       .Value.value;
+                value       = val  .value;
                 left_value  = value.prev;
                 right_value = value.next;
             }
-
+        
             if(doassert && HDebug.IsDebuggerAttached)
             {
                 if(left_value != null && left_value.value != null &&       value != null) HDebug.Assert(comp(left_value.value,       value.value) <= 0);
@@ -163,20 +163,20 @@ namespace HTLib2
             }
             else
             {
-                var bstnode = bst.Insert(node);
-                HDebug.Assert(bstnode.Value.value == node);
+                var bstnode = bst.BstInsert(node);
+                HDebug.Assert(bstnode.value == node);
 
-                var avlnode_successor = bstnode.Value.Successor();
-                if (avlnode_successor == null)
+                var bstnode_successor = bstnode.Successor();
+                if (bstnode_successor == null)
                 {
                     // added to tail
-                    HDebug.Assert(bst.AvlSearch(tail).Successor().value.value == node);
+                    HDebug.Assert(bst.BstSearch(tail).Successor().value.value == node);
                     HDebug.Assert(nodecomp(tail, node) < 0);
                     tail._next = node;
                     node._prev = tail;
                     tail = node;
                 }
-                else if (avlnode_successor.value.value == head)
+                else if (bstnode_successor.value.value == head)
                 {
                     // added to head
                     HDebug.Assert(nodecomp(node, head) < 0);
@@ -186,7 +186,7 @@ namespace HTLib2
                 }
                 else
                 {
-                    Node node_next = avlnode_successor.value.value;
+                    Node node_next = bstnode_successor.value.value;
                     Node node_prev = node_next.prev;
                     HDebug.Assert(node_prev.next == node_next);
                     HDebug.Assert(node_next.prev == node_prev);
@@ -264,15 +264,21 @@ namespace HTLib2
         }
         public bool Validate()
         {
+            return Validate(comp);
+        }
+        public bool Validate(Comparison<T> comp_validate)
+        {
+            int nodecomp_validate(Node x, Node y) { return comp_validate(x.value, y.value); }
+
             // check AVL validate
-            if(bst.Validate() == false) return false;
+            if(bst.Validate(nodecomp_validate) == false) return false;
 
             // check linked-list validate
             Node n = head;
             while(n != null)
             {
                 Node n_next = n.next;
-                if(n_next != null && (nodecomp(n, n_next) <= 0) == false)
+                if(n_next != null && (nodecomp_validate(n, n_next) <= 0) == false)
                     return false;
                 n = n_next;
             }
