@@ -10,17 +10,14 @@ namespace HTLib2
         public static string HTemp1(this string value)
         {
             throw new Exception();
-            return null;
         }
         public static string HTemp2(this string value)
         {
             throw new Exception();
-            return null;
         }
         public static string HTemp3(this string value)
         {
             throw new Exception();
-            return null;
         }
         public static string HToUpperLowers(this string value)
         {
