@@ -77,6 +77,41 @@ namespace HTLib2.Bioinfo
             /// doc.ki  = sum( -1 * doc.u2 .* log(doc.u2) );    // (1 x 3n) ki = sum[ -1 * u2 * log(u2) ]
             /// doc.ki  = exp(doc.ki) / doc.n;                  // (1 x 3n) ki = 1/n * exp[ sum[ -1 * u2 * log(u2) ] ]
         }
+        public static void GetDegreeOfCollectivity
+            ( string matV
+            , string vecD
+            , string vecM
+            , string outvec
+            , string remdoc = "remdoc"
+            , bool   clear_remdoc = true
+            , double? assert_threshold = null
+            )
+        {
+            if(HDebug.IsDebuggerAttached)
+            {
+                //if(_RemoveDOF_IsOrthonormal(dof, assert_threshold) == false)
+                //    throw new Exception("dof is not orthonormal");
+            }
+          //Matlab.Execute(("assert(matV = 3n x 3n);                     ").Replace("remdoc",remdoc));
+          //Matlab.Execute(("assert(vecD = 3n x 1 );                     ").Replace("remdoc",remdoc));
+          //Matlab.Execute(("assert(vecM =  n x 1 );                     ").Replace("remdoc",remdoc));
+            Matlab.Execute(("remdoc.matV = "+matV+";                                    ").Replace("remdoc",remdoc));
+            Matlab.Execute(("remdoc.vecD = "+vecD+";                                    ").Replace("remdoc",remdoc));
+            Matlab.Execute(("remdoc.vecM = "+vecM+";                                    ").Replace("remdoc",remdoc));
+            Matlab.Execute(("remdoc.n   = length(remdoc.vecM);                          ").Replace("remdoc",remdoc));
+            Matlab.Execute(("remdoc.u2  = (remdoc.matV(1:3:end,:) .^ 2);                ").Replace("remdoc",remdoc));    // (n x 3n) u2 = x^2
+            Matlab.Execute(("remdoc.u2  = remdoc.u2 + (remdoc.matV(2:3:end,:) .^ 2);    ").Replace("remdoc",remdoc));    // (n x 3n) u2 = x^2 + y^2
+            Matlab.Execute(("remdoc.u2  = remdoc.u2 + (remdoc.matV(3:3:end,:) .^ 2);    ").Replace("remdoc",remdoc));    // (n x 3n) u2 = x^2 + y^2 + z^3
+            Matlab.Execute(("remdoc.m   = remdoc.vecM * ones(1,3*remdoc.n);             ").Replace("remdoc",remdoc));    // (n x 3n)
+            Matlab.Execute(("remdoc.u2  = remdoc.u2 ./ remdoc.m;                        ").Replace("remdoc",remdoc));    // (n x 3n) u2 = (x^2 + y^2 + z^3) / m
+            Matlab.Execute(("remdoc.div =  sum(remdoc.u2);                              ").Replace("remdoc",remdoc));    // (1 x 3n) alpha = sum[ (x^2 + y^2 + z^3) / m ]
+            Matlab.Execute(("remdoc.div = ones(remdoc.n,1) * remdoc.div;                ").Replace("remdoc",remdoc));    // (n x 3n)
+            Matlab.Execute(("remdoc.u2  = remdoc.u2 ./ remdoc.div;                      ").Replace("remdoc",remdoc));    // (n x 3n) u2 = 1/alpha * (x^2 + y^2 + z^3) / m
+            Matlab.Execute(("remdoc.ki  = sum( -1 * remdoc.u2 .* log(remdoc.u2) );      ").Replace("remdoc",remdoc));    // (1 x 3n) ki = sum[ -1 * u2 * log(u2) ]
+            Matlab.Execute(("remdoc.ki  = exp(remdoc.ki) / remdoc.n;                    ").Replace("remdoc",remdoc));    // (1 x 3n) ki = 1/n * exp[ sum[ -1 * u2 * log(u2) ] ]
+            Matlab.Execute((outvec+"=remdoc.ki;                                         ").Replace("remdoc",remdoc));
+            if(clear_remdoc) Matlab.Execute(("clear remdoc;                             ").Replace("remdoc",remdoc));
+        }
         public static IEnumerable<double> GetDegreeOfCollectivity(this IEnumerable<Mode> modes, double[] masses)
         {
             double[] buff_u2_ij = null;
