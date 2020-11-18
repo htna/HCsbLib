@@ -81,7 +81,7 @@ namespace HTLib2
         }
         public Node Search(T query)
         {
-            var nodequery = new Node(query, null, null);;
+            var nodequery = new Node(query, null, null);
 
             var value = avl.Search(nodequery);
 
@@ -91,7 +91,7 @@ namespace HTLib2
         }
         public (Node value, Node parent_value) SearchWithParent(T query)
         {
-            var nodequery = new Node(query, null, null);;
+            var nodequery = new Node(query, null, null);
 
             var (val, parent_val) = avl.SearchWithParent(nodequery);
 
@@ -216,7 +216,7 @@ namespace HTLib2
         }
         public Node Delete(T query)
         {
-            var nodequery = new Node(query, null, null);;
+            var nodequery = new Node(query, null, null);
 
             var del = avl.Delete(nodequery);
             if(del == null)
