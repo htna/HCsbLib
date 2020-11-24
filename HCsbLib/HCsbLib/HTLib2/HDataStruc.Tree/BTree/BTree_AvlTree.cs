@@ -437,6 +437,11 @@ namespace HTLib2
                     value  = query,
                 };
                 (AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent)? del = BstDelete<AvlNodeInfo>(ref root, avlquery, avlcomp);
+
+                return Delete(del);
+            }
+            private RetT? Delete((AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent)? del)
+            {
                 if(del == null)
                     return null;
                 
