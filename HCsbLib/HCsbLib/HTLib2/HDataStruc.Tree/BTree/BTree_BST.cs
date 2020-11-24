@@ -209,19 +209,19 @@ namespace HTLib2
         {
             return BstDeleteImpl(ref root, query, compare);
         }
-        static (T value, Node<T> deleted_parent)? BstDelete<T>(ref Node<T> root, Node<T> node)
-        {
-            HDebug.ToDo();
-            if(node == root)
-                return BstDeleteImpl(ref root);
-            Node<T> parent = node.parent;
-            if(parent.left == node)
-                return BstDeleteImpl(ref parent.left);
-            else if(parent.right == node)
-                return BstDeleteImpl(ref parent.right);
-            else
-                throw new HException();
-        }
+        //static (T value, Node<T> deleted_parent)? BstDelete<T>(ref Node<T> root, Node<T> node)
+        //{
+        //    HDebug.ToDo();
+        //    if(node == root)
+        //        return BstDeleteImpl(ref root);
+        //    Node<T> parent = node.parent;
+        //    if(parent.left == node)
+        //        return BstDeleteImpl(ref parent.left);
+        //    else if(parent.right == node)
+        //        return BstDeleteImpl(ref parent.right);
+        //    else
+        //        throw new HException();
+        //}
         static (T value, Node<T> deleted_parent)? BstDeleteImpl<T>(ref Node<T> node, T query, Comparison<T> compare)
         {
             // find node to delete
