@@ -453,12 +453,15 @@ namespace HTLib2
 
                 return Delete(del);
             }
-            //public RetT? Delete(Node<AvlNodeInfo> node)
-            //{
-            //    (AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent)? del = BstDelete<AvlNodeInfo>(ref root, node);
-            //
-            //    return Delete(del);
-            //}
+            public RetT? Delete(Node node)
+            {
+                Node<AvlNodeInfo> nodeT = (node as Node<AvlNodeInfo>);
+                if(nodeT == null)
+                    throw new HException();
+                (AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent)? del = BstDelete<AvlNodeInfo>(ref root, nodeT);
+            
+                return Delete(del);
+            }
             private RetT? Delete((AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent)? del)
             {
                 if(del == null)
