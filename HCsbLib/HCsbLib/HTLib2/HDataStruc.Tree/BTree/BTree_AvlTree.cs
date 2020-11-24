@@ -26,6 +26,19 @@ namespace HTLib2
                 public T value;
                 public static RetT New(T val) { return new RetT { value = val }; }
             }
+            public struct RetNode
+            {
+                public Node node;
+                public T value
+                {
+                    get
+                    {
+                        Node<AvlNodeInfo> nodeT = node as Node<AvlNodeInfo>;
+                        return nodeT.value.value;
+                    }
+                }
+                internal static RetNode New(Node<AvlNodeInfo> node) { return new RetNode { node = node }; }
+            }
 
             internal struct AvlNodeInfo
             {
@@ -86,19 +99,19 @@ namespace HTLib2
             {
                 return (Search(query) != null);
             }
-            public RetT? Search(T query)
+            public RetNode? Search(T query)
             {
                 Node<AvlNodeInfo> node = AvlSearch(query);
                 if(node == null)
                     return null;
-                return RetT.New(node.value.value);
+                return RetNode.New(node);
             }
-            public (RetT? val, RetT? parent_val) SearchWithParent(T query)
+            public (RetNode? val, RetNode? parent_val) SearchWithParent(T query)
             {
                 (Node<AvlNodeInfo> node, Node<AvlNodeInfo> node_parent) = AvlSearchWithParent(query);
 
-                RetT? val        = null; if(node        != null) val        = RetT.New(node       .value.value);
-                RetT? parent_val = null; if(node_parent != null) parent_val = RetT.New(node_parent.value.value);
+                RetNode? val        = null; if(node        != null) val        = RetNode.New(node       );
+                RetNode? parent_val = null; if(node_parent != null) parent_val = RetNode.New(node_parent);
 
                 return (val, parent_val);
             }
@@ -440,6 +453,12 @@ namespace HTLib2
 
                 return Delete(del);
             }
+            //public RetT? Delete(Node<AvlNodeInfo> node)
+            //{
+            //    (AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent)? del = BstDelete<AvlNodeInfo>(ref root, node);
+            //
+            //    return Delete(del);
+            //}
             private RetT? Delete((AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent)? del)
             {
                 if(del == null)
