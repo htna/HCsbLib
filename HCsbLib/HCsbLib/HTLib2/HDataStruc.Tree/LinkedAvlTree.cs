@@ -224,6 +224,10 @@ namespace HTLib2
 
             Node node = del.Value.value;
 
+            return Delete_UpdateHeadTail(node);
+        }
+        internal Node Delete_UpdateHeadTail(Node node)
+        {
             if(avl.IsEmpty())
             {
                 HDebug.Assert(node == head);
