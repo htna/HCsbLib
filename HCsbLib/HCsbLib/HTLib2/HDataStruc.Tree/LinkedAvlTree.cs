@@ -14,15 +14,16 @@ namespace HTLib2
         static int _debug = 0;
 #pragma warning restore 414
 
-        public class Node
+        // Linked-List Node
+        public class LLNode
         {
             public T    value;
-            public Node prev { get { return _prev; } }
-            public Node next { get { return _next; } }
+            public LLNode prev { get { return _prev; } }
+            public LLNode next { get { return _next; } }
 
-            internal Node _prev;
-            internal Node _next;
-            internal Node(T value, Node prev, Node next)
+            internal LLNode _prev;
+            internal LLNode _next;
+            internal LLNode(T value, LLNode prev, LLNode next)
             {
                 this.value = value;
                 this._prev = prev ;
@@ -35,28 +36,28 @@ namespace HTLib2
             }
         }
 
-        Node head;
-        Node tail;
-        BTree.AvlTree<Node> avl;
+        LLNode head;
+        LLNode tail;
+        BTree.AvlTree<LLNode> avl;
         Comparison<T> comp;
-        int nodecomp(Node x, Node y) { return comp(x.value, y.value); }
+        int nodecomp(LLNode x, LLNode y) { return comp(x.value, y.value); }
 
         public LinkedAvlTree(Comparison<T> comp)
         {
             this.head = null;
             this.tail = null;
             this.comp = comp;
-            this.avl  = BTree.AvlTree<Node>.NewAvlTree(nodecomp);
+            this.avl  = BTree.AvlTree<LLNode>.NewAvlTree(nodecomp);
         }
         public static LinkedAvlTree<T> New(Comparison<T> comp)
         {
             return new LinkedAvlTree<T>(comp);
         }
-        public Node GetHead()
+        public LLNode GetHead()
         {
             return head;
         }
-        public Node GetTail()
+        public LLNode GetTail()
         {
             return tail;
         }
@@ -79,9 +80,9 @@ namespace HTLib2
         {
             return (Search(query) != null);
         }
-        public Node Search(T query)
+        public LLNode Search(T query)
         {
-            var nodequery = new Node(query, null, null);
+            var nodequery = new LLNode(query, null, null);
 
             var value = avl.Search(nodequery);
 
@@ -89,28 +90,28 @@ namespace HTLib2
                 return null;
             return value.Value.value;
         }
-        public (Node value, Node parent_value) SearchWithParent(T query)
+        public (LLNode value, LLNode parent_value) SearchWithParent(T query)
         {
-            var nodequery = new Node(query, null, null);
+            var nodequery = new LLNode(query, null, null);
 
             var (val, parent_val) = avl.SearchWithParent(nodequery);
 
-            Node value        = null; if(val        != null) value        = val       .Value.value;
-            Node parent_value = null; if(parent_val != null) parent_value = parent_val.Value.value;
+            LLNode value        = null; if(val        != null) value        = val       .Value.value;
+            LLNode parent_value = null; if(parent_val != null) parent_value = parent_val.Value.value;
 
             return (value, parent_value);
         }
-        public (Node value, (Node left_value, Node right_value)) SearchRange(T query, bool doassert=true)
+        public (LLNode value, (LLNode left_value, LLNode right_value)) SearchRange(T query, bool doassert=true)
         {
-            var nodequery = new Node(query, null, null); ;
+            var nodequery = new LLNode(query, null, null); ;
 
             var (val, parent_val) = avl.SearchWithParent(nodequery);
 
-            Node value, left_value, right_value;
+            LLNode value, left_value, right_value;
             if(val == null)
             {
                 HDebug.Assert(parent_val != null);
-                Node parent_value = parent_val.Value.value;
+                LLNode parent_value = parent_val.Value.value;
                 int cmp = comp(query, parent_value.value);
                 HDebug.Assert(cmp != 0);
                 if(cmp < 0)
@@ -147,9 +148,9 @@ namespace HTLib2
             }
             return (value, (left_value, right_value));
         }
-        public Node Insert(T value)
+        public LLNode Insert(T value)
         {
-            Node node = new Node(value, null, null);
+            LLNode node = new LLNode(value, null, null);
 
             if(avl.IsEmpty() == true)
             {
@@ -185,8 +186,8 @@ namespace HTLib2
                 }
                 else
                 {
-                    Node node_next = avlnode_successor.value.value;
-                    Node node_prev = node_next.prev;
+                    LLNode node_next = avlnode_successor.value.value;
+                    LLNode node_prev = node_next.prev;
                     HDebug.Assert(node_prev.next == node_next);
                     HDebug.Assert(node_next.prev == node_prev);
                     HDebug.Assert(nodecomp(node_prev, node_next) < 0);
@@ -200,33 +201,33 @@ namespace HTLib2
             }
             return node;
         }
-        public List<Node> InsertRange(params T[] values)
+        public List<LLNode> InsertRange(params T[] values)
         {
             return InsertRange(values as IEnumerable<T>);
         }
-        public List<Node> InsertRange(IEnumerable<T> values)
+        public List<LLNode> InsertRange(IEnumerable<T> values)
         {
-            List<Node> nodes = new List<Node>();
+            List<LLNode> nodes = new List<LLNode>();
             foreach(var value in values)
             {
-                Node node = Insert(value);
+                LLNode node = Insert(value);
                 nodes.Add(node);
             }
             return nodes;
         }
-        public Node Delete(T query)
+        public LLNode Delete(T query)
         {
-            var nodequery = new Node(query, null, null);
+            var nodequery = new LLNode(query, null, null);
 
-            BTree.AvlTree<Node>.RetT? del = avl.Delete(nodequery);
+            BTree.AvlTree<LLNode>.RetT? del = avl.Delete(nodequery);
             if(del == null)
                 return null;
 
-            Node node = del.Value.value;
+            LLNode node = del.Value.value;
 
             return Delete_UpdateHeadTail(node);
         }
-        internal Node Delete_UpdateHeadTail(Node node)
+        internal LLNode Delete_UpdateHeadTail(LLNode node)
         {
             if(avl.IsEmpty())
             {
@@ -248,8 +249,8 @@ namespace HTLib2
             }
             else
             {
-                Node node_prev = node.prev;
-                Node node_next = node.next;
+                LLNode node_prev = node.prev;
+                LLNode node_next = node.next;
                 node_prev._next = node_next;
                 node_next._prev = node_prev;
                 node._next = null;
@@ -271,16 +272,16 @@ namespace HTLib2
         }
         public bool Validate(Comparison<T> comp_validate)
         {
-            int nodecomp_validate(Node x, Node y) { return comp_validate(x.value, y.value); }
+            int nodecomp_validate(LLNode x, LLNode y) { return comp_validate(x.value, y.value); }
 
             // check AVL validate
             if(avl.Validate(nodecomp_validate) == false) return false;
 
             // check linked-list validate
-            Node n = head;
+            LLNode n = head;
             while(n != null)
             {
-                Node n_next = n.next;
+                LLNode n_next = n.next;
                 if(n_next != null && (nodecomp_validate(n, n_next) <= 0) == false)
                     return false;
                 n = n_next;
