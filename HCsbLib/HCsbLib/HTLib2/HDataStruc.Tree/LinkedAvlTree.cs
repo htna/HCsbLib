@@ -218,16 +218,12 @@ namespace HTLib2
         {
             var nodequery = new Node(query, null, null);
 
-            BTree.AvlTree<Node>.RetT? del = avl.Delete(nodequery);
+            var del = avl.Delete(nodequery);
             if(del == null)
                 return null;
 
             Node node = del.Value.value;
 
-            return Delete_UpdateHeadTail(node);
-        }
-        internal Node Delete_UpdateHeadTail(Node node)
-        {
             if(avl.IsEmpty())
             {
                 HDebug.Assert(node == head);
