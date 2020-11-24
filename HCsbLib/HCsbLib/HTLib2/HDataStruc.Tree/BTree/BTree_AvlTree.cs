@@ -436,7 +436,7 @@ namespace HTLib2
                 {
                     value  = query,
                 };
-                var del = BstDelete<AvlNodeInfo>(ref root, avlquery, avlcomp);
+                (AvlNodeInfo value, Node<AvlNodeInfo> deleted_parent)? del = BstDelete<AvlNodeInfo>(ref root, avlquery, avlcomp);
                 if(del == null)
                     return null;
                 
