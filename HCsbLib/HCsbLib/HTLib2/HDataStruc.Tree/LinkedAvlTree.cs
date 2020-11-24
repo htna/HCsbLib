@@ -218,7 +218,7 @@ namespace HTLib2
         {
             var nodequery = new Node(query, null, null);
 
-            var del = avl.Delete(nodequery);
+            BTree.AvlTree<Node>.RetT? del = avl.Delete(nodequery);
             if(del == null)
                 return null;
 
