@@ -209,17 +209,7 @@ namespace HTLib2
         {
             return BstDeleteImpl(ref root, query, compare);
         }
-        static (T value, Node<T> deleted_parent)? BstDeleteImpl<T>(ref Node<T> node, T query, Comparison<T> compare)
-        {
-            // find node to delete
-            HDebug.Assert(node != null);
-            int query_node = compare(query, node.value);
-            if     (query_node <  0) return BstDeleteImpl(ref node.left , query, compare);
-            else if(query_node >  0) return BstDeleteImpl(ref node.right, query, compare);
-            else if(query_node == 0) return BstDeleteImpl(ref node);
-            else                     return null;
-        }
-        static (T value, Node<T> deleted_parent)? BstDeleteImpl<T>(ref Node<T> root, Node<T> node)
+        static (T value, Node<T> deleted_parent)? BstDelete<T>(ref Node<T> root, Node<T> node)
         {
             HDebug.ToDo();
             if(node == root)
@@ -231,6 +221,16 @@ namespace HTLib2
                 return BstDeleteImpl(ref parent.right);
             else
                 throw new HException();
+        }
+        static (T value, Node<T> deleted_parent)? BstDeleteImpl<T>(ref Node<T> node, T query, Comparison<T> compare)
+        {
+            // find node to delete
+            HDebug.Assert(node != null);
+            int query_node = compare(query, node.value);
+            if     (query_node <  0) return BstDeleteImpl(ref node.left , query, compare);
+            else if(query_node >  0) return BstDeleteImpl(ref node.right, query, compare);
+            else if(query_node == 0) return BstDeleteImpl(ref node);
+            else                     return null;
         }
         static (T value, Node<T> deleted_parent) BstDeleteImpl<T>(ref Node<T> node)
         {
