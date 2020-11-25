@@ -63,6 +63,20 @@ namespace HTLib2
                 (T value, Node<T> deleted_parent)? del = BTree.BstDelete(ref root, query, _comp);
                 return del;
             }
+            public override string ToString()
+            {
+                if(root == null)
+                    return "()";
+                string str = root.ToStringSimple();
+                return str;
+            }
+            public string ToStringMathematica()
+            {
+                if(root == null)
+                    return "TreePlot[{},VertexLabeling->True]";
+                string str = root.ToStringMathematica();
+                return str;
+            }
         }
         public static BST<T> NewBST<T>(Comparison<T> comp)
         {

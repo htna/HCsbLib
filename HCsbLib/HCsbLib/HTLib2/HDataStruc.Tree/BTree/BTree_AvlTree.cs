@@ -74,6 +74,13 @@ namespace HTLib2
                 string str = root.ToStringSimple();
                 return str;
             }
+            public string ToStringMathematica()
+            {
+                if(root == null)
+                    return "TreePlot[{},VertexLabeling->True]";
+                string str = root.ToStringMathematica();
+                return str;
+            }
             
             ///////////////////////////////////////////////////////////////////////
             /// AVL Search

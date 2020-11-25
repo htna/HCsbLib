@@ -187,6 +187,57 @@ namespace HTLib2
                     return;
                 }
             }
+            public string ToStringMathematica()
+            {
+                StringBuilder sb = new StringBuilder();
+                ToStringMathematica(sb, this);
+                return sb.ToString();
+            }
+            public void ToStringMathematica(StringBuilder sb, Node<T> root)
+            {
+                if (root == null)
+                {
+                    sb.Append("TreePlot[{},VertexLabeling->True]");
+                    return;
+                }
+
+                List<string> edges = new List<string>();
+                if(root.IsLeaf())
+                {
+                    string edge
+                        = "\"root\"->"
+                        + root.value.ToString();
+                    edges.Add(edge);
+                }
+                else
+                {
+                    ToStringMathematicaRec(edges, root);
+                }
+
+                sb.Append("TreePlot[{");
+                for(int i=0; i<edges.Count; i++)
+                {
+                    if(i != 0)
+                        sb.Append(",");
+                    sb.Append(edges[i]);
+                }
+                sb.Append("},VertexLabeling->True]");
+            }
+            static void ToStringMathematicaRec(List<string> edges, Node<T> node)
+            {
+                if (node == null)
+                    return;
+                if(node.parent != null)
+                {
+                    string edge
+                        = node.parent.value.ToString()
+                        + "->"
+                        + node.value.ToString();
+                    edges.Add(edge);
+                }
+                ToStringMathematicaRec(edges, node.left );
+                ToStringMathematicaRec(edges, node.right);
+            }
         }
     }
 }

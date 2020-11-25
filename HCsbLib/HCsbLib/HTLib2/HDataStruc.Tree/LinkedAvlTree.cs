@@ -41,6 +41,15 @@ namespace HTLib2
         Comparison<T> comp;
         int nodecomp(Node x, Node y) { return comp(x.value, y.value); }
 
+        public override string ToString()
+        {
+            return avl.ToString();
+        }
+        public string ToStringMathematica()
+        {
+            return avl.ToStringMathematica();
+        }
+
         public LinkedAvlTree(Comparison<T> comp)
         {
             this.head = null;
