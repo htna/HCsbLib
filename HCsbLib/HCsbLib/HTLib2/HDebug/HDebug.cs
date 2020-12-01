@@ -362,13 +362,20 @@ namespace HTLib2
                 _ConditionalAssert[hash][name] = value;
             }
         }
-        static public bool IsDebuggerAttached
-        {
-            get
-            {
-                return System.Diagnostics.Debugger.IsAttached;
-            }
-        }
+
+        //static public bool IsDebuggerAttached
+        //{
+        //    get
+        //    {
+        //        return System.Diagnostics.Debugger.IsAttached;
+        //    }
+        //}
+#if DEBUG
+        public const bool IsDebuggerAttached = true;
+#else
+        public const bool IsDebuggerAttached = false;
+#endif
+
         static public bool IsDebuggerAttachedWithProb(double prob)
         {
             if(System.Diagnostics.Debugger.IsAttached)
