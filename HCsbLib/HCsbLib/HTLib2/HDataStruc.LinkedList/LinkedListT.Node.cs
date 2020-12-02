@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HTLib2
 {
-    public partial class LinkedList<T>
+    public partial class HLinkedList<T>
     {
         public class Node
         {
