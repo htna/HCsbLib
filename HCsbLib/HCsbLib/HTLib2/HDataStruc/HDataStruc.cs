@@ -10,17 +10,21 @@ namespace HTLib2
 	public static partial class HDataStruc
 	{
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static T HStackPeek<T>(this List<T> stack)
+		public static T HLast<T>(this List<T> list)
         {
-			return stack[stack.Count-1];
+			return list[list.Count-1];
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static T HStackPop<T>(this List<T> stack)
+		public static void HRemoveLast<T>(this List<T> list)
         {
-			int idx = stack.Count-1;
-			T top = stack[idx];
-			stack.RemoveAt(idx);
-			return top;
+			list.RemoveAt(list.Count-1);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static T HPopLast<T>(this List<T> list)
+        {
+			T last = list[list.Count-1];
+			list.RemoveAt(list.Count-1);
+			return last;
         }
 	};
 }
