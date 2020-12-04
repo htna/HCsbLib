@@ -8,7 +8,7 @@ namespace HTLib2
 {
 	public static partial class HDataStruc
 	{
-		public static T HStackPeak<T>(this List<T> stack)
+		public static T HStackPeek<T>(this List<T> stack)
         {
 			return stack[stack.Count-1];
         }
