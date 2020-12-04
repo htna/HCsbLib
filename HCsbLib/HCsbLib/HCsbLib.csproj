@@ -649,6 +649,7 @@
     <Compile Include="HTLib2\HDataStruc.Tree\BTree\BTree.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\Tree.cs" />
     <Compile Include="HTLib2\HDataStruc.Tree\TreeT.cs" />
+    <Compile Include="HTLib2\HDataStruc\HDataStruc.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.Selftest.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.Static.cs" />
