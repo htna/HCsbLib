@@ -627,6 +627,7 @@
     <Compile Include="HTLib2\HDataStruc.Graph\Algorithm\Graph.Dijkstra.cs" />
     <Compile Include="HTLib2\HDataStruc.Graph\Algorithm\Graph.Kruskal.cs" />
     <Compile Include="HTLib2\HDataStruc.Graph\Algorithm\Graph.TarjanCycleDetect.cs" />
+    <Compile Include="HTLib2\HDataStruc.Graph\HGraph.cs" />
     <Compile Include="HTLib2\HDataStruc.Graph\Graph.Build.cs" />
     <Compile Include="HTLib2\HDataStruc.Graph\Graph.BuildTree.cs" />
     <Compile Include="HTLib2\HDataStruc.Graph\Graph.BuildTree.MST.cs" />
