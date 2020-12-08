@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices;
 
 namespace HTLib2
 {
@@ -20,6 +18,9 @@ namespace HTLib2
             public int           id;
             public T             value;
             public HashSet<Node> neighbors;
+
+            internal HType.HUnion _union;
+            internal bool _visited { get { return _union.bval; } set { _union.bval = value; } }
 
             ICollection<HGraph.Node> HGraph.Node.neighbors
             {
