@@ -238,8 +238,6 @@ namespace HTLib2.KDTree
          */
         public TYPE[] range(double[] lowk, double[] uppk)
         {
-            // range search may has a big
-            HDebug.Assert(false);
 
             if (lowk.Length != uppk.Length)
             {
