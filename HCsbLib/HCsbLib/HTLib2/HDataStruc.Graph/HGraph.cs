@@ -20,7 +20,8 @@ namespace HTLib2
             public HashSet<Node> neighbors;
 
             public HType.HUnion union;
-            public bool visited { get { return union.bval; } set { union.bval = value; } }
+            public bool visited { get { return union.bval        ; } set { union.bval = value; } }
+            public Node pointer { get { return union.oval as Node; } set { union.oval = value; } }
 
             ICollection<HGraph.Node> HGraph.Node.neighbors
             {
