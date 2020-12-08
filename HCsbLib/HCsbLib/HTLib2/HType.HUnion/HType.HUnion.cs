@@ -13,6 +13,7 @@ namespace HTLib2
             [ FieldOffset(0) ] public int    ival;
             [ FieldOffset(0) ] public bool   bval;
             [ FieldOffset(0) ] public double dval;
+            [ FieldOffset(0) ] public object oval;
         }
     }
 }
