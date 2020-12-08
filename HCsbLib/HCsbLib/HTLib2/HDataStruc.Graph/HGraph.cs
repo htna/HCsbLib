@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Linq;
+using System.Text;
 
 namespace HTLib2
 {
@@ -18,15 +20,18 @@ namespace HTLib2
             for(int i=0; i<nodes.Count; i++)
                 nodes[i].flag = -1; // no group assigned
 
-            List<int> groups = new List<int>(); // group start index
+            List<int> groups_id   = new List<int>();
+            List<int> groups_idx0 = new List<int>(); // group start index
+            List<int> groups_size = new List<int>(); // group size
             Stack<Node> stack = new Stack<Node>(nodes.Count);
             for(int i=0; i<nodes.Count; i++)
             {
                 if(nodes[i].flag != -1)
                     continue;
 
-                int group = groups.Count;
-                groups.Add(i);
+                int group_id   = groups_idx0.Count;
+                int group_size = 0;
+                int group_idx0 = i;
 
                 stack.Clear();
                 stack.Push(nodes[i]);
@@ -35,15 +40,28 @@ namespace HTLib2
                     Node node = stack.Pop();
                     if(node.flag != -1)
                         continue;
-                    node.flag = group;
+                    node.flag = group_id;
+                    group_size ++;
                     foreach(var nbr in node.neighbors)
                         if(nbr.flag == -1)
                             stack.Push(nbr);
                 }
+
+                groups_id  .Add(group_id  );
+                groups_idx0.Add(group_idx0);
+                groups_size.Add(group_size);
             }
 
-            for(int i=0; i<groups.Count; i++)
-                yield return EnumEqualFlag(nodes, groups[i], i);
+            // sort by size of groups
+            {
+                int[] idx_sort = groups_size.HIdxSorted().HReverse();
+                groups_id   = groups_id  .HSelectByIndex(idx_sort).ToList();
+                groups_idx0 = groups_idx0.HSelectByIndex(idx_sort).ToList();
+                groups_size = groups_size.HSelectByIndex(idx_sort).ToList();
+            }
+
+            for(int i=0; i<groups_idx0.Count; i++)
+                yield return EnumEqualFlag(nodes, groups_idx0[i], groups_id[i]);
 
         }
         public static IEnumerable<Node> EnumEqualFlag(IList<Node> nodes, int start, int flag)
@@ -71,7 +89,7 @@ namespace HTLib2
 
             public override string ToString()
             {
-                var sb = new System.Text.StringBuilder();
+                var sb = new StringBuilder();
                 sb.Append(id);
                 if(neighbors != null)
                 {
