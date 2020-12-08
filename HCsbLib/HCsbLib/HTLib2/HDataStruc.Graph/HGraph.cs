@@ -19,8 +19,8 @@ namespace HTLib2
             public T             value;
             public HashSet<Node> neighbors;
 
-            internal HType.HUnion _union;
-            internal bool _visited { get { return _union.bval; } set { _union.bval = value; } }
+            public HType.HUnion union;
+            public bool visited { get { return union.bval; } set { union.bval = value; } }
 
             ICollection<HGraph.Node> HGraph.Node.neighbors
             {
