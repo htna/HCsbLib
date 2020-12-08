@@ -17,6 +17,7 @@ namespace HTLib2
     {
         public class Node : HGraph.Node
         {
+            public int           id;
             public T             value;
             public HashSet<Node> neighbors;
 
