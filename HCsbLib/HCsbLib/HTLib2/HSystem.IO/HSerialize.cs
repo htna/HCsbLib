@@ -267,14 +267,14 @@ namespace HTLib2
                 BinaryWriter writer = new BinaryWriter(stream);
                 {
                     if(ver != null)
-                        writer.Write(new Ver(ver.Value));
+                        writer.HWrite(new Ver(ver.Value));
                 }
                 {
                     System.Int32 count = objs.Length;
-                    writer.Serialize(stream, count);
+                    writer.HWrite(count);
                     for(int i = 0; i < count; i++)
                     {
-                        writer.Serialize(stream, objs[i]);
+                        writer.HWrite(objs[i]);
                     }
                 }
                 stream.Flush();
@@ -287,13 +287,14 @@ namespace HTLib2
             using(new NamedLock(lockname))
             {
                 Stream stream = HFile.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-                BinaryFormatter bFormatter = new BinaryFormatter();
+                BinaryReader reader = new BinaryReader(stream);
                 {
                     if(ver != null)
                     {
                         try
                         {
-                            Ver sver = (Ver)bFormatter.Deserialize(stream);
+                            Ver sver;
+                            reader.HRead(out sver);
                             if(sver.ver != ver.Value)
                             {
                                 stream.Close();
@@ -310,11 +311,12 @@ namespace HTLib2
                     }
                 }
                 {
-                    System.Int32 count = (System.Int32)bFormatter.Deserialize(stream);
+                    System.Int32 count;
+                    reader.HRead(out count);
                     objs = new object[count];
                     for(int i = 0; i < count; i++)
                     {
-                        objs[i] = bFormatter.Deserialize(stream);
+                        reader.HRead(out objs[i]);
                     }
                 }
                 stream.Close();
