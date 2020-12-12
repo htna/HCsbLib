@@ -247,17 +247,17 @@ namespace HTLib2
 
 
 
-        public static void SerializeBinary(string filename, int? ver, object obj0                                                                                                                     ) { _SerializeBinary(filename, ver, new object[] { obj0                                                       }); }
-        public static void SerializeBinary(string filename, int? ver, object obj0, object obj1                                                                                                        ) { _SerializeBinary(filename, ver, new object[] { obj0, obj1                                                 }); }
-        public static void SerializeBinary(string filename, int? ver, object obj0, object obj1, object obj2                                                                                           ) { _SerializeBinary(filename, ver, new object[] { obj0, obj1, obj2                                           }); }
-        public static void SerializeBinary(string filename, int? ver, object obj0, object obj1, object obj2, object obj3                                                                              ) { _SerializeBinary(filename, ver, new object[] { obj0, obj1, obj2, obj3                                     }); }
-        public static void SerializeBinary(string filename, int? ver, object obj0, object obj1, object obj2, object obj3, object obj4                                                                 ) { _SerializeBinary(filename, ver, new object[] { obj0, obj1, obj2, obj3, obj4                               }); }
-        public static void SerializeBinary(string filename, int? ver, object obj0, object obj1, object obj2, object obj3, object obj4, object obj5                                                    ) { _SerializeBinary(filename, ver, new object[] { obj0, obj1, obj2, obj3, obj4, obj5                         }); }
-        public static void SerializeBinary(string filename, int? ver, object obj0, object obj1, object obj2, object obj3, object obj4, object obj5, object obj6                                       ) { _SerializeBinary(filename, ver, new object[] { obj0, obj1, obj2, obj3, obj4, obj5, obj6                   }); }
-        public static void SerializeBinary(string filename, int? ver, object obj0, object obj1, object obj2, object obj3, object obj4, object obj5, object obj6, object obj7                          ) { _SerializeBinary(filename, ver, new object[] { obj0, obj1, obj2, obj3, obj4, obj5, obj6, obj7             }); }
-        public static void SerializeBinary(string filename, int? ver, object obj0, object obj1, object obj2, object obj3, object obj4, object obj5, object obj6, object obj7, object obj8             ) { _SerializeBinary(filename, ver, new object[] { obj0, obj1, obj2, obj3, obj4, obj5, obj6, obj7, obj8       }); }
-        public static void SerializeBinary(string filename, int? ver, object obj0, object obj1, object obj2, object obj3, object obj4, object obj5, object obj6, object obj7, object obj8, object obj9) { _SerializeBinary(filename, ver, new object[] { obj0, obj1, obj2, obj3, obj4, obj5, obj6, obj7, obj8, obj9 }); }
-        public static void _SerializeBinary(string filename, int? ver, object[] objs)
+        public static void SerializeBinary<T0                                    >(string filename, int? ver, T0 obj0                                                                                 ) { _SerializeBinary(filename, ver, new (Type, object)[] { (typeof(T0), obj0)                                                                                                                                                                                     }); }
+        public static void SerializeBinary<T0, T1                                >(string filename, int? ver, T0 obj0, T1 obj1                                                                        ) { _SerializeBinary(filename, ver, new (Type, object)[] { (typeof(T0), obj0), (typeof(T1), obj1)                                                                                                                                                                 }); }
+        public static void SerializeBinary<T0, T1, T2                            >(string filename, int? ver, T0 obj0, T1 obj1, T2 obj2                                                               ) { _SerializeBinary(filename, ver, new (Type, object)[] { (typeof(T0), obj0), (typeof(T1), obj1), (typeof(T2), obj2)                                                                                                                                             }); }
+        public static void SerializeBinary<T0, T1, T2, T3                        >(string filename, int? ver, T0 obj0, T1 obj1, T2 obj2, T3 obj3                                                      ) { _SerializeBinary(filename, ver, new (Type, object)[] { (typeof(T0), obj0), (typeof(T1), obj1), (typeof(T2), obj2), (typeof(T3), obj3)                                                                                                                         }); }
+        public static void SerializeBinary<T0, T1, T2, T3, T4                    >(string filename, int? ver, T0 obj0, T1 obj1, T2 obj2, T3 obj3, T4 obj4                                             ) { _SerializeBinary(filename, ver, new (Type, object)[] { (typeof(T0), obj0), (typeof(T1), obj1), (typeof(T2), obj2), (typeof(T3), obj3), (typeof(T4), obj4)                                                                                                     }); }
+        public static void SerializeBinary<T0, T1, T2, T3, T4, T5                >(string filename, int? ver, T0 obj0, T1 obj1, T2 obj2, T3 obj3, T4 obj4, T5 obj5                                    ) { _SerializeBinary(filename, ver, new (Type, object)[] { (typeof(T0), obj0), (typeof(T1), obj1), (typeof(T2), obj2), (typeof(T3), obj3), (typeof(T4), obj4), (typeof(T5), obj5)                                                                                 }); }
+        public static void SerializeBinary<T0, T1, T2, T3, T4, T5, T6            >(string filename, int? ver, T0 obj0, T1 obj1, T2 obj2, T3 obj3, T4 obj4, T5 obj5, T6 obj6                           ) { _SerializeBinary(filename, ver, new (Type, object)[] { (typeof(T0), obj0), (typeof(T1), obj1), (typeof(T2), obj2), (typeof(T3), obj3), (typeof(T4), obj4), (typeof(T5), obj5), (typeof(T6), obj6)                                                             }); }
+        public static void SerializeBinary<T0, T1, T2, T3, T4, T5, T6, T7        >(string filename, int? ver, T0 obj0, T1 obj1, T2 obj2, T3 obj3, T4 obj4, T5 obj5, T6 obj6, T7 obj7                  ) { _SerializeBinary(filename, ver, new (Type, object)[] { (typeof(T0), obj0), (typeof(T1), obj1), (typeof(T2), obj2), (typeof(T3), obj3), (typeof(T4), obj4), (typeof(T5), obj5), (typeof(T6), obj6), (typeof(T7), obj7)                                         }); }
+        public static void SerializeBinary<T0, T1, T2, T3, T4, T5, T6, T7, T8    >(string filename, int? ver, T0 obj0, T1 obj1, T2 obj2, T3 obj3, T4 obj4, T5 obj5, T6 obj6, T7 obj7, T8 obj8         ) { _SerializeBinary(filename, ver, new (Type, object)[] { (typeof(T0), obj0), (typeof(T1), obj1), (typeof(T2), obj2), (typeof(T3), obj3), (typeof(T4), obj4), (typeof(T5), obj5), (typeof(T6), obj6), (typeof(T7), obj7), (typeof(T8), obj8)                     }); }
+        public static void SerializeBinary<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(string filename, int? ver, T0 obj0, T1 obj1, T2 obj2, T3 obj3, T4 obj4, T5 obj5, T6 obj6, T7 obj7, T8 obj8, T9 obj9) { _SerializeBinary(filename, ver, new (Type, object)[] { (typeof(T0), obj0), (typeof(T1), obj1), (typeof(T2), obj2), (typeof(T3), obj3), (typeof(T4), obj4), (typeof(T5), obj5), (typeof(T6), obj6), (typeof(T7), obj7), (typeof(T8), obj8), (typeof(T9), obj9) }); }
+        public static void _SerializeBinary(string filename, int? ver, (Type type, object obj)[] objs)
 		{
             string lockname = "Serializer: "+filename.Replace("\\", "@");
             using(new NamedLock(lockname))
@@ -274,7 +274,10 @@ namespace HTLib2
                     writer.HWrite(count);
                     for(int i = 0; i < count; i++)
                     {
-                        writer.HWrite(objs[i]);
+                        Type   type = objs[i].type;
+                        object obj  = objs[i].obj ;
+                        writer.Write(type.AssemblyQualifiedName);
+                        writer.HWrite(obj);
                     }
                 }
                 stream.Flush();
@@ -316,7 +319,9 @@ namespace HTLib2
                     objs = new object[count];
                     for(int i = 0; i < count; i++)
                     {
-                        reader.HRead(out objs[i]);
+                        string type_name = reader.ReadString();
+                        Type   type = Type.GetType(type_name);
+                        reader.HRead(out objs[i], type);
                     }
                 }
                 stream.Close();
