@@ -53,8 +53,8 @@ namespace HTLib2
         {
             if((value is IBinarySerializable) == false)
                 throw new HException();
-            string typeT = typeof(T).FullName;
-            writer.Write(typeT);
+            string type_name = value.GetType().FullName;
+            writer.Write(type_name);
             ((IBinarySerializable)value).Serialize(writer);
         }
         static void _HWriteList<T>(BinaryWriter writer, object value)
@@ -83,13 +83,12 @@ namespace HTLib2
         }
         static void _HWrite<T>(BinaryWriter writer, T value)
         {
-            Type type = typeof(T);
             if(value is IBinarySerializable) { _HWriteBinarySerializable<T>(writer, value); return; }
-            string type_name = type.FullName;
-            if(type_name == typeof(double ).FullName) { _HWrite        (writer, value); return; }
-            if(type_name == typeof(int    ).FullName) { _HWrite        (writer, value); return; }
-            if(type_name == typeof(string ).FullName) { _HWrite        (writer, value); return; }
-            if(type_name == typeof(bool   ).FullName) { _HWrite        (writer, value); return; }
+            string type_name = value.GetType().FullName;
+            if(type_name == typeof(double ).FullName) { _HWriteDouble  (writer, value); return; }
+            if(type_name == typeof(int    ).FullName) { _HWriteInt     (writer, value); return; }
+            if(type_name == typeof(string ).FullName) { _HWriteString  (writer, value); return; }
+            if(type_name == typeof(bool   ).FullName) { _HWriteBool    (writer, value); return; }
             if(type_name == typeof(List<T>).FullName) { _HWriteList <T>(writer, value); return; }
             if(type_name == typeof(    T[]).FullName) { _HWriteArray<T>(writer, value); return; }
             throw new Exception();
