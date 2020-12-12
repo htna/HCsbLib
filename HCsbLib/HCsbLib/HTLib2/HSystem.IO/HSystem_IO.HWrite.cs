@@ -40,16 +40,10 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, List<string> values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, List<bool  > values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T>(this BinaryWriter writer,     T value) where T : IBinarySerializable
-        {
-            string typeT = typeof(T).FullName;
-            writer.Write(typeT);
-            value.Serialize(writer);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T>(this BinaryWriter writer,     T[]     values) where T : IBinarySerializable { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.HWrite(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T>(this BinaryWriter writer,     List<T> values) where T : IBinarySerializable { writer.Write(values.Count ); for(int i=0; i<values.Count ; i++) writer.HWrite(values[i]); }
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this BinaryWriter writer, T               value ) { _HWrite          <T  >(writer, value ); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this BinaryWriter writer, List<T>         values) { _HWriteList      <T  >(writer, values); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this BinaryWriter writer, T[]             values) { _HWriteArray     <T  >(writer, values); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T,U>(this BinaryWriter writer, Dictionary<T,U> dict  ) { _HWriteDictionary<T,U>(writer, dict  ); }
 
         static void _HWriteDouble(BinaryWriter writer, object value) { writer.Write((double)value); }
         static void _HWriteInt   (BinaryWriter writer, object value) { writer.Write((int   )value); }
