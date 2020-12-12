@@ -55,7 +55,7 @@ namespace HTLib2
         {
             if((value is IBinarySerializable) == false)
                 throw new HException();
-            string type_name = value.GetType().FullName;
+            string type_name = value.GetType().AssemblyQualifiedName;
             writer.Write(type_name);
             ((IBinarySerializable)value).Serialize(writer);
         }
@@ -96,7 +96,7 @@ namespace HTLib2
         }
         static void _HWrite(BinaryWriter writer, object value)
         {
-            //string type_name = value.GetType().FullName;
+            //string type_name = value.GetType()AssemblyQualifiedName;
             if(value is IBinarySerializable) { _HWriteBinarySerializable(writer, value); return; }
             if(value is double             ) { _HWriteDouble            (writer, value); return; }
             if(value is int                ) { _HWriteInt               (writer, value); return; }
