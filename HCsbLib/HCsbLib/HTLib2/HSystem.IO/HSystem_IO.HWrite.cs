@@ -51,7 +51,7 @@ namespace HTLib2
         static void _HWriteBool  (BinaryWriter writer, object value) { writer.Write((bool  )value); }
         static void _HWriteBinarySerializable<T>(BinaryWriter writer, object value)
         {
-            if(typeof(T).IsSubclassOf(typeof(IBinarySerializable)) == false)
+            if((value is IBinarySerializable) == false)
                 throw new HException();
             string typeT = typeof(T).FullName;
             writer.Write(typeT);
@@ -84,7 +84,7 @@ namespace HTLib2
         static void _HWrite<T>(BinaryWriter writer, T value)
         {
             Type type = typeof(T);
-            if(type.IsSubclassOf(typeof(IBinarySerializable))) { _HWriteBinarySerializable<T>(writer, value); return; }
+            if(value is IBinarySerializable) { _HWriteBinarySerializable<T>(writer, value); return; }
             string type_name = type.FullName;
             if(type_name == typeof(double ).FullName) { _HWrite        (writer, value); return; }
             if(type_name == typeof(int    ).FullName) { _HWrite        (writer, value); return; }
