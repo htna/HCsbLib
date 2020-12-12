@@ -29,6 +29,36 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out string[] values) { int length = reader.ReadInt32(); values = new string[length]; for(int i=0; i<length; i++) values[i] = reader.ReadString (); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out bool  [] values) { int length = reader.ReadInt32(); values = new bool  [length]; for(int i=0; i<length; i++) values[i] = reader.ReadBoolean(); }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T>(this BinaryWriter writer,     T value) where T : IBinarySerializable
+        {
+            string typeT = typeof(T).FullName;
+            writer.Write(typeT);
+            value.Serialize(writer);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead <T>(this BinaryReader reader, out T value) where T : IBinarySerializable
+        {
+            string typeT = reader.ReadString();
+            Type   t = Type.GetType(typeT);
+            object o = Activator.CreateInstance(t);
+            if((o is T) == false)
+                throw new HException("type-mismatch in HRead<T>(reader,out T value)\nAssign "+t.Name+" type into "+typeof(T).Name+" type.");
+            value = (T)o;
+            value.Deserialize(reader);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T>(this BinaryWriter writer,     T[] values) where T : IBinarySerializable
+        {
+            writer.Write(values.Length);
+            for(int i=0; i<values.Length; i++)
+                writer.HWrite(values[i]);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead <T>(this BinaryReader reader, out T[] values) where T : IBinarySerializable
+        {
+            int length = reader.ReadInt32();
+            values = new T[length];
+            for(int i=0; i<length; i++)
+                reader.HRead(out values[i]);
+        }
+
         //  [Serializable]
         //  public class Data
         //  {
