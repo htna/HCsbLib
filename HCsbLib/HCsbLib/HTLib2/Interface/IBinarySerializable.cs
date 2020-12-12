@@ -8,7 +8,7 @@ using System.IO;
 
 namespace HTLib2
 {
-    interface IBinarySerializable
+    public interface IBinarySerializable
     {
         void Serialize(BinaryWriter toStream);
         void Deserialize(BinaryReader fromStream);
