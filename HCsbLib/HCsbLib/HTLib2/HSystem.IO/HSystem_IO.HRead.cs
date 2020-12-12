@@ -7,6 +7,8 @@ using System.IO;
 
 namespace HTLib2
 {
+    using IList       = System.Collections.IList;
+    using IDictionary = System.Collections.IDictionary;
     public static partial class HSystem_IO
     {
         //  public class Data : IBinarySerializable
@@ -40,72 +42,99 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out List<string> values) { int length = reader.ReadInt32(); values = new List<string>(length); for(int i=0; i<length; i++) values.Add(reader.ReadString ()); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out List<bool  > values) { int length = reader.ReadInt32(); values = new List<bool  >(length); for(int i=0; i<length; i++) values.Add(reader.ReadBoolean()); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead<T  >(this BinaryReader reader, out T               value ) { value  = (T               )(_HRead          <T  >(reader)); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead<T  >(this BinaryReader reader, out List<T>         values) { values = (List<T>         )(_HReadList      <T  >(reader)); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead<T  >(this BinaryReader reader, out T[]             values) { values = (T[]             )(_HReadArray     <T  >(reader)); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead<T,U>(this BinaryReader reader, out Dictionary<T,U> dict  ) { dict   = (Dictionary<T,U> )(_HReadDictionary<T,U>(reader)); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead(this BinaryReader reader, out object value, Type type)
+        {
+            value = _HRead(reader, type);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead<T  >(this BinaryReader reader, out T               value ) { value  = (T              )(_HRead          (reader, typeof(T              ))); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead<T  >(this BinaryReader reader, out List<T>         values) { values = (List<T>        )(_HReadList      (reader, typeof(List<T>        ))); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead<T  >(this BinaryReader reader, out T[]             values) { values = (T[]            )(_HReadArray     (reader, typeof(T[]            ))); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead<T,U>(this BinaryReader reader, out Dictionary<T,U> dict  ) { dict   = (Dictionary<T,U>)(_HReadDictionary(reader, typeof(Dictionary<T,U>))); }
 
         static object _HReadDouble(BinaryReader reader) { return reader.ReadDouble (); }
         static object _HReadInt   (BinaryReader reader) { return reader.ReadInt32  (); }
         static object _HReadString(BinaryReader reader) { return reader.ReadString (); }
         static object _HReadBool  (BinaryReader reader) { return reader.ReadBoolean(); }
-        static object _HReadBinarySerializable<T>(BinaryReader reader)
+        static object _HReadBinarySerializable(BinaryReader reader)
         {
-            HDebug.Assert(typeof(T).IsSubclassOf(typeof(IBinarySerializable)));
             string type_name = reader.ReadString();
             Type   type = Type.GetType(type_name);
+            HDebug.Assert(type != null);
             object obj = Activator.CreateInstance(type);
-            if((obj is T) == false)
-                throw new HException("type-mismatch in HRead<T>(reader,out T value)\nAssign "+type.Name+" type into "+typeof(T).Name+" type.");
+            if((obj is IBinarySerializable) == false)
+                throw new HException("type-mismatch in HRead<T>(reader,out T value)\nAssign "+type.Name+" type into "+typeof(IBinarySerializable).Name+" type.");
             ((IBinarySerializable)obj).Deserialize(reader);
             return obj;
         }
-        static object _HReadList<T>(BinaryReader reader)
+        static object _HReadList(BinaryReader reader, Type type)
         {
+            IList values = (IList)Activator.CreateInstance(type);
             int leng = reader.ReadInt32();
-            List<T> values = new List<T>(leng);
+            Type typeT = type.GenericTypeArguments[0];
             for(int i=0; i<leng; i++)
             {
-                object value = _HRead<T>(reader);
-                values.Add((T)value);
+                object value = _HRead(reader, typeT);
+                values.Add(value);
             }
             return values;
         }
-        static object _HReadArray<T>(BinaryReader reader)
+        static object _HReadArray(BinaryReader reader, Type type)
         {
+            HDebug.ToDo("check");
+            Type typeT = type.GenericTypeArguments[0];
             int leng = reader.ReadInt32();
-            T[] values = new T[leng];
+            Array values = Array.CreateInstance(typeT, leng);
             for(int i=0; i<leng; i++)
             {
-                object value = _HRead<T>(reader);
-                values[i] = (T)value;
+                object value = _HRead(reader, typeT);
+                values.SetValue(value, i);
             }
             return values;
         }
-        static object _HReadDictionary<T,U>(BinaryReader reader)
+        static object _HReadDictionary(BinaryReader reader, Type type)
         {
+            IDictionary dict = (IDictionary)Activator.CreateInstance(type);
             int leng = reader.ReadInt32();
-            Dictionary<T,U> dict = new Dictionary<T,U>(leng);
+            Type typeT = type.GenericTypeArguments[0];
+            Type typeU = type.GenericTypeArguments[1];
             for(int i=0; i<leng; i++)
             {
-                T key = (T)_HRead<T>(reader);
-                U val = (U)_HRead<U>(reader);
+                object key = _HRead(reader, typeT);
+                object val = _HRead(reader, typeU);
                 dict.Add(key, val);
             }
             return dict;
         }
-        static object _HRead<T>(BinaryReader reader)
+        static object _HRead(BinaryReader reader)
         {
-            Type type = typeof(T);
-            if(type.IsSubclassOf(typeof(IBinarySerializable))) return _HReadBinarySerializable<T>(reader);
+            return null;
+        }
+        static object _HRead(BinaryReader reader, Type type)
+        {
             string type_name = type.FullName;
-            if(type_name == typeof(double ).FullName) return _HReadDouble  (reader);
-            if(type_name == typeof(int    ).FullName) return _HReadInt     (reader);
-            if(type_name == typeof(string ).FullName) return _HReadString  (reader);
-            if(type_name == typeof(bool   ).FullName) return _HReadBool    (reader);
-            if(type_name == typeof(List<T>).FullName) return _HReadList <T>(reader);
-            if(type_name == typeof(    T[]).FullName) return _HReadArray<T>(reader);
+            if(type_name == typeof(double              ).FullName) return _HReadDouble            (reader);
+            if(type_name == typeof(int                 ).FullName) return _HReadInt               (reader);
+            if(type_name == typeof(string              ).FullName) return _HReadString            (reader);
+            if(type_name == typeof(bool                ).FullName) return _HReadBool              (reader);
+            if(typeof(IBinarySerializable).IsAssignableFrom(type)) return _HReadBinarySerializable(reader);
+            if(typeof(IDictionary        ).IsAssignableFrom(type)) return _HReadDictionary        (reader, type);
+            if(typeof(IList              ).IsAssignableFrom(type)) return _HReadList              (reader, type);
+            if(typeof(Array              ).IsAssignableFrom(type)) return _HReadArray             (reader, type);
             throw new Exception();
         }
+        //static object _HRead<T>(BinaryReader reader)
+        //{
+        //    Type type = typeof(T);
+        //    if(type.IsSubclassOf(typeof(IBinarySerializable))) return _HReadBinarySerializable<T>(reader);
+        //    string type_name = type.FullName;
+        //    if(type_name == typeof(double ).FullName) return _HReadDouble  (reader);
+        //    if(type_name == typeof(int    ).FullName) return _HReadInt     (reader);
+        //    if(type_name == typeof(string ).FullName) return _HReadString  (reader);
+        //    if(type_name == typeof(bool   ).FullName) return _HReadBool    (reader);
+        //    if(type_name == typeof(List<T>).FullName) return _HReadList <T>(reader);
+        //    if(type_name == typeof(    T[]).FullName) return _HReadArray<T>(reader);
+        //    throw new Exception();
+        //}
     }
 }
