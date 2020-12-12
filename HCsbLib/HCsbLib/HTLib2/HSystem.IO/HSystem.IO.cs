@@ -28,6 +28,7 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out int    value) { value = reader.ReadInt32  (); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out string value) { value = reader.ReadString (); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out bool   value) { value = reader.ReadBoolean(); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static int HReadLeng(this BinaryReader reader) { return reader.ReadInt32();  }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out double[] values) { int length = reader.ReadInt32(); values = new double[length]; for(int i=0; i<length; i++) values[i] = reader.ReadDouble (); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out int   [] values) { int length = reader.ReadInt32(); values = new int   [length]; for(int i=0; i<length; i++) values[i] = reader.ReadInt32  (); }
@@ -55,39 +56,18 @@ namespace HTLib2
             value = (T)o;
             value.Deserialize(reader);
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T>(this BinaryWriter writer,     T[] values) where T : IBinarySerializable
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static T HRead <T>(this BinaryReader reader) where T : IBinarySerializable
         {
-            writer.Write(values.Length);
-            for(int i=0; i<values.Length; i++)
-                writer.HWrite(values[i]);
+            T value;
+            reader.HRead<T>(out value);
+            return value;
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead <T>(this BinaryReader reader, out T[] values) where T : IBinarySerializable
-        {
-            int length = reader.ReadInt32();
-            values = new T[length];
-            for(int i=0; i<length; i++)
-                reader.HRead(out values[i]);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T>(this BinaryWriter writer, List<T> values) where T : IBinarySerializable
-        {
-            writer.Write(values.Count);
-            for(int i=0; i<values.Count; i++)
-                writer.HWrite(values[i]);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead <T>(this BinaryReader reader, out List<T> values) where T : IBinarySerializable
-        {
-            int length = reader.ReadInt32();
-            values = new List<T>(length);
-            for(int i=0; i<length; i++)
-            {
-                T value;
-                reader.HRead(out value);
-                values.Add(value);
-            }
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T>(this BinaryWriter writer,     T[]     values) where T : IBinarySerializable { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.HWrite(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T>(this BinaryWriter writer,     List<T> values) where T : IBinarySerializable { writer.Write(values.Count ); for(int i=0; i<values.Count ; i++) writer.HWrite(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead <T>(this BinaryReader reader, out T[]     values) where T : IBinarySerializable { int length = reader.ReadInt32(); values = new T      [length]; for(int i=0; i<length; i++) values[i] =reader.HRead<T>() ; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead <T>(this BinaryReader reader, out List<T> values) where T : IBinarySerializable { int length = reader.ReadInt32(); values = new List<T>(length); for(int i=0; i<length; i++) values.Add(reader.HRead<T>()); }
 
-        //  [Serializable]
-        //  public class Data
+        //  public class Data : IBinarySerializable
         //  {
         //      public int   value ;
         //      public int[] values;
