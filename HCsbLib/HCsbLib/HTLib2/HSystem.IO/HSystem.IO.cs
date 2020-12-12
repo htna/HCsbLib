@@ -28,5 +28,22 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out int   [] values) { int length = reader.ReadInt32(); values = new int   [length]; for(int i=0; i<length; i++) values[i] = reader.ReadInt32  (); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out string[] values) { int length = reader.ReadInt32(); values = new string[length]; for(int i=0; i<length; i++) values[i] = reader.ReadString (); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out bool  [] values) { int length = reader.ReadInt32(); values = new bool  [length]; for(int i=0; i<length; i++) values[i] = reader.ReadBoolean(); }
+
+        //  [Serializable]
+        //  public class Data
+        //  {
+        //      public int   value ;
+        //      public int[] values;
+        //      public void Serialize(System.IO.BinaryWriter writer)
+        //      {
+        //          writer.HWrite(value );
+        //          writer.HWrite(values);
+        //      }
+        //      public void Deserialize(System.IO.BinaryReader reader)
+        //      {
+        //          reader.HRead(out value );
+        //          reader.HRead(out values);
+        //      }
+        //  }
     }
 }
