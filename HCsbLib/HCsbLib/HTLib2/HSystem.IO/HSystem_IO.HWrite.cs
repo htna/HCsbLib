@@ -7,6 +7,8 @@ using System.IO;
 
 namespace HTLib2
 {
+    using IList       = System.Collections.IList;
+    using IDictionary = System.Collections.IDictionary;
     public static partial class HSystem_IO
     {
         //  public class Data : IBinarySerializable
@@ -40,16 +42,16 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, List<string> values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, List<bool  > values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this BinaryWriter writer, T               value ) { _HWrite          <T  >(writer, value ); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this BinaryWriter writer, List<T>         values) { _HWriteList      <T  >(writer, values); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this BinaryWriter writer, T[]             values) { _HWriteArray     <T  >(writer, values); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T,U>(this BinaryWriter writer, Dictionary<T,U> dict  ) { _HWriteDictionary<T,U>(writer, dict  ); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this BinaryWriter writer, T               value ) { _HWrite          (writer, value ); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this BinaryWriter writer, List<T>         values) { _HWriteList      (writer, values); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this BinaryWriter writer, T[]             values) { _HWriteArray     (writer, values); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T,U>(this BinaryWriter writer, Dictionary<T,U> dict  ) { _HWriteDictionary(writer, dict  ); }
 
         static void _HWriteDouble(BinaryWriter writer, object value) { writer.Write((double)value); }
         static void _HWriteInt   (BinaryWriter writer, object value) { writer.Write((int   )value); }
         static void _HWriteString(BinaryWriter writer, object value) { writer.Write((string)value); }
         static void _HWriteBool  (BinaryWriter writer, object value) { writer.Write((bool  )value); }
-        static void _HWriteBinarySerializable<T>(BinaryWriter writer, object value)
+        static void _HWriteBinarySerializable(BinaryWriter writer, object value)
         {
             if((value is IBinarySerializable) == false)
                 throw new HException();
@@ -57,40 +59,52 @@ namespace HTLib2
             writer.Write(type_name);
             ((IBinarySerializable)value).Serialize(writer);
         }
-        static void _HWriteList<T>(BinaryWriter writer, object value)
+        static void _HWriteList(BinaryWriter writer, object value)
         {
-            List<T> values = (List<T>)value;
+            if((value is IList) == false)
+                throw new HException();
+            IList values = (IList)value;
             writer.Write(values.Count);
             for(int i=0; i<values.Count; i++)
                 _HWrite(writer, values[i]);
         }
-        static void _HWriteArray<T>(BinaryWriter writer, object value)
+        static void _HWriteArray(BinaryWriter writer, object value)
         {
-            T[] values = (T[])value;
+            if((value is Array) == false)
+                throw new HException();
+            Array values = (Array)value;
             writer.Write(values.Length);
             for(int i=0; i<values.Length; i++)
-                _HWrite(writer, values[i]);
+                _HWrite(writer, values.GetValue(i));
         }
-        static void _HWriteDictionary<T,U>(BinaryWriter writer, object value)
+        public static void _HWriteDictionary(this BinaryWriter writer, object value)
         {
-            Dictionary<T,U> dict = (Dictionary<T,U>)value;
+            if((value is IDictionary) == false)
+                throw new HException();
+            IDictionary dict = (IDictionary)value;
             writer.Write(dict.Count);
-            foreach(var key_val in dict)
+            var dict_enum = dict.GetEnumerator();
+            //foreach(var key_val in dictenum)
+            int cnt = 0;
+            while(dict_enum.MoveNext())
             {
-                _HWrite(writer, key_val.Key  );
-                _HWrite(writer, key_val.Value);
+                cnt ++;
+                _HWrite(writer, dict_enum.Key  );
+                _HWrite(writer, dict_enum.Value);
             }
+            HDebug.Assert(cnt == dict.Count);
         }
-        static void _HWrite<T>(BinaryWriter writer, T value)
+        static void _HWrite(BinaryWriter writer, object value)
         {
-            if(value is IBinarySerializable) { _HWriteBinarySerializable<T>(writer, value); return; }
-            string type_name = value.GetType().FullName;
-            if(type_name == typeof(double ).FullName) { _HWriteDouble  (writer, value); return; }
-            if(type_name == typeof(int    ).FullName) { _HWriteInt     (writer, value); return; }
-            if(type_name == typeof(string ).FullName) { _HWriteString  (writer, value); return; }
-            if(type_name == typeof(bool   ).FullName) { _HWriteBool    (writer, value); return; }
-            if(type_name == typeof(List<T>).FullName) { _HWriteList <T>(writer, value); return; }
-            if(type_name == typeof(    T[]).FullName) { _HWriteArray<T>(writer, value); return; }
+            //string type_name = value.GetType().FullName;
+            if(value is IBinarySerializable) { _HWriteBinarySerializable(writer, value); return; }
+            if(value is double             ) { _HWriteDouble            (writer, value); return; }
+            if(value is int                ) { _HWriteInt               (writer, value); return; }
+            if(value is string             ) { _HWriteString            (writer, value); return; }
+            if(value is bool               ) { _HWriteBool              (writer, value); return; }
+            if(value is IList              ) { _HWriteList              (writer, value); return; }
+            if(value is Array              ) { _HWriteArray             (writer, value); return; }
+            if(value is IDictionary        ) { _HWriteDictionary        (writer, value); return; }
             throw new Exception();
         }
     }
