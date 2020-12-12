@@ -42,20 +42,15 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out List<string> values) { int length = reader.ReadInt32(); values = new List<string>(length); for(int i=0; i<length; i++) values.Add(reader.ReadString ()); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead (this BinaryReader reader, out List<bool  > values) { int length = reader.ReadInt32(); values = new List<bool  >(length); for(int i=0; i<length; i++) values.Add(reader.ReadBoolean()); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead(this BinaryReader reader, out object value, Type type)
-        {
-            value = _HRead(reader, type);
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead<T  >(this BinaryReader reader, out T               value ) { value  = (T              )(_HRead          (reader, typeof(T              ))); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead<T  >(this BinaryReader reader, out List<T>         values) { values = (List<T>        )(_HReadList      (reader, typeof(List<T>        ))); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead<T  >(this BinaryReader reader, out T[]             values) { values = (T[]            )(_HReadArray     (reader, typeof(T[]            ))); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HRead<T,U>(this BinaryReader reader, out Dictionary<T,U> dict  ) { dict   = (Dictionary<T,U>)(_HReadDictionary(reader, typeof(Dictionary<T,U>))); }
 
-        static object _HReadDouble(BinaryReader reader) { return reader.ReadDouble (); }
-        static object _HReadInt   (BinaryReader reader) { return reader.ReadInt32  (); }
-        static object _HReadString(BinaryReader reader) { return reader.ReadString (); }
-        static object _HReadBool  (BinaryReader reader) { return reader.ReadBoolean(); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] static object _HReadDouble(BinaryReader reader) { return reader.ReadDouble (); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] static object _HReadInt   (BinaryReader reader) { return reader.ReadInt32  (); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] static object _HReadString(BinaryReader reader) { return reader.ReadString (); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] static object _HReadBool  (BinaryReader reader) { return reader.ReadBoolean(); }
         static object _HReadBinarySerializable(BinaryReader reader)
         {
             string type_name = reader.ReadString();
@@ -106,10 +101,6 @@ namespace HTLib2
             }
             return dict;
         }
-        static object _HRead(BinaryReader reader)
-        {
-            return null;
-        }
         static object _HRead(BinaryReader reader, Type type)
         {
             string type_name = type.FullName;
@@ -123,18 +114,5 @@ namespace HTLib2
             if(typeof(Array              ).IsAssignableFrom(type)) return _HReadArray             (reader, type);
             throw new Exception();
         }
-        //static object _HRead<T>(BinaryReader reader)
-        //{
-        //    Type type = typeof(T);
-        //    if(type.IsSubclassOf(typeof(IBinarySerializable))) return _HReadBinarySerializable<T>(reader);
-        //    string type_name = type.FullName;
-        //    if(type_name == typeof(double ).FullName) return _HReadDouble  (reader);
-        //    if(type_name == typeof(int    ).FullName) return _HReadInt     (reader);
-        //    if(type_name == typeof(string ).FullName) return _HReadString  (reader);
-        //    if(type_name == typeof(bool   ).FullName) return _HReadBool    (reader);
-        //    if(type_name == typeof(List<T>).FullName) return _HReadList <T>(reader);
-        //    if(type_name == typeof(    T[]).FullName) return _HReadArray<T>(reader);
-        //    throw new Exception();
-        //}
     }
 }
