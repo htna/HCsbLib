@@ -18,10 +18,10 @@ namespace HTLib2
         //          writer.HWrite(value );
         //          writer.HWrite(values);
         //      }
-        //      public void Deserialize(System.IO.BinaryReader reader)
+        //      public void Deserialize(System.IO.BinaryWriter writer)
         //      {
-        //          reader.HRead(out value );
-        //          reader.HRead(out values);
+        //          writer.HRead(out value );
+        //          writer.HRead(out values);
         //      }
         //  }
 
@@ -49,5 +49,56 @@ namespace HTLib2
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T>(this BinaryWriter writer,     T[]     values) where T : IBinarySerializable { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.HWrite(values[i]); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T>(this BinaryWriter writer,     List<T> values) where T : IBinarySerializable { writer.Write(values.Count ); for(int i=0; i<values.Count ; i++) writer.HWrite(values[i]); }
+
+
+        static void _HWriteDouble(BinaryWriter writer, object value) { writer.Write((double)value); }
+        static void _HWriteInt   (BinaryWriter writer, object value) { writer.Write((int   )value); }
+        static void _HWriteString(BinaryWriter writer, object value) { writer.Write((string)value); }
+        static void _HWriteBool  (BinaryWriter writer, object value) { writer.Write((bool  )value); }
+        static void _HWriteBinarySerializable<T>(BinaryWriter writer, object value)
+        {
+            if(typeof(T).IsSubclassOf(typeof(IBinarySerializable)) == false)
+                throw new HException();
+            string typeT = typeof(T).FullName;
+            writer.Write(typeT);
+            ((IBinarySerializable)value).Serialize(writer);
+        }
+        static void _HWriteList<T>(BinaryWriter writer, object value)
+        {
+            List<T> values = (List<T>)value;
+            writer.Write(values.Count);
+            for(int i=0; i<values.Count; i++)
+                _HWrite(writer, values[i]);
+        }
+        static void _HWriteArray<T>(BinaryWriter writer, object value)
+        {
+            T[] values = (T[])value;
+            writer.Write(values.Length);
+            for(int i=0; i<values.Length; i++)
+                _HWrite(writer, values[i]);
+        }
+        static void _HWriteDictionary<T,U>(BinaryWriter writer, object value)
+        {
+            Dictionary<T,U> dict = (Dictionary<T,U>)value;
+            writer.Write(dict.Count);
+            foreach(var key_val in dict)
+            {
+                _HWrite(writer, key_val.Key  );
+                _HWrite(writer, key_val.Value);
+            }
+        }
+        static void _HWrite<T>(BinaryWriter writer, T value)
+        {
+            Type type = typeof(T);
+            if(type.IsSubclassOf(typeof(IBinarySerializable))) { _HWriteBinarySerializable<T>(writer, value); return; }
+            string type_name = type.FullName;
+            if(type_name == typeof(double ).FullName) { _HWrite        (writer, value); return; }
+            if(type_name == typeof(int    ).FullName) { _HWrite        (writer, value); return; }
+            if(type_name == typeof(string ).FullName) { _HWrite        (writer, value); return; }
+            if(type_name == typeof(bool   ).FullName) { _HWrite        (writer, value); return; }
+            if(type_name == typeof(List<T>).FullName) { _HWriteList <T>(writer, value); return; }
+            if(type_name == typeof(    T[]).FullName) { _HWriteArray<T>(writer, value); return; }
+            throw new Exception();
+        }
     }
 }

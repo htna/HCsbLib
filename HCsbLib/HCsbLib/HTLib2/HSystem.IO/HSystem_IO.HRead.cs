@@ -85,7 +85,7 @@ namespace HTLib2
         static object _HReadDictionary<T,U>(BinaryReader reader)
         {
             int leng = reader.ReadInt32();
-            Dictionary<T,U> dict = new Dictionary<T, U>(leng);
+            Dictionary<T,U> dict = new Dictionary<T,U>(leng);
             for(int i=0; i<leng; i++)
             {
                 T key = (T)_HRead<T>(reader);
