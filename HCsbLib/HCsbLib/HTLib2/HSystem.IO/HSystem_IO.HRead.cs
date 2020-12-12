@@ -104,14 +104,14 @@ namespace HTLib2
         static object _HRead(BinaryReader reader, Type type)
         {
             string type_name = type.FullName;
+            if(typeof(IBinarySerializable).IsAssignableFrom(type)) return _HReadBinarySerializable(reader);
             if(type_name == typeof(double              ).FullName) return _HReadDouble            (reader);
             if(type_name == typeof(int                 ).FullName) return _HReadInt               (reader);
             if(type_name == typeof(string              ).FullName) return _HReadString            (reader);
             if(type_name == typeof(bool                ).FullName) return _HReadBool              (reader);
-            if(typeof(IBinarySerializable).IsAssignableFrom(type)) return _HReadBinarySerializable(reader);
-            if(typeof(IDictionary        ).IsAssignableFrom(type)) return _HReadDictionary        (reader, type);
             if(typeof(IList              ).IsAssignableFrom(type)) return _HReadList              (reader, type);
             if(typeof(Array              ).IsAssignableFrom(type)) return _HReadArray             (reader, type);
+            if(typeof(IDictionary        ).IsAssignableFrom(type)) return _HReadDictionary        (reader, type);
             throw new Exception();
         }
     }
