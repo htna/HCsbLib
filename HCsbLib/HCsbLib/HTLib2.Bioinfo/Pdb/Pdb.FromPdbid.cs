@@ -40,14 +40,14 @@ namespace HTLib2.Bioinfo
 
                 if(download.Value)
                 {   // redownload
-                    pdb = Pdb.FromPdbid(pdbid);
+                    pdb = Pdb.FromPdbid(pdbid, exception_handling);
                     pdb.ToFile(pdbpath);
                 }
                 return pdb;
             }
             else if(download.Value)
             {
-                Pdb pdb = Pdb.FromPdbid(pdbid);
+                Pdb pdb = Pdb.FromPdbid(pdbid, exception_handling);
                 if(pdb != null)
                 {
                     pdb.ToFile(pdbpath);
