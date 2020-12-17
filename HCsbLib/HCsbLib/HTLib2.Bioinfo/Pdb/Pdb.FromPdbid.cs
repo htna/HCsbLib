@@ -55,7 +55,7 @@ namespace HTLib2.Bioinfo
             }
             return null;
         }
-        public static Pdb FromPdbid(string pdbid)
+        public static Pdb FromPdbid(string pdbid, string exception_handling=null)
 		{
             //Pdb pdb = FromFile(cachepath);
             //webClient.DownloadFile("http://mysite.com/myfile.txt", @"c:\myfile.txt");
@@ -71,9 +71,19 @@ namespace HTLib2.Bioinfo
             }
             catch(Exception e)
             {
-                System.Console.Error.WriteLine("error while downloading {0}", pdbid);
-                System.Console.Error.WriteLine(e.Message);
-                System.Console.Error.WriteLine(e);
+                switch(exception_handling)
+                {
+                    case "silent":
+                        break;
+                    case "rethrow":
+                        throw e;
+                    case null:
+                    default:
+                        System.Console.Error.WriteLine("error while downloading {0}", pdbid);
+                        System.Console.Error.WriteLine(e.Message);
+                        System.Console.Error.WriteLine(e);
+                        break;
+                }
                 pdb = null;
             }
             webClient.Dispose();
