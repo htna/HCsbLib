@@ -8,6 +8,32 @@ namespace HTLib2.Bioinfo
 {
 	public partial class PdbCIF
 	{
+        public static string[] HeaderFromPdbid
+            ( string pdbid
+            , string cachebase  // null or @"K:\PdbUnzippeds\$PDBID$.pdb"
+            , bool? download    // null or false
+            )
+        {
+            if(cachebase == null) cachebase = @"D:\ProtDataBank\header\$PDBID$.cif";
+            if(download  == null) download  = false;
+
+            string cifpath = cachebase.Replace("$PDBID$", pdbid);
+
+            if(HFile.Exists(cifpath))
+            {
+                return HFile.ReadAllLines(cifpath);
+            }
+            else if(download.Value)
+            {
+                string[] lines = HeaderFromPdbid(pdbid);
+                if(lines != null)
+                {
+                    HFile.WriteAllLines(cifpath, lines);
+                    return lines;
+                }
+            }
+            return null;
+        }
         public static string[] HeaderFromPdbid(string pdbid)
 		{
             //Pdb pdb = FromFile(cachepath);
@@ -19,7 +45,18 @@ namespace HTLib2.Bioinfo
             try
             {
                 Stream stream = webClient.OpenRead(address);
-                lines = HFile.ReadAllLines(stream);
+                {
+                    StreamReader streamreader = new StreamReader(stream);
+                    List<string> _lines = new List<string>();
+                    while(true)
+                    {
+                        string line = streamreader.ReadLine();
+                        if(line == null)
+                            break;
+                        _lines.Add(line);
+                    }
+                    lines = _lines.ToArray();
+                }
                 stream.Close();
             }
             catch(Exception e)
