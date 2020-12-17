@@ -25,7 +25,7 @@ namespace HTLib2.Bioinfo
             , bool? download    // null or false
             )
         {
-            if(cachebase == null) cachebase = @"K:\PdbUnzippeds\$PDBID$.pdb";
+            if(cachebase == null) cachebase = @"D:\ProtDataBank\pdb\$PDBID$.pdb";
             if(download  == null) download  = false;
 
             string pdbpath = cachebase.Replace("$PDBID$", pdbid);
