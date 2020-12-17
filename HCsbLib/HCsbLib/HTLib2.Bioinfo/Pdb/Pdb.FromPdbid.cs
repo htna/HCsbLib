@@ -23,6 +23,7 @@ namespace HTLib2.Bioinfo
             ( string pdbid
             , string cachebase  // null or @"K:\PdbUnzippeds\$PDBID$.pdb"
             , bool? download    // null or false
+            , string exception_handling=null
             )
         {
             if(cachebase == null) cachebase = @"D:\ProtDataBank\pdb\$PDBID$.pdb";
