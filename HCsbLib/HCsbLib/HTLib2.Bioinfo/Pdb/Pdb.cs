@@ -24,6 +24,7 @@ namespace HTLib2.Bioinfo
         public readonly int[] _idxanisous;    public Anisou[] anisous { get { return elements.HSelectByIndex<Element,Anisou>(_idxanisous).ToArray(); } }
         public readonly int[] _idxsiguijs;    public Siguij[] siguijs { get { return elements.HSelectByIndex<Element,Siguij>(_idxsiguijs).ToArray(); } }
         public readonly int[] _idxmodels ;    public Model [] models  { get { return elements.HSelectByIndex<Element,Model >(_idxmodels ).ToArray(); } }
+        public readonly int[] _idxremarks;    public Remark[] remarks { get { return elements.HSelectByIndex<Element,Remark>(_idxremarks).ToArray(); } }
                                               public Seqres[] seqress { get { return ListElemByType<Pdb.Seqres>().ToArray(); } }
                                               public Conect[] conects { get { return ListElemByType<Pdb.Conect>().ToArray(); } }
                                               public Site  [] sites   { get { return ListElemByType<Pdb.Site  >().ToArray(); } }
@@ -106,6 +107,7 @@ namespace HTLib2.Bioinfo
             List<int> idxsiguijs = new List<int>(); for(int i=0; i<elements.Count; i++) if(typeof(Siguij).IsInstanceOfType(elements[i])) idxsiguijs.Add(i); this._idxsiguijs = idxsiguijs.ToArray();
             List<int> idxmodels  = new List<int>(); for(int i=0; i<elements.Count; i++) if(typeof(Model ).IsInstanceOfType(elements[i])) idxmodels .Add(i); this._idxmodels  = idxmodels .ToArray();
             List<int> idxendmdls = new List<int>(); for(int i=0; i<elements.Count; i++) if(typeof(Endmdl).IsInstanceOfType(elements[i])) idxendmdls.Add(i); this._idxendmdls = idxendmdls.ToArray();
+            List<int> idxremarks = new List<int>(); for(int i=0; i<elements.Count; i++) if(typeof(Remark).IsInstanceOfType(elements[i])) idxremarks.Add(i); this._idxremarks = idxremarks.ToArray();
             HDebug.Assert(idxmodels.Count == idxendmdls.Count);
         }
 
@@ -126,6 +128,9 @@ namespace HTLib2.Bioinfo
             List<int> idxhetatms = new List<int>(); for(int i=0; i<elements.Length; i++) if(typeof(Hetatm).IsInstanceOfType(elements[i])) idxhetatms.Add(i); this._idxhetatms = idxhetatms.ToArray();
             List<int> idxanisous = new List<int>(); for(int i=0; i<elements.Length; i++) if(typeof(Anisou).IsInstanceOfType(elements[i])) idxanisous.Add(i); this._idxanisous = idxanisous.ToArray();
             List<int> idxsiguijs = new List<int>(); for(int i=0; i<elements.Length; i++) if(typeof(Siguij).IsInstanceOfType(elements[i])) idxsiguijs.Add(i); this._idxsiguijs = idxsiguijs.ToArray();
+            List<int> idxmodels  = new List<int>(); for(int i=0; i<elements.Length; i++) if(typeof(Model ).IsInstanceOfType(elements[i])) idxmodels .Add(i); this._idxmodels  = idxmodels .ToArray();
+            List<int> idxendmdls = new List<int>(); for(int i=0; i<elements.Length; i++) if(typeof(Endmdl).IsInstanceOfType(elements[i])) idxendmdls.Add(i); this._idxendmdls = idxendmdls.ToArray();
+            List<int> idxremarks = new List<int>(); for(int i=0; i<elements.Length; i++) if(typeof(Remark).IsInstanceOfType(elements[i])) idxremarks.Add(i); this._idxremarks = idxremarks.ToArray();
         }
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
