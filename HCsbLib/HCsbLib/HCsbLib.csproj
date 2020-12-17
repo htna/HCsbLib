@@ -375,6 +375,7 @@
     <Compile Include="HTLib2.Bioinfo\PdbDatabase\PdbDatabase.pdblist.cs" />
     <Compile Include="HTLib2.Bioinfo\PdbDatabase\PdbDatabase.RootPath.cs" />
     <Compile Include="HTLib2.Bioinfo\PdbDatabase\PdbDatabase.Static.cs" />
+    <Compile Include="HTLib2.Bioinfo\PdbCIF\PdbCIF.HeaderFromPdbid.cs" />
     <Compile Include="HTLib2.Bioinfo\PdbTools\PdbTools.BuildWaterBoxSphere.cs" />
     <Compile Include="HTLib2.Bioinfo\PdbTools\PdbTools.cs" />
     <Compile Include="HTLib2.Bioinfo\PdbTools\PdbTools.SoakMoleculeISolventBox.cs" />
