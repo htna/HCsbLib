@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 
-namespace SolvEffect.htna10
+namespace HTLib2
 {
     using Debug = System.Diagnostics.Debug;
 // https://referencesource.microsoft.com/#PresentationCore/Shared/MS/Internal/PriorityQueue.cs
@@ -38,7 +38,7 @@ namespace SolvEffect.htna10
     /// Push and Pop are each O(log N). Pushing N objects and them popping
     /// them all is equivalent to performing a heap sort and is O(N log N).
     /// </remarks>
-    internal class PriorityQueue<T>
+    public class HPriorityQueue<T>
     {
         //
         // The _heap array represents a binary tree with the "shape" property.
@@ -79,7 +79,7 @@ namespace SolvEffect.htna10
  
         #region constructors
  
-        internal PriorityQueue(int capacity, IComparer<T> comparer)
+        public HPriorityQueue(int capacity, IComparer<T> comparer)
         {
             _heap = new T[capacity > 0 ? capacity : DefaultCapacity];
             _count = 0;
