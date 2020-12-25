@@ -93,7 +93,7 @@ namespace HTLib2
         /// <summary>
         /// Gets the number of items in the priority queue.
         /// </summary>
-        internal int Count
+        public int Count
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get { return _count; }
@@ -103,7 +103,7 @@ namespace HTLib2
         /// Gets the first or topmost object in the priority queue, which is the
         /// object with the minimum value.
         /// </summary>
-        internal T Top
+        public T Top
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -122,7 +122,7 @@ namespace HTLib2
         /// Adds an object to the priority queue.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void Push(T value)
+        public void Push(T value)
         {
             // Increase the size of the array if necessary.
             if (_count == _heap.Length)
@@ -150,7 +150,7 @@ namespace HTLib2
         /// Removes the first node (i.e., the logical root) from the heap.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void Pop()
+        public void Pop()
         {
             Debug.Assert(_count != 0);
             if (!_isHeap)
