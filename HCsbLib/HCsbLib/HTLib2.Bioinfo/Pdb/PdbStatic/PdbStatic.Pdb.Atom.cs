@@ -8,6 +8,14 @@ namespace HTLib2.Bioinfo
     using IAtom = Pdb.IAtom;
     public static partial class PdbStatic
     {
+        public static void ToFile(this IList<Pdb.Atom> atoms, string filepath)
+        {
+            string[] lines = new string[atoms.Count];
+            for(int i=0; i<atoms.Count; i++)
+                lines[i] = atoms[i].line;
+            HFile.WriteAllLines(filepath, lines);
+        }
+
         public static List<   int> ListSerial    <ATOM>(this IList<ATOM> atoms) where ATOM:IAtom  { List<   int> list = new List<   int>(atoms.Count); foreach(ATOM atom in atoms) list.Add(atom.serial    ); return list; }
         public static List<string> ListName      <ATOM>(this IList<ATOM> atoms) where ATOM:IAtom  { List<string> list = new List<string>(atoms.Count); foreach(ATOM atom in atoms) list.Add(atom.name      ); return list; }
         public static List<  char> ListAltLoc    <ATOM>(this IList<ATOM> atoms) where ATOM:IAtom  { List<  char> list = new List<  char>(atoms.Count); foreach(ATOM atom in atoms) list.Add(atom.altLoc    ); return list; }
