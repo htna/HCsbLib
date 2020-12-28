@@ -121,6 +121,7 @@ namespace HTLib2
         /// <summary>
         /// Adds an object to the priority queue.
         /// </summary>
+        /// htna: can add multiple instances
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Push(T value)
         {
