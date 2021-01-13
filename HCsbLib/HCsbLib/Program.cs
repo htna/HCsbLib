@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using HTLib2;
+using HTLib2.Bioinfo;
 
 namespace HCsbLib
 {
