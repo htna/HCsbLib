@@ -8,10 +8,11 @@ namespace HTLib2.Bioinfo
     public partial class Namd
     {
         public static Run.CPsfgen RunPsfgen
-                ( IList<Tuple<string, string, Pdb.IAtom[]>> lstSegFileAtoms
+                ( string psfgen_path
+                , IList<Tuple<string, string, Pdb.IAtom[]>> lstSegFileAtoms
                 , string tempbase //=null
                 , string parameters //=null
-                , string namdversion //="2.8"
+                //, string namdversion //="2.8"
                 , IList<string> infiles
                 , IList<string> outfiles
                 , string topology
@@ -21,10 +22,11 @@ namespace HTLib2.Bioinfo
                 )
         {
             return Run.Psfgen
-                ( lstSegFileAtoms
+                ( psfgen_path
+                , lstSegFileAtoms
                 , tempbase //=null
                 , parameters //=null
-                , namdversion //="2.8"
+                //, namdversion //="2.8"
                 , infiles
                 , outfiles
                 , topology
@@ -152,10 +154,11 @@ namespace HTLib2.Bioinfo
                 return psfgen_lines.ToArray();
             }
             public static CPsfgen Psfgen
-                ( IList<Tuple<string, string, Pdb.IAtom[]>> lstSegFileAtoms // segname, filename, pdbatoms
+                ( string psfgen_path
+                , IList<Tuple<string, string, Pdb.IAtom[]>> lstSegFileAtoms // segname, filename, pdbatoms
                 , string tempbase //=null
                 , string parameters //=null
-                , string namdversion //="2.8"
+                //, string namdversion //="2.8"
                 , IList<string> infiles
                 , IList<string> outfiles
                 , string topology
@@ -201,15 +204,15 @@ namespace HTLib2.Bioinfo
                 List<string> psf_lines;
                 List<string> pdb_lines;
                 {
-                    {
-                        //foreach(var respath_filename in GetResourcePaths("2.8", "psfgen"))
-                        foreach(var respath_filename in GetResourcePaths(namdversion, "psfgen"))
-                        {
-                            string respath  = respath_filename.Item1;
-                            string filename = respath_filename.Item2;
-                            HResource.CopyResourceTo<Tinker>(respath, filename);
-                        }
-                    }
+                    //  {
+                    //      //foreach(var respath_filename in GetResourcePaths("2.8", "psfgen"))
+                    //      foreach(var respath_filename in GetResourcePaths(namdversion, "psfgen"))
+                    //      {
+                    //          string respath  = respath_filename.Item1;
+                    //          string filename = respath_filename.Item2;
+                    //          HResource.CopyResourceTo<Tinker>(respath, filename);
+                    //      }
+                    //  }
 
                     //  Dictionary<string, Tuple<string, Pdb.IAtom[]>> segname_filename_pdbatoms = new Dictionary<string, Tuple<string, Pdb.IAtom[]>>();
                     //  //if(pdbs.Length != 1) throw new ArgumentException();
@@ -291,7 +294,7 @@ namespace HTLib2.Bioinfo
                     lines = lines.HRemoveAllContains("$segname$");
 
                     HFile.WriteAllLines("prot.inp", lines);
-                    string command0 = string.Format("psfgen < prot.inp");
+                    string command0 = string.Format(psfgen_path+" < prot.inp");
                     bool pause = options.Contains("psfgen pause");
                     HProcess.StartAsBatchInConsole(null, pause, command0);
 

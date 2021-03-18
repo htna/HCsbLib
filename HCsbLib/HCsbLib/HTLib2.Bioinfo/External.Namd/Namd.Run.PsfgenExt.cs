@@ -46,7 +46,26 @@ namespace HTLib2.Bioinfo
             return npdb;
         }
         public static CPsfgenExt PsfgenExt
-            ( Pdb pdb
+            ( string psfgen_path
+            , Pdb pdb
+            , string[] toplines
+            , string[] parlines
+            , Pdb alignto
+            , HOptions options
+            )
+        {
+            return PsfgenExt
+            ( psfgen_path
+            , pdb.iatoms
+            , toplines
+            , parlines
+            , alignto
+            , options
+            );
+        }
+        public static CPsfgenExt PsfgenExt
+            ( string psfgen_path
+            , Pdb.IAtom[] pdb_iatoms
             , string[] toplines
             , string[] parlines
             , Pdb alignto
@@ -55,7 +74,6 @@ namespace HTLib2.Bioinfo
         {
             string[] psfgen_lines = null;
             List<Tuple<string, string, Pdb.IAtom[]>> lstSegFileAtoms = new List<Tuple<string, string, Pdb.IAtom[]>>();
-            var pdb_iatoms = pdb.iatoms;
             foreach(var ch_iatoms in pdb_iatoms.GroupChainID())
             {
                 lstSegFileAtoms.Add(new Tuple<string, string, Pdb.IAtom[]>
@@ -65,12 +83,14 @@ namespace HTLib2.Bioinfo
                 ));
             }
             return PsfgenExt
-                ( lstSegFileAtoms, toplines, parlines, alignto, psfgen_lines
+                ( psfgen_path
+                , lstSegFileAtoms, toplines, parlines, alignto, psfgen_lines
                 , options: options
                 );
         }
         public static CPsfgenExt PsfgenExt
-            ( IList<Tuple<string, string, Pdb.IAtom[]>> lstSegFileAtoms
+            ( string psfgen_path
+            , IList<Tuple<string, string, Pdb.IAtom[]>> lstSegFileAtoms
             , string[] toplines
             , string[] parlines
             , Pdb alignto
@@ -99,7 +119,8 @@ namespace HTLib2.Bioinfo
                 if((HFile.Exists("prot.pdb"    ) == false) || (HFile.Exists("prot.psf"   ) == false))
                 {
                     var psfgen = Namd.RunPsfgen
-                        (lstSegFileAtoms, tempbase, null, "2.10"
+                        ( psfgen_path
+                        , lstSegFileAtoms, tempbase, null //, "2.10"
                         , new string[] { topname }
                         , new string[] {}
                         , topname
