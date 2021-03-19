@@ -6,6 +6,22 @@ using System.Runtime.Serialization;
 
 namespace HTLib2.Bioinfo
 {
+    public static partial class PdbStatic
+    {
+        public static double GetResolution(this IEnumerable<Pdb.Remark2> remark2s)
+        {
+            double? resolution = null;
+            foreach(var remark2 in remark2s)
+            {
+                if(remark2._RESOLUTION != "RESOLUTION.") continue;
+                if(remark2._ANGSTROMS  != "ANGSTROMS." ) continue;
+                HDebug.Assert(resolution == null);
+                resolution = remark2.resolution;
+            }
+
+            return resolution.Value;
+        }
+    }
     public partial class Pdb
     {
         [Serializable]
