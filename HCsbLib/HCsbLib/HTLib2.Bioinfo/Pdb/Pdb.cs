@@ -26,10 +26,10 @@ namespace HTLib2.Bioinfo
         public readonly int[] _idxmodels ;    public Model  [] models   { get { return elements.HSelectByIndex<Element,Model >(_idxmodels ).ToArray(); } }
         public readonly int[] _idxremarks;    public Remark [] remarks  { get { return elements.HSelectByIndex<Element,Remark>(_idxremarks).ToArray(); } }
                                               public Remark2[] remark2s { get { return ListElemByType<Pdb.Remark2>().ToArray(); } }
-                                              public Seqres [] seqress  { get { return ListElemByType<Pdb.Seqres>().ToArray(); } }
-                                              public Conect [] conects  { get { return ListElemByType<Pdb.Conect>().ToArray(); } }
-                                              public Site   [] sites    { get { return ListElemByType<Pdb.Site  >().ToArray(); } }
-                                              public Compnd [] compnds  { get { return ListElemByType<Pdb.Compnd>().ToArray(); } }
+                                              public Seqres [] seqress  { get { return ListElemByType<Pdb.Seqres >().ToArray(); } }
+                                              public Conect [] conects  { get { return ListElemByType<Pdb.Conect >().ToArray(); } }
+                                              public Site   [] sites    { get { return ListElemByType<Pdb.Site   >().ToArray(); } }
+                                              public Compnd [] compnds  { get { return ListElemByType<Pdb.Compnd >().ToArray(); } }
         public readonly int[] _idxendmdls;
 
         public Atom[] AtomsInModel(Model model)
