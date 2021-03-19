@@ -13,10 +13,26 @@ namespace HTLib2.Bioinfo
             double? resolution = null;
             foreach(var remark2 in remark2s)
             {
-                if(remark2._RESOLUTION != "RESOLUTION.") continue;
-                if(remark2._ANGSTROMS  != "ANGSTROMS." ) continue;
-                HDebug.Assert(resolution == null);
-                resolution = remark2.resolution;
+                {
+                    string line = remark2.line;
+                    line = line.Replace("REMARK   2" , "");
+                    line = line.Replace("RESOLUTION.", "");
+                    line = line.Replace("ANGSTROMS." , "");
+                    line = line.Trim();
+                    double res;
+                    if(double.TryParse(line, out res))
+                    {
+                        HDebug.Assert(resolution == null);
+                        resolution = res;
+                        continue;
+                    }
+                }
+                {
+                    if(remark2._RESOLUTION != "RESOLUTION.") continue;
+                    if(remark2._ANGSTROMS  != "ANGSTROMS." ) continue;
+                    HDebug.Assert(resolution == null);
+                    resolution = remark2.TryResolution();
+                }
             }
 
             return resolution.Value;
