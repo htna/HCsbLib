@@ -16,20 +16,20 @@ namespace HTLib2.Bioinfo
             return elements.ListType<ELEM>().ToArray();
         }
 
-		                                      public IAtom [] iatoms  { get { return elements.HSelectByType <Element,IAtom >()           .ToArray(); } }
-		public readonly int[] _idxatoms  ;    public Atom  [] atoms   { get { return elements.HSelectByIndex<Element,Atom  >(_idxatoms  ).ToArray(); } }
-        public readonly int[] _idxhelixes;    public Helix [] helixes { get { return elements.HSelectByIndex<Element,Helix >(_idxhelixes).ToArray(); } }
-		public readonly int[] _idxsheets ;    public Sheet [] sheets  { get { return elements.HSelectByIndex<Element,Sheet >(_idxsheets ).ToArray(); } }
-        public readonly int[] _idxhetatms;    public Hetatm[] hetatms { get { return elements.HSelectByIndex<Element,Hetatm>(_idxhetatms).ToArray(); } }
-        public readonly int[] _idxanisous;    public Anisou[] anisous { get { return elements.HSelectByIndex<Element,Anisou>(_idxanisous).ToArray(); } }
-        public readonly int[] _idxsiguijs;    public Siguij[] siguijs { get { return elements.HSelectByIndex<Element,Siguij>(_idxsiguijs).ToArray(); } }
-        public readonly int[] _idxmodels ;    public Model [] models  { get { return elements.HSelectByIndex<Element,Model >(_idxmodels ).ToArray(); } }
-        public readonly int[] _idxremarks;    public Remark[] remarks { get { return elements.HSelectByIndex<Element,Remark>(_idxremarks).ToArray(); } }
-                                              public Remark2[] remark2s{ get { return ListElemByType<Pdb.Remark2>().ToArray(); } }
-                                              public Seqres[] seqress { get { return ListElemByType<Pdb.Seqres>().ToArray(); } }
-                                              public Conect[] conects { get { return ListElemByType<Pdb.Conect>().ToArray(); } }
-                                              public Site  [] sites   { get { return ListElemByType<Pdb.Site  >().ToArray(); } }
-                                              public Compnd[] compnds { get { return ListElemByType<Pdb.Compnd>().ToArray(); } }
+		                                      public IAtom  [] iatoms   { get { return elements.HSelectByType <Element,IAtom >()           .ToArray(); } }
+		public readonly int[] _idxatoms  ;    public Atom   [] atoms    { get { return elements.HSelectByIndex<Element,Atom  >(_idxatoms  ).ToArray(); } }
+        public readonly int[] _idxhelixes;    public Helix  [] helixes  { get { return elements.HSelectByIndex<Element,Helix >(_idxhelixes).ToArray(); } }
+		public readonly int[] _idxsheets ;    public Sheet  [] sheets   { get { return elements.HSelectByIndex<Element,Sheet >(_idxsheets ).ToArray(); } }
+        public readonly int[] _idxhetatms;    public Hetatm [] hetatms  { get { return elements.HSelectByIndex<Element,Hetatm>(_idxhetatms).ToArray(); } }
+        public readonly int[] _idxanisous;    public Anisou [] anisous  { get { return elements.HSelectByIndex<Element,Anisou>(_idxanisous).ToArray(); } }
+        public readonly int[] _idxsiguijs;    public Siguij [] siguijs  { get { return elements.HSelectByIndex<Element,Siguij>(_idxsiguijs).ToArray(); } }
+        public readonly int[] _idxmodels ;    public Model  [] models   { get { return elements.HSelectByIndex<Element,Model >(_idxmodels ).ToArray(); } }
+        public readonly int[] _idxremarks;    public Remark [] remarks  { get { return elements.HSelectByIndex<Element,Remark>(_idxremarks).ToArray(); } }
+                                              public Remark2[] remark2s { get { return ListElemByType<Pdb.Remark2>().ToArray(); } }
+                                              public Seqres [] seqress  { get { return ListElemByType<Pdb.Seqres>().ToArray(); } }
+                                              public Conect [] conects  { get { return ListElemByType<Pdb.Conect>().ToArray(); } }
+                                              public Site   [] sites    { get { return ListElemByType<Pdb.Site  >().ToArray(); } }
+                                              public Compnd [] compnds  { get { return ListElemByType<Pdb.Compnd>().ToArray(); } }
         public readonly int[] _idxendmdls;
 
         public Atom[] AtomsInModel(Model model)
