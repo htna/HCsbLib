@@ -6,6 +6,17 @@ using System.Runtime.Serialization;
 
 namespace HTLib2.Bioinfo
 {
+    public static partial class PdbStatic
+    {
+        public static IEnumerable<Pdb.Remark> HEnumByRemarkNum(this IEnumerable<Pdb.Remark> remarks, int remarkNum)
+        {
+            foreach(var remark in remarks)
+            {
+                if(remark.remarkNum == remarkNum)
+                    yield return remark;
+            }
+        }
+    }
 	public partial class Pdb
 	{
         [Serializable]
