@@ -46,8 +46,8 @@ namespace HTLib2.Bioinfo
 				return new Remark(line);
 			}
 			public static bool IsRemark(string line) { return (line.Substring(0, 6) == "REMARK"); }
-			public    int continuat   { get { return Integer(idxs_continuat ).Value; } } int[] idxs_continuat = new int[]{ 8,10}; //  8 - 10    Integer        remarkNum    Remark number.
-			public string title       { get { return String (idxs_title     );       } } int[] idxs_title     = new int[]{12,70}; // 12 - 70    LString        empty        Left as white space in first line of each new remark.
+			public    int remarkNum   { get { return Integer(idxs_remarkNum ).Value; } } int[] idxs_remarkNum = new int[]{ 8,10}; //  8 - 10    Integer        remarkNum    Remark number.
+			public string empty       { get { return String (idxs_empty     );       } } int[] idxs_empty     = new int[]{12,70}; // 12 - 70    LString        empty        Left as white space in first line of each new remark.
 
 			// IComparable<Atom>
 			//int IComparable<Atom>.CompareTo(Atom other)
