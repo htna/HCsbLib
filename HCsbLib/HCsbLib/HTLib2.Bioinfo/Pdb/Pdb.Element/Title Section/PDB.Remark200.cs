@@ -143,7 +143,7 @@ namespace HTLib2.Bioinfo
                 contents = contents.Replace("TEMPERATURE", "");
                 contents = contents.Replace("(KELVIN)"   , "");
                 contents = contents.Replace(":"   , "");
-                temp     = int.Parse(contents);
+                temp     = double.Parse(contents);
             }
             return temp;
         }
