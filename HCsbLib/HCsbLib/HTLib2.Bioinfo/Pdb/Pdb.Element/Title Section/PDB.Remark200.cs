@@ -143,9 +143,16 @@ namespace HTLib2.Bioinfo
                 contents = contents.Replace("TEMPERATURE", "");
                 contents = contents.Replace("(KELVIN)"   , "");
                 contents = contents.Replace(":"   , "");
-                if(contents.Contains("NULL"))
-                    continue;
-                temp     = double.Parse(contents);
+                string[] tokens = contents.Split(';');
+                foreach(string token in tokens)
+                {
+                    double dbl;
+                    if(double.TryParse(contents, out dbl))
+                    {
+                        temp = dbl;
+                        break;
+                    }
+                }
             }
             return temp;
         }
