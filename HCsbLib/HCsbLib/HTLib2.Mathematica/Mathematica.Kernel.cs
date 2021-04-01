@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Wolfram.NETLink;
-using System.Drawing;
+//using System.Drawing;
 
 namespace HTLib2
 {
@@ -97,11 +97,11 @@ namespace HTLib2
         }
         public class Image
         {
-            public System.Drawing.Image image;
-            public Image(System.Drawing.Image image)
-            {
-                this.image = image;
-            }
+            //  public System.Drawing.Image image;
+            //  public Image(System.Drawing.Image image)
+            //  {
+            //      this.image = image;
+            //  }
         };
         public static Image EvaluateImage(string evaluate, int width, int height)
         {

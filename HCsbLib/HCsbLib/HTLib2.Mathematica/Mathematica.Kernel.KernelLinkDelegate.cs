@@ -34,14 +34,14 @@ namespace HTLib2
             public void EnableObjectReferences()                                {        ml.EnableObjectReferences()                            ; }
             public void Evaluate(string s)                                      {        ml.Evaluate(s)                                         ; }
             public void Evaluate(Expr e)                                        {        ml.Evaluate(e.expr)                                    ; }
-            public Image EvaluateToImage(Expr e, int width, int height)         { return new Image(ml.EvaluateToImage(e.expr, width, height))   ; }
-            public Image EvaluateToImage(string s, int width, int height)       { return new Image(ml.EvaluateToImage(s, width, height))        ; }
+          //public Image EvaluateToImage(Expr e, int width, int height)         { return new Image(ml.EvaluateToImage(e.expr, width, height))   ; }
+          //public Image EvaluateToImage(string s, int width, int height)       { return new Image(ml.EvaluateToImage(s, width, height))        ; }
             public string EvaluateToInputForm(string s, int pageWidth)          { return ml.EvaluateToInputForm(s, pageWidth)                   ; }
             public string EvaluateToInputForm(Expr e, int pageWidth)            { return ml.EvaluateToInputForm(e.expr, pageWidth)              ; }
             public string EvaluateToOutputForm(string s, int pageWidth)         { return ml.EvaluateToOutputForm(s, pageWidth)                  ; }
             public string EvaluateToOutputForm(Expr e, int pageWidth)           { return ml.EvaluateToOutputForm(e.expr, pageWidth)             ; }
-            public Image EvaluateToTypeset(Expr e, int width)                   { return new Image(ml.EvaluateToTypeset(e.expr, width))         ; }
-            public Image EvaluateToTypeset(string s, int width)                 { return new Image(ml.EvaluateToTypeset(s, width))              ; }
+          //public Image EvaluateToTypeset(Expr e, int width)                   { return new Image(ml.EvaluateToTypeset(e.expr, width))         ; }
+          //public Image EvaluateToTypeset(string s, int width)                 { return new Image(ml.EvaluateToTypeset(s, width))              ; }
             public Array GetArray(Type leafType, int depth)                     { return ml.GetArray(leafType, depth)                           ; }
             public Array GetArray(Type leafType, int depth, out string[] heads) { return ml.GetArray(leafType, depth, out heads)                ; }
             public ExpressionType GetExpressionType()                           { return ml.GetExpressionType()                                 ; }
