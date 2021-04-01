@@ -1,0 +1,409 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>HCsbLib</RootNamespace>
+    <StartupObject>HCsbLib.Program</StartupObject>
+    <Nullable>annotations</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Properties\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\1cbn-a.pdb" />
+    <None Remove="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Essential CHARMM Features.html" />
+    <None Remove="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Full example.html" />
+    <None Remove="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - MD.html" />
+    <None Remove="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Minimization.html" />
+    <None Remove="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Neutralization.html" />
+    <None Remove="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Solvation.html" />
+    <None Remove="HTLib2.Bioinfo\External.HydroBond\HydroBond.reference.txt" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\action.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\align.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\analyz.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\angang.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\angle.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\angpot.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\argue.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ascii.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\atmlst.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\atmtyp.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\atoms.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\bath.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\bitor.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\bndpot.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\bond.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\border.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\bound.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\boxes.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\cell.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\charge.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\chgpot.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\chrono.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\chunks.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\couple.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\cutoff.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\deriv.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\dipole.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\disgeo.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\dma.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\domega.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\energi.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ewald.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\faces.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\fft.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\fields.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\files.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\fracs.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\freeze.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\gkstuf.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\group.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\hescut.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\hessn.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\hpmf.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\improp.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\imptor.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\inform.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\inter.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\iounit.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kanang.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kangs.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\katoms.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kbonds.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kchrge.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kdipol.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\keys.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kgeoms.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\khbond.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kiprop.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kitors.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kmulti.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kopbnd.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kopdst.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\korbs.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kpitor.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kpolr.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kstbnd.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ksttor.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ktorsn.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ktrtor.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kurybr.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kvdwpr.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kvdws.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\light.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\linmin.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\math.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\mdstuf.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\merck.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\minima.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\molcul.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\moldyn.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\moment.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\mplpot.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\mpole.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\mutant.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\neigh.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\npolar.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\nucleo.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\omega.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\opbend.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\opdist.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\openmp.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\orbits.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\output.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\params.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\paths.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\pbstuf.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\pdb.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\phipsi.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\piorbs.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\pistuf.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\pitors.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\pme.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\pmpb.c" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\polar.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\polgrp.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\polpot.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\potent.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\potfit.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\precis.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ptable.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\qmstuf.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\refer.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\resdue.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\rgddyn.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\rigid.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ring.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\rotate.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\rxnfld.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\rxnpot.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\scales.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\sequen.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\server.c" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\shunt.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\sizes.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\socket.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\solute.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\stodyn.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\strbnd.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\strtor.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\syntrn.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\titles.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\torpot.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\tors.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\tortor.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\tree.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\units.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\uprior.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\urey.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\urypot.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\usage.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\usolve.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\valfit.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\vdw.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\vdwpot.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\vibs.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\virial.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\warp.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\xtals.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\zclose.i" />
+    <None Remove="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\zcoord.i" />
+    <None Remove="HTLib2.Bioinfo\ForceField\ForceField.Pw\Analysis.txt" />
+    <None Remove="HTLib2.Bioinfo\Hess\STeM\STeM.m" />
+    <None Remove="HTLib2\Algorithm.KDTree\KDTreeDLL\readme.txt" />
+    <None Remove="HTLib2\External.alglib381\manual.csharp.html" />
+    <None Remove="HTLib2\External.bungee.lbfgs\Readme.txt" />
+    <None Remove="HTLib2\External.dnAnalytics\dnAnalytics.dll" />
+    <None Remove="HTLib2\External.dnAnalytics\dnAnalytics.fsharp.dll" />
+    <None Remove="HTLib2\External.dnAnalytics\dnAnalytics.fsharp.xml" />
+    <None Remove="HTLib2\External.dnAnalytics\dnAnalytics.xml" />
+    <None Remove="HTLib2\External.dnAnalytics\zlib.net.dll" />
+    <None Remove="HTLib2\External.KDTree\readme.txt" />
+    <None Remove="HTLib2\HMath.Geometry.EqSpherePoints\eqsp-1.10.txt" />
+    <None Remove="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Eigen_src.h" />
+    <None Remove="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Inverse_src.h" />
+    <None Remove="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.InvN_src.cpp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\1cbn-a.pdb" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Essential CHARMM Features.html" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Full example.html" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - MD.html" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Minimization.html" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Neutralization.html" />
+    <Content Include="HTLib2.Bioinfo\External.Charmm\CHARMM tutorial\CHARMM tutorial - Solvation.html" />
+    <Content Include="HTLib2.Bioinfo\External.HydroBond\HydroBond.reference.txt" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\action.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\align.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\analyz.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\angang.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\angle.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\angpot.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\argue.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ascii.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\atmlst.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\atmtyp.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\atoms.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\bath.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\bitor.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\bndpot.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\bond.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\border.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\bound.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\boxes.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\cell.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\charge.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\chgpot.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\chrono.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\chunks.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\couple.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\cutoff.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\deriv.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\dipole.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\disgeo.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\dma.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\domega.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\energi.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ewald.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\faces.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\fft.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\fields.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\files.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\fracs.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\freeze.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\gkstuf.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\group.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\hescut.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\hessn.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\hpmf.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\improp.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\imptor.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\inform.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\inter.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\iounit.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kanang.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kangs.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\katoms.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kbonds.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kchrge.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kdipol.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\keys.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kgeoms.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\khbond.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kiprop.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kitors.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kmulti.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kopbnd.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kopdst.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\korbs.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kpitor.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kpolr.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kstbnd.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ksttor.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ktorsn.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ktrtor.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kurybr.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kvdwpr.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\kvdws.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\light.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\linmin.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\math.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\mdstuf.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\merck.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\minima.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\molcul.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\moldyn.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\moment.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\mplpot.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\mpole.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\mutant.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\neigh.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\npolar.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\nucleo.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\omega.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\opbend.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\opdist.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\openmp.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\orbits.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\output.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\params.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\paths.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\pbstuf.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\pdb.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\phipsi.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\piorbs.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\pistuf.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\pitors.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\pme.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\pmpb.c" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\polar.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\polgrp.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\polpot.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\potent.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\potfit.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\precis.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ptable.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\qmstuf.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\refer.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\resdue.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\rgddyn.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\rigid.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\ring.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\rotate.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\rxnfld.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\rxnpot.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\scales.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\sequen.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\server.c" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\shunt.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\sizes.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\socket.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\solute.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\stodyn.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\strbnd.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\strtor.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\syntrn.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\titles.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\torpot.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\tors.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\tortor.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\tree.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\units.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\uprior.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\urey.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\urypot.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\usage.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\usolve.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\valfit.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\vdw.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\vdwpot.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\vibs.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\virial.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\warp.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\xtals.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\zclose.i" />
+    <Content Include="HTLib2.Bioinfo\External.Tinker\src\tinker-6.2.06\zcoord.i" />
+    <Content Include="HTLib2.Bioinfo\ForceField\ForceField.Pw\Analysis.txt" />
+    <Content Include="HTLib2.Bioinfo\Hess\STeM\STeM.m" />
+    <Content Include="HTLib2\Algorithm.KDTree\KDTreeDLL\readme.txt" />
+    <Content Include="HTLib2\External.alglib381\manual.csharp.html" />
+    <Content Include="HTLib2\External.bungee.lbfgs\Readme.txt" />
+    <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.dll" />
+    <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.fsharp.dll" />
+    <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.fsharp.xml" />
+    <Content Include="HTLib2\External.dnAnalytics\dnAnalytics.xml" />
+    <Content Include="HTLib2\External.dnAnalytics\zlib.net.dll" />
+    <Content Include="HTLib2\External.KDTree\readme.txt" />
+    <Content Include="HTLib2\HMath.Geometry.EqSpherePoints\eqsp-1.10.txt" />
+    <Content Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Eigen_src.h" />
+    <Content Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Inverse_src.h" />
+    <Content Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.InvN_src.cpp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="HTLib2\HMath.Geometry\UnderConstruction\" />
+    <Folder Include="HTLib2\Numerics\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Resources.Extensions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="dnAnalytics">
+      <HintPath>..\HCsbLib\HTLib2\External.dnAnalytics\dnAnalytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.MLApp">
+      <HintPath>..\HCsbLib\obj\Debug\Interop.MLApp.dll</HintPath>
+    </Reference>
+    <Reference Include="Wolfram.NETLink">
+      <HintPath>..\HCsbLib\External.NETLink\NETLink17\Wolfram.NETLink.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\MathematicaPlotForm.Designer.cs">
+      <DependentUpon>MathematicaPlotForm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\MathematicaPlotForm.resx">
+      <DependentUpon>MathematicaPlotForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="HTLib2.Mathematica\SourceFrom.HTLib\External.Mathematica\Sample\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
