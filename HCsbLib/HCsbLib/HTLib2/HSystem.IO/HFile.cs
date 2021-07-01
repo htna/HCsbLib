@@ -24,15 +24,16 @@ namespace HTLib2
         /// Usage:
         /// 
         /// static Dictionary<string, object> locks = new Dictionary<string, object>();
-        /// string pdbid;
-        /// if(locks.ContainsKey(pdbid) == false)
+        /// string lockname;
+        /// if(locks.ContainsKey(lockname) == false)
         /// {
-        ///     var filelock = HFile.LockFile(lockbase+pdbid);
+        ///     var filelock = HFile.LockFile(lockbase+lockname);
         ///     if(filelock == null)
-        ///     {
-        ///         continue; // skip
+        ///     {   // skip
+        ///         System.Console.WriteLine(lockname + "is locked");
+        ///         continue;
         ///     }
-        ///     locks.Add(pdbid, filelock);
+        ///     locks.Add(lockname, filelock);
         /// }
         public static FileLock LockFile(string path, FileMode mode=FileMode.OpenOrCreate, FileAccess access=FileAccess.ReadWrite)
         {
