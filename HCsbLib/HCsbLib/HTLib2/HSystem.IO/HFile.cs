@@ -20,6 +20,20 @@ namespace HTLib2
                 file = null;
             }
         }
+        ///////////////////////////////////////////////////////////////////////////////////
+        /// Usage:
+        /// 
+        /// static Dictionary<string, object> locks = new Dictionary<string, object>();
+        /// string pdbid;
+        /// if(locks.ContainsKey(pdbid) == false)
+        /// {
+        ///     var filelock = HFile.LockFile(lockbase+pdbid);
+        ///     if(filelock == null)
+        ///     {
+        ///         continue; // skip
+        ///     }
+        ///     locks.Add(pdbid, filelock);
+        /// }
         public static FileLock LockFile(string path, FileMode mode=FileMode.OpenOrCreate, FileAccess access=FileAccess.ReadWrite)
         {
             try
