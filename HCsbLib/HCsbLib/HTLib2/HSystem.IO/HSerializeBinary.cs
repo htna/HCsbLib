@@ -27,7 +27,7 @@ namespace HTLib2
             {
                 Stream stream = HFile.Open(filename, FileMode.Create);
 
-                BinaryWriter writer = new BinaryWriter(stream);
+                HBinaryWriter writer = new BinaryWriter(stream);
                 {
                     System.Int32 count = objs.Length;
                     writer.HWrite(count);
@@ -48,7 +48,7 @@ namespace HTLib2
             using(new NamedLock(lockname))
             {
                 Stream stream = HFile.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-                BinaryReader reader = new BinaryReader(stream);
+                HBinaryReader reader = new BinaryReader(stream);
                 object[] objs;
                 {
                     System.Int32 count;
@@ -97,7 +97,7 @@ namespace HTLib2
             {
                 Stream stream = HFile.Open(filename, FileMode.Create);
 
-                BinaryWriter writer = new BinaryWriter(stream);
+                HBinaryWriter writer = new BinaryWriter(stream);
                 {
                     if(ver != null)
                         writer.HWrite(new Ver(ver.Value));
@@ -122,7 +122,7 @@ namespace HTLib2
             using(new NamedLock(lockname))
             {
                 Stream stream = HFile.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-                BinaryReader reader = new BinaryReader(stream);
+                HBinaryReader reader = new BinaryReader(stream);
                 {
                     if(ver != null)
                     {

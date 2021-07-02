@@ -30,13 +30,13 @@ namespace HTLib2
             {
                 return ver.ver;
             }
-            public void Serialize(BinaryWriter writer)
+            public void Serialize(HBinaryWriter writer)
             {
                 writer.Write("ver(");
                 writer.Write(ver);
                 writer.Write(")");
             }
-            public void Deserialize(BinaryReader reader)
+            public void Deserialize(HBinaryReader reader)
             {
                 string str1, str2;
                 str1 = reader.ReadString(); HDebug.Assert(str1 == "ver(");

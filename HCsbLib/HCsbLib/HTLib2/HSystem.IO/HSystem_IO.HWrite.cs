@@ -15,43 +15,43 @@ namespace HTLib2
         //  {
         //      public int   value ;
         //      public int[] values;
-        //      public void Serialize(System.IO.BinaryWriter writer)
+        //      public void Serialize(HBinaryWriter writer)
         //      {
         //          writer.HWrite(value );
         //          writer.HWrite(values);
         //      }
-        //      public void Deserialize(System.IO.BinaryWriter writer)
+        //      public void Deserialize(HBinaryWriter writer)
         //      {
         //          writer.HRead(out value );
         //          writer.HRead(out values);
         //      }
         //  }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, double value) { writer.Write(value); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, int    value) { writer.Write(value); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, string value) { writer.Write(value); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, bool   value) { writer.Write(value); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this HBinaryWriter writer, double value) { writer.Write(value); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this HBinaryWriter writer, int    value) { writer.Write(value); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this HBinaryWriter writer, string value) { writer.Write(value); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this HBinaryWriter writer, bool   value) { writer.Write(value); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, double[] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, int   [] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, string[] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, bool  [] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this HBinaryWriter writer, double[] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this HBinaryWriter writer, int   [] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this HBinaryWriter writer, string[] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this HBinaryWriter writer, bool  [] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, List<double> values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, List<int   > values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, List<string> values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this BinaryWriter writer, List<bool  > values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this HBinaryWriter writer, List<double> values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this HBinaryWriter writer, List<int   > values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this HBinaryWriter writer, List<string> values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite(this HBinaryWriter writer, List<bool  > values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this BinaryWriter writer, T               value ) { _HWrite          (writer, value ); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this BinaryWriter writer, List<T>         values) { _HWriteList      (writer, values); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this BinaryWriter writer, T[]             values) { _HWriteArray     (writer, values); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T,U>(this BinaryWriter writer, Dictionary<T,U> dict  ) { _HWriteDictionary(writer, dict  ); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this HBinaryWriter writer, T               value ) { _HWrite          (writer, value ); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this HBinaryWriter writer, List<T>         values) { _HWriteList      (writer, values); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T  >(this HBinaryWriter writer, T[]             values) { _HWriteArray     (writer, values); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static void HWrite<T,U>(this HBinaryWriter writer, Dictionary<T,U> dict  ) { _HWriteDictionary(writer, dict  ); }
 
-        static void _HWriteDouble(BinaryWriter writer, object value) { writer.Write((double)value); }
-        static void _HWriteInt   (BinaryWriter writer, object value) { writer.Write((int   )value); }
-        static void _HWriteString(BinaryWriter writer, object value) { writer.Write((string)value); }
-        static void _HWriteBool  (BinaryWriter writer, object value) { writer.Write((bool  )value); }
-        static void _HWriteBinarySerializable(BinaryWriter writer, object value)
+        static void _HWriteDouble(HBinaryWriter writer, object value) { writer.Write((double)value); }
+        static void _HWriteInt   (HBinaryWriter writer, object value) { writer.Write((int   )value); }
+        static void _HWriteString(HBinaryWriter writer, object value) { writer.Write((string)value); }
+        static void _HWriteBool  (HBinaryWriter writer, object value) { writer.Write((bool  )value); }
+        static void _HWriteBinarySerializable(HBinaryWriter writer, object value)
         {
             if((value is IBinarySerializable) == false)
                 throw new HException();
@@ -59,7 +59,7 @@ namespace HTLib2
             writer.Write(type_name);
             ((IBinarySerializable)value).Serialize(writer);
         }
-        static void _HWriteList(BinaryWriter writer, object value)
+        static void _HWriteList(HBinaryWriter writer, object value)
         {
             if((value is IList) == false)
                 throw new HException();
@@ -68,7 +68,7 @@ namespace HTLib2
             for(int i=0; i<values.Count; i++)
                 _HWrite(writer, values[i]);
         }
-        static void _HWriteArray(BinaryWriter writer, object value)
+        static void _HWriteArray(HBinaryWriter writer, object value)
         {
             if((value is Array) == false)
                 throw new HException();
@@ -77,7 +77,7 @@ namespace HTLib2
             for(int i=0; i<values.Length; i++)
                 _HWrite(writer, values.GetValue(i));
         }
-        public static void _HWriteDictionary(this BinaryWriter writer, object value)
+        public static void _HWriteDictionary(this HBinaryWriter writer, object value)
         {
             if((value is IDictionary) == false)
                 throw new HException();
@@ -94,7 +94,7 @@ namespace HTLib2
             }
             HDebug.Assert(cnt == dict.Count);
         }
-        static void _HWrite(BinaryWriter writer, object value)
+        static void _HWrite(HBinaryWriter writer, object value)
         {
             //string type_name = value.GetType()AssemblyQualifiedName;
             if(value is IBinarySerializable) { _HWriteBinarySerializable(writer, value); return; }
