@@ -7,10 +7,10 @@ using System.IO;
 
 namespace HTLib2
 {
-    public struct HBinarySerializableReader
+    public struct HBinaryReader
     {
         public BinaryReader reader;
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator BinaryReader(HBinarySerializableReader breader) { return breader.reader; }
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator BinaryReader(HBinaryReader breader) { return breader.reader; }
 
         public Stream BaseStream                           { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return reader.BaseStream         ; } }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void    Close()                                   {        Close()                   ; }
@@ -39,10 +39,10 @@ namespace HTLib2
         //protected virtual void FillBuffer(int numBytes);
         //protected internal int Read7BitEncodedInt();
     }
-    public struct HBinarySerializableWriter
+    public struct HBinaryWriter
     {
         public BinaryWriter writer;
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator BinaryWriter(HBinarySerializableWriter bwriter) { return bwriter.writer; }
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator BinaryWriter(HBinaryWriter bwriter) { return bwriter.writer; }
 
         public Stream BaseStream                         { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return writer.BaseStream                 ; } }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Close()                                    {        writer.Close()                    ; }
