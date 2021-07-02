@@ -8,13 +8,42 @@ namespace HTLib2.Bioinfo
 {
     public static partial class HBioinfoStatic
     {
-        public static Dictionary<int, ValueTuple<int, Pdb.Atom, Pdb.Atom>> GetResiPdbatom
+        public struct GetResiPdbatomItem
+        {
+            public int      xyzid       ;
+            public int      NearResi    ;
+            public Pdb.Atom NearAtom    ;
+            public Pdb.Atom NearConnAtom;
+            public GetResiPdbatomItem(int xyzid, int NearResi, Pdb.Atom NearAtom, Pdb.Atom NearConnAtom)
+            {
+                this.xyzid        = xyzid       ;
+                this.NearResi     = NearResi    ;
+                this.NearAtom     = NearAtom    ;
+                this.NearConnAtom = NearConnAtom;
+            }
+            public static implicit operator (int NearResi, Pdb.Atom NearAtom, Pdb.Atom NearConnAtom)(GetResiPdbatomItem item)
+		    {
+		    	return (item.NearResi, item.NearAtom, item.NearConnAtom);
+		    }
+        }
+        public static Dictionary<int, (int NearResi, Pdb.Atom NearAtom, Pdb.Atom NearConnAtom)> HToDictionaryTuple3(this Dictionary<int, GetResiPdbatomItem> dict)
+        {
+            Dictionary<int, ValueTuple<int, Pdb.Atom, Pdb.Atom>> res = new Dictionary<int, (int, Pdb.Atom, Pdb.Atom)>();
+            foreach(var item in dict)
+            {
+                int key = item.Key;
+                var val = item.Value;
+                res.Add(key, (val.NearResi, val.NearAtom, val.NearConnAtom));
+            }
+            return res;
+        }
+        public static Dictionary<int, GetResiPdbatomItem> GetResiPdbatom
             ( Tinker.Xyz xyz
             , string prot_xyz_path// = @"..\prot.xyz"
             , string prot_pdb_path// = @"..\prot.pdb"
             )
         {
-            Dictionary<int, ValueTuple<int, Pdb.Atom, Pdb.Atom>> xyzid_NearResi_NearAtom_NearConnAtom = null;
+            Dictionary<int, GetResiPdbatomItem> xyzid_NearResi_NearAtom_NearConnAtom = null;
             {
                 // check if prot.xyz is the same to the protein in prot_solv.xyz
                 var xyz0 = Tinker.Xyz.FromFile(prot_xyz_path, false);
@@ -49,7 +78,7 @@ namespace HTLib2.Bioinfo
 
                 if(sameprot)
                 {
-                    xyzid_NearResi_NearAtom_NearConnAtom = new Dictionary<int, ValueTuple<int, Pdb.Atom, Pdb.Atom>>();
+                    xyzid_NearResi_NearAtom_NearConnAtom = new Dictionary<int, GetResiPdbatomItem>();
 
                     var pdb0 = Pdb.FromFile(prot_pdb_path);
                     KDTreeDLL.KDTree<Pdb.Atom> kdtree = new KDTreeDLL.KDTree<Pdb.Atom>(3);
@@ -66,7 +95,7 @@ namespace HTLib2.Bioinfo
                         var dist = (near.coord - atom.Coord).Dist;
                         if(dist < 0.1)
                         {
-                            xyzid_NearResi_NearAtom_NearConnAtom.Add(atom.Id, new ValueTuple<int, Pdb.Atom, Pdb.Atom>(near.resSeq, near, null));
+                            xyzid_NearResi_NearAtom_NearConnAtom.Add(atom.Id, new GetResiPdbatomItem(atom.Id, near.resSeq, near, null));
                         }
                         else
                         {
@@ -77,7 +106,7 @@ namespace HTLib2.Bioinfo
                             var conndist = (connnear.coord - conn.Coord).Dist;
                             HDebug.Assert(conndist < 0.1);
 
-                            xyzid_NearResi_NearAtom_NearConnAtom.Add(atom.Id, new ValueTuple<int, Pdb.Atom, Pdb.Atom>(connnear.resSeq, null, connnear));
+                            xyzid_NearResi_NearAtom_NearConnAtom.Add(atom.Id, new GetResiPdbatomItem(atom.Id, connnear.resSeq, null, connnear));
                         }
                     }
                 }
