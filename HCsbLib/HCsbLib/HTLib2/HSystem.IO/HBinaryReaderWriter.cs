@@ -11,6 +11,7 @@ namespace HTLib2
     {
         public BinaryReader reader;
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator BinaryReader(HBinaryReader breader) { return breader.reader; }
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator HBinaryReader(BinaryReader  reader) { return new HBinaryReader { reader = reader }; }
 
         public Stream BaseStream                           { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return reader.BaseStream         ; } }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void    Close()                                   {        Close()                   ; }
@@ -42,7 +43,9 @@ namespace HTLib2
     public struct HBinaryWriter
     {
         public BinaryWriter writer;
+
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator BinaryWriter(HBinaryWriter bwriter) { return bwriter.writer; }
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator HBinaryWriter(BinaryWriter  writer) { return new HBinaryWriter { writer = writer }; }
 
         public Stream BaseStream                         { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return writer.BaseStream                 ; } }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Close()                                    {        writer.Close()                    ; }
