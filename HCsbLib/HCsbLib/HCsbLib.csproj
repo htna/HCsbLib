@@ -890,6 +890,7 @@
     <Compile Include="HTLib2\HSystem.HProcess\HProcess.cs" />
     <Compile Include="HTLib2\HSystem.HResource\HResource.cs" />
     <Compile Include="HTLib2\HSystem.IO\HDirectory.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HSerializeBinary.cs" />
     <Compile Include="HTLib2\HSystem.IO\HSystem_IO.cs" />
     <Compile Include="HTLib2\HSystem.IO\HSystem_IO.HReadExt.cs" />
     <Compile Include="HTLib2\HSystem.IO\HSystem_IO.HWriteExt.cs" />
