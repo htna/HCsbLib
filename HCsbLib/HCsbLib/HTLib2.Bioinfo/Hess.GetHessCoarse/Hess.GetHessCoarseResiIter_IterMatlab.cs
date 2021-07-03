@@ -79,7 +79,7 @@ namespace HTLib2.Bioinfo
                                                 );
                     }
                     Matrix CG_H = Matlab.GetMatrix("CG.H");
-                    CGH = new HessMatrixDense { hess=CG_H };
+                    CGH = HessMatrix.FromMatrix( CG_H );
                 }
 
                 return new CGetHessCoarseResiIterImpl
@@ -100,7 +100,7 @@ namespace HTLib2.Bioinfo
             {
                 ila = null;
                 if(cloneH)
-                    H = H.CloneHess();
+                    H = H.CloneHessMatrix();
 
                 bool       process_disp_console = false;
                 if(options != null && options.Contains("print process"))

@@ -23,7 +23,7 @@ namespace HTLib2.Bioinfo
             {
                 ila = null;
                 if(cloneH)
-                    H = H.CloneHess();
+                    H = H.CloneHessMatrix();
 
                 bool       process_disp_console = true;
                 if(options != null && options.Contains("print process"))
@@ -73,8 +73,8 @@ namespace HTLib2.Bioinfo
                         /// HessMatrix    C = H.SubMatrixByAtoms(false, idxremv, idxkeep, parallel:parallel);
                         /// HessMatrix    D = H.SubMatrixByAtoms(false, idxremv, idxremv, parallel:parallel);
                         {
-                            C = H.Zeros(idxremv.Length*3, idxkeep.Length*3);
-                            D = H.Zeros(idxremv.Length*3, idxremv.Length*3);
+                            C = HessMatrix.ZerosHessMatrix(idxremv.Length*3, idxkeep.Length*3);
+                            D = HessMatrix.ZerosHessMatrix(idxremv.Length*3, idxremv.Length*3);
                             int iremv_min = iremv.Min();
                             int iremv_max = iremv.Max();
 

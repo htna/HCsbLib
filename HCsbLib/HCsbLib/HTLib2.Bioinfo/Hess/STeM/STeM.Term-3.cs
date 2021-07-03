@@ -13,7 +13,7 @@ public partial class Hess
                                       , bool useArnaud96=false)
         {
             if(hessian == null)
-                hessian = new double[caArray.Count*3, caArray.Count*3];
+                hessian = HessMatrix.FromMatrix(new double[caArray.Count*3, caArray.Count*3]);
 
             for(int i=0; i<caArray.Count-3; i++)
                 ThirdTerm(caArray, K_phi1, K_phi3, hessian, i, i+1, i+2, i+3, useArnaud96:useArnaud96);
@@ -115,7 +115,7 @@ public partial class Hess
             //HDebug.Assert(useArnaud96 == true); // convert to use Arnaud96
             if(useArnaud96)
             {
-                HessMatrix hess3 = Paper.Arnaud96.HessSpring(caArray_, 2*K_phi).ToArray();
+                HessMatrix hess3 = HessMatrix.FromMatrix(Paper.Arnaud96.HessSpring(caArray_, 2*K_phi));
                 //if(HDebug.IsDebuggerAttached)
                 if(ThirdTerm_selftest)
                 {

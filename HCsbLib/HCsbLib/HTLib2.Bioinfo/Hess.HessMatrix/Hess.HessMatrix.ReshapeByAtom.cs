@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HTLib2.Bioinfo
 {
-    public abstract partial class HessMatrix : Matrix
+    public partial class HessMatrix : IHessMatrix
     {
         ///////////////////////////////////////////////////////////////////////
         // MakeNearZeroBlockAsZero
@@ -71,7 +71,7 @@ namespace HTLib2.Bioinfo
         public HessMatrix ReshapeByAtomImpl0(IList<int> idxatms, bool ignNegIdx)
         {
             HDebug.Assert(idxatms.Count == idxatms.HUnion().Length); // check no-duplication of indexes
-            HessMatrix reshape = Zeros(idxatms.Count*3, idxatms.Count*3);
+            HessMatrix reshape = ZerosHessMatrix(idxatms.Count*3, idxatms.Count*3);
             for(int nbc=0; nbc<idxatms.Count; nbc++)
                 for(int nbr=0; nbr<idxatms.Count; nbr++)
                 {

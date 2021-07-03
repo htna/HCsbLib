@@ -22,7 +22,7 @@ namespace HTLib2.Bioinfo
                     HessMatrix  anmCR = Hess.GetHessAnm(coords.HSelectByIndex(new int[] { c, r }));
                     //Matrix  anmCR = anm.SubMatrix(new int[] { 0, 1, 2 }, new int[] { 3, 4, 5 });
                     int[] idxs = new int[] { c*3+0, c*3+1, c*3+2, r*3+0, r*3+1, r*3+2 };
-                    HessMatrix hessCR = new HessMatrixDense{ hess=hess.SubMatrix(idxs, idxs) };
+                    HessMatrix hessCR = HessMatrix.FromMatrix( hess.SubMatrix(idxs, idxs) );
                     hessCR = Hess.CorrectHessDiag(hessCR);
 
                     Vector vecHessCR = hessCR.GetColVectorList().ToVector();

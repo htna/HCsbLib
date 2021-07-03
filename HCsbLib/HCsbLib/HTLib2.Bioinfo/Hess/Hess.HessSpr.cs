@@ -84,7 +84,7 @@ namespace HTLib2.Bioinfo
                 /// b0: A
                 int size = coords.Count;
                 if(hessian == null)
-                    hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                    hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
                 foreach(Universe.Bond bond in bonds)
                 {
@@ -110,7 +110,7 @@ namespace HTLib2.Bioinfo
                 /// S0: A
                 int size = coords.Count;
                 if(hessian == null)
-                    hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                    hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
                 foreach(Universe.Angle angle in angles)
                 {
@@ -154,7 +154,7 @@ namespace HTLib2.Bioinfo
                 /// 
                 int size = coords.Count;
                 if(hessian == null)
-                    hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                    hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
                 foreach(Universe.Improper improper in impropers)
                 {
@@ -200,7 +200,7 @@ namespace HTLib2.Bioinfo
                 /// delta: degrees
                 int size = coords.Count;
                 if(hessian == null)
-                    hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                    hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
                 foreach(Universe.Dihedral dihedral in dihedrals)
                 {
@@ -480,7 +480,7 @@ namespace HTLib2.Bioinfo
             {
                 int size = coords.Count;
                 if(hessian == null)
-                    hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                    hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
                 List<Tuple<double, Universe.Atom, Vector, Universe.Atom, Vector>> dbg_list_strong_Kij = null;
                 double dbg_thld_strong_Kij_pos = +1.0E+05;
@@ -831,7 +831,7 @@ namespace HTLib2.Bioinfo
             {
                 int size = coords.Count;
                 if(hessian == null)
-                    hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                    hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
                 foreach(Universe.Nonbonded14 nonbonded14 in nonbonded14s)
                 {

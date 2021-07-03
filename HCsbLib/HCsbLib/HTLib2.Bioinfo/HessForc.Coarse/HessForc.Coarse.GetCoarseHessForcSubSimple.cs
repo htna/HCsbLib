@@ -27,7 +27,7 @@ namespace HTLib2.Bioinfo
                 Vector     F = forc.ToVector();
 
                 if(cloneH)
-                    H = H.CloneHess();
+                    H = H.CloneHessMatrix();
 
                 bool process_disp_console = false;
                 bool parallel = true;
@@ -147,7 +147,7 @@ namespace HTLib2.Bioinfo
 
                     ////////////////////////////////////////////////////////////////////////////////////////
                     // Replace A -> H
-                    H = Matlab.GetMatrix("HH", H.Zeros, true);
+                    H = Matlab.GetMatrix("HH", HessMatrix.ZerosHessMatrix, true);
                     F = Matlab.GetVector("FF");
                     Matlab.Execute("clear;");
 

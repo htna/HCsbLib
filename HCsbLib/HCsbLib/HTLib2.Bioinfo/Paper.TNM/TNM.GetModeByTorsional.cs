@@ -24,7 +24,7 @@ public static partial class Paper
             )
         {
             return GetModeByTorsional(univ
-                , new HessMatrixDense { hess=hessian }
+                , HessMatrix.FromMatrix( hessian )
                 , univ_rotinfos, J
                 , coords, optoutJMJ, optoutJM
                 , fnEigSymm, fnMul

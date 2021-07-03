@@ -11,7 +11,7 @@ namespace HTLib2.Bioinfo
         {
             int size = hess.ColSize/3;
             HDebug.Assert(size*3 == hess.ColSize, size*3 == hess.RowSize);
-            HessMatrix fix = hess.Zeros(size*3, size*3);
+            HessMatrix fix = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
             for(int c=0; c<size; c++)
             {

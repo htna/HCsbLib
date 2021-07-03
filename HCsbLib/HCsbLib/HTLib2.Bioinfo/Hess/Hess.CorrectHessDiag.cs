@@ -27,7 +27,7 @@ namespace HTLib2.Bioinfo
                 HDebug.Assert(Hess.CheckHessDiag(thess, 0.00000001) == true);
             }
 
-            HessMatrix nhess = hessian.CloneHess();
+            HessMatrix nhess = hessian.CloneHessMatrix();
             HDebug.Assert(nhess.ColSize == nhess.RowSize);
             HDebug.Assert(nhess.ColSize % 3 == 0);
             int size = nhess.ColSize / 3;

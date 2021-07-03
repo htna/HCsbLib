@@ -14,7 +14,7 @@ namespace HTLib2.Bioinfo
             public static CGetHessCoarseResiIterImpl GetHessCoarseResiIterImpl_ILinAlg(HessMatrix H, List<int>[] lstNewIdxRemv, double thres_zeroblk, ILinAlg ila, bool cloneH)
             {
                 if(cloneH)
-                    H = H.CloneHess();
+                    H = H.CloneHessMatrix();
 
                 bool       process_disp_console = true;
                 DateTime[] process_time         = new DateTime[7];
@@ -50,7 +50,7 @@ namespace HTLib2.Bioinfo
                         //HessMatrix    B = H.SubMatrixByAtoms(false, idxkeep, idxremv);
                         HessMatrix    C = H.SubMatrixByAtoms(false, idxremv, idxkeep);                                      if(process_disp_console) { process_time[1] = DateTime.UtcNow; System.Console.Write("C({0:00.00} min), ", (process_time[1]-process_time[0]).TotalMinutes); }
                         HessMatrix    D = H.SubMatrixByAtoms(false, idxremv, idxremv);                                      if(process_disp_console) { process_time[2] = DateTime.UtcNow; System.Console.Write("D({0:00.00} min), ", (process_time[2]-process_time[1]).TotalMinutes); }
-                        HessMatrix invD = new HessMatrixDense { hess=ila.InvSymm(D) };                                      if(process_disp_console) { process_time[3] = DateTime.UtcNow; System.Console.Write("invD({0:00.00} min), ", (process_time[3]-process_time[2]).TotalMinutes); }
+                        HessMatrix invD = HessMatrix.FromMatrix( ila.InvSymm(D) );                                          if(process_disp_console) { process_time[3] = DateTime.UtcNow; System.Console.Write("invD({0:00.00} min), ", (process_time[3]-process_time[2]).TotalMinutes); }
 
                         // make B,C sparse
                         //int B_cntzero = B.MakeNearZeroBlockAsZero(thres_zeroblk);
@@ -107,7 +107,7 @@ namespace HTLib2.Bioinfo
             public static CGetHessCoarseResiIterImpl GetHessCoarseResiIterImpl_ILinAlg_20150329(HessMatrix H, List<int>[] lstNewIdxRemv, double thres_zeroblk, ILinAlg ila, bool cloneH)
             {
                 if(cloneH)
-                    H = H.CloneHess();
+                    H = H.CloneHessMatrix();
 
                 //System.Console.WriteLine("begin coarse-graining");
                 List<HessCoarseResiIterInfo> iterinfos = new List<HessCoarseResiIterInfo>();
@@ -136,7 +136,7 @@ namespace HTLib2.Bioinfo
                         //HessMatrix    B = H.SubMatrixByAtoms(false, idxkeep, idxremv);
                         HessMatrix    C = H.SubMatrixByAtoms(false, idxremv, idxkeep);
                         HessMatrix    D = H.SubMatrixByAtoms(false, idxremv, idxremv);
-                        HessMatrix invD = new HessMatrixDense { hess=ila.InvSymm(D) };
+                        HessMatrix invD = HessMatrix.FromMatrix( ila.InvSymm(D) );
 
                         // make B,C sparse
                         //int B_cntzero = B.MakeNearZeroBlockAsZero(thres_zeroblk);

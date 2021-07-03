@@ -33,7 +33,7 @@ namespace HTLib2.Bioinfo
                 idxhess.Add(idx*3+2);
             }
 
-            HessMatrix hess_HH = new HessMatrixDense{ hess=hess.InvOfSubMatrixOfInv(idxhess, ila, invtype, invopt) };
+            HessMatrix hess_HH = HessMatrix.FromMatrix( hess.InvOfSubMatrixOfInv(idxhess, ila, invtype, invopt) );
             if(chkDiagToler == null)
                 chkDiagToler = 0.000001;
             HDebug.Assert(Hess.CheckHessDiag(hess_HH, chkDiagToler.Value));
@@ -76,7 +76,7 @@ namespace HTLib2.Bioinfo
             Mode[] modes = GetModesFromHess(hess_HH, ila);
             return modes;
         }
-        public static HessMatrixDense GetHessCoarseBlkmat(HessMatrix hess, IList<int> idx_heavy, string invopt = "inv")
+        public static HessMatrix GetHessCoarseBlkmat(HessMatrix hess, IList<int> idx_heavy, string invopt = "inv")
         {
             /// Hess = [ HH HL ] = [ A B ]
             ///        [ LH LL ]   [ C D ]
@@ -88,8 +88,7 @@ namespace HTLib2.Bioinfo
             using(new Matlab.NamedLock(""))
             {
                 Matlab.Clear();
-                if(hess is HessMatrixSparse) Matlab.PutSparseMatrix("H", hess.GetMatrixSparse(), 3, 3);
-                else                         Matlab.PutMatrix("H", hess, true);
+                Matlab.PutSparseMatrix("H", hess.GetMatrixSparse(), 3, 3);
 
                 Matlab.Execute("H = (H + H')/2;");
 
@@ -168,7 +167,7 @@ namespace HTLib2.Bioinfo
 
                 Matlab.Clear();
             }
-            return new HessMatrixDense { hess=hess_HH };
+            return HessMatrix.FromMatrix( hess_HH );
         }
         //public static MatrixByArr GetHessCoarseBlkmat_ilu(MatrixSparse<MatrixByArr> hess, IList<int> idx_heavy)
         //{

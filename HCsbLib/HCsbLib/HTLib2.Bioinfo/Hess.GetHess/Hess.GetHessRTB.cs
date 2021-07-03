@@ -256,9 +256,8 @@ namespace HTLib2.Bioinfo
                 Matrix PMP;
                 using(new Matlab.NamedLock(""))
                 {
-                    if     (hess is HessMatrixSparse) Matlab.PutSparseMatrix("H", hess.GetMatrixSparse(), 3, 3);
-                    else if(hess is HessMatrixDense ) Matlab.PutMatrix("H", hess, true);
-                    else HDebug.Exception();
+                    if(hess.RatioUsedBlocks < 0.1) Matlab.PutSparseMatrix("H", hess.GetMatrixSparse(), 3, 3);
+                    else                           Matlab.PutMatrix("H", hess, true);
                     Matlab.PutMatrix("P", P, true);
                     Matlab.PutVector("M", masses);
                     Matlab.Execute("M=diag(reshape([M,M,M]',length(M)*3,1));");

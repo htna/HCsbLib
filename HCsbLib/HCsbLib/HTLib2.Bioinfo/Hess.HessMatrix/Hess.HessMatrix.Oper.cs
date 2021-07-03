@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HTLib2.Bioinfo
 {
-    public partial class HessMatrix : Matrix
+    public partial class HessMatrix : IHessMatrix
     {
         //public static HessMatrix operator-(HessMatrix left               ) { HessMatrix mat = left.CloneHess(); mat.UpdateMul(-1     ); return mat; }
         //public static HessMatrix operator+(HessMatrix left, IMatrix right) { HessMatrix mat = left.CloneHess(); mat.UpdateAdd(right, 1); return mat; }
@@ -17,12 +17,12 @@ namespace HTLib2.Bioinfo
         //    return mat;
         //}
         public static HessMatrix operator*(HessMatrix left,HessMatrix right){HessMatrix mat = GetMulImpl(null, true, left, right); return mat; }
-        public static HessMatrix operator*(HessMatrix left, double  right) { HessMatrix mat = left .CloneHess(); mat.UpdateMul(right  ); return mat; }
-        public static HessMatrix operator*(double left, HessMatrix  right) { HessMatrix mat = right.CloneHess(); mat.UpdateMul(left  ); return mat; }
-        public static HessMatrix operator/(HessMatrix left, double  right) { HessMatrix mat = left .CloneHess(); mat.UpdateMul(1/right); return mat; }
+        public static HessMatrix operator*(HessMatrix left, double  right) { HessMatrix mat = left .CloneHessMatrix(); mat.UpdateMul(right  ); return mat; }
+        public static HessMatrix operator*(double left, HessMatrix  right) { HessMatrix mat = right.CloneHessMatrix(); mat.UpdateMul(left  ); return mat; }
+        public static HessMatrix operator/(HessMatrix left, double  right) { HessMatrix mat = left .CloneHessMatrix(); mat.UpdateMul(1/right); return mat; }
 
-        public static HessMatrix operator+(HessMatrix left, HessMatrix right) { HessMatrix mat = left.CloneHess(); mat.UpdateAdd(right,  1, null, 0); return mat; }
-        public static HessMatrix operator-(HessMatrix left, HessMatrix right) { HessMatrix mat = left.CloneHess(); mat.UpdateAdd(right, -1, null, 0); return mat; }
+        public static HessMatrix operator+(HessMatrix left, HessMatrix right) { HessMatrix mat = left.CloneHessMatrix(); mat.UpdateAdd(right,  1, null, 0); return mat; }
+        public static HessMatrix operator-(HessMatrix left, HessMatrix right) { HessMatrix mat = left.CloneHessMatrix(); mat.UpdateAdd(right, -1, null, 0); return mat; }
         //public static HessMatrix GetMul(HessMatrix left, IMatrix right)
         //{
         //    if(right is HessMatrix)
@@ -45,28 +45,13 @@ namespace HTLib2.Bioinfo
                                                  ,{3,4,5,6,7,8}
                                                  ,{4,5,6,7,8,9}
                                                  ,{5,6,7,8,9,0}};
-                    HessMatrix h1 = HessMatrixDense .FromMatrix(h0);
-                    HessMatrix h2 = HessMatrixSparse.FromMatrix(h0);
-                    Matrix t0 = Matrix.GetMul(Matrix.GetMul(h1, h1), h1);
+                    HessMatrix h1 = HessMatrix.FromMatrix(h0);
+                    Matrix t0 = Matrix.GetMul(Matrix.GetMul(h0, h0), h0);
                     {
-                        Matrix t1 = GetMulImpl(ila, false, h1, h1, h1); double d1=(t0-t1).HAbsMax(); HDebug.Assert(0 == d1);
-                        Matrix t2 = GetMulImpl(ila, false, h1, h1, h2); double d2=(t0-t2).HAbsMax(); HDebug.Assert(0 == d2);
-                        Matrix t3 = GetMulImpl(ila, false, h1, h2, h1); double d3=(t0-t3).HAbsMax(); HDebug.Assert(0 == d3);
-                        Matrix t4 = GetMulImpl(ila, false, h1, h2, h2); double d4=(t0-t4).HAbsMax(); HDebug.Assert(0 == d4);
-                        Matrix t5 = GetMulImpl(ila, false, h2, h1, h1); double d5=(t0-t5).HAbsMax(); HDebug.Assert(0 == d5);
-                        Matrix t6 = GetMulImpl(ila, false, h2, h1, h2); double d6=(t0-t6).HAbsMax(); HDebug.Assert(0 == d6);
-                        Matrix t7 = GetMulImpl(ila, false, h2, h2, h1); double d7=(t0-t7).HAbsMax(); HDebug.Assert(0 == d7);
-                        Matrix t8 = GetMulImpl(ila, false, h2, h2, h2); double d8=(t0-t8).HAbsMax(); HDebug.Assert(0 == d8);
+                        Matrix t1 = GetMulImpl(ila, false, h1, h1, h1).ToArray(); double d1=(t0-t1).HAbsMax(); HDebug.Assert(0 == d1);
                     }
                     {
-                        Matrix t1 = GetMulImpl(null,false, h1, h1, h1); double d1=(t0-t1).HAbsMax(); HDebug.Assert(0 == d1);
-                        Matrix t2 = GetMulImpl(null,false, h1, h1, h2); double d2=(t0-t2).HAbsMax(); HDebug.Assert(0 == d2);
-                        Matrix t3 = GetMulImpl(null,false, h1, h2, h1); double d3=(t0-t3).HAbsMax(); HDebug.Assert(0 == d3);
-                        Matrix t4 = GetMulImpl(null,false, h1, h2, h2); double d4=(t0-t4).HAbsMax(); HDebug.Assert(0 == d4);
-                        Matrix t5 = GetMulImpl(null,false, h2, h1, h1); double d5=(t0-t5).HAbsMax(); HDebug.Assert(0 == d5);
-                        Matrix t6 = GetMulImpl(null,false, h2, h1, h2); double d6=(t0-t6).HAbsMax(); HDebug.Assert(0 == d6);
-                        Matrix t7 = GetMulImpl(null,false, h2, h2, h1); double d7=(t0-t7).HAbsMax(); HDebug.Assert(0 == d7);
-                        Matrix t8 = GetMulImpl(null,false, h2, h2, h2); double d8=(t0-t8).HAbsMax(); HDebug.Assert(0 == d8);
+                        Matrix t1 = GetMulImpl(null,false, h1, h1, h1).ToArray(); double d1=(t0-t1).HAbsMax(); HDebug.Assert(0 == d1);
                     }
                 }
 
@@ -88,20 +73,11 @@ namespace HTLib2.Bioinfo
                                          ,{3,4,5,6,7,8}
                                          ,{4,5,6,7,8,9}
                                          ,{5,6,7,8,9,0}};
-                HessMatrix h2 = HessMatrixSparse.FromMatrix(h1);
+                HessMatrix h2 = HessMatrix.FromMatrix(h1);
                 Matrix     h11 =     Matrix.GetMul    (h1, h1);
                 HessMatrix h22 = HessMatrix.GetMulImpl(h2, h2, null, false);
-                Matrix     hdiff = h11 - h22;
+                Matrix     hdiff = h11 - h22.ToMatrix();
                 HDebug.AssertToleranceMatrix(0, hdiff);
-            }
-            if((left is HessMatrixDense) && (right is HessMatrixDense))
-            {
-                if(ila != null)
-                {
-                    return new HessMatrixDense { hess = ila.Mul(left, right) };
-                }
-                if(warning)
-                    HDebug.ToDo("Check (HessMatrixDense * HessMatrixDense) !!!");
             }
 
             Dictionary<int, Dictionary<int, Tuple<int, int, MatrixByArr>>> left_ic_rows = new Dictionary<int, Dictionary<int, Tuple<int, int, MatrixByArr>>>();
@@ -111,8 +87,7 @@ namespace HTLib2.Bioinfo
             foreach(var ir_col in right.EnumColBlocksAll()) right_ir_cols.Add(ir_col.Item1, ir_col.Item2.HToDictionaryWithKeyItem1());
 
             HessMatrix mul = null;
-            if((left is HessMatrixDense) && (right is HessMatrixDense)) mul = HessMatrixDense .ZerosDense (left.ColSize, right.RowSize);
-            else                                                        mul = HessMatrixSparse.ZerosSparse(left.ColSize, right.RowSize);
+            mul = HessMatrix.ZerosHessMatrix(left.ColSize, right.RowSize);
             for(int ic=0; ic<left.ColBlockSize; ic++)
             {
                 var left_row = left_ic_rows[ic];
@@ -257,7 +232,7 @@ namespace HTLib2.Bioinfo
         }
         public virtual HessMatrix Tr()
         {
-            HessMatrix tr = Zeros(RowSize, ColSize);
+            HessMatrix tr = ZerosHessMatrix(RowSize, ColSize);
             foreach(var bc_br_bval in EnumBlocks())
             {
                 int bc = bc_br_bval.Item1;

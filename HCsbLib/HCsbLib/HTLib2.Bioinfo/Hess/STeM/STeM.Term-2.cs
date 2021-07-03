@@ -12,7 +12,7 @@ public partial class Hess
         public static HessMatrix SecondTerm(IList<Vector> caArray, double K_theta, HessMatrix hessian)
         {
             if(hessian == null)
-                hessian = new double[caArray.Count*3, caArray.Count*3];
+                hessian = HessMatrix.FromMatrix(new double[caArray.Count*3, caArray.Count*3]);
 
             for(int i=0; i<caArray.Count-2; i++)
                 SecondTerm(caArray, K_theta, hessian, i, i+1, i+2);

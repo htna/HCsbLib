@@ -6,7 +6,7 @@ using System.Text;
 namespace HTLib2.Bioinfo
 {
     [Serializable]
-    public abstract partial class HessMatrix : Matrix
+    public abstract partial class IHessMatrix : Matrix
     {
         public int ColBlockSize { get { HDebug.Assert(ColSize%3 == 0); return (ColSize / 3); } }
         public int RowBlockSize { get { HDebug.Assert(RowSize%3 == 0); return (RowSize / 3); } }
@@ -28,14 +28,14 @@ namespace HTLib2.Bioinfo
             }
         }
 
-        public override Matrix     Clone() { return CloneHess(); }
-        public abstract HessMatrix CloneHess();
+        public override Matrix     Clone() { return CloneIHessMatrix(); }
+        public abstract IHessMatrix CloneIHessMatrix();
         //public abstract IHessMatrix CloneT();
         public abstract MatrixByArr GetBlock(int bc, int br);
         public abstract MatrixByArr GetBlockLock(int bc, int br);
         public abstract void SetBlock(int bc, int br, MatrixByArr bval);
         public abstract void SetBlockLock(int bc, int br, MatrixByArr bval);
-        public void SetBlock(IList<int> bcs, IList<int> brs, HessMatrix subhess)
+        public void SetBlock(IList<int> bcs, IList<int> brs, IHessMatrix subhess)
         {
             HDebug.Assert(bcs.Count == subhess.ColBlockSize);
             HDebug.Assert(brs.Count == subhess.RowBlockSize);
@@ -93,21 +93,6 @@ namespace HTLib2.Bioinfo
             }
         }
 
-        public new abstract HessMatrix Zeros(int colsize, int rowsize);
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-        // implicit conversion
-        public static implicit operator HessMatrix(double[,] hess)
-        {
-            return HessMatrixDense.FromMatrix(hess);
-        }
-
-        public IMatrixSparse<MatrixByArr> GetMatrixSparse()
-        {
-            if(this is HessMatrixSparse) return (this as HessMatrixSparse).GetMatrixSparse();
-            if(this is HessMatrixDense ) return HessMatrixSparse.FromMatrix(this).GetMatrixSparse();
-            if(this is HessMatrixLayeredArray) return (this as IMatrixSparse<MatrixByArr>);
-            throw new NotImplementedException();
-        }
+        public new abstract IHessMatrix Zeros(int colsize, int rowsize);
     }
 }

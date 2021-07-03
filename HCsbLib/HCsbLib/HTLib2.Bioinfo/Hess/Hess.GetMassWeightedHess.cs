@@ -52,7 +52,7 @@ namespace HTLib2.Bioinfo
         }
         public static HessMatrix GetMassWeightedHess(HessMatrix hess, Vector mass)
         {
-            HessMatrix mwhess = hess.CloneHess();
+            HessMatrix mwhess = hess.CloneHessMatrix();
 
             HDebug.ToDo("check: mass -> mass3");
             double[] mass3 = new double[mass.Size*3];
@@ -113,7 +113,7 @@ namespace HTLib2.Bioinfo
                 {
                     Matrix tmat0 = hess.ToArray();
                     UpdateMassWeightedHess(tmat0, mass);
-                    HessMatrix tmat1 = hess.CloneHess();
+                    HessMatrix tmat1 = hess.CloneHessMatrix();
                     UpdateMassWeightedHess(tmat1, mass);
                     double absmax = (tmat0 - tmat1).HAbsMax();
                     HDebug.Exception(absmax < 0.00000001);

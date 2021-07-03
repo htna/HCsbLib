@@ -213,7 +213,7 @@ public partial class Hess
                 for(int i=0; i<idxs_r6.Count; i++) for(int j=i+4; j<idxs_r6.Count; j++) listNonbond.Add(new Tuple<int, int>(idxs_r6[i], idxs_r6[j]));
 
                 List<Vector> coords = atoms.ListCoord();
-                HessMatrix hessian = HessMatrixSparse.ZerosSparse(atoms.Count*3, atoms.Count*3);
+                HessMatrix hessian = HessMatrix.ZerosHessMatrix(atoms.Count*3, atoms.Count*3);
             
                 double Epsilon=0.36;
                 double K_r=100*Epsilon;

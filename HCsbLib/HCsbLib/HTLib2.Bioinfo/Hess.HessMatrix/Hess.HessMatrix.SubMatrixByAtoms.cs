@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HTLib2.Bioinfo
 {
-    public abstract partial class HessMatrix : Matrix
+    public partial class HessMatrix : IHessMatrix
     {
         public HessMatrix CorrectHessDiag()
         {
@@ -29,7 +29,7 @@ namespace HTLib2.Bioinfo
                 HessMatrix thess0  = Hess.GetHessAnm(tcoords);
                 int[] tidxs = new int[]{0, 2};
                 HessMatrix thess1a = thess0.SubMatrixByAtoms(false, tidxs);
-                HessMatrix thess1b = new double[,]
+                HessMatrix thess1b = HessMatrix.FromMatrix(new double[,]
                 {
                     { thess0[0,0], thess0[0,1], thess0[0,2],        thess0[0,6], thess0[0,7], thess0[0,8] },
                     { thess0[1,0], thess0[1,1], thess0[1,2],        thess0[1,6], thess0[1,7], thess0[1,8] },
@@ -37,7 +37,7 @@ namespace HTLib2.Bioinfo
                     { thess0[6,0], thess0[6,1], thess0[6,2],        thess0[6,6], thess0[6,7], thess0[6,8] },
                     { thess0[7,0], thess0[7,1], thess0[7,2],        thess0[7,6], thess0[7,7], thess0[7,8] },
                     { thess0[8,0], thess0[8,1], thess0[8,2],        thess0[8,6], thess0[8,7], thess0[8,8] },
-                };
+                });
 
 //                           thess1a = Hess.CorrectHessDiag(thess1a);                     // diagonal of original matrix contains the interaction between 0-1 and 1-2 also,
 //                HessMatrix thess1b = Hess.GetHessAnm(tcoords.HSelectByIndex(tidxs));    // while new generated hessian matrix does not.
@@ -120,7 +120,7 @@ namespace HTLib2.Bioinfo
                 row_idx2nidx[idx] = row_idx2nidx[idx].HAdd(nidx);
             }
 
-            HessMatrix nhess = Zeros(idxColAtoms.Count*3, idxRowAtoms.Count*3);
+            HessMatrix nhess = ZerosHessMatrix(idxColAtoms.Count*3, idxRowAtoms.Count*3);
             {
                 Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
                 {
@@ -159,7 +159,7 @@ namespace HTLib2.Bioinfo
                                              ,{3,4,5,6,7,8}
                                              ,{4,5,6,7,8,9}
                                              ,{5,6,7,8,9,0}};
-                HessMatrix thess2 = HessMatrixDense.FromMatrix(thess1);
+                HessMatrix thess2 = HessMatrix.FromMatrix(thess1);
                 HessMatrix thess3 = thess2.SubMatrixByAtomsImpl(false, new int[] { 0 }, new int[] { 1 }, true);
                 Matrix thess4 = new double[,] {{3,4,5}
                                               ,{4,5,6}
@@ -181,14 +181,14 @@ namespace HTLib2.Bioinfo
                                              ,{3,4,5,6,7,8}
                                              ,{4,5,6,7,8,9}
                                              ,{5,6,7,8,9,0}};
-                HessMatrix thess2 = HessMatrixDense.FromMatrix(thess1);
+                HessMatrix thess2 = HessMatrix.FromMatrix(thess1);
                 HessMatrix thess3 = thess2.SubMatrixByAtomsImpl0(new int[] { 0 }, new int[] { 1 });
                 Matrix thess4 = new double[,] {{3,4,5}
                                               ,{4,5,6}
                                               ,{5,6,7}};
                 HDebug.AssertToleranceMatrix(0, thess3-thess4);
             }
-            HessMatrix nhess = Zeros(idxColAtoms.Count*3, idxRowAtoms.Count*3);
+            HessMatrix nhess = ZerosHessMatrix(idxColAtoms.Count*3, idxRowAtoms.Count*3);
 
             for(int nbc=0; nbc<idxColAtoms.Count; nbc++)
             {

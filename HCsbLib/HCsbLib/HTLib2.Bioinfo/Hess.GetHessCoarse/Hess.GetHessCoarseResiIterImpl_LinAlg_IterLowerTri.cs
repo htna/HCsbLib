@@ -29,7 +29,7 @@ namespace HTLib2.Bioinfo
                     ila = null;
                     cloneH = true;
                     if(cloneH)
-                        H = H.CloneHess();
+                        H = H.CloneHessMatrix();
 
                     bool       process_disp_console = true;
                     if(options != null && options.Contains("print process"))
@@ -321,7 +321,7 @@ namespace HTLib2.Bioinfo
                         }
                     }
 
-                    HessMatrix CC = HessMatrixSparse.ZerosSparse(C.ColSize, Cbr_CCbr.Count*3);
+                    HessMatrix CC = HessMatrix.ZerosHessMatrix(C.ColSize, Cbr_CCbr.Count*3);
                     {
                         Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
                         {
@@ -411,7 +411,7 @@ namespace HTLib2.Bioinfo
                             if(Matlab.GetValue("nnz(BinvDC)/numel(BinvDC)") > 0.5)
                             {
                                 double[,] arr = Matlab.GetMatrix("BinvDC", true);
-                                BB_invDD_CC = HessMatrixDense.FromMatrix(arr);
+                                BB_invDD_CC = HessMatrix.FromMatrix(arr);
                                 if(process_disp_console) System.Console.Write("Y), ");
                             }
                             else
@@ -439,7 +439,7 @@ namespace HTLib2.Bioinfo
                                 //  for(int i=0; i<listi.Length; i++)
                                 //      BBinvDDCC[listi[i]-1, listj[i]-1] = lists[i];
                                 //  //GC.Collect(0);
-                                BB_invDD_CC = HessMatrixSparse.ZerosSparse(colsize, rowsize);
+                                BB_invDD_CC = HessMatrix.ZerosHessMatrix(colsize, rowsize);
                                 foreach(var bc_br_bval in lst_bc_br_bval)
                                 {
                                     int bc = bc_br_bval.Key.Item1;
@@ -464,7 +464,7 @@ namespace HTLib2.Bioinfo
                         }
                         //GC.Collect(0);
 
-                        B_invD_C = HessMatrixSparse.ZerosSparse(C.RowSize, C.RowSize);
+                        B_invD_C = HessMatrix.ZerosHessMatrix(C.RowSize, C.RowSize);
                         {
                             //  for(int bcc=0; bcc<CCbr_Cbr.Count; bcc++)
                             //  {

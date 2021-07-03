@@ -266,8 +266,7 @@ namespace HTLib2.Bioinfo
         {
             int n = coords.Count;
             HessMatrix hess = null;
-            if(n < 100) hess = HessMatrixDense .ZerosDense (n*3, n*3);
-            else        hess = HessMatrixSparse.ZerosSparse(n*3, n*3);
+            hess = HessMatrix.ZerosHessMatrix(n*3, n*3);
             GetHessAnm(coords, cutoffs, hess, options);
             return hess;
         }
@@ -401,7 +400,7 @@ namespace HTLib2.Bioinfo
             //Debug.Assert(AnmHessianSelfTest());
 
             int n = coords.Count;
-            HessMatrix hess = HessMatrixDense.ZerosDense(n*3, n*3);
+            HessMatrix hess = HessMatrix.ZerosHessMatrix(n*3, n*3);
             for(int i=0; i<n; i++)
             {
                 if(coords[i] == null)
@@ -466,8 +465,7 @@ namespace HTLib2.Bioinfo
 
             int n = coords.Count;
             HessMatrix hess = null;
-            if(n < 100) hess = HessMatrixDense .ZerosDense (n*3, n*3);
-            else        hess = HessMatrixSparse.ZerosSparse(n*3, n*3);
+            hess = HessMatrix.ZerosHessMatrix(n*3, n*3);
             int numset = 0;
             foreach(var kij in enumKij)
             {
@@ -511,7 +509,7 @@ namespace HTLib2.Bioinfo
             //Debug.Assert(AnmHessianSelfTest());
 
             int n = coords.Count;
-            HessMatrix hess = HessMatrixDense.ZerosDense(n*3, n*3);
+            HessMatrix hess = HessMatrix.ZerosHessMatrix(n*3, n*3);
             for(int i=0; i<n; i++)
             {
                 if(coords[i] == null)

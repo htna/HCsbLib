@@ -381,9 +381,9 @@ namespace HTLib2.Bioinfo
                     {
                         switch(outHessFormat)
                         {
-                            case "full matrix"  : hess = HessMatrixDense .ZerosDense (size * 3, size * 3); break;
-                            case "sparse matrix": hess = HessMatrixSparse.ZerosSparse(size * 3, size * 3); break;
-                            default:              hess = null;                                             break;
+                            case "full matrix"  : hess = HessMatrix.ZerosHessMatrix(size * 3, size * 3); break;
+                            case "sparse matrix": hess = HessMatrix.ZerosHessMatrix(size * 3, size * 3); break;
+                            default:              hess = null;                                           break;
                         }
                     }
                     //HDebug.SetEpsilon(hess);

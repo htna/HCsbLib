@@ -264,7 +264,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                HessMatrix CC = HessMatrixSparse.ZerosSparse(C.ColSize, Cbr_CCbr.Count*3);
+                HessMatrix CC = HessMatrix.ZerosHessMatrix(C.ColSize, Cbr_CCbr.Count*3);
                 {
                     Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
                     {
@@ -307,7 +307,7 @@ namespace HTLib2.Bioinfo
                         }
                     }
 
-                    HessMatrixSparse BB_invDD_CC;
+                    HessMatrix BB_invDD_CC;
                     using(new Matlab.NamedLock(""))
                     {
                         Matlab.Execute("clear;");                                                               if(process_disp_console) System.Console.Write("matlab(");
@@ -357,12 +357,12 @@ namespace HTLib2.Bioinfo
                                             //for(int i=0; i<listi.Length; i++)
                                             //    BBinvDDCC[listi[i], listj[i]] = lists[i];
                         //GC.Collect(0);
-                        BB_invDD_CC = HessMatrixSparse.FromMatrix(BBinvDDCC, parallel);                         if(process_disp_console) System.Console.Write("Z), ");
+                        BB_invDD_CC = HessMatrix.FromMatrix(BBinvDDCC, parallel);                         if(process_disp_console) System.Console.Write("Z), ");
                         Matlab.Execute("clear;");
                     }
                     //GC.Collect(0);
 
-                    B_invD_C = HessMatrixSparse.ZerosSparse(C.RowSize, C.RowSize);
+                    B_invD_C = HessMatrix.ZerosHessMatrix(C.RowSize, C.RowSize);
                     {
                         //  for(int bcc=0; bcc<CCbr_Cbr.Count; bcc++)
                         //  {

@@ -108,7 +108,7 @@ namespace HTLib2.Bioinfo
                         {
                             Func<int, int, HessMatrix> Zeros = delegate(int colsize, int rowsize)
                             {
-                                return HessMatrixDense.ZerosDense(colsize, rowsize);
+                                return HessMatrix.ZerosHessMatrix(colsize, rowsize);
                             };
                             BB_invDD_CC = Matlab.GetMatrix("BinvDC", Zeros, true);
                             if(process_disp_console) System.Console.Write("Y), ");
@@ -138,7 +138,7 @@ namespace HTLib2.Bioinfo
                             //  for(int i=0; i<listi.Length; i++)
                             //      BBinvDDCC[listi[i]-1, listj[i]-1] = lists[i];
                             //  //GC.Collect(0);
-                            BB_invDD_CC = DD.Zeros(colsize, rowsize);
+                            BB_invDD_CC = HessMatrix.ZerosHessMatrix(colsize, rowsize);
                             foreach(var bc_br_bval in lst_bc_br_bval)
                             {
                                 int bc = bc_br_bval.Key.Item1;
@@ -167,7 +167,7 @@ namespace HTLib2.Bioinfo
                 {
                     int colsize = 0;
                     int rowsize = 0;
-                    BB_invDD_CC = HessMatrixDense.ZerosDense(colsize, rowsize); // 0xn nxn nx0 = 0x0
+                    BB_invDD_CC = HessMatrix.ZerosHessMatrix(colsize, rowsize); // 0xn nxn nx0 = 0x0
                     BB_invDD_GG = new double[colsize];                          // 0xn nxn nxm = 0xm = 0x0
                 }
 

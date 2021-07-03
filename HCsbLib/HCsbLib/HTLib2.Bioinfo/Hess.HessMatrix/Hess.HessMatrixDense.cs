@@ -5,8 +5,7 @@ using System.Text;
 
 namespace HTLib2.Bioinfo
 {
-    [Serializable]
-    public partial class HessMatrixDense : HessMatrix
+    public partial class _HessMatrixDense : IHessMatrix
     {
         public Matrix hess;
 
@@ -24,8 +23,8 @@ namespace HTLib2.Bioinfo
             get { return hess[c, r]; }
             set { hess[c, r] = value; }
         }
-        public override HessMatrix CloneHess()  { return CloneT(); }
-        public HessMatrixDense CloneT() { return new HessMatrixDense { hess = hess.Clone() }; }
+        public override IHessMatrix CloneIHessMatrix()  { return CloneHessMatrixDense(); }
+        public _HessMatrixDense CloneHessMatrixDense() { return new _HessMatrixDense { hess = hess.Clone() }; }
 
         public override int NumUsedBlocks
         {
@@ -143,13 +142,13 @@ namespace HTLib2.Bioinfo
                         yield return new Tuple<int, int>(bc, br);
         }
 
-        public override HessMatrix Zeros(int colsize, int rowsize)
+        public override IHessMatrix Zeros(int colsize, int rowsize)
         {
             return ZerosDense(colsize, rowsize);
         }
-        public static HessMatrix ZerosDense(int colsize, int rowsize)
+        public static _HessMatrixDense ZerosDense(int colsize, int rowsize)
         {
-            return new HessMatrixDense
+            return new _HessMatrixDense
             {
                 hess = Matrix.Zeros(colsize, rowsize),
             };
@@ -160,9 +159,9 @@ namespace HTLib2.Bioinfo
             return hess.ToArray().Clone() as double[,];
         }
 
-        public static HessMatrix FromMatrix(Matrix mat)
+        public static _HessMatrixDense FromMatrix(Matrix mat)
         {
-            return new HessMatrixDense
+            return new _HessMatrixDense
             {
                 hess = mat.ToArray(),
             };

@@ -13,7 +13,7 @@ public partial class Hess
         {
             Vector[] coords = univ.GetCoords();
 
-            HessMatrix hessian_spr = HessMatrixSparse.ZerosSparse(univ.size * 3, univ.size * 3);
+            HessMatrix hessian_spr = HessMatrix.ZerosHessMatrix(univ.size * 3, univ.size * 3);
             Universe.Nonbondeds_v1 nonbondeds = new Universe.Nonbondeds_v1(univ.atoms, univ.size, 12);
             nonbondeds.UpdateNonbondeds(coords, 0);
             hessian_spr = STeM.GetHessBond    (coords, univ.bonds                       , null, hessian: hessian_spr); HDebug.Verify(Hess.CheckHessDiag(hessian_spr, 0.000001, "non-computable exception while generating STeM hess_spr with bond"));
@@ -52,7 +52,7 @@ public partial class Hess
         {
             int size = coords.Count;
             if(hessian == null)
-                hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
             foreach(Universe.Bond bond in bonds)
             {
@@ -124,7 +124,7 @@ public partial class Hess
         {
             int size = coords.Count;
             if(hessian == null)
-                hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
             foreach(Universe.Angle angle in angles)
             {
@@ -223,7 +223,7 @@ public partial class Hess
         {
             int size = coords.Count;
             if(hessian == null)
-                hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
             double sqrt2 = Math.Sqrt(2);
 
@@ -291,7 +291,7 @@ public partial class Hess
         {
             int size = coords.Count;
             if(hessian == null)
-                hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
             foreach(Universe.Dihedral dihedral in dihedrals)
             {
@@ -373,7 +373,7 @@ public partial class Hess
         {
             int size = coords.Count;
             if(hessian == null)
-                hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
             foreach(Universe.Nonbonded nonbonded in nonbondeds)
             {
@@ -414,7 +414,7 @@ public partial class Hess
         {
             int size = coords.Count;
             if(hessian == null)
-                hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
             foreach(Universe.AtomPack pair in pairs)
             {
@@ -455,7 +455,7 @@ public partial class Hess
         {
             int size = coords.Count;
             if(hessian == null)
-                hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
             foreach(Universe.Nonbonded14 nonbonded14 in nonbonded14s)
             {
@@ -503,7 +503,7 @@ public partial class Hess
         {
             int size = coords.Count;
             if(hessian == null)
-                hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
             foreach(Universe.Nonbonded nonbonded in nonbondeds)
             {
@@ -528,7 +528,7 @@ public partial class Hess
         {
             int size = coords.Count;
             if(hessian == null)
-                hessian = HessMatrixSparse.ZerosSparse(size*3, size*3);
+                hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
 
             foreach(Universe.Nonbonded14 nonbonded14 in nonbonded14s)
             {
