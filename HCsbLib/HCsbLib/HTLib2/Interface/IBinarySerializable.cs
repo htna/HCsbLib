@@ -10,7 +10,8 @@ namespace HTLib2
 {
     public interface IBinarySerializable
     {
+        //IBinarySerializable(HBinaryReader reader);
         void Serialize(HBinaryWriter writer);
-        void Deserialize(HBinaryReader reader);
+        [Obsolete] void Deserialize(HBinaryReader reader);
     }
 }
