@@ -725,5 +725,84 @@ namespace HTLib2.Bioinfo
             //  
             //  //throw new NotImplementedException();
         }
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        // IBinarySerializable
+        public void Serialize(HBinaryWriter writer)
+        {
+            writer.HWrite(colblksize           );
+            writer.HWrite(rowblksize           );
+            writer.HWrite(layersize            );
+            writer.HWrite(numusedblocks_offdiag);
+
+            writer.HWrite(NumUsedBlocks        );
+            int bcnt = 0;
+            foreach(var bc_br_bval in _EnumBlocks())
+            {
+                bcnt ++;
+                writer.HWrite(bc_br_bval.Item1     );
+                writer.HWrite(bc_br_bval.Item2     );
+                writer.HWrite(bc_br_bval.Item3[0,0]);
+                writer.HWrite(bc_br_bval.Item3[0,1]);
+                writer.HWrite(bc_br_bval.Item3[0,2]);
+                writer.HWrite(bc_br_bval.Item3[1,0]);
+                writer.HWrite(bc_br_bval.Item3[1,1]);
+                writer.HWrite(bc_br_bval.Item3[1,2]);
+                writer.HWrite(bc_br_bval.Item3[2,0]);
+                writer.HWrite(bc_br_bval.Item3[2,1]);
+                writer.HWrite(bc_br_bval.Item3[2,2]);
+            }
+            if(bcnt != NumUsedBlocks)
+                throw new System.IO.InvalidDataException();
+        }
+        public HessMatrixLayeredArray(HBinaryReader reader)
+        {
+            this.colblksize           = reader.ReadInt32();
+            this.rowblksize           = reader.ReadInt32();
+            this.layersize            = reader.ReadInt32();
+            int numusedblocks_offdiag = reader.ReadInt32();
+
+            int br2_size =  rowblksize % layersize;
+            int br1_size = (rowblksize - br2_size) / layersize + 1;
+
+               diag       = new List<double    [,]>(colblksize);
+            offdiag       = new List<double[][][,]>(colblksize);
+            offdiag_count = new List<int   []     >(colblksize);
+            for(int bc=0; bc<colblksize; bc++)
+            {
+                   diag      .Add(null                     );
+                offdiag      .Add(new double[br1_size][][,]);
+                offdiag_count.Add(new int   [br1_size]     );
+                for(int br1=0; br1<br1_size; br1++)
+                {
+                    offdiag      [bc][br1] = null;
+                    offdiag_count[bc][br1] = 0;
+                }
+            }
+
+            int NumUsedBlocks         = reader.ReadInt32();
+            for(int i=0; i<NumUsedBlocks; i++)
+            {
+                double[,] bval = new double[3,3];
+                int     bc = reader.ReadInt32();
+                int     br = reader.ReadInt32();
+                bval[0, 0] = reader.ReadDouble();
+                bval[0, 1] = reader.ReadDouble();
+                bval[0, 2] = reader.ReadDouble();
+                bval[1, 0] = reader.ReadDouble();
+                bval[1, 1] = reader.ReadDouble();
+                bval[1, 2] = reader.ReadDouble();
+                bval[2, 0] = reader.ReadDouble();
+                bval[2, 1] = reader.ReadDouble();
+                bval[2, 2] = reader.ReadDouble();
+                SetBlock(bc, br, bval);
+            }
+            HDebug.Assert(NumUsedBlocks         == this.NumUsedBlocks        );
+            HDebug.Assert(numusedblocks_offdiag == this.numusedblocks_offdiag);
+        }
+        public void Deserialize(HBinaryReader reader)
+        {
+            // this is an abstract class
+            throw new NotImplementedException();
+        }
     }
 }
