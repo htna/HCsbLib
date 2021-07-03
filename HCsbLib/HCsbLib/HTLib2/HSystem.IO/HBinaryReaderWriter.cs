@@ -7,7 +7,7 @@ using System.IO;
 
 namespace HTLib2
 {
-    public struct HBinaryReader
+    public struct HBinaryReader : IDisposable
     {
         public BinaryReader reader;
 		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator BinaryReader(HBinaryReader breader) { return breader.reader; }
@@ -40,7 +40,7 @@ namespace HTLib2
         //protected virtual void FillBuffer(int numBytes);
         //protected internal int Read7BitEncodedInt();
     }
-    public struct HBinaryWriter
+    public struct HBinaryWriter : IDisposable
     {
         public BinaryWriter writer;
 
