@@ -57,10 +57,10 @@ namespace HTLib2
             string type_name = reader.ReadString();
             Type   type = Type.GetType(type_name);
             HDebug.Assert(type != null);
-            object obj = Activator.CreateInstance(type);
+            object obj = Activator.CreateInstance(type, reader); // create object using reader by calling constructor Class(HBinaryReader reader)
             if((obj is IBinarySerializable) == false)
-                throw new HException("type-mismatch in HRead<T>(reader,out T value)\nAssign "+type.Name+" type into "+typeof(IBinarySerializable).Name+" type.");
-            ((IBinarySerializable)obj).Deserialize(reader);
+                throw new Exception("type-mismatch in HRead<T>(reader,out T value)\nAssign "+type.Name+" type into "+typeof(IBinarySerializable).Name+" type.");
+            //((IBinarySerializable)obj).Deserialize(reader);
             return obj;
         }
         static object _HReadList(HBinaryReader reader, Type type)

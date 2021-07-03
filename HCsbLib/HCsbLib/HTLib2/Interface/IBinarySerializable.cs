@@ -8,10 +8,16 @@ using System.IO;
 
 namespace HTLib2
 {
+    /// Implement
+    /// * void IBinarySerializable.Serialize(HBinaryWriter writer);
+    /// * constructor of ctor(HBinaryReader reader);
+    ///   which corresponds to 
+    ///   1. creating an object and
+    ///   2. calling obj.Deserialize(HBinaryReader reader);
     public interface IBinarySerializable
     {
         //IBinarySerializable(HBinaryReader reader);
         void Serialize(HBinaryWriter writer);
-        [Obsolete] void Deserialize(HBinaryReader reader);
+        //[Obsolete] void Deserialize(HBinaryReader reader);
     }
 }
