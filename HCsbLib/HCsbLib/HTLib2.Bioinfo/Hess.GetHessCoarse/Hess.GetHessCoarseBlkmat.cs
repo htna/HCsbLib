@@ -88,7 +88,7 @@ namespace HTLib2.Bioinfo
             using(new Matlab.NamedLock(""))
             {
                 Matlab.Clear();
-                Matlab.PutSparseMatrix("H", hess.GetMatrixSparse(), 3, 3);
+                Matlab.PutSparseMatrix("H", hess);
 
                 Matlab.Execute("H = (H + H')/2;");
 

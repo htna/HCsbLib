@@ -170,7 +170,7 @@ namespace HTLib2.Bioinfo
                 {
                     string msg = "";
                     {
-                        if(bsparse) Matlab.PutSparseMatrix("V", mwhess_.GetMatrixSparse(), 3, 3);
+                        if(bsparse) Matlab.PutSparseMatrix("V", mwhess_);
                         else        Matlab.PutMatrix      ("V", ref mwhess, true, true);
                     }
                     msg += Matlab.Execute("tic;");

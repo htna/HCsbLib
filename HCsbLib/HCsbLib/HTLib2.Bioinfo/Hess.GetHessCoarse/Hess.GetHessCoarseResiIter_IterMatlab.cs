@@ -18,7 +18,7 @@ namespace HTLib2.Bioinfo
 
                 using(new Matlab.NamedLock("CGHessIter"))
                 {
-                    Matlab.PutSparseMatrix("CG.H", H.GetMatrixSparse(), 3, 3);
+                    Matlab.PutSparseMatrix("CG.H", H);
                     Matlab.PutValue("CG.th", thres_zeroblk);
                     Matlab.PutValue("CG.iter", lstNewIdxRemv.Length);
                     for(int iter=lstNewIdxRemv.Length-1; iter>=0; iter--)

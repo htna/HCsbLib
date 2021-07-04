@@ -256,7 +256,7 @@ namespace HTLib2.Bioinfo
                 Matrix PMP;
                 using(new Matlab.NamedLock(""))
                 {
-                    if(hess.RatioUsedBlocks < 0.1) Matlab.PutSparseMatrix("H", hess.GetMatrixSparse(), 3, 3);
+                    if(hess.RatioUsedBlocks < 0.1) Matlab.PutSparseMatrix("H", hess);
                     else                           Matlab.PutMatrix("H", hess, true);
                     Matlab.PutMatrix("P", P, true);
                     Matlab.PutVector("M", masses);
@@ -359,7 +359,7 @@ namespace HTLib2.Bioinfo
                         Matrix PHP;
                         using(new Matlab.NamedLock(""))
                         {
-                            Matlab.PutSparseMatrix("H", H.GetMatrixSparse(), 3, 3);
+                            Matlab.PutSparseMatrix("H", H);
                             Matlab.PutMatrix("P", PBlkOrth.ToMatrix(true));
                             PHP = Matlab.GetMatrix("P'*H*P");
                         }

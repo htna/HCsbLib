@@ -118,7 +118,7 @@ namespace HTLib2.Bioinfo
                         int[] idxca  = HEnum.HEnumCount(numca).ToArray();
                         int[] idxoth = HEnum.HEnumFromTo(numca, coords.Length-1).ToArray();
                         Matlab.Register(@"C:\temp\");
-                        Matlab.PutSparseMatrix("H", H.GetMatrixSparse(), 3, 3);
+                        Matlab.PutSparseMatrix("H", H);
                         Matlab.Execute("figure; spy(H)");
                         Matlab.Clear();
                     }
@@ -180,10 +180,10 @@ namespace HTLib2.Bioinfo
                         HessMatrix C = H.SubMatrixByAtoms(false, idxoth, idxca );
                         HessMatrix D = H.SubMatrixByAtoms(false, idxoth, idxoth);
                         Matlab.Clear();
-                        Matlab.PutSparseMatrix("A", A.GetMatrixSparse(), 3, 3);
-                        Matlab.PutSparseMatrix("B", B.GetMatrixSparse(), 3, 3);
-                        Matlab.PutSparseMatrix("C", C.GetMatrixSparse(), 3, 3);
-                        Matlab.PutSparseMatrix("D", D.GetMatrixSparse(), 3, 3);
+                        Matlab.PutSparseMatrix("A", A);
+                        Matlab.PutSparseMatrix("B", B);
+                        Matlab.PutSparseMatrix("C", C);
+                        Matlab.PutSparseMatrix("D", D);
                         Matlab.Clear();
                     }
                         #endregion

@@ -148,7 +148,7 @@ namespace HTLib2.Bioinfo
                     Vector D;
                     using(new Matlab.NamedLock(""))
                     {
-                        Matlab.PutSparseMatrix("testeig.H", testhess.hess.GetMatrixSparse(), 3, 3);
+                        Matlab.PutSparseMatrix("testeig.H", testhess.hess);
                         Matlab.Execute("testeig.H = (testeig.H + testeig.H')/2;");
                         Matlab.Execute("[testeig.V, testeig.D] = eig(full(testeig.H));");
                         Matlab.Execute("testeig.D = diag(testeig.D);");

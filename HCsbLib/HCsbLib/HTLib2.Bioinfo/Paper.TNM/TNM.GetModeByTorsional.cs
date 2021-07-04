@@ -153,7 +153,7 @@ public static partial class Paper
                             Matlab.PutMatrix("GetModeByTor.J", J.ToArray()      , true);
                             //Matlab.PutMatrix("GetModeByTor.M", M      , true);
                             //Matlab.PutMatrix("GetModeByTor.H", hessian, true);
-                            Matlab.PutSparseMatrix("GetModeByTor.H", hessian.GetMatrixSparse(), 3, 3);
+                            Matlab.PutSparseMatrix("GetModeByTor.H", hessian);
                             if(HDebug.IsDebuggerAttached && hessian.ColSize < 10000)
                             {
                                 Matlab.PutMatrix("GetModeByTor.Htest", hessian.ToArray(), true);

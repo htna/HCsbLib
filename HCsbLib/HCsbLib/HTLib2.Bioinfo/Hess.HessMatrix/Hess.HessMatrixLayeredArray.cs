@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 {
     [Serializable]
     public partial class HessMatrix : IHessMatrix, ISerializable
-        , IMatrixSparse<MatrixByArr>
+        , IMatrixSparse<double>
     {
         List<double    [,]>     diag;
         List<double[][][,]>  offdiag;
@@ -417,39 +417,28 @@ namespace HTLib2.Bioinfo
             throw new NotImplementedException();
         }
         //////////////////////////////////////////////////////////////
-        // IMatrixSparse<MatrixByArr>
-        IEnumerable<ValueTuple<int, int, MatrixByArr>> IMatrixSparse<MatrixByArr>.EnumElements()
+        // IMatrixSparse<double>
+        public IEnumerable<ValueTuple<int, int, double>> EnumElements()
         {
-            return EnumBlocks();
+            foreach(var blk in EnumBlocks())
+            {
+                int         bc3 = blk.Item1 * 3;
+                int         br3 = blk.Item2 * 3;
+                MatrixByArr bv  = blk.Item3;
+                yield return (bc3+0, br3+0, bv[0,0]);
+                yield return (bc3+0, br3+1, bv[0,1]);
+                yield return (bc3+0, br3+2, bv[0,2]);
+                yield return (bc3+1, br3+0, bv[1,0]);
+                yield return (bc3+1, br3+1, bv[1,1]);
+                yield return (bc3+1, br3+2, bv[1,2]);
+                yield return (bc3+2, br3+0, bv[2,0]);
+                yield return (bc3+2, br3+1, bv[2,1]);
+                yield return (bc3+2, br3+2, bv[2,2]);
+            }
         }
-        // IMatrixSparse<MatrixByArr>
+        // IMatrixSparse<double>
         //////////////////////////////////////////////////////////////
         // IMatrix<MatrixByArr>
-        int IMatrix<MatrixByArr>.ColSize{ get { return ColBlockSize; } }
-        int IMatrix<MatrixByArr>.RowSize{ get { return RowBlockSize; } }
-        MatrixByArr IMatrix<MatrixByArr>.this[int  bc, int  br]
-        {
-            get { return GetBlock(bc, br); }
-            set { SetBlock(bc, br, value); }
-        }
-        MatrixByArr IMatrix<MatrixByArr>.this[long bc, long br]
-        {
-            get { HDebug.Assert(false); return GetBlock((int)bc, (int)br); }
-            set { HDebug.Assert(false); SetBlock((int)bc, (int)br, value); }
-        }
-        MatrixByArr[,] IMatrix<MatrixByArr>.ToArray()
-        {
-            MatrixByArr[,] arr = new MatrixByArr[ColBlockSize, RowBlockSize];
-            foreach (var (bc, br, bval) in _EnumBlocks())
-            {
-                arr[bc, br] = bval;
-            }
-            for(int bc=0; bc<arr.GetLength(0); bc++)
-                for(int br=0; br<arr.GetLength(1); br++)
-                    if(arr[bc,br] == null)
-                        arr[bc, br] = new double[3,3];
-            return arr;
-        }
         // IMatrix<MatrixByArr>
         //////////////////////////////////////////////////////////////
 
@@ -799,13 +788,6 @@ namespace HTLib2.Bioinfo
         {
             // this is an abstract class
             throw new NotImplementedException();
-        }
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////
-        // implicit conversion
-        public IMatrixSparse<MatrixByArr> GetMatrixSparse()
-        {
-            return this;
         }
     }
 }
