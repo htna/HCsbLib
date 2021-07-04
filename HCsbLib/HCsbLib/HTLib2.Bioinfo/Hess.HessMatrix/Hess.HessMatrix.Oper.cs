@@ -16,13 +16,16 @@ namespace HTLib2.Bioinfo
         //    HessMatrix mat = HessMatrix.GetMul(left, right);
         //    return mat;
         //}
-        public static HessMatrix operator*(HessMatrix left,HessMatrix right){HessMatrix mat = GetMulImpl(null, true, left, right); return mat; }
+        public static HessMatrix operator*(HessMatrix left,HessMatrix right){HessMatrix mat = HessMatrixStatic.GetMulImpl(null, true, left, right); return mat; }
         public static HessMatrix operator*(HessMatrix left, double  right) { HessMatrix mat = left .CloneHessMatrix(); mat.UpdateMul(right  ); return mat; }
         public static HessMatrix operator*(double left, HessMatrix  right) { HessMatrix mat = right.CloneHessMatrix(); mat.UpdateMul(left  ); return mat; }
         public static HessMatrix operator/(HessMatrix left, double  right) { HessMatrix mat = left .CloneHessMatrix(); mat.UpdateMul(1/right); return mat; }
 
         public static HessMatrix operator+(HessMatrix left, HessMatrix right) { HessMatrix mat = left.CloneHessMatrix(); mat.UpdateAdd(right,  1, null, 0); return mat; }
         public static HessMatrix operator-(HessMatrix left, HessMatrix right) { HessMatrix mat = left.CloneHessMatrix(); mat.UpdateAdd(right, -1, null, 0); return mat; }
+    }
+    public static partial class HessMatrixStatic
+    {
         //public static HessMatrix GetMul(HessMatrix left, IMatrix right)
         //{
         //    if(right is HessMatrix)
@@ -46,7 +49,7 @@ namespace HTLib2.Bioinfo
                                                  ,{4,5,6,7,8,9}
                                                  ,{5,6,7,8,9,0}};
                     HessMatrix h1 = HessMatrix.FromMatrix(h0);
-                    Matrix t0 = Matrix.GetMul(Matrix.GetMul(h0, h0), h0);
+                    Matrix t0 = MatrixStatic.GetMul(MatrixStatic.GetMul(h0, h0), h0);
                     {
                         Matrix t1 = GetMulImpl(ila, false, h1, h1, h1).ToArray(); double d1=(t0-t1).HAbsMax(); HDebug.Assert(0 == d1);
                     }
@@ -74,8 +77,8 @@ namespace HTLib2.Bioinfo
                                          ,{4,5,6,7,8,9}
                                          ,{5,6,7,8,9,0}};
                 HessMatrix h2 = HessMatrix.FromMatrix(h1);
-                Matrix     h11 =     Matrix.GetMul    (h1, h1);
-                HessMatrix h22 = HessMatrix.GetMulImpl(h2, h2, null, false);
+                Matrix     h11 = MatrixStatic.GetMul  (h1, h1);
+                HessMatrix h22 = HessMatrixStatic.GetMulImpl(h2, h2, null, false);
                 Matrix     hdiff = h11 - h22.ToMatrix();
                 HDebug.AssertToleranceMatrix(0, hdiff);
             }
@@ -117,25 +120,25 @@ namespace HTLib2.Bioinfo
 
             return mul;
         }
-        public override void UpdateMul(double other)
+        public static void UpdateMul(this HessMatrix _this, double other)
         {
             double[,] debug_prv = null;
             if(HDebug.IsDebuggerAttached)
-                debug_prv = this.ToArray();
+                debug_prv = _this.ToArray();
 
-            foreach(var bc_br_bval in EnumBlocks())
+            foreach(var bc_br_bval in _this.EnumBlocks())
             {
                 int         bc   = bc_br_bval.Item1;
                 int         br   = bc_br_bval.Item2;
                 MatrixByArr bmat = bc_br_bval.Item3;
-                SetBlock(bc, br, bmat * other);
+                _this.SetBlock(bc, br, bmat * other);
             }
 
             if(HDebug.IsDebuggerAttached)
             {
-                double[,] debug_now = this.ToArray();
-                for(int c=0; c<ColSize; c++)
-                    for(int r=0; r<RowSize; r++)
+                double[,] debug_now = _this.ToArray();
+                for(int c=0; c<_this.ColSize; c++)
+                    for(int r=0; r<_this.RowSize; r++)
                     {
                         double val0 = debug_now[c, r];
                         double val1 = other * debug_prv[c, r];
@@ -143,9 +146,9 @@ namespace HTLib2.Bioinfo
                     }
             }
         }
-        public void UpdateAdd(HessMatrix other, double other_mul)
+        public static void UpdateAdd(this HessMatrix _this, HessMatrix other, double other_mul)
         {
-            UpdateAdd
+            _this.UpdateAdd
             ( other
             , other_mul
             , null  //idxOther
@@ -153,17 +156,17 @@ namespace HTLib2.Bioinfo
             );
         }
         static bool UpdateAdd_SelfTest = HDebug.IsDebuggerAttached;
-        public int UpdateAdd(HessMatrix other, double mul_other, IList<int> idxOther, double thres_NearZeroBlock, bool parallel=false)
+        public static int UpdateAdd(this HessMatrix _this, HessMatrix other, double mul_other, IList<int> idxOther, double thres_NearZeroBlock, bool parallel=false)
         {
             Matrix debug_updateadd = null;
             if(UpdateAdd_SelfTest && idxOther == null && thres_NearZeroBlock==0)
             {
-                if((100 < ColBlockSize) && (ColBlockSize < 1000)
-                && (100 < RowBlockSize) && (RowBlockSize < 1000)
+                if((100 < _this.ColBlockSize) && (_this.ColBlockSize < 1000)
+                && (100 < _this.RowBlockSize) && (_this.RowBlockSize < 1000)
                 && (other.NumUsedBlocks > 20))
                 {
                     UpdateAdd_SelfTest = false;
-                    debug_updateadd = this.ToArray();
+                    debug_updateadd = _this.ToArray();
                     debug_updateadd.UpdateAdd(other, mul_other);
                 }
             }
@@ -202,7 +205,7 @@ namespace HTLib2.Bioinfo
                 int               br   = idx_other[other_br];
                 lock(_lock)
                 {
-                    MatrixByArr  this_bmat = GetBlock(bc, br);
+                    MatrixByArr  this_bmat = _this.GetBlock(bc, br);
                     MatrixByArr   new_bmat;
                     if(this_bmat == null)
                     {
@@ -214,7 +217,7 @@ namespace HTLib2.Bioinfo
                         if(other_bmat == null)  new_bmat = this_bmat.CloneT()              ;
                         else                    new_bmat = this_bmat + mul_other*other_bmat;
                     }
-                    SetBlock(bc, br, new_bmat);
+                    _this.SetBlock(bc, br, new_bmat);
                 }
             };
 
@@ -223,17 +226,17 @@ namespace HTLib2.Bioinfo
             
             if(debug_updateadd != null)
             {
-                Matrix debug_diff = debug_updateadd-this;
+                Matrix debug_diff = debug_updateadd - _this;
                 double debug_absmax = debug_diff.HAbsMax();
                 HDebug.AssertToleranceMatrix(0, debug_diff);
             }
 
             return count_ignored;
         }
-        public virtual HessMatrix Tr()
+        public static HessMatrix Tr(this HessMatrix _this)
         {
-            HessMatrix tr = ZerosHessMatrix(RowSize, ColSize);
-            foreach(var bc_br_bval in EnumBlocks())
+            HessMatrix tr = HessMatrix.ZerosHessMatrix(_this.RowSize, _this.ColSize);
+            foreach(var bc_br_bval in _this.EnumBlocks())
             {
                 int bc = bc_br_bval.Item1;
                 int br = bc_br_bval.Item2;

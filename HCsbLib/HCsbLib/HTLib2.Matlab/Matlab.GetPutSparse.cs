@@ -10,7 +10,7 @@ namespace HTLib2
         //public static void PutSparseMatrix<MATRIX>(string name, MatrixSparse<MATRIX> real, int elemColSize, int elemRowSize)
         //public static void PutSparseMatrix<MATRIX>(string name, IMatrixSparse<MATRIX> real, int elemColSize, int elemRowSize)
         //    where MATRIX : Matrix
-        public static void PutSparseMatrix(string name, IMatrixSparse<double> real, string opt=null)
+        public static void PutSparseMatrix(string name, IMatrixSparse<double> real, bool bUseFile=false)
 		{
             /// http://www.mathworks.com/help/matlab/ref/sparse.html
             /// S = sparse(i,j,s,m,n)
@@ -19,7 +19,7 @@ namespace HTLib2
             /// * Vectors i, j, and s are all the same length.
             /// * Any elements of s that are zero are ignored.
             /// * Any elementsof s that have duplicate values of i and j are added together. 
-            if(opt == null)
+            if(bUseFile == false)
             {
                 int m = real.ColSize;
                 int n = real.RowSize;
@@ -47,8 +47,9 @@ namespace HTLib2
                 Execute(name+" = htlib2_matlab_PutSparseMatrix;");
                 Execute("clear htlib2_matlab_PutSparseMatrix;");
             }
-            else if(opt == "use file")
+            else
             {
+                HDebug.Assert(bUseFile == true);
                 string i_path = HFile.GetTempPath(_path_temporary, ".dat");
                 string j_path = HFile.GetTempPath(_path_temporary, ".dat");
                 string s_path = HFile.GetTempPath(_path_temporary, ".dat");

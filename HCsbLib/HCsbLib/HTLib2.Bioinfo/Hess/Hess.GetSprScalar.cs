@@ -54,7 +54,7 @@ namespace HTLib2.Bioinfo
             S12[0,0] =  u12[0];    S12[1,0] =  u12[1];    S12[2,0] =  u12[2];
             S12[3,0] = -u12[0];    S12[4,0] = -u12[1];    S12[5,0] = -u12[2];
 
-            Matrix invkij = GetInvSprTensorSymm(H, S12, ila);
+            Matrix invkij = GetInvSprTensorSymm(H.ToMatrix(), S12, ila);
             HDebug.Assert(invkij.ColSize == 1, invkij.RowSize == 1);
             HDebug.Assert(invkij[0, 0] > 0);
 
@@ -85,7 +85,7 @@ namespace HTLib2.Bioinfo
             for(int i=0; i<6; i++)
                 S12[i, i] = 1;
 
-            Matrix invkij = GetInvSprTensorSymm(H, S12, ila);
+            Matrix invkij = GetInvSprTensorSymm(H.ToMatrix(), S12, ila);
             HDebug.Assert(invkij.ColSize == 1, invkij.RowSize == 1);
             HDebug.Assert(invkij[0, 0] > 0);
 

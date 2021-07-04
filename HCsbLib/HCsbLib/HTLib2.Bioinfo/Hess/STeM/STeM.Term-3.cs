@@ -115,7 +115,7 @@ public partial class Hess
             //HDebug.Assert(useArnaud96 == true); // convert to use Arnaud96
             if(useArnaud96)
             {
-                HessMatrix hess3 = HessMatrix.FromMatrix(Paper.Arnaud96.HessSpring(caArray_, 2*K_phi));
+                Matrix hess3 = Paper.Arnaud96.HessSpring(caArray_, 2*K_phi);
                 //if(HDebug.IsDebuggerAttached)
                 if(ThirdTerm_selftest)
                 {
@@ -142,7 +142,7 @@ public partial class Hess
             }
 
             VECTORS caArray = new VECTORS(caArray_);
-            MATRIX hessian = new MATRIX(new double[12,12]);
+            MATRIX<Matrix> hessian = new MATRIX<Matrix>(new double[12,12]);
 
             {
                 int i=1;

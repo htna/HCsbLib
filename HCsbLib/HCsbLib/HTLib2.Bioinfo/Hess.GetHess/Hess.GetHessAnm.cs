@@ -93,7 +93,7 @@ namespace HTLib2.Bioinfo
             Matrix anm_gsong = Matlab.GetMatrix("anm");
             Matlab.Execute("clear;");
 
-            Matrix anm = GetHessAnm(coords.ToArray(), cutoff);
+            HessMatrix anm = GetHessAnm(coords.ToArray(), cutoff);
 
             if(anm_gsong.RowSize != anm.RowSize) { HDebug.Assert(false); return false; }
             if(anm_gsong.ColSize != anm.ColSize) { HDebug.Assert(false); return false; }
@@ -191,7 +191,7 @@ namespace HTLib2.Bioinfo
                 var    _coords = Pdb._smallest_protein_cacoords;
                 Matrix _Bmat = Hess.GetHessAnmBmat(_coords, 13).ToArray();
                 Matrix _BB = _Bmat * _Bmat.Tr();
-                Matrix _ANM = Hess.GetHessAnm(_coords, 13);
+                Matrix _ANM = Hess.GetHessAnm(_coords, 13).ToMatrix();
                 double _err = (_BB - _ANM).HAbsMax();
                 HDebug.Assert(_err < 0.00000001);
             }

@@ -193,21 +193,6 @@ namespace HTLib2
             int[] cols = HEnum.HEnumCount(ColSize).ToArray();
             return EnumElements(cols);
         }
-        public IEnumerable<Tuple<int,int,T>> EnumElements_dep(params int[] cols)
-        {
-            foreach(int c in cols)
-            //for(int c=0; c<ColSize; c++)
-            {
-                if(diagonal[c] != null)
-                    yield return new Tuple<int, int, T>(c, c, diagonal[c]);
-                foreach(var r_val in offdiagonal[c])
-                {
-                    int r   = r_val.Key;
-                    T   val = r_val.Value;
-                    yield return new Tuple<int, int, T>(c, r, val);
-                }
-            }
-        }
         public IEnumerable<ValueTuple<int,int,T>> EnumElements(params int[] cols)
         {
             foreach(int c in cols)

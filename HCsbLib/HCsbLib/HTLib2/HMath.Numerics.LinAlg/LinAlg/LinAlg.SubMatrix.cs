@@ -28,7 +28,7 @@ namespace HTLib2
 					submat[c, r] = _this[c+_colfrom, r+_rowfrom];
 			return submat;
 		}
-        public static Matrix SubMatrix(this Matrix _this, IList<int> idxcols, IList<int> idxrows)
+        public static Matrix SubMatrix(this IMatrix<double> _this, IList<int> idxcols, IList<int> idxrows)
         {
             Matrix submat = Matrix.Zeros(idxcols.Count, idxrows.Count);
             for(int nc=0; nc<idxcols.Count; nc++)

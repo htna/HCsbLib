@@ -140,10 +140,10 @@ public partial class Hess
         public static HessMatrix firstTerm(IList<Vector> caArray_, MatrixByArr distance_, int numOfResidues, FuncIJ func_K_r, HessMatrix hessian_=null)
         {
             VECTORS caArray  = new VECTORS(caArray_);
-            MATRIX  distance = new MATRIX(distance_);
+            MATRIX<MatrixByArr>  distance = new MATRIX<MatrixByArr>(distance_);
             if(hessian_ == null)
                 hessian_ = HessMatrix.ZerosHessMatrix(caArray_.Count*3, caArray_.Count*3);
-            MATRIX hessian = new MATRIX(hessian_);
+            MATRIX<HessMatrix> hessian = new MATRIX<HessMatrix>(hessian_);
 
             // derive the hessian of the first term (off diagonal)
             for(int m=2; m<=numOfResidues; m++)
@@ -221,18 +221,16 @@ public partial class Hess
                 hessian[3*j  ,3*j-1]       += +2*K_r*bz*by/distijsqr;
             }
 
-            if(hessian.matrix is HessMatrix)
-                return (hessian.matrix as HessMatrix);
-            return HessMatrix.FromMatrix( hessian.matrix );
+            return hessian.matrix;
         }
 
         public static HessMatrix secondTerm(IList<Vector> caArray_, MatrixByArr distance_, int numOfResidues, FuncIJK func_K_theta, HessMatrix hessian_=null)
         {
             VECTORS caArray = new VECTORS(caArray_);
-            MATRIX distance = new MATRIX(distance_);
+            MATRIX<MatrixByArr> distance = new MATRIX<MatrixByArr>(distance_);
             if(hessian_ == null)
                 hessian_ = HessMatrix.ZerosHessMatrix( caArray_.Count*3, caArray_.Count*3 );
-            MATRIX hessian = new MATRIX(hessian_);
+            MATRIX<HessMatrix> hessian = new MATRIX<HessMatrix>(hessian_);
 
             // derive the hessian of the second term
             for(int m=2; m<=numOfResidues-1; m++)
@@ -432,18 +430,16 @@ public partial class Hess
                 hessian[3*k  ,3*k-1]       += +2*K_theta/(1-G*G)*dGdZk*dGdYk;
             }
 
-            if(hessian.matrix is HessMatrix)
-                return (hessian.matrix as HessMatrix);
-            return HessMatrix.FromMatrix( hessian.matrix );
+            return hessian.matrix;
         }
 
         public static HessMatrix thirdTerm(IList<Vector> caArray_, MatrixByArr distance_, int numOfResidues, FuncIJKL func_K_phi1, FuncIJKL func_K_phi3, HessMatrix hessian_=null)
         {
             VECTORS caArray = new VECTORS(caArray_);
-            MATRIX distance = new MATRIX(distance_);
+            MATRIX<MatrixByArr> distance = new MATRIX<MatrixByArr>(distance_);
             if(hessian_ == null)
                 hessian_ = HessMatrix.ZerosHessMatrix(caArray_.Count*3, caArray_.Count*3);
-            MATRIX hessian = new MATRIX(hessian_);
+            MATRIX<HessMatrix> hessian = new MATRIX<HessMatrix>(hessian_);
 
             for(int m=3; m<=numOfResidues-1; m++)
             {
@@ -817,18 +813,16 @@ public partial class Hess
                 hessian[3*l  ,3*l-1]       += +2*K_phi/(1-G*G)*dGdZl*dGdYl;
             }
 
-            if(hessian.matrix is HessMatrix)
-                return (hessian.matrix as HessMatrix);
-            return HessMatrix.FromMatrix( hessian.matrix );
+            return hessian.matrix;
         }
 
         public static HessMatrix fourthTerm(IList<Vector> caArray_, MatrixByArr distance_, int numOfResidues, FuncIJ func_Epsilon, HessMatrix hessian_=null)
         {
             VECTORS caArray = new VECTORS(caArray_);
-            MATRIX distance = new MATRIX(distance_);
+            MATRIX<MatrixByArr> distance = new MATRIX<MatrixByArr>(distance_);
             if(hessian_ == null)
                 hessian_ = HessMatrix.ZerosHessMatrix(caArray_.Count*3, caArray_.Count*3);
-            MATRIX hessian = new MATRIX(hessian_);
+            MATRIX<HessMatrix> hessian = new MATRIX<HessMatrix>(hessian_);
 
             // derive the hessian of the first term (off diagonal)
             for(int i=1; i<=numOfResidues; i++)
@@ -876,9 +870,7 @@ public partial class Hess
                 }
             }
 
-            if(hessian.matrix is HessMatrix)
-                return (hessian.matrix as HessMatrix);
-            return HessMatrix.FromMatrix( hessian.matrix );
+            return hessian.matrix;
         }
     }
 }

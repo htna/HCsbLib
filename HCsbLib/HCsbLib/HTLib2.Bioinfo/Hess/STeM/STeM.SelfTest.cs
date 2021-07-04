@@ -175,7 +175,7 @@ public partial class Hess
 
                 InfoPack extra = new InfoPack();
                 //Vector bfactors = ENM.BFactorFromHessian(hess, null, 6, extra);
-                Vector bfactors  = Hess.GetBFactor        (hess, null, 6, extra);
+                Vector bfactors  = Hess.GetBFactor        (hess.ToMatrix(), null, 6, extra);
                 Vector eigvals = (double[])extra["eigenvalues"];
                 int[] idxsorted_eigvals = eigvals.ToArray().HAbs().HIdxSorted();
                 for(int i = 0; i < 6; i++) eigvals[idxsorted_eigvals[i]] = 0;
@@ -231,7 +231,7 @@ public partial class Hess
 
                 InfoPack extra = new InfoPack();
                 //Vector bfactors = ENM.BFactorFromHessian(hessian, null, 6, extra);
-                Vector bfactors = Hess.GetBFactor(hessian, null, 6, extra);
+                Vector bfactors = Hess.GetBFactor(hessian.ToMatrix(), null, 6, extra);
                 Vector eigvals = (double[])extra["eigenvalues"];
                 int[] idxsorted_eigvals = eigvals.ToArray().HAbs().HIdxSorted();
                 for(int i = 0; i < 6; i++) eigvals[idxsorted_eigvals[i]] = 0;

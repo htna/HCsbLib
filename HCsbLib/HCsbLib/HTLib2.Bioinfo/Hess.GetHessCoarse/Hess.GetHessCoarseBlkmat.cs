@@ -23,7 +23,7 @@ namespace HTLib2.Bioinfo
         /// find the HH coarse-grain block of Hessian matrix:
         ///   Hess_HH = HH - HL * LL^-1 * LH
 
-        public static HessMatrix GetHessCoarseBlkmat(Matrix hess, IList<int> idx_heavy, ILinAlg ila, double? chkDiagToler, string invtype, params object[] invopt)
+        public static HessMatrix GetHessCoarseBlkmat(IMatrix<double> hess, IList<int> idx_heavy, ILinAlg ila, double? chkDiagToler, string invtype, params object[] invopt)
         {
             List<int> idxhess = new List<int>();
             foreach(int idx in idx_heavy)
@@ -39,43 +39,43 @@ namespace HTLib2.Bioinfo
             HDebug.Assert(Hess.CheckHessDiag(hess_HH, chkDiagToler.Value));
             return hess_HH;
         }
-        public static HessMatrix GetHessCoarseBlkmat(Matrix hess, IList<int> idx_heavy, ILinAlg ila)
+        public static HessMatrix GetHessCoarseBlkmat(IMatrix<double> hess, IList<int> idx_heavy, ILinAlg ila)
         {
             return GetHessCoarseBlkmat(hess, idx_heavy, ila, null, "inv");
         }
-        public static Mode[] GetModeCoarseBlkmat(Matrix hess, IList<int> idx_heavy, ILinAlg ila)
-        {
-            HDebug.Depreciated("use GetHessCoarseBlkmat() and GetModesFromHess() separately");
-            Matrix hess_HH = GetHessCoarseBlkmat(hess, idx_heavy, ila);
-            //{
-            //    Matlab.PutMatrix("H", hess);
-            //    Matlab.Execute("H = (H + H')/2;");
-            //
-            //    Matlab.PutVector("idx0", idx_heavy.ToArray());
-            //    Matlab.Execute("idx0 = sort([idx0*3+1; idx0*3+2; idx0*3+3]);");
-            //    Matlab.PutValue("idx1", hess.ColSize);
-            //    Matlab.Execute("idx1 = setdiff(1:idx1, idx0)';");
-            //    HDebug.Assert(Matlab.GetValueInt("length(union(idx0,idx1))") == hess.ColSize*3);
-            //
-            //    Matlab.Execute("A = full(H(idx0,idx0));");
-            //    Matlab.Execute("B =      H(idx0,idx1) ;");
-            //    Matlab.Execute("C =      H(idx1,idx0) ;");
-            //    Matlab.Execute("D = full(H(idx1,idx1));");
-            //    Matlab.Execute("clear H;");
-            //
-            //    Matlab.Execute("bhess = A - B * inv(D) * C;");
-            //    Matlab.Execute("bhess = (bhess + bhess')/2;");
-            //}
-            Mode[] modes = GetModesFromHess(hess_HH, ila);
-            return modes;
-        }
-        public static Mode[] GetModeCoarseBlkmat(HessMatrix hess, IList<int> idx_heavy, ILinAlg ila)
-        {
-            HDebug.Depreciated("use GetHessCoarseBlkmat() and GetModesFromHess() separately");
-            Matrix hess_HH = GetHessCoarseBlkmat(hess, idx_heavy);
-            Mode[] modes = GetModesFromHess(hess_HH, ila);
-            return modes;
-        }
+        //  public static Mode[] GetModeCoarseBlkmat(Matrix hess, IList<int> idx_heavy, ILinAlg ila)
+        //  {
+        //      HDebug.Depreciated("use GetHessCoarseBlkmat() and GetModesFromHess() separately");
+        //      Matrix hess_HH = GetHessCoarseBlkmat(hess, idx_heavy, ila);
+        //      //{
+        //      //    Matlab.PutMatrix("H", hess);
+        //      //    Matlab.Execute("H = (H + H')/2;");
+        //      //
+        //      //    Matlab.PutVector("idx0", idx_heavy.ToArray());
+        //      //    Matlab.Execute("idx0 = sort([idx0*3+1; idx0*3+2; idx0*3+3]);");
+        //      //    Matlab.PutValue("idx1", hess.ColSize);
+        //      //    Matlab.Execute("idx1 = setdiff(1:idx1, idx0)';");
+        //      //    HDebug.Assert(Matlab.GetValueInt("length(union(idx0,idx1))") == hess.ColSize*3);
+        //      //
+        //      //    Matlab.Execute("A = full(H(idx0,idx0));");
+        //      //    Matlab.Execute("B =      H(idx0,idx1) ;");
+        //      //    Matlab.Execute("C =      H(idx1,idx0) ;");
+        //      //    Matlab.Execute("D = full(H(idx1,idx1));");
+        //      //    Matlab.Execute("clear H;");
+        //      //
+        //      //    Matlab.Execute("bhess = A - B * inv(D) * C;");
+        //      //    Matlab.Execute("bhess = (bhess + bhess')/2;");
+        //      //}
+        //      Mode[] modes = GetModesFromHess(hess_HH, ila);
+        //      return modes;
+        //  }
+        //  public static Mode[] GetModeCoarseBlkmat(HessMatrix hess, IList<int> idx_heavy, ILinAlg ila)
+        //  {
+        //      HDebug.Depreciated("use GetHessCoarseBlkmat() and GetModesFromHess() separately");
+        //      Matrix hess_HH = GetHessCoarseBlkmat(hess, idx_heavy);
+        //      Mode[] modes = GetModesFromHess(hess_HH, ila);
+        //      return modes;
+        //  }
         public static HessMatrix GetHessCoarseBlkmat(HessMatrix hess, IList<int> idx_heavy, string invopt = "inv")
         {
             /// Hess = [ HH HL ] = [ A B ]

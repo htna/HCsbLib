@@ -222,7 +222,7 @@ namespace HTLib2.Bioinfo
                                 // get A,B,C,D, F,G
                                 double assert;
                                 Matlab.Execute("clear");
-                                Matlab.PutSparseMatrix("HH", H, "use file");
+                                Matlab.PutSparseMatrix("HH", H, true);
                                 //Matlab.PutMatrix("HH", H, true);
                                 //Matlab.Execute("HH = sparse(HH);");
                                 Matlab.PutVector("FF", F.ToVector());
@@ -278,7 +278,7 @@ namespace HTLib2.Bioinfo
                             {
                                 // get A,B,C,D, F,G
                                 Matlab.Execute("clear");
-                                Matlab.PutSparseMatrix("HH", H, "use file");
+                                Matlab.PutSparseMatrix("HH", H, true);
                                 Matlab.PutVector("FF", F.ToVector());
                                 Matlab.PutValue("n", idxKeep.Count*3);
                                 Matlab.PutValue("N", coords.Length*3);

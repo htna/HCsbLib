@@ -61,7 +61,7 @@ public static partial class HBioinfo
                     Matlab.Execute("SELFTEST.bfactor3 = diag(SELFTEST.invhess);");
                     Matlab.Execute("SELFTEST.bfactor = SELFTEST.bfactor3(1:3:end) + SELFTEST.bfactor3(2:3:end) + SELFTEST.bfactor3(3:3:end);");
                     MatrixByArr selftest_hess = Matlab.GetMatrix("SELFTEST.hess");
-                    Mode[] selftest_mode = Hess.GetModesFromHess(selftest_hess);
+                    Mode[] selftest_mode = Hess.GetModesFromHess(selftest_hess, null);
                     Vector selftest_bfactor = BFactor.GetBFactor(selftest_mode);
                     Vector selftest_check   = Matlab.GetVector("SELFTEST.bfactor");
                     Vector selftest_diff = selftest_bfactor - selftest_check;

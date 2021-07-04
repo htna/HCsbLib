@@ -7,7 +7,7 @@ namespace HTLib2.Bioinfo
 {
 	public partial class Hess
     {
-        public static Matrix GetHessStem(IList<Vector> coords)
+        public static HessMatrix GetHessStem(IList<Vector> coords)
         {
             return STeM.GetHessCa(coords);
         }

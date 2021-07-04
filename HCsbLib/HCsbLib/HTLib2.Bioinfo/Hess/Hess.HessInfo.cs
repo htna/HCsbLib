@@ -131,7 +131,7 @@ namespace HTLib2.Bioinfo
             }
             public Mode[] GetModesMassWeighted(bool delhess, ILinAlg la)
             {
-                Matrix mwhess = GetHessMassWeighted(delhess);
+                HessMatrix mwhess = GetHessMassWeighted(delhess);
                 Mode[] mwmodes = Hess.GetModesFromHess(mwhess, la);
                 return mwmodes;
             }

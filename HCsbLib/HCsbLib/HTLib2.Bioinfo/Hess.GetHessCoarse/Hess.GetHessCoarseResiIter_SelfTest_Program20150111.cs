@@ -293,7 +293,7 @@ namespace HTLib2.Bioinfo
                             Mode[] camodes_orig;
                             {
                                 int[] idxca = (hessinfo.atoms as Universe.Atom[]).ListPdbAtomName(true).HIdxEqual("CA");
-                                Matrix cahess  = Hess.GetHessCoarseBlkmat  (hessinfo.hess, idxca, "inv");
+                                HessMatrix cahess  = Hess.GetHessCoarseBlkmat  (hessinfo.hess, idxca, "inv");
                                 Mode[] lcamodes = Hess.GetModesFromHess(cahess, la);
                                 var camodes_nzero_zero = lcamodes.SeparateTolerants();
                                 if(bool.Parse("false")) { camodes_nzero_zero = lcamodes.SeparateTolerantsByCountSigned(6); } /// manually fix 3LKY, 4EDL

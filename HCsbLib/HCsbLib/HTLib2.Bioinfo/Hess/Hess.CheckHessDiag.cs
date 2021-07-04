@@ -8,19 +8,22 @@ namespace HTLib2.Bioinfo
 	public partial class Hess
     {
         public static bool CheckHessDiag_selftest = HDebug.IsDebuggerAttached;
-        public static bool CheckHessDiag(Matrix hessian, double tolerSumDiag, string exceptmsg=null)
+        public static bool CheckHessDiag(IHessMatrix hessian, double tolerSumDiag, string exceptmsg=null)
         {
             if(CheckHessDiag_selftest)
             {
                 CheckHessDiag_selftest = false;
 
-                Matrix thess = new double[,]{ {-1,-2, 0,    1, 2, 3 }
-                                            , {-2,-4,-5,    2, 4, 5 }
-                                            , {-3,-5,-6,    3, 5, 6 }
-                                            , { 1,-2, 3,   -1, 2,-3 }
-                                            , { 2,-4,-5,   -2, 4, 5 }
-                                            , {-3, 5, 6,    3,-5,-6 }
-                                            };
+                _HessMatrixDense thess = _HessMatrixDense.FromMatrix
+                (
+                    new double[,]{ {-1,-2, 0,    1, 2, 3 }
+                                 , {-2,-4,-5,    2, 4, 5 }
+                                 , {-3,-5,-6,    3, 5, 6 }
+                                 , { 1,-2, 3,   -1, 2,-3 }
+                                 , { 2,-4,-5,   -2, 4, 5 }
+                                 , {-3, 5, 6,    3,-5,-6 }
+                                 }
+                );
                 HDebug.Assert(Hess.CheckHessDiag(thess, 0.0000001) == false);
                 thess[0, 2] = -3;
                 HDebug.Assert(Hess.CheckHessDiag(thess, 0.0000001) == true);

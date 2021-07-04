@@ -162,6 +162,24 @@ namespace HTLib2
             return min;
         }
 
+        public static T HMax<T>(this IEnumerable<T> values)
+            where T : IComparable<T>
+        {
+            T max = values.First();
+            foreach(T val in values)
+                if(max.CompareTo(val) < 0)
+                    max = val;
+            return max;
+        }
+        public static T HMin<T>(this IEnumerable<T> values)
+            where T : IComparable<T>
+        {
+            T max = values.First();
+            foreach(T val in values)
+                if(max.CompareTo(val) > 0)
+                    max = val;
+            return max;
+        }
 
         public static T? HMin<T>(this IList<T[]    > valuess) where T : struct { T? min = null; foreach(var values in valuess) foreach(dynamic value in values) { if(min == null) min = value; else min = (value < min) ? value : min; } return min; }
         public static T? HMin<T>(this IList<List<T>> valuess) where T : struct { T? min = null; foreach(var values in valuess) foreach(dynamic value in values) { if(min == null) min = value; else min = (value < min) ? value : min; } return min; }

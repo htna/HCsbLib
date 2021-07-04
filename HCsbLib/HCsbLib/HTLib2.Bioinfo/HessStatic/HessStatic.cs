@@ -77,7 +77,7 @@ namespace HTLib2.Bioinfo
             if(selftest_GetHessTraceSpringBwAtoms_hess_atomi_atomj)
             {
                 selftest_GetHessTraceSpringBwAtoms_hess_atomi_atomj = false;
-                double _spr_ij =  GetHessTraceSpringBwAtoms(hess as Matrix, atomi, atomj);
+                double _spr_ij =  GetHessTraceSpringBwAtoms(hess.ToMatrix(), atomi, atomj);
                 HDebug.Assert(Math.Abs(spr_ij - _spr_ij) < threshold);
             }
 
@@ -103,13 +103,13 @@ namespace HTLib2.Bioinfo
             int i3 = atomi * 3;
             int j3 = atomj * 3;
 
-            double[,] hess_ij = new double[3,3]
+            Matrix hess_ij = new double[3,3]
             {
                 { hess[i3+0, j3+0],  hess[i3+0, j3+1],  hess[i3+0, j3+2] },
                 { hess[i3+1, j3+0],  hess[i3+1, j3+1],  hess[i3+1, j3+2] },
                 { hess[i3+2, j3+0],  hess[i3+2, j3+1],  hess[i3+2, j3+2] },
             };
-            double[,] hess_ji = new double[3,3]
+            Matrix hess_ji = new double[3,3]
             {
                 { hess[j3+0, i3+0],  hess[j3+0, i3+1],  hess[j3+0, i3+2] },
                 { hess[j3+1, i3+0],  hess[j3+1, i3+1],  hess[j3+1, i3+2] },
@@ -165,7 +165,7 @@ namespace HTLib2.Bioinfo
             if(selftest_GetHessAnmSpringBwAtoms_hess_coords_atomi_atomj)
             {
                 selftest_GetHessAnmSpringBwAtoms_hess_coords_atomi_atomj = false;
-                double _spr_ij =  GetHessAnmSpringBwAtoms(hess as Matrix, coords, atomi, atomj);
+                double _spr_ij =  GetHessAnmSpringBwAtoms(hess.ToMatrix(), coords, atomi, atomj);
                 HDebug.Assert(Math.Abs(spr_ij - _spr_ij) < threshold);
             }
 

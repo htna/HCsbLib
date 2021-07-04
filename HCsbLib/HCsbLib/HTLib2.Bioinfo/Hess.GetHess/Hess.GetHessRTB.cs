@@ -447,7 +447,7 @@ namespace HTLib2.Bioinfo
                     Vector[] trottra = GetRotTran(tcoords, tmasses);
                     HDebug.Assert(trottra.Length == 6);
                     // get test ANM
-                    var      tanm = Hess.GetHessAnm(tcoords);
+                    HessMatrix tanm = Hess.GetHessAnm(tcoords);
                     // size of vec_i == 1
                     for(int i=0; i<trottra.Length; i++)
                     {

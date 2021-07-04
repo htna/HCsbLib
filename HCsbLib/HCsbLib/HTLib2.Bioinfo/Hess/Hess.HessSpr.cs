@@ -20,7 +20,7 @@ namespace HTLib2.Bioinfo
                                 };
                 return hess01;
             }
-            public static void UpdateHess01(IList<Vector> coords, int id0, int id1, double k01, Matrix hessian)
+            public static void UpdateHess01(IList<Vector> coords, int id0, int id1, double k01, HessMatrix hessian)
             {
                 if(HDebug.Selftest())
                     #region Check with ANM hessian matrix when k01=1
@@ -29,14 +29,14 @@ namespace HTLib2.Bioinfo
                     Vector[] pts = new Vector[10];
                     for(int i=0; i<pts.Length; i++)
                         pts[i] = new double[3] { rand.NextDouble(), rand.NextDouble(), rand.NextDouble() };
-                    Matrix hess = new double[pts.Length*3, pts.Length*3];
+                    HessMatrix hess = HessMatrix.ZerosHessMatrix(pts.Length*3, pts.Length*3);
                     for(int c=0; c<pts.Length-1; c++)
                         for(int r=c+1; r<pts.Length; r++)
                         {
                             UpdateHess01(pts, c, r, 1, hess);
                         }
-                    Matrix anmhess = Hess.GetHessAnm(pts, double.PositiveInfinity);
-                    Matrix dhess = hess - anmhess;
+                    HessMatrix anmhess = Hess.GetHessAnm(pts, double.PositiveInfinity);
+                    HessMatrix dhess = hess - anmhess;
                     HDebug.AssertToleranceMatrix(0.00000001, dhess);
                 }
                     #endregion

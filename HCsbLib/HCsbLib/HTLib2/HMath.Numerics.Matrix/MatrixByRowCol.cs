@@ -67,7 +67,7 @@ namespace HTLib2
             return new MatrixByRowCol(arr);
         }
 
-        public override Vector GetColVector(int row)
+        public Vector GetColVector(int row)
         {
             return arr[row];
         }

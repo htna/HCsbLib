@@ -232,16 +232,11 @@ namespace HTLib2.Bioinfo
             }
         }
 
-        public override IHessMatrix CloneIHessMatrix()
-        {
-            return CloneHessMatrix();
-        }
-
         //public static implicit operator MatrixByArr(HessMatrix hess)
         //{
         //    return hess.ToArray();
         //}
-        public double[,] ToArray()
+        public override double[,] ToArray()
         {
             double[,] arr = new double[ColSize, RowSize];
             foreach(ValueTuple<int, int, double[,]> bc_br_bval in _EnumBlocks())
@@ -412,10 +407,6 @@ namespace HTLib2.Bioinfo
                     yield return blk;
             }
         }
-        public override IEnumerable<Tuple<int, int>> EnumIndices_dep()
-        {
-            throw new NotImplementedException();
-        }
         //////////////////////////////////////////////////////////////
         // IMatrixSparse<double>
         public IEnumerable<ValueTuple<int, int, double>> EnumElements()
@@ -438,9 +429,23 @@ namespace HTLib2.Bioinfo
         }
         // IMatrixSparse<double>
         //////////////////////////////////////////////////////////////
-        // IMatrix<MatrixByArr>
-        // IMatrix<MatrixByArr>
-        //////////////////////////////////////////////////////////////
+        public IEnumerable<double> EnumNonZeroValues()
+        {
+            foreach(var blk in EnumBlocks())
+            {
+                MatrixByArr bv  = blk.Item3;
+                double val;
+                val = bv[0,0]; if(val != 0) yield return val;
+                val = bv[0,1]; if(val != 0) yield return val;
+                val = bv[0,2]; if(val != 0) yield return val;
+                val = bv[1,0]; if(val != 0) yield return val;
+                val = bv[1,1]; if(val != 0) yield return val;
+                val = bv[1,2]; if(val != 0) yield return val;
+                val = bv[2,0]; if(val != 0) yield return val;
+                val = bv[2,1]; if(val != 0) yield return val;
+                val = bv[2,2]; if(val != 0) yield return val;
+            }
+        }
 
         public override IHessMatrix Zeros(int colsize, int rowsize)
         {
@@ -471,30 +476,22 @@ namespace HTLib2.Bioinfo
         }
         public static HessMatrix FromMatrix(Matrix mat, bool parallel=false)
         {
-            if(mat is HessMatrix)
-                return (mat as HessMatrix).CloneHessMatrix();
-        
             HDebug.Assert(mat.ColSize % 3 == 0);
             HDebug.Assert(mat.RowSize % 3 == 0);
             HessMatrix hess = ZerosHessMatrix(mat.ColSize, mat.RowSize);
         
             {
                 _HessMatrixDense dense = new _HessMatrixDense { hess = mat };
-        
-                Action<Tuple<int, int>> func = delegate(Tuple<int, int> bc_br)
+
+                foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in dense.EnumBlocks())
                 {
-                    int bc   = bc_br.Item1;
-                    int br   = bc_br.Item2;
-                    if(dense.HasBlock(bc, br) == false)
-                        return;
-        
-                    var bval = dense.GetBlock(bc, br);
+                    int bc           = bc_br_bval.Item1;
+                    int br           = bc_br_bval.Item2;
+                    MatrixByArr bval = bc_br_bval.Item3;
+                    HDebug.Assert(bval != null);
                     HDebug.Assert(bval.HSumPow2() != 0);
-                    lock(hess)
-                        hess.SetBlock(bc, br, bval);
-                };
-                if(parallel)    Parallel.ForEach(         dense.EnumIndicesAll(), func           );
-                else            foreach(var bc_br_bval in dense.EnumIndicesAll()) func(bc_br_bval);
+                    hess.SetBlock(bc, br, bval.CloneT());
+                }
             }
         
             if(HDebug.IsDebuggerAttached)

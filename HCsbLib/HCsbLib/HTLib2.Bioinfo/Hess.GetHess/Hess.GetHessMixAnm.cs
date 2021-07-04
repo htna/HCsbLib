@@ -16,7 +16,7 @@ namespace HTLib2.Bioinfo
 
         public class CMixAnm
         {
-            public Matrix     hess   = null;
+            public HessMatrix hess   = null;
             public Pdb.Atom[] atoms  = null;
             public Vector[]   coords = null;
             public Matrix     kij    = null;
@@ -123,7 +123,7 @@ namespace HTLib2.Bioinfo
                 }
             }
 
-            Matrix hess = GetHessAnm(hesscoords, hesskij);
+            HessMatrix hess = GetHessAnm(hesscoords, hesskij);
 
             return new CMixAnm
             {

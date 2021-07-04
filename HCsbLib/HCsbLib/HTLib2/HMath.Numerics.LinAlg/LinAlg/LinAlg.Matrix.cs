@@ -366,7 +366,8 @@ namespace HTLib2
                     mat[c, r] += lvec[c] * rvec[r] * scale;
         }
         public static bool   DMD_selftest = HDebug.IsDebuggerAttached;
-        public static Matrix DMD(Vector diagmat1, Matrix mat,Vector diagmat2)
+        public static MATRIX DMD<MATRIX>(Vector diagmat1, MATRIX mat,Vector diagmat2, Func<int,int,MATRIX> Zeros)
+            where MATRIX : IMatrix<double>
         {
             if(DMD_selftest)
                 #region selftest
@@ -377,12 +378,12 @@ namespace HTLib2
                 Vector td2 = new double[] { 4, 5, 6 };
                 Matrix tm  = new double[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
                 Matrix dmd0 = LinAlg.Diag(td1) * tm * LinAlg.Diag(td2);
-                Matrix dmd1 = LinAlg.DMD(td1, tm, td2);
+                Matrix dmd1 = LinAlg.DMD(td1, tm, td2, Matrix.Zeros);
                 double err = (dmd0 - dmd1).HAbsMax();
                 HDebug.Assert(err == 0);
             }
                 #endregion
-            Matrix DMD = mat.Clone();
+            MATRIX DMD = Zeros(mat.ColSize, mat.RowSize);
             for(int c=0; c<mat.ColSize; c++)
                 for(int r=0; r<mat.RowSize; r++)
                 {
@@ -394,7 +395,7 @@ namespace HTLib2
             return DMD;
         }
         //public static bool VtMV_selftest = HDebug.IsDebuggerAttached;
-        public static double VtMV(Vector lvec, Matrix mat, Vector rvec, string options="")
+        public static double VtMV(Vector lvec, IMatrix<double> mat, Vector rvec) //, string options="")
         {
             if(HDebug.Selftest())
             {

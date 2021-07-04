@@ -44,7 +44,7 @@ public partial class Hess
                 FourthTerm(lcaArray, Epsilon, lhess0, 0, 1);
                 FourthTerm(lcaArray, Epsilon, lhess0, 1, 0);
                 double r2 = (lcaArray[0] - lcaArray[1]).Dist2;
-                Matrix dhess0 = (120*Epsilon/r2) * Hess.GetHessAnm(lcaArray, double.PositiveInfinity);
+                HessMatrix dhess0 = (120*Epsilon/r2) * Hess.GetHessAnm(lcaArray, double.PositiveInfinity);
                 HDebug.AssertToleranceMatrix(0.00000001, lhess0-dhess0);
             }
         }
@@ -58,7 +58,7 @@ public partial class Hess
         public static Matrix FourthTerm(IList<Vector> caArray_, double Epsilon)
         {
             VECTORS caArray = new VECTORS(caArray_);
-            MATRIX hessian = new MATRIX(new double[6,6]);
+            MATRIX<Matrix> hessian = new MATRIX<Matrix>(new double[6,6]);
 
             // derive the hessian of the first term (off diagonal)
             {

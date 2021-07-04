@@ -7,7 +7,7 @@ namespace HTLib2
 {
 	public partial class LinAlg
 	{
-        public static Matrix InvOfSubMatrixOfInv(this Matrix mat, IList<int> idxs, ILinAlg ila, string invtype, params object[] invopt)
+        public static Matrix InvOfSubMatrixOfInv(this IMatrix<double> mat, IList<int> idxs, ILinAlg ila, string invtype, params object[] invopt)
         {
             if(HDebug.Selftest())
             {

@@ -18,7 +18,7 @@ namespace HTLib2.Bioinfo
             HDebug.ToDo("check!!");
             int size = coords.Count;
 
-            Matrix khess = Hess.GetHessAnm(coords, pwspring.ToArray());
+            Matrix khess = Hess.GetHessAnm(coords, pwspring.ToArray()).ToMatrix();
             Matrix invkhess;
             {
                 var HH = la.ToILMat(khess);
@@ -33,7 +33,7 @@ namespace HTLib2.Bioinfo
             Matrix npwforce = Hess.GetHessFSM_GetEqlibForc(coords, khess, invkhess, pwforce);
             Matrix  pwdist  = coords.Pwdist();
 
-            Matrix anm = Hess.GetHessAnm(coords, double.PositiveInfinity);
+            HessMatrix anm = Hess.GetHessAnm(coords, double.PositiveInfinity);
 
             MatrixBySparseMatrix fhess = MatrixBySparseMatrix.Zeros(size*3, size*3, 3);
             for(int i=0; i<size; i++)

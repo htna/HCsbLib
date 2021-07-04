@@ -228,7 +228,7 @@ public static partial class Paper
                         double[] toreigvals = new double[m];
                         Mode[] modes      = new Mode[m];
                         {
-                            Matrix H = hessian; HDebug.Assert(hessian.ColSize == hessian.RowSize);
+                            Matrix H = hessian.ToMatrix(); HDebug.Assert(hessian.ColSize == hessian.RowSize);
                             Matrix M = Matrix.Zeros(hessian.ColSize, hessian.RowSize); HDebug.Assert(3*masses.Size == M.ColSize, M.ColSize == M.RowSize);
                             for(int i=0; i<M.ColSize; i++) M[i, i] = masses[i/3];
                             Matrix Jt = J.Tr();

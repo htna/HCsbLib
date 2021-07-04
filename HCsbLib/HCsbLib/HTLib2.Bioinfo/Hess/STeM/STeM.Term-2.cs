@@ -56,7 +56,7 @@ public partial class Hess
         public static Matrix SecondTerm(IList<Vector> caArray_, double K_theta)
         {
             VECTORS caArray = new VECTORS(caArray_);
-            MATRIX hessian = new MATRIX(new double[9,9]);
+            MATRIX<Matrix> hessian = new MATRIX<Matrix>(new double[9,9]);
 
             // derive the hessian of the second term
             {

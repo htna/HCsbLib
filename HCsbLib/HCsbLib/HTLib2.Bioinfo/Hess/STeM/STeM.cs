@@ -28,10 +28,11 @@ public partial class Hess
                 return caArray[i-1];
             }
         }
-        class MATRIX
+        class MATRIX<MAT>
+                where MAT : IMatrix<double>
         {
-            public Matrix matrix;
-            public MATRIX(Matrix matrix) { this.matrix = matrix; }
+            public MAT matrix;
+            public MATRIX(MAT matrix) { this.matrix = matrix; }
             public double this[int i1, int i2]
             {
                 get { return matrix[i1-1, i2-1]; }

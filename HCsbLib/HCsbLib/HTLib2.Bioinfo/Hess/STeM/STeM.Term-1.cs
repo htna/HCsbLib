@@ -33,7 +33,7 @@ public partial class Hess
 
             if(HDebug.IsDebuggerAttached)
             {
-                Matrix anm = (2*K_r)* Hess.GetHessAnm(lcaArray, double.PositiveInfinity);
+                HessMatrix anm = (2*K_r)* Hess.GetHessAnm(lcaArray, double.PositiveInfinity);
                 HDebug.AssertToleranceMatrix(0.00000001, lhess - anm);
             }
         }
@@ -68,7 +68,7 @@ public partial class Hess
         public static Matrix FirstTerm (IList<Vector> caArray_, double K_r)
         {
             VECTORS caArray  = new VECTORS(caArray_);
-            MATRIX hessian = new MATRIX(new double[6,6]);
+            MATRIX<Matrix> hessian = new MATRIX<Matrix>(new double[6,6]);
 
             // derive the hessian of the first term (off diagonal)
             {

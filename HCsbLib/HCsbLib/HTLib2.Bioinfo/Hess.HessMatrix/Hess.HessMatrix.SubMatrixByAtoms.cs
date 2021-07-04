@@ -41,8 +41,8 @@ namespace HTLib2.Bioinfo
 
 //                           thess1a = Hess.CorrectHessDiag(thess1a);                     // diagonal of original matrix contains the interaction between 0-1 and 1-2 also,
 //                HessMatrix thess1b = Hess.GetHessAnm(tcoords.HSelectByIndex(tidxs));    // while new generated hessian matrix does not.
-                Matrix tdiffhess = thess1a - thess1b;
-                double max_tdiffhess = tdiffhess.ToArray().HAbs().HMax();
+                HessMatrix tdiffhess = thess1a - thess1b;
+                double max_tdiffhess = tdiffhess.EnumNonZeroValues().HEnumAbs().HMax();
                 HDebug.Exception(0 == max_tdiffhess);
             }
 
@@ -52,8 +52,8 @@ namespace HTLib2.Bioinfo
             {
                 List<int> idx3Atoms = new List<int>();
                 foreach(int idx in idxAtoms) for(int i=0; i<3; i++) idx3Atoms.Add(idx*3+i);
-                Matrix tnhess = this.SubMatrix(idx3Atoms, idx3Atoms);
-                double max2_tdiffhess = (nhess - tnhess).ToArray().HAbs().HMax();
+                Matrix tnhess = this.ToMatrix().SubMatrix(idx3Atoms, idx3Atoms);
+                double max2_tdiffhess = (nhess.ToMatrix() - tnhess).EnumNonZeroValues().HEnumAbs().HMax();
                 HDebug.AssertTolerance(0.00000001, max2_tdiffhess);
             }
             return nhess;
@@ -164,7 +164,7 @@ namespace HTLib2.Bioinfo
                 Matrix thess4 = new double[,] {{3,4,5}
                                               ,{4,5,6}
                                               ,{5,6,7}};
-                HDebug.AssertToleranceMatrix(0, thess3-thess4);
+                HDebug.AssertToleranceMatrix(0, thess3.ToMatrix()-thess4);
             }
 
             return nhess;
@@ -186,7 +186,7 @@ namespace HTLib2.Bioinfo
                 Matrix thess4 = new double[,] {{3,4,5}
                                               ,{4,5,6}
                                               ,{5,6,7}};
-                HDebug.AssertToleranceMatrix(0, thess3-thess4);
+                HDebug.AssertToleranceMatrix(0, thess3.ToMatrix()-thess4);
             }
             HessMatrix nhess = ZerosHessMatrix(idxColAtoms.Count*3, idxRowAtoms.Count*3);
 

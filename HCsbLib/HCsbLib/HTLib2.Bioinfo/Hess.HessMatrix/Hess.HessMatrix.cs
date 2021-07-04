@@ -5,9 +5,18 @@ using System.Text;
 
 namespace HTLib2.Bioinfo
 {
-    [Serializable]
-    public abstract partial class IHessMatrix : Matrix
+    public abstract partial class IHessMatrix : IMatrix<double>
     {
+        ////////////////////////////////////////////////////////////////////
+        // IMatrix<double>
+        public abstract int ColSize { get; }
+        public abstract int RowSize { get; }
+        public abstract double this[int  c, int r] { get; set; }
+        public abstract double this[long c, long r] { get; set; }
+        public abstract double[,] ToArray();
+        // IMatrix<double>
+        ////////////////////////////////////////////////////////////////////
+
         public int ColBlockSize { get { HDebug.Assert(ColSize%3 == 0); return (ColSize / 3); } }
         public int RowBlockSize { get { HDebug.Assert(RowSize%3 == 0); return (RowSize / 3); } }
         public int NumAtoms
@@ -28,9 +37,6 @@ namespace HTLib2.Bioinfo
             }
         }
 
-        public override Matrix     Clone() { return CloneIHessMatrix(); }
-        public abstract IHessMatrix CloneIHessMatrix();
-        //public abstract IHessMatrix CloneT();
         public abstract MatrixByArr GetBlock(int bc, int br);
         public abstract MatrixByArr GetBlockLock(int bc, int br);
         public abstract void SetBlock(int bc, int br, MatrixByArr bval);
@@ -53,7 +59,6 @@ namespace HTLib2.Bioinfo
         public abstract IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks();
         //public abstract IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocksInCols_dep(int[] lstBlkCol);
         public abstract IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocksInCols(int[] lstBlkCol);
-        public abstract IEnumerable<Tuple<int, int>> EnumIndices_dep();
         public IEnumerable<Tuple<int, Tuple<int, int, MatrixByArr>[]>> EnumColBlocksAll()
         {
             Dictionary<int, List<Tuple<int, int, MatrixByArr>>> ibr_listBlock = new Dictionary<int, List<Tuple<int, int, MatrixByArr>>>();

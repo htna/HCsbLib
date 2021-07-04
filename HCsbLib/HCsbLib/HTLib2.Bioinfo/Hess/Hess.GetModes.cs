@@ -34,7 +34,7 @@ namespace HTLib2.Bioinfo
 
             return true;
         }
-        public static void GetModes(Matrix hess, out Matrix modes, out Vector freqs)
+        public static void GetModes(IMatrix<double> hess, out Matrix modes, out Vector freqs)
         {
             HDebug.Depreciated("use others");
             HDebug.Assert(GetModesSelftest());
@@ -57,51 +57,47 @@ namespace HTLib2.Bioinfo
                     modes[c, rr] = eigvec[c, r];
             }
         }
-        public static Mode[] GetModesFromHessGnm(Matrix hess, ILinAlg la)
+        public static Mode[] GetModesFromHessGnm(IMatrix<double> hess, ILinAlg la)
         {
             return GetModesFromHess(hess, la);
         }
-        //public static Mode[] GetModes(Matrix hess)
-        //{
-        //    return GetModesFromHess(hess);
-        //}
-        public static Mode[] GetModesFromHess(Matrix hess)
-        {
-            //string cachepath = null;
-            HDebug.Depreciated("use Mode[] GetModesFromHess(Matrix hess, ILinAlg la)");
+        //  public static Mode[] GetModesFromHess(Matrix hess)
+        //  {
+        //      //string cachepath = null;
+        //      HDebug.Depreciated("use Mode[] GetModesFromHess(Matrix hess, ILinAlg la)");
+        //  
+        //      Vector[] eigvec;
+        //      double[] eigval;
+        //      //if(cachepath != null && HFile.Exists(cachepath))
+        //      //{
+        //      //    HSerialize.Deserialize(cachepath, null, out eigval, out eigvec);
+        //      //}
+        //      //else
+        //      //{
+        //          HDebug.Verify(NumericSolver.Eig(hess.ToArray(), out eigvec, out eigval));
+        //      //    if(cachepath != null)
+        //      //        HSerialize.SerializeDepreciated(cachepath, null, eigval, eigvec);
+        //      //}
+        //  
+        //      List<Mode> modes;
+        //      {   // sort by eigenvalues
+        //          int[] idx = eigval.HAbs().HIdxSorted();
+        //          modes = new List<Mode>(idx.Length);
+        //          for(int i=0; i<eigval.Length; i++)
+        //          {
+        //              Mode mode = new Mode
+        //              {
+        //                  eigval = eigval[idx[i]],
+        //                  eigvec = eigvec[idx[i]]
+        //              };
+        //              modes.Add(mode);
+        //          }
+        //      }
+        //  
+        //      return modes.ToArray();
+        //  }
 
-            Vector[] eigvec;
-            double[] eigval;
-            //if(cachepath != null && HFile.Exists(cachepath))
-            //{
-            //    HSerialize.Deserialize(cachepath, null, out eigval, out eigvec);
-            //}
-            //else
-            //{
-                HDebug.Verify(NumericSolver.Eig(hess.ToArray(), out eigvec, out eigval));
-            //    if(cachepath != null)
-            //        HSerialize.SerializeDepreciated(cachepath, null, eigval, eigvec);
-            //}
-
-            List<Mode> modes;
-            {   // sort by eigenvalues
-                int[] idx = eigval.HAbs().HIdxSorted();
-                modes = new List<Mode>(idx.Length);
-                for(int i=0; i<eigval.Length; i++)
-                {
-                    Mode mode = new Mode
-                    {
-                        eigval = eigval[idx[i]],
-                        eigvec = eigvec[idx[i]]
-                    };
-                    modes.Add(mode);
-                }
-            }
-
-            return modes.ToArray();
-        }
-
-        public static Mode[] GetModesFromHess(Matrix hess, ILinAlg la)
+        public static Mode[] GetModesFromHess(IMatrix<double> hess, ILinAlg la)
         {
             List<Mode> modes;
             {
@@ -122,7 +118,7 @@ namespace HTLib2.Bioinfo
                         break;
                     default:
                         {
-                            var H = la.ToILMat(hess);
+                            var H = la.ToILMat(hess.ToArray());
                             H = (H + H.Tr)/2;
                             var VD = la.EigSymm(H);
                             V = VD.Item1.ToMatrix();

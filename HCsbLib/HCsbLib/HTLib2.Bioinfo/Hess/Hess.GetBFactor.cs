@@ -38,7 +38,7 @@ namespace HTLib2.Bioinfo
                     atoms.Add(atom);
             }
             List<Vector> coords = atoms.ListCoord();
-            Matrix hess = Hess.GetHessAnm(coords, cutoff);
+            Matrix hess = Hess.GetHessAnm(coords, cutoff).ToMatrix();
             InfoPack lextra = new InfoPack();
             Vector bfactor = GetBFactor(hess, 0.00000001, null, lextra);
             if(extra != null)

@@ -17,10 +17,10 @@ namespace HTLib2
         public static bool IsOnes  (this double[,] arr              ) { int ColSize=arr.GetLength(0); int RowSize=arr.GetLength(1); for(int c=0; c<ColSize; c++) for(int r=0; r<RowSize; r++) if(arr[c, r] != 1    ) return false; return true; }
         public static bool IsValues(this double[,] arr, double value) { int ColSize=arr.GetLength(0); int RowSize=arr.GetLength(1); for(int c=0; c<ColSize; c++) for(int r=0; r<RowSize; r++) if(arr[c, r] != value) return false; return true; }
 
-		public static bool IsNaN             (this Matrix mat) { return mat.ToArray().IsNaN             (); }
-		public static bool IsInfinity        (this Matrix mat) { return mat.ToArray().IsInfinity        (); }
-		public static bool IsPositiveInfinity(this Matrix mat) { return mat.ToArray().IsPositiveInfinity(); }
-		public static bool IsNegativeInfinity(this Matrix mat) { return mat.ToArray().IsNegativeInfinity(); }
-		public static bool IsComputable      (this Matrix mat) { return mat.ToArray().IsComputable      (); }
+		public static bool IsNaN             (this IMatrix<double> mat) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(double.IsNaN             (mat[c, r])) return true; return false; }
+		public static bool IsInfinity        (this IMatrix<double> mat) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(double.IsInfinity        (mat[c, r])) return true; return false; }
+		public static bool IsPositiveInfinity(this IMatrix<double> mat) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(double.IsPositiveInfinity(mat[c, r])) return true; return false; }
+		public static bool IsNegativeInfinity(this IMatrix<double> mat) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(double.IsNegativeInfinity(mat[c, r])) return true; return false; }
+		public static bool IsComputable      (this IMatrix<double> mat) { return ((mat.IsNaN() == false) && (mat.IsInfinity() == false)); }
     }
 }
