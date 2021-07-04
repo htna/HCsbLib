@@ -8,14 +8,14 @@ namespace HTLib2
 {
     public static partial class LinAlg
 	{
-        public static Vector[] GetColVectorList(this Matrix _this)
+        public static Vector[] GetColVectorList(this IMatrix<double> _this)
         {
             Vector[] vecs = new Vector[_this.RowSize];
             for(int r=0; r<_this.RowSize; r++)
                 vecs[r] = _this.GetColVector(r);
             return vecs;
         }
-        public static Vector[] GetRowVectorList(this Matrix _this)
+        public static Vector[] GetRowVectorList(this IMatrix<double> _this)
         {
             Vector[] vecs = new Vector[_this.ColSize];
             for(int c=0; c<_this.ColSize; c++)
