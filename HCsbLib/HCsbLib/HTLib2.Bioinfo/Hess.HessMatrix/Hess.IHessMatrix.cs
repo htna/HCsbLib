@@ -41,18 +41,6 @@ namespace HTLib2.Bioinfo
         public abstract MatrixByArr GetBlockLock(int bc, int br);
         public abstract void SetBlock(int bc, int br, MatrixByArr bval);
         public abstract void SetBlockLock(int bc, int br, MatrixByArr bval);
-        public void SetBlock(IList<int> bcs, IList<int> brs, IHessMatrix subhess)
-        {
-            HDebug.Assert(bcs.Count == subhess.ColBlockSize);
-            HDebug.Assert(brs.Count == subhess.RowBlockSize);
-            for(int ic=0; ic<bcs.Count; ic++)
-                for(int ir=0; ir<brs.Count; ir++)
-                {
-                    int bc = bcs[ic];
-                    int br = brs[ir];
-                    SetBlock(bc, br, subhess.GetBlock(ic, ir));
-                }
-        }
         // foreach(Tuple<int, int, MatrixByArr> bc_br_bval in hess.EnumBlocks())
         public abstract bool HasBlock(int bc, int br);
         public abstract bool HasBlockLock(int bc, int br);

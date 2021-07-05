@@ -53,16 +53,16 @@ namespace HTLib2.Bioinfo
         ///////////////////////////////////////////////////////////////////////
         // ReshapeByAtom
         // ReshapeByAtomGroupLeftRight
-        public HessMatrix ReshapeByAtom(IList<int> idxatms) { return ReshapeByAtomImpl(idxatms, true); }
-        public HessMatrix ReshapeByAtom(params int[] idxatms) { return ReshapeByAtomImpl(idxatms, true); }
-        static bool       ReshapeByAtomImpl_selftest = HDebug.IsDebuggerAttached;
-        public HessMatrix ReshapeByAtomImpl(IList<int> idxatms, bool ignNegIdx)
+        public HessMatrix SubMatrixByAtoms(IList<int> idxatms) { return SubMatrixByAtoms(idxatms, true); }
+        public HessMatrix SubMatrixByAtoms(params int[] idxatms) { return SubMatrixByAtoms(idxatms, true); }
+        static bool       SubMatrixByAtoms_selftest = HDebug.IsDebuggerAttached;
+        public HessMatrix SubMatrixByAtoms(IList<int> idxatms, bool ignNegIdx)
         {
             HessMatrix reshape = SubMatrixByAtoms(ignNegIdx, idxatms);
 
-            if(ReshapeByAtomImpl_selftest && idxatms.Count<3000)
+            if(SubMatrixByAtoms_selftest && idxatms.Count<3000)
             {
-                ReshapeByAtomImpl_selftest = false;
+                SubMatrixByAtoms_selftest = false;
                 HessMatrix treshape = ReshapeByAtomImpl0(idxatms, ignNegIdx);
                 HDebug.Assert(HessMatrix.HessMatrixSparseEqual(reshape, treshape));
             }
@@ -83,7 +83,7 @@ namespace HTLib2.Bioinfo
                         {
                             if(GetBlock(bc, br) != null)
                             {
-                                HDebug.AssertTolerance(0, GetBlock(bc, br).ToArray());
+                                HDebug.Assert(0 == GetBlock(bc, br).ToArray().MaxAbs());
                             }
                         }
                         continue;

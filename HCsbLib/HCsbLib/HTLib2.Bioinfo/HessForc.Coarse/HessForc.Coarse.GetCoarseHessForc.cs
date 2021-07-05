@@ -91,7 +91,7 @@ namespace HTLib2.Bioinfo
                         idxs.AddRange(idxRemv);
                     HDebug.Assert(idxs.Count == idxs.HToHashSet().Count);
 
-                    H = hessforc.hess.ReshapeByAtom(idxs);
+                    H = hessforc.hess.SubMatrixByAtoms(idxs);
                     numca    = idxKeep.Length;
                     F        = hessforc.forc .ToArray().HSelectByIndex(idxs);
                     reMass   = hessforc.mass .ToArray().HSelectByIndex(idxs);

@@ -24,7 +24,7 @@ namespace HTLib2.Bioinfo
             HDebug.Assert(idxs[0] == atm1);
             HDebug.Assert(idxs[1] == atm2);
 
-            HessMatrix H = hess.ReshapeByAtom(idxs);
+            HessMatrix H = hess.SubMatrixByAtoms(idxs);
             H = Hess.GetHessFixDiag(H);
             HDebug.Assert(H.ColSize == H.RowSize, H.RowSize == idxs.Length*3);
             // H should have 6 zero eigenvalues !!
@@ -74,7 +74,7 @@ namespace HTLib2.Bioinfo
             HDebug.Assert(idxs[0] == atm1);
             HDebug.Assert(idxs[1] == atm2);
 
-            HessMatrix H = hess.ReshapeByAtom(idxs);
+            HessMatrix H = hess.SubMatrixByAtoms(idxs);
             H = Hess.GetHessFixDiag(H);
             HDebug.Assert(H.ColSize == H.RowSize, H.RowSize == idxs.Length*3);
             // H should have 6 zero eigenvalues !!

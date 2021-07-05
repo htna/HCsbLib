@@ -61,7 +61,7 @@ namespace HTLib2.Bioinfo
                         idxs.AddRange(idxRemv);
                     HDebug.Assert(idxs.Count == idxs.HToHashSet().Count);
 
-                    H = hessinfo.hess.ReshapeByAtom(idxs);
+                    H = hessinfo.hess.SubMatrixByAtoms(idxs);
                     numca    = idxKeep.Length;
                     reMass   = hessinfo.mass .ToArray().HSelectByIndex(idxs);
                     reAtoms  = hessinfo.atoms.ToArray().HSelectByIndex(idxs);
