@@ -9,9 +9,9 @@ namespace HTLib2
 {
 	public struct ValueMatrix3x3 : IMatrix<double>
 	{
-		double v00, v01, v02;
-        double v10, v11, v12;
-        double v20, v21, v22;
+		public double v00, v01, v02;
+        public double v10, v11, v12;
+        public double v20, v21, v22;
 
         public int ColSize { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return 3; } }    //public int NumRows { get { return ColSize; } }
         public int RowSize { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return 3; } }    //public int NumCols { get { return RowSize; } }
