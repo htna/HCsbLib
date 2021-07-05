@@ -24,7 +24,7 @@ namespace HCsbLibExplsolv
                     HDebug.Assert(tokens.Length == 1);
                     int size = int.Parse(tokens[0]);
                     HDebug.Assert(size%3 == 0);
-                    hess = HessMatrix.ZerosHessMatrix(size, size);
+                    hess = HessMatrix.Zeros(size, size);
                 }
                 else
                 {
