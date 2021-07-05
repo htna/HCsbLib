@@ -41,9 +41,9 @@ namespace HTLib2.Bioinfo
         public abstract MatrixByArr GetBlockLock(int bc, int br);
         public abstract void SetBlock(int bc, int br, MatrixByArr bval);
         public abstract void SetBlockLock(int bc, int br, MatrixByArr bval);
-        // foreach(Tuple<int, int, MatrixByArr> bc_br_bval in hess.EnumBlocks())
         public abstract bool HasBlock(int bc, int br);
         public abstract bool HasBlockLock(int bc, int br);
+        // foreach(Tuple<int, int, MatrixByArr> bc_br_bval in hess.EnumBlocks())
         public abstract IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks();
         public abstract IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocksInCols(int[] lstBlkCol);
         public IEnumerable<Tuple<int, Tuple<int, int, MatrixByArr>[]>> EnumColBlocksAll()
