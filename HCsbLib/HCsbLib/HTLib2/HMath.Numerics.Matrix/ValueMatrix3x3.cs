@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
@@ -12,11 +13,11 @@ namespace HTLib2
         double v10, v11, v12;
         double v20, v21, v22;
 
-        public int ColSize { get { return 3; } }    //public int NumRows { get { return ColSize; } }
-        public int RowSize { get { return 3; } }    //public int NumCols { get { return RowSize; } }
-        public double this[int  c, int  r] { get { return GetAt(c, r); } set { SetAt(c, r, value); } }
-        public double this[long c, long r] { get { return GetAt(c, r); } set { SetAt(c, r, value); } }
-        public double[,] ToArray()
+        public int ColSize { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return 3; } }    //public int NumRows { get { return ColSize; } }
+        public int RowSize { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return 3; } }    //public int NumCols { get { return RowSize; } }
+        public double this[int  c, int  r] { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return GetAt(c, r); } [MethodImpl(MethodImplOptions.AggressiveInlining)] set { SetAt(c, r, value); } }
+        public double this[long c, long r] { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return GetAt(c, r); } [MethodImpl(MethodImplOptions.AggressiveInlining)] set { SetAt(c, r, value); } }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public double[,] ToArray()
         {
             return new double[3, 3]
             {
@@ -25,32 +26,32 @@ namespace HTLib2
                 { v20, v21, v22 },
             };
         }
-        public double GetAt(long c, long r)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public double GetAt(long c, long r)
         {
             if(c == 0)
             {
-                if(r == 0) return v00;
-                if(r == 1) return v01;
-                if(r == 2) return v02;
-                throw new IndexOutOfRangeException();
+                if     (r == 0) return v00;
+                else if(r == 1) return v01;
+                else if(r == 2) return v02;
+                else throw new IndexOutOfRangeException();
             }
-            if(c == 1)
+            else if(c == 1)
             {
-                if(r == 0) return v10;
-                if(r == 1) return v11;
-                if(r == 2) return v12;
-                throw new IndexOutOfRangeException();
+                if     (r == 0) return v10;
+                else if(r == 1) return v11;
+                else if(r == 2) return v12;
+                else throw new IndexOutOfRangeException();
             }
-            if(c == 2)
+            else if(c == 2)
             {
-                if(r == 0) return v20;
-                if(r == 1) return v21;
-                if(r == 2) return v22;
-                throw new IndexOutOfRangeException();
+                if     (r == 0) return v20;
+                else if(r == 1) return v21;
+                else if(r == 2) return v22;
+                else throw new IndexOutOfRangeException();
             }
             throw new IndexOutOfRangeException();
         }
-        public void SetAt(long c, long r, double value)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void SetAt(long c, long r, double value)
         {
             if(c == 0)
             {
@@ -75,7 +76,31 @@ namespace HTLib2
             }
             throw new IndexOutOfRangeException();
         }
-
+        public static implicit operator double[,] (ValueMatrix3x3 mat)
+        {
+            return mat.ToArray();
+            //  return new double[3, 3]
+            //  {
+            //      { v00, v01, v02 },
+            //      { v10, v11, v12 },
+            //      { v20, v21, v22 },
+            //  };
+        }
+        public static implicit operator ValueMatrix3x3 (double[,] mat)
+        {
+            return new ValueMatrix3x3
+            {
+                v00 = mat[0,0],
+                v01 = mat[0,1],
+                v02 = mat[0,2],
+                v10 = mat[1,0],
+                v11 = mat[1,1],
+                v12 = mat[1,2],
+                v20 = mat[2,0],
+                v21 = mat[2,1],
+                v22 = mat[2,2],
+            };
+        }
 		////////////////////////////////////////////////////////////////////////////////////
 		// Functions
         //public Matrix Transpose()
