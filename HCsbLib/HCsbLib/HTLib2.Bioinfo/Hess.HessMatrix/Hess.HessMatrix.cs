@@ -30,6 +30,22 @@ namespace HTLib2.Bioinfo
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
+        // Operators
+        //public static HessMatrix operator-(HessMatrix left               ) { HessMatrix mat = left.CloneHess(); mat.UpdateMul(-1      ); return mat; }
+        //public static HessMatrix operator+(HessMatrix left, IMatrix right) { HessMatrix mat = left.CloneHess(); mat.UpdateAdd(right, 1); return mat; }
+        //public static HessMatrix operator-(HessMatrix left, IMatrix right) { HessMatrix mat = left.CloneHess(); mat.UpdateAdd(right,-1); return mat; }
+        //public static HessMatrix operator*(HessMatrix left, IMatrix right) { HessMatrix mat = HessMatrix.GetMul(left, right);            return mat; }
+        public static HessMatrix operator* (HessMatrix left, HessMatrix  right) {HessMatrix mat = HessMatrixStatic.GetMulImpl(null, true, left, right); return mat; }
+        public static HessMatrix operator* (HessMatrix left, double      right) { HessMatrix mat = left .CloneHessMatrix(); mat.UpdateMul(right  );     return mat; }
+        public static HessMatrix operator* (double     left, HessMatrix  right) { HessMatrix mat = right.CloneHessMatrix(); mat.UpdateMul(left   );     return mat; }
+        public static HessMatrix operator/ (HessMatrix left, double      right) { HessMatrix mat = left .CloneHessMatrix(); mat.UpdateMul(1/right);     return mat; }
+
+        public static HessMatrix operator+(HessMatrix left, HessMatrix right) { HessMatrix mat = left.CloneHessMatrix(); mat.UpdateAdd(right,  1, null, 0); return mat; }
+        public static HessMatrix operator-(HessMatrix left, HessMatrix right) { HessMatrix mat = left.CloneHessMatrix(); mat.UpdateAdd(right, -1, null, 0); return mat; }
+      //public static bool      operator==(HessMatrix left, HessMatrix right) { return HessMatrixStatic.HessMatrixEqual(left, right); }
+      //public static bool      operator!=(HessMatrix left, HessMatrix right) { return HessMatrixStatic.HessMatrixEqual(left, right) == false; }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
         // Matrix
         public override int ColSize       { get { return colblksize * 3; } }    //public int NumRows { get { return ColSize; } }
         public override int RowSize       { get { return rowblksize * 3; } }    //public int NumCols { get { return RowSize; } }
