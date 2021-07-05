@@ -23,6 +23,8 @@ namespace HTLib2.Bioinfo
 
         public static HessMatrix operator+(HessMatrix left, HessMatrix right) { HessMatrix mat = left.CloneHessMatrix(); mat.UpdateAdd(right,  1, null, 0); return mat; }
         public static HessMatrix operator-(HessMatrix left, HessMatrix right) { HessMatrix mat = left.CloneHessMatrix(); mat.UpdateAdd(right, -1, null, 0); return mat; }
+        public static bool      operator==(HessMatrix left, HessMatrix right) { return HessMatrixStatic.HessMatrixEqual(left, right); }
+        public static bool      operator!=(HessMatrix left, HessMatrix right) { return HessMatrixStatic.HessMatrixEqual(left, right) == false; }
     }
     public static partial class HessMatrixStatic
     {

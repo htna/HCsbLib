@@ -298,9 +298,9 @@
     <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessStem.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.IHessMatrix.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrix.Oper.cs" />
-    <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrix.ReshapeByAtom.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixStatic_SubMatrixByAtoms2.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixStatic.cs" />
-    <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrix.SubMatrixByAtoms.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixStatic_SubMatrixByAtoms1.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrix.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Archive\Hess.HessMatrixBlkMat.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixDense.cs" />

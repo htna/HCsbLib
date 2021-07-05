@@ -5,15 +5,15 @@ using System.Text;
 
 namespace HTLib2.Bioinfo
 {
-    public partial class HessMatrix : IHessMatrix
+    public partial class HessMatrixStatic
     {
         ///////////////////////////////////////////////////////////////////////
         // MakeNearZeroBlockAsZero
-        public int MakeNearZeroBlockAsZero(double thres_absmax)
+        public static int MakeNearZeroBlockAsZero(this HessMatrix _this, double thres_absmax)
         {
             double min_absmax_bval = double.MaxValue;
             List<Tuple<int,int>> lstIdxToMakeZero = new List<Tuple<int, int>>();
-            foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in EnumBlocks())
+            foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in _this.EnumBlocks())
             {
                 int bc   = bc_br_bval.Item1;
                 int br   = bc_br_bval.Item2;
@@ -29,17 +29,17 @@ namespace HTLib2.Bioinfo
             {
                 int bc = bc_br.Item1;
                 int br = bc_br.Item2;
-                HDebug.Assert(GetBlock(bc,br).HAbsMax() < thres_absmax);
-                SetBlock(bc, br, null);
+                HDebug.Assert(_this.GetBlock(bc,br).HAbsMax() < thres_absmax);
+                _this.SetBlock(bc, br, null);
             }
             return lstIdxToMakeZero.Count;
         }
         ///////////////////////////////////////////////////////////////////////
         // UpdateSubMatrixByAtom
-        public void UpdateSubMatrixByAtom(HessMatrix submat, IList<int> idxcolatoms, IList<int> idxrowatoms)
+        public static void UpdateSubMatrixByAtom(this HessMatrix _this, HessMatrix submat, IList<int> idxcolatoms, IList<int> idxrowatoms)
         {
-            HDebug.Assert(idxcolatoms.Max() < ColBlockSize);
-            HDebug.Assert(idxrowatoms.Max() < RowBlockSize);
+            HDebug.Assert(idxcolatoms.Max() < _this.ColBlockSize);
+            HDebug.Assert(idxrowatoms.Max() < _this.RowBlockSize);
             HDebug.Assert(submat.ColBlockSize == idxcolatoms.Count);
             HDebug.Assert(submat.RowBlockSize == idxrowatoms.Count);
             for(int ic=0; ic<idxcolatoms.Count; ic++)
@@ -47,48 +47,48 @@ namespace HTLib2.Bioinfo
                 {
                     int hess_ic = idxcolatoms[ic];
                     int hess_ir = idxrowatoms[ir];
-                    SetBlock(hess_ic, hess_ir, submat.GetBlock(ic, ir).CloneT());
+                    _this.SetBlock(hess_ic, hess_ir, submat.GetBlock(ic, ir).CloneT());
                 }
         }
         ///////////////////////////////////////////////////////////////////////
         // ReshapeByAtom
         // ReshapeByAtomGroupLeftRight
-        public HessMatrix SubMatrixByAtoms(IList<int> idxatms) { return SubMatrixByAtoms(idxatms, true); }
-        public HessMatrix SubMatrixByAtoms(params int[] idxatms) { return SubMatrixByAtoms(idxatms, true); }
-        static bool       SubMatrixByAtoms_selftest = HDebug.IsDebuggerAttached;
-        public HessMatrix SubMatrixByAtoms(IList<int> idxatms, bool ignNegIdx)
+        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, IList<int>   idxatms) { return SubMatrixByAtoms(_this, idxatms, true); }
+        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, params int[] idxatms) { return SubMatrixByAtoms(_this, idxatms, true); }
+        static bool              SubMatrixByAtoms_selftest = HDebug.IsDebuggerAttached;
+        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, IList<int> idxatms, bool ignNegIdx)
         {
-            HessMatrix reshape = SubMatrixByAtoms(ignNegIdx, idxatms);
+            HessMatrix reshape = SubMatrixByAtoms(_this, ignNegIdx, idxatms);
 
             if(SubMatrixByAtoms_selftest && idxatms.Count<3000)
             {
                 SubMatrixByAtoms_selftest = false;
-                HessMatrix treshape = ReshapeByAtomImpl0(idxatms, ignNegIdx);
-                HDebug.Assert(HessMatrix.HessMatrixSparseEqual(reshape, treshape));
+                HessMatrix treshape = ReshapeByAtomImpl0(_this, idxatms, ignNegIdx);
+                HDebug.Assert(HessMatrixStatic.HessMatrixEqual(reshape, treshape));
             }
             return reshape;
         }
-        public HessMatrix ReshapeByAtomImpl0(IList<int> idxatms, bool ignNegIdx)
+        public static HessMatrix ReshapeByAtomImpl0(this HessMatrix _this, IList<int> idxatms, bool ignNegIdx)
         {
             HDebug.Assert(idxatms.Count == idxatms.HUnion().Length); // check no-duplication of indexes
-            HessMatrix reshape = Zeros(idxatms.Count*3, idxatms.Count*3);
+            HessMatrix reshape = HessMatrix.Zeros(idxatms.Count*3, idxatms.Count*3);
             for(int nbc=0; nbc<idxatms.Count; nbc++)
                 for(int nbr=0; nbr<idxatms.Count; nbr++)
                 {
                     int bc = idxatms[nbc]; if(ignNegIdx && bc < 0) continue;
                     int br = idxatms[nbr]; if(ignNegIdx && br < 0) continue;
-                    if(HasBlock(bc, br) == false)
+                    if(_this.HasBlock(bc, br) == false)
                     {
                         if(HDebug.IsDebuggerAttached)
                         {
-                            if(GetBlock(bc, br) != null)
+                            if(_this.GetBlock(bc, br) != null)
                             {
-                                HDebug.Assert(0 == GetBlock(bc, br).ToArray().MaxAbs());
+                                HDebug.Assert(0 == _this.GetBlock(bc, br).ToArray().MaxAbs());
                             }
                         }
                         continue;
                     }
-                    MatrixByArr blkrc = GetBlock(bc, br);
+                    MatrixByArr blkrc = _this.GetBlock(bc, br);
                     reshape.SetBlock(nbc, nbr, blkrc.CloneT());
                 }
             return reshape;
@@ -101,7 +101,7 @@ namespace HTLib2.Bioinfo
             //public int                   numright              = 0;
             //public Tuple<int[], int[]>[] lstGroupNIdxLeftRight = null;
         };
-        public InfoReshapeByAtomGroupLeftRight ReshapeByAtomGroupLeftRight(IList<Tuple<int[], int[]>> lstGroupIdxLeftRight)
+        public static InfoReshapeByAtomGroupLeftRight ReshapeByAtomGroupLeftRight(this HessMatrix _this, IList<Tuple<int[], int[]>> lstGroupIdxLeftRight)
         {
             throw new NotImplementedException();
             //Tuple<int[], int[]>[] lstGroupNIdxLeftRight = new Tuple<int[], int[]>[lstGroupIdxLeftRight.Count];

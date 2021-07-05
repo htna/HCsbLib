@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace HTLib2.Bioinfo
 {
-    public partial class HessMatrix : IHessMatrix
+    public static partial class HessMatrixStatic
     {
-        public HessMatrix CorrectHessDiag()
+        public static HessMatrix CorrectHessDiag(this HessMatrix _this)
         {
-            return Hess.CorrectHessDiag(this);
+            return Hess.CorrectHessDiag(_this);
         }
 
-        public HessMatrix SubMatrixByAtoms(bool ignNegIdx, IList<int> idxAtoms) { return SubMatrixByAtomsImpl(ignNegIdx, idxAtoms); }
-        public HessMatrix SubMatrixByAtoms(bool ignNegIdx, params int[] idxAtoms) { return SubMatrixByAtomsImpl(ignNegIdx, idxAtoms); }
+        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, bool ignNegIdx, IList<int>   idxAtoms) { return SubMatrixByAtomsImpl(_this, ignNegIdx, idxAtoms); }
+        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, bool ignNegIdx, params int[] idxAtoms) { return SubMatrixByAtomsImpl(_this, ignNegIdx, idxAtoms); }
         public static bool       SubMatrixByAtomsImpl_selftest = HDebug.IsDebuggerAttached;
-        public HessMatrix SubMatrixByAtomsImpl(bool ignNegIdx, IList<int> idxAtoms)
+        public static HessMatrix SubMatrixByAtomsImpl(this HessMatrix _this, bool ignNegIdx, IList<int> idxAtoms)
         {
             if(SubMatrixByAtomsImpl_selftest)
             {
@@ -46,33 +46,36 @@ namespace HTLib2.Bioinfo
                 HDebug.Exception(0 == max_tdiffhess);
             }
 
-            HessMatrix nhess = SubMatrixByAtomsImpl(ignNegIdx, idxAtoms, idxAtoms, true);
+            HessMatrix nhess = SubMatrixByAtomsImpl(_this, ignNegIdx, idxAtoms, idxAtoms, true);
 
             if(HDebug.IsDebuggerAttached && idxAtoms.Count < 1000)
             {
                 List<int> idx3Atoms = new List<int>();
                 foreach(int idx in idxAtoms) for(int i=0; i<3; i++) idx3Atoms.Add(idx*3+i);
-                Matrix tnhess = this.ToMatrix().SubMatrix(idx3Atoms, idx3Atoms);
+                Matrix tnhess = _this.ToMatrix().SubMatrix(idx3Atoms, idx3Atoms);
                 double max2_tdiffhess = (nhess.ToMatrix() - tnhess).EnumNonZeroValues().HEnumAbs().HMax();
                 HDebug.AssertTolerance(0.00000001, max2_tdiffhess);
             }
             return nhess;
         }
 
-        public HessMatrix SubMatrixByAtoms
-            ( bool ignNegIdx        // [false]
+        public static HessMatrix SubMatrixByAtoms
+            ( this HessMatrix _this
+            , bool ignNegIdx        // [false]
             , IList<int> idxColAtoms
             , IList<int> idxRowAtoms
             , bool parallel=false
             )
         {
             return SubMatrixByAtomsImpl
-                ( ignNegIdx, idxColAtoms, idxRowAtoms, true
+                ( _this
+                , ignNegIdx, idxColAtoms, idxRowAtoms, true
                 , parallel: parallel
                 );
         }
-        public HessMatrix SubMatrixByAtoms
-            ( bool ignNegIdx        // [false]
+        public static HessMatrix SubMatrixByAtoms
+            ( this HessMatrix _this
+            , bool ignNegIdx        // [false]
             , IList<int> idxColAtoms
             , IList<int> idxRowAtoms
             , bool bCloneBlock
@@ -80,13 +83,15 @@ namespace HTLib2.Bioinfo
             )
         {
             return SubMatrixByAtomsImpl
-                ( ignNegIdx, idxColAtoms, idxRowAtoms, bCloneBlock
+                ( _this
+                , ignNegIdx, idxColAtoms, idxRowAtoms, bCloneBlock
                 , parallel: parallel
                 );
         }
         public static bool       SubMatrixByAtomsImpl_selftest2 = HDebug.IsDebuggerAttached;
-        public HessMatrix SubMatrixByAtomsImpl
-            ( bool ignNegIdx        // [false]
+        public static HessMatrix SubMatrixByAtomsImpl
+            ( this HessMatrix _this
+            , bool ignNegIdx        // [false]
             , IList<int> idxColAtoms
             , IList<int> idxRowAtoms
             , bool bCloneBlock
@@ -120,7 +125,7 @@ namespace HTLib2.Bioinfo
                 row_idx2nidx[idx] = row_idx2nidx[idx].HAdd(nidx);
             }
 
-            HessMatrix nhess = Zeros(idxColAtoms.Count*3, idxRowAtoms.Count*3);
+            HessMatrix nhess = HessMatrix.Zeros(idxColAtoms.Count*3, idxRowAtoms.Count*3);
             {
                 Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
                 {
@@ -143,15 +148,15 @@ namespace HTLib2.Bioinfo
                     }
                 };
 
-                if(parallel)    Parallel.ForEach(         EnumBlocksInCols(col_idxs.ToArray()), func           );
-                else            foreach(var bc_br_bval in EnumBlocksInCols(col_idxs.ToArray())) func(bc_br_bval);
+                if(parallel)    Parallel.ForEach(         _this.EnumBlocksInCols(col_idxs.ToArray()), func           );
+                else            foreach(var bc_br_bval in _this.EnumBlocksInCols(col_idxs.ToArray())) func(bc_br_bval);
             
             }
             if(SubMatrixByAtomsImpl_selftest2)
             {
                 SubMatrixByAtomsImpl_selftest2 = false;
-                HessMatrix tnhess = SubMatrixByAtomsImpl0(idxColAtoms, idxRowAtoms);
-                HDebug.Assert(HessMatrix.HessMatrixSparseEqual(nhess, tnhess));
+                HessMatrix tnhess = SubMatrixByAtomsImpl0(_this, idxColAtoms, idxRowAtoms);
+                HDebug.Assert(HessMatrixStatic.HessMatrixEqual(nhess, tnhess));
                 //////////////////////////////////////////
                 Matrix thess1 = new double[,]{{0,1,2,3,4,5}
                                              ,{1,2,3,4,5,6}
@@ -170,7 +175,7 @@ namespace HTLib2.Bioinfo
             return nhess;
         }
         public static bool       SubMatrixByAtomsImpl0_selftest2 = HDebug.IsDebuggerAttached;
-        public HessMatrix SubMatrixByAtomsImpl0(IList<int> idxColAtoms, IList<int> idxRowAtoms)
+        public static HessMatrix SubMatrixByAtomsImpl0(this HessMatrix _this, IList<int> idxColAtoms, IList<int> idxRowAtoms)
         {
             if(SubMatrixByAtomsImpl0_selftest2)
             {
@@ -188,7 +193,7 @@ namespace HTLib2.Bioinfo
                                               ,{5,6,7}};
                 HDebug.AssertToleranceMatrix(0, thess3.ToMatrix()-thess4);
             }
-            HessMatrix nhess = Zeros(idxColAtoms.Count*3, idxRowAtoms.Count*3);
+            HessMatrix nhess = HessMatrix.Zeros(idxColAtoms.Count*3, idxRowAtoms.Count*3);
 
             for(int nbc=0; nbc<idxColAtoms.Count; nbc++)
             {
@@ -196,9 +201,9 @@ namespace HTLib2.Bioinfo
                 {
                     int bc = idxColAtoms[nbc]; if(bc < 0) continue;
                     int br = idxRowAtoms[nbr]; if(br < 0) continue;
-                    if(HasBlock(bc, br) == false)
+                    if(_this.HasBlock(bc, br) == false)
                         continue;
-                    MatrixByArr block = GetBlock(bc, br).CloneT(); // hessian matrix for interaction between atom i and j
+                    MatrixByArr block = _this.GetBlock(bc, br).CloneT(); // hessian matrix for interaction between atom i and j
                     HDebug.Assert(block.IsZero() == false);
                     nhess.SetBlock(nbc, nbr, block);
                 }
@@ -207,27 +212,27 @@ namespace HTLib2.Bioinfo
             return nhess;
         }
 
-        public static bool HessMatrixSparseEqual(HessMatrix hess, HessMatrix equal)
+        public static bool HessMatrixEqual(HessMatrix left, HessMatrix right)
         {
-            if(hess.ColSize != equal.ColSize) return false;
-            if(hess.RowSize != equal.RowSize) return false;
+            if(left.ColSize != right.ColSize) return false;
+            if(left.RowSize != right.RowSize) return false;
 
-            foreach(var bc_br_bval in hess.EnumBlocks())
+            foreach(var bc_br_bval in left.EnumBlocks())
             {
                 int bc  = bc_br_bval.Item1;
                 int br  = bc_br_bval.Item2;
                 var bv  = bc_br_bval.Item3;
-                var bv0 = equal.GetBlock(bc, br);
+                var bv0 = right.GetBlock(bc, br);
                 if(bv0 == null) return false;
                 if((bv - bv0).HAbsMax() != 0) return false;
             }
 
-            foreach(var bc_br_bval in equal.EnumBlocks())
+            foreach(var bc_br_bval in right.EnumBlocks())
             {
                 int bc  = bc_br_bval.Item1;
                 int br  = bc_br_bval.Item2;
                 var bv  = bc_br_bval.Item3;
-                var bv0 = hess.GetBlock(bc, br);
+                var bv0 = left.GetBlock(bc, br);
                 if(bv0 == null) return false;
                 if((bv - bv0).HAbsMax() != 0) return false;
             }
