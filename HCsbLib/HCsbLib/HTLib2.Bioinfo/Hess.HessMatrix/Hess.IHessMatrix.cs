@@ -57,7 +57,6 @@ namespace HTLib2.Bioinfo
         public abstract bool HasBlock(int bc, int br);
         public abstract bool HasBlockLock(int bc, int br);
         public abstract IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks();
-        //public abstract IEnumerable<Tuple<int, int, MatrixByArr>> EnumBlocksInCols_dep(int[] lstBlkCol);
         public abstract IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocksInCols(int[] lstBlkCol);
         public IEnumerable<Tuple<int, Tuple<int, int, MatrixByArr>[]>> EnumColBlocksAll()
         {
@@ -97,7 +96,5 @@ namespace HTLib2.Bioinfo
                 yield return new Tuple<int, Tuple<int, int, MatrixByArr>[]>(ibc, rowblk);
             }
         }
-
-        public new abstract IHessMatrix Zeros(int colsize, int rowsize);
     }
 }

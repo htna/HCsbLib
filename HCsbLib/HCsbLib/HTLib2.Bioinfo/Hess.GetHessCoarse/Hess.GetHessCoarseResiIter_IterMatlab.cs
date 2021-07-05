@@ -79,7 +79,7 @@ namespace HTLib2.Bioinfo
                                                 );
                     }
                     Matrix CG_H = Matlab.GetMatrix("CG.H");
-                    CGH = HessMatrix.FromMatrix( CG_H );
+                    CGH = CG_H.ToHessMatrix();
                 }
 
                 return new CGetHessCoarseResiIterImpl

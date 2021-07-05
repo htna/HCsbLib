@@ -147,7 +147,7 @@ namespace HTLib2.Bioinfo
 
                     ////////////////////////////////////////////////////////////////////////////////////////
                     // Replace A -> H
-                    H = Matlab.GetMatrix("HH", HessMatrix.ZerosHessMatrix, true);
+                    H = Matlab.GetMatrix("HH", HessMatrix.Zeros, true);
                     F = Matlab.GetVector("FF");
                     Matlab.Execute("clear;");
 

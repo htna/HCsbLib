@@ -42,7 +42,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                HessMatrix CC = HessMatrix.ZerosHessMatrix(C.ColSize, Cbr_CCbr.Count*3);
+                HessMatrix CC = HessMatrix.Zeros(C.ColSize, Cbr_CCbr.Count*3);
                 {
                     Action<ValueTuple<int, int, MatrixByArr>, HessMatrix, Dictionary<int, int>> func =
                         delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval, HessMatrix _CC, Dictionary<int, int> _Cbr_CCbr)
@@ -98,7 +98,7 @@ namespace HTLib2.Bioinfo
                         BB_invDD_GG = BBInvDDCC_BBInvDDGG.Item2;
                     }
 
-                    B_invD_C = HessMatrix.ZerosHessMatrix(C.RowSize, C.RowSize);
+                    B_invD_C = HessMatrix.Zeros(C.RowSize, C.RowSize);
                     {
                         //  for(int bcc=0; bcc<CCbr_Cbr.Count; bcc++)
                         //  {

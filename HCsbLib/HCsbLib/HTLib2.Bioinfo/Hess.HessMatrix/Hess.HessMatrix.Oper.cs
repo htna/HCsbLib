@@ -48,7 +48,7 @@ namespace HTLib2.Bioinfo
                                                  ,{3,4,5,6,7,8}
                                                  ,{4,5,6,7,8,9}
                                                  ,{5,6,7,8,9,0}};
-                    HessMatrix h1 = HessMatrix.FromMatrix(h0);
+                    HessMatrix h1 = h0.ToHessMatrix();
                     Matrix t0 = MatrixStatic.GetMul(MatrixStatic.GetMul(h0, h0), h0);
                     {
                         Matrix t1 = GetMulImpl(ila, false, h1, h1, h1).ToArray(); double d1=(t0-t1).HAbsMax(); HDebug.Assert(0 == d1);
@@ -76,7 +76,7 @@ namespace HTLib2.Bioinfo
                                          ,{3,4,5,6,7,8}
                                          ,{4,5,6,7,8,9}
                                          ,{5,6,7,8,9,0}};
-                HessMatrix h2 = HessMatrix.FromMatrix(h1);
+                HessMatrix h2 = h1.ToHessMatrix();
                 Matrix     h11 = MatrixStatic.GetMul  (h1, h1);
                 HessMatrix h22 = HessMatrixStatic.GetMulImpl(h2, h2, null, false);
                 Matrix     hdiff = h11 - h22.ToMatrix();
@@ -90,7 +90,7 @@ namespace HTLib2.Bioinfo
             foreach(var ir_col in right.EnumColBlocksAll()) right_ir_cols.Add(ir_col.Item1, ir_col.Item2.HToDictionaryWithKeyItem1());
 
             HessMatrix mul = null;
-            mul = HessMatrix.ZerosHessMatrix(left.ColSize, right.RowSize);
+            mul = HessMatrix.Zeros(left.ColSize, right.RowSize);
             for(int ic=0; ic<left.ColBlockSize; ic++)
             {
                 var left_row = left_ic_rows[ic];
@@ -235,7 +235,7 @@ namespace HTLib2.Bioinfo
         }
         public static HessMatrix Tr(this HessMatrix _this)
         {
-            HessMatrix tr = HessMatrix.ZerosHessMatrix(_this.RowSize, _this.ColSize);
+            HessMatrix tr = HessMatrix.Zeros(_this.RowSize, _this.ColSize);
             foreach(var bc_br_bval in _this.EnumBlocks())
             {
                 int bc = bc_br_bval.Item1;

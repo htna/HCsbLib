@@ -14,10 +14,7 @@ namespace HTLib2.Bioinfo
                 if(modes == null)
                     modes = ToModes(masses);
 
-                HessMatrix ohess = HessMatrix.FromMatrix
-                (
-                    modes.GetHessian(masses,la)
-                );
+                HessMatrix ohess = modes.GetHessian(masses,la);
                 double corr = HMath.HCorr(hess.ToArray().HToArray1D(), ohess.ToArray().HToArray1D());
                 System.Console.Write("corr(TestHess,HessVibr:{0}  ", corr);
 

@@ -243,7 +243,7 @@ namespace HTLib2.Bioinfo
                                 Matlab.Execute("HHH = A - BinvD * C;");
                                 Matlab.Execute("FFF = F - BinvD * G;");
                                 // return
-                                HHH = Matlab.GetMatrix("HHH", HessMatrix.ZerosHessMatrix, true);
+                                HHH = Matlab.GetMatrix("HHH", HessMatrix.Zeros, true);
                                 FFF = Matlab.GetVector("FFF");
                                 Matlab.Execute("clear");
                             }
@@ -326,7 +326,7 @@ namespace HTLib2.Bioinfo
                                   //Matlab.Execute("load('HHH.mat'   ,'FFF');           ");
                                 }
 
-                                HHH = Matlab.GetMatrix<HessMatrix>("HHH", HessMatrix.ZerosHessMatrix, true);
+                                HHH = Matlab.GetMatrix<HessMatrix>("HHH", HessMatrix.Zeros, true);
                                 FFF = Matlab.GetVector("FFF");
                                 Matlab.Execute("clear");
                             }

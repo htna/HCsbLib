@@ -12,7 +12,7 @@ public partial class Hess
         public static HessMatrix FourthTerm(IList<Vector> caArray, double Epsilon, HessMatrix hessian)
         {
             if(hessian == null)
-                hessian = HessMatrix.FromMatrix(new double[caArray.Count*3, caArray.Count*3]);
+                hessian = HessMatrix.Zeros(caArray.Count*3, caArray.Count*3);
 
             for(int i=0; i<caArray.Count; i++)
             {
@@ -40,7 +40,7 @@ public partial class Hess
                 if(caArray.Count == 2)
                     // avoid stack overflow
                     return;
-                HessMatrix lhess0 = HessMatrix.FromMatrix(new double[6, 6]);
+                HessMatrix lhess0 = HessMatrix.Zeros(6, 6);
                 FourthTerm(lcaArray, Epsilon, lhess0, 0, 1);
                 FourthTerm(lcaArray, Epsilon, lhess0, 1, 0);
                 double r2 = (lcaArray[0] - lcaArray[1]).Dist2;

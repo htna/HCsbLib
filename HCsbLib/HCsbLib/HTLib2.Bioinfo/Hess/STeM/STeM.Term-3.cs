@@ -13,7 +13,7 @@ public partial class Hess
                                       , bool useArnaud96=false)
         {
             if(hessian == null)
-                hessian = HessMatrix.FromMatrix(new double[caArray.Count*3, caArray.Count*3]);
+                hessian = HessMatrix.Zeros(caArray.Count*3, caArray.Count*3);
 
             for(int i=0; i<caArray.Count-3; i++)
                 ThirdTerm(caArray, K_phi1, K_phi3, hessian, i, i+1, i+2, i+3, useArnaud96:useArnaud96);

@@ -447,22 +447,18 @@ namespace HTLib2.Bioinfo
             }
         }
 
-        public override IHessMatrix Zeros(int colsize, int rowsize)
-        {
-            return ZerosHessMatrix(colsize, rowsize);
-        }
         public static bool ZerosSparse_selftest = HDebug.IsDebuggerAttached;
-        public static HessMatrix ZerosHessMatrix(int colsize, int rowsize)
+        public static HessMatrix Zeros(int colsize, int rowsize)
         {
             int layersize = 64;
-            return ZerosHessMatrix(colsize, rowsize, layersize);
+            return Zeros(colsize, rowsize, layersize);
         }
-        public static HessMatrix ZerosHessMatrix(int colsize, int rowsize, int layersize)
+        public static HessMatrix Zeros(int colsize, int rowsize, int layersize)
         {
             if(ZerosSparse_selftest)
             {
                 ZerosSparse_selftest = false;
-                HessMatrix tmat = ZerosHessMatrix(300, 300, layersize);
+                HessMatrix tmat = Zeros(300, 300, layersize);
                 bool bzero = true;
                 for(int c=0; c<tmat.ColSize; c++)
                     for(int r=0; r<tmat.ColSize; r++)
@@ -473,39 +469,6 @@ namespace HTLib2.Bioinfo
 
             HessMatrix mat = new HessMatrix(colsize, rowsize, layersize);
             return mat;
-        }
-        public static HessMatrix FromMatrix(Matrix mat, bool parallel=false)
-        {
-            HDebug.Assert(mat.ColSize % 3 == 0);
-            HDebug.Assert(mat.RowSize % 3 == 0);
-            HessMatrix hess = ZerosHessMatrix(mat.ColSize, mat.RowSize);
-        
-            {
-                HessMatrixDense dense = new HessMatrixDense { hess = mat };
-
-                foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in dense.EnumBlocks())
-                {
-                    int bc           = bc_br_bval.Item1;
-                    int br           = bc_br_bval.Item2;
-                    MatrixByArr bval = bc_br_bval.Item3;
-                    HDebug.Assert(bval != null);
-                    HDebug.Assert(bval.HSumPow2() != 0);
-                    hess.SetBlock(bc, br, bval.CloneT());
-                }
-            }
-        
-            if(HDebug.IsDebuggerAttached)
-            {
-                HDebug.Assert(mat.ColSize == hess.ColSize);
-                HDebug.Assert(mat.RowSize == hess.RowSize);
-                int colsize = mat.ColSize;
-                int rowsize = mat.RowSize;
-                for(int c=0; c<colsize; c++)
-                    for(int r=0; r<rowsize; r++)
-                        HDebug.Assert(hess[c, r] == mat[c, r]);
-            }
-        
-            return hess;
         }
         public HessMatrix(SerializationInfo info, StreamingContext ctxt)
         {

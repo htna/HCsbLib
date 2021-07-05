@@ -11,7 +11,7 @@ namespace HTLib2.Bioinfo
         {
             int size = coords.Count;
             if(hess == null)
-                hess = HessMatrix.ZerosHessMatrix(size*3, size*3);
+                hess = HessMatrix.Zeros(size*3, size*3);
             if(K == null) K = new double[size, size];
             if(F == null) F = new double[size, size];
         /// Parallel.For(0, size, delegate(int i)

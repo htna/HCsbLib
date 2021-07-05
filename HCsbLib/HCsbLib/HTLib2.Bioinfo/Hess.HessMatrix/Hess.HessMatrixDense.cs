@@ -178,11 +178,7 @@ namespace HTLib2.Bioinfo
                     }
         }
 
-        public override IHessMatrix Zeros(int colsize, int rowsize)
-        {
-            return ZerosDense(colsize, rowsize);
-        }
-        public static HessMatrixDense ZerosDense(int colsize, int rowsize)
+        public static HessMatrixDense Zeros(int colsize, int rowsize)
         {
             return new HessMatrixDense
             {

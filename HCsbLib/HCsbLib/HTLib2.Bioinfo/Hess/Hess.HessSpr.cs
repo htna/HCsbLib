@@ -29,7 +29,7 @@ namespace HTLib2.Bioinfo
                     Vector[] pts = new Vector[10];
                     for(int i=0; i<pts.Length; i++)
                         pts[i] = new double[3] { rand.NextDouble(), rand.NextDouble(), rand.NextDouble() };
-                    HessMatrix hess = HessMatrix.ZerosHessMatrix(pts.Length*3, pts.Length*3);
+                    HessMatrix hess = HessMatrix.Zeros(pts.Length*3, pts.Length*3);
                     for(int c=0; c<pts.Length-1; c++)
                         for(int r=c+1; r<pts.Length; r++)
                         {
@@ -84,7 +84,7 @@ namespace HTLib2.Bioinfo
                 /// b0: A
                 int size = coords.Count;
                 if(hessian == null)
-                    hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
+                    hessian = HessMatrix.Zeros(size*3, size*3);
 
                 foreach(Universe.Bond bond in bonds)
                 {
@@ -110,7 +110,7 @@ namespace HTLib2.Bioinfo
                 /// S0: A
                 int size = coords.Count;
                 if(hessian == null)
-                    hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
+                    hessian = HessMatrix.Zeros(size*3, size*3);
 
                 foreach(Universe.Angle angle in angles)
                 {
@@ -154,7 +154,7 @@ namespace HTLib2.Bioinfo
                 /// 
                 int size = coords.Count;
                 if(hessian == null)
-                    hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
+                    hessian = HessMatrix.Zeros(size*3, size*3);
 
                 foreach(Universe.Improper improper in impropers)
                 {
@@ -200,7 +200,7 @@ namespace HTLib2.Bioinfo
                 /// delta: degrees
                 int size = coords.Count;
                 if(hessian == null)
-                    hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
+                    hessian = HessMatrix.Zeros(size*3, size*3);
 
                 foreach(Universe.Dihedral dihedral in dihedrals)
                 {
@@ -480,7 +480,7 @@ namespace HTLib2.Bioinfo
             {
                 int size = coords.Count;
                 if(hessian == null)
-                    hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
+                    hessian = HessMatrix.Zeros(size*3, size*3);
 
                 List<Tuple<double, Universe.Atom, Vector, Universe.Atom, Vector>> dbg_list_strong_Kij = null;
                 double dbg_thld_strong_Kij_pos = +1.0E+05;
@@ -831,7 +831,7 @@ namespace HTLib2.Bioinfo
             {
                 int size = coords.Count;
                 if(hessian == null)
-                    hessian = HessMatrix.ZerosHessMatrix(size*3, size*3);
+                    hessian = HessMatrix.Zeros(size*3, size*3);
 
                 foreach(Universe.Nonbonded14 nonbonded14 in nonbonded14s)
                 {

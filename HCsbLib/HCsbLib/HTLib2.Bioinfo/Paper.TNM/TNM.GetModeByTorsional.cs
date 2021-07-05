@@ -13,24 +13,6 @@ public static partial class Paper
     public partial class TNM
     {
         public static Mode[] GetModeByTorsional(Universe univ
-            , Matrix hessian
-            , List<Universe.RotableInfo> univ_rotinfos=null
-            , Matrix J = null
-            , Vector[] coords=null
-            , HPack<Matrix> optoutJMJ=null // J' M J
-            , HPack<Matrix> optoutJM =null // J' M
-            , Func<Matrix, Tuple<Matrix, Vector>> fnEigSymm = null
-            , Func<Matrix, Matrix, Matrix, Matrix> fnMul = null
-            )
-        {
-            return GetModeByTorsional(univ
-                , HessMatrix.FromMatrix( hessian )
-                , univ_rotinfos, J
-                , coords, optoutJMJ, optoutJM
-                , fnEigSymm, fnMul
-                );
-        }
-        public static Mode[] GetModeByTorsional(Universe univ
             , HessMatrix hessian
             , List<Universe.RotableInfo> univ_rotinfos=null
             , Matrix J = null

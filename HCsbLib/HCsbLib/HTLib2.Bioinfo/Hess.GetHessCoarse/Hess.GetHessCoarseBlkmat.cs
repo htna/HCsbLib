@@ -33,7 +33,7 @@ namespace HTLib2.Bioinfo
                 idxhess.Add(idx*3+2);
             }
 
-            HessMatrix hess_HH = HessMatrix.FromMatrix( hess.InvOfSubMatrixOfInv(idxhess, ila, invtype, invopt) );
+            HessMatrix hess_HH = hess.InvOfSubMatrixOfInv(idxhess, ila, invtype, invopt).ToHessMatrix();
             if(chkDiagToler == null)
                 chkDiagToler = 0.000001;
             HDebug.Assert(Hess.CheckHessDiag(hess_HH, chkDiagToler.Value));
@@ -167,7 +167,7 @@ namespace HTLib2.Bioinfo
 
                 Matlab.Clear();
             }
-            return HessMatrix.FromMatrix( hess_HH );
+            return hess_HH.ToHessMatrix();
         }
         //public static MatrixByArr GetHessCoarseBlkmat_ilu(MatrixSparse<MatrixByArr> hess, IList<int> idx_heavy)
         //{

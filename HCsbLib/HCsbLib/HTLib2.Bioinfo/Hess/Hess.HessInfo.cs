@@ -81,7 +81,7 @@ namespace HTLib2.Bioinfo
                 object[] subatoms  = (atoms  == null) ? null : atoms .HSelectByIndex(idxSele);
                 Vector[] subcoords = (coords == null) ? null : coords.HSelectByIndex(idxSele);
                 int subsize = idxSele.Count;
-                HessMatrix subhess = HessMatrix.ZerosHessMatrix(subsize*3, subsize*3);
+                HessMatrix subhess = HessMatrix.Zeros(subsize*3, subsize*3);
                 foreach(var bc_br_bval in hess.EnumBlocks())
                 {
                     int bc   = bc_br_bval.Item1; if(whole2sele.ContainsKey(bc) == false) continue; int nbc = whole2sele[bc];

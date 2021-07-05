@@ -45,7 +45,7 @@ namespace HTLib2.Bioinfo
 
                     Func<int, int, HessMatrix> Zeros = delegate(int colsize, int rowsize)
                     {
-                        return HessMatrix.ZerosHessMatrix(colsize, rowsize);
+                        return HessMatrix.Zeros(colsize, rowsize);
                     };
                     BB_invDD_CC = Matlab.GetMatrix("BinvDC", Zeros, true);
                     if(process_disp_console) System.Console.Write("Y), ");

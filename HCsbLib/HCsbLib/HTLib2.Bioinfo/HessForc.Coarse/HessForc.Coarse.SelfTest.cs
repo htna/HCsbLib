@@ -32,7 +32,7 @@ namespace HTLib2.Bioinfo
                     var univ = Universe.Build(xyz, prm);
 
                     var testhess = Tinker.Run.Testhess(tinkerpath_testhess, xyz, prm, temppath
-                        , HessMatrixZeros: HessMatrix.ZerosHessMatrix
+                        , HessMatrixZeros: HessMatrix.Zeros
                         );
                     var testgrad = Tinker.Run.Testgrad(tinkerpath_testgrad, xyz, prm, temppath);
                     var hessinfo = Hess.HessInfo.FromTinker(xyz, prm, testhess.hess);

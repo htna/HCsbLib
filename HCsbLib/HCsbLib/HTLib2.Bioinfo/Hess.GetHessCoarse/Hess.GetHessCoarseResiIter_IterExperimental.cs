@@ -73,8 +73,8 @@ namespace HTLib2.Bioinfo
                         /// HessMatrix    C = H.SubMatrixByAtoms(false, idxremv, idxkeep, parallel:parallel);
                         /// HessMatrix    D = H.SubMatrixByAtoms(false, idxremv, idxremv, parallel:parallel);
                         {
-                            C = HessMatrix.ZerosHessMatrix(idxremv.Length*3, idxkeep.Length*3);
-                            D = HessMatrix.ZerosHessMatrix(idxremv.Length*3, idxremv.Length*3);
+                            C = HessMatrix.Zeros(idxremv.Length*3, idxkeep.Length*3);
+                            D = HessMatrix.Zeros(idxremv.Length*3, idxremv.Length*3);
                             int iremv_min = iremv.Min();
                             int iremv_max = iremv.Max();
 

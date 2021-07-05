@@ -411,7 +411,7 @@ namespace HTLib2.Bioinfo
             }
             return hess;
         }
-        public static MatrixByArr GetHessian(this IList<Mode> modes, IList<double> masses, ILinAlg la)
+        public static HessMatrix GetHessian(this IList<Mode> modes, IList<double> masses, ILinAlg la)
         {
             /// mode.eigval =             mweigval
             /// mode.eigvec = mass^-0.5 * mweigvec
@@ -441,12 +441,12 @@ namespace HTLib2.Bioinfo
                     mws[iv][i] = mws[iv][i] * masses[i/3];
             }
             Vector ds = modes.ListEigval().ToArray();
-            MatrixByArr hess;
+            HessMatrix hess;
             {
                 var MW = la.ToILMat(mws.ToMatrix());
                 var D  = la.ToILMat(ds).Diag();
                 var H = la.Mul(MW, D, MW.Tr);
-                hess = H.ToArray();
+                hess = H.ToArray().ToHessMatrix();
                 MW.Dispose();
                 D.Dispose();
                 H.Dispose();

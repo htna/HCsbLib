@@ -23,7 +23,7 @@ public partial class Hess
             int numOfResidues=caArray.Count;
             double[,] distance = caArray.Pwdist();
 
-            HessMatrix hessian = HessMatrix.ZerosHessMatrix(caArray.Count*3, caArray.Count*3);
+            HessMatrix hessian = HessMatrix.Zeros(caArray.Count*3, caArray.Count*3);
             hessian = FirstTerm (caArray, K_r           , hessian: hessian);
             hessian = SecondTerm(caArray, K_theta       , hessian: hessian);
             hessian = ThirdTerm (caArray, K_phi1, K_phi3, hessian: hessian);
@@ -94,7 +94,7 @@ public partial class Hess
             int numOfResidues=caArray.Count;
             double[,] distance = caArray.Pwdist();
 
-            HessMatrix hessian = HessMatrix .ZerosHessMatrix(caArray.Count*3, caArray.Count*3);
+            HessMatrix hessian = HessMatrix .Zeros(caArray.Count*3, caArray.Count*3);
 
             if(func_K_r     != null                       ) hessian = firstTerm (caArray, distance, numOfResidues, func_K_r                , hessian_:hessian);
             if(func_K_theta != null                       ) hessian = secondTerm(caArray, distance, numOfResidues, func_K_theta            , hessian_:hessian);
@@ -124,10 +124,10 @@ public partial class Hess
 
                 Matlab.PutMatrix("STEM.caArray", caArray.ToMatrix(false));
                 Matlab.Execute("[STEM.hv1, STEM.hv2, STEM.hv3, STEM.hv4] = "+randomname+"(STEM.caArray);");
-                HessMatrix hv1 = HessMatrix.FromMatrix(Matlab.GetMatrix("STEM.hv1"));
-                HessMatrix hv2 = HessMatrix.FromMatrix(Matlab.GetMatrix("STEM.hv2"));
-                HessMatrix hv3 = HessMatrix.FromMatrix(Matlab.GetMatrix("STEM.hv3"));
-                HessMatrix hv4 = HessMatrix.FromMatrix(Matlab.GetMatrix("STEM.hv4"));
+                HessMatrix hv1 = Matlab.GetMatrix("STEM.hv1").ToHessMatrix();
+                HessMatrix hv2 = Matlab.GetMatrix("STEM.hv2").ToHessMatrix();
+                HessMatrix hv3 = Matlab.GetMatrix("STEM.hv3").ToHessMatrix();
+                HessMatrix hv4 = Matlab.GetMatrix("STEM.hv4").ToHessMatrix();
                 hess0 = hv1 + hv2 + hv3 + hv4;
 
                 Matlab.Cd(currpath);
@@ -142,7 +142,7 @@ public partial class Hess
             VECTORS caArray  = new VECTORS(caArray_);
             MATRIX<MatrixByArr>  distance = new MATRIX<MatrixByArr>(distance_);
             if(hessian_ == null)
-                hessian_ = HessMatrix.ZerosHessMatrix(caArray_.Count*3, caArray_.Count*3);
+                hessian_ = HessMatrix.Zeros(caArray_.Count*3, caArray_.Count*3);
             MATRIX<HessMatrix> hessian = new MATRIX<HessMatrix>(hessian_);
 
             // derive the hessian of the first term (off diagonal)
@@ -229,7 +229,7 @@ public partial class Hess
             VECTORS caArray = new VECTORS(caArray_);
             MATRIX<MatrixByArr> distance = new MATRIX<MatrixByArr>(distance_);
             if(hessian_ == null)
-                hessian_ = HessMatrix.ZerosHessMatrix( caArray_.Count*3, caArray_.Count*3 );
+                hessian_ = HessMatrix.Zeros( caArray_.Count*3, caArray_.Count*3 );
             MATRIX<HessMatrix> hessian = new MATRIX<HessMatrix>(hessian_);
 
             // derive the hessian of the second term
@@ -438,7 +438,7 @@ public partial class Hess
             VECTORS caArray = new VECTORS(caArray_);
             MATRIX<MatrixByArr> distance = new MATRIX<MatrixByArr>(distance_);
             if(hessian_ == null)
-                hessian_ = HessMatrix.ZerosHessMatrix(caArray_.Count*3, caArray_.Count*3);
+                hessian_ = HessMatrix.Zeros(caArray_.Count*3, caArray_.Count*3);
             MATRIX<HessMatrix> hessian = new MATRIX<HessMatrix>(hessian_);
 
             for(int m=3; m<=numOfResidues-1; m++)
@@ -821,7 +821,7 @@ public partial class Hess
             VECTORS caArray = new VECTORS(caArray_);
             MATRIX<MatrixByArr> distance = new MATRIX<MatrixByArr>(distance_);
             if(hessian_ == null)
-                hessian_ = HessMatrix.ZerosHessMatrix(caArray_.Count*3, caArray_.Count*3);
+                hessian_ = HessMatrix.Zeros(caArray_.Count*3, caArray_.Count*3);
             MATRIX<HessMatrix> hessian = new MATRIX<HessMatrix>(hessian_);
 
             // derive the hessian of the first term (off diagonal)

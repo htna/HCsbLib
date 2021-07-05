@@ -153,8 +153,8 @@ namespace HTLib2.Bioinfo
                     Vector        nF;
                     Vector        nG;
                     {
-                        C = HessMatrix.ZerosHessMatrix(idxremv.Length*3, idxkeep.Length*3);
-                        D = HessMatrix.ZerosHessMatrix(idxremv.Length*3, idxremv.Length*3);
+                        C = HessMatrix.Zeros(idxremv.Length*3, idxkeep.Length*3);
+                        D = HessMatrix.Zeros(idxremv.Length*3, idxremv.Length*3);
 
                         //List<Tuple<int, int, MatrixByArr>> lst_bc_br_bval = H.EnumBlocksInCols(idxremv).ToList();
                         //foreach(var bc_br_bval in lst_bc_br_bval)
