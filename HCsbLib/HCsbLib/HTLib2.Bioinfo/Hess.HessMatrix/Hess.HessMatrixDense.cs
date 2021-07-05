@@ -126,7 +126,6 @@ namespace HTLib2.Bioinfo
                 SetBlock(bc, br, bval);
             }
         }
-        [Obsolete]
         public override bool HasBlock(int bc, int br)
         {
             int nbc = bc*3;
@@ -142,7 +141,6 @@ namespace HTLib2.Bioinfo
             if(hess[nbc+2, nbr+2] != 0) return true;
             return false;
         }
-        [Obsolete]
         public override bool HasBlockLock(int bc, int br)
         {
             lock(hess)
