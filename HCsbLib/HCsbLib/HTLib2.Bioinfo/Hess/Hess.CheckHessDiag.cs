@@ -14,7 +14,7 @@ namespace HTLib2.Bioinfo
             {
                 CheckHessDiag_selftest = false;
 
-                _HessMatrixDense thess = _HessMatrixDense.FromMatrix
+                HessMatrixDense thess = HessMatrixDense.FromMatrix
                 (
                     new double[,]{ {-1,-2, 0,    1, 2, 3 }
                                  , {-2,-4,-5,    2, 4, 5 }

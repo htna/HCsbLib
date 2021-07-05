@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HTLib2.Bioinfo
 {
-    public partial class _HessMatrixDense : IHessMatrix
+    public partial class HessMatrixDense : IHessMatrix
     {
         public Matrix hess;
 
@@ -23,7 +23,7 @@ namespace HTLib2.Bioinfo
             get { return hess[c, r]; }
             set { hess[c, r] = value; }
         }
-        public _HessMatrixDense CloneHessMatrixDense() { return new _HessMatrixDense { hess = hess.Clone() }; }
+        public HessMatrixDense CloneHessMatrixDense() { return new HessMatrixDense { hess = hess.Clone() }; }
 
         public override int NumUsedBlocks
         {
@@ -182,9 +182,9 @@ namespace HTLib2.Bioinfo
         {
             return ZerosDense(colsize, rowsize);
         }
-        public static _HessMatrixDense ZerosDense(int colsize, int rowsize)
+        public static HessMatrixDense ZerosDense(int colsize, int rowsize)
         {
-            return new _HessMatrixDense
+            return new HessMatrixDense
             {
                 hess = Matrix.Zeros(colsize, rowsize),
             };
@@ -195,9 +195,9 @@ namespace HTLib2.Bioinfo
             return hess.ToArray().Clone() as double[,];
         }
 
-        public static _HessMatrixDense FromMatrix(Matrix mat)
+        public static HessMatrixDense FromMatrix(Matrix mat)
         {
-            return new _HessMatrixDense
+            return new HessMatrixDense
             {
                 hess = mat.ToArray(),
             };

@@ -481,7 +481,7 @@ namespace HTLib2.Bioinfo
             HessMatrix hess = ZerosHessMatrix(mat.ColSize, mat.RowSize);
         
             {
-                _HessMatrixDense dense = new _HessMatrixDense { hess = mat };
+                HessMatrixDense dense = new HessMatrixDense { hess = mat };
 
                 foreach(ValueTuple<int, int, MatrixByArr> bc_br_bval in dense.EnumBlocks())
                 {
