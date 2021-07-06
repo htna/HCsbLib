@@ -18,6 +18,9 @@ namespace HTLib2
             id2obj = new Dictionary<long, object>();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void   AddIdObj(long objid, object obj) { id2obj.Add(objid, obj); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public object GetIdObj(long objid            ) { return id2obj[objid];   }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator BinaryReader(HBinaryReader breader) { return breader.reader; }
       //[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator HBinaryReader(BinaryReader  reader) { return new HBinaryReader { reader = reader }; }
 

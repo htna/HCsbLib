@@ -191,7 +191,7 @@ namespace HTLib2
                     objs = new object[count];
                     for(int i = 0; i < count; i++)
                     {
-                        reader.Read(out objs[i], types[i]);
+                        reader.Read(types[i], out objs[i]);
                     }
                 }
                 stream.Close();

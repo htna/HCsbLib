@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.AccessControl;
 using System.Text;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using System.IO;
 
@@ -40,40 +41,33 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(List<string> values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(List<bool  > values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write<  T>(T               value ) where T : IBinarySerializable { value.Serialize(this); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write<  T>(List<T>         values) where T : IBinarySerializable { writer.Write(values.Count ); for(int i=0; i<values.Count ; i++) values[i].Serialize(this); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write<  T>(T[]             values) where T : IBinarySerializable { writer.Write(values.Length); for(int i=0; i<values.Length; i++) values[i].Serialize(this); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write<K,T>(Dictionary<K,T> dict  ) where T : IBinarySerializable {
-            writer.Write(dict.Count);
-            int cnt = 0;
-            foreach(var key_val in dict)
-            {
-                cnt ++;
-                K key = key_val.Key;
-                T val = key_val.Value;
-                _HWrite<K>(key);
-                _HWrite<T>(val);
-            }
-            HDebug.Assert(cnt == dict.Count);
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write<  T>(T               value ) { _Write          (typeof(T              ), value ); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write<  T>(T[]             values) { _WriteArray     (typeof(T[]            ), values); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write<  T>(List<T>         values) { _WriteList      (typeof(List<T>        ), values); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write<K,T>(Dictionary<K,T> dict  ) { _WriteDictionary(typeof(Dictionary<K,T>), dict  ); }
 
-        void _HWriteDouble(object value) { writer.Write((double)value); }
-        void _HWriteInt   (object value) { writer.Write((int   )value); }
-        void _HWriteLong  (object value) { writer.Write((long  )value); }
-        void _HWriteString(object value) { writer.Write((string)value); }
-        void _HWriteBool  (object value) { writer.Write((bool  )value); }
-        void _HWriteBinarySerializable<T>(object obj)
+        void _WriteDouble(object value) { writer.Write((double)value); }
+        void _WriteInt   (object value) { writer.Write((int   )value); }
+        void _WriteLong  (object value) { writer.Write((long  )value); }
+        void _WriteString(object value) { writer.Write((string)value); }
+        void _WriteBool  (object value) { writer.Write((bool  )value); }
+        void _WriteBinarySerializable(Type type, object obj)
         {
-            if(typeof(T).IsClass)
+            if(type.IsClass)
             {
-                bool firstTime;
-                long objid = GetObjId(obj, out firstTime);
-                writer.Write(objid);
-                if(firstTime)
+                bool isnull = (obj == null);
+                writer.Write(isnull);
+                if(isnull == false)
                 {
-                    // string type_name = value.GetType().AssemblyQualifiedName;
-                    // writer.Write(type_name);
-                    ((IBinarySerializable)obj).Serialize(this);
+                    bool firstTime;
+                    long objid = GetObjId(obj, out firstTime);
+                    writer.Write(objid);
+                    if(firstTime)
+                    {
+                        // string type_name = value.GetType().AssemblyQualifiedName;
+                        // writer.Write(type_name);
+                        ((IBinarySerializable)obj).Serialize(this);
+                    }
                 }
             }
             else
@@ -83,62 +77,50 @@ namespace HTLib2
                 ((IBinarySerializable)obj).Serialize(this);
             }
         }
-        //static void _HWriteBinarySerializable(HBinaryWriter writer, object value)
-        //{
-        //    if((value is IBinarySerializable) == false)
-        //        throw new HException();
-        //    string type_name = value.GetType().AssemblyQualifiedName;
-        //    writer.Write(type_name);
-        //    ((IBinarySerializable)value).Serialize(writer);
-        //}
-        //static void _HWriteList(HBinaryWriter writer, object value)
-        //{
-        //    if((value is IList) == false)
-        //        throw new HException();
-        //    IList values = (IList)value;
-        //    writer.Write(values.Count);
-        //    for(int i=0; i<values.Count; i++)
-        //        _HWrite(writer, values[i]);
-        //}
-        //static void _HWriteArray(HBinaryWriter writer, object value)
-        //{
-        //    if((value is Array) == false)
-        //        throw new HException();
-        //    Array values = (Array)value;
-        //    writer.Write(values.Length);
-        //    for(int i=0; i<values.Length; i++)
-        //        _HWrite(writer, values.GetValue(i));
-        //}
-        //public static void _HWriteDictionary(this HBinaryWriter writer, object value)
-        //{
-        //    if((value is IDictionary) == false)
-        //        throw new HException();
-        //    IDictionary dict = (IDictionary)value;
-        //    writer.Write(dict.Count);
-        //    var dict_enum = dict.GetEnumerator();
-        //    //foreach(var key_val in dictenum)
-        //    int cnt = 0;
-        //    while(dict_enum.MoveNext())
-        //    {
-        //        cnt ++;
-        //        _HWrite(writer, dict_enum.Key  );
-        //        _HWrite(writer, dict_enum.Value);
-        //    }
-        //    HDebug.Assert(cnt == dict.Count);
-        //}
-        void _HWrite<T>(T value)
+        void _WriteArray(Type type, Array values)
+        {
+            HDebug.Assert(type.HasElementType);
+            Type elem_type = type.GetElementType();
+            writer.Write(values.Length);
+            for(int i=0; i<values.Length; i++)
+                _Write(elem_type, values.GetValue(i));
+        }
+        void _WriteList(Type type, IList values)
+        {
+            Type elem_type = type.GetElementType();
+            writer.Write(values.Count);
+            for(int i=0; i<values.Count; i++)
+                _Write(elem_type, values[i]);
+        }
+        void _WriteDictionary(Type type, IDictionary dict)
+        {
+            HDebug.Assert(type.GenericTypeArguments.Length == 2);
+            Type key_type = type.GenericTypeArguments[0];
+            Type val_type = type.GenericTypeArguments[1];
+            writer.Write(dict.Count);
+            var dict_enum = dict.GetEnumerator();
+            //foreach(var key_val in dictenum)
+            int cnt = 0;
+            while(dict_enum.MoveNext())
+            {
+                cnt ++;
+                _Write(key_type, dict_enum.Key  );
+                _Write(val_type, dict_enum.Value);
+            }
+            HDebug.Assert(cnt == dict.Count);
+        }
+        void _Write(Type type, object value)
         {
             //string type_name = value.GetType()AssemblyQualifiedName;
-            Type type = typeof(T);
-            if(type.IsSubclassOf(typeof(double             ))) { _HWriteDouble               (value); return; }
-            if(type.IsSubclassOf(typeof(int                ))) { _HWriteInt                  (value); return; }
-            if(type.IsSubclassOf(typeof(long               ))) { _HWriteLong                 (value); return; }
-            if(type.IsSubclassOf(typeof(string             ))) { _HWriteString               (value); return; }
-            if(type.IsSubclassOf(typeof(bool               ))) { _HWriteBool                 (value); return; }
-            if(type.IsSubclassOf(typeof(IBinarySerializable))) { _HWriteBinarySerializable<T>(value); return; }
-            //if(value is IList              ) { _HWriteList              (writer, value); return; }
-            //if(value is Array              ) { _HWriteArray             (writer, value); return; }
-            //if(value is IDictionary        ) { _HWriteDictionary        (writer, value); return; }
+            if(type.IsSubclassOf(typeof(double             ))) { _WriteDouble            (      value               ); return; }
+            if(type.IsSubclassOf(typeof(int                ))) { _WriteInt               (      value               ); return; }
+            if(type.IsSubclassOf(typeof(long               ))) { _WriteLong              (      value               ); return; }
+            if(type.IsSubclassOf(typeof(string             ))) { _WriteString            (      value               ); return; }
+            if(type.IsSubclassOf(typeof(bool               ))) { _WriteBool              (      value               ); return; }
+            if(type.IsSubclassOf(typeof(IBinarySerializable))) { _WriteBinarySerializable(type, value               ); return; }
+            if(value is Array                                ) { _WriteArray             (type, value as Array      ); return; }
+            if(value is IList                                ) { _WriteList              (type, value as IList      ); return; }
+            if(value is IDictionary                          ) { _WriteDictionary        (type, value as IDictionary); return; }
             throw new Exception();
         }
     }
