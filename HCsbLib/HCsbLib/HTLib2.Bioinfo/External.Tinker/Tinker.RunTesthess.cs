@@ -9,11 +9,29 @@ namespace HTLib2.Bioinfo
     {
         public partial class Run
         {
-            public class CTesthess
+            public class CTesthess : IBinarySerializable
             {
                 public HessMatrix hess;
                 public Xyz xyz;
                 public Prm prm;
+
+                public CTesthess() { }
+                ///////////////////////////////////////////////////
+                // IBinarySerializable
+                public void Serialize(HBinaryWriter writer)
+                {
+                    HDebug.Exception("need to check !");
+                    writer.Write(hess);
+                    writer.Write(xyz );
+                    writer.Write(prm );
+                }
+                public CTesthess(HBinaryReader reader)
+                {
+                    HDebug.Exception("need to check !");
+                    reader.Read(out hess);
+                    reader.Read(out xyz );
+                    reader.Read(out prm );
+                }
 
                 /// call Hess.HessInfo.FromTinker(...)
                 //public Hess.HessInfo GetHessInfo()
