@@ -10,8 +10,28 @@ namespace HTLib2.Bioinfo
     public partial class Tinker
     {
         [Serializable]
-        public partial class Prm
+        public partial class Prm : IBinarySerializable
         {
+            ///////////////////////////////////////////////////
+            // IBinarySerializable
+            public void Serialize(HBinaryWriter writer)
+            {
+                writer.Write(_lines);
+            }
+            public Prm(HBinaryReader reader)
+            {
+                string[] lines; reader.Read(out lines);
+
+                (List<Element> elements, Dictionary<int,int> id2idxatom, Dictionary<int,string> class2type) = GetDataFromLines(lines);
+
+                this._lines     = lines.ToArray()   ;
+                this._elements  = elements.ToArray();
+                this.id2idxatom = id2idxatom        ;
+                this.class2type = class2type        ;
+            }
+            // IBinarySerializable
+            ///////////////////////////////////////////////////
+
             public static Universe UpdateUnivParams(string parampath, Universe univ)
             {
                 throw new NotImplementedException("need to check!!!");
@@ -169,9 +189,16 @@ namespace HTLib2.Bioinfo
                 //    lines.Add(element.line);
                 HFile.WriteAllLines(filepath, lines);
             }
-            public static Prm FromLines(IList<string> lines)
+            public Prm(string[] _lines, Element[] _elements, Dictionary<int, int> id2idxatom, Dictionary<int, string> class2type)
             {
-                List<Element> elements = new List<Element>();
+                this._lines     = _lines    ;
+                this._elements  = _elements ;
+                this.id2idxatom = id2idxatom;
+                this.class2type = class2type;
+            }
+            public static (List<Element> elements, Dictionary<int,int> id2idxatom, Dictionary<int,string> class2type) GetDataFromLines(IList<string> lines)
+            {
+                List<Element> elements            = new List<Element>();
                 Dictionary<int,int   > id2idxatom = new Dictionary<int,int   >();
                 Dictionary<int,string> class2type = new Dictionary<int,string>();
                 foreach(string line in lines)
@@ -204,11 +231,17 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                return new Prm{ _lines     = lines.ToArray()
-                              , _elements  = elements.ToArray()
-                              , id2idxatom = id2idxatom
-                              , class2type = class2type
-                              };
+                return (elements, id2idxatom, class2type);
+            }
+            public static Prm FromLines(IList<string> lines)
+            {
+                (List<Element> elements, Dictionary<int,int> id2idxatom, Dictionary<int,string> class2type) = GetDataFromLines(lines);
+
+                return new Prm( _lines     : lines.ToArray()
+                              , _elements  : elements.ToArray()
+                              , id2idxatom : id2idxatom
+                              , class2type : class2type
+                              );
             }
             public static List<Element> GetListElement(IList<string> lines)
             {
