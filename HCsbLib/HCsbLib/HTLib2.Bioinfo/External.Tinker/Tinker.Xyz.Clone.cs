@@ -31,7 +31,7 @@ namespace HTLib2.Bioinfo
                     nelements.Add(nelement);
                 }
 
-                Xyz nxyz = new Xyz { elements = nelements.ToArray() };
+                Xyz nxyz = new Xyz( nelements.ToArray() );
                 return nxyz;
             }
             public Xyz CloneByReindex(IList<Pdb.Atom> pdb0atoms, HPack<Tuple<int, int>[]> idxXyzFromTo=null)
@@ -160,7 +160,7 @@ namespace HTLib2.Bioinfo
                         HDebug.Assert((nelements[i] as Xyz.Atom).Id == i);
                 }
 
-                return new Xyz { elements = nelements };
+                return new Xyz( nelements );
             }
             public Xyz CloneByReindex(int idStart=1)
             {
@@ -284,7 +284,7 @@ namespace HTLib2.Bioinfo
                     nelements[idxhdr[0]] = Header.FromData(maxid);
                 }
 
-                return new Xyz { elements = nelements.ToArray() };
+                return new Xyz( nelements.ToArray() );
             }
             public static List<Atom> CloneByReindex(IEnumerable<Xyz.Atom> atoms, IList<Tuple<int,int>> idsFromTo, Xyz.Atom.Format format, bool allowresize=false)
             {
@@ -400,7 +400,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                return new Xyz { elements = nelements };
+                return new Xyz( nelements );
             }
             public Xyz CloneByRemoveIds(IList<int> lstAtomIdRemove)
             {
@@ -441,9 +441,9 @@ namespace HTLib2.Bioinfo
                 nelements[idxhdr[0]] = Header.FromData(atoms_format, maxid);
 
                 return new Xyz
-                {
-                    elements = nelements
-                };
+                (
+                    nelements
+                );
             }
         }
     }

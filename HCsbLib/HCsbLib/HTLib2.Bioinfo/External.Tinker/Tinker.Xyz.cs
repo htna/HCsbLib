@@ -236,7 +236,7 @@ namespace HTLib2.Bioinfo
     public partial class Tinker
     {
         [Serializable]
-        public partial class Xyz
+        public partial class Xyz : IBinarySerializable
         {
             public Element[] elements;
             public Atom[]    atoms { get { return elements.HSelectByType<Element,Atom>().ToArray(); } }
@@ -253,6 +253,25 @@ namespace HTLib2.Bioinfo
                     }
                     return format;
                 }
+            }
+            public Xyz(Element[] elements)
+            {
+                this.elements = elements;
+            }
+            ///////////////////////////////////////////////////
+            // IBinarySerializable
+            public void Serialize(HBinaryWriter writer)
+            {
+                writer.Write(atoms_format);
+                string[] lines = elements.EnumLine().ToArray();
+                writer.Write(lines);
+            }
+            public Xyz(HBinaryReader reader)
+            {
+                Atom.Format format; reader.Read(out format);
+                string[]    lines;  reader.Read(out lines );
+                
+                elements = GetElementsFromLines(format, lines);
             }
             /// 186  GNOMES, ROCK MONSTERS AND CHILI SAUCE
             ///   1  NH3  -11.020000  -12.540000  -24.210000    65     2     5     6     7
@@ -398,7 +417,7 @@ namespace HTLib2.Bioinfo
                 Atom.Format format = new Atom.Format();
                 return FromLines(format, lines);
             }
-            public static Xyz FromLines(Atom.Format format, IList<string> lines)
+            public static Element[] GetElementsFromLines(Atom.Format format, IList<string> lines)
             {
                 if(HDebug.Selftest())
                     #region MyRegion
@@ -421,8 +440,12 @@ namespace HTLib2.Bioinfo
                 for(int i=1; i<lines.Count; i++)
                     elements[i] = new Atom(format, lines[i]);
 
-                Xyz xyz = new Xyz();
-                xyz.elements = elements;
+                return elements;
+            }
+            public static Xyz FromLines(Atom.Format format, IList<string> lines)
+            {
+                Element[] elements = GetElementsFromLines(format, lines);
+                Xyz xyz = new Xyz( elements );
                 
                 return xyz;
             }
@@ -448,7 +471,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                Xyz xyz = new Xyz { elements = elements };
+                Xyz xyz = new Xyz( elements );
                 return xyz;
             }
 
@@ -610,7 +633,7 @@ namespace HTLib2.Bioinfo
             public class Atom : Element
             {
                 [Serializable]
-                public class Format
+                public class Format : IBinarySerializable
                 {
                     public int[] idxId       = new int[]{ 0, 5};    public string formatId       = "                     {0}";  // HSubEndStringCount
                     public int[] idxAtomType = new int[]{ 8,10};    public string formatAtomType = "{0}                     ";  // Substring
@@ -640,6 +663,30 @@ namespace HTLib2.Bioinfo
                         idxAtomId   = new int[]{ i, i+5         };    i+=6          ;    formatAtomId   = "                     {0}";  // HSubEndStringCount
                         idxBondedId = new int[]{ i, i+IdSize    };    i+=1+CoordSize;    formatBondedId = "                     {0}";  // HSubEndStringCount
                     }
+                    ///////////////////////////////////////////////////
+                    // IBinarySerializable
+                    public void Serialize(HBinaryWriter writer)
+                    {
+                        writer.Write(idxId      );
+                        writer.Write(idxAtomType);
+                        writer.Write(idxX       );
+                        writer.Write(idxY       );
+                        writer.Write(idxZ       );
+                        writer.Write(idxAtomId  );
+                        writer.Write(idxBondedId);
+                    }
+                    public Format(HBinaryReader reader)
+                    {
+                        reader.Read(out idxId      );
+                        reader.Read(out idxAtomType);
+                        reader.Read(out idxX       );
+                        reader.Read(out idxY       );
+                        reader.Read(out idxZ       );
+                        reader.Read(out idxAtomId  );
+                        reader.Read(out idxBondedId);
+                    }
+                    // IBinarySerializable
+                    ///////////////////////////////////////////////////
 
                     public static Format defformat_digit06 = new Format
                     {

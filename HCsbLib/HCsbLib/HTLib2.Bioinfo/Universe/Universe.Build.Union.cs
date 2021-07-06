@@ -158,9 +158,9 @@ namespace HTLib2.Bioinfo
                 elements.AddRange(univ1.refs["xyz"].Get<Tinker.Xyz>().elements);
                 elements.AddRange(univ2.refs["xyz"].Get<Tinker.Xyz>().elements);
                 xyz = new Tinker.Xyz
-                {
-                    elements = elements.ToArray()
-                };
+                (
+                     elements.ToArray()
+                );
             }
 
             Tinker.Prm prm = univ1.refs["prm"].Get<Tinker.Prm>();

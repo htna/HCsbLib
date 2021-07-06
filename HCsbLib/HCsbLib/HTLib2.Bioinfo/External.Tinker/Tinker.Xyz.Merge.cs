@@ -73,7 +73,7 @@ namespace HTLib2.Bioinfo
                 nelements.AddRange(natoms2);
             }
 
-            return new Xyz { elements = nelements.ToArray() };
+            return new Xyz( nelements.ToArray() );
         }
     }
 }
