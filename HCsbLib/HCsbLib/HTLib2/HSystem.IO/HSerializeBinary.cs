@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -10,7 +9,7 @@ namespace HTLib2
 {
     using IBS = IBinarySerializable;
 	public static partial class HSerialize
-	{
+	{ 
         public static void SerializeBinary<T0                                    >(string filename, T0 obj0                                                                                 ) where T0:IBS                                                                                                                      { _SerializeBinary(filename, GetOBS(obj0)                                                                                                                               ); }
         public static void SerializeBinary<T0,T1                                 >(string filename, T0 obj0, T1 obj1                                                                        ) where T0:IBS where T1:IBS                                                                                                         { _SerializeBinary(filename, GetOBS(obj0), GetOBS(obj1)                                                                                                                 ); }
         public static void SerializeBinary<T0, T1, T2                            >(string filename, T0 obj0, T1 obj1, T2 obj2                                                               ) where T0:IBS where T1:IBS where T2:IBS                                                                                            { _SerializeBinary(filename, GetOBS(obj0), GetOBS(obj1), GetOBS(obj2)                                                                                                   ); }
@@ -58,11 +57,11 @@ namespace HTLib2
             using(new NamedLock(lockname))
             {
                 Stream stream = HFile.Open(filename, FileMode.Create);
-                HBinaryWriter writer = new BinaryWriter(stream);
+                HBinaryWriter writer = new HBinaryWriter(stream);
                 writer.Write("SerializeBinaryBegin");
                 {
                     int count = objBinSerializers.Length;
-                    writer.HWrite(count);
+                    writer.Write(count);
                     for(int i=0; i<count; i++)
                         objBinSerializers[i].SerializeBinary(writer);
                 }
@@ -98,12 +97,12 @@ namespace HTLib2
             using(new NamedLock(lockname))
             {
                 Stream stream = HFile.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-                HBinaryReader reader = new BinaryReader(stream);
+                HBinaryReader reader = new HBinaryReader(stream);
                 object[] objs;
                 if(reader.ReadString() != "SerializeBinaryBegin") return null;
                 {
                     int count;
-                    reader.HRead(out count);
+                    reader.Read(out count);
                     if(count != objBinDeserializers.Length)
                         return null;
                     objs = new object[count];
@@ -137,19 +136,19 @@ namespace HTLib2
             {
                 Stream stream = HFile.Open(filename, FileMode.Create);
 
-                HBinaryWriter writer = new BinaryWriter(stream);
+                HBinaryWriter hwriter = new HBinaryWriter(stream);
                 {
                     if(ver != null)
-                        writer.HWrite(new Ver(ver.Value));
+                        hwriter.Write(new Ver(ver.Value));
                 }
                 {
                     System.Int32 count = objs.Length;
-                    writer.HWrite(count);
+                    hwriter.Write(count);
                     for(int i = 0; i < count; i++)
                     {
                         Type   type = objs[i].type;
                         object obj  = objs[i].obj ;
-                        writer.HWrite(obj);
+/////////////////////////////////////////////////////////////////////////hwriter.HWrite(obj);
                     }
                 }
                 stream.Flush();
@@ -162,14 +161,14 @@ namespace HTLib2
             using(new NamedLock(lockname))
             {
                 Stream stream = HFile.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
-                HBinaryReader reader = new BinaryReader(stream);
+                HBinaryReader reader = new HBinaryReader(stream);
                 {
                     if(ver != null)
                     {
                         try
                         {
                             Ver sver;
-                            reader.HRead(out sver);
+                            reader.Read(out sver);
                             if(sver.ver != ver.Value)
                             {
                                 stream.Close();
@@ -186,13 +185,13 @@ namespace HTLib2
                 object[] objs;
                 {
                     System.Int32 count;
-                    reader.HRead(out count);
+                    reader.Read(out count);
                     if(count != types.Length)
                         return null;
                     objs = new object[count];
                     for(int i = 0; i < count; i++)
                     {
-                        reader.HRead(out objs[i], types[i]);
+                        reader.Read(out objs[i], types[i]);
                     }
                 }
                 stream.Close();

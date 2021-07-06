@@ -2,16 +2,24 @@
 using System.Collections.Generic;
 using System.Security.AccessControl;
 using System.Text;
+using System.Runtime.Serialization;
 using System.Runtime.CompilerServices;
 using System.IO;
 
 namespace HTLib2
 {
-    public struct HBinaryReader : IDisposable
+    public partial struct HBinaryReader : IDisposable
     {
-        public BinaryReader reader;
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator BinaryReader(HBinaryReader breader) { return breader.reader; }
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator HBinaryReader(BinaryReader  reader) { return new HBinaryReader { reader = reader }; }
+        public BinaryReader            reader;
+        public Dictionary<long,object> id2obj;
+        public HBinaryReader(Stream stream)
+        {
+            reader = new BinaryReader(stream);
+            id2obj = new Dictionary<long, object>();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator BinaryReader(HBinaryReader breader) { return breader.reader; }
+      //[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator HBinaryReader(BinaryReader  reader) { return new HBinaryReader { reader = reader }; }
 
         public Stream BaseStream                           { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return reader.BaseStream         ; } }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void    Close()                                   {        reader.Close()                   ; }
@@ -40,12 +48,21 @@ namespace HTLib2
         //protected virtual void FillBuffer(int numBytes);
         //protected internal int Read7BitEncodedInt();
     }
-    public struct HBinaryWriter : IDisposable
+    public partial struct HBinaryWriter : IDisposable
     {
-        public BinaryWriter writer;
+        public BinaryWriter      writer;
+        public ObjectIDGenerator obj2id;
+        public HBinaryWriter(Stream stream)
+        {
+            writer = new BinaryWriter(stream);
+            obj2id = new ObjectIDGenerator();
+        }
 
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator BinaryWriter(HBinaryWriter bwriter) { return bwriter.writer; }
-		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator HBinaryWriter(BinaryWriter  writer) { return new HBinaryWriter { writer = writer }; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public long GetObjId(object obj, out bool firstTime) { return obj2id.GetId(obj, out firstTime); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public long HasObjId(object obj, out bool firstTime) { return obj2id.HasId(obj, out firstTime); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator BinaryWriter(HBinaryWriter bwriter) { return bwriter.writer; }
+      //[MethodImpl(MethodImplOptions.AggressiveInlining)] public static implicit operator HBinaryWriter(BinaryWriter  writer) { return new HBinaryWriter { writer = writer }; }
 
         public Stream BaseStream                         { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return writer.BaseStream                 ; } }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Close()                                    {        writer.Close()                    ; }

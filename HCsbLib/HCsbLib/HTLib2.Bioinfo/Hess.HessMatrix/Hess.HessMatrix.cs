@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 {
     [Serializable]
     public partial class HessMatrix : IHessMatrix, ISerializable
-        , IMatrixSparse<double>
+        , IMatrixSparse<double>, IBinarySerializable
     {
         List<double    [,]>     diag;
         List<double[][][,]>  offdiag;
@@ -690,27 +690,27 @@ namespace HTLib2.Bioinfo
         // IBinarySerializable
         public void Serialize(HBinaryWriter writer)
         {
-            writer.HWrite(colblksize           );
-            writer.HWrite(rowblksize           );
-            writer.HWrite(layersize            );
-            writer.HWrite(numusedblocks_offdiag);
+            writer.Write(colblksize           );
+            writer.Write(rowblksize           );
+            writer.Write(layersize            );
+            writer.Write(numusedblocks_offdiag);
 
-            writer.HWrite(NumUsedBlocks        );
+            writer.Write(NumUsedBlocks        );
             int bcnt = 0;
             foreach(var bc_br_bval in _EnumBlocks())
             {
                 bcnt ++;
-                writer.HWrite(bc_br_bval.Item1     );
-                writer.HWrite(bc_br_bval.Item2     );
-                writer.HWrite(bc_br_bval.Item3[0,0]);
-                writer.HWrite(bc_br_bval.Item3[0,1]);
-                writer.HWrite(bc_br_bval.Item3[0,2]);
-                writer.HWrite(bc_br_bval.Item3[1,0]);
-                writer.HWrite(bc_br_bval.Item3[1,1]);
-                writer.HWrite(bc_br_bval.Item3[1,2]);
-                writer.HWrite(bc_br_bval.Item3[2,0]);
-                writer.HWrite(bc_br_bval.Item3[2,1]);
-                writer.HWrite(bc_br_bval.Item3[2,2]);
+                writer.Write(bc_br_bval.Item1     );
+                writer.Write(bc_br_bval.Item2     );
+                writer.Write(bc_br_bval.Item3[0,0]);
+                writer.Write(bc_br_bval.Item3[0,1]);
+                writer.Write(bc_br_bval.Item3[0,2]);
+                writer.Write(bc_br_bval.Item3[1,0]);
+                writer.Write(bc_br_bval.Item3[1,1]);
+                writer.Write(bc_br_bval.Item3[1,2]);
+                writer.Write(bc_br_bval.Item3[2,0]);
+                writer.Write(bc_br_bval.Item3[2,1]);
+                writer.Write(bc_br_bval.Item3[2,2]);
             }
             if(bcnt != NumUsedBlocks)
                 throw new System.IO.InvalidDataException();
