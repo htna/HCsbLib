@@ -45,20 +45,22 @@ namespace HTLib2.Bioinfo
             {
                 // check if prot.xyz is the same to the protein in prot_solv.xyz
                 var xyz0 = Tinker.Xyz.FromFile(prot_xyz_path, false);
+                List<int> bonds  = new List<int>(10);
+                List<int> bonds0 = new List<int>(10);
                 bool sameprot = true;
                 for(int i=0; i<xyz0.atoms.Length; i++)
                 {
                     var atom  = xyz.atoms[i];
                     var atom0 = xyz0.atoms[i];
-                    if(atom.Id        != atom0.Id       ) { HDebug.Assert(false); sameprot = false; }
-                    if(atom.AtomId    != atom0.AtomId   ) { HDebug.Assert(false); sameprot = false; }
-                    if(atom.AtomType  != atom0.AtomType ) { HDebug.Assert(false); sameprot = false; }
+                    if(atom.Id        != atom0.Id       ) { HDebug.Assert(false); sameprot = false; break; }
+                    if(atom.AtomId    != atom0.AtomId   ) { HDebug.Assert(false); sameprot = false; break; }
+                    if(atom.AtomType  != atom0.AtomType ) { HDebug.Assert(false); sameprot = false; break; }
 
-                    int[] bonds  = atom .BondedIds;
-                    int[] bonds0 = atom0.BondedIds;
-                    if(bonds.Length   != bonds0.Length  ) { HDebug.Assert(false); sameprot = false; }
-                    for(int j=0; j<Math.Min(bonds.Length, bonds0.Length); j++)
-                        if(bonds[j]   != bonds0[j]      ) { HDebug.Assert(false); sameprot = false; }
+                    atom .GetBondedIds(ref bonds );
+                    atom0.GetBondedIds(ref bonds0);
+                    if(bonds.Count    != bonds0.Count   ) { HDebug.Assert(false); sameprot = false; break; }
+                    for(int j=0; j<bonds.Count; j++)
+                        if(bonds[j]   != bonds0[j]      ) { HDebug.Assert(false); sameprot = false; break; }
 
                     //if(atom.BondedId1 != atom0.BondedId1) { HDebug.Assert(false); sameprot = false; }
                     //if(atom.BondedId2 != atom0.BondedId2) { HDebug.Assert(false); sameprot = false; }
