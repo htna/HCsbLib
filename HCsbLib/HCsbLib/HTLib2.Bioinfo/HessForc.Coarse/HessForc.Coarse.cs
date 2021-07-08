@@ -12,8 +12,7 @@ namespace HTLib2.Bioinfo
     {
         public static partial class Coarse
         {
-            [Serializable]
-            public class HessForcInfo
+            public class HessForcInfo : IBinarySerializable
             {
                 public object[]     atoms   = null;
                 public Vector       mass    = null;
@@ -21,6 +20,20 @@ namespace HTLib2.Bioinfo
                 public HessMatrix   hess    = null;
                 public Vector[]     forc    = null;
 
+                public HessForcInfo
+                    ( object[]     atoms  = null
+                    , Vector       mass   = null
+                    , Vector[]     coords = null
+                    , HessMatrix   hess   = null
+                    , Vector[]     forc   = null
+                    )
+                {
+                    this.atoms  = atoms ;
+                    this.mass   = mass  ;
+                    this.coords = coords;
+                    this.hess   = hess  ;
+                    this.forc   = forc  ;
+                }
                 public static HessForcInfo From(Hess.HessInfo hessinfo)
                 {
                     return new HessForcInfo{
@@ -50,6 +63,23 @@ namespace HTLib2.Bioinfo
                         hess    = hess,
                         numZeroEigval = null,
                     };
+                }
+                ///////////////////////////////////////////////////
+                // IBinarySerializable
+                public void BinarySerialize(HBinaryWriter writer)
+                {
+                    //public object[]     atoms  
+                    //public Vector       mass   
+                    //public Vector[]     coords 
+                    //public HessMatrix   hess   
+                    //public Vector[]     forc   
+                    throw new NotImplementedException();
+                    //writer.HWrite(value);
+                }
+                public HessForcInfo(HBinaryReader reader)
+                {
+                    throw new NotImplementedException();
+                    //reader.HRead(out value);
                 }
             }
         }
