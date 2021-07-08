@@ -18,7 +18,7 @@ namespace HTLib2.Bioinfo
                 public CTesthess() { }
                 ///////////////////////////////////////////////////
                 // IBinarySerializable
-                public void Serialize(HBinaryWriter writer)
+                public void BinarySerialize(HBinaryWriter writer)
                 {
                     HDebug.Exception("need to check !");
                     writer.Write(hess);

@@ -48,7 +48,7 @@ namespace HTLib2
             public T obj;
             public void SerializeBinary(HBinaryWriter writer)
             {
-                obj.Serialize(writer);
+                obj.BinarySerialize(writer);
             }
         }
         static void _SerializeBinary(string filename, params IOBS[] objBinSerializers)

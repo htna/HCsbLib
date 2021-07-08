@@ -688,7 +688,7 @@ namespace HTLib2.Bioinfo
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // IBinarySerializable
-        public void Serialize(HBinaryWriter writer)
+        public void BinarySerialize(HBinaryWriter writer)
         {
             writer.Write(colblksize           );
             writer.Write(rowblksize           );

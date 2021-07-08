@@ -21,7 +21,7 @@ namespace HTLib2
     //          int value;
     //          ///////////////////////////////////////////////////
     //          // IBinarySerializable
-    //          public void Serialize(HBinaryWriter writer)
+    //          public void BinarySerialize(HBinaryWriter writer)
     //          {
     //              writer.HWrite(value);
     //          }
@@ -34,7 +34,7 @@ namespace HTLib2
     public interface IBinarySerializable
     {
         //IBinarySerializable(HBinaryReader reader);
-        void Serialize(HBinaryWriter writer);
-        //[Obsolete] void Deserialize(HBinaryReader reader);
+        void BinarySerialize(HBinaryWriter writer);
+        //[Obsolete] void BinaryDeserialize(HBinaryReader reader);
     }
 }

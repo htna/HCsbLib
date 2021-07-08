@@ -30,7 +30,7 @@ namespace HTLib2
             {
                 return ver.ver;
             }
-            public void Serialize(HBinaryWriter writer)
+            public void BinarySerialize(HBinaryWriter writer)
             {
                 writer.Write("ver(");
                 writer.Write(ver);

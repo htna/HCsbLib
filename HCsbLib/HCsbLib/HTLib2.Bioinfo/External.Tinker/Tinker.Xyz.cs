@@ -260,7 +260,7 @@ namespace HTLib2.Bioinfo
             }
             ///////////////////////////////////////////////////
             // IBinarySerializable
-            public void Serialize(HBinaryWriter writer)
+            public void BinarySerialize(HBinaryWriter writer)
             {
                 writer.Write(atoms_format);
                 string[] lines = elements.EnumLine().ToArray();
@@ -665,7 +665,7 @@ namespace HTLib2.Bioinfo
                     }
                     ///////////////////////////////////////////////////
                     // IBinarySerializable
-                    public void Serialize(HBinaryWriter writer)
+                    public void BinarySerialize(HBinaryWriter writer)
                     {
                         writer.Write(idxId      );
                         writer.Write(idxAtomType);

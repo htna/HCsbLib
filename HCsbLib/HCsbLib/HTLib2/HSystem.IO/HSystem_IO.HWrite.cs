@@ -66,7 +66,7 @@ namespace HTLib2
                     {
                         // string type_name = value.GetType().AssemblyQualifiedName;
                         // writer.Write(type_name);
-                        ((IBinarySerializable)obj).Serialize(this);
+                        ((IBinarySerializable)obj).BinarySerialize(this);
                     }
                 }
             }
@@ -74,7 +74,7 @@ namespace HTLib2
             {
                 // string type_name = value.GetType().AssemblyQualifiedName;
                 // writer.Write(type_name);
-                ((IBinarySerializable)obj).Serialize(this);
+                ((IBinarySerializable)obj).BinarySerialize(this);
             }
         }
         void _WriteArray(Type type, Array values)
