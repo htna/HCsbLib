@@ -309,7 +309,7 @@ namespace HTLib2.Bioinfo
                                 continue;
                             case "hess diagonal":
                                 {
-                                    string[] tokens = line.Split().HRemoveAll("");
+                                    string[] tokens = line.Split((string[])null, StringSplitOptions.RemoveEmptyEntries);    // line.Split().HRemoveAll("");
                                     if(tokens[0] == "Atom") continue;
                                     int Atom =    int.Parse(tokens[0]); // ; if(   int.TryParse(tokens[0], out Atom) == false) continue;
                                     double X = double.Parse(tokens[1]); // ; if(double.TryParse(tokens[1], out    X) == false) continue;
@@ -321,7 +321,7 @@ namespace HTLib2.Bioinfo
                                 continue;
                             case "sum hess diagonal":
                                 {
-                                    string[] tokens = line.Split().HRemoveAll("");
+                                    string[] tokens = line.Split((string[])null, StringSplitOptions.RemoveEmptyEntries);    // line.Split().HRemoveAll("");
                                     double sum = double.Parse(tokens.Last()); // if(double.TryParse(tokens.Last(), out sum) == false) continue;
                                     outSumDiagHessElem = sum;
                                 }
@@ -331,7 +331,7 @@ namespace HTLib2.Bioinfo
                             case "sparse hess file": outHessFormat = "sparse matrix"; goto case "hess file";
                             case "hess file":
                                 {
-                                    string[] tokens = line.Split().HRemoveAll("");
+                                    string[] tokens = line.Split((string[])null, StringSplitOptions.RemoveEmptyEntries);    // line.Split().HRemoveAll("");
                                     string outputpath_dir = HFile.GetFileInfo(outputpath).Directory.FullName;
                                     outHessMatFile = outputpath_dir + "\\" + tokens.Last();
                                 }
@@ -441,7 +441,7 @@ namespace HTLib2.Bioinfo
                     {
                 ///     string line = lines[i];
                 ///     string line = matreader.ReadLine();
-                        string[] tokens = line.Trim().Split().HRemoveAll("");
+                        string[] tokens = line.Trim().Split((string[])null, StringSplitOptions.RemoveEmptyEntries); // line.Trim().Split().HRemoveAll("");
                         if(tokens.Length == 0)
                             continue;
                 ///     if(tokenss[i] == null)
