@@ -7,6 +7,7 @@ using HTLib2.Bioinfo;
 
 namespace HTLib2.Bioinfo
 {
+    using Element = Tinker.TkFile.Element;
     public partial class Tinker
     {
         public partial class PdbXyz
@@ -422,9 +423,9 @@ namespace HTLib2.Bioinfo
                     for(int i=0; i<xyz.elements.Length; i++)
                     {
                         var elem = xyz.elements[i];
-                        if(elem is Tinker.Xyz.Atom)
+                        if(elem.type == Tinker.Xyz.Atom.type)
                         {
-                            var xyzatom = elem as Tinker.Xyz.Atom;
+                            var xyzatom = elem.Atom;
                             var pdbatom = kdtree.nearest(xyzatom.Coord);
                             double dist = (xyzatom.Coord - pdbatom.coord).Dist;
                             if(dist > 0.1)
@@ -438,9 +439,9 @@ namespace HTLib2.Bioinfo
                             }
                         }
                     }
-                    var bind_atom = xyz.elements[bind_idx] as Tinker.Xyz.Atom;
+                    var bind_atom = xyz.elements[bind_idx].Atom;
                     bind_ID = bind_atom.Id;
-                    xyz.elements[bind_idx] = Tinker.Xyz.Atom.FromCoord(bind_atom, bind_atom.Coord + new Vector(900, 900, 900));
+                    xyz.elements[bind_idx] = Tinker.Xyz.Atom.ElementFromCoord(bind_atom, bind_atom.Coord + new Vector(900, 900, 900));
                     bind_xyz_name = "$PDBID$.v3.prot.v2.mark.atom$BINDID$.that.binds.FE.xyz".Replace("$PDBID$" , pdbid)
                                                                                             .Replace("$BINDID$", bind_ID.ToString());
                     xyz.ToFile(bind_xyz_name, false);
@@ -483,11 +484,11 @@ namespace HTLib2.Bioinfo
                         for(int i=0; i<xyz.elements.Length; i++)
                         {
                             if(xyz.elements[i].type != "Atom") continue;
-                            var atom = xyz.elements[i] as Tinker.Xyz.Atom;
+                            var atom = xyz.elements[i].Atom;
                             if(atom.AtomType.Trim().Length == 0) continue;
-                            if(atom.Id == NE2_ID) { atom = new Tinker.Xyz.Atom(atom.line.Replace(HE2_sid ,"  xxxx")); xyz.elements[i] = atom;              continue; }
-                            if(atom.Id == HE2_ID) { atom = new Tinker.Xyz.Atom(atom.line.Replace(HE2_sid ,"  xxxx")); xyz.elements[i] = atom; HE2_idx = i; continue; }
-                            if(atom.Id ==  FE_ID) { atom = new Tinker.Xyz.Atom(atom.line.Replace("  9901","  yyyy")); xyz.elements[i] = atom;              continue; }
+                            if(atom.Id == NE2_ID) { Element nelem = Tinker.Xyz.Atom.ElementFromLine(atom.line.Replace(HE2_sid ,"  xxxx")); xyz.elements[i] = nelem;              continue; }
+                            if(atom.Id == HE2_ID) { Element nelem = Tinker.Xyz.Atom.ElementFromLine(atom.line.Replace(HE2_sid ,"  xxxx")); xyz.elements[i] = nelem; HE2_idx = i; continue; }
+                            if(atom.Id ==  FE_ID) { Element nelem = Tinker.Xyz.Atom.ElementFromLine(atom.line.Replace("  9901","  yyyy")); xyz.elements[i] = nelem;              continue; }
                         }
                         xyz.ToFile(prot41_name, false);
 
@@ -496,10 +497,10 @@ namespace HTLib2.Bioinfo
                         for(int i=0; i<xyz.elements.Length; i++)
                         {
                             if(xyz.elements[i].type != "Atom") continue;
-                            var atom = xyz.elements[i] as Tinker.Xyz.Atom;
+                            var atom = xyz.elements[i].Atom;
                             if(atom.AtomType.Trim().Length == 0) continue;
-                            if(atom.Id == NE2_ID) { atom = new Tinker.Xyz.Atom(atom.line.Replace("  xxxx", FE_sid)); xyz.elements[i] = atom; continue; }
-                            if(atom.Id ==  FE_ID) { atom = new Tinker.Xyz.Atom(atom.line.Replace("  yyyy",NE2_sid)); xyz.elements[i] = atom; continue; }
+                            if(atom.Id == NE2_ID) { Element nelem = Tinker.Xyz.Atom.ElementFromLine(atom.line.Replace("  xxxx", FE_sid)); xyz.elements[i] = nelem; continue; }
+                            if(atom.Id ==  FE_ID) { Element nelem = Tinker.Xyz.Atom.ElementFromLine(atom.line.Replace("  yyyy",NE2_sid)); xyz.elements[i] = nelem; continue; }
                         }
                         xyz.ToFile(prot42_name, false);
 

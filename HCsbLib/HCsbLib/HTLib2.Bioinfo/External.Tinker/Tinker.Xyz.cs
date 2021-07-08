@@ -74,6 +74,16 @@ namespace HTLib2.Bioinfo
                 ids[i] = atoms[i].Id;
             return ids;
         }
+        public static IEnumerable<Element> HEnumElement(this IEnumerable<Tinker.Xyz.Atom> atoms)
+        {
+            foreach(var atom in atoms)
+                yield return atom.elem;
+        }
+        public static IEnumerable<Element> HEnumElement(this IEnumerable<Tinker.Xyz.Header> headers)
+        {
+            foreach(var header in headers)
+                yield return header.elem;
+        }
         public static IEnumerable<int> HEnumId(this IEnumerable<Tinker.Xyz.Atom> atoms)
         {
             foreach(var atom in atoms)
@@ -217,6 +227,11 @@ namespace HTLib2.Bioinfo
             foreach(var elem in elems)
                 yield return elem.line;
         }
+        public static IEnumerable<string> EnumLine(this IEnumerable<Tinker.Xyz.Atom> atoms)
+        {
+            foreach(var atom in atoms)
+                yield return atom.line;
+        }
         public static IEnumerable<Tinker.Xyz.Atom> HSelectByAtomType(this IEnumerable<Tinker.Xyz.Atom> atoms, string AtomType)
         {
             foreach(var atom in atoms)
@@ -235,7 +250,7 @@ namespace HTLib2.Bioinfo
     }
     public partial class Tinker
     {
-        [Serializable]
+        //[Serializable]
         public partial class Xyz : IBinarySerializable
         {
             public Element[] elements;
@@ -244,12 +259,11 @@ namespace HTLib2.Bioinfo
             {
                 get
                 {
-                    Atom[] atoms = this.atoms;
-                    Atom.Format format = atoms[0].format;
+                    Atom.Format format = elements[0].format;
                     if(HDebug.IsDebuggerAttached)
                     {
-                        foreach(var atom in atoms)
-                            HDebug.Assert(format == atom.format);
+                        foreach(var element in elements)
+                            HDebug.Assert(format == element.format);
                     }
                     return format;
                 }
@@ -374,16 +388,16 @@ namespace HTLib2.Bioinfo
                 List<Element> nelems = new List<Element>();
                 foreach(var elem in elements)
                 {
-                    if(elem is Atom)
+                    if(elem.type == Atom.type)
                     {
-                        var atom = elem as Atom;
-                        var natom = Atom.FromData(format, atom.Id, atom.AtomType.Trim(), atom.X, atom.Y, atom.Z, atom.AtomId, atom.BondedIds, autoAdjustCoord);
+                        Atom     atom = elem.Atom;
+                        Element natom = Atom.ElementFromData(format, atom.Id, atom.AtomType.Trim(), atom.X, atom.Y, atom.Z, atom.AtomId, atom.BondedIds, autoAdjustCoord);
                         nelems.Add(natom);
                     }
-                    else if(elem is Header)
+                    else if(elem.type == Header.type)
                     {
-                        var header = elem as Header;
-                        var nheader = Header.FromData(format, header.NumAtoms);
+                        Header   header = elem.Header;
+                        Element nheader = Header.ElementFromData(format, header.NumAtoms);
                         //{
                         //    string line = "";
                         //    line += string.Format("                    {0}", header.NumAtoms).HSubEndStringCount(format.idxId[1]-format.idxId[0]+1);
@@ -394,7 +408,8 @@ namespace HTLib2.Bioinfo
                     }
                     else
                     {
-                        nelems.Add(elem);
+                        Element    nelem = new Element(elem.line, elem.type, format);
+                        nelems.Add(nelem);
                     }
                 }
 
@@ -402,7 +417,7 @@ namespace HTLib2.Bioinfo
             }
             public static Xyz FromAtoms(IList<Xyz.Atom> atoms)
             {
-                Header header = Header.FromData(atoms.Count);
+                Element header = Header.ElementFromData(atoms.Count);
 
                 List<string> lines = new List<string>(atoms.Count+1);
 
@@ -436,9 +451,9 @@ namespace HTLib2.Bioinfo
                     return null;
 
                 Element[] elements = new Element[lines.Count];
-                elements[0] = new Header(lines[0]);
+                elements[0] = Header.ElementFromLine(format, lines[0]);
                 for(int i=1; i<lines.Count; i++)
-                    elements[i] = new Atom(format, lines[i]);
+                    elements[i] = Atom.ElementFromLine(format, lines[i]);
 
                 return elements;
             }
@@ -456,14 +471,14 @@ namespace HTLib2.Bioinfo
                 {
                     switch(elements[i].type)
                     {
-                        case "Header":
-                            HDebug.Assert((elements[0] as Header).NumAtoms == coords.Count);
+                        case Header.type:
+                            HDebug.Assert(elements[0].Header.NumAtoms == coords.Count);
                             break;
-                        case "Atom":
-                            Atom atom  = (elements[i] as Atom);
+                        case Atom.type:
+                            Atom atom    = elements[i].Atom;
                             Vector coord = coords[atom.Id-1];
-                            Atom natom = Atom.FromCoord(atom, coord);
-                            elements[i] = natom;
+                            Element nelem =  Atom.ElementFromCoord(atom, coord);
+                            elements[i] = nelem;
                             break;
                         default:
                             HDebug.Assert(false);
@@ -590,12 +605,13 @@ namespace HTLib2.Bioinfo
             //    public readonly Format format;
             //    public Element(Format format, string line) : base(line) { this.format = format; }
             //}
-            public class Header : Element
+            public struct Header
             {
-                public readonly Atom.Format format;
-                public Header(Atom.Format format, string line) : base(line) { this.format = format                  ; }
-                public Header(               string line) : base(line) { this.format = Atom.Format.defformat_digit06; }
-                public override string type { get { return "Header"; } }
+                public readonly Element elem;
+                public string           line   { get { return elem.line  ; } }
+                public Atom.Format      format { get { return elem.format; } }
+                public Header(Element elem) { this.elem = elem; }
+                public const string type = "Header";
                 ///  num atoms
                 ///  0-5
                 /// 
@@ -604,17 +620,19 @@ namespace HTLib2.Bioinfo
                 ///  ================================================================================
                 ///    3138  HYDROLASE/HYDROLASE INHIBITOR           02-OCT-12   4HDB
                 /// "  2521  HEME PROTEIN                            25-FEB-98   1A6G"
-                public int NumAtoms { get { return GetInt(format.idxId).Value; } }
-                public static Header FromData(int numatoms, string description="", string date="", string pdbid="")
+                public int NumAtoms { get { return elem.GetInt(elem.format.idxId).Value; } }
+                public static Element ElementFromLine(Atom.Format format, string line) {                                                     return new Element(line, Header.type, format); }
+                public static Element ElementFromLine(                    string line) { Atom.Format format = Atom.Format.defformat_digit06; return new Element(line, Header.type, format); }
+                public static Element ElementFromData(int numatoms, string description="", string date="", string pdbid="")
                 {
-                    return FromData(Atom.Format.defformat_digit06, numatoms, description, date, pdbid);
+                    return ElementFromData(Atom.Format.defformat_digit06, numatoms, description, date, pdbid);
                 }
-                public static Header FromData(Atom.Format format, int numatoms, string description="", string date="", string pdbid="")
+                public static Element ElementFromData(Atom.Format format, int numatoms, string description="", string date="", string pdbid="")
                 {
                     if(HDebug.Selftest())
                     {
                         var line0 = "  2521  HEME PROTEIN                            25-FEB-98   1A6G";
-                        var line1 = FromData(2521, "HEME PROTEIN", "25-FEB-98", "1A6G").line;
+                        var line1 = ElementFromData(2521, "HEME PROTEIN", "25-FEB-98", "1A6G").line;
                         HDebug.Exception(line0 == line1);
                     }
                     string line = "";
@@ -624,15 +642,15 @@ namespace HTLib2.Bioinfo
                     if(date        != null) line += (date        + "                                        ").Substring(0, 12);
                     if(pdbid       != null) line += (pdbid       + "                                        ").Substring(0,  4);
                     line = line.TrimEnd();
-                    Header header = new Header(format, line);
-                    HDebug.Assert(numatoms == header.NumAtoms);
-                    return header;
+                    Element elem = new Element(line, Header.type, format);
+                    HDebug.Assert(numatoms == elem.Header.NumAtoms);
+                    return elem;
                 }
             }
-            [Serializable]
-            public class Atom : Element
+            //[Serializable]
+            public class Atom
             {
-                [Serializable]
+                //[Serializable]
                 public class Format : IBinarySerializable
                 {
                     public int[] idxId       = new int[]{ 0, 5};    public string formatId       = "                     {0}";  // HSubEndStringCount
@@ -782,9 +800,11 @@ namespace HTLib2.Bioinfo
                     };
                 }
 
-                public readonly Format format;
-                public Atom(Format format, string line) : base(line) { this.format = format                  ; CheckFormat(format, line); }
-                public Atom(               string line) : base(line) { this.format = Format.defformat_digit06; CheckFormat(format, line); }
+                public readonly Element elem;
+                public string           line   { get { return elem.line  ; } }
+                public Format           format { get { return elem.format; } }
+                public Atom(Element elem) { this.elem = elem; }
+                //public readonly Format format;
                 static void CheckFormat(Format format, string line)
                 {
                     for(int i=1+format.idxId      [1]; i<format.idxAtomType[0]; i++) HDebug.Assert(line[i] == ' ');
@@ -794,7 +814,7 @@ namespace HTLib2.Bioinfo
                     for(int i=1+format.idxZ       [1]; i<format.idxAtomId  [0]; i++) HDebug.Assert(line[i] == ' ');
                     for(int i=1+format.idxAtomId  [1]; i<format.idxBondedId[0]; i++) HDebug.Assert(line[i] == ' ');
                 }
-                public override string type { get { return "Atom"; } }
+                public const string type = "Atom";
                 ///  id  (atom type in prm)   x     y      z        (atom-id in prm)  bonds, ...
                 ///  0-5 8-10                11-22  23-34  35-46    47-52             53-58(6), 59-64(6), ...
                 ///   
@@ -803,12 +823,12 @@ namespace HTLib2.Bioinfo
                 ///  ================================================================================
                 ///       1  NH3   -4.040000   15.048000   13.602000    65     2     5     6     7
 
-                public int    Id         { get { return GetInt   (format.idxId       ).Value; } }
-                public string AtomType   { get { return GetString(format.idxAtomType )      ; } }
-                public double X          { get { return GetDouble(format.idxX        ).Value; } }
-                public double Y          { get { return GetDouble(format.idxY        ).Value; } }
-                public double Z          { get { return GetDouble(format.idxZ        ).Value; } }
-                public int    AtomId     { get { return GetInt   (format.idxAtomId   ).Value; } }
+                public int    Id         { get { return elem.GetInt   (elem.format.idxId       ).Value; } }
+                public string AtomType   { get { return elem.GetString(elem.format.idxAtomType )      ; } }
+                public double X          { get { return elem.GetDouble(elem.format.idxX        ).Value; } }
+                public double Y          { get { return elem.GetDouble(elem.format.idxY        ).Value; } }
+                public double Z          { get { return elem.GetDouble(elem.format.idxZ        ).Value; } }
+                public int    AtomId     { get { return elem.GetInt   (elem.format.idxAtomId   ).Value; } }
                 public int?   BondedId1  { get { return GetBondedId(1); } }
                 public int?   BondedId2  { get { return GetBondedId(2); } }
                 public int?   BondedId3  { get { return GetBondedId(3); } }
@@ -832,15 +852,15 @@ namespace HTLib2.Bioinfo
                     //return GetInt(GetIdxBondedId(idx));
                     switch(idx)
                     {
-                        case 1: return GetInt(GetIdxBondedId(format,  0));
-                        case 2: return GetInt(GetIdxBondedId(format,  1));
-                        case 3: return GetInt(GetIdxBondedId(format,  2));
-                        case 4: return GetInt(GetIdxBondedId(format,  3));
-                        case 5: return GetInt(GetIdxBondedId(format,  4));
-                        case 6: return GetInt(GetIdxBondedId(format,  5));
-                        case 7: return GetInt(GetIdxBondedId(format,  6));
-                        case 8: return GetInt(GetIdxBondedId(format,  7));
-                        case 9: return GetInt(GetIdxBondedId(format,  8));
+                        case 1: return elem.GetInt(GetIdxBondedId(elem.format,  0));
+                        case 2: return elem.GetInt(GetIdxBondedId(elem.format,  1));
+                        case 3: return elem.GetInt(GetIdxBondedId(elem.format,  2));
+                        case 4: return elem.GetInt(GetIdxBondedId(elem.format,  3));
+                        case 5: return elem.GetInt(GetIdxBondedId(elem.format,  4));
+                        case 6: return elem.GetInt(GetIdxBondedId(elem.format,  5));
+                        case 7: return elem.GetInt(GetIdxBondedId(elem.format,  6));
+                        case 8: return elem.GetInt(GetIdxBondedId(elem.format,  7));
+                        case 9: return elem.GetInt(GetIdxBondedId(elem.format,  8));
                     }
                     throw new NotImplementedException();
                 }
@@ -869,7 +889,9 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                public static Atom FromData(int id, string atomtype, double x, double y, double z, int atomid, int[] bondedids, bool autoAdjustCoord=false)
+                public static Element ElementFromLine(Format format, string line) {                                         ; CheckFormat(format, line); return new Element(line, Atom.type, format); }
+                public static Element ElementFromLine(               string line) { Format format = Format.defformat_digit06; CheckFormat(format, line); return new Element(line, Atom.type, format); }
+                public static Element ElementFromData(int id, string atomtype, double x, double y, double z, int atomid, int[] bondedids, bool autoAdjustCoord=false)
                 {
                     if(HDebug.Selftest())
                     {
@@ -879,17 +901,17 @@ namespace HTLib2.Bioinfo
                         /// "     1  NH3   -4.040000   15.048000   13.602000    65     2     5     6     7"
                         /// "     1  NH3   -7.403641    7.761010   19.275393    65     2     5     6     7"
                         line0 =    "     1  NH3   -7.403641    7.761010   19.275393    65     2     5     6     7";
-                        line1 = FromData(1,"NH3", -7.403641,   7.761010,  19.275393,   65,
+                        line1 = ElementFromData(1,"NH3", -7.403641,   7.761010,  19.275393,   65,
                                                                                   new int[] { 2,    5,    6,    7 } ).line;
                         HDebug.Exception(line0 == line1);
                         line0 =     "    41  O      0.845971   11.532886   21.390802    74    40";
-                        line1 = FromData(41, "O",   0.845971,  11.532886,  21.390802,   74,
+                        line1 = ElementFromData(41, "O",   0.845971,  11.532886,  21.390802,   74,
                                                                                   new int[] { 40 } ).line;
                         HDebug.Exception(line0 == line1);
                     }
-                    return FromData(Format.defformat_digit06, id, atomtype, x, y, z, atomid, bondedids, autoAdjustCoord);
+                    return ElementFromData(Format.defformat_digit06, id, atomtype, x, y, z, atomid, bondedids, autoAdjustCoord);
                 }
-                public static Atom FromData(Format format, int id, string atomtype, double x, double y, double z, int atomid, int[] bondedids, bool autoAdjustCoord=false)
+                public static Element ElementFromData(Format format, int id, string atomtype, double x, double y, double z, int atomid, int[] bondedids, bool autoAdjustCoord=false)
                 {
                     if(HDebug.Selftest())
                     {
@@ -899,16 +921,16 @@ namespace HTLib2.Bioinfo
                         /// "     1  NH3   -4.040000   15.048000   13.602000    65     2     5     6     7"
                         /// "     1  NH3   -7.403641    7.761010   19.275393    65     2     5     6     7"
                         line0 =                              "     1  NH3   -7.403641    7.761010   19.275393    65     2     5     6     7";
-                        line1 = FromData(Format.defformat_digit06, 1,"NH3", -7.403641,   7.761010,  19.275393,   65,
+                        line1 = ElementFromData(Format.defformat_digit06, 1,"NH3", -7.403641,   7.761010,  19.275393,   65,
                                                                                                             new int[] { 2,    5,    6,    7 } ).line;
                         HDebug.Exception(line0 == line1);
                         line0 =                               "    41  O      0.845971   11.532886   21.390802    74    40";
-                        line1 = FromData(Format.defformat_digit06, 41,"O",    0.845971,  11.532886,  21.390802,   74
+                        line1 = ElementFromData(Format.defformat_digit06, 41,"O",    0.845971,  11.532886,  21.390802,   74
                                                                                                             ,new int[]{ 40 } ).line;
                         HDebug.Exception(line0 == line1);
 
                         line0 =                                   "     13  OT         -85.4401110000        -18.6572660000         -9.9272310000   101     14     15";
-                        line1 = FromData(Format._defformat_digit10_id7, 13, "OT",      -85.4401110000,       -18.6572660000,        -9.9272310000,  101,
+                        line1 = ElementFromData(Format._defformat_digit10_id7, 13, "OT",      -85.4401110000,       -18.6572660000,        -9.9272310000,  101,
                                                                                                                                                 new int[] { 14,    15 } ).line;
                         HDebug.Exception(line0 == line1);
                     }
@@ -928,28 +950,28 @@ namespace HTLib2.Bioinfo
                         if(bond[0] != ' ') bond = " "+bond;
                         line += bond;
                     }
-                    Atom atom = new Atom(format, line);
-                    HDebug.Assert(id              == atom.Id              );
-                    HDebug.Assert(atomtype.Trim() == atom.AtomType.Trim() );
-                    HDebug.Assert(atomid          == atom.AtomId          );
-                    HDebug.Assert(bondedids.HToVectorT() == atom.BondedIds);
+                    Element elem = new Element(line, Atom.type, format);
+                    HDebug.Assert(id                     == elem.Atom.Id              );
+                    HDebug.Assert(atomtype.Trim()        == elem.Atom.AtomType.Trim() );
+                    HDebug.Assert(atomid                 == elem.Atom.AtomId          );
+                    HDebug.Assert(bondedids.HToVectorT() == elem.Atom.BondedIds);
                     // exceptional case that the atom is out of available number range
-                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, x-atom.X); } else { if(Math.Abs(x-atom.X) > 0.000001) return FromData(format, id, atomtype, x/2, y, z, atomid, bondedids, autoAdjustCoord); }
-                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, y-atom.Y); } else { if(Math.Abs(y-atom.Y) > 0.000001) return FromData(format, id, atomtype, x, y/2, z, atomid, bondedids, autoAdjustCoord); }
-                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, z-atom.Z); } else { if(Math.Abs(z-atom.Z) > 0.000001) return FromData(format, id, atomtype, x, y, z/2, atomid, bondedids, autoAdjustCoord); }
-                    return atom;
+                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, x-elem.Atom.X); } else { if(Math.Abs(x-elem.Atom.X) > 0.000001) return ElementFromData(format, id, atomtype, x/2, y, z, atomid, bondedids, autoAdjustCoord); }
+                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, y-elem.Atom.Y); } else { if(Math.Abs(y-elem.Atom.Y) > 0.000001) return ElementFromData(format, id, atomtype, x, y/2, z, atomid, bondedids, autoAdjustCoord); }
+                    if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, z-elem.Atom.Z); } else { if(Math.Abs(z-elem.Atom.Z) > 0.000001) return ElementFromData(format, id, atomtype, x, y, z/2, atomid, bondedids, autoAdjustCoord); }
+                    return elem;
                 }
-                public static Atom FromCoord(Atom src, Vector coord)
+                public static Element ElementFromCoord(Atom src, Vector coord)
                 {
-                    return FromCoord(src, coord, Format.defformat_digit06);
+                    return ElementFromCoord(src, coord, Format.defformat_digit06);
                 }
-                public static Atom FromCoord(Atom src, Vector coord, Format format)
+                public static Element ElementFromCoord(Atom src, Vector coord, Format format)
                 {
                     double x = coord[0];
                     double y = coord[1];
                     double z = coord[2];
-                    Atom dest = FromData(format, src.Id, src.AtomType, x, y, z, src.AtomId, src.BondedIds);
-                    return dest;
+                    Element elem = ElementFromData(format, src.Id, src.AtomType, x, y, z, src.AtomId, src.BondedIds);
+                    return  elem;
                 }
 
                 //  public Prm.Charge GetCharge(Prm prm)

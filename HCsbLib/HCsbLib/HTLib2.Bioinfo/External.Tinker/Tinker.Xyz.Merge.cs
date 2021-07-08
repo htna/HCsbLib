@@ -62,15 +62,15 @@ namespace HTLib2.Bioinfo
                         throw new Exception();
                 }
 
-                header = Xyz.Header.FromData(format, maxid);
+                header = Xyz.Header.ElementFromData(format, maxid).Header;
             }
 
             List<Tinker.TkFile.Element> nelements;
             {
                 nelements = new List<Tinker.TkFile.Element>();
-                nelements.Add(header);
-                nelements.AddRange(natoms1);
-                nelements.AddRange(natoms2);
+                nelements.Add     (header .elem          );
+                nelements.AddRange(natoms1.HEnumElement());
+                nelements.AddRange(natoms2.HEnumElement());
             }
 
             return new Xyz( nelements.ToArray() );
