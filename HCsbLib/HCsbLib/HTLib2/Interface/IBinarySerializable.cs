@@ -29,6 +29,8 @@ namespace HTLib2
     //          {
     //              reader.HRead(out value);
     //          }
+    //          // IBinarySerializable
+    //          ///////////////////////////////////////////////////
     //      }
 
     public interface IBinarySerializable
