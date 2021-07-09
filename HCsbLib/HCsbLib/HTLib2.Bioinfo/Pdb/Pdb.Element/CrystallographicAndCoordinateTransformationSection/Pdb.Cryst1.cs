@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Cryst1 : Element
+        public class Cryst1 : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format23/sect8.html#CRYST1
 			///
@@ -49,15 +49,24 @@ namespace HTLib2.Bioinfo
 				return new Cryst1(line);
 			}
             public static bool IsCryst1(string line) { return (line.Substring(0, 6) == "CRYST1"); }
-            public double a      { get { return Double (idxs_a     ).Value; } } int[] idxs_a      = new int[]{ 7,15};  //  7 - 15      Real(9.3)            a            a (Angstroms).
-            public double b      { get { return Double (idxs_b     ).Value; } } int[] idxs_b      = new int[]{16,24};  // 16 - 24      Real(9.3)            b            b (Angstroms).
-            public double c      { get { return Double (idxs_c     ).Value; } } int[] idxs_c      = new int[]{25,33};  // 25 - 33      Real(9.3)            c            c (Angstroms).
-            public double alpha  { get { return Double (idxs_alpha ).Value; } } int[] idxs_alpha  = new int[]{34,40};  // 34 - 40      Real(7.2)            alpha        alpha (degrees).
-            public double beta   { get { return Double (idxs_beta  ).Value; } } int[] idxs_beta   = new int[]{41,47};  // 41 - 47      Real(7.2)            beta         beta (degrees).
-            public double gamma  { get { return Double (idxs_gamma ).Value; } } int[] idxs_gamma  = new int[]{48,54};  // 48 - 54      Real(7.2)            gamma        gamma (degrees).
-            public string sGroup { get { return String (idxs_sGroup);       } } int[] idxs_sGroup = new int[]{56,66};  // 56 - 66      LString              sGroup       Space group.
-            public    int z      { get { return Integer(idxs_z     ).Value; } } int[] idxs_z      = new int[]{67,70};  // 67 - 70      Integer              z            Z value.
+            public double a      { get { return Double (idxs_a     ).Value; } } static readonly int[] idxs_a      = new int[]{ 7,15};  //  7 - 15      Real(9.3)            a            a (Angstroms).
+            public double b      { get { return Double (idxs_b     ).Value; } } static readonly int[] idxs_b      = new int[]{16,24};  // 16 - 24      Real(9.3)            b            b (Angstroms).
+            public double c      { get { return Double (idxs_c     ).Value; } } static readonly int[] idxs_c      = new int[]{25,33};  // 25 - 33      Real(9.3)            c            c (Angstroms).
+            public double alpha  { get { return Double (idxs_alpha ).Value; } } static readonly int[] idxs_alpha  = new int[]{34,40};  // 34 - 40      Real(7.2)            alpha        alpha (degrees).
+            public double beta   { get { return Double (idxs_beta  ).Value; } } static readonly int[] idxs_beta   = new int[]{41,47};  // 41 - 47      Real(7.2)            beta         beta (degrees).
+            public double gamma  { get { return Double (idxs_gamma ).Value; } } static readonly int[] idxs_gamma  = new int[]{48,54};  // 48 - 54      Real(7.2)            gamma        gamma (degrees).
+            public string sGroup { get { return String (idxs_sGroup);       } } static readonly int[] idxs_sGroup = new int[]{56,66};  // 56 - 66      LString              sGroup       Space group.
+            public    int z      { get { return Integer(idxs_z     ).Value; } } static readonly int[] idxs_z      = new int[]{67,70};  // 67 - 70      Integer              z            Z value.
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Cryst1(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
             ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Cryst1(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

@@ -41,7 +41,7 @@ namespace HTLib2.Bioinfo
     public partial class Pdb
     {
         [Serializable]
-        public class Remark2 : Element
+        public class Remark2 : Element, IBinarySerializable
         {
             /// http://www.wwpdb.org/documentation/format23/remarks.html
             ///
@@ -99,10 +99,10 @@ namespace HTLib2.Bioinfo
                 return new Remark2(line);
             }
             public static bool IsRemark2(string line) { return (line.Substring(0,10) == "REMARK   2"); }
-            public char   _REMARKNUM  { get { return Char   (idxs__REMARKNUM);       } } int[] idxs__REMARKNUM= new int[]{10,10}; // 10         LString(1)     "2"
-            public string _RESOLUTION { get { return String (idxs__RESOLUTIO);       } } int[] idxs__RESOLUTIO= new int[]{12,22}; // 12 - 22    LString(11)    "RESOLUTION."
-            public double resolution  { get { return Double (idxs_resolution).Value; } } int[] idxs_resolution= new int[]{24,30}; // 24 - 30    Real(7.2)      resolution   Resolution.
-            public string _ANGSTROMS  { get { return String (idxs__ANGSTROMS);       } } int[] idxs__ANGSTROMS= new int[]{32,41}; // 32 - 41    LString(10)    "ANGSTROMS."
+            public char   _REMARKNUM  { get { return Char   (idxs__REMARKNUM);       } } static readonly int[] idxs__REMARKNUM= new int[]{10,10}; // 10         LString(1)     "2"
+            public string _RESOLUTION { get { return String (idxs__RESOLUTIO);       } } static readonly int[] idxs__RESOLUTIO= new int[]{12,22}; // 12 - 22    LString(11)    "RESOLUTION."
+            public double resolution  { get { return Double (idxs_resolution).Value; } } static readonly int[] idxs_resolution= new int[]{24,30}; // 24 - 30    Real(7.2)      resolution   Resolution.
+            public string _ANGSTROMS  { get { return String (idxs__ANGSTROMS);       } } static readonly int[] idxs__ANGSTROMS= new int[]{32,41}; // 32 - 41    LString(10)    "ANGSTROMS."
 
             public double? TryResolution()
             {
@@ -126,6 +126,15 @@ namespace HTLib2.Bioinfo
             //    return serial.CompareTo(other.serial);
             //}
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Remark2(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
             ////////////////////////////////////////////////////////////////////////////////////
             // Serializable
             public Remark2(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

@@ -20,7 +20,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Remark : Element
+        public class Remark : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format23/remarks.html
 			///
@@ -57,8 +57,8 @@ namespace HTLib2.Bioinfo
 				return new Remark(line);
 			}
 			public static bool IsRemark(string line) { return (line.Substring(0, 6) == "REMARK"); }
-			public    int remarkNum   { get { return Integer(idxs_remarkNum ).Value; } } int[] idxs_remarkNum = new int[]{ 8,10}; //  8 - 10    Integer        remarkNum    Remark number.
-			public string empty       { get { return String (idxs_empty     );       } } int[] idxs_empty     = new int[]{12,70}; // 12 - 70    LString        empty        Left as white space in first line of each new remark.
+			public    int remarkNum   { get { return Integer(idxs_remarkNum ).Value; } } static readonly int[] idxs_remarkNum = new int[]{ 8,10}; //  8 - 10    Integer        remarkNum    Remark number.
+			public string empty       { get { return String (idxs_empty     );       } } static readonly int[] idxs_empty     = new int[]{12,70}; // 12 - 70    LString        empty        Left as white space in first line of each new remark.
             public string contents    { get { return empty;                          } }
 
 			// IComparable<Atom>
@@ -67,6 +67,15 @@ namespace HTLib2.Bioinfo
 			//	return serial.CompareTo(other.serial);
 			//}
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Remark(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Remark(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

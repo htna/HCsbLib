@@ -63,7 +63,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Compnd : Element
+        public class Compnd : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format23/sect2.html#COMPND
             /// 
@@ -125,9 +125,18 @@ namespace HTLib2.Bioinfo
 				return new Compnd(line);
 			}
 			public static bool IsCompnd(string line) { return (line.Substring(0, 6) == "COMPND"); }
-			public string continuation { get { return String (idxs_continuation ); } } int[] idxs_continuation  = new int[]{ 8,10}; //  9 - 10        Continuation      continuation   Allows concatenation of multiple records.
-			public string specification{ get { return String (idxs_specification); } } int[] idxs_specification = new int[]{11,70}; // 11 - 70        Specification     compound       Description of the molecular components.
+			public string continuation { get { return String (idxs_continuation ); } } static readonly int[] idxs_continuation  = new int[]{ 8,10}; //  9 - 10        Continuation      continuation   Allows concatenation of multiple records.
+			public string specification{ get { return String (idxs_specification); } } static readonly int[] idxs_specification = new int[]{11,70}; // 11 - 70        Specification     compound       Description of the molecular components.
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Compnd(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Compnd(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

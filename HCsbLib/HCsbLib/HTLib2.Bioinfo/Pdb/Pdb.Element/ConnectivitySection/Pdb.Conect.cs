@@ -72,7 +72,7 @@ namespace HTLib2.Bioinfo
         }
 
         [Serializable]
-        public class Conect : Element
+        public class Conect : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format32/sect10.html
             /// 
@@ -168,6 +168,15 @@ namespace HTLib2.Bioinfo
                 return bonds;
             }
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Conect(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Conect(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) {}

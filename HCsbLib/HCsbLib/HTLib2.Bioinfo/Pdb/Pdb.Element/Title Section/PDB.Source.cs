@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Source : Element
+        public class Source : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format23/sect2.html#SOURCE
             /// 
@@ -66,9 +66,18 @@ namespace HTLib2.Bioinfo
 				return new Source(line);
 			}
 			public static bool IsSource(string line) { return (line.Substring(0, 6) == "SOURCE"); }
-			public string continuation { get { return String (idxs_continuation); } } int[] idxs_continuation = new int[]{ 9,10}; //  9 - 10        Continuation      continuation   Allows concatenation of multiple records.
-			public string srcName      { get { return String (idxs_srcName     ); } } int[] idxs_srcName      = new int[]{11,70}; // 11 - 70        Specification     compound       Description of the molecular components.
+			public string continuation { get { return String (idxs_continuation); } } static readonly int[] idxs_continuation = new int[]{ 9,10}; //  9 - 10        Continuation      continuation   Allows concatenation of multiple records.
+			public string srcName      { get { return String (idxs_srcName     ); } } static readonly int[] idxs_srcName      = new int[]{11,70}; // 11 - 70        Specification     compound       Description of the molecular components.
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Source(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Source(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

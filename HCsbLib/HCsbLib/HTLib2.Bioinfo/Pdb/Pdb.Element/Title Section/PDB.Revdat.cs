@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Revdat : Element
+        public class Revdat : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format32/sect2.html#REVDAT
             /// 
@@ -58,16 +58,25 @@ namespace HTLib2.Bioinfo
 				return new Revdat(line);
 			}
             public static bool IsRevdat(string line) { return (line.Substring(0, 6) == "REVDAT"); }
-            public int    modNum      { get { return Integer(idxs_modNum      ).Value; } } int[] idxs_modNum       = new int[] { 8,10}; //  8 - 10       Integer        modNum        Modification number.                   
-            public string continuation{ get { return String (idxs_continuation);       } } int[] idxs_continuation = new int[] {11,12}; // 11 - 12       Continuation   continuation  Allows concatenation of multiple records.
-            public string modDate     { get { return String (idxs_modDate     );       } } int[] idxs_modDate      = new int[] {14,22}; // 14 - 22       Date           modDate       Date of modification (or release  for new entries) in DD-MMM-YY format. This is not repeated on continued lines.
-            public string modId       { get { return String (idxs_modId       );       } } int[] idxs_modId        = new int[] {24,27}; // 24 - 27       IDCode         modId         ID code of this entry. This is not repeated on  continuation lines.
-            public int    modType     { get { return Integer(idxs_modType     ).Value; } } int[] idxs_modType      = new int[] {32,32}; // 32            Integer        modType       An integer identifying the type of modification. For all  revisions, the modification type is listed as 1 
-            public string record1     { get { return String (idxs_record1     );       } } int[] idxs_record1      = new int[] {40,45}; // 40 - 45       LString(6)     record        Modification detail. 
-            public string record2     { get { return String (idxs_record2     );       } } int[] idxs_record2      = new int[] {47,52}; // 47 - 52       LString(6)     record        Modification detail. 
-            public string record3     { get { return String (idxs_record3     );       } } int[] idxs_record3      = new int[] {54,59}; // 54 - 59       LString(6)     record        Modification detail. 
-            public string record4     { get { return String (idxs_record4     );       } } int[] idxs_record4      = new int[] {61,66}; // 61 - 66       LString(6)     record        Modification detail.
+            public int    modNum      { get { return Integer(idxs_modNum      ).Value; } } static readonly int[] idxs_modNum       = new int[] { 8,10}; //  8 - 10       Integer        modNum        Modification number.                   
+            public string continuation{ get { return String (idxs_continuation);       } } static readonly int[] idxs_continuation = new int[] {11,12}; // 11 - 12       Continuation   continuation  Allows concatenation of multiple records.
+            public string modDate     { get { return String (idxs_modDate     );       } } static readonly int[] idxs_modDate      = new int[] {14,22}; // 14 - 22       Date           modDate       Date of modification (or release  for new entries) in DD-MMM-YY format. This is not repeated on continued lines.
+            public string modId       { get { return String (idxs_modId       );       } } static readonly int[] idxs_modId        = new int[] {24,27}; // 24 - 27       IDCode         modId         ID code of this entry. This is not repeated on  continuation lines.
+            public int    modType     { get { return Integer(idxs_modType     ).Value; } } static readonly int[] idxs_modType      = new int[] {32,32}; // 32            Integer        modType       An integer identifying the type of modification. For all  revisions, the modification type is listed as 1 
+            public string record1     { get { return String (idxs_record1     );       } } static readonly int[] idxs_record1      = new int[] {40,45}; // 40 - 45       LString(6)     record        Modification detail. 
+            public string record2     { get { return String (idxs_record2     );       } } static readonly int[] idxs_record2      = new int[] {47,52}; // 47 - 52       LString(6)     record        Modification detail. 
+            public string record3     { get { return String (idxs_record3     );       } } static readonly int[] idxs_record3      = new int[] {54,59}; // 54 - 59       LString(6)     record        Modification detail. 
+            public string record4     { get { return String (idxs_record4     );       } } static readonly int[] idxs_record4      = new int[] {61,66}; // 61 - 66       LString(6)     record        Modification detail.
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Revdat(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
             ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Revdat(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

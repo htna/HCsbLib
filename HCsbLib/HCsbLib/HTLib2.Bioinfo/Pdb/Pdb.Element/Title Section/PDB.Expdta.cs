@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Expdta : Element
+        public class Expdta : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format23/sect2.html#EXPDTA
             /// 
@@ -52,9 +52,18 @@ namespace HTLib2.Bioinfo
 				return new Expdta(line);
 			}
             public static bool IsExpdta(string line) { return (line.Substring(0, 6) == "EXPDTA"); }
-			public string continuation{ get { return String(idxs_continuation); } } int[] idxs_continuation = new int[] { 9,10}; //  9 - 10        Continuation      continuation   Allows concatenation of multiple records.
-            public string technique   { get { return String(idxs_technique   ); } } int[] idxs_technique    = new int[] {11,70}; // 11 - 70        Specification     compound       Description of the molecular components.
+			public string continuation{ get { return String(idxs_continuation); } } static readonly int[] idxs_continuation = new int[] { 9,10}; //  9 - 10        Continuation      continuation   Allows concatenation of multiple records.
+            public string technique   { get { return String(idxs_technique   ); } } static readonly int[] idxs_technique    = new int[] {11,70}; // 11 - 70        Specification     compound       Description of the molecular components.
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Expdta(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Expdta(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

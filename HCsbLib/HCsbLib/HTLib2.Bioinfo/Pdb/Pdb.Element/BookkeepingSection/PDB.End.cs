@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class End : Element
+        public class End : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format23/sect11.html#END
             /// 
@@ -41,6 +41,15 @@ namespace HTLib2.Bioinfo
 			}
             public static bool IsEnd(string line) { return (line.Substring(0, 6) == "END   "); }
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public End(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public End(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

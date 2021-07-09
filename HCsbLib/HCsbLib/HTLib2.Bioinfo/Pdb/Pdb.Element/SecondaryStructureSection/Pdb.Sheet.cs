@@ -67,7 +67,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Sheet : Element
+        public class Sheet : Element, IBinarySerializable
 		{
 			/// http://www.wwpdb.org/documentation/format32/sect5.html#SHEET
 			///
@@ -176,6 +176,15 @@ namespace HTLib2.Bioinfo
             public    int prevResSeq { get { return Integer(66,69).Value; } } //66 - 69        Integer       prevResSeq     Registration. Residue sequence number in previous strand.
             public   char prevICode  { get { return Char   (70   );       } } //70             AChar         prevICode      Registration.  Insertion code in
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Sheet(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
             ////////////////////////////////////////////////////////////////////////////////////
             // Serializable
             public Sheet(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Header : Element
+        public class Header : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format23/sect2.html#HEADER
             /// 
@@ -49,10 +49,19 @@ namespace HTLib2.Bioinfo
 				return new Header(line);
 			}
 			public static bool IsHeader(string line) { return (line.Substring(0, 6) == "HEADER"); }
-			public string classification{ get { return String (idxs_classification); } } int[] idxs_classification = new int[]{11,50}; // 11 - 50      String(40)     classification    Classifies the molecule(s)
-			public string depDate       { get { return String (idxs_depDate       ); } } int[] idxs_depDate        = new int[]{51,59}; // 51 - 59      Date           depDate           Deposition date. 
-			public string idCode        { get { return String (idxs_idCode        ); } } int[] idxs_idCode         = new int[]{63,66}; // 63 - 66      IDcode         idCode            This identifier is unique within the PDB
+			public string classification{ get { return String (idxs_classification); } } static readonly int[] idxs_classification = new int[]{11,50}; // 11 - 50      String(40)     classification    Classifies the molecule(s)
+			public string depDate       { get { return String (idxs_depDate       ); } } static readonly int[] idxs_depDate        = new int[]{51,59}; // 51 - 59      Date           depDate           Deposition date. 
+			public string idCode        { get { return String (idxs_idCode        ); } } static readonly int[] idxs_idCode         = new int[]{63,66}; // 63 - 66      IDcode         idCode            This identifier is unique within the PDB
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Header(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Header(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

@@ -35,7 +35,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Seqres : Element
+        public class Seqres : Element, IBinarySerializable
 		{
 			/// http://www.wwpdb.org/documentation/format32/sect3.html#SEQRES
 			///
@@ -136,6 +136,15 @@ namespace HTLib2.Bioinfo
                 }
             }
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Seqres(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Seqres(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

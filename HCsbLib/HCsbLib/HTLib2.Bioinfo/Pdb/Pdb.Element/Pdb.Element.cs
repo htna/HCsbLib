@@ -21,7 +21,7 @@ namespace HTLib2.Bioinfo
     public partial class Pdb
     {
         [Serializable]
-        public partial class Element : ISerializable
+        public partial class Element : ISerializable, IBinarySerializable
         {
             public readonly string line;
             protected string  String (int begin, int end) { string substr = line.Substring(begin-1, end-begin+1); return substr; }
@@ -80,6 +80,17 @@ namespace HTLib2.Bioinfo
                 }
             }
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public void BinarySerialize(HBinaryWriter writer)
+            {
+                writer.Write(line);
+            }
+            public Element(HBinaryReader reader)
+            {
+                reader.Read(out line);
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Element(SerializationInfo info, StreamingContext ctxt)

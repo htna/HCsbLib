@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Model : Element, IComparable<Model>
+        public class Model : Element, IComparable<Model>, IBinarySerializable
 		{
 			/// http://www.wwpdb.org/documentation/format23/sect9.html#MODEL
 			///
@@ -85,6 +85,15 @@ namespace HTLib2.Bioinfo
             //    return str;
             //}
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Model(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Model(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) {}

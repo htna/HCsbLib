@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Ter : Element//, IComparable<Ter>
+        public class Ter : Element, IBinarySerializable //, IComparable<Ter>
 		{
 			/// http://www.wwpdb.org/documentation/format23/sect9.html#TER
 			///
@@ -58,11 +58,11 @@ namespace HTLib2.Bioinfo
 				return new Ter(line);
 			}
             public static bool IsTer(string line) { return (line.Substring(0, 6) == "TER   "); }
-            public    int serial  { get { return Integer(idxs_serial ).Value; } } int[] idxs_serial  = new int[]{ 7,11}; // //  7 - 11     Integer           serial          Serial number.
-            public string resName { get { return String (idxs_resName);       } } int[] idxs_resName = new int[]{18,20}; // // 18 - 20     Residue name      resName         Residue name.
-            public   char chainID { get { return Char   (idxs_chainID);       } } int[] idxs_chainID = new int[]{22,22}; // // 22          Character         chainID         Chain identifier.
-            public    int resSeq  { get { return Integer(idxs_resSeq ).Value; } } int[] idxs_resSeq  = new int[]{23,26}; // // 23 - 26     Integer           resSeq          Residue sequence number.
-            public   char iCode   { get { return Char   (idxs_iCode  );       } } int[] idxs_iCode   = new int[]{27,27}; // // 27          AChar             iCode           Insertion code.
+            public    int serial  { get { return Integer(idxs_serial ).Value; } } static readonly int[] idxs_serial  = new int[]{ 7,11}; // //  7 - 11     Integer           serial          Serial number.
+            public string resName { get { return String (idxs_resName);       } } static readonly int[] idxs_resName = new int[]{18,20}; // // 18 - 20     Residue name      resName         Residue name.
+            public   char chainID { get { return Char   (idxs_chainID);       } } static readonly int[] idxs_chainID = new int[]{22,22}; // // 22          Character         chainID         Chain identifier.
+            public    int resSeq  { get { return Integer(idxs_resSeq ).Value; } } static readonly int[] idxs_resSeq  = new int[]{23,26}; // // 23 - 26     Integer           resSeq          Residue sequence number.
+            public   char iCode   { get { return Char   (idxs_iCode  );       } } static readonly int[] idxs_iCode   = new int[]{27,27}; // // 27          AChar             iCode           Insertion code.
 
 			//// IComparable<Atom>
 			//int IComparable<Atom>.CompareTo(Atom other)
@@ -70,6 +70,15 @@ namespace HTLib2.Bioinfo
 			//	return serial.CompareTo(other.serial);
 			//}
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Ter(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Ter(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) {}

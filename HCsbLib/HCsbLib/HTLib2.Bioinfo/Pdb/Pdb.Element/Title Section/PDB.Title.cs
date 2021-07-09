@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Title : Element
+        public class Title : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format23/sect2.html#TITLE
 			///
@@ -49,8 +49,8 @@ namespace HTLib2.Bioinfo
 				return new Title(line);
 			}
 			public static bool IsTitle(string line) { return (line.Substring(0, 6) == "TITLE "); }
-			public string continuation{ get { return String (idxs_continuation); } } int[] idxs_continuation = new int[]{ 9,10}; //  9 - 10    Continuation     continuation     Allows concatenation of multiple records.
-			public string title       { get { return String (idxs_title       ); } } int[] idxs_title        = new int[]{11,70}; // 11 - 70    String           title            Title of the experiment.
+			public string continuation{ get { return String (idxs_continuation); } } static readonly int[] idxs_continuation = new int[]{ 9,10}; //  9 - 10    Continuation     continuation     Allows concatenation of multiple records.
+			public string title       { get { return String (idxs_title       ); } } static readonly int[] idxs_title        = new int[]{11,70}; // 11 - 70    String           title            Title of the experiment.
 
 			// IComparable<Atom>
 			//int IComparable<Atom>.CompareTo(Atom other)
@@ -58,6 +58,15 @@ namespace HTLib2.Bioinfo
 			//	return serial.CompareTo(other.serial);
 			//}
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Title(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Title(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

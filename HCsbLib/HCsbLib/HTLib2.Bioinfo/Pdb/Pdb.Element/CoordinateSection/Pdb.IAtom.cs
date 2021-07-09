@@ -141,7 +141,7 @@ namespace HTLib2.Bioinfo
     }
     public partial class Pdb
     {
-        public abstract partial class IAtom : Element, IComparable<IAtom>
+        public abstract partial class IAtom : Element, IComparable<IAtom>, IBinarySerializable
         {
             /// http://www.wwpdb.org/documentation/format32/sect9.html                                  | http://www.wwpdb.org/documentation/format32/sect9.html#HETATM
             ///                                                                                         | 
@@ -355,6 +355,17 @@ namespace HTLib2.Bioinfo
                 str += string.Format(", segm({0})", segment);
                 return str;
             }
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+                writer.Write(hexserial);
+            }
+            public IAtom(HBinaryReader reader) : base(reader)
+            {
+                reader.Read(out hexserial);
+            }
+            // IBinarySerializable
             ////////////////////////////////////////////////////////////////////////////////////
             // Serializable
             public IAtom(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) {}

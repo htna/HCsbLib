@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Siguij : Element, IComparable<Siguij>
+        public class Siguij : Element, IComparable<Siguij>, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format23/sect9.html#SIGUIJ
 			///
@@ -67,21 +67,21 @@ namespace HTLib2.Bioinfo
 				return new Siguij(line);
 			}
             public static bool IsSiguij(string line) { return (line.Substring(0, 6) == "SIGUIJ"); }
-            public    int serial    { get { return Integer(idxs_serial    ).Value; } } int[] idxs_serial     = new int[]{ 7,11}; //  7 - 11      Integer          serial        Atom serial number.
-            public string name      { get { return String (idxs_name      );       } } int[] idxs_name       = new int[]{13,16}; // 13 - 16      Atom             name          Atom name.
-            public   char altLoc    { get { return Char   (idxs_altLoc    );       } } int[] idxs_altLoc     = new int[]{17,17}; // 17           Character        altLoc        Alternate location indicator.
-            public string resName   { get { return String (idxs_resName   );       } } int[] idxs_resName    = new int[]{18,20}; // 18 - 20      Residue name     resName       Residue name.
-            public   char chainID   { get { return Char   (idxs_chainID   );       } } int[] idxs_chainID    = new int[]{22,22}; // 22           Character        chainID       Chain identifier.
-            public    int resSeq    { get { return Integer(idxs_resSeq    ).Value; } } int[] idxs_resSeq     = new int[]{23,26}; // 23 - 26      Integer          resSeq        Residue sequence number.
-            public   char iCode     { get { return Char   (idxs_iCode     );       } } int[] idxs_iCode      = new int[]{27,27}; // 27           AChar            iCode         Insertion code.
-            public    int sig11     { get { return Integer(idxs_sig11     ).Value; } } int[] idxs_sig11      = new int[]{29,35}; // 29 - 35      Integer          sig[1][1]     Sigma U(1,1)
-            public    int sig22     { get { return Integer(idxs_sig22     ).Value; } } int[] idxs_sig22      = new int[]{36,42}; // 36 - 42      Integer          sig[2][2]     Sigma U(2,2)
-            public    int sig33     { get { return Integer(idxs_sig33     ).Value; } } int[] idxs_sig33      = new int[]{43,49}; // 43 - 49      Integer          sig[3][3]     Sigma U(3,3)
-            public    int sig12     { get { return Integer(idxs_sig12     ).Value; } } int[] idxs_sig12      = new int[]{50,56}; // 50 - 56      Integer          sig[1][2]     Sigma U(1,2)
-            public    int sig13     { get { return Integer(idxs_sig13     ).Value; } } int[] idxs_sig13      = new int[]{57,63}; // 57 - 63      Integer          sig[1][3]     Sigma U(1,3)
-            public    int sig23     { get { return Integer(idxs_sig23     ).Value; } } int[] idxs_sig23      = new int[]{64,70}; // 64 - 70      Integer          sig[2][3]     Sigma U(2,3)
-            public string element   { get { return String (idxs_element   );       } } int[] idxs_element    = new int[]{77,78}; // 77 - 78      LString(2)       element       Element symbol, right-justified.
-            public string charge    { get { return String (idxs_charge    );       } } int[] idxs_charge     = new int[]{79,80}; // 79 - 80      LString(2)       charge        Charge on the atom.
+            public    int serial    { get { return Integer(idxs_serial    ).Value; } } static readonly int[] idxs_serial     = new int[]{ 7,11}; //  7 - 11      Integer          serial        Atom serial number.
+            public string name      { get { return String (idxs_name      );       } } static readonly int[] idxs_name       = new int[]{13,16}; // 13 - 16      Atom             name          Atom name.
+            public   char altLoc    { get { return Char   (idxs_altLoc    );       } } static readonly int[] idxs_altLoc     = new int[]{17,17}; // 17           Character        altLoc        Alternate location indicator.
+            public string resName   { get { return String (idxs_resName   );       } } static readonly int[] idxs_resName    = new int[]{18,20}; // 18 - 20      Residue name     resName       Residue name.
+            public   char chainID   { get { return Char   (idxs_chainID   );       } } static readonly int[] idxs_chainID    = new int[]{22,22}; // 22           Character        chainID       Chain identifier.
+            public    int resSeq    { get { return Integer(idxs_resSeq    ).Value; } } static readonly int[] idxs_resSeq     = new int[]{23,26}; // 23 - 26      Integer          resSeq        Residue sequence number.
+            public   char iCode     { get { return Char   (idxs_iCode     );       } } static readonly int[] idxs_iCode      = new int[]{27,27}; // 27           AChar            iCode         Insertion code.
+            public    int sig11     { get { return Integer(idxs_sig11     ).Value; } } static readonly int[] idxs_sig11      = new int[]{29,35}; // 29 - 35      Integer          sig[1][1]     Sigma U(1,1)
+            public    int sig22     { get { return Integer(idxs_sig22     ).Value; } } static readonly int[] idxs_sig22      = new int[]{36,42}; // 36 - 42      Integer          sig[2][2]     Sigma U(2,2)
+            public    int sig33     { get { return Integer(idxs_sig33     ).Value; } } static readonly int[] idxs_sig33      = new int[]{43,49}; // 43 - 49      Integer          sig[3][3]     Sigma U(3,3)
+            public    int sig12     { get { return Integer(idxs_sig12     ).Value; } } static readonly int[] idxs_sig12      = new int[]{50,56}; // 50 - 56      Integer          sig[1][2]     Sigma U(1,2)
+            public    int sig13     { get { return Integer(idxs_sig13     ).Value; } } static readonly int[] idxs_sig13      = new int[]{57,63}; // 57 - 63      Integer          sig[1][3]     Sigma U(1,3)
+            public    int sig23     { get { return Integer(idxs_sig23     ).Value; } } static readonly int[] idxs_sig23      = new int[]{64,70}; // 64 - 70      Integer          sig[2][3]     Sigma U(2,3)
+            public string element   { get { return String (idxs_element   );       } } static readonly int[] idxs_element    = new int[]{77,78}; // 77 - 78      LString(2)       element       Element symbol, right-justified.
+            public string charge    { get { return String (idxs_charge    );       } } static readonly int[] idxs_charge     = new int[]{79,80}; // 79 - 80      LString(2)       charge        Charge on the atom.
 
             public double[,] SigmaU  { get { return new double[3,3]{{sig11,sig12,sig13}
                                                                    ,{sig12,sig22,sig23}
@@ -115,6 +115,15 @@ namespace HTLib2.Bioinfo
                 return str;
             }
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Siguij(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Siguij(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

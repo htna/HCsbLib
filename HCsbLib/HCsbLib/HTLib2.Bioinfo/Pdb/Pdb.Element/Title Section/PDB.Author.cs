@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Author : Element
+        public class Author : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format32/sect2.html#AUTHOR
             /// 
@@ -44,9 +44,18 @@ namespace HTLib2.Bioinfo
 				return new Author(line);
 			}
             public static bool IsAuthor(string line) { return (line.Substring(0, 6) == "AUTHOR"); }
-			public string continuation{ get { return String(idxs_continuation); } } int[] idxs_continuation = new int[] { 9,10}; //  9 - 10      Continuation    continuation  Allows concatenation of multiple records.
-            public string authorList  { get { return String(idxs_authorList  ); } } int[] idxs_authorList   = new int[] {11,79}; // 11 - 79      List            authorList    List of the author names, separated by commas.
+			public string continuation{ get { return String(idxs_continuation); } } static readonly int[] idxs_continuation = new int[] { 9,10}; //  9 - 10      Continuation    continuation  Allows concatenation of multiple records.
+            public string authorList  { get { return String(idxs_authorList  ); } } static readonly int[] idxs_authorList   = new int[] {11,79}; // 11 - 79      List            authorList    List of the author names, separated by commas.
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Author(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Author(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

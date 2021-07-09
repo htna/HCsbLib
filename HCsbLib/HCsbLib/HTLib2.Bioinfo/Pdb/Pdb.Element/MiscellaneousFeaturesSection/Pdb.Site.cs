@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
     public partial class Pdb
     {
         [Serializable]
-        public class Site : Element
+        public class Site : Element, IBinarySerializable
         {
             /// http://www.wwpdb.org/documentation/format32/sect7.html#SITE
             ///
@@ -102,6 +102,15 @@ namespace HTLib2.Bioinfo
             public    int seq4    { get { return Integer     (57,60).Value; } } // 57 - 60        Integer       seq4          Residue sequence number for fourth residue of the site.////////////////////////
             public   char iCode4  { get { return Char        (61   );       } } // 61             AChar         iCode4        Insertion code for fourth residue
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Site(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
             ////////////////////////////////////////////////////////////////////////////////////
             // Serializable
             public Site(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

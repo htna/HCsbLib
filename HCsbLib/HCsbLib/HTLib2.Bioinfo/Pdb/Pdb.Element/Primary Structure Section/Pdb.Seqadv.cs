@@ -13,7 +13,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Seqadv : Element
+        public class Seqadv : Element, IBinarySerializable
 		{
 			/// http://www.wwpdb.org/documentation/format32/sect3.html#SEQADV
 			///
@@ -72,6 +72,15 @@ namespace HTLib2.Bioinfo
             public    int dbSeq      { get { return Integer(44,48).Value; } } // 44 - 48        Integer       dbSeq         Sequence database sequence number.
             public string conflict   { get { return String (50,70);       } } // 50 - 70        LString       conflict      Conflict comment.
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Seqadv(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Seqadv(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

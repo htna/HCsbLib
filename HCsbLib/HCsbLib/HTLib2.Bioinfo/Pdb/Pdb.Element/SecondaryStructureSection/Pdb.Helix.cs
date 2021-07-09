@@ -50,7 +50,7 @@ namespace HTLib2.Bioinfo
     public partial class Pdb
 	{
         [Serializable]
-        public class Helix : Element
+        public class Helix : Element, IBinarySerializable
 		{
 			/// http://www.wwpdb.org/documentation/format32/sect5.html#HELIX
 			///
@@ -131,6 +131,15 @@ namespace HTLib2.Bioinfo
             public PdbStatic.ResInfo init { get { return new PdbStatic.ResInfo { resName = initResName, chainID = initChainID, resSeq  = initSeqNum, iCode   = initICode }; } }
             public PdbStatic.ResInfo  end { get { return new PdbStatic.ResInfo { resName =  endResName, chainID =  endChainID, resSeq  =  endSeqNum, iCode   =  endICode }; } }
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Helix(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Helix(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

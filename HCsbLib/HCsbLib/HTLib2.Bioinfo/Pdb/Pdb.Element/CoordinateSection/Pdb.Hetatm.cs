@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Hetatm : IAtom
+        public class Hetatm : IAtom, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format32/sect9.html#HETATM
             /// 
@@ -76,6 +76,15 @@ namespace HTLib2.Bioinfo
                 return base.ToString("hetatm");
             }
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Hetatm(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Hetatm(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) {}

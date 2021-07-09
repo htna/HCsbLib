@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Jrnl : Element
+        public class Jrnl : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format32/sect2.html#JRNL
             /// 
@@ -146,8 +146,17 @@ namespace HTLib2.Bioinfo
 				return new Jrnl(line);
 			}
             public static bool IsJrnl(string line) { return (line.Substring(0, 6) == "JRNL  "); }
-            public string text { get { return String(idxs_text); } } int[] idxs_text = new int[] { 13, 79 }; // 13 - 79       LString        text          See Details below.           
+            public string text { get { return String(idxs_text); } } static readonly int[] idxs_text = new int[] { 13, 79 }; // 13 - 79       LString        text          See Details below.           
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Jrnl(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Jrnl(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

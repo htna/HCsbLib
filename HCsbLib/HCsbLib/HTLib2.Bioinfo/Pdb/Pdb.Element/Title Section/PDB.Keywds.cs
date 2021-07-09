@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 	public partial class Pdb
 	{
         [Serializable]
-        public class Keywds : Element
+        public class Keywds : Element, IBinarySerializable
 		{
             /// http://www.wwpdb.org/documentation/format23/sect2.html#KEYWDS
             /// 
@@ -46,9 +46,18 @@ namespace HTLib2.Bioinfo
 				return new Keywds(line);
 			}
 			public static bool IsKeywds(string line) { return (line.Substring(0, 6) == "KEYWDS"); }
-			public string continuation { get { return String (idxs_continuation); } } int[] idxs_continuation = new int[]{ 9,10}; //  9 - 10        Continuation      continuation   Allows concatenation of multiple records.
-			public string keywds       { get { return String (idxs_keywds      ); } } int[] idxs_keywds       = new int[]{11,70}; // 11 - 70        Specification     compound       Description of the molecular components.
+			public string continuation { get { return String (idxs_continuation); } } static readonly int[] idxs_continuation = new int[]{ 9,10}; //  9 - 10        Continuation      continuation   Allows concatenation of multiple records.
+			public string keywds       { get { return String (idxs_keywds      ); } } static readonly int[] idxs_keywds       = new int[]{11,70}; // 11 - 70        Specification     compound       Description of the molecular components.
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Keywds(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
 		    ////////////////////////////////////////////////////////////////////////////////////
 		    // Serializable
             public Keywds(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) { }

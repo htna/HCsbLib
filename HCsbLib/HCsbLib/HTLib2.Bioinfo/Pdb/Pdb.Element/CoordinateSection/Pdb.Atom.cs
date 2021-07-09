@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
     public partial class Pdb
     {
         [Serializable]
-        public partial class Atom : IAtom
+        public partial class Atom : IAtom, IBinarySerializable
         {
             /// http://www.wwpdb.org/documentation/format32/sect9.html
             ///
@@ -135,6 +135,15 @@ namespace HTLib2.Bioinfo
                 return base.ToString("atom");
             }
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            // IBinarySerializable
+            public new void BinarySerialize(HBinaryWriter writer)
+            {
+            }
+            public Atom(HBinaryReader reader) : base(reader)
+            {
+            }
+            // IBinarySerializable
             ////////////////////////////////////////////////////////////////////////////////////
             // Serializable
             public Atom(SerializationInfo info, StreamingContext ctxt) : base(info, ctxt) {}
