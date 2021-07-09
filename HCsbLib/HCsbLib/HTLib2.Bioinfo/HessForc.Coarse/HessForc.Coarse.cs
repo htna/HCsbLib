@@ -69,17 +69,64 @@ namespace HTLib2.Bioinfo
                 public void BinarySerialize(HBinaryWriter writer)
                 {
                     //public object[]     atoms  
+                    {
+                        writer.Write(atoms.Length);
+                        for(int i=0; i<atoms.Length; i++)
+                        {
+                            object atom = atoms[i];
+                            switch(atom)
+                            {
+                                case Tinker.Xyz.Atom xyzatom:
+                                    writer.Write("Tinker.Xyz.Atom");
+                                    xyzatom.BinarySerialize(writer);
+                                    break;
+                                default:
+                                    throw new Exception();
+                            }
+                        }
+                    }
                     //public Vector       mass   
                     //public Vector[]     coords 
                     //public HessMatrix   hess   
                     //public Vector[]     forc   
-                    throw new NotImplementedException();
-                    //writer.HWrite(value);
+                    {
+                        writer.Write(mass  );
+                        writer.Write(coords);
+                        writer.Write(hess  );
+                        writer.Write(forc  );
+                    }
                 }
                 public HessForcInfo(HBinaryReader reader)
                 {
-                    throw new NotImplementedException();
-                    //reader.HRead(out value);
+                    //public object[]     atoms  
+                    {
+                        int length; reader.Read(out length);
+                        atoms = new object[length];
+                        for(int i=0; i<atoms.Length; i++)
+                        {
+                            string type; reader.Read(out type);
+                            object atom;
+                            switch(type)
+                            {
+                                case "Tinker.Xyz.Atom":
+                                    atom = new Tinker.Xyz.Atom(reader);
+                                    break;
+                                default:
+                                    throw new Exception();
+                            }
+                            atoms[i] = atom;
+                        }
+                    }
+                    //public Vector       mass   
+                    //public Vector[]     coords 
+                    //public HessMatrix   hess   
+                    //public Vector[]     forc   
+                    {
+                        reader.Read(out mass  );
+                        reader.Read(out coords);
+                        reader.Read(out hess  );
+                        reader.Read(out forc  );
+                    }
                 }
             }
         }
