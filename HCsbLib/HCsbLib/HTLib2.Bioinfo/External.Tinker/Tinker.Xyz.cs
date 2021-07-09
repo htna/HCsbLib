@@ -235,7 +235,7 @@ namespace HTLib2.Bioinfo
     }
     public partial class Tinker
     {
-        [Serializable]
+        //[Serializable]
         public partial class Xyz : IBinarySerializable
         {
             public Element[] elements;
@@ -263,15 +263,49 @@ namespace HTLib2.Bioinfo
             public void BinarySerialize(HBinaryWriter writer)
             {
                 writer.Write(atoms_format);
-                string[] lines = elements.EnumLine().ToArray();
-                writer.Write(lines);
+                writer.Write(elements.Length);
+                for(int i=0; i<elements.Length; i++)
+                {
+                    Element element = elements[i];
+                    switch(element)
+                    {
+                        case Header header:
+                            writer.Write("Header");
+                            header.BinarySerialize(writer);
+                            break;
+                        case Atom atom:
+                            writer.Write("Atom");
+                            atom.BinarySerialize(writer);
+                            break;
+                        default:
+                            throw new Exception();
+                    }
+                }
             }
             public Xyz(HBinaryReader reader)
             {
                 Atom.Format format; reader.Read(out format);
-                string[]    lines;  reader.Read(out lines );
-                
-                elements = GetElementsFromLines(format, lines);
+                int         length; reader.Read(out length);
+                elements = new Element[length];
+                for(int i=0; i<elements.Length; i++)
+                {
+                    string type; reader.Read(out type);
+                    Element element;
+                    switch(type)
+                    {
+                        case "Header":
+                            element = new Header(reader);
+                            HDebug.Assert(object.ReferenceEquals(format, (element as Header).format));
+                            break;
+                        case "Atom":
+                            element = new Atom(reader);
+                            HDebug.Assert(object.ReferenceEquals(format, (element as Atom).format));
+                            break;
+                        default:
+                            throw new Exception();
+                    }
+                    elements[i] = element;
+                }
             }
             /// 186  GNOMES, ROCK MONSTERS AND CHILI SAUCE
             ///   1  NH3  -11.020000  -12.540000  -24.210000    65     2     5     6     7
@@ -590,8 +624,23 @@ namespace HTLib2.Bioinfo
             //    public readonly Format format;
             //    public Element(Format format, string line) : base(line) { this.format = format; }
             //}
-            public class Header : Element
+            public class Header : Element, IBinarySerializable
             {
+                ///////////////////////////////////////////////////
+                // IBinarySerializable
+                public new void BinarySerialize(HBinaryWriter writer)
+                {
+                    base.BinarySerialize(writer);
+                    writer.Write(format);
+                }
+                public Header(HBinaryReader reader)
+                    : base(reader)
+                {
+                    reader.Read(out format);
+                }
+                // IBinarySerializable
+                ///////////////////////////////////////////////////
+
                 public readonly Atom.Format format;
                 public Header(Atom.Format format, string line) : base(line) { this.format = format                  ; }
                 public Header(               string line) : base(line) { this.format = Atom.Format.defformat_digit06; }
@@ -629,10 +678,10 @@ namespace HTLib2.Bioinfo
                     return header;
                 }
             }
-            [Serializable]
-            public class Atom : Element
+            //[Serializable]
+            public class Atom : Element, IBinarySerializable
             {
-                [Serializable]
+                //[Serializable]
                 public class Format : IBinarySerializable
                 {
                     public int[] idxId       = new int[]{ 0, 5};    public string formatId       = "                     {0}";  // HSubEndStringCount
@@ -782,6 +831,20 @@ namespace HTLib2.Bioinfo
                     };
                 }
 
+                ///////////////////////////////////////////////////
+                // IBinarySerializable
+                public new void BinarySerialize(HBinaryWriter writer)
+                {
+                    base.BinarySerialize(writer);
+                    writer.Write(format);
+                }
+                public Atom(HBinaryReader reader)
+                    : base(reader)
+                {
+                    reader.Read(out format);
+                }
+                // IBinarySerializable
+                ///////////////////////////////////////////////////
                 public readonly Format format;
                 public Atom(Format format, string line) : base(line) { this.format = format                  ; CheckFormat(format, line); }
                 public Atom(               string line) : base(line) { this.format = Format.defformat_digit06; CheckFormat(format, line); }

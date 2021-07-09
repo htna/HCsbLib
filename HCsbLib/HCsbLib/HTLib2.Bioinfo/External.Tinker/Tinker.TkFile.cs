@@ -49,12 +49,24 @@ namespace HTLib2.Bioinfo
                 HFile.WriteAllLines(writepath, lines);
             }
 
-            [Serializable]
-            public class Element
+            //[Serializable]
+            public class Element : IBinarySerializable
             {
                 public readonly string line;
                 public Element(string line) { this.line = line; }
                 public virtual string type { get { throw new NotImplementedException(); } }
+                ///////////////////////////////////////////////////
+                // IBinarySerializable
+                public void BinarySerialize(HBinaryWriter writer)
+                {
+                    writer.Write(line  );
+                }
+                public Element(HBinaryReader reader)
+                {
+                    reader.Read(out line  );
+                }
+                // IBinarySerializable
+                ///////////////////////////////////////////////////
 
                 string[] tokens = null;
                 public override string ToString()
