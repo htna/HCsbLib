@@ -55,9 +55,9 @@ namespace HTLib2
         {
             if(type.IsClass)
             {
-                bool isnull = (obj == null);
-                writer.Write(isnull);
-                if(isnull == false)
+                bool notnull = (obj != null);
+                writer.Write(notnull);
+                if(notnull)
                 {
                     bool firstTime;
                     long objid = GetObjId(obj, out firstTime);
@@ -117,7 +117,7 @@ namespace HTLib2
             if(type.IsSubclassOf(typeof(long               ))) { _WriteLong              (      value               ); return; }
             if(type.IsSubclassOf(typeof(string             ))) { _WriteString            (      value               ); return; }
             if(type.IsSubclassOf(typeof(bool               ))) { _WriteBool              (      value               ); return; }
-            if(type.IsSubclassOf(typeof(IBinarySerializable))) { _WriteBinarySerializable(type, value               ); return; }
+            if(value is IBinarySerializable                  ) { _WriteBinarySerializable(type, value               ); return; }
             if(value is Array                                ) { _WriteArray             (type, value as Array      ); return; }
             if(value is IList                                ) { _WriteList              (type, value as IList      ); return; }
             if(value is IDictionary                          ) { _WriteDictionary        (type, value as IDictionary); return; }

@@ -62,8 +62,8 @@ namespace HTLib2
         {
             if(type.IsClass)
             {
-                bool isnull = _ReadBool();
-                if(isnull)
+                bool notnull = _ReadBool();
+                if(notnull)
                 {
                     return null;
                 }
