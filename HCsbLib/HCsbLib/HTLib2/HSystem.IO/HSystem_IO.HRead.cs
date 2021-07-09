@@ -65,17 +65,13 @@ namespace HTLib2
                 bool notnull = _ReadBool();
                 if(notnull)
                 {
-                    return null;
-                }
-                else
-                {
                     long objid = _ReadLong();
                     bool firstTime = (id2obj.ContainsKey(objid) == false);
                     if(firstTime)
                     {
                         //  string type_name = reader.ReadString();
                         //  Type   type = Type.GetType(type_name);
-                        object obj = Activator.CreateInstance(type, reader); // create object using reader by calling constructor Class(HBinaryReader reader)
+                        object obj = Activator.CreateInstance(type, this); // create object using reader by calling constructor Class(HBinaryReader reader)
                         AddIdObj(objid, obj);
                         return obj;
                     }
@@ -85,12 +81,16 @@ namespace HTLib2
                         return obj;
                     }
                 }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
                 //  string type_name = reader.ReadString();
                 //  Type   type = Type.GetType(type_name);
-                object obj = Activator.CreateInstance(type, reader); // create object using reader by calling constructor Class(HBinaryReader reader)
+                object obj = Activator.CreateInstance(type, this); // create object using reader by calling constructor Class(HBinaryReader reader)
                 return obj;
             }
         }
