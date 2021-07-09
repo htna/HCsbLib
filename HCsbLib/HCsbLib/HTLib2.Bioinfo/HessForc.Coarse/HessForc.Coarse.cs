@@ -72,16 +72,14 @@ namespace HTLib2.Bioinfo
                     {
                         writer.Write(atoms.Length);
                         for(int i=0; i<atoms.Length; i++)
+                            WriteAtom(writer, atoms[i]);
+                        //////////////////////////////////////////////////////////
+                        static void WriteAtom(HBinaryWriter writer, object atom)
                         {
-                            object atom = atoms[i];
                             switch(atom)
                             {
-                                case Tinker.Xyz.Atom xyzatom:
-                                    writer.Write("Tinker.Xyz.Atom");
-                                    xyzatom.BinarySerialize(writer);
-                                    break;
-                                default:
-                                    throw new Exception();
+                                case Tinker.Xyz.Atom xyzatom: writer.Write("Tinker.Xyz.Atom"); xyzatom.BinarySerialize(writer); return;
+                                default: throw new Exception();
                             }
                         }
                     }
@@ -103,18 +101,16 @@ namespace HTLib2.Bioinfo
                         int length; reader.Read(out length);
                         atoms = new object[length];
                         for(int i=0; i<atoms.Length; i++)
+                            atoms[i] = ReadAtom(reader);
+                        //////////////////////////////////////////////////////////
+                        static object ReadAtom(HBinaryReader reader)
                         {
                             string type; reader.Read(out type);
-                            object atom;
                             switch(type)
                             {
-                                case "Tinker.Xyz.Atom":
-                                    atom = new Tinker.Xyz.Atom(reader);
-                                    break;
-                                default:
-                                    throw new Exception();
+                                case "Tinker.Xyz.Atom": return new Tinker.Xyz.Atom(reader);
+                                default: throw new Exception();
                             }
-                            atoms[i] = atom;
                         }
                     }
                     //public Vector       mass   
