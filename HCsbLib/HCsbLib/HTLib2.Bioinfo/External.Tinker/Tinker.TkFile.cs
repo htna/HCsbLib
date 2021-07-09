@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Runtime.CompilerServices;
 
 namespace HTLib2.Bioinfo
 {
@@ -50,37 +49,12 @@ namespace HTLib2.Bioinfo
                 HFile.WriteAllLines(writepath, lines);
             }
 
-            //[Serializable]
-            public sealed class Element : IBinarySerializable
+            [Serializable]
+            public class Element
             {
                 public readonly string line;
-                public readonly string type;
-                public readonly Xyz.Atom.Format format;
-                public Element(string line, string type, Xyz.Atom.Format format)
-                {
-                    this.line   = line;
-                    this.type   = type;
-                    this.format = format;
-                }
-                ///////////////////////////////////////////////////
-                // IBinarySerializable
-                public void BinarySerialize(HBinaryWriter writer)
-                {
-                    writer.Write(line  );
-                    writer.Write(type  );
-                    writer.Write(format);
-                }
-                public Element(HBinaryReader reader)
-                {
-                    reader.Read(out line  );
-                    reader.Read(out type  );
-                    reader.Read(out format);
-                }
-                // IBinarySerializable
-                ///////////////////////////////////////////////////
-
-                public Xyz.Header Header { get { if(type != Xyz.Header.type) throw new Exception(); return new Xyz.Header(this); }}
-                public Xyz.Atom   Atom   { get { if(type != Xyz.Atom  .type) throw new Exception(); return new Xyz.Atom  (this); }}
+                public Element(string line) { this.line = line; }
+                public virtual string type { get { throw new NotImplementedException(); } }
 
                 string[] tokens = null;
                 public override string ToString()
@@ -99,7 +73,6 @@ namespace HTLib2.Bioinfo
                 //public int?    GetTokenInt   (int idx) { string[] tokens = GetTokens(); if(idx >= tokens.Length) return null;return    int.Parse(tokens[idx]); }
                 //public double? GetTokenDouble(int idx) { string[] tokens = GetTokens(); if(idx >= tokens.Length) return null;return double.Parse(tokens[idx]); }
 
-                [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 public string  GetString(int[] idx)
                 {
                     if(line.Length <= idx[0]) return null;
@@ -107,10 +80,9 @@ namespace HTLib2.Bioinfo
                     int leng=idx[1]-idx[0]+1;
                     return line.Substring(idx[0], leng);
                 }
-                [MethodImpl(MethodImplOptions.AggressiveInlining)] public int?    GetInt   (params int[] idx) { string str=GetString(idx); if(str == null) return null; int    val; if(int   .TryParse(str, out val) == false) return null; return val; }
-                [MethodImpl(MethodImplOptions.AggressiveInlining)] public double? GetDouble(params int[] idx) { string str=GetString(idx); if(str == null) return null; double val; if(double.TryParse(str, out val) == false) return null; return val; }
+                public int?    GetInt   (params int[] idx) { string str=GetString(idx); if(str == null) return null; int    val; if(int   .TryParse(str, out val) == false) return null; return val; }
+                public double? GetDouble(params int[] idx) { string str=GetString(idx); if(str == null) return null; double val; if(double.TryParse(str, out val) == false) return null; return val; }
 
-                [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 public static string UpdateLine<T>(string line, T value, string format, params int[] idx)
                 {
                     string str = string.Format(format, value).HSubEndStringCount(idx[1]-idx[0]+1);

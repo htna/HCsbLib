@@ -9,7 +9,7 @@ namespace HTLib2.Bioinfo
 {
     public partial class Tinker
     {
-        //[Serializable]
+        [Serializable]
         public partial class Prm : IBinarySerializable
         {
             ///////////////////////////////////////////////////
@@ -248,7 +248,7 @@ namespace HTLib2.Bioinfo
                 return null;
             }
 
-            //[Serializable]
+            [Serializable]
             public class Element
             {
                 public string line;
@@ -325,7 +325,7 @@ namespace HTLib2.Bioinfo
             ///                                           Torsion(Class1,Class2,Class3,Class4,Kchi0,delta0,n0,Kchi1,delta1,n1,Kchi2,delta2,n2)
             ///     Type : Atom(Id,Class,Type,Desc,Mass), 
             /// 
-            //[Serializable]
+            [Serializable]
             public class Atom : Element
             {
                 /// sample
@@ -481,7 +481,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
             }
-            //[Serializable]
+            [Serializable]
             public class Vdw : Element
             {
                 ///       ################################
@@ -540,7 +540,7 @@ namespace HTLib2.Bioinfo
                 }
 
             }
-            //[Serializable]
+            [Serializable]
             public class Vdw14 : Element
             {
                 ///       ####################################
@@ -594,7 +594,7 @@ namespace HTLib2.Bioinfo
                     return FromLine(line);
                 }
             }
-            //[Serializable]
+            [Serializable]
             public class Bond : Element
             {
                 ///       ##################################
@@ -652,7 +652,7 @@ namespace HTLib2.Bioinfo
                     return FromLine(line);
                 }
             }
-            //[Serializable]
+            [Serializable]
             public class Angle : Element
             {
                 ///       ################################
@@ -715,7 +715,7 @@ namespace HTLib2.Bioinfo
                     return FromLine(line);
                 }
             }
-            //[Serializable]
+            [Serializable]
             public class Ureybrad : Element
             {
                 ///       ###############################
@@ -776,7 +776,7 @@ namespace HTLib2.Bioinfo
                     return FromLine(line);
                 }
             }
-            //[Serializable]
+            [Serializable]
             public class Improper : Element
             {
                 ///       ####################################
@@ -897,7 +897,7 @@ namespace HTLib2.Bioinfo
                     return FromLine(line);
                 }
             }
-            //[Serializable]
+            [Serializable]
             public class Torsion : Element
             {
                 ///       ############################
@@ -1098,7 +1098,7 @@ namespace HTLib2.Bioinfo
                     }
                     return FromLine(line);
                 }
-                //[Serializable]
+                [Serializable]
                 public class Data { public double Kchi, n, delta; }
                 public Data[] GetListData()
                 {
@@ -1109,7 +1109,7 @@ namespace HTLib2.Bioinfo
                     return list.ToArray();
                 }
             }
-            //[Serializable]
+            [Serializable]
             public class Charge : Element
             {
                 ///       ########################################
@@ -1189,7 +1189,7 @@ namespace HTLib2.Bioinfo
                     return FromLine(line);
                 }
             }
-            //[Serializable]
+            [Serializable]
             public class Biotype : Element
             {
                 ///       ########################################

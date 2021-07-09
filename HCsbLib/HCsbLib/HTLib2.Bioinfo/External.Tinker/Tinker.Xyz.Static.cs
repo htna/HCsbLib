@@ -19,11 +19,13 @@ namespace HTLib2.Bioinfo
             {
                 switch(elements[ie].type)
                 {
-                    case Xyz.Header.type:
-                        headers.Add(elements[ie].Header);
+                    case "Header":
+                        HDebug.Assert(elements[ie] is Xyz.Header);
+                        headers.Add(elements[ie] as Xyz.Header);
                         break;
-                    case Xyz.Atom.type:
-                        atoms.Add(elements[ie].Atom);
+                    case "Atom":
+                        HDebug.Assert(elements[ie] is Xyz.Atom);
+                        atoms.Add(elements[ie] as Xyz.Atom);
                         break;
                     default:
                         HDebug.Assert(false);

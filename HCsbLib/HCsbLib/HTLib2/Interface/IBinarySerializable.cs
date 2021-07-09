@@ -23,11 +23,11 @@ namespace HTLib2
     //          // IBinarySerializable
     //          public void BinarySerialize(HBinaryWriter writer)
     //          {
-    //              writer.Write(value);
+    //              writer.HWrite(value);
     //          }
     //          public Data(HBinaryReader reader)
     //          {
-    //              reader.Read(out value);
+    //              reader.HRead(out value);
     //          }
     //          // IBinarySerializable
     //          ///////////////////////////////////////////////////

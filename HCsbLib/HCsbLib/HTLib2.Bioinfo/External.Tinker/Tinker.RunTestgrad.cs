@@ -70,7 +70,7 @@ namespace HTLib2.Bioinfo
             public class CTestgrad
             {
                 public double potential;
-                //[Serializable]
+                [Serializable]
                 public class EnrgCmpnt
                 {
                     public double EB   ,EA  ,EBA ,EUB ,EAA ,EOPB; /// bond ,angle    ,___  ,Urey-Bradley ,___ ,____

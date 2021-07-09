@@ -704,7 +704,7 @@ namespace HTLib2.Bioinfo
                     List<string> xyzlines;
                     {
                         xyzlines = new List<string>();
-                        xyzlines.Add(Xyz.Header.ElementFromData(xyzid_info.Count, "", "", "").line);
+                        xyzlines.Add(Xyz.Header.FromData(xyzid_info.Count, "", "", "").line);
                         foreach(var xyzid in xyzid_info.Keys.ToArray().HSort())
                         {
                             int    id        = xyzid;
@@ -715,7 +715,7 @@ namespace HTLib2.Bioinfo
                             double z         = xyzid_info[xyzid].Item2[2];
                             int    atomid    = xyzid_info[xyzid].Item3;
                             int[]  bondedids = xyzid_info[xyzid].Item4.ToArray();
-                            xyzlines.Add(Xyz.Atom.ElementFromData(id, atomtype, x, y, z, atomid, bondedids).line);
+                            xyzlines.Add(Xyz.Atom.FromData(id, atomtype, x, y, z, atomid, bondedids).line);
                         }
                     }
 

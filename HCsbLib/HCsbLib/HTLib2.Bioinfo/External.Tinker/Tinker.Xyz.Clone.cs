@@ -18,10 +18,10 @@ namespace HTLib2.Bioinfo
                     Element nelement = null;
                     switch(element.type)
                     {
-                        case Header.type:
-                            nelement = Header.ElementFromData(element.Header.NumAtoms);
+                        case "Header":
+                            nelement = Header.FromData((element as Header).NumAtoms);
                             break;
-                        case Atom.type:
+                        case "Atom":
                             nelement = element;
                             break;
                         default:
@@ -141,8 +141,8 @@ namespace HTLib2.Bioinfo
                 Element[] nelements = new Element[elements.Length];
                 {
                     // copy header
-                    HDebug.Assert(elements[0].type == Xyz.Header.type);
-                    nelements[0] = Xyz.Header.ElementFromLine(elements[0].format, elements[0].line);
+                    HDebug.Assert((elements[0] as Xyz.Header) != null);
+                    nelements[0] = new Xyz.Header((elements[0] as Xyz.Header).format, elements[0].line);
 
                     foreach(var idxinfo in idxinfos)
                     {
@@ -151,13 +151,13 @@ namespace HTLib2.Bioinfo
                         int[] nbondedids = idxinfo.Item3.HToVectorT() * -1; // convert negative to positive index
                         HDebug.Assert(nid > 0, nbondedids.HToVectorT() > 0); // check positive
 
-                        Element          nelem = Xyz.Atom.ElementFromData(atom.format, nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
-                        nelements[nid] = nelem;
+                        Xyz.Atom natom = Xyz.Atom.FromData(atom.format, nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
+                        nelements[nid] = natom;
                     }
 
                     // Verify
                     for(int i=1; i<nelements.Length; i++)
-                        HDebug.Assert(nelements[i].Atom.Id == i);
+                        HDebug.Assert((nelements[i] as Xyz.Atom).Id == i);
                 }
 
                 return new Xyz( nelements );
@@ -265,7 +265,7 @@ namespace HTLib2.Bioinfo
             public Xyz CloneByReindex(IList<Tuple<int,int>> idsFromTo, bool allowresize=false)
             {
                 (List<Xyz.Header> headers, List<Xyz.Atom> atoms, List<Element> unknown) = elements.GroupByHeaderAtom();
-                if((headers.Count != 1) || (unknown.Count != 0))
+                if(unknown.Count != 0)
                 {
                     throw new Exception();
                 }
@@ -274,16 +274,14 @@ namespace HTLib2.Bioinfo
                 List<Xyz.Atom  > natoms   = CloneByReindex(atoms, idsFromTo, null, allowresize);
 
                 List<Element> nelements = new List<Element>();
-                nelements.AddRange(nheaders.HEnumElement());
-                nelements.AddRange(natoms  .HEnumElement());
+                nelements.AddRange(nheaders);
+                nelements.AddRange(natoms  );
 
                 {
                     int maxid = nelements.HSelectByType((Atom)null).HListId().Max();
-                    //int[] idxhdr = nelements.HIndexByType((Header)null).ToArray();
-                    //HDebug.Assert(idxhdr.Length == 1);
-                    //nelements[idxhdr[0]] = Header.ElementFromData(maxid);
-                    HDebug.Assert(nelements[0].type == Header.type);
-                    nelements[0] = Header.ElementFromData(maxid);
+                    int[] idxhdr = nelements.HIndexByType((Header)null).ToArray();
+                    HDebug.Assert(idxhdr.Length == 1);
+                    nelements[idxhdr[0]] = Header.FromData(maxid);
                 }
 
                 return new Xyz( nelements.ToArray() );
@@ -321,7 +319,7 @@ namespace HTLib2.Bioinfo
                     Atom.Format atom_format = format;
                     if(atom_format == null) atom_format = atom.format;
 
-                    Xyz.Atom natom = Xyz.Atom.ElementFromData(atom_format, nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids).Atom;
+                    Xyz.Atom natom = Xyz.Atom.FromData(atom_format, nid, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, nbondedids);
                     nid_natoms.Add(nid, natom);
                 }
 
@@ -386,12 +384,12 @@ namespace HTLib2.Bioinfo
                     int icoords = 0;
                     for(int ie=0; ie<elements.Length; ie++)
                     {
-                        if(elements[ie].type != Atom.type)
+                        Atom iatom = elements[ie] as Atom;
+                        if(iatom == null)
                             nelements[ie] = elements[ie];
                         else
                         {
-                            Atom iatom = elements[ie].Atom;
-                            nelements[ie] = Atom.ElementFromCoord(iatom, coords[icoords], format);
+                            nelements[ie] = Atom.FromCoord(iatom, coords[icoords], format);
                             icoords++;
                         }
                     }
@@ -411,8 +409,8 @@ namespace HTLib2.Bioinfo
                 Dictionary<int,int> id2idx = new Dictionary<int, int>();
                 for(int idx=0; idx<nelements.Length; idx++)
                 {
-                    if(nelements[idx].type == Header.type) continue;
-                    if(nelements[idx].type == Atom  .type) { id2idx.Add(nelements[idx].Atom.Id, idx); continue; }
+                    if(nelements[idx] is Header) continue;
+                    if(nelements[idx] is Atom  ) { id2idx.Add((nelements[idx] as Atom).Id, idx); continue; }
                     throw new Exception();
                 }
 
@@ -421,28 +419,26 @@ namespace HTLib2.Bioinfo
                 foreach(var id in lstAtomIdRemove)
                 {
                     int  idx  = id2idx[id];
-                    Atom atom = nelements[idx].Atom;
+                    Atom atom = nelements[idx] as Atom;
                     foreach(var bondid in atom.BondedIds)
                     {
                         int   bondidx = id2idx[bondid];
-                        Atom  bond    = nelements[bondidx].Atom;
+                        Atom  bond    = nelements[bondidx] as Atom;
                         int[] bond_bondids = bond.BondedIds;
                               bond_bondids = bond_bondids.HRemoveAll(id);
-                        Element nbond = Atom.ElementFromData(atoms_format, bond.Id, bond.AtomType, bond.X, bond.Y, bond.Z, bond.AtomId, bond_bondids);
-                        nelements[bondidx] = nbond;
+                              bond = Atom.FromData(atoms_format, bond.Id, bond.AtomType, bond.X, bond.Y, bond.Z, bond.AtomId, bond_bondids);
+                        nelements[bondidx] = bond;
                     }
-                    Element  natom = Atom.ElementFromData(atoms_format, atom.Id, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, new int[] { });
-                    nelements[idx] = natom;
+                    atom = Atom.FromData(atoms_format, atom.Id, atom.AtomType, atom.X, atom.Y, atom.Z, atom.AtomId, new int[] { });
+                    nelements[idx] = atom;
                     nelements[idx] = null;
                 }
                 nelements = nelements.HRemoveAllNull(false).ToArray();
 
                 int maxid = nelements.HSelectByType((Atom)null).HListId().Max();
-                //int[] idxhdr = nelements.HIndexByType((Header)null).ToArray();
-                //HDebug.Assert(idxhdr.Length == 1);
-                //nelements[idxhdr[0]] = Header.ElementFromData(atoms_format, maxid);
-                HDebug.Assert(nelements[0].type == Header.type);
-                nelements[0] = Header.ElementFromData(atoms_format, maxid);
+                int[] idxhdr = nelements.HIndexByType((Header)null).ToArray();
+                HDebug.Assert(idxhdr.Length == 1);
+                nelements[idxhdr[0]] = Header.FromData(atoms_format, maxid);
 
                 return new Xyz
                 (
