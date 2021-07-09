@@ -96,8 +96,7 @@ namespace HTLib2
         }
         object _ReadArray(Type type)
         {
-            HDebug.ToDo("check");
-            Type typeT = type.GenericTypeArguments[0];
+            Type typeT = type.GetElementType();
             int leng = reader.ReadInt32();
             Array values = Array.CreateInstance(typeT, leng);
             for(int i=0; i<leng; i++)
