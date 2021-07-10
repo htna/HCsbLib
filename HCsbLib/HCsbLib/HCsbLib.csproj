@@ -908,8 +908,9 @@
     <Compile Include="HTLib2\HSystem.IO\HSerialize.text2d.cs" />
     <Compile Include="HTLib2\HSystem.IO\HStream.cs" />
     <Compile Include="HTLib2\HSystem.IO\HTempDictionary.cs" />
+    <Compile Include="HTLib2\HSystem.System\HEnvironment_GlobalMemoryStatus.cs" />
     <Compile Include="HTLib2\HSystem.System\HEnvironment.cs" />
-    <Compile Include="HTLib2\HSystem.System\HEnvironment.Is64Bit.cs" />
+    <Compile Include="HTLib2\HSystem.System\HEnvironment_Is64Bit.cs" />
     <Compile Include="HTLib2\HSystem.System\HGC.cs" />
     <Compile Include="HTLib2\HSystem.System\HReflection.cs" />
     <Compile Include="HTLib2\HType.HUnion\HType.HUnion.cs" />
