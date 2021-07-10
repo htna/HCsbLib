@@ -53,7 +53,7 @@ namespace HTLib2.Bioinfo
                 List<int> idx3Atoms = new List<int>();
                 foreach(int idx in idxAtoms) for(int i=0; i<3; i++) idx3Atoms.Add(idx*3+i);
                 Matrix tnhess = _this.ToMatrix().SubMatrix(idx3Atoms, idx3Atoms);
-                double max2_tdiffhess = (nhess.ToMatrix() - tnhess).EnumNonZeroValues().HEnumAbs().HMax();
+                double max2_tdiffhess = (nhess.ToMatrix() - tnhess).HEnumElement().HEnumAbs().HMax();
                 HDebug.AssertTolerance(0.00000001, max2_tdiffhess);
             }
             return nhess;
