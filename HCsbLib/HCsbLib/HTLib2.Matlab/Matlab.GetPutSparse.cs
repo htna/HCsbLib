@@ -60,8 +60,8 @@ namespace HTLib2
                     System.IO.BinaryWriter s_writer = new System.IO.BinaryWriter(new System.IO.FileStream(s_path, System.IO.FileMode.CreateNew));
                     foreach (var c_r_val in real.EnumElements())
                     {
-                        int    c   = c_r_val.Item1;
-                        int    r   = c_r_val.Item2;
+                        double c   = c_r_val.Item1;
+                        double r   = c_r_val.Item2;
                         double val = c_r_val.Item3;
 
                         count ++;
@@ -94,6 +94,19 @@ namespace HTLib2
                 HFile.Delete(i_path);
                 HFile.Delete(j_path);
                 HFile.Delete(s_path);
+            }
+            if(HDebug.IsDebuggerAttached)
+            {
+                Random rand = new Random();
+                for(int i=0; i<1000; i++)
+                {
+                    int c = rand.NextInt(real.ColSize) + 1;
+                    int r = rand.NextInt(real.RowSize) + 1;
+                    double real_cr = real[c-1, r-1];
+                    double matl_cr = Matlab.GetValue("full("+name+"("+c+","+r+"))");
+                    HDebug.Assert(real_cr == matl_cr);
+                    //HDebug.Assert(Math.Abs(real_cr - matl_cr) < 1.0e-15);
+                }
             }
         }
         public static void PutSparseMatrix(string name, IMatrixSparse<MatrixByArr> real, int elemColSize, int elemRowSize, string opt=null)
