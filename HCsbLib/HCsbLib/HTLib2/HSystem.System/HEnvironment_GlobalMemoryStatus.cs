@@ -3,13 +3,33 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
+/// https://programming.vip/docs/c-gets-cpu-and-memory-usage.html
 namespace HTLib2
 {
     public partial class HEnvironment
     {
-        public partial class GlobalMemoryStatus
+        public partial class HGlobalMemoryStatus
         {
+            // Get the current available physical memory size
+            public static double GetAvailPhysMemByte() { return GetAvailPhysMem()                     ; }
+            public static double GetAvailPhysMemMB  () { return GetAvailPhysMem() / (1024.0)          ; }
+            public static double GetAvailPhysMemKB  () { return GetAvailPhysMem() / (1024.0*1024)     ; }
+            public static double GetAvailPhysMemGB  () { return GetAvailPhysMem() / (1024.0*1024*1024); }
+
+            // Get the current memory size used
+            public static double GetUsedPhysMemByte() { return GetUsedPhysMem()                     ; }
+            public static double GetUsedPhysMemMB  () { return GetUsedPhysMem() / (1024.0)          ; }
+            public static double GetUsedPhysMemKB  () { return GetUsedPhysMem() / (1024.0*1024)     ; }
+            public static double GetUsedPhysMemGB  () { return GetUsedPhysMem() / (1024.0*1024*1024); }
+
+            // Get the current total physical memory size
+            public static double GetTotalPhysMemByte() { return GetTotalPhysMem()                     ; }
+            public static double GetTotalPhysMemMB  () { return GetTotalPhysMem() / (1024.0)          ; }
+            public static double GetTotalPhysMemKB  () { return GetTotalPhysMem() / (1024.0*1024)     ; }
+            public static double GetTotalPhysMemGB  () { return GetTotalPhysMem() / (1024.0*1024*1024); }
+
             //  static void Main(string[] args)
             //  {
             //      Console.WriteLine("Total memory:" + FormatSize(GetTotalPhys()));
@@ -108,6 +128,60 @@ namespace HTLib2
                 return mi.ullTotalPhys;
             }
             #endregion
+        }
+        public class HCpuStatus
+        {
+            public static double GetCpuUsageRate()
+            {
+                // check only one NUMA node
+
+                PerformanceCounter cpuCounter;
+                cpuCounter = new PerformanceCounter();
+                cpuCounter.CategoryName = "Processor";
+                cpuCounter.CounterName = "% Processor Time";
+                cpuCounter.InstanceName = "_Total";
+                cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+                float[] rates = new float[100];
+                for(int i=0; i<rates.Length; i++)
+                {
+                    System.Threading.Thread.Sleep(10);
+                    float rate = cpuCounter.NextValue();
+                    rates[i] = rate;
+                }
+                return rates.Average();
+            }
+
+            //  static void Main(string[] args)
+            //  {
+            //      PerformanceCounter cpuCounter;
+            //      PerformanceCounter ramCounter;
+            //  
+            //      cpuCounter = new PerformanceCounter();
+            //      cpuCounter.CategoryName = "Processor";
+            //      cpuCounter.CounterName = "% Processor Time";
+            //      cpuCounter.InstanceName = "_Total";
+            //      cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            //      ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+            //  
+            //  
+            //  
+            //      Console.WriteLine("Computer CPU Utilization rate:" + cpuCounter.NextValue() + "%");
+            //      Console.WriteLine("The computer can use memory:" + ramCounter.NextValue() + "MB");
+            //      Console.WriteLine();
+            //  
+            //      while (true)
+            //      {
+            //          System.Threading.Thread.Sleep(1000);
+            //          Console.WriteLine("Computer CPU Utilization rate:" + cpuCounter.NextValue() + " %");
+            //          Console.WriteLine("The computer can use memory:" + ramCounter.NextValue() + "MB");
+            //          Console.WriteLine();
+            //  
+            //          if ((int)cpuCounter.NextValue() > 80)
+            //          {
+            //              System.Threading.Thread.Sleep(1000 * 60);
+            //          }
+            //      }
+            //  }
         }
     }
 }
