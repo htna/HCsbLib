@@ -72,6 +72,15 @@ namespace HTLib2
             return arr;
         }
 
+        public IEnumerable<double> EnumValues()
+        {
+            for(int c=0; c<ColSize; c++)
+                for(int r=0; r<RowSize; r++)
+                {
+                    double val = this[c, r];
+                    yield return val;
+                }
+        }
         public IEnumerable<double> EnumNonZeroValues()
         {
             for(int c=0; c<ColSize; c++)
