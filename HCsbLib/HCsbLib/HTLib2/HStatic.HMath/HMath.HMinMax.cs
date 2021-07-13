@@ -11,6 +11,7 @@ namespace HTLib2
 	{
         public static double HMin(this IMatrix<double> mat)
         {
+            HDebug.Assert((mat.ColSize > 0) && (mat.RowSize > 0));
             double min = mat[0, 0];
             for(int c=0; c<mat.ColSize; c++)
                 for(int r=0; r<mat.RowSize; r++)
@@ -19,6 +20,7 @@ namespace HTLib2
         }
         public static double HMax(this IMatrix<double> mat)
         {
+            HDebug.Assert((mat.ColSize > 0) && (mat.RowSize > 0));
             double max = mat[0, 0];
             for(int c=0; c<mat.ColSize; c++)
                 for(int r=0; r<mat.RowSize; r++)
@@ -28,6 +30,7 @@ namespace HTLib2
         public static int HIdxMax<T>(this IList<T> values)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Count > 0);
             int idxmax = 0;
             for(int i=1; i<values.Count; i++)
                 if(values[idxmax].CompareTo(values[i]) < 0)
@@ -37,6 +40,7 @@ namespace HTLib2
         public static int HIdxMin<T>(this IList<T> values)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Count > 0);
             int idxmax = 0;
             for(int i=1; i<values.Count; i++)
                 if(values[idxmax].CompareTo(values[i]) > 0)
@@ -46,6 +50,7 @@ namespace HTLib2
         public static int[] HIdxMax<T>(this T[,] values)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Length > 0);
             int idxmax0 = 0, idxmax1 = 0;
             for(int i0=0; i0<values.GetLength(0); i0++)
                 for(int i1=0; i1<values.GetLength(1); i1++)
@@ -59,6 +64,7 @@ namespace HTLib2
         public static int[] HIdxMin<T>(this T[,] values)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Length > 0);
             int idxmax0 = 0, idxmax1 = 0;
             for(int i0=0; i0<values.GetLength(0); i0++)
                 for(int i1=0; i1<values.GetLength(1); i1++)
@@ -72,6 +78,7 @@ namespace HTLib2
         public static int[] HIdxMax<T>(this T[,,] values)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Length > 0);
             int idxmax0 = 0, idxmax1 = 0, idxmax2 = 0;
             for(int i0=0; i0<values.GetLength(0); i0++)
                 for(int i1=0; i1<values.GetLength(1); i1++)
@@ -87,6 +94,7 @@ namespace HTLib2
         public static int[] HIdxMin<T>(this T[,,] values)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Length > 0);
             int idxmax0 = 0, idxmax1 = 0, idxmax2 = 0;
             for(int i0=0; i0<values.GetLength(0); i0++)
                 for(int i1=0; i1<values.GetLength(1); i1++)
@@ -103,6 +111,7 @@ namespace HTLib2
         public static T HMax<T>(this T[,] values)
             where T : IComparable<T>
 		{
+            HDebug.Assert(values.Length > 0);
             int[] idxmax = HIdxMax(values);
             HDebug.Assert(idxmax.Length == 2);
             return values[idxmax[0], idxmax[1]];
@@ -110,6 +119,7 @@ namespace HTLib2
         public static T HMin<T>(this T[,] values)
             where T : IComparable<T>
 		{
+            HDebug.Assert(values.Length > 0);
             int[] idxmin = HIdxMin(values);
             HDebug.Assert(idxmin.Length == 2);
             return values[idxmin[0], idxmin[1]];
@@ -117,6 +127,7 @@ namespace HTLib2
         public static T HMax<T>(this T[,,] values)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Length > 0);
             int[] idxmax = HIdxMax(values);
             HDebug.Assert(idxmax.Length == 3);
             return values[idxmax[0], idxmax[1], idxmax[2]];
@@ -124,6 +135,7 @@ namespace HTLib2
         public static T HMin<T>(this T[,,] values)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Length > 0);
             int[] idxmin = HIdxMin(values);
             HDebug.Assert(idxmin.Length == 3);
             return values[idxmin[0], idxmin[1], idxmin[2]];
@@ -132,6 +144,7 @@ namespace HTLib2
         public static T HMaxNth<T>(this IList<T> values, int nth)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Count > 0);
             int[] idxsortd = values.HIdxSorted();
             nth = (values.Count-1) - nth;
             return values[idxsortd[nth]];
@@ -139,6 +152,7 @@ namespace HTLib2
         public static T HMinNth<T>(this IList<T> values, int nth)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Count > 0);
             int[] idxsortd = values.HIdxSorted();
             return values[idxsortd[nth]];
         }
@@ -146,6 +160,7 @@ namespace HTLib2
         public static T HMax<T>(params T[] values)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Length > 0);
             T max = values[0];
             for(int i=1; i<values.Length; i++)
                 if(max.CompareTo(values[i]) < 0)
@@ -155,6 +170,7 @@ namespace HTLib2
         public static T HMin<T>(params T[] values)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Length > 0);
             T min = values[0];
             for(int i=1; i<values.Length; i++)
                 if(min.CompareTo(values[i]) > 0)
@@ -165,6 +181,7 @@ namespace HTLib2
         public static T HMax<T>(this IEnumerable<T> values)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Count() > 0);
             T max = values.First();
             foreach(T val in values)
                 if(max.CompareTo(val) < 0)
@@ -174,6 +191,7 @@ namespace HTLib2
         public static T HMin<T>(this IEnumerable<T> values)
             where T : IComparable<T>
         {
+            HDebug.Assert(values.Count() > 0);
             T max = values.First();
             foreach(T val in values)
                 if(max.CompareTo(val) > 0)
