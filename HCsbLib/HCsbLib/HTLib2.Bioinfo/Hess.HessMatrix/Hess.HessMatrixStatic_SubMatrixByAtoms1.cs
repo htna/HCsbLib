@@ -41,8 +41,8 @@ namespace HTLib2.Bioinfo
 
 //                           thess1a = Hess.CorrectHessDiag(thess1a);                     // diagonal of original matrix contains the interaction between 0-1 and 1-2 also,
 //                HessMatrix thess1b = Hess.GetHessAnm(tcoords.HSelectByIndex(tidxs));    // while new generated hessian matrix does not.
-                HessMatrix tdiffhess = thess1a - thess1b;
-                double max_tdiffhess = tdiffhess.EnumNonZeroValues().HEnumAbs().HMax();
+                Matrix tdiffhess = (thess1a - thess1b).ToMatrix();
+                double max_tdiffhess = tdiffhess.EnumValues().HEnumAbs().HMax(); 
                 HDebug.Exception(0 == max_tdiffhess);
             }
 
