@@ -124,6 +124,52 @@ namespace HTLib2.Bioinfo
                         reader.Read(out forc  );
                     }
                 }
+
+                public bool Equal(HessForcInfo other)
+                {
+                    HessForcInfo info1 = this;
+                    HessForcInfo info2 = other;
+
+                    if(info1.atoms.Length != info2.atoms.Length)
+                        return false;
+                    for(int i=0; i<info1.atoms.Length; i++)
+                    {
+                        Tinker.Xyz.Atom atom_comp = info1.atoms[i] as Tinker.Xyz.Atom;
+                        Tinker.Xyz.Atom atom_load = info2.atoms[i] as Tinker.Xyz.Atom;
+                        if(atom_comp.line != atom_load.line)
+                            return false;
+                    }
+                    if(info1.coords.Length != info2.coords.Length)
+                        return false;
+                    for(int i=0; i<info1.coords.Length; i++)
+                    {
+                        Vector coord_comp = info1.coords[i] as Vector;
+                        Vector coord_load = info2.coords[i] as Vector;
+                        if((coord_comp - coord_load).Dist2 != 0)
+                            return false;
+                    }
+                    if(info1.forc.Length != info2.forc.Length)
+                        return false;
+                    for(int i=0; i<info1.forc.Length; i++)
+                    {
+                        Vector coord_comp = info1.forc[i] as Vector;
+                        Vector coord_load = info2.forc[i] as Vector;
+                        if((coord_comp - coord_load).Dist2 != 0)
+                            return false;
+                    }
+                    {
+                        if(info1.mass.Size != info2.mass.Size)
+                            return false;
+                        if((info1.mass - info2.mass).Dist2 != 0)
+                            return false;
+                    }
+                    {
+                        bool hess_equal = HessMatrixStatic.HessMatrixEqual(info1.hess, info2.hess);
+                        if(hess_equal == false)
+                            return false;
+                    }
+                    return true;
+                }
             }
         }
     }
