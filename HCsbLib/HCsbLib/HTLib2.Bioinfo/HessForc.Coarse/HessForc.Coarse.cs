@@ -125,7 +125,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                public bool Equal(HessForcInfo other)
+                public bool Equals(HessForcInfo other)
                 {
                     HessForcInfo info1 = this;
                     HessForcInfo info2 = other;
