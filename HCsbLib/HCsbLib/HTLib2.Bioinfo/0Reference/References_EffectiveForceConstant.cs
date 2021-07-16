@@ -5,11 +5,11 @@ using System.Text;
 
 namespace HTLib2.Bioinfo
 {
-    public partial class References
+    public partial class HRef
     {
         // The Effective Pair Force-Constant
         // HinsenK, PetrescuA-J, Dellerue S, Bellissent-Funel M-C and Kneller G R 2000 Harmonicity in slow protein dynamics Chem. Phys. 261 25–37
-        public class EffectiveForceConstant
+        public class EffectivePairForceConstant
         {
             public static Matrix GetEffFrcCst(IHessMatrix hess)
             {
@@ -37,17 +37,16 @@ namespace HTLib2.Bioinfo
                 return efc_bcbr;
             }
             // reference for matlab code
-            public static Matrix GetEffFrcCst(string matlab_hess)
+            public static void GetEffFrcCst(string hess, string efcmat)
             {
                 // HMSGEFC : (H)ess(M)atrix(S)tatic.(G)et(E)ffective(F)orce(C)onstants
-                Matlab.Execute("HMSGEFC.hess = "+matlab_hess+";");
+                Matlab.Execute("HMSGEFC.hess = "+hess+";");
                 Matlab.Execute("HMSGEFC.efc11 = HMSGEFC.hess(1:3:end, 1:3:end);");
                 Matlab.Execute("HMSGEFC.efc22 = HMSGEFC.hess(2:3:end, 2:3:end);");
                 Matlab.Execute("HMSGEFC.efc33 = HMSGEFC.hess(3:3:end, 3:3:end);");
                 Matlab.Execute("HMSGEFC.efc   = HMSGEFC.efc11 + HMSGEFC.efc22 + HMSGEFC.efc22;");
-                Matrix efc = Matlab.GetMatrix("HMSGEFC.efc");
+                Matlab.Execute(efcmat + " = HMSGEFC.efc");
                 Matlab.Execute("clear HMSGEFC;");
-                return efc;
             }
         }
     }
