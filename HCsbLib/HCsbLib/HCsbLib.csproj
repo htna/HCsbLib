@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HTLib2.Bioinfo\0Reference\References_EffectiveForceConstant.cs" />
     <Compile Include="HTLib2.Bioinfo\Align\AlignData.cs" />
     <Compile Include="HTLib2.Bioinfo\Align\IMinAlign.cs" />
     <Compile Include="HTLib2.Bioinfo\Align\MinAnisou.cs" />
@@ -297,6 +298,7 @@
     <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessSbNMA_SelfTest.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessSsNMA.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.GetHess\Hess.GetHessStem.cs" />
+    <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixStatic_EffFrcCst.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.IHessMatrix.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixStatic_Oper.cs" />
     <Compile Include="HTLib2.Bioinfo\Hess.HessMatrix\Hess.HessMatrixStatic_SubMatrixByAtoms2.cs" />
