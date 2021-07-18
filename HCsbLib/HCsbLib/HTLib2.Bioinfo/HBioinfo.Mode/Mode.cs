@@ -61,6 +61,22 @@ namespace HTLib2.Bioinfo
                 freqs[i] = UnitConversion.EigvalToFreq(eigvals[i]);
             return freqs;
         }
+        public static double EigvalToFreq(double eigval)
+        {
+            double freq = UnitConversion.EigvalToFreq(eigval);
+            return freq;
+        }
+        public static double FreqToPsec(double freq)
+        {
+            double psec = UnitConversion.FreqToPsec(freq);
+            return psec;
+        }
+        public static double EigvalToPsec(double eigval)
+        {
+            double freq = EigvalToFreq(eigval);
+            double psec = FreqToPsec(freq);
+            return psec;
+        }
 
         public Mode()
         {
