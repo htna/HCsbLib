@@ -23,7 +23,9 @@ namespace HTLib2
         public static bool Selftest()
         {
             if(HDebug.IsDebuggerAttached == false)
+                #pragma warning disable CS0162
                 return false;
+                #pragma warning restore CS0162
             StackTrace stackTrace = new StackTrace();
             var frame1 = stackTrace.GetFrame(1);
             var method = frame1.GetMethod();
@@ -33,7 +35,9 @@ namespace HTLib2
         public static bool Selftest(object func)
         {
             if(HDebug.IsDebuggerAttached == false)
+                #pragma warning disable CS0162
                 return false;
+                #pragma warning restore CS0162
             if(setSelftestDone.Contains(func))
                 return false;
             setSelftestDone.Add(func);
