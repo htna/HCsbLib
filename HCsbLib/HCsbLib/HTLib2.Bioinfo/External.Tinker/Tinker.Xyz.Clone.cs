@@ -10,6 +10,11 @@ namespace HTLib2.Bioinfo
     {
         public partial class Xyz
         {
+            public Xyz Clone()
+            {
+                string[] lines = elements.EnumLine().ToArray();
+                return Xyz.FromLines(atoms_format, lines);
+            }
             public Xyz CloneByRemoveHeader()
             {
                 List<Element> nelements = new List<Element>();
