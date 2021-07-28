@@ -77,5 +77,27 @@ namespace HTLib2
             mean /= weights.Sum();
             return mean;
         }
+        public static double MeanDist2(this IEnumerable<Vector> values)
+        {
+            double meandist2 = 0;
+            foreach(Vector value in values)
+            {
+                double dist2 = value.Dist2;
+                meandist2 += dist2;
+            }
+            meandist2 /= values.Count();
+            return meandist2;
+        }
+        public static double MeanDist2(this IEnumerable<Vector> values, Vector reference)
+        {
+            double meandist2 = 0;
+            foreach(Vector value in values)
+            {
+                double dist2 = (value - reference).Dist2;
+                meandist2 += dist2;
+            }
+            meandist2 /= values.Count();
+            return meandist2;
+        }
     }
 }
