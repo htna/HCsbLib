@@ -50,6 +50,22 @@ namespace HTLib2
             mean /= values.Count();
             return mean;
         }
+        public static Vector Variance(this IEnumerable<Vector> values, Vector mean)
+        {
+            int size = values.First().Size;
+            Vector var = new double[size];
+
+            foreach(Vector value in values)
+            {
+                for(int i=0; i<size; i++)
+                {
+                    double diffi = mean[i] - value[i];
+                    var[i] += (diffi * diffi);
+                }
+            }
+            var /= values.Count();
+            return var;
+        }
         public static Vector MeanWeighted(this IList<Vector> values, IList<double> weights)
         {
             Vector mean = new double[values.First().Size];
