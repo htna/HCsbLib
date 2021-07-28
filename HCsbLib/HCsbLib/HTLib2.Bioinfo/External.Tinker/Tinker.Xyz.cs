@@ -679,7 +679,7 @@ namespace HTLib2.Bioinfo
                 }
             }
             //[Serializable]
-            public class Atom : Element, IBinarySerializable
+            public class Atom : Element, IBinarySerializable, ICloneable
             {
                 //[Serializable]
                 public class Format : IBinarySerializable
@@ -844,6 +844,16 @@ namespace HTLib2.Bioinfo
                     reader.Read(out format);
                 }
                 // IBinarySerializable
+                ///////////////////////////////////////////////////
+                public Atom CloneAtom()
+                {
+                    Atom natom = new Atom(format, line);
+                    return natom;
+                }
+                public object Clone()
+                {
+                    return CloneAtom();
+                }
                 ///////////////////////////////////////////////////
                 public readonly Format format;
                 public Atom(Format format, string line) : base(line) { this.format = format                  ; CheckFormat(format, line); }
