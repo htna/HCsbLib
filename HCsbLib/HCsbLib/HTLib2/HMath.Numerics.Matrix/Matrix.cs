@@ -109,6 +109,35 @@ namespace HTLib2
         public static Matrix operator/(Matrix left, double  right) { Matrix mat = left.Clone(); mat.UpdateMul(1/right); return mat; }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
+        // IBinarySerializable
+        public void BinarySerialize(HBinaryWriter writer)
+        {
+            switch(this)
+            {
+                case MatrixByColRow mbcr:
+                    writer.Write("MatrixByColRow");
+                    mbcr.BinarySerialize(writer);
+                    return;
+                case MatrixByArr mba:
+                default:
+                    throw new NotImplementedException();
+            }
+            //writer.Write(value);
+        }
+        public static Matrix BinaryDeserialize(HBinaryReader reader)
+        {
+            string type; reader.Read(out type);
+            switch(type)
+            {
+                case "MatrixByColRow":
+                    return MatrixByColRow.BinaryDeserialize(reader);
+                case "MatrixByArr":
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+        // IBinarySerializable
+        //////////////////////////////////////////////////////////////////////////////////////////////////
         // ToString()
         public override string ToString()
 		{

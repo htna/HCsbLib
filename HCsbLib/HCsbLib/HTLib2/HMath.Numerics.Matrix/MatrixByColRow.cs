@@ -74,14 +74,14 @@ namespace HTLib2
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // IBinarySerializable
-        public void BinarySerializeMatrixByColRow(HBinaryWriter writer)
+        public void BinarySerialize(HBinaryWriter writer)
         {
             int leng = arr.Length;
             writer.Write(leng);
             for(int i=0; i<leng; i++)
                 writer.Write(arr[i]);
         }
-        public static MatrixByColRow BinaryDeserializeMatrixByColRow(HBinaryReader reader)
+        public static MatrixByColRow BinaryDeserialize(HBinaryReader reader)
         {
             int leng; reader.Read(out leng);
             double[][] arr = new double[leng][];
