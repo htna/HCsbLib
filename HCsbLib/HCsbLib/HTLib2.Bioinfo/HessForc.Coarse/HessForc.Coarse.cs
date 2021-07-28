@@ -8,6 +8,21 @@ using HTLib2.Bioinfo;
 
 namespace HTLib2.Bioinfo
 {
+    using HessForcInfo = HessForc.Coarse.HessForcInfo;
+    public static partial class HessForcStatic
+    {
+        public static IEnumerable<object[]  > HEnumAtoms (this IEnumerable<HessForcInfo> hessforcs) { foreach(var hessforc in hessforcs) yield return hessforc.atoms ; }
+        public static IEnumerable<Vector    > HEnumMass  (this IEnumerable<HessForcInfo> hessforcs) { foreach(var hessforc in hessforcs) yield return hessforc.mass  ; }
+        public static IEnumerable<Vector[]  > HEnumCoords(this IEnumerable<HessForcInfo> hessforcs) { foreach(var hessforc in hessforcs) yield return hessforc.coords; }
+        public static IEnumerable<HessMatrix> HEnumHess  (this IEnumerable<HessForcInfo> hessforcs) { foreach(var hessforc in hessforcs) yield return hessforc.hess  ; }
+        public static IEnumerable<Vector[]  > HEnumForc  (this IEnumerable<HessForcInfo> hessforcs) { foreach(var hessforc in hessforcs) yield return hessforc.forc  ; }
+
+        public static IEnumerable<object     > HEnumAtomsAt    (this IEnumerable<HessForcInfo> hessforcs, int idx       ) { foreach(var hessforc in hessforcs) yield return hessforc.atoms [idx] ; }
+        public static IEnumerable<double     > HEnumMassAt     (this IEnumerable<HessForcInfo> hessforcs, int idx       ) { foreach(var hessforc in hessforcs) yield return hessforc.mass  [idx] ; }
+        public static IEnumerable<Vector     > HEnumCoordsAt   (this IEnumerable<HessForcInfo> hessforcs, int idx       ) { foreach(var hessforc in hessforcs) yield return hessforc.coords[idx] ; }
+        public static IEnumerable<MatrixByArr> HEnumHessBlockAt(this IEnumerable<HessForcInfo> hessforcs, int bc, int br) { foreach(var hessforc in hessforcs) yield return hessforc.hess.GetBlock(bc, br); }
+        public static IEnumerable<Vector     > HEnumForcAt     (this IEnumerable<HessForcInfo> hessforcs, int idx       ) { foreach(var hessforc in hessforcs) yield return hessforc.forc  [idx] ; }
+    }
     public partial class HessForc
     {
         public static partial class Coarse
