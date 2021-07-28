@@ -145,6 +145,7 @@ namespace HTLib2.Bioinfo
                     HessForcInfo info1 = this;
                     HessForcInfo info2 = other;
 
+                    //public object[]     atoms  
                     if(info1.atoms.Length != info2.atoms.Length)
                         return false;
                     for(int i=0; i<info1.atoms.Length; i++)
@@ -154,6 +155,7 @@ namespace HTLib2.Bioinfo
                         if(atom_comp.line != atom_load.line)
                             return false;
                     }
+                    //public Vector[]     coords 
                     if(info1.coords.Length != info2.coords.Length)
                         return false;
                     for(int i=0; i<info1.coords.Length; i++)
@@ -163,6 +165,7 @@ namespace HTLib2.Bioinfo
                         if((coord_comp - coord_load).Dist2 != 0)
                             return false;
                     }
+                    //public Vector[]     forc   
                     if(info1.forc.Length != info2.forc.Length)
                         return false;
                     for(int i=0; i<info1.forc.Length; i++)
@@ -172,12 +175,14 @@ namespace HTLib2.Bioinfo
                         if((coord_comp - coord_load).Dist2 != 0)
                             return false;
                     }
+                    //public Vector       mass   
                     {
                         if(info1.mass.Size != info2.mass.Size)
                             return false;
                         if((info1.mass - info2.mass).Dist2 != 0)
                             return false;
                     }
+                    //public HessMatrix   hess   
                     {
                         bool hess_equal = HessMatrixStatic.HessMatrixEqual(info1.hess, info2.hess);
                         if(hess_equal == false)
