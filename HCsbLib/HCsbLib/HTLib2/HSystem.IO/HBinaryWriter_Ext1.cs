@@ -29,17 +29,17 @@ namespace HTLib2
         //  }
 
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(double[] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(int   [] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(long  [] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(string[] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(bool  [] values) { writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(double[] values) { if(values == null) { writer.Write(-1); return; } writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(int   [] values) { if(values == null) { writer.Write(-1); return; } writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(long  [] values) { if(values == null) { writer.Write(-1); return; } writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(string[] values) { if(values == null) { writer.Write(-1); return; } writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(bool  [] values) { if(values == null) { writer.Write(-1); return; } writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(List<double> values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(List<int   > values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(List<long  > values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(List<string> values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(List<bool  > values) { writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(List<double> values) { if(values == null) { writer.Write(-1); return; } writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(List<int   > values) { if(values == null) { writer.Write(-1); return; } writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(List<long  > values) { if(values == null) { writer.Write(-1); return; } writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(List<string> values) { if(values == null) { writer.Write(-1); return; } writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(List<bool  > values) { if(values == null) { writer.Write(-1); return; } writer.Write(values.Count); for(int i=0; i<values.Count; i++) writer.Write(values[i]); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write<  T>(T               value ) { _Write          (typeof(T              ), value ); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write<  T>(T[]             values) { _WriteArray     (typeof(T[]            ), values); }
