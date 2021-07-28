@@ -81,7 +81,7 @@ namespace HTLib2
             for(int i=0; i<leng; i++)
                 writer.Write(arr[i]);
         }
-        public MatrixByColRow BinaryDeserializeMatrixByColRow(HBinaryReader reader)
+        public static MatrixByColRow BinaryDeserializeMatrixByColRow(HBinaryReader reader)
         {
             int leng; reader.Read(out leng);
             double[][] arr = new double[leng][];
