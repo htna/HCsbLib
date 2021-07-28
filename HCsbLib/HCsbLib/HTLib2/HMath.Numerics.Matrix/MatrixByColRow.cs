@@ -71,5 +71,27 @@ namespace HTLib2
         {
             return arr[col];
         }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        // IBinarySerializable
+        public void BinarySerializeMatrixByColRow(HBinaryWriter writer)
+        {
+            int leng = arr.Length;
+            writer.Write(leng);
+            for(int i=0; i<leng; i++)
+                writer.Write(arr[i]);
+        }
+        public MatrixByColRow BinaryDeserializeMatrixByColRow(HBinaryReader reader)
+        {
+            int leng; reader.Read(out leng);
+            double[][] arr = new double[leng][];
+            for(int i=0; i<leng; i++)
+                reader.Read(out arr[i]);
+
+            MatrixByColRow mat = new MatrixByColRow(arr);
+            return mat;
+        }
+        // IBinarySerializable
+        //////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
