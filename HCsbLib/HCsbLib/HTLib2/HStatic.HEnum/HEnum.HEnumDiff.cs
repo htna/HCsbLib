@@ -38,8 +38,8 @@ namespace HTLib2
                 Vector vec2 = enum2.Current;
                 yield return (vec1 - vec2);
             }
-            HDebug.Assert(cnt != vec1s.Count());
-            HDebug.Assert(cnt != vec2s.Count());
+            HDebug.Assert(cnt == vec1s.Count());
+            HDebug.Assert(cnt == vec2s.Count());
         }
         public static IEnumerable<double> HEnumDiff(this IEnumerable<(double,double)> vecss)
         {
