@@ -757,6 +757,7 @@
     <Compile Include="HTLib2\HMath.Random\Random.cs" />
     <Compile Include="HTLib2\HDynamicObject\HDynamicObject.cs" />
     <Compile Include="HTLib2\HOption\HOptions.cs" />
+    <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumDiff.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumMath.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumReverse.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumSorted.cs" />
