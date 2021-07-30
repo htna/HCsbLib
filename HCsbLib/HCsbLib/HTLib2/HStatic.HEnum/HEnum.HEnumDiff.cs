@@ -7,22 +7,22 @@ namespace HTLib2
 {
     public static partial class HEnum
     {
-        public static IEnumerable<double> HEnumDiff(this IEnumerable<(double,double)> vecss)
+        public static IEnumerable<double> HEnumDiff(this IEnumerable<(double,double)> valss)
         {
-            foreach(var vecs in vecss)
+            foreach(var vals in valss)
             {
-                double vec1 = vecs.Item1;
-                double vec2 = vecs.Item2;
-                yield return (vec1 - vec2);
+                double val1 = vals.Item1;
+                double val2 = vals.Item2;
+                yield return (val1 - val2);
             }
         }
-        public static IEnumerable<double> HEnumDiff(this (IEnumerable<double>, IEnumerable<double>) vecss)
+        public static IEnumerable<double> HEnumDiff(this (IEnumerable<double>, IEnumerable<double>) valss)
         {
-            IEnumerable<double> vec1s = vecss.Item1;
-            IEnumerable<double> vec2s = vecss.Item2;
-            HDebug.Assert(vec1s.Count() == vec2s.Count());
-            IEnumerator<double> enum1  = vec1s.GetEnumerator();
-            IEnumerator<double> enum2  = vec2s.GetEnumerator();
+            IEnumerable<double> val1s = valss.Item1;
+            IEnumerable<double> val2s = valss.Item2;
+            HDebug.Assert(val1s.Count() == val2s.Count());
+            IEnumerator<double> enum1  = val1s.GetEnumerator();
+            IEnumerator<double> enum2  = val2s.GetEnumerator();
             int cnt = 0;
             while(true)
             {
@@ -34,29 +34,29 @@ namespace HTLib2
                 if(b1 == false)
                     break;
                 cnt ++;
-                double vec1 = enum1.Current;
-                double vec2 = enum2.Current;
-                yield return (vec1 - vec2);
+                double val1 = enum1.Current;
+                double val2 = enum2.Current;
+                yield return (val1 - val2);
             }
-            HDebug.Assert(cnt == vec1s.Count());
-            HDebug.Assert(cnt == vec2s.Count());
+            HDebug.Assert(cnt == val1s.Count());
+            HDebug.Assert(cnt == val2s.Count());
         }
-        public static IEnumerable<Vector> HEnumDiff(this IEnumerable<(Vector,Vector)> vecss)
+        public static IEnumerable<Vector> HEnumDiff(this IEnumerable<(Vector,Vector)> valss)
         {
-            foreach(var vecs in vecss)
+            foreach(var vals in valss)
             {
-                Vector vec1 = vecs.Item1;
-                Vector vec2 = vecs.Item2;
-                yield return (vec1 - vec2);
+                Vector val1 = vals.Item1;
+                Vector val2 = vals.Item2;
+                yield return (val1 - val2);
             }
         }
-        public static IEnumerable<Vector> HEnumDiff(this (IEnumerable<Vector>, IEnumerable<Vector>) vecss)
+        public static IEnumerable<Vector> HEnumDiff(this (IEnumerable<Vector>, IEnumerable<Vector>) valss)
         {
-            IEnumerable<Vector> vec1s = vecss.Item1;
-            IEnumerable<Vector> vec2s = vecss.Item2;
-            HDebug.Assert(vec1s.Count() == vec2s.Count());
-            IEnumerator<Vector> enum1  = vec1s.GetEnumerator();
-            IEnumerator<Vector> enum2  = vec2s.GetEnumerator();
+            IEnumerable<Vector> val1s = valss.Item1;
+            IEnumerable<Vector> val2s = valss.Item2;
+            HDebug.Assert(val1s.Count() == val2s.Count());
+            IEnumerator<Vector> enum1  = val1s.GetEnumerator();
+            IEnumerator<Vector> enum2  = val2s.GetEnumerator();
             int cnt = 0;
             while(true)
             {
@@ -68,12 +68,12 @@ namespace HTLib2
                 if(b1 == false)
                     break;
                 cnt ++;
-                Vector vec1 = enum1.Current;
-                Vector vec2 = enum2.Current;
-                yield return (vec1 - vec2);
+                Vector val1 = enum1.Current;
+                Vector val2 = enum2.Current;
+                yield return (val1 - val2);
             }
-            HDebug.Assert(cnt == vec1s.Count());
-            HDebug.Assert(cnt == vec2s.Count());
+            HDebug.Assert(cnt == val1s.Count());
+            HDebug.Assert(cnt == val2s.Count());
         }
         public static IEnumerable<MatrixByArr> HEnumDiff(this IEnumerable<(MatrixByArr,MatrixByArr)> valss)
         {
