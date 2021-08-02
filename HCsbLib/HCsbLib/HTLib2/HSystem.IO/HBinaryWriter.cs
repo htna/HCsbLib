@@ -17,6 +17,12 @@ namespace HTLib2
             writer = new BinaryWriter(stream);
             obj2id = new ObjectIDGenerator();
         }
+        public HBinaryWriter(string path)
+        {
+            Stream stream = HFile.Open(path, FileMode.Create);
+            writer = new BinaryWriter(stream);
+            obj2id = new ObjectIDGenerator();
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public long GetObjId(object obj, out bool firstTime) { return obj2id.GetId(obj, out firstTime); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public long HasObjId(object obj, out bool firstTime) { return obj2id.HasId(obj, out firstTime); }

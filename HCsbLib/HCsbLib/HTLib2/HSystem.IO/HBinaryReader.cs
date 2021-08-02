@@ -17,6 +17,12 @@ namespace HTLib2
             reader = new BinaryReader(stream);
             id2obj = new Dictionary<long, object>();
         }
+        public HBinaryReader(string path)
+        {
+            Stream stream = HFile.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+            reader = new BinaryReader(stream);
+            id2obj = new Dictionary<long, object>();
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void   AddIdObj(long objid, object obj) { id2obj.Add(objid, obj); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public object GetIdObj(long objid            ) { return id2obj[objid];   }
