@@ -896,6 +896,8 @@
     <Compile Include="HTLib2\HSystem.HProcess\HProcess.cs" />
     <Compile Include="HTLib2\HSystem.HResource\HResource.cs" />
     <Compile Include="HTLib2\HSystem.IO\HBinaryWriter.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HBinaryReader_Ext3.cs" />
+    <Compile Include="HTLib2\HSystem.IO\HBinaryWriter_Ext3.cs" />
     <Compile Include="HTLib2\HSystem.IO\HDirectory.cs" />
     <Compile Include="HTLib2\HSystem.IO\HSerializeBinary.cs" />
     <Compile Include="HTLib2\HSystem.IO\HBinaryReader.cs" />
