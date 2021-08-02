@@ -112,11 +112,11 @@ namespace HTLib2
         void _Write(Type type, object value)
         {
             //string type_name = value.GetType()AssemblyQualifiedName;
-            if(type.IsSubclassOf(typeof(double             ))) { _WriteDouble            (      value               ); return; }
-            if(type.IsSubclassOf(typeof(int                ))) { _WriteInt               (      value               ); return; }
-            if(type.IsSubclassOf(typeof(long               ))) { _WriteLong              (      value               ); return; }
-            if(type.IsSubclassOf(typeof(string             ))) { _WriteString            (      value               ); return; }
-            if(type.IsSubclassOf(typeof(bool               ))) { _WriteBool              (      value               ); return; }
+            if(type == typeof(double                        )) { _WriteDouble            (      value               ); return; }
+            if(type == typeof(int                           )) { _WriteInt               (      value               ); return; }
+            if(type == typeof(long                          )) { _WriteLong              (      value               ); return; }
+            if(type == typeof(string                        )) { _WriteString            (      value               ); return; }
+            if(type == typeof(bool                          )) { _WriteBool              (      value               ); return; }
             if(value is IBinarySerializable                  ) { _WriteBinarySerializable(type, value               ); return; }
             if(value is Array                                ) { _WriteArray             (type, value as Array      ); return; }
             if(value is IList                                ) { _WriteList              (type, value as IList      ); return; }
