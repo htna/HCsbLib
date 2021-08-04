@@ -98,17 +98,17 @@ namespace HTLib2
                 else            { } // do nothing
             }
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int NumNonZero
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return _c_r_value.Count;
             }
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double NumNonZeroRatio
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return _c_r_value.Count / (1.0 * _colsize * _rowsize);
