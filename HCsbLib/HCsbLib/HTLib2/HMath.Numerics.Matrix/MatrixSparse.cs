@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
-    class MatrixSparse : IMatrix<double>, IBinarySerializable
+    public class MatrixSparse : IMatrix<double>, IBinarySerializable
     {
         int _colsize;
         int _rowsize;
