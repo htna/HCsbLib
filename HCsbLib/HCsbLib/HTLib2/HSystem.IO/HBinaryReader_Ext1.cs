@@ -149,7 +149,7 @@ namespace HTLib2
             if(typeof(Array              ).IsAssignableFrom(type)) return _ReadArray             (type);
             if(typeof(IList              ).IsAssignableFrom(type)) return _ReadList              (type);
             if(typeof(IDictionary        ).IsAssignableFrom(type)) return _ReadDictionary        (type);
-            throw new Exception();
+            HDebug.Assert(false); throw new Exception();
         }
     }
 }
