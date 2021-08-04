@@ -35,7 +35,6 @@ namespace HTLib2
         // IBinarySerializable
         public void BinarySerialize(HBinaryWriter writer)
         {
-            //writer.Write(_c_r_value);
             writer.Write(_colsize);
             writer.Write(_rowsize);
             writer.Write(_c_r_value.Count);
@@ -55,7 +54,20 @@ namespace HTLib2
         }
         public MatrixSparse(HBinaryReader reader)
         {
-            reader.Read(out _c_r_value);
+                       reader.Read(out _colsize);
+                       reader.Read(out _rowsize);
+            int count; reader.Read(out count   );
+            
+            _c_r_value = new Dictionary<(int c, int r), double>();
+            for(int i=0; i<count; i++)
+            {
+                int    c  ; reader.Read(out c  );
+                int    r  ; reader.Read(out r  );
+                double val; reader.Read(out val);
+                SetAt(c, r, val);
+            }
+            if(count != _c_r_value.Count)
+                throw new Exception("(count != _c_r_value.Count)");
         }
         // IBinarySerializable
         ///////////////////////////////////////////////////
@@ -139,6 +151,22 @@ namespace HTLib2
                     smat[c,r] = val;
                 }
             return smat;
+        }
+        public static bool EqualContents(MatrixSparse a, MatrixSparse b)
+        {
+            if(a._colsize != b._colsize) return false;
+            if(a._colsize != b._colsize) return false;
+            foreach(var itema in a._c_r_value)
+            {
+                (int,int) key  = itema.Key;
+                double    vala = itema.Value;
+                if(b._c_r_value.ContainsKey(key) == false)
+                    return false;
+                double    valb = b._c_r_value[key];
+                if(vala != valb)
+                    return false;
+            }
+            return true;
         }
     }
 }
