@@ -25,6 +25,23 @@ namespace HTLib2.Bioinfo
 		    {
 		    	return (item.NearResi, item.NearAtom, item.NearConnAtom);
 		    }
+            public override string ToString()
+            {
+                Pdb.Atom pdbatom = (NearAtom != null) ? NearAtom : NearConnAtom;
+                if(pdbatom == null)
+                    return "null";
+
+                int    id      = xyzatom.Id;
+                string name    = pdbatom.name;
+                string resName = pdbatom.resName;
+                int    resSeq  = pdbatom.resSeq;
+                double x       = xyzatom.X;
+                double y       = xyzatom.Y;
+                double z       = xyzatom.Z;
+
+                string str = string.Format("{0,3}, {1}, {2}{3,3:000} ({4,6:0.000},{5,6:0.000},{6,6:0.000})", id, name, resName, resSeq, x, y, z);
+                return str;
+            }
         }
         public static Dictionary<int, (int NearResi, Pdb.Atom NearAtom, Pdb.Atom NearConnAtom)> HToDictionaryTuple3(this List<GetResiPdbatomItem> dict)
         {
