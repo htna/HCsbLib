@@ -96,15 +96,36 @@ namespace HTLib2
         }
         object _ReadArray(Type type)
         {
+            HDebug.Assert(type.HasElementType);
             Type typeT = type.GetElementType();
-            int leng = reader.ReadInt32();
-            Array values = Array.CreateInstance(typeT, leng);
-            for(int i=0; i<leng; i++)
+            Array values;
+            switch(type.GetArrayRank())
             {
-                object value = _Read(typeT);
-                values.SetValue(value, i);
+                case 1:
+                    int leng = reader.ReadInt32();
+                    values = Array.CreateInstance(typeT, leng);
+                    for(int i=0; i<leng; i++)
+                    {
+                        object value = _Read(typeT);
+                        values.SetValue(value, i);
+                    }
+                    return values;
+                case 2:
+                    throw new NotImplementedException();
+                    HDebug.ToDo("check");
+                    int leng0 = reader.ReadInt32();
+                    int leng1 = reader.ReadInt32();
+                    values = Array.CreateInstance(typeT, leng0, leng1);
+                    for(int i0=0; i0<values.GetLength(0); i0++)
+                    for(int i1=0; i1<values.GetLength(1); i1++)
+                    {
+                        object value = _Read(typeT);
+                        values.SetValue(value, i0, i1);
+                    }
+                    return values;
+                default:
+                    throw new NotImplementedException();
             }
-            return values;
         }
         object _ReadList(Type type)
         {

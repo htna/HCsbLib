@@ -81,9 +81,24 @@ namespace HTLib2
         {
             HDebug.Assert(type.HasElementType);
             Type elem_type = type.GetElementType();
-            writer.Write(values.Length);
-            for(int i=0; i<values.Length; i++)
-                _Write(elem_type, values.GetValue(i));
+            switch(type.GetArrayRank())
+            {
+                case 1:
+                    writer.Write(values.Length);
+                    for(int i=0; i<values.Length; i++)
+                        _Write(elem_type, values.GetValue(i));
+                    break;
+                case 2:
+                    HDebug.ToDo("check");
+                    writer.Write(values.GetLength(0));
+                    writer.Write(values.GetLength(1));
+                    for(int i0=0; i0<values.GetLength(0); i0++)
+                        for(int i1=0; i1<values.GetLength(1); i1++)
+                            _Write(elem_type, values.GetValue(i0, i1));
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
         }
         void _WriteList(Type type, IList values)
         {
