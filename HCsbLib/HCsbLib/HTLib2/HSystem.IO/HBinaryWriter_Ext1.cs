@@ -102,7 +102,7 @@ namespace HTLib2
         }
         void _WriteList(Type type, IList values)
         {
-            Type elem_type = type.GetElementType();
+            Type elem_type = type.GenericTypeArguments[0];
             writer.Write(values.Count);
             for(int i=0; i<values.Count; i++)
                 _Write(elem_type, values[i]);
