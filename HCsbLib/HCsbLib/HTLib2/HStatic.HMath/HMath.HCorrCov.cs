@@ -44,6 +44,10 @@ namespace HTLib2
         //}
         public static double HCov(double[] vec1, double[] vec2)
         {
+            return HCov(vec1 as IList<double>, vec2 as IList<double>);
+        }
+        public static double HCov(IList<double> vec1, IList<double> vec2)
+        {
             if(HDebug.Selftest())
             {
                 // check with mathematica
@@ -51,12 +55,12 @@ namespace HTLib2
                 double terr = 0.5 - tcov;
                 HDebug.AssertTolerance(0.00000001, terr);
             }
-            if(vec1.Length != vec2.Length)
+            if(vec1.Count != vec2.Count)
                 throw new Exception();
             double avg1 = vec1.HAvg();
             double avg2 = vec2.HAvg();
             double cov = 0;
-            int size = vec1.Length;
+            int size = vec1.Count;
             for(int i=0; i<size; i++)
                 cov += (vec1[i] - avg1)*(vec2[i] - avg2);
             cov = cov / (size-1); /// the unbiased estimate of the covariance, which divide by (n-1)
@@ -68,6 +72,10 @@ namespace HTLib2
         //}
         public static double HCorr(double[] vec1, double[] vec2)
         {
+            return HCorr(vec1 as IList<double>, vec2 as IList<double>);
+        }
+        public static double HCorr(IList<double> vec1, IList<double> vec2)
+        {
             if(HDebug.Selftest())
             {
                 // check with mathematica
@@ -75,7 +83,7 @@ namespace HTLib2
                 double terr = 0.2401922307076307 - tcorr;
                 HDebug.AssertTolerance(0.00000001, terr);
             }
-            if(vec1.Length != vec2.Length)
+            if(vec1.Count != vec2.Count)
                 throw new Exception();
             double corr = HCov(vec1, vec2) / Math.Sqrt(vec1.HVar() * vec2.HVar());
             return corr;
