@@ -24,6 +24,29 @@ namespace HTLib2
         {
             return values.Average();
         }
+        public static bool HAvgSelected_selftest = HDebug.IsDebuggerAttached;
+        public static double HAvgSelected(this IList<double> values, IList<bool> seles)
+        {
+            if(HAvgSelected_selftest)
+            {
+                HAvgSelected_selftest = false;
+                HDebug.Assert(HAvgSelected(new double[] { 1, 2 }, new bool[] { true , true } ) == 1.5);
+                HDebug.Assert(HAvgSelected(new double[] { 1, 2 }, new bool[] { false, true } ) == 2  );
+            }
+            if(values.Count != seles.Count)
+                throw new Exception();
+            double avg = 0;
+            int count = values.Count;
+            int avg_involved = 0;
+            for(int i=0; i<count; i++)
+                if(seles[i] == true)
+                {
+                    avg += values[i];
+                    avg_involved ++;
+                }
+            avg = avg / avg_involved;
+            return avg;
+        }
         public static double HAvg(this Vector vec)
         {
             return vec.ToArray().Average();
