@@ -66,6 +66,30 @@ namespace HTLib2
             var /= (values.Count - 1); /// the unbiased estimate of variance, which divide by (n-1)
             return var;
         }
+        public static double HVarSelected(this IList<double> values, IList<bool> seles)
+        {
+            if(HDebug.Selftest())
+            {
+                double tvar = HVarSelected(new double[] { 1, 2, 3, 4, 5 }, new bool[] { true, true, true, true, true });
+                double terr = 2.5 - tvar;
+                HDebug.AssertTolerance(0.0000000001, terr);
+            }
+            if(values.Count != seles.Count)
+                throw new Exception();
+            double avg = HAvgSelected(values, seles);
+            double var = 0;
+            int    var_involved = 0;
+            for(int i=0; i<values.Count; i++)
+                if(seles[i] == true)
+                {
+                    double value = values[i];
+                    var += (avg - value)*(avg - value);
+                    var_involved ++;
+                }
+                
+            var /= (var_involved - 1); /// the unbiased estimate of variance, which divide by (n-1)
+            return var;
+        }
         public static double HVar(this Vector vec)
         {
             return vec.ToArray().HVar();

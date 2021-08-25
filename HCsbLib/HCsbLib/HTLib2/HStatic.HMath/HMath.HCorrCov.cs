@@ -66,6 +66,35 @@ namespace HTLib2
             cov = cov / (size-1); /// the unbiased estimate of the covariance, which divide by (n-1)
             return cov;
         }
+        public static double HCovSelected(IList<double> vec1, IList<double> vec2, IList<bool> sele)
+        {
+            if(HDebug.Selftest())
+            {
+                // check with mathematica
+                double tcov = HCovSelected(new double[] { 1, 2, 3 }, new double[] { 3, 7, 4 }, new bool[] { true, true, true });
+                double terr = 0.5 - tcov;
+                HDebug.AssertTolerance(0.00000001, terr);
+            }
+            if((vec1.Count != vec2.Count) || (vec1.Count != sele.Count))
+                throw new Exception("((vec1.Count != vec2.Count) || (vec1.Count != sele.Count))");
+            double avg1 = HAvgSelected(vec1, sele);
+            double avg2 = HAvgSelected(vec2, sele);
+
+            int size = vec1.Count;
+            int num_involved = 0;
+            double cov = 0;
+            for(int i=0; i<size; i++)
+            {
+                if(sele[i] == false)
+                    continue;
+                double v1 = vec1[i];
+                double v2 = vec2[i];
+                cov += (v1 - avg1)*(v2 - avg2);
+                num_involved ++;
+            }
+            cov = cov / (num_involved-1); /// the unbiased estimate of the covariance, which divide by (n-1)
+            return cov;
+        }
         //public static double Corr(Vector vec1, Vector vec2)
         //{
         //    return Corr(vec1.ToArray().ToList(), vec2.ToArray().ToList());
@@ -86,6 +115,23 @@ namespace HTLib2
             if(vec1.Count != vec2.Count)
                 throw new Exception();
             double corr = HCov(vec1, vec2) / Math.Sqrt(vec1.HVar() * vec2.HVar());
+            return corr;
+        }
+        public static double HCorrSelected(IList<double> vec1, IList<double> vec2, IList<bool> sele)
+        {
+            if(HDebug.Selftest())
+            {
+                // check with mathematica
+                double tcorr = HCorrSelected(new double[] { 1, 2, 3 }, new double[] { 3, 7, 4 }, new bool[] { true, true, true });
+                double terr = 0.2401922307076307 - tcorr;
+                HDebug.AssertTolerance(0.00000001, terr);
+            }
+            if((vec1.Count != vec2.Count) || (vec1.Count != sele.Count))
+                throw new Exception("((vec1.Count != vec2.Count) || (vec1.Count != sele.Count))");
+            double cov  = HCovSelected(vec1, vec2, sele);
+            double var1 = HVarSelected(vec1, sele);
+            double var2 = HVarSelected(vec2, sele);
+            double corr = cov / Math.Sqrt(var1 * var2);
             return corr;
         }
     }
