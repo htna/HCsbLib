@@ -75,6 +75,7 @@ namespace HTLib2
         public static object LeastSquare
             ( double[,] As, double[] bs
             , bool opt_get_stat = false
+            , string opt_inv = "matlab"
             )
         {
             if(HDebug.Selftest())
@@ -143,12 +144,20 @@ namespace HTLib2
                 case 3: { Matrix invAA = LinAlg.Inv3x3(AA.ToArray()); x = LinAlg.MV(invAA, Ab); } break;
                 case 4: { Matrix invAA = LinAlg.Inv4x4(AA.ToArray()); x = LinAlg.MV(invAA, Ab); } break;
                 default:
-                    Matlab.PutMatrix("LinAlg_LeastSquare.AA", AA);
-                    Matlab.PutVector("LinAlg_LeastSquare.Ab", Ab);
-                    Matlab.Execute("LinAlg_LeastSquare.AA = inv(LinAlg_LeastSquare.AA);");
-                    Matlab.Execute("LinAlg_LeastSquare.x = LinAlg_LeastSquare.AA * LinAlg_LeastSquare.Ab;");
-                    x = Matlab.GetVector("LinAlg_LeastSquare.x");
-                    Matlab.Execute("clear LinAlg_LeastSquare;");
+                    switch(opt_inv)
+                    {
+                        case null:
+                        case "matlab":
+                            Matlab.PutMatrix("LinAlg_LeastSquare.AA", AA);
+                            Matlab.PutVector("LinAlg_LeastSquare.Ab", Ab);
+                            Matlab.Execute("LinAlg_LeastSquare.AA = inv(LinAlg_LeastSquare.AA);");
+                            Matlab.Execute("LinAlg_LeastSquare.x = LinAlg_LeastSquare.AA * LinAlg_LeastSquare.Ab;");
+                            x = Matlab.GetVector("LinAlg_LeastSquare.x");
+                            Matlab.Execute("clear LinAlg_LeastSquare;");
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
                     break;
             }
 
