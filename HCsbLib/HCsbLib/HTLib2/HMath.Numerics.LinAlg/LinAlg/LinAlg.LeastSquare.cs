@@ -144,7 +144,6 @@ namespace HTLib2
                     double esti = 0;
                     for(int j=0; j<k; j++)
                         esti += As[i,j] * x[j];
-                    esti += x[k];
 
                     opt_estimation[i] = esti;
                     avg_err2 += (esti - bs[i])*(esti - bs[i]);
