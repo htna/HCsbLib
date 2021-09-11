@@ -72,10 +72,17 @@ namespace HTLib2
 
             return xt;
         }
-        public static object LeastSquare
+        public struct CLeastSquare
+        {
+            public double[] x                 ;
+            public double? opt_mean_square_err;
+            public double? opt_estimation_corr;
+            public Vector  opt_estimation     ;
+        }
+        public static CLeastSquare LeastSquare
             ( double[,] As, double[] bs
             , bool opt_get_stat = false
-            , string opt_inv = "matlab"
+            , object opt_inv = null
             )
         {
             if(HDebug.Selftest())
@@ -154,7 +161,7 @@ namespace HTLib2
                 opt_estimation_corr = HMath.HCorr(opt_estimation, bs);
             }
             
-            return new
+            return new CLeastSquare
             {
                 x = x,
                 /// optional outputs
@@ -166,7 +173,7 @@ namespace HTLib2
         public static void LeastSquare
             ( double[,] At_A, double[] At_b
             , out double[] x
-            , string opt_inv = "matlab"
+            , object opt_inv = null
             )
         {
             int k = At_A.GetLength(0);
@@ -174,7 +181,7 @@ namespace HTLib2
             if(k != At_A.GetLength(1)) throw new ArgumentException("k != At_A.GetLength(1)");
             if(k != At_b.GetLength(0)) throw new ArgumentException("k != At_b.GetLength(0)");
 
-            switch(k+1)
+            switch(k)
             {
                 case 2: { Matrix invAA = LinAlg.Inv2x2(At_A); x = LinAlg.MV(invAA, At_b); } return;
                 case 3: { Matrix invAA = LinAlg.Inv3x3(At_A); x = LinAlg.MV(invAA, At_b); } return;
@@ -191,11 +198,94 @@ namespace HTLib2
                             x = Matlab.GetVector("LinAlg_LeastSquare.x");
                             Matlab.Execute("clear LinAlg_LeastSquare;");
                             return;
+                        case "matlab-pinv":
+                            Matlab.PutMatrix("LinAlg_LeastSquare.AA", At_A);
+                            Matlab.PutVector("LinAlg_LeastSquare.Ab", At_b);
+                            Matlab.Execute("LinAlg_LeastSquare.AA = pinv(LinAlg_LeastSquare.AA);");
+                            Matlab.Execute("LinAlg_LeastSquare.x = LinAlg_LeastSquare.AA * LinAlg_LeastSquare.Ab;");
+                            x = Matlab.GetVector("LinAlg_LeastSquare.x");
+                            Matlab.Execute("clear LinAlg_LeastSquare;");
+                            return;
                         default:
+                            if(opt_inv is Func<double[,], double[,]>)
+                            {
+                                Func<double[,], double[,]> inv = opt_inv as Func<double[,], double[,]>;
+                                Matrix invAA = inv(At_A);
+                                x = LinAlg.MV(invAA, At_b);
+                                return;
+                            }
                             throw new NotImplementedException();
                     }
                     break;
             }
+        }
+        public static CLeastSquare LeastSquare
+            ( IList<double>[] As, IList<double> bs
+            , bool opt_get_stat = false
+            , object opt_inv = null
+            )
+        {
+            /// [ As[0][0], As[1][0], ... , As[k][0] ]   [x_0]   [ bs[0] ]
+            /// [ As[0][1], As[1][1], ... , As[k][1] ] * [x_1] = [ bs[1] ]
+            /// [ As[0][2], As[1][2], ... , As[k][2] ]   [...]   [ bs[2] ]
+            /// [    ...  ,    ...  ,     ,    ...   ]   [x_k]   [  ...  ]
+            /// [ As[0][n], As[1][n], ... , As[k][n] ]           [ bs[n] ]
+            int k = As.Length;
+            int n = As[0].Count;
+
+            double[,] At_A = new double[k,k];
+            double[ ] At_b = new double[k  ];
+
+            if(bs.Count != As[0].Count)
+                throw new ArgumentException("bs.Count != As.Length");
+            for(int i=0; i<n; i++)
+            {
+                for(int a=0; a<k; a++)
+                {
+                    double Ai_a = As[a][i];// if(Ai_a == 0) Ai_a = 0.000000001;
+                    double bi   = bs[i];
+                    for(int b=0; b<k; b++)
+                    {
+                        double Ai_b = As[b][i];// if(Ai_b == 0) Ai_b = 0.000000001;
+                        At_A[a,b] += Ai_a * Ai_b;
+                    }
+                    At_b[a] += Ai_a * bi;
+                }
+            }
+
+            double[] x;
+            LeastSquare(At_A, At_b, out x, opt_inv);
+
+            double? opt_mean_square_err = null;
+            double? opt_estimation_corr = null;
+            Vector  opt_estimation      = null;
+            if(opt_get_stat)
+            {
+                opt_estimation = new double[n];
+                double avg_err2 = 0;
+                for(int i=0; i<n; i++)
+                {
+                    double esti = 0;
+                    for(int j=0; j<k; j++)
+                        esti += As[j][i] * x[j];
+
+                    opt_estimation[i] = esti;
+                    avg_err2 += (esti - bs[i])*(esti - bs[i]);
+                }
+                avg_err2 /= n;
+
+                opt_mean_square_err = avg_err2;
+                opt_estimation_corr = HMath.HCorr(opt_estimation, bs.ToArray());
+            }
+
+            return new CLeastSquare
+            {
+                x = x,
+                /// optional outputs
+                opt_mean_square_err = opt_mean_square_err,
+                opt_estimation_corr = opt_estimation_corr,
+                opt_estimation      = opt_estimation     ,
+            };
         }
     }
 }
