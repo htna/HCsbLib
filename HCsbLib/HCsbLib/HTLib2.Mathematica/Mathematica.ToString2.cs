@@ -236,9 +236,7 @@ namespace HTLib2
                 }
                 if(name == typeof(string).FullName)
                 {
-                    string str;
-                    if(formatDouble == null) str = obj.ToString();
-                    else                     str = string.Format(formatString, obj);
+                    string str = obj.ToString();
                     if(str.StartsWith("(* ") && str.EndsWith(" *)"))
                     {
                         // add comment as it is
@@ -246,6 +244,8 @@ namespace HTLib2
                     }
                     else
                     {
+                        if(formatString == null) str = obj.ToString();
+                        else                     str = string.Format(formatString, obj);
                         str = str.Replace("\\", "\\\\");
                         str = "\"" + str + "\"";
 
