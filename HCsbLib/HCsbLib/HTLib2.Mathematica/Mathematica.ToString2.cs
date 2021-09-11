@@ -14,22 +14,22 @@ namespace HTLib2
         public static string ToString2(object obj)
         {
             StringBuilder text = new StringBuilder();
-            _ToString2(text, null, obj);
+            _ToString2(text, obj, null, null);
             return text.ToString();
         }
-        public static string ToString2(string format, object obj)
+        public static string ToString2(string formatInt, string formatDouble, object obj)
         {
             StringBuilder text = new StringBuilder();
-            _ToString2(text, format, obj);
+            _ToString2(text, obj, formatInt, formatDouble);
             return text.ToString();
         }
-        public static string ToString2(string format, object obj, params object[] objs)
+        public static string ToString2(string formatInt, string formatDouble, object obj, params object[] objs)
         {
             StringBuilder text = new StringBuilder();
             List<object> list = new List<object>(objs.Length+1);
             list.Add(obj);
             list.AddRange(objs);
-            _ToString2(text, format, list);
+            _ToString2(text, list, formatInt, formatDouble);
             return text.ToString();
         }
         //public static string ToString2<T>(T[] objs)
@@ -90,12 +90,12 @@ namespace HTLib2
         //    text.Append("}");
         //    return text.ToString();
         //}
-        protected static void _ToString2(StringBuilder text, string format, System.Array arr, int[] idxs, int dim, int rank)
+        protected static void _ToString2(StringBuilder text, System.Array arr, int[] idxs, int dim, int rank, string formatInt, string formatDouble)
         {
             if(dim == rank)
             {
                 object obj = arr.GetValue(idxs);
-                _ToString2(text, format, obj);
+                _ToString2(text, obj, formatInt, formatDouble);
                 return;
             }
 
@@ -107,11 +107,11 @@ namespace HTLib2
                 if(i != 0)
                     text.Append(delim);
                 idxs[dim] = i;
-                _ToString2(text, format, arr, idxs, dim+1, rank);
+                _ToString2(text, arr, idxs, dim+1, rank, formatInt, formatDouble);
             }
             text.Append("}");
         }
-        protected static void _ToString2(StringBuilder text, string format, System.Array arr)
+        protected static void _ToString2(StringBuilder text, System.Array arr, string formatInt, string formatDouble)
         {
             if(arr == null)
             {
@@ -121,9 +121,9 @@ namespace HTLib2
 
             int rank  = arr.Rank;
             int[] idxs = new int[rank];
-            _ToString2(text, format, arr, idxs, 0, rank);
+            _ToString2(text, arr, idxs, 0, rank, formatInt, formatDouble);
         }
-        protected static void _ToString2(StringBuilder text, string format, System.Collections.IEnumerable objs)
+        protected static void _ToString2(StringBuilder text, System.Collections.IEnumerable objs, string formatInt, string formatDouble)
         {
             text.Append("{");
             if(objs != null)
@@ -133,12 +133,12 @@ namespace HTLib2
                 {
                     if(addcomma) text.Append(", ");
                     else         addcomma = true;
-                    _ToString2(text, format, obj);
+                    _ToString2(text, obj, formatInt, formatDouble);
                 }
             }
             text.Append("}");
         }
-        protected static void _ToString2(StringBuilder text, string format, System.Collections.IDictionary obj)
+        protected static void _ToString2(StringBuilder text, System.Collections.IDictionary obj, string formatInt, string formatDouble)
         {
             text.Append("<| ");
             bool addcomma = false;
@@ -146,9 +146,9 @@ namespace HTLib2
             {
                 if(addcomma) text.Append(", ");
                 else         addcomma = true;
-                _ToString2(text, format, key_value.Key);
+                _ToString2(text, key_value.Key  , formatInt, formatDouble);
                 text.Append("->");
-                _ToString2(text, format, key_value.Value);
+                _ToString2(text, key_value.Value, formatInt, formatDouble);
             }
             text.Append(" |>");
         }
@@ -163,16 +163,16 @@ namespace HTLib2
         //    text.Append(delims[2]);
         //    return text.ToString();
         //}
-        protected static void _ToString2(StringBuilder text, string format, System.Runtime.CompilerServices.ITuple obj)
+        protected static void _ToString2(StringBuilder text, System.Runtime.CompilerServices.ITuple obj, string formatInt, string formatDouble)
         {
             int leng = obj.Length;
             object[] objs = new object[leng];
             for(int i=0; i<leng; i++)
                 objs[i] = obj[i];
 
-            _ToString2(text, format, objs);
+            _ToString2(text, objs, formatInt, formatDouble);
         }
-        protected static void _ToString2<T>(StringBuilder text, string format, IMatrix<T> obj)
+        protected static void _ToString2<T>(StringBuilder text, IMatrix<T> obj, string formatInt, string formatDouble)
         //protected static void _ToString2(StringBuilder text, string format, IMatrix<double> obj)
         {
             text.Append("{");
@@ -184,13 +184,13 @@ namespace HTLib2
                 for(int r=0; r<obj.RowSize; r++)
                 {
                     if(r != 0) text.Append(",");
-                    _ToString2(text, format, obj[c,r]);
+                    _ToString2(text, obj[c,r], formatInt, formatDouble);
                 }
                 text.Append("}");
             }
             text.Append("}");
         }
-        protected static void _ToString2(StringBuilder text, string format, object obj)
+        protected static void _ToString2(StringBuilder text, object obj, string formatInt, string formatDouble)
         {
             try
             {
@@ -201,19 +201,19 @@ namespace HTLib2
                 if(name == typeof(Vector).FullName)
                 {
                     Vector data = (Vector)obj;
-                    _ToString2(text, format, data._data);
+                    _ToString2(text, data._data, formatInt, formatDouble);
                     return;
                 }
                 if(name == typeof(int).FullName)
                 {
-                    if(format == null) { text.Append(obj.ToString()                 ); return; }
-                    else               { text.Append(string.Format(format, (int)obj)); return; }
+                    if(formatInt == null) { text.Append(obj.ToString()                    ); return; }
+                    else                  { text.Append(string.Format(formatInt, (int)obj)); return; }
                 }
                 if(name == typeof(double).FullName)
                 {
                     string str;
-                    if(format == null) str = ((double)obj).ToString();
-                    else               str = string.Format(format, (double)obj);
+                    if(formatDouble == null) str = ((double)obj).ToString();
+                    else                     str = string.Format(formatDouble, (double)obj);
 
                     if(str.Contains("E") || str.Contains("e"))
                     {
@@ -249,17 +249,17 @@ namespace HTLib2
                     return;
                 }
 
-                if(obj is System.Runtime.CompilerServices.ITuple    ) { _ToString2(text, format, obj as System.Runtime.CompilerServices.ITuple    ); return; }
-                if(obj is System.Collections.IDictionary            ) { _ToString2(text, format, obj as System.Collections.IDictionary            ); return; }
-                if(obj is IMatrix<double>                           ) { _ToString2(text, format, obj as IMatrix<double>                           ); return; }
-                if(obj is System.Array                              ) { _ToString2(text, format, obj as System.Array                              ); return; }
+                if(obj is System.Runtime.CompilerServices.ITuple    ) { _ToString2(text, obj as System.Runtime.CompilerServices.ITuple    , formatInt, formatDouble); return; }
+                if(obj is System.Collections.IDictionary            ) { _ToString2(text, obj as System.Collections.IDictionary            , formatInt, formatDouble); return; }
+                if(obj is IMatrix<double>                           ) { _ToString2(text, obj as IMatrix<double>                           , formatInt, formatDouble); return; }
+                if(obj is System.Array                              ) { _ToString2(text, obj as System.Array                              , formatInt, formatDouble); return; }
                 if(obj is System.Collections.IList                  )
                 {
                     //HDebug.ToDo();
                     //var objs = obj as System.Collections.IList;
                     //objs.getleng
                 }
-                if(obj is System.Collections.IEnumerable            ) { _ToString2(text, format, obj as System.Collections.IEnumerable            ); return; }
+                if(obj is System.Collections.IEnumerable            ) { _ToString2(text, obj as System.Collections.IEnumerable            , formatInt, formatDouble); return; }
 
                 //if(name==typeof(List<Tuple<double,int>>                              ).FullName) return _ToString2                           (format, (List<Tuple<double,int>>                              )obj);
                 //if(name==typeof(List<Tuple<int,double>>                              ).FullName) return _ToString2                           (format, (List<Tuple<int,double>>                              )obj);
@@ -333,7 +333,7 @@ namespace HTLib2
                 //}
                 if(name == typeof(object[]).FullName)
                 {
-                    _ToString2(text, format, (object[])obj);
+                    _ToString2(text, (object[])obj, formatInt, formatDouble);
                     return;
                 }
                 HDebug.Assert(false);
