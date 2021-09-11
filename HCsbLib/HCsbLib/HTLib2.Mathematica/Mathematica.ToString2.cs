@@ -236,7 +236,9 @@ namespace HTLib2
                 }
                 if(name == typeof(string).FullName)
                 {
-                    string str = string.Format(formatString, obj);
+                    string str;
+                    if(formatDouble == null) str = obj.ToString();
+                    else                     str = string.Format(formatString, obj);
                     if(str.StartsWith("(* ") && str.EndsWith(" *)"))
                     {
                         // add comment as it is
