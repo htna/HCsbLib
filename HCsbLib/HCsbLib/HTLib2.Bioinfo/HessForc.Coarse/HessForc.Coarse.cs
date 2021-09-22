@@ -29,11 +29,13 @@ namespace HTLib2.Bioinfo
         {
             public class HessForcInfo : IBinarySerializable
             {
+                public const int    SerializeVersion = 2;
                 public object[]     atoms   = null;
                 public Vector       mass    = null;
                 public Vector[]     coords  = null;
                 public HessMatrix   hess    = null;
                 public Vector[]     forc    = null;
+                public double?      enrg    = null;
 
                 public HessForcInfo
                     ( object[]     atoms  = null
@@ -41,6 +43,7 @@ namespace HTLib2.Bioinfo
                     , Vector[]     coords = null
                     , HessMatrix   hess   = null
                     , Vector[]     forc   = null
+                    , double?      enrg   = null
                     )
                 {
                     this.atoms  = atoms ;
@@ -48,6 +51,7 @@ namespace HTLib2.Bioinfo
                     this.coords = coords;
                     this.hess   = hess  ;
                     this.forc   = forc  ;
+                    this.enrg   = enrg  ;
                 }
                 public static HessForcInfo From(Hess.HessInfo hessinfo)
                 {
@@ -68,6 +72,17 @@ namespace HTLib2.Bioinfo
                         forc   = forc           ,
                     };
                 }
+                public static HessForcInfo From(Hess.HessInfo hessinfo, Vector[] forc, double enrg)
+                {
+                    return new HessForcInfo{
+                        atoms  = hessinfo.atoms ,
+                        mass   = hessinfo.mass  ,
+                        coords = hessinfo.coords,
+                        hess   = hessinfo.hess  ,
+                        forc   = forc           ,
+                        enrg   = enrg           ,
+                    };
+                }
                 public Hess.HessInfo GetHessInfo()
                 {
                     return new Hess.HessInfo
@@ -83,6 +98,7 @@ namespace HTLib2.Bioinfo
                 // IBinarySerializable
                 public void BinarySerialize(HBinaryWriter writer)
                 {
+                    writer.Write(SerializeVersion);
                     //public object[]     atoms  
                     {
                         writer.Write(atoms.Length);
@@ -102,18 +118,33 @@ namespace HTLib2.Bioinfo
                     //public Vector[]     coords 
                     //public HessMatrix   hess   
                     //public Vector[]     forc   
+                    //public double       enrg   
                     {
                         writer.Write(mass  );
                         writer.Write(coords);
                         writer.Write(hess  );
                         writer.Write(forc  );
+                        writer.Write(enrg  );
                     }
                 }
                 public HessForcInfo(HBinaryReader reader)
                 {
+                    int ver; //reader.Read(out ver); if(ver != SerializeVersion) throw new FormatException();
                     //public object[]     atoms  
                     {
-                        int length; reader.Read(out length);
+                        int ver_length; reader.Read(out ver_length);
+                        int     length;
+                        if(ver_length < 100)
+                        {
+                            ver = ver_length;
+                            reader.Read(out length);
+                        }
+                        else
+                        {
+                            length = ver_length;
+                            ver = 0;
+                        }
+
                         atoms = new object[length];
                         for(int i=0; i<atoms.Length; i++)
                             atoms[i] = ReadAtom(reader);
@@ -132,11 +163,13 @@ namespace HTLib2.Bioinfo
                     //public Vector[]     coords 
                     //public HessMatrix   hess   
                     //public Vector[]     forc   
+                    //public double       enrg   
                     {
                         reader.Read(out mass  );
                         reader.Read(out coords);
                         reader.Read(out hess  );
                         reader.Read(out forc  );
+           if(ver >= 2) reader.Read(out enrg  ); else enrg = null;
                     }
                 }
 
@@ -163,6 +196,21 @@ namespace HTLib2.Bioinfo
                         Vector coord_comp = info1.coords[i] as Vector;
                         Vector coord_load = info2.coords[i] as Vector;
                         if((coord_comp - coord_load).Dist2 != 0)
+                            return false;
+                    }
+                    //public double       enrg   
+                    {
+                        static bool Equal(double? a, double? b)
+                        {
+                            if(a == null                     && b == null                    ) return true;
+                            double va = a.Value; double vb = b.Value;
+                            if(double.IsNaN             (va) && double.IsNaN             (vb)) return true;
+                            if(double.IsPositiveInfinity(va) && double.IsPositiveInfinity(vb)) return true;
+                            if(double.IsNegativeInfinity(va) && double.IsNegativeInfinity(vb)) return true;
+                            if(a == b                                                        ) return true;
+                            return false;
+                        }
+                        if(Equal(info1.enrg, info2.enrg) == false)
                             return false;
                     }
                     //public Vector[]     forc   
