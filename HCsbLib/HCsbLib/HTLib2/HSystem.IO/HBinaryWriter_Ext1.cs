@@ -28,6 +28,10 @@ namespace HTLib2
         //      }
         //  }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(double? value) { if(value != null) { _WriteBool(true); _WriteDouble(value.Value); } else { _WriteBool(false); } }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(int   ? value) { if(value != null) { _WriteBool(true); _WriteInt   (value.Value); } else { _WriteBool(false); } }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(long  ? value) { if(value != null) { _WriteBool(true); _WriteLong  (value.Value); } else { _WriteBool(false); } }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(bool  ? value) { if(value != null) { _WriteBool(true); _WriteBool  (value.Value); } else { _WriteBool(false); } }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(double[] values) { if(values == null) { writer.Write(-1); return; } writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Write(int   [] values) { if(values == null) { writer.Write(-1); return; } writer.Write(values.Length); for(int i=0; i<values.Length; i++) writer.Write(values[i]); }

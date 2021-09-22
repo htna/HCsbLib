@@ -36,6 +36,11 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out string value) { value = reader.ReadString (); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out bool   value) { value = reader.ReadBoolean(); }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out double? value) { if(_ReadBool()) { value = reader.ReadDouble (); } else { value = null; } }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out int   ? value) { if(_ReadBool()) { value = reader.ReadInt32  (); } else { value = null; } }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out long  ? value) { if(_ReadBool()) { value = reader.ReadInt64  (); } else { value = null; } }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out bool  ? value) { if(_ReadBool()) { value = reader.ReadBoolean(); } else { value = null; } }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out double[] values) { int length = reader.ReadInt32(); if(length == -1) { values = null; return; } values = new double[length]; for(int i=0; i<length; i++) values[i] = reader.ReadDouble (); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out int   [] values) { int length = reader.ReadInt32(); if(length == -1) { values = null; return; } values = new int   [length]; for(int i=0; i<length; i++) values[i] = reader.ReadInt32  (); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out long  [] values) { int length = reader.ReadInt32(); if(length == -1) { values = null; return; } values = new long  [length]; for(int i=0; i<length; i++) values[i] = reader.ReadInt64  (); }
@@ -48,10 +53,10 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out List<string> values) { int length = reader.ReadInt32(); if(length == -1) { values = null; return; } values = new List<string>(length); for(int i=0; i<length; i++) values.Add(reader.ReadString ()); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out List<bool  > values) { int length = reader.ReadInt32(); if(length == -1) { values = null; return; } values = new List<bool  >(length); for(int i=0; i<length; i++) values.Add(reader.ReadBoolean()); }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read<T  >(out T               value ) { value  = (T              )(_Read          (typeof(T              ))); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read<T  >(out T[]             values) { values = (T[]            )(_ReadArray     (typeof(T[]            ))); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read<T  >(out List<T>         values) { values = (List<T>        )(_ReadList      (typeof(List<T>        ))); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read<T,U>(out Dictionary<T,U> dict  ) { dict   = (Dictionary<T,U>)(_ReadDictionary(typeof(Dictionary<T,U>))); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read<T  >(out T               value) { value = (T              )(_Read          (typeof(T              ))); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read<T  >(out T[]             value) { value = (T[]            )(_ReadArray     (typeof(T[]            ))); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read<T  >(out List<T>         value) { value = (List<T>        )(_ReadList      (typeof(List<T>        ))); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read<T,U>(out Dictionary<T,U> value) { value = (Dictionary<T,U>)(_ReadDictionary(typeof(Dictionary<T,U>))); }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] double _ReadDouble() { return reader.ReadDouble (); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] int    _ReadInt   () { return reader.ReadInt32  (); }
