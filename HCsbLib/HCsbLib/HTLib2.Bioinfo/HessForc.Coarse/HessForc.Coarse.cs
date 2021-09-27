@@ -175,9 +175,12 @@ namespace HTLib2.Bioinfo
 
                 public bool Equals(HessForcInfo other)
                 {
-                    HessForcInfo info1 = this;
-                    HessForcInfo info2 = other;
-
+                    return EqualsHessForcInfo(this, other);
+                }
+                public static bool EqualsHessForcInfo(object obj1, object obj2)
+                {
+                    HessForcInfo info1 = (HessForcInfo)obj1;
+                    HessForcInfo info2 = (HessForcInfo)obj2;
                     //public object[]     atoms  
                     if(info1.atoms.Length != info2.atoms.Length)
                         return false;
