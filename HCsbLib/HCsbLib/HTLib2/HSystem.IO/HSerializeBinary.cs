@@ -99,18 +99,25 @@ namespace HTLib2
                 Stream stream = HFile.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
                 HBinaryReader reader = new HBinaryReader(stream);
                 object[] objs;
-                if(reader.ReadString() != "SerializeBinaryBegin") return null;
+                try
                 {
-                    int count;
-                    reader.Read(out count);
-                    if(count != objBinDeserializers.Length)
-                        return null;
-                    objs = new object[count];
-                    for(int i = 0; i < count; i++)
-                        objs[i] = objBinDeserializers[i].DeserializeBinary(reader);
+                    if(reader.ReadString() != "SerializeBinaryBegin") return null;
+                    {
+                        int count;
+                        reader.Read(out count);
+                        if(count != objBinDeserializers.Length)
+                            return null;
+                        objs = new object[count];
+                        for(int i = 0; i < count; i++)
+                            objs[i] = objBinDeserializers[i].DeserializeBinary(reader);
+                    }
+                    if(reader.ReadString() != "SerializeBinaryEnd")
+                        throw new FileFormatException("reader.ReadString() != SerializeBinaryEnd");
                 }
-                if(reader.ReadString() != "SerializeBinaryEnd")
-                    throw new FileFormatException();
+                catch
+                {
+                    throw new FileFormatException("catch");
+                }
                 stream.Close();
                 return objs;
             }
