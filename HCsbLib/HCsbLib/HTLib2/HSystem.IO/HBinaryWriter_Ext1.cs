@@ -137,6 +137,7 @@ namespace HTLib2
             if(type == typeof(string                        )) { _WriteString            (      value               ); return; }
             if(type == typeof(bool                          )) { _WriteBool              (      value               ); return; }
             if(type == typeof(Matrix                        )) { ((Matrix)value).BinarySerialize(this               ); return; }
+            if(type == typeof(Vector                        )) { ((Vector)value).BinarySerialize(this               ); return; }
             if(value is IBinarySerializable                  ) { _WriteBinarySerializable(type, value               ); return; }
             if(value is Array                                ) { _WriteArray             (type, value as Array      ); return; }
             if(value is IList                                ) { _WriteList              (type, value as IList      ); return; }

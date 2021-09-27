@@ -171,6 +171,7 @@ namespace HTLib2
             if(type_name == typeof(string              ).FullName) return _ReadString            ();
             if(type_name == typeof(bool                ).FullName) return _ReadBool              ();
             if(type_name == typeof(Matrix              ).FullName) return Matrix.BinaryDeserialize(this);
+            if(type_name == typeof(Vector              ).FullName) return new Vector(this);
             if(typeof(IBinarySerializable).IsAssignableFrom(type)) return _ReadBinarySerializable(type);
             if(typeof(Array              ).IsAssignableFrom(type)) return _ReadArray             (type);
             if(typeof(IList              ).IsAssignableFrom(type)) return _ReadList              (type);
