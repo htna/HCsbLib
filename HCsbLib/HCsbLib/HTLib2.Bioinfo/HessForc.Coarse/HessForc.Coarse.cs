@@ -181,6 +181,13 @@ namespace HTLib2.Bioinfo
                 {
                     HessForcInfo info1 = (HessForcInfo)obj1;
                     HessForcInfo info2 = (HessForcInfo)obj2;
+                    if(info1 == null && info2 == null)
+                    {
+                        HDebug.Assert(false);
+                        return true;
+                    }
+                    if(info1 == null && info2 != null) return false;
+                    if(info1 != null && info2 == null) return false;
                     //public object[]     atoms  
                     if(info1.atoms.Length != info2.atoms.Length)
                         return false;
