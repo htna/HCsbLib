@@ -34,6 +34,15 @@ namespace HTLib2
             HDebug.Assert(absmax != -1);
             return absmax;
         }
+        public static double HAbsMaxDiffWith(this IVector<double> a, IVector<double> b)
+        {
+            HDebug.Assert(a.Size == b.Size);
+            double absmax = -1;
+            for(int i=0; i<a.Size; i++)
+                absmax = Math.Max(absmax, Math.Abs(a[i] - b[i]));
+            HDebug.Assert(absmax != -1);
+            return absmax;
+        }
         public static double HAbsMin(this IMatrix<double> mat)
         {
             double absmin = double.MaxValue;
