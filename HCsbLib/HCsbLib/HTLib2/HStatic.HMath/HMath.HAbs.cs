@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
     public static partial class HMath
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static double HAbsMaxDiffWith(this (IMatrix<double>, IMatrix<double>) pair) { return pair.Item1.HAbsMaxDiffWith(pair.Item2); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static double HAbsMaxDiffWith(this (IVector<double>, IVector<double>) pair) { return pair.Item1.HAbsMaxDiffWith(pair.Item2); }
+
         public static double MaxAbs(this double[] values)
         {
             double max = 0;
