@@ -300,15 +300,31 @@ namespace HTLib2
                 HFile.Delete(tmppath);
             }
         }
-        public static void PutMatrix(string name, IList<Vector> value)
+        public static void PutMatrixByColVectors(string name, IList<Vector> vectors, bool bUseFile=false)
         {
-            int col = value.Count;
-            int row = value[0].Size;
-            double[,] real = new double[col, row];
-            for(int c=0; c<col; c++)
-                for(int r=0; r<row; r++)
-                    real[c, r] = value[c][r];
-            PutMatrix(name, real);
+            int vec_size = vectors[0].Size;
+            int vec_cont = vectors.Count;
+            double[,] real = new double[vec_size, vec_cont];
+            for(int iv=0; iv<vec_cont; iv++)
+            {
+                Vector vector = vectors[iv];
+                for(int i=0; i<vec_size; i++)
+                    real[i, iv] = vector[i];
+            }
+            PutMatrix(name, real, bUseFile);
+        }
+        public static void PutMatrixByRowVectors(string name, IList<Vector> vectors, bool bUseFile=false)
+        {
+            int vec_size = vectors[0].Size;
+            int vec_cont = vectors.Count;
+            double[,] real = new double[vec_cont, vec_size];
+            for(int iv=0; iv<vec_cont; iv++)
+            {
+                Vector vector = vectors[iv];
+                for(int i=0; i<vec_size; i++)
+                    real[iv, i] = vector[i];
+            }
+            PutMatrix(name, real, bUseFile);
         }
     }
 }
