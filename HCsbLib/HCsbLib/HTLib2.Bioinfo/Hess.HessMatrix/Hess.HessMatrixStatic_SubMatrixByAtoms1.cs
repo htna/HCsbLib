@@ -214,6 +214,7 @@ namespace HTLib2.Bioinfo
 
         public static bool HessMatrixEqual(HessMatrix left, HessMatrix right)
         {
+            if(left == null && right == null) return true;
             if(left.ColSize != right.ColSize) return false;
             if(left.RowSize != right.RowSize) return false;
 
