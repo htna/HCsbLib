@@ -298,6 +298,13 @@ namespace HTLib2
                     return false;
             return true;
         }
+        public static bool ExistsAll(IEnumerable<string> paths)
+        {
+            foreach(var path in paths)
+                if(Exists(path) == false)
+                    return false;
+            return true;
+        }
         public static bool ExistsAny(params string[] paths)
         {
             foreach(var path in paths)
