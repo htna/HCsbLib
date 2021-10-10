@@ -326,13 +326,14 @@ namespace HTLib2.Bioinfo
                 string line0 = lines[0];
                 string line1 = lines[1];
 
-                int[] idxId = new int[] { 0, line0.Length-1 };
                 int   idxId_length;// = idxId[1] - idxId[0] + 1;
                 {
                     int val; int.TryParse(line0, out val);
                     string[] tokens = line0.Split(new char[]{' ' }, StringSplitOptions.RemoveEmptyEntries);
                     idxId_length = line0.IndexOf(tokens[0]) + tokens[0].Length;
                 }
+
+                int[] idxId = new int[] { 0, idxId_length-1 };
 
                 int[] idxAtomType  = null;
                 {
