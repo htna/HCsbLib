@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.CompilerServices;
 
 namespace HTLib2.Bioinfo
 {
@@ -11,7 +12,14 @@ namespace HTLib2.Bioinfo
     {
         public partial class HessSpr
         {
-            public class HKijFij { public double Kij, Fij; };
+            public class HKijFij
+            {
+                public double derive1;
+                public double derive2;
+                public double Fij { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return -1*derive1; } }
+                public double Kij { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return    derive2; } }
+            };
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static HKijFij GetKijFijNbnd(bool vdW, bool elec
                                                ,Vector coordi, double ri0, double qi, double ei
                                                ,Vector coordj, double rj0, double qj, double ej
@@ -63,32 +71,32 @@ namespace HTLib2.Bioinfo
                 double eij  = Math.Sqrt(ei * ej);
                 double eps  = D/332;
 
-                double Kvdw  = eij * (-13*-12) * Math.Pow(r0ij/rij, 12) / (rij*rij)
-                             - eij * (-7*-6*2) * Math.Pow(r0ij/rij,  6) / (rij*rij);
-                double Kelec =       (  -2*-1) * (qij/eps) / (rij*rij*rij);
+                double d2vdw  = eij * (-13*-12) * Math.Pow(r0ij/rij, 12) / (rij*rij)
+                              - eij * (-7*-6*2) * Math.Pow(r0ij/rij,  6) / (rij*rij);
+                double d2elec =       (  -2*-1) * (qij/eps) / (rij*rij*rij);
 
-                double Fvdw  = eij * (    -12) * Math.Pow(r0ij/rij, 12) / rij
-                             - eij * (   -6*2) * Math.Pow(r0ij/rij,  6) / rij;
-                double Felec =       (     -1) * (qij/eps) / (rij*rij);
-                double Evdw  = eij * (1      ) * Math.Pow(r0ij/rij, 12)
-                             - eij * (      2) * Math.Pow(r0ij/rij,  6);
-                double Eelec =       (1      ) * (qij/eps) / (rij);
+                double d1vdw  = eij * (    -12) * Math.Pow(r0ij/rij, 12) / rij
+                              - eij * (   -6*2) * Math.Pow(r0ij/rij,  6) / rij;
+                double d1elec =       (     -1) * (qij/eps) / (rij*rij);
+                double Evdw   = eij * (1      ) * Math.Pow(r0ij/rij, 12)
+                              - eij * (      2) * Math.Pow(r0ij/rij,  6);
+                double Eelec  =       (1      ) * (qij/eps) / (rij);
 
                 double ee = D;
                 double Kvdw_stem  = eij; //Math.Sqrt(atom0.epsilon * atom1.epsilon)
                 double Kelec_stem = (332.0/60.0 * qij / ee / r0ij);
 
                 //Debug.Assert(Kvdw + Kelec >= 0);
-                double Kij = 0;
-                double Fij = 0;
-                if(vdW ) { Kij += Kvdw ; Fij += Fvdw ; }
-                if(elec) { Kij += Kelec; Fij += Felec; }
+                double derive2 = 0;
+                double derive1 = 0;
+                if(vdW ) { derive2 += d2vdw ; derive1 += d1vdw ; }
+                if(elec) { derive2 += d2elec; derive1 += d1elec; }
 
                 //double pweng = Evdw + Eelec;
                 //double pwfrc = Fvdw + Felec;
                 //double pwspr = Kij;
 
-                return new HKijFij { Kij=Kij, Fij=Fij };
+                return new HKijFij { derive2=derive2, derive1=derive1 };
             }
         }
     }
