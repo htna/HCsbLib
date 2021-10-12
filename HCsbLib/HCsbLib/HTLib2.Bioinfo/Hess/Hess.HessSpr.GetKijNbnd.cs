@@ -12,7 +12,7 @@ namespace HTLib2.Bioinfo
     {
         public partial class HessSpr
         {
-            public class HKijFij
+            public struct HKijFij
             {
                 public double derive1;
                 public double derive2;
