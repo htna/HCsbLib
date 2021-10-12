@@ -65,7 +65,7 @@ namespace HTLib2.Bioinfo
 
                 double Kvdw  = eij * (-13*-12) * Math.Pow(r0ij/rij, 12) / (rij*rij)
                              - eij * (-7*-6*2) * Math.Pow(r0ij/rij,  6) / (rij*rij);
-                double Kelec = 2 * (qij/eps) / (rij*rij*rij);
+                double Kelec =       (  -2*-1) * (qij/eps) / (rij*rij*rij);
 
                 double Fvdw  = eij * (    -12) * Math.Pow(r0ij/rij, 12) / rij
                              - eij * (   -6*2) * Math.Pow(r0ij/rij,  6) / rij;
