@@ -18,6 +18,25 @@ namespace HTLib2.Bioinfo
                 public double derive2;
                 public double Fij { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return -1*derive1; } }
                 public double Kij { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return    derive2; } }
+                public double[,] GetHessBlk(Vector coordi, Vector coordj)
+                {
+                    /// Hyuntae Na, Guang Song*, "A natural unification of GNM and ANM and the role of inter-residue forces," Physical Biology. Vol. 11. No. 3, 2014.
+                    /// http://iopscience.iop.org/1478-3975/11/3/036002/
+                    /// Tested and Checked with Tinker TestHess
+                    Vector vij = coordi - coordj;
+                    double kij = Kij;
+                    double fij = Fij;
+                    double rij = vij.Dist;
+                    double sca_anm = (kij + fij / rij) * (-1 / vij.Dist2); // spring constant * scale to make unit vector for ANM
+                    double sca_I3  =        fij / rij;
+                    double[,] hessij  = new double[3, 3]
+                    {
+                        { sca_anm*vij[0]*vij[0] + sca_I3, sca_anm*vij[0]*vij[1]         , sca_anm*vij[0]*vij[2]          },
+                        { sca_anm*vij[1]*vij[0]         , sca_anm*vij[1]*vij[1] + sca_I3, sca_anm*vij[1]*vij[2]          },
+                        { sca_anm*vij[2]*vij[0]         , sca_anm*vij[2]*vij[1]         , sca_anm*vij[2]*vij[2] + sca_I3 },
+                    };
+                    return hessij;
+                }
             };
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static HKijFij GetKijFijNbnd(bool vdW, bool elec
