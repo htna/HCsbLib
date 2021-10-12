@@ -63,8 +63,8 @@ namespace HTLib2.Bioinfo
                 double eij  = Math.Sqrt(ei * ej);
                 double eps  = D/332;
 
-                double Kvdw  = eij * (-12*-13) * Math.Pow(r0ij/rij, 12) / (rij*rij)
-                             - eij * (-6*-7*2) * Math.Pow(r0ij/rij,  6) / (rij*rij);
+                double Kvdw  = eij * (-13*-12) * Math.Pow(r0ij/rij, 12) / (rij*rij)
+                             - eij * (-7*-6*2) * Math.Pow(r0ij/rij,  6) / (rij*rij);
                 double Kelec = 2 * (qij/eps) / (rij*rij*rij);
 
                 double Fvdw  = eij * (    -12) * Math.Pow(r0ij/rij, 12) / rij
