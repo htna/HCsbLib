@@ -53,7 +53,11 @@ namespace HTLib2.Bioinfo
         {
             get
             {
-                return numusedblocks_offdiag + diag.Count;
+                int num = numusedblocks_offdiag;
+                foreach(var diagi in diag)
+                    if(diagi != null)
+                        num ++;
+                return num;
             }
         }
         //public override double RatioUsedBlocks { get {
