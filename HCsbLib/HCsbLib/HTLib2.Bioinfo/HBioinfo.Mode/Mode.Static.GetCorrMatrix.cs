@@ -75,6 +75,10 @@ namespace HTLib2.Bioinfo
         }
         public static Matrix GetCorrMatrix(this IList<Mode> modes)
         {
+            return GetCorrMatrix(modes, false);
+        }
+        public static Matrix GetCorrMatrix(this IList<Mode> modes, bool useAbsEigval)
+        {
             if(HDebug.Selftest())
                 HDebug.Assert(GetCorrMatrix_SelfTest(modes, GetCorrMatrix));
             
@@ -84,6 +88,8 @@ namespace HTLib2.Bioinfo
             {
                 eigvals[i] = modes[i].eigval;
                 eigvecs[i] = modes[i].GetEigvecsOfAtoms();
+                if(useAbsEigval)
+                    eigvals[i] = Math.Abs(eigvals[i]);
             }
 
             int size = modes[0].size;
@@ -178,6 +184,10 @@ namespace HTLib2.Bioinfo
         }
         public static Matrix GetCorrMatrixMatlab(this IList<Mode> modes)
         {
+            return GetCorrMatrixMatlab(modes, false);
+        }
+        public static Matrix GetCorrMatrixMatlab(this IList<Mode> modes, bool useAbsEigval)
+        {
             if(HDebug.Selftest())
                 HDebug.Assert(GetCorrMatrix_SelfTest(modes, GetCorrMatrixMatlab));
 
@@ -205,6 +215,8 @@ namespace HTLib2.Bioinfo
                 Matlab.Clear();
                 Matlab.PutMatrix("MD", MD, true);
                 Matlab.PutVector("EV", EV);
+                if(useAbsEigval)
+                    Matlab.Execute("D = abs(D);");
                 Matlab.Execute("nmodes = length(EV);");
                 Matlab.Execute("iEV   = diag(1 ./ EV);");
                 Matlab.Execute("Dijx = MD(1:3:end,:); Dijx = Dijx*iEV*Dijx'; Dij=    Dijx; clear Dijx;");
