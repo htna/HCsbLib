@@ -216,7 +216,7 @@ namespace HTLib2.Bioinfo
                 Matlab.PutMatrix("MD", MD, true);
                 Matlab.PutVector("EV", EV);
                 if(useAbsEigval)
-                    Matlab.Execute("D = abs(D);");
+                    Matlab.Execute("EV = abs(EV);");
                 Matlab.Execute("nmodes = length(EV);");
                 Matlab.Execute("iEV   = diag(1 ./ EV);");
                 Matlab.Execute("Dijx = MD(1:3:end,:); Dijx = Dijx*iEV*Dijx'; Dij=    Dijx; clear Dijx;");
