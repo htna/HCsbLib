@@ -127,6 +127,17 @@ namespace HTLib2
             }
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public IEnumerable<(int c, int r, double val)> EnumNonZeros()
+        {
+            foreach(var item in _c_r_value)
+            {
+                int    c   = item.Key.c;
+                int    r   = item.Key.r;
+                double val = item.Value;
+                yield return (c, r, val);
+            }
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Matrix ToMatrix()
         {
             Matrix mat = Matrix.Zeros(_colsize, _rowsize);
