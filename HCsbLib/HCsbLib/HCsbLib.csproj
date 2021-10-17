@@ -727,6 +727,7 @@
     <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.ToVector.cs" />
     <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Trace.cs" />
     <Compile Include="HTLib2\HMath.Numerics.LinAlg\LinAlg\LinAlg.Vector.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixSymmetric.cs" />
     <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixSparse2.cs" />
     <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixSparse.cs" />
     <Compile Include="HTLib2\HMath.Numerics.Matrix\Matrix.cs" />
@@ -776,6 +777,8 @@
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumNonZeros.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.HEnumSequence.cs" />
     <Compile Include="HTLib2\HStatic.HEnum\HEnum.Tuple.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HSort.cs" />
+    <Compile Include="HTLib2\HStatic.HMath\HMath.HSwap.cs" />
     <Compile Include="HTLib2\HStatic.HMath\HMath.HStatistics.cs" />
     <Compile Include="HTLib2\HStatic.HMath\HMath.Quantile.cs" />
     <Compile Include="HTLib2\HStatic.HMath\HMath.HSum.cs" />
