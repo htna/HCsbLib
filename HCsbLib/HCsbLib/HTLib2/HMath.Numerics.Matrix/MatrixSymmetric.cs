@@ -7,6 +7,13 @@ using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
+    public static partial class HStatic
+    {
+        public static MatrixSymmetric ToMatrixSymmetric(this Matrix mat)
+        {
+            return MatrixSymmetric.FromMatrix(mat);
+        }
+    }
     public class MatrixSymmetric : IMatrix<double>, IBinarySerializable
     {
         int _size;
@@ -124,6 +131,24 @@ namespace HTLib2
             }
             return smat;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsSymmetric(Matrix mat, double tol)
+        {
+            if(mat.ColSize != mat.RowSize) return false;
+            int size = mat.ColSize;
+            for(int c=0; c<size; c++)
+            {
+                for(int r=0; r<=c; r++)
+                {
+                    double cr_val = mat[c,r];
+                    double rc_val = mat[r,c];
+                    if(Math.Abs(cr_val - rc_val) > tol)
+                        return false;
+                }
+            }
+            return true;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool EqualContents(MatrixSymmetric a, MatrixSymmetric b)
         {
             if(a._size != b._size) return false;
@@ -138,6 +163,7 @@ namespace HTLib2
             }
             return true;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool EqualContents(Matrix a, Matrix b)
         {
             if(a.ColSize != b.ColSize) return false;
@@ -153,6 +179,7 @@ namespace HTLib2
             }
             return true;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool EqualContents(Matrix a, Matrix b, double tol)
         {
             if(a.ColSize != b.ColSize) return false;
