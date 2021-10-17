@@ -7,6 +7,13 @@ using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
+    public static partial class HStatic
+    {
+        public static MatrixSparse2 ToMatrixSparse2(this Matrix mat)
+        {
+            return MatrixSparse2.FromMatrix(mat);
+        }
+    }
     public class MatrixSparse2 : IMatrix<double>, IBinarySerializable
     {
         int _colsize;
