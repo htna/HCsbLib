@@ -15,6 +15,11 @@ namespace HTLib2
             return MatrixSymmetric<T>.FromMatrix<T>(mat);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static MatrixSymmetric<T> ToMatrixSymmetricTU<T,U>(this IMatrix<U> mat)
+        {
+            return MatrixSymmetric<T>.FromMatrixTU<T,U>(mat);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool HEqualContents<T>(this MatrixSymmetric<T> a, MatrixSymmetric<T> b)
             where T : IEquatable<T>
         {
