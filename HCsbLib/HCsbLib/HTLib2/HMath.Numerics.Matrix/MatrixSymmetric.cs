@@ -9,9 +9,10 @@ namespace HTLib2
 {
     public static partial class HStatic
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MatrixSymmetric<T> ToMatrixSymmetric<T>(this IMatrix<T> mat)
         {
-            return MatrixSymmetric<T>.FromMatrix(mat);
+            return MatrixSymmetric<T>.FromMatrix<T>(mat);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool HEqualContents<T>(this MatrixSymmetric<T> a, MatrixSymmetric<T> b)
@@ -132,8 +133,10 @@ namespace HTLib2
             }
             return mat;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static MatrixSymmetric<T> FromMatrix  <T  >(IMatrix<T> mat) { return _FromMatrix<T,T>(mat); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static MatrixSymmetric<T> FromMatrixTU<T,U>(IMatrix<U> mat) { return _FromMatrix<T,U>(mat); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static MatrixSymmetric<T> FromMatrix<T>(IMatrix<T> mat)
+        public static MatrixSymmetric<T> _FromMatrix<T,U>(IMatrix<U> mat)
         {
             if(mat.ColSize != mat.RowSize)
                 throw new Exception("(mat.ColSize != mat.RowSize)");
