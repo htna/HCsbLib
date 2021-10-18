@@ -9,37 +9,54 @@ namespace HTLib2
 {
     public static partial class HStatic
     {
-        public static MatrixSymmetric ToMatrixSymmetric(this Matrix mat)
+        public static MatrixSymmetric<T> ToMatrixSymmetric<T>(this IMatrix<T> mat)
         {
-            return MatrixSymmetric.FromMatrix(mat);
+            return MatrixSymmetric<T>.FromMatrix(mat);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HEqualContents<T>(this MatrixSymmetric<T> a, MatrixSymmetric<T> b)
+            where T : IEquatable<T>
+        {
+            if(a.ColSize != b.ColSize) return false;
+            for(int c=0; c<a.ColSize; c++)
+            {
+                for(int r=0; r<=c; r++)
+                {
+                    T a_val = a[c,r];
+                    T b_val = b[c,r];
+                    //if(a_val != b_val) return false;
+                    if(a_val.Equals(b_val) == false) return false;
+                }
+            }
+            return true;
         }
     }
-    public class MatrixSymmetric : IMatrix<double>, IBinarySerializable
+    public class MatrixSymmetric<T> : IMatrix<T>, IBinarySerializable
     {
         int _size;
-        double[][] _arr;
+        T[][] _arr;
         ///////////////////////////////////////////////////
-        // IMatrix<double>
+        // IMatrix<T>
         public int ColSize { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return _size; } }
         public int RowSize { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return _size; } }
-        public double this[int  c, int  r] { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return GetAt(c,r);                   } [MethodImpl(MethodImplOptions.AggressiveInlining)] set { SetAt(c,r,value);                    } }
-        public double this[long c, long r] { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { throw new NotImplementedException(); } [MethodImpl(MethodImplOptions.AggressiveInlining)] set { throw new NotImplementedException(); } }
+        public T this[int  c, int  r] { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return GetAt(c,r);                   } [MethodImpl(MethodImplOptions.AggressiveInlining)] set { SetAt(c,r,value);                    } }
+        public T this[long c, long r] { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { throw new NotImplementedException(); } [MethodImpl(MethodImplOptions.AggressiveInlining)] set { throw new NotImplementedException(); } }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double[,] ToArray()
+        public T[,] ToArray()
         {
-            double[,] arr = new double[_size,_size];
+            T[,] arr = new T[_size,_size];
             for(int c=0; c<_size; c++)
             {
                 for(int r=0; r<=c; r++)
                 {
-                    double val = _arr[c][r];
+                    T val = _arr[c][r];
                     arr[c,r] = val;
                     arr[r,c] = val;
                 }
             }
             return arr;
         }
-        // IMatrix<double>
+        // IMatrix<T>
         ///////////////////////////////////////////////////
         // IBinarySerializable
         public void BinarySerialize(HBinaryWriter writer)
@@ -49,7 +66,7 @@ namespace HTLib2
             {
                 for(int r=0; r<=c; r++)
                 {
-                    double val = _arr[c][r];
+                    T val = _arr[c][r];
                     writer.Write(val);
                 }
             }
@@ -57,13 +74,13 @@ namespace HTLib2
         public MatrixSymmetric(HBinaryReader reader)
         {
             reader.Read(out _size);
-            _arr = new double[_size][];
+            _arr = new T[_size][];
             for(int c=0; c<_size; c++)
             {
-                _arr[c] = new double[c+1];
+                _arr[c] = new T[c+1];
                 for(int r=0; r<=c; r++)
                 {
-                    double val;
+                    T val;
                     reader.Read(out val);
                     _arr[c][r] = val;
                 }
@@ -75,16 +92,16 @@ namespace HTLib2
         public MatrixSymmetric(int size)
         {
             _size = size;
-            _arr = new double[_size][];
+            _arr = new T[_size][];
             for(int c=0; c<_size; c++)
-                _arr[c] = new double[c+1];
+                _arr[c] = new T[c+1];
         }
-        public static MatrixSymmetric Zeros(int size)
+        public static MatrixSymmetric<T> Zeros(int size)
         {
-            return new MatrixSymmetric(size);
+            return new MatrixSymmetric<T>(size);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double GetAt(int c, int r)
+        public T GetAt(int c, int r)
         {
             if((c < 0) || (c >= _size)) throw new IndexOutOfRangeException("((c < 0) || (c >= _ColSize))");
             if((c < 0) || (r >= _size)) throw new IndexOutOfRangeException("((c < 0) || (r >= _RowSize))");
@@ -92,7 +109,7 @@ namespace HTLib2
             return _arr[c][r];
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetAt(int c, int r, double value)
+        public void SetAt(int c, int r, T value)
         {
             if((c < 0) || (c >= _size)) throw new IndexOutOfRangeException("((c < 0) || (c >= _ColSize))");
             if((c < 0) || (r >= _size)) throw new IndexOutOfRangeException("((c < 0) || (r >= _RowSize))");
@@ -100,14 +117,15 @@ namespace HTLib2
             _arr[c][r] = value;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Matrix ToMatrix()
+        public IMatrix<T> ToMatrix<MATRIX>(Func<int,int,MATRIX> Zeros)
+            where MATRIX : IMatrix<T>
         {
-            Matrix mat = Matrix.Zeros(_size, _size);
+            IMatrix<T> mat = Zeros(_size, _size);
             for(int c=0; c<_size; c++)
             {
                 for(int r=0; r<=c; r++)
                 {
-                    double val = _arr[c][r];
+                    T val = _arr[c][r];
                     mat[c,r] = val;
                     mat[r,c] = val;
                 }
@@ -115,85 +133,23 @@ namespace HTLib2
             return mat;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static MatrixSymmetric FromMatrix(Matrix mat)
+        public static MatrixSymmetric<T> FromMatrix<T>(IMatrix<T> mat)
         {
             if(mat.ColSize != mat.RowSize)
                 throw new Exception("(mat.ColSize != mat.RowSize)");
             int size = mat.ColSize;
-            MatrixSymmetric smat = MatrixSymmetric.Zeros(size);
+            MatrixSymmetric<T> smat = MatrixSymmetric<T>.Zeros(size);
             for(int c=0; c<size; c++)
             {
                 for(int r=0; r<=c; r++)
                 {
-                    double val = (mat[c,r] + mat[r,c])/2;
+                    dynamic cr_val = mat[c,r];
+                    dynamic rc_val = mat[r,c];
+                    T val = (cr_val + rc_val)/2;
                     smat[c,r] = val;
                 }
             }
             return smat;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsSymmetric(Matrix mat, double tol)
-        {
-            if(mat.ColSize != mat.RowSize) return false;
-            int size = mat.ColSize;
-            for(int c=0; c<size; c++)
-            {
-                for(int r=0; r<=c; r++)
-                {
-                    double cr_val = mat[c,r];
-                    double rc_val = mat[r,c];
-                    if(Math.Abs(cr_val - rc_val) > tol)
-                        return false;
-                }
-            }
-            return true;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool EqualContents(MatrixSymmetric a, MatrixSymmetric b)
-        {
-            if(a._size != b._size) return false;
-            for(int c=0; c<a._size; c++)
-            {
-                for(int r=0; r<=c; r++)
-                {
-                    double a_val = a[c,r];
-                    double b_val = b[c,r];
-                    if(a_val != b_val) return false;
-                }
-            }
-            return true;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool EqualContents(Matrix a, Matrix b)
-        {
-            if(a.ColSize != b.ColSize) return false;
-            if(a.RowSize != b.RowSize) return false;
-            for(int c=0; c<a.ColSize; c++)
-            {
-                for(int r=0; r<a.RowSize; r++)
-                {
-                    double a_val = a[c,r];
-                    double b_val = b[c,r];
-                    if(a_val != b_val) return false;
-                }
-            }
-            return true;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool EqualContents(Matrix a, Matrix b, double tol)
-        {
-            if(a.ColSize != b.ColSize) return false;
-            if(a.RowSize != b.RowSize) return false;
-            for(int c=0; c<a.ColSize; c++)
-            {
-                for(int r=0; r<a.RowSize; r++)
-                {
-                    double a_val = a[c,r];
-                    double b_val = b[c,r];
-                    if(Math.Abs(a_val - b_val) > tol) return false;
-                }
-            }
-            return true;
         }
     }
 }

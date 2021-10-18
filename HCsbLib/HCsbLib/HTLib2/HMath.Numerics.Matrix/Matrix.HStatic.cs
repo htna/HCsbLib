@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
-//using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
@@ -13,6 +13,7 @@ namespace HTLib2
         {
             return new MatrixByArr(arr);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void UpdateAbs(this Matrix mat)
         {
             for(int c=0; c<mat.ColSize; c++)
@@ -22,12 +23,14 @@ namespace HTLib2
                     if(val < 0) mat[c,r] = Math.Abs(val);
                 }
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix GetAbs(this Matrix mat)
         {
             Matrix absmat = mat.Clone();
             absmat.UpdateAbs();
             return absmat;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void UpdateAdd(this IMatrix<double> _this, IMatrix<double> other, double other_mul)
         {
             HDebug.Exception(_this.ColSize == other.ColSize);
@@ -67,6 +70,7 @@ namespace HTLib2
         //        for(int r=0; r<RowSize; r++)
         //            this[c, r] -= other[c, r];
         //}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix GetMul(this IMatrix<double> left, IMatrix<double> right)
         {
             int RowSize = left.RowSize;
@@ -82,6 +86,7 @@ namespace HTLib2
                         mul[c, r] += left[c, i] * right[i, r];
             return mul;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void UpdateMul(this IMatrix<double> _this, double other)
         {
             for(int c=0; c<_this.ColSize; c++)
@@ -89,6 +94,7 @@ namespace HTLib2
                     _this[c, r] *= other;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector GetColVector(this IMatrix<double> _this, int row)
         {
             HDebug.AssertAnd(0<=row, row<_this.RowSize);
@@ -97,6 +103,7 @@ namespace HTLib2
                 vec[col] = _this[col, row];
             return vec;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector GetRowVector(this IMatrix<double> _this, int col)
         {
             HDebug.AssertAnd(0<=col, col<_this.ColSize);
@@ -106,11 +113,79 @@ namespace HTLib2
             return vec;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetValue(this IMatrix<double> _this, double value)
         {
             for(int c=0; c<_this.ColSize; c++)
                 for(int r=0; r<_this.RowSize; r++)
                     _this[c, r] = value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HEqualContents(this Matrix a, Matrix b)
+        {
+            if(a.ColSize != b.ColSize) return false;
+            if(a.RowSize != b.RowSize) return false;
+            for(int c=0; c<a.ColSize; c++)
+            {
+                for(int r=0; r<a.RowSize; r++)
+                {
+                    double a_val = a[c,r];
+                    double b_val = b[c,r];
+                    if(a_val != b_val) return false;
+                }
+            }
+            return true;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HEqualContents(this Matrix a, Matrix b, double tol)
+        {
+            if(a.ColSize != b.ColSize) return false;
+            if(a.RowSize != b.RowSize) return false;
+            for(int c=0; c<a.ColSize; c++)
+            {
+                for(int r=0; r<a.RowSize; r++)
+                {
+                    double a_val = a[c,r];
+                    double b_val = b[c,r];
+                    if(Math.Abs(a_val - b_val) > tol) return false;
+                }
+            }
+            return true;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HIsSymmetric(this Matrix mat)
+        {
+            if(mat.ColSize != mat.RowSize) return false;
+            int size = mat.ColSize;
+            for(int c=0; c<size; c++)
+            {
+                for(int r=0; r<=c; r++)
+                {
+                    double cr_val = mat[c,r];
+                    double rc_val = mat[r,c];
+                    if(cr_val != rc_val)
+                        return false;
+                }
+            }
+            return true;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HIsSymmetric(this Matrix mat, double tol)
+        {
+            if(mat.ColSize != mat.RowSize) return false;
+            int size = mat.ColSize;
+            for(int c=0; c<size; c++)
+            {
+                for(int r=0; r<=c; r++)
+                {
+                    double cr_val = mat[c,r];
+                    double rc_val = mat[r,c];
+                    if(Math.Abs(cr_val - rc_val) > tol)
+                        return false;
+                }
+            }
+            return true;
         }
     }
 }
