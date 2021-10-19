@@ -153,8 +153,8 @@ namespace HTLib2
                 {
                     dynamic cr_val = mat[c,r];
                     dynamic rc_val = mat[r,c];
-                    T val = (cr_val + rc_val)/2;
-                    smat[c,r] = val;
+                    dynamic val = (cr_val + rc_val)/2;
+                    smat[c,r] = (T)val;
                 }
             }
             return smat;
