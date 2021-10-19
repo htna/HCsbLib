@@ -166,6 +166,7 @@ namespace HTLib2
         {
             string type_name = type.FullName;
             if(type_name == typeof(double              ).FullName) return _ReadDouble            ();
+            if(type_name == typeof(float               ).FullName) return reader.ReadSingle      ();
             if(type_name == typeof(int                 ).FullName) return _ReadInt               ();
             if(type_name == typeof(long                ).FullName) return _ReadLong              ();
             if(type_name == typeof(string              ).FullName) return _ReadString            ();
