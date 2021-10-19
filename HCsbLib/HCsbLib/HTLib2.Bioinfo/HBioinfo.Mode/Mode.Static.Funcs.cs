@@ -453,6 +453,109 @@ namespace HTLib2.Bioinfo
             }
             return hess;
         }
+        public static HessMatrix GetHessianMatlab(this IList<Mode> modes, IList<double> masses)
+        {
+            /// mode.eigval =             mweigval
+            /// mode.eigvec = mass^-0.5 * mweigvec
+            /// 
+            /// W = [mode(1).eigvec, mode(2).eigvec, ... ]
+            /// M = masses
+            /// D = diag([mode(1).eigval, mode(2).eigval, ...])
+            /// 
+            /// mwH = M^-0.5 H M^-0.5
+            /// [V,D] = eig(mwH)
+            /// mode.eigval == D
+            /// mode.eigvec == M^-0.5 V = W
+            /// 
+            /// W D W' = (M^-0.5     V) D (M^-0.5     V)'
+            ///        = M^-0.5       V D V'      M^-0.5
+            ///        = M^-0.5        mwH        M^-0.5
+            ///        = M^-0.5 (M^-0.5 H M^-0.5) M^-0.5
+            ///        = M^-1           H         M^-1
+            /// H = M (M^-1 H M^-1) M
+            ///   = M (W    D   W') M
+            ///   = (M W)   D   (M W)'
+            Vector[] W = new Vector[modes.Count];
+            double[] D = new double[modes.Count];
+            for(int i=0; i<modes.Count; i++)
+            {
+                W[i] = modes[i].eigvec;
+                D[i] = modes[i].eigval;
+                HDebug.Assert(W[i].Size == masses.Count*3);
+            }
+            double[] M = new double[masses.Count*3];
+            for(int i=0; i<masses.Count; i++)
+                M[i*3+0] = M[i*3+1] = M[i*3+2] = masses[i];
+            Matlab.PutMatrixByColVectors("W", W, true);
+            Matlab.PutVector("D", D);
+            Matlab.PutVector("M", M);
+            Matlab.Execute("MW = diag(M)*W;");
+            Matlab.Execute("H = MW * diag(D) * MW';");
+            Matrix H = Matlab.GetMatrix("H", Matrix.Zeros, true);
+            HessMatrix hess = H.ToHessMatrix();
+            Matlab.Execute("clear");
+
+            return hess;
+        }
+        public static HessMatrix GetInvHessianMatlab(this IList<Mode> modes, IList<double> masses)
+        {
+            /// mode.eigval =             mweigval
+            /// mode.eigvec = mass^-0.5 * mweigvec
+            /// 
+            /// W = [mode(1).eigvec, mode(2).eigvec, ... ]
+            /// M = masses
+            /// D = diag([mode(1).eigval, mode(2).eigval, ...])
+            /// 
+            /// mwH = M^-0.5 H M^-0.5
+            /// [V,D] = eig(mwH)
+            /// mode.eigval == D
+            /// mode.eigvec == M^-0.5 V = W
+            ///                V = M^0.5 W
+            /// 
+            /// mwH = V D V'
+            /// 
+            /// 
+            /// H^-1 * H = I
+            ///                  H^-1                  H           =          I
+            ///                  H^-1 (M^0.5   M^-0.5) H           =          I
+            ///          M^0.5  (H^-1  M^0.5   M^-0.5  H) M^-0.5   =  M^0.5 * I * M^-0.5
+            ///         (M^0.5   H^-1  M^0.5) (M^-0.5  H  M^-0.5)  =  M^0.5     * M^-0.5
+            ///         (M^0.5   H^-1  M^0.5)  mwH                 =          I         
+            ///         (M^0.5   H^-1  M^0.5)  mwH * mwH^-1        =          I * mwH^-1
+            ///         (M^0.5   H^-1  M^0.5)                      =              mwH^-1
+            ///  M^-0.5 (M^0.5   H^-1  M^0.5) M^-0.5               =     M^-0.5 * mwH^-1    * M^-0.5
+            /// (M^-0.5  M^0.5)  H^-1 (M^0.5  M^-0.5)              =     M^-0.5 * mwH^-1    * M^-0.5
+            ///                  H^-1                              =     M^-0.5 * mwH^-1    * M^-0.5
+            ///                  H^-1                              =     M^-0.5 * V D^-1 V' * M^-0.5
+            /// 
+            /// H^-1 =  M^-0.5 * V        * D^-1 *  V' * M^-0.5
+            ///      = (M^-0.5 * V      ) * D^-1 * (V' * M^-0.5')
+            ///      = (M^-0.5 * V      ) * D^-1 * (M^-0.5 * V      )'
+            ///      = (M^-0.5 * M^0.5 W) * D^-1 * (M^-0.5 * M^0.5 W)'
+            ///      = (               W) * D^-1 * (               W)'
+            ///      = W * D^-1 * W'
+            Vector[] W = new Vector[modes.Count];
+            double[] D = new double[modes.Count];
+            for(int i=0; i<modes.Count; i++)
+            {
+                W[i] = modes[i].eigvec;
+                D[i] = modes[i].eigval;
+                HDebug.Assert(W[i].Size == masses.Count*3);
+            }
+            double[] M = new double[masses.Count*3];
+            for(int i=0; i<masses.Count; i++)
+                M[i*3+0] = M[i*3+1] = M[i*3+2] = masses[i];
+            Matlab.PutMatrixByColVectors("W", W, true);
+            Matlab.PutVector("D", D);
+            Matlab.PutVector("M", M);
+            Matlab.Execute("invD = diag(1 ./ D);");
+            Matlab.Execute("invH = W * invD * W';");
+            Matrix invH = Matlab.GetMatrix("invH", Matrix.Zeros, true);
+            HessMatrix invhess = invH.ToHessMatrix();
+            Matlab.Execute("clear");
+
+            return invhess;
+        }
         public static Mode.FloatMode[] ToFloatModes(this Mode[] modes)
         {
             Mode.FloatMode[] fmodes = new Mode.FloatMode[modes.Length];
