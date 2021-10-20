@@ -21,6 +21,15 @@ namespace HTLib2
         public static void SerializeBinary<T0, T1, T2, T3, T4, T5, T6, T7, T8    >(string filename, T0 obj0, T1 obj1, T2 obj2, T3 obj3, T4 obj4, T5 obj5, T6 obj6, T7 obj7, T8 obj8         ) where T0:IBS where T1:IBS where T2:IBS where T3:IBS where T4:IBS where T5:IBS where T6:IBS where T7:IBS where T8:IBS              { _SerializeBinary(filename, GetOBS(obj0), GetOBS(obj1), GetOBS(obj2), GetOBS(obj3), GetOBS(obj4), GetOBS(obj5), GetOBS(obj6), GetOBS(obj7), GetOBS(obj8)               ); }
         public static void SerializeBinary<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(string filename, T0 obj0, T1 obj1, T2 obj2, T3 obj3, T4 obj4, T5 obj5, T6 obj6, T7 obj7, T8 obj8, T9 obj9) where T0:IBS where T1:IBS where T2:IBS where T3:IBS where T4:IBS where T5:IBS where T6:IBS where T7:IBS where T8:IBS where T9:IBS { _SerializeBinary(filename, GetOBS(obj0), GetOBS(obj1), GetOBS(obj2), GetOBS(obj3), GetOBS(obj4), GetOBS(obj5), GetOBS(obj6), GetOBS(obj7), GetOBS(obj8), GetOBS(obj9) ); }
 
+        public static void SerializeBinaryList<T>(string filename, T[] objs)
+            where T:IBS
+        {
+            IOBS[] objBinSerializers = new IOBS[objs.Length];
+            for(int i=0; i<objs.Length; i++)
+                objBinSerializers[i] = GetOBS<T>(objs[i]);
+            _SerializeBinary(filename, objBinSerializers);
+        }
+
         public static void DeserializeBinary<T0                                    >(string filename, out T0 obj0                                                                                                                     ) where T0:IBS                                                                                                                      { object[] objs = _DeserializeBinary(filename, GetOBD<T0>()                                                                                                                               ); HDebug.Assert(objs.Length ==  1); obj0 = (T0)objs[0];                                                                                                                                                                                     }
         public static void DeserializeBinary<T0, T1                                >(string filename, out T0 obj0, out T1 obj1                                                                                                        ) where T0:IBS where T1:IBS                                                                                                         { object[] objs = _DeserializeBinary(filename, GetOBD<T0>(), GetOBD<T1>()                                                                                                                 ); HDebug.Assert(objs.Length ==  2); obj0 = (T0)objs[0]; obj1 = (T1)objs[1];                                                                                                                                                                 }
         public static void DeserializeBinary<T0, T1, T2                            >(string filename, out T0 obj0, out T1 obj1, out T2 obj2                                                                                           ) where T0:IBS where T1:IBS where T2:IBS                                                                                            { object[] objs = _DeserializeBinary(filename, GetOBD<T0>(), GetOBD<T1>(), GetOBD<T2>()                                                                                                   ); HDebug.Assert(objs.Length ==  3); obj0 = (T0)objs[0]; obj1 = (T1)objs[1]; obj2 = (T2)objs[2];                                                                                                                                             }
@@ -32,17 +41,31 @@ namespace HTLib2
         public static void DeserializeBinary<T0, T1, T2, T3, T4, T5, T6, T7, T8    >(string filename, out T0 obj0, out T1 obj1, out T2 obj2, out T3 obj3, out T4 obj4, out T5 obj5, out T6 obj6, out T7 obj7, out T8 obj8             ) where T0:IBS where T1:IBS where T2:IBS where T3:IBS where T4:IBS where T5:IBS where T6:IBS where T7:IBS where T8:IBS              { object[] objs = _DeserializeBinary(filename, GetOBD<T0>(), GetOBD<T1>(), GetOBD<T2>(), GetOBD<T3>(), GetOBD<T4>(), GetOBD<T5>(), GetOBD<T6>(), GetOBD<T7>(), GetOBD<T8>()               ); HDebug.Assert(objs.Length ==  9); obj0 = (T0)objs[0]; obj1 = (T1)objs[1]; obj2 = (T2)objs[2]; obj3 = (T3)objs[3]; obj4 = (T4)objs[4]; obj5 = (T5)objs[5]; obj6 = (T6)objs[6]; obj7 = (T7)objs[7]; obj8 = (T8)objs[8];                     }
         public static void DeserializeBinary<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(string filename, out T0 obj0, out T1 obj1, out T2 obj2, out T3 obj3, out T4 obj4, out T5 obj5, out T6 obj6, out T7 obj7, out T8 obj8, out T9 obj9) where T0:IBS where T1:IBS where T2:IBS where T3:IBS where T4:IBS where T5:IBS where T6:IBS where T7:IBS where T8:IBS where T9:IBS { object[] objs = _DeserializeBinary(filename, GetOBD<T0>(), GetOBD<T1>(), GetOBD<T2>(), GetOBD<T3>(), GetOBD<T4>(), GetOBD<T5>(), GetOBD<T6>(), GetOBD<T7>(), GetOBD<T8>(), GetOBD<T9>() ); HDebug.Assert(objs.Length == 10); obj0 = (T0)objs[0]; obj1 = (T1)objs[1]; obj2 = (T2)objs[2]; obj3 = (T3)objs[3]; obj4 = (T4)objs[4]; obj5 = (T5)objs[5]; obj6 = (T6)objs[6]; obj7 = (T7)objs[7]; obj8 = (T8)objs[8]; obj9 = (T9)objs[9]; }
 
+        public static T[] DeserializeBinaryList<T>(string filename, int count)
+            where T:IBS
+        {
+            IOBD[] objBinDeserializers = new IOBD[count];
+            for(int i=0; i<count; i++)
+                objBinDeserializers[i] = GetOBD<T>();
+            object[] objs = _DeserializeBinary(filename, objBinDeserializers);
+            HDebug.Assert(objs.Length ==  count);
+            T[] retobjs = new T[count];
+            for(int i=0; i<count; i++)
+                retobjs[i] = (T)objs[i];
+            return retobjs;
+        }
+
         // OBS : Object Binary Serializer
-        static IOBS GetOBS<T>(T obj)
+        public static IOBS GetOBS<T>(T obj)
             where T  : IBS
         {
             return new OBS<T>{ obj = obj };
         }
-        interface IOBS
+        public interface IOBS
         {
             void SerializeBinary(HBinaryWriter writer);
         }
-        class OBS<T> : IOBS
+        public class OBS<T> : IOBS
             where T  : IBS
         {
             public T obj;
@@ -51,7 +74,7 @@ namespace HTLib2
                 obj.BinarySerialize(writer);
             }
         }
-        static void _SerializeBinary(string filename, params IOBS[] objBinSerializers)
+        public static void _SerializeBinary(string filename, params IOBS[] objBinSerializers)
 		{
             string lockname = "Serializer: "+filename.Replace("\\", "@");
             using(new NamedLock(lockname))
@@ -71,16 +94,16 @@ namespace HTLib2
             }
 		}
         // OBD : Object Binary Deserializer
-        static IOBD GetOBD<T>()
+        public static IOBD GetOBD<T>()
             where T  : IBS
         {
             return new OBD<T>();
         }
-        interface IOBD
+        public interface IOBD
         {
             object DeserializeBinary(HBinaryReader reader);
         }
-        class OBD<T> : IOBD
+        public class OBD<T> : IOBD
             where T  : IBS
         {
             public object DeserializeBinary(HBinaryReader reader)
@@ -91,7 +114,7 @@ namespace HTLib2
                 return obj;
             }
         }
-        static object[] _DeserializeBinary(string filename, params IOBD[] objBinDeserializers)
+        public static object[] _DeserializeBinary(string filename, params IOBD[] objBinDeserializers)
         {
             string lockname = "Serializer: "+filename.Replace("\\", "@");
             using(new NamedLock(lockname))
