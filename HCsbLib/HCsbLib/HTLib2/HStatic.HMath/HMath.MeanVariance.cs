@@ -13,6 +13,21 @@ namespace HTLib2
         {
             return values.Average();
         }
+        public static double MeanInRange(this IEnumerable<double> values, double range_min, double range_max)
+        {
+            HDebug.Assert(range_min <= range_max);
+            double mean = 0;
+            int    cont = 0;
+            foreach(var value in values)
+            {
+                if(value < range_min) continue;
+                if(range_max < value) continue;
+                mean += value;
+                cont ++;
+            }
+            mean /= cont;
+            return mean;
+        }
         public static double MeanSquared(this IEnumerable<double> values)
         {
             double mean = 0;
