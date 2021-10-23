@@ -82,6 +82,22 @@ namespace HTLib2
         // IMatrix<double>
         ///////////////////////////////////////////////////
 
+        public SMatrix3x3
+            ( double v00, double v01, double v02
+            , double v10, double v11, double v12
+            , double v20, double v21, double v22
+            )
+        {
+            this.v00 = v00;
+            this.v01 = v01;
+            this.v02 = v02;
+            this.v10 = v10;
+            this.v11 = v11;
+            this.v12 = v12;
+            this.v20 = v20;
+            this.v21 = v21;
+            this.v22 = v22;
+        }
         public static SMatrix3x3 Zeros(int colsize, int rowsize)
         {
             return new SMatrix3x3();
