@@ -193,6 +193,13 @@
     <Compile Include="HTLib2.Bioinfo\External.Tinker\src\i_urypot.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\src\i_usage.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\src\i_virial.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.CalcEnergy.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.CalcEnergy.echarge.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.CalcEnergy.echarge1.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.CalcEnergy.echarge2.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.CalcEnergy.elj.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.CalcEnergy.elj1.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.CalcEnergy.elj2.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.SockInSolv.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.Static.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.Merge.cs" />
