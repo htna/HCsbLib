@@ -58,6 +58,23 @@ namespace HTLib2
             this.data = ldata.ToArray();
         }
 
+        public T this[int i]
+        {
+            get
+            {
+                HDebug.Assert(0 <= i && i < SizeLong);
+                long idx = i / MaxBlockCapacity;
+                long off = i % MaxBlockCapacity;
+                return data[idx][off];
+            }
+            set
+            {
+                HDebug.Assert(0 <= i && i < SizeLong);
+                long idx = i / MaxBlockCapacity;
+                long off = i % MaxBlockCapacity;
+                data[idx][off] = value;
+            }
+        }
         public T this[long i]
         {
             get

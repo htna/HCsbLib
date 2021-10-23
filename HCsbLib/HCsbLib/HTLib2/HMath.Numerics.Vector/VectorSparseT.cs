@@ -26,6 +26,22 @@ namespace HTLib2
             return msg;
         }
 
+        public T this[int i]
+        {
+            get
+            {
+                HDebug.Assert(0<=i, i<Size);
+                if(data.ContainsKey(i)) return data[i];
+                if(GetDefault != null) return GetDefault();
+                return default(T);
+            }
+            set
+            {
+                HDebug.Assert(0<=i, i<Size);
+                if(data.ContainsKey(i)) { data[i] = value; return; }
+                data.Add(i, value);
+            }
+        }
         public T this[long i]
         {
             get

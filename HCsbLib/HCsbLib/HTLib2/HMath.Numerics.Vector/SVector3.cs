@@ -14,6 +14,25 @@ namespace HTLib2
         // IVector<double>
         public long SizeLong { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return 3; } }
         public int   Size    { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return 3; } }
+        public double this[int i]
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                if     (i==0) return v0;
+                else if(i==1) return v1;
+                else if(i==2) return v2;
+                throw new IndexOutOfRangeException();
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                if     (i==0) { v0=value; return; }
+                else if(i==1) { v1=value; return; }
+                else if(i==2) { v2=value; return; }
+                throw new IndexOutOfRangeException();
+            }
+        }
         public double this[long i]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]

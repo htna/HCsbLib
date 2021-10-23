@@ -11,6 +11,7 @@ namespace HTLib2
     {
         long SizeLong { get; }
         int Size { get; }
+        T this[int i] { get; set; }
         T this[long i] { get; set; }
         T[] ToArray();
     }

@@ -87,6 +87,19 @@ namespace HTLib2
                 return _data.Length;
             }
         }
+        public double this[int i]
+        {
+            get
+            {
+                HDebug.Assert(i >= 0 && i < Size);
+                return _data[i];
+            }
+            set
+            {
+                HDebug.Assert(i >= 0 && i < Size);
+                _data[i] = value;
+            }
+        }
         public double this[long i]
         {
             get
