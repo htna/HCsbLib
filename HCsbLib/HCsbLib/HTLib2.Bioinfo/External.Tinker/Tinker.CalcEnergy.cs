@@ -7,5 +7,8 @@ namespace HTLib2.Bioinfo
 {
     public partial class Tinker
     {
+        public partial class CalcEnergy
+        {
+        }
     }
 }
