@@ -66,8 +66,8 @@ namespace HTLib2.Bioinfo
                                                                 /// c
                                                                 /// c     get chain rule terms for van der Waals Hessian elements
                                                                 /// c
-                    de = de / rik            ;                   //                    de = de / rik
-                    d2e = (d2e-de) / rik2    ;                   //                    d2e = (d2e-de) / rik2
+                   de = de / rik            ;                   //                    de = de / rik
+                   d2e = (d2e-de) / rik2    ;                   //                    d2e = (d2e-de) / rik2
             double d2edx = d2e * xr         ;                   //                    d2edx = d2e * xr
             double d2edy = d2e * yr         ;                   //                    d2edy = d2e * yr
             double d2edz = d2e * zr         ;                   //                    d2edz = d2e * zr
