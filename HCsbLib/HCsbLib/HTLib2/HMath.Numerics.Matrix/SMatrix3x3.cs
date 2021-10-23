@@ -98,7 +98,7 @@ namespace HTLib2
             this.v21 = v21;
             this.v22 = v22;
         }
-        public static SMatrix3x3 Zeros(int colsize, int rowsize)
+        public static SMatrix3x3 Zeros()
         {
             return new SMatrix3x3();
         }
