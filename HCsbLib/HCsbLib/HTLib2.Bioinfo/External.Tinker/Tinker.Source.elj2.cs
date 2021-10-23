@@ -12,6 +12,7 @@ namespace HTLib2.Bioinfo
             , double[] coordj, Tinker.Prm.Vdw vdwj
             )
         {
+            throw new NotImplementedException();
                                                                 /// c
                                                                 /// c     compute the Hessian elements for this interaction
                                                                 /// c
