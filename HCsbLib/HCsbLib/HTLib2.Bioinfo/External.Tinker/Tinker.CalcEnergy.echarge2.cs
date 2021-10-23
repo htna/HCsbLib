@@ -205,7 +205,7 @@ namespace HTLib2.Bioinfo
                                                                 /// c     for periodic boundary conditions with large cutoffs
                                                                 /// c     neighbors must be found by the replicates method
                                                                 /// c
-                                                                //        if (.not. use_replica)  return
+            //////////////////////////////////////////////////////        if (.not. use_replica)  return
                                                                 /// c
                                                                 /// c     calculate interaction energy with other unit cells
                                                                 /// c
