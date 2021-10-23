@@ -43,6 +43,7 @@ namespace HTLib2.Bioinfo
             , double[] coordj, Tinker.Prm.Charge chgj
             )
         {
+            throw new NotImplementedException();
                                                     /// unit.i
             const double coulomb = 332.063714;      //        parameter (coulomb=332.063714d0)
                                                     /// initprm.f
