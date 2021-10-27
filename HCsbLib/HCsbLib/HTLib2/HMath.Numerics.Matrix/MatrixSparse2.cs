@@ -14,7 +14,7 @@ namespace HTLib2
             return MatrixSparse2.FromMatrix(mat);
         }
     }
-    public class MatrixSparse2 : IMatrix<double>, IBinarySerializable
+    public class MatrixSparse2 : IMatrix<double>, IMatrixSparse<double>, IBinarySerializable
     {
         int _colsize;
         int _rowsize;
@@ -41,6 +41,14 @@ namespace HTLib2
             return arr;
         }
         // IMatrix<double>
+        ///////////////////////////////////////////////////
+        // IEnumerable<ValueTuple<int, int, T>> EnumElements();
+        public IEnumerable<ValueTuple<int, int, double>> EnumElements()
+        {
+            foreach(var c_r_val in EnumNonZeros())
+                yield return c_r_val;
+        }
+        // IEnumerable<ValueTuple<int, int, T>> EnumElements();
         ///////////////////////////////////////////////////
         // IBinarySerializable
         public void BinarySerialize(HBinaryWriter writer)

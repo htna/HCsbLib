@@ -32,6 +32,14 @@ namespace HTLib2
         }
         // IMatrix<double>
         ///////////////////////////////////////////////////
+        // IEnumerable<ValueTuple<int, int, T>> EnumElements();
+        public IEnumerable<ValueTuple<int, int, double>> EnumElements()
+        {
+            foreach(var c_r_val in EnumNonZeros())
+                yield return c_r_val;
+        }
+        // IEnumerable<ValueTuple<int, int, T>> EnumElements();
+        ///////////////////////////////////////////////////
         // IBinarySerializable
         public void BinarySerialize(HBinaryWriter writer)
         {
