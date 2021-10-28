@@ -217,7 +217,7 @@ namespace HTLib2.Bioinfo
                             if(double.IsNaN             (va) && double.IsNaN             (vb)) return true;
                             if(double.IsPositiveInfinity(va) && double.IsPositiveInfinity(vb)) return true;
                             if(double.IsNegativeInfinity(va) && double.IsNegativeInfinity(vb)) return true;
-                            if(a == b                                                        ) return true;
+                            if(va == vb                                                      ) return true;
                             return false;
                         }
                         if(Equal(info1.enrg, info2.enrg) == false)
