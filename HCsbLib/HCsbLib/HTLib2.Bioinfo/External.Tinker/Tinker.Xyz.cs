@@ -442,7 +442,8 @@ namespace HTLib2.Bioinfo
             }
             public static Xyz FromAtoms(IList<Xyz.Atom> atoms)
             {
-                Header header = Header.FromData(atoms.Count);
+                Atom.Format format = atoms.First().format;
+                Header header = Header.FromData(format, atoms.Count);
 
                 List<string> lines = new List<string>(atoms.Count+1);
 
@@ -450,7 +451,7 @@ namespace HTLib2.Bioinfo
                 foreach(var atom in atoms)
                     lines.Add(atom.line);
 
-                return FromLines(lines);
+                return FromLines(format, lines);
             }
             public static Xyz FromLines(IList<string> lines)
             {
