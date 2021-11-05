@@ -142,10 +142,15 @@ namespace HTLib2
         public override string ToString()
 		{
             //return "no display...";
-            StringBuilder str = new StringBuilder();
-			str.Append("Matrix ["+ColSize+","+RowSize+"] ");
-            str.Append(HToString("0.00000", null, "{{", "}}", ", ", "}, {", 100));
-            return str.ToString();
+            StringBuilder sb = new StringBuilder();
+			sb.Append("Matrix ["+ColSize+","+RowSize+"] ");
+            sb.Append(sb);
+            //str.Append(HToString("0.00000", null, "{{", "}}", ", ", "}, {", 100));
+            MatrixStatic.HToString
+                ( this, sb
+                , "0.00000", null, "{{", "}}", ", ", "}, {", 100
+                );
+            return sb.ToString();
 		}
 		//public string ToString(string format)
 		//{
@@ -159,35 +164,29 @@ namespace HTLib2
 		//{
         //    return ToString(format, null, "{{", "}}", coldelim, rowdelim);
 		//}
-		public string HToString( string format = "0.00000"
-                               , IFormatProvider formatProvider = null
-                               , string begindelim = "{{"
-                               , string enddelim   = "}}"
-                               , string rowdelim   = ", "
-                               , string coldelim   = "}, {"
-                               , int? maxcount     = null
-                               )
+		public string HToString
+            ( string format = "0.00000"
+            , IFormatProvider formatProvider = null
+            , string begindelim = "{{"
+            , string enddelim   = "}}"
+            , string rowdelim   = ", "
+            , string coldelim   = "}, {"
+            , int? maxcount     = null
+            )
 		{
-			StringBuilder str = new StringBuilder();
-			str.Append(begindelim);
-
-            int count = 0;
-
-			for(int c = 0; c < ColSize; c++) {
-				if(c != 0) str.Append(coldelim);
-
-				for(int r = 0; r < RowSize; r++) {
-					if(r != 0) str.Append(rowdelim);
-					// str += this[c, r].ToString(format, formatProvider);
-                    if(maxcount != null && count > maxcount.Value)
-                        break;
-					str.Append(this[c, r].ToString(format));
-                    count++;
-				}
-			}
-
-			str.Append(enddelim);
-			return str.ToString();
+			StringBuilder sb = new StringBuilder();
+            MatrixStatic.HToString
+            ( this
+            , sb
+            , format
+            , formatProvider
+            , begindelim
+            , enddelim
+            , rowdelim
+            , coldelim
+            , maxcount
+            );
+            return sb.ToString();
 		}
     }
 }

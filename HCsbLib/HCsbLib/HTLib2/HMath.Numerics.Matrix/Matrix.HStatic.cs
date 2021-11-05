@@ -188,8 +188,9 @@ namespace HTLib2
             return true;
         }
 
-		public static string HToString
+		public static void HToString
             ( this IMatrix<double> mat
+            , StringBuilder sb
             , string format = "0.00000"
             , IFormatProvider formatProvider = null
             , string begindelim = "{{"
@@ -199,26 +200,24 @@ namespace HTLib2
             , int? maxcount     = null
             )
 		{
-			StringBuilder str = new StringBuilder();
-			str.Append(begindelim);
+			sb.Append(begindelim);
 
             int count = 0;
 
 			for(int c = 0; c < mat.ColSize; c++) {
-				if(c != 0) str.Append(coldelim);
+				if(c != 0) sb.Append(coldelim);
 
 				for(int r = 0; r < mat.RowSize; r++) {
-					if(r != 0) str.Append(rowdelim);
+					if(r != 0) sb.Append(rowdelim);
 					// str += this[c, r].ToString(format, formatProvider);
                     if(maxcount != null && count > maxcount.Value)
                         break;
-					str.Append(mat[c, r].ToString(format));
+					sb.Append(mat[c, r].ToString(format));
                     count++;
 				}
 			}
 
-			str.Append(enddelim);
-			return str.ToString();
+			sb.Append(enddelim);
 		}
     }
 }

@@ -141,5 +141,18 @@ namespace HTLib2
             , v02, v12, v22
             );
         }
+        public override string ToString()
+        {
+            //return "no display...";
+            StringBuilder sb = new StringBuilder();
+			sb.Append("Matrix ["+ColSize+","+RowSize+"] ");
+            sb.Append(sb);
+            //str.Append(HToString("0.00000", null, "{{", "}}", ", ", "}, {", 100));
+            MatrixStatic.HToString
+                ( this, sb
+                , "0.00000", null, "{{", "}}", ", ", "}, {", 100
+                );
+            return sb.ToString();
+        }
     }
 }
