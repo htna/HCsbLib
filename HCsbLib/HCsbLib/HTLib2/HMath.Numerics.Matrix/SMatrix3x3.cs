@@ -133,5 +133,13 @@ namespace HTLib2
             v10 += add.v10;    v11 += add.v11;    v12 += add.v12;
             v20 += add.v20;    v21 += add.v21;    v22 += add.v22;
         }
+        public SMatrix3x3 Tr()
+        {
+            return new SMatrix3x3
+            ( v00, v10, v20
+            , v01, v11, v21
+            , v02, v12, v22
+            );
+        }
     }
 }
