@@ -43,6 +43,7 @@ namespace HTLib2.Bioinfo
         public abstract void SetBlockLock(int bc, int br, MatrixByArr bval);
         public abstract bool HasBlock(int bc, int br);
         public abstract bool HasBlockLock(int bc, int br);
+
         // foreach(Tuple<int, int, MatrixByArr> bc_br_bval in hess.EnumBlocks())
         public abstract IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocks();
         public abstract IEnumerable<ValueTuple<int, int, MatrixByArr>> EnumBlocksInCols(int[] lstBlkCol);
@@ -83,6 +84,33 @@ namespace HTLib2.Bioinfo
                 Tuple<int, int, MatrixByArr>[] rowblk = ibc_listBlock[ibc].HSelectByIndex(idxsrt);
                 yield return new Tuple<int, Tuple<int, int, MatrixByArr>[]>(ibc, rowblk);
             }
+        }
+
+        public static bool Equals(IHessMatrix hessa, IHessMatrix hessb, double threshold=0)
+        {
+            foreach((int bc, int br, MatrixByArr bvala) in hessa.EnumBlocks())
+            {
+                var bvalb = hessb.GetBlock(bc, br);
+                if(bvalb == null)
+                    return false;
+                double maxabsdiff = (bvala,bvalb).HAbsMaxDiffWith();
+                if(maxabsdiff > threshold)
+                    return false;
+            }
+            foreach((int bc, int br, MatrixByArr bvalb) in hessb.EnumBlocks())
+            {
+                var bvala = hessa.GetBlock(bc, br);
+                if(bvala == null)
+                    return false;
+                double maxabsdiff = (bvala,bvalb).HAbsMaxDiffWith();
+                if(maxabsdiff > threshold)
+                    return false;
+            }
+            return true;
+        }
+        public bool EqualsIHessMatrix(IHessMatrix other, double threshold=0)
+        {
+            return Equals(this, other, threshold);
         }
     }
 }
