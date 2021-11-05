@@ -102,7 +102,7 @@ namespace HTLib2
         {
             return new SMatrix3x3();
         }
-        public static bool EqualContents(SMatrix3x3 a, SMatrix3x3 b)
+        public static bool Equals(SMatrix3x3 a, SMatrix3x3 b)
         {
             if(a.v00 != b.v00) return false;
             if(a.v01 != b.v01) return false;
@@ -114,6 +114,24 @@ namespace HTLib2
             if(a.v21 != b.v21) return false;
             if(a.v22 != b.v22) return false;
             return true;
+        }
+        public void UpdateByMul(double mul)
+        {
+            v00 *= mul;    v01 *= mul;    v02 *= mul;
+            v10 *= mul;    v11 *= mul;    v12 *= mul;
+            v20 *= mul;    v21 *= mul;    v22 *= mul;
+        }
+        public void UpdateByAdd(double add)
+        {
+            v00 += add;    v01 += add;    v02 += add;
+            v10 += add;    v11 += add;    v12 += add;
+            v20 += add;    v21 += add;    v22 += add;
+        }
+        public void UpdateByAdd(SMatrix3x3 add)
+        {
+            v00 += add.v00;    v01 += add.v01;    v02 += add.v02;
+            v10 += add.v10;    v11 += add.v11;    v12 += add.v12;
+            v20 += add.v20;    v21 += add.v21;    v22 += add.v22;
         }
     }
 }
