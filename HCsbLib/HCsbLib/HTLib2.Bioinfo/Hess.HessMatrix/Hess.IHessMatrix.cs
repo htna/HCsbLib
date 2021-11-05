@@ -92,7 +92,7 @@ namespace HTLib2.Bioinfo
             {
                 var bvalb = hessb.GetBlock(bc, br);
                 if(bvalb == null)
-                    return false;
+                    bvalb = new double[3,3];
                 double maxabsdiff = (bvala,bvalb).HAbsMaxDiffWith();
                 if(maxabsdiff > threshold)
                     return false;
@@ -101,7 +101,7 @@ namespace HTLib2.Bioinfo
             {
                 var bvala = hessa.GetBlock(bc, br);
                 if(bvala == null)
-                    return false;
+                    bvala = new double[3,3];
                 double maxabsdiff = (bvala,bvalb).HAbsMaxDiffWith();
                 if(maxabsdiff > threshold)
                     return false;
