@@ -331,21 +331,12 @@ namespace HTLib2
                                , string delim       = ", "
                                )
         {
-            StringBuilder str = new StringBuilder();
-            str.Append(begindelim);
-
-            int tsize = Math.Min(Size, 100);
-
-            for(int i=0; i<tsize; i++)
-            {
-                if(i != 0) str.Append(delim);
-                str.Append(this[i].ToString(format));
-            }
-            if(tsize != Size)
-                str.Append(", ...");
-
-            str.Append(enddelim);
-            return str.ToString();
+            StringBuilder sb = new StringBuilder();
+            HStatic.HToString
+                ( this, sb
+                , format, formatProvider, begindelim, enddelim, delim
+                );
+            return sb.ToString();
         }
 
         ////////////////////////////////////////////////////////////////////////////////////
