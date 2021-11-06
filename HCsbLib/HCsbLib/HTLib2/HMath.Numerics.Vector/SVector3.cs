@@ -80,7 +80,7 @@ namespace HTLib2
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("Vector ["+Size+"] ");
+            sb.Append("SVector3 ["+Size+"] ");
             HStatic.HToString(this, sb, "0.00000", null, "{", "}", ", ");
             return sb.ToString();
         }
