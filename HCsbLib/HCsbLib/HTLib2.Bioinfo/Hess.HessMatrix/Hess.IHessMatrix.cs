@@ -86,31 +86,36 @@ namespace HTLib2.Bioinfo
             }
         }
 
-        public static bool Equals(IHessMatrix hessa, IHessMatrix hessb, double threshold=0)
+        public static double HAbsMaxDiff(IHessMatrix hessa, IHessMatrix hessb)
         {
+            double maxabs = -1;
             foreach((int bc, int br, MatrixByArr bvala) in hessa.EnumBlocks())
             {
                 var bvalb = hessb.GetBlock(bc, br);
-                double maxabsdiff;
-                if(bvalb == null)   maxabsdiff = bvala.HAbsMax();
-                else                maxabsdiff = (bvala,bvalb).HAbsMaxDiffWith();
-                if(maxabsdiff > threshold)
-                    return false;
+                double lmaxabs;
+                if(bvalb == null)         lmaxabs =  bvala.HAbsMax();
+                else                      lmaxabs = (bvala,bvalb).HAbsMaxDiffWith();
+                maxabs = Math.Max(maxabs, lmaxabs);
             }
             foreach((int bc, int br, MatrixByArr bvalb) in hessb.EnumBlocks())
             {
                 var bvala = hessa.GetBlock(bc, br);
-                double maxabsdiff;
-                if(bvala == null)   maxabsdiff = bvalb.HAbsMax();
-                else                maxabsdiff = (bvala,bvalb).HAbsMaxDiffWith();
-                if(maxabsdiff > threshold)
-                    return false;
+                double lmaxabs;
+                if(bvala == null)         lmaxabs =  bvalb.HAbsMax();
+                else                      lmaxabs = (bvalb,bvala).HAbsMaxDiffWith();
+                maxabs = Math.Max(maxabs, lmaxabs);
             }
-            return true;
+            return maxabs;
+        }
+        public static bool Equals(IHessMatrix hessa, IHessMatrix hessb, double threshold=0)
+        {
+            bool   equal = (HAbsMaxDiff(hessa,hessb) < threshold);
+            return equal;
         }
         public bool EqualsIHessMatrix(IHessMatrix other, double threshold=0)
         {
-            return Equals(this, other, threshold);
+            bool   equal = (HAbsMaxDiff(this,other) < threshold);
+            return equal;
         }
     }
 }
