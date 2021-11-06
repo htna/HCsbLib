@@ -15,5 +15,29 @@ namespace HTLib2
                 result[i] = vectors[i].Clone();
             return result;
         }
+        public static void HToString
+            ( this IVector<double> vec
+            , StringBuilder sb
+            , string format="0.00000"
+            , IFormatProvider formatProvider=null
+            , string begindelim  = "{"
+            , string enddelim    = "}"
+            , string delim       = ", "
+            )
+        {
+            sb.Append(begindelim);
+
+            int tsize = Math.Min(vec.Size, 100);
+
+            for(int i=0; i<tsize; i++)
+            {
+                if(i != 0) sb.Append(delim);
+                sb.Append(vec[i].ToString(format));
+            }
+            if(tsize != vec.Size)
+                sb.Append(", ...");
+
+            sb.Append(enddelim);
+        }
     }
 }
