@@ -119,7 +119,7 @@ namespace HTLib2
         {
             //return "no display...";
             StringBuilder sb = new StringBuilder();
-			sb.Append("Matrix ["+ColSize+","+RowSize+"] ");
+			sb.Append("SMatrix3x3 ["+ColSize+","+RowSize+"] ");
             sb.Append(sb);
             //str.Append(HToString("0.00000", null, "{{", "}}", ", ", "}, {", 100));
             MatrixStatic.HToString
