@@ -115,6 +115,19 @@ namespace HTLib2
             if(a.v22 != b.v22) return false;
             return true;
         }
+        public override string ToString()
+        {
+            //return "no display...";
+            StringBuilder sb = new StringBuilder();
+			sb.Append("Matrix ["+ColSize+","+RowSize+"] ");
+            sb.Append(sb);
+            //str.Append(HToString("0.00000", null, "{{", "}}", ", ", "}, {", 100));
+            MatrixStatic.HToString
+                ( this, sb
+                , "0.00000", null, "{{", "}}", ", ", "}, {", 100
+                );
+            return sb.ToString();
+        }
         public void UpdateByMul(double mul)
         {
             v00 *= mul;    v01 *= mul;    v02 *= mul;
@@ -140,19 +153,6 @@ namespace HTLib2
             , v01, v11, v21
             , v02, v12, v22
             );
-        }
-        public override string ToString()
-        {
-            //return "no display...";
-            StringBuilder sb = new StringBuilder();
-			sb.Append("Matrix ["+ColSize+","+RowSize+"] ");
-            sb.Append(sb);
-            //str.Append(HToString("0.00000", null, "{{", "}}", ", ", "}, {", 100));
-            MatrixStatic.HToString
-                ( this, sb
-                , "0.00000", null, "{{", "}}", ", ", "}, {", 100
-                );
-            return sb.ToString();
         }
     }
 }
