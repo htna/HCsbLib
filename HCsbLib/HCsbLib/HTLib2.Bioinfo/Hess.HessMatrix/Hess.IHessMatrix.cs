@@ -91,18 +91,18 @@ namespace HTLib2.Bioinfo
             foreach((int bc, int br, MatrixByArr bvala) in hessa.EnumBlocks())
             {
                 var bvalb = hessb.GetBlock(bc, br);
-                if(bvalb == null)
-                    bvalb = new double[3,3];
-                double maxabsdiff = (bvala,bvalb).HAbsMaxDiffWith();
+                double maxabsdiff;
+                if(bvalb == null)   maxabsdiff = bvala.HAbsMax();
+                else                maxabsdiff = (bvala,bvalb).HAbsMaxDiffWith();
                 if(maxabsdiff > threshold)
                     return false;
             }
             foreach((int bc, int br, MatrixByArr bvalb) in hessb.EnumBlocks())
             {
                 var bvala = hessa.GetBlock(bc, br);
-                if(bvala == null)
-                    bvala = new double[3,3];
-                double maxabsdiff = (bvala,bvalb).HAbsMaxDiffWith();
+                double maxabsdiff;
+                if(bvala == null)   maxabsdiff = bvalb.HAbsMax();
+                else                maxabsdiff = (bvala,bvalb).HAbsMaxDiffWith();
                 if(maxabsdiff > threshold)
                     return false;
             }
