@@ -77,5 +77,30 @@ namespace HTLib2
             if(a.v2 != b.v2) return false;
             return true;
         }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Vector ["+Size+"] ");
+            HStatic.HToString(this, sb, "0.00000", null, "{", "}", ", ");
+            return sb.ToString();
+        }
+        public void UpdateByMul(double mul)
+        {
+            v0 *= mul;
+            v1 *= mul;
+            v2 *= mul;
+        }
+        public void UpdateByAdd(double add)
+        {
+            v0 += add;
+            v1 += add;
+            v2 += add;
+        }
+        public void UpdateByAdd(SVector3 add)
+        {
+            v0 += add.v0;
+            v1 += add.v1;
+            v2 += add.v2;
+        }
     }
 }
