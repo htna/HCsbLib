@@ -138,6 +138,19 @@ namespace HTLib2.Bioinfo
                     return _Inter01234;
                 }
             }
+                   HashSet<Atom> _Inter13 = null;
+            public HashSet<Atom>  Inter13
+            {
+                get
+                {
+                    if(_Inter13 == null)
+                    {
+                        _Inter13 = Enumerable.Except(Inter123, Inter12).HToHashSet();
+                        _Inter13.Add(this);
+                    }
+                    return _Inter13;
+                }
+            }
             public List<Atom>[] ListInterAtom12()   { return ListInterAtomN(2); }
             public List<Atom>[] ListInterAtom123()  { return ListInterAtomN(3); }
             public List<Atom>[] ListInterAtom1234() { return ListInterAtomN(4); }

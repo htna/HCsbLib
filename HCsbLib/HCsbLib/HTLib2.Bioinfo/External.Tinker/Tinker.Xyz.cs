@@ -94,6 +94,21 @@ namespace HTLib2.Bioinfo
             foreach(var atom in atoms)
                 yield return atom.GetPrmVdw(prm_id2atom, prm_cls2vdw);
         }
+        public static IEnumerable<Tinker.Prm.Vdw14> HEnumPrmVdw14(this IEnumerable<Tinker.Xyz.Atom> atoms, Tinker.Prm prm)
+        {
+            Dictionary<int,Tinker.Prm.Atom > prm_id2atom   = prm.atoms .ToIdDictionary();
+            Dictionary<int,Tinker.Prm.Vdw14> prm_cls2vdw14 = prm.vdw14s.ToClassDictionary();
+            return HEnumPrmVdw14(atoms, prm_id2atom, prm_cls2vdw14);
+        }
+        public static IEnumerable<Tinker.Prm.Vdw14> HEnumPrmVdw14
+            ( this IEnumerable<Tinker.Xyz.Atom> atoms
+            , Dictionary<int,Tinker.Prm.Atom > prm_id2atom
+            , Dictionary<int,Tinker.Prm.Vdw14> prm_cls2vdw14
+            )
+        {
+            foreach(var atom in atoms)
+                yield return atom.GetPrmVdw14(prm_id2atom, prm_cls2vdw14);
+        }
 
         public static IEnumerable<Tinker.Prm.Charge> HEnumPrmCharge(this IEnumerable<Tinker.Xyz.Atom> atoms, Tinker.Prm prm)
         {
@@ -1109,9 +1124,26 @@ namespace HTLib2.Bioinfo
                     , Dictionary<int, Prm.Vdw > prm_cls2vdw
                     )
                 {
-                    Prm.Atom   prm_atom = prm_id2atom  [this.AtomId];
+                    Prm.Atom   prm_atom = prm_id2atom[this.AtomId];
                     Prm.Vdw    prm_vdw  = prm_cls2vdw[prm_atom.Class];
                     return prm_vdw;
+                }
+                public Prm.Vdw14 GetPrmVdw14(Prm prm)
+                {
+                    Dictionary<int,Prm.Atom > prm_id2atom = prm.atoms .ToIdDictionary();
+                    Dictionary<int,Prm.Vdw14> prm_cls2vdw = prm.vdw14s.ToClassDictionary();
+                    return GetPrmVdw14(prm_id2atom, prm_cls2vdw);
+                }
+                public Prm.Vdw14 GetPrmVdw14
+                    ( Dictionary<int, Prm.Atom > prm_id2atom
+                    , Dictionary<int, Prm.Vdw14> prm_cls2vdw
+                    )
+                {
+                    Prm.Atom   prm_atom  = prm_id2atom[this.AtomId];
+                    if(prm_cls2vdw.ContainsKey(prm_atom.Class) == false)
+                        return null;
+                    Prm.Vdw14  prm_vdw14 = prm_cls2vdw[prm_atom.Class];
+                    return prm_vdw14;
                 }
             }
         }
