@@ -236,7 +236,7 @@ namespace HCsbLibExplsolv
 
             //////////////////////////////////////////////////////////////////////
             // Hess/Force info class
-            HessForc.Coarse.HessForcInfo hessforcinfo_prot_solv = new HessForc.Coarse.HessForcInfo
+            HessForc.HessForcInfo hessforcinfo_prot_solv = new HessForc.HessForcInfo
             {
                 atoms  = xyz.atoms,
                 mass   = null,
@@ -247,7 +247,7 @@ namespace HCsbLibExplsolv
 
             //////////////////////////////////////////////////////////////////////
             // coarse-graining Hess/Force
-            HessForc.Coarse.HessForcInfo hessforcinfo_prot_exsolv;
+            HessForc.HessForcInfo hessforcinfo_prot_exsolv;
             hessforcinfo_prot_exsolv = HessForc.Coarse.GetCoarseHessForc
             (hessforcinfo_prot_solv
             , coords: hessforcinfo_prot_solv.coords
