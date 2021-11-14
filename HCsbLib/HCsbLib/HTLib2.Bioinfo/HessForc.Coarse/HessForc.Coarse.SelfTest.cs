@@ -37,7 +37,7 @@ namespace HTLib2.Bioinfo
                     var testgrad = Tinker.Run.Testgrad(tinkerpath_testgrad, xyz, prm, temppath);
                     var hessinfo = Hess.HessInfo.FromTinker(xyz, prm, testhess.hess);
 
-                    var hessforcinfo = HessForc.Coarse.HessForcInfo.From(hessinfo);
+                    var hessforcinfo = HessForc.HessForcInfo.From(hessinfo);
                         hessforcinfo.forc = testgrad.anlyts.GetForces(xyz.atoms);
                     var coarseinfo_debug = HessForc.Coarse.GetCoarseHessForc
                     ( hessforcinfo
