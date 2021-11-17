@@ -170,6 +170,8 @@ namespace HTLib2.Bioinfo
         if(ver >= 2) reader.Read(out enrg  ); else enrg = null;
                 }
             }
+            // IBinarySerializable
+            ///////////////////////////////////////////////////
 
             public bool Equals(HessForcInfo other)
             {
