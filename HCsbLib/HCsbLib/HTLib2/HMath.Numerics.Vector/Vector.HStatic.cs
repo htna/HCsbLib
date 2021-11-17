@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
     public static partial class HStatic
     {
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Dist(this (Vector, Vector) pt1_pt2)
         {
             return Math.Sqrt(Dist2(pt1_pt2));
         }
 
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Dist2(this (Vector, Vector) pt1_pt2)
         {
             Vector pt1 = pt1_pt2.Item1;
@@ -31,6 +32,33 @@ namespace HTLib2
             }
 
             return dist2;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void UpdateAdd(this IVector<double> _this, IVector<double> other, double other_mul)
+        {
+            HDebug.Exception(_this.Size == other.Size);
+            if(other_mul == 1)
+            {
+                for(int i=0; i<_this.Size; i++)
+                    _this[i] += other[i];
+            }
+            else if(other_mul == -1)
+            {
+                for(int i=0; i<_this.Size; i++)
+                    _this[i] -= other[i];
+            }
+            else
+            {
+                for(int i=0; i<_this.Size; i++)
+                    _this[i] += (other[i] * other_mul);
+            }
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void UpdateMul(this IVector<double> _this, double other)
+        {
+            for(int i=0; i<_this.Size; i++)
+                _this[i] *= other;
         }
 
         public static double[] HToArrayOfIndex(this IList<Vector> vecs, int idx)
