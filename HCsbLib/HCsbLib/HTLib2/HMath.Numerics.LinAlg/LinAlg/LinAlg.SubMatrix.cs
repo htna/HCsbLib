@@ -34,7 +34,7 @@ namespace HTLib2
             SubMatrix(_this, idxcols, idxrows, ref submat);
             return submat;
         }
-        public static void SubMatrix(IMatrix<double> _this, IList<int> idxcols, IList<int> idxrows, ref Matrix submat)
+        public static void SubMatrix(this IMatrix<double> _this, IList<int> idxcols, IList<int> idxrows, ref Matrix submat)
         {
             if((submat == null) || (submat.ColSize != idxcols.Count) || (submat.ColSize != idxcols.Count))
                 submat = Matrix.Zeros(idxcols.Count, idxrows.Count);
