@@ -101,6 +101,16 @@ namespace HTLib2
             }
             return select;
         }
+        public static T[][] HSelectByIndex<T>(this IList<T[]> arr2d, IList<int> idx1, IList<int> idx2)
+        {
+            List<T[]> select = new List<T[]>(idx1.Count);
+            for(int i1=0; i1<idx1.Count; i1++)
+            {
+                T[] select_i1 = arr2d[idx1[i1]].HSelectByIndex(idx2);
+                select.Add(select_i1);
+            }
+            return select.ToArray();
+        }
 
         public static Tuple<T        > HSelectByIndex<T>(this IList<T> list, Tuple<int                > idx) { return new Tuple<T        >(list[idx.Item1]                                                                    ); }
         public static Tuple<T,T      > HSelectByIndex<T>(this IList<T> list, Tuple<int,int            > idx) { return new Tuple<T,T      >(list[idx.Item1], list[idx.Item2]                                                   ); }
