@@ -224,20 +224,21 @@ namespace HTLib2.Bioinfo
                         return false;
                 }
                 //public Vector[]     forc   
+                double threshold = 0;
                 if(info1.forc.Length != info2.forc.Length)
                     return false;
                 for(int i=0; i<info1.forc.Length; i++)
                 {
                     Vector coord_comp = info1.forc[i] as Vector;
                     Vector coord_load = info2.forc[i] as Vector;
-                    if((coord_comp - coord_load).Dist2 != 0)
+                    if((coord_comp - coord_load).Dist2 > threshold)
                         return false;
                 }
                 //public Vector       mass   
                 {
                     if(info1.mass.Size != info2.mass.Size)
                         return false;
-                    if((info1.mass - info2.mass).Dist2 != 0)
+                    if((info1.mass - info2.mass).Dist2 > threshold)
                         return false;
                 }
                 //public HessMatrix   hess   
