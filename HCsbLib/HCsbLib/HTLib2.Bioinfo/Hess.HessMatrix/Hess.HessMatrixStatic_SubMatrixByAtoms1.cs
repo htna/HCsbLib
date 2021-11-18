@@ -218,6 +218,7 @@ namespace HTLib2.Bioinfo
             if(left.ColSize != right.ColSize) return false;
             if(left.RowSize != right.RowSize) return false;
 
+            double threshold = 0;
             foreach(var bc_br_bval in left.EnumBlocks())
             {
                 int bc  = bc_br_bval.Item1;
@@ -225,7 +226,8 @@ namespace HTLib2.Bioinfo
                 var bv  = bc_br_bval.Item3;
                 var bv0 = right.GetBlock(bc, br);
                 if(bv0 == null) return false;
-                if((bv - bv0).HAbsMax() != 0) return false;
+                double absmax = (bv - bv0).HAbsMax();
+                if(absmax > threshold) return false;
             }
 
             foreach(var bc_br_bval in right.EnumBlocks())
@@ -235,7 +237,8 @@ namespace HTLib2.Bioinfo
                 var bv  = bc_br_bval.Item3;
                 var bv0 = left.GetBlock(bc, br);
                 if(bv0 == null) return false;
-                if((bv - bv0).HAbsMax() != 0) return false;
+                double absmax = (bv - bv0).HAbsMax();
+                if(absmax > threshold) return false;
             }
 
             return true;
