@@ -31,6 +31,13 @@ namespace HTLib2
         public static Matrix SubMatrix(this IMatrix<double> _this, IList<int> idxcols, IList<int> idxrows)
         {
             Matrix submat = Matrix.Zeros(idxcols.Count, idxrows.Count);
+            SubMatrix(_this, idxcols, idxrows, ref submat);
+            return submat;
+        }
+        public static void SubMatrix(IMatrix<double> _this, IList<int> idxcols, IList<int> idxrows, ref Matrix submat)
+        {
+            if((submat == null) || (submat.ColSize != idxcols.Count) || (submat.ColSize != idxcols.Count))
+                submat = Matrix.Zeros(idxcols.Count, idxrows.Count);
             for(int nc=0; nc<idxcols.Count; nc++)
                 for(int nr=0; nr<idxrows.Count; nr++)
                 {
@@ -41,7 +48,6 @@ namespace HTLib2
 
                     submat[nc, nr] = _this[c, r];
                 }
-            return submat;
         }
         public static Matrix[,] SubMatrix(this Matrix _this, IList<IList<int>> idxcolss, IList<IList<int>> idxrowss)
         {
