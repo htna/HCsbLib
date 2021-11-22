@@ -13,10 +13,10 @@ namespace HTLib2.Bioinfo
             return Hess.CorrectHessDiag(_this);
         }
 
-        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, bool ignNegIdx, IList<int>   idxAtoms) { return SubMatrixByAtomsImpl(_this, ignNegIdx, idxAtoms); }
-        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, bool ignNegIdx, params int[] idxAtoms) { return SubMatrixByAtomsImpl(_this, ignNegIdx, idxAtoms); }
+        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, bool ignNegIdx, bool bCloneBlock, IList<int>   idxAtoms) { return SubMatrixByAtomsImpl(_this, ignNegIdx, bCloneBlock, idxAtoms); }
+        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, bool ignNegIdx, bool bCloneBlock, params int[] idxAtoms) { return SubMatrixByAtomsImpl(_this, ignNegIdx, bCloneBlock, idxAtoms); }
         public static bool       SubMatrixByAtomsImpl_selftest = HDebug.IsDebuggerAttached;
-        public static HessMatrix SubMatrixByAtomsImpl(this HessMatrix _this, bool ignNegIdx, IList<int> idxAtoms)
+        public static HessMatrix SubMatrixByAtomsImpl(this HessMatrix _this, bool ignNegIdx, bool bCloneBlock, IList<int> idxAtoms)
         {
             if(SubMatrixByAtomsImpl_selftest)
             {
@@ -28,7 +28,7 @@ namespace HTLib2.Bioinfo
                 };
                 HessMatrix thess0  = Hess.GetHessAnm(tcoords);
                 int[] tidxs = new int[]{0, 2};
-                HessMatrix thess1a = thess0.SubMatrixByAtoms(false, tidxs);
+                HessMatrix thess1a = thess0.SubMatrixByAtoms(false, bCloneBlock, tidxs);
                 HessMatrix thess1b = (new double[,]
                 {
                     { thess0[0,0], thess0[0,1], thess0[0,2],        thess0[0,6], thess0[0,7], thess0[0,8] },
@@ -46,7 +46,7 @@ namespace HTLib2.Bioinfo
                 HDebug.Exception(0 == max_tdiffhess);
             }
 
-            HessMatrix nhess = SubMatrixByAtomsImpl(_this, ignNegIdx, idxAtoms, idxAtoms, true);
+            HessMatrix nhess = SubMatrixByAtomsImpl(_this, ignNegIdx, idxAtoms, idxAtoms, bCloneBlock);
 
             if(HDebug.IsDebuggerAttached && idxAtoms.Count < 1000)
             {

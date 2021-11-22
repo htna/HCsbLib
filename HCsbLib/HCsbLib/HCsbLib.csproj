@@ -750,7 +750,7 @@
     <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixBySparseMatrix.cs" />
     <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixSparseT.cs" />
     <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixByRowVecT.cs" />
-    <Compile Include="HTLib2\HMath.Numerics.Matrix\TMatrix - Copy.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Matrix\MatrixByVectorss.cs" />
     <Compile Include="HTLib2\HMath.Numerics.Matrix\ValueMatrix3x3.cs" />
     <Compile Include="HTLib2\HMath.Numerics.Matrix\TMatrix.cs" />
     <Compile Include="HTLib2\HMath.Numerics.Vector\SVector3.cs" />

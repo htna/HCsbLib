@@ -53,12 +53,14 @@ namespace HTLib2.Bioinfo
         ///////////////////////////////////////////////////////////////////////
         // ReshapeByAtom
         // ReshapeByAtomGroupLeftRight
-        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, IList<int>   idxatms) { return SubMatrixByAtoms(_this, idxatms, true); }
-        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, params int[] idxatms) { return SubMatrixByAtoms(_this, idxatms, true); }
+        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, IList<int>   idxatms) { return SubMatrixByAtoms(_this, idxatms, true, true); }
+        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, params int[] idxatms) { return SubMatrixByAtoms(_this, idxatms, true, true); }
+        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, bool bCloneBlock, IList<int>   idxatms) { return SubMatrixByAtoms(_this, idxatms, bCloneBlock, true); }
+        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, bool bCloneBlock, params int[] idxatms) { return SubMatrixByAtoms(_this, idxatms, bCloneBlock, true); }
         static bool              SubMatrixByAtoms_selftest = HDebug.IsDebuggerAttached;
-        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, IList<int> idxatms, bool ignNegIdx)
+        public static HessMatrix SubMatrixByAtoms(this HessMatrix _this, IList<int> idxatms, bool bCloneBlock, bool ignNegIdx)
         {
-            HessMatrix reshape = SubMatrixByAtoms(_this, ignNegIdx, idxatms);
+            HessMatrix reshape = SubMatrixByAtoms(_this, ignNegIdx, bCloneBlock, idxatms);
 
             if(SubMatrixByAtoms_selftest && idxatms.Count<3000)
             {
