@@ -179,6 +179,7 @@ namespace HTLib2.Bioinfo
             }
             public static bool EqualsHessForcInfo(object obj1, object obj2)
             {
+                double threshold = 0;
                 HessForcInfo info1 = (HessForcInfo)obj1;
                 HessForcInfo info2 = (HessForcInfo)obj2;
                 if(info1 == null && info2 == null)
@@ -224,7 +225,6 @@ namespace HTLib2.Bioinfo
                         return false;
                 }
                 //public Vector[]     forc   
-                double threshold = 0;
                 if(info1.forc.Length != info2.forc.Length)
                     return false;
                 for(int i=0; i<info1.forc.Length; i++)
