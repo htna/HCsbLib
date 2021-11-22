@@ -177,9 +177,8 @@ namespace HTLib2.Bioinfo
             {
                 return EqualsHessForcInfo(this, other);
             }
-            public static bool EqualsHessForcInfo(object obj1, object obj2)
+            public static bool EqualsHessForcInfo(object obj1, object obj2, double threshold=0)
             {
-                double threshold = 0;
                 HessForcInfo info1 = (HessForcInfo)obj1;
                 HessForcInfo info2 = (HessForcInfo)obj2;
                 if(info1 == null && info2 == null)
@@ -206,22 +205,22 @@ namespace HTLib2.Bioinfo
                 {
                     Vector coord_comp = info1.coords[i] as Vector;
                     Vector coord_load = info2.coords[i] as Vector;
-                    if((coord_comp - coord_load).Dist2 != 0)
+                    if((coord_comp,coord_load).HAbsMaxDiffWith() > threshold)
                         return false;
                 }
                 //public double       enrg   
                 {
-                    static bool Equal(double? a, double? b)
+                    static bool Equal(double? a, double? b, double threshold)
                     {
                         if(a == null                     && b == null                    ) return true;
                         double va = a.Value; double vb = b.Value;
                         if(double.IsNaN             (va) && double.IsNaN             (vb)) return true;
                         if(double.IsPositiveInfinity(va) && double.IsPositiveInfinity(vb)) return true;
                         if(double.IsNegativeInfinity(va) && double.IsNegativeInfinity(vb)) return true;
-                        if(va == vb                                                      ) return true;
+                        if(Math.Abs(va - vb) < threshold                                 ) return true;
                         return false;
                     }
-                    if(Equal(info1.enrg, info2.enrg) == false)
+                    if(Equal(info1.enrg, info2.enrg, threshold) == false)
                         return false;
                 }
                 //public Vector[]     forc   
@@ -231,14 +230,14 @@ namespace HTLib2.Bioinfo
                 {
                     Vector coord_comp = info1.forc[i] as Vector;
                     Vector coord_load = info2.forc[i] as Vector;
-                    if((coord_comp - coord_load).Dist2 > threshold)
+                    if((coord_comp, coord_load).HAbsMaxDiffWith() > threshold)
                         return false;
                 }
                 //public Vector       mass   
                 {
                     if(info1.mass.Size != info2.mass.Size)
                         return false;
-                    if((info1.mass - info2.mass).Dist2 > threshold)
+                    if((info1.mass, info2.mass).HAbsMaxDiffWith() > threshold)
                         return false;
                 }
                 //public HessMatrix   hess   
