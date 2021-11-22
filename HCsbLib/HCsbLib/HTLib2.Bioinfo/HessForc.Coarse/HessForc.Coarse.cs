@@ -242,7 +242,7 @@ namespace HTLib2.Bioinfo
                 }
                 //public HessMatrix   hess   
                 {
-                    bool hess_equal = HessMatrixStatic.HessMatrixEqual(info1.hess, info2.hess);
+                    bool hess_equal = HessMatrixStatic.HessMatrixEqual(info1.hess, info2.hess, threshold);
                     if(hess_equal == false)
                         return false;
                 }
