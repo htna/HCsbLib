@@ -212,21 +212,22 @@ namespace HTLib2.Bioinfo
             return nhess;
         }
 
-        public static bool HessMatrixEqual(HessMatrix left, HessMatrix right)
+        public static bool HessMatrixEqual(HessMatrix left, HessMatrix right, double threshold=0)
         {
             if(left == null && right == null) return true;
             if(left.ColSize != right.ColSize) return false;
             if(left.RowSize != right.RowSize) return false;
 
-            double threshold = 0;
+            double[,] zeros = new double[3,3];
+
             foreach(var bc_br_bval in left.EnumBlocks())
             {
                 int bc  = bc_br_bval.Item1;
                 int br  = bc_br_bval.Item2;
                 var bv  = bc_br_bval.Item3;
                 var bv0 = right.GetBlock(bc, br);
-                if(bv0 == null) return false;
-                double absmax = (bv - bv0).HAbsMax();
+                if(bv0 == null) bv0 = zeros;
+                double absmax = (bv, bv0).HAbsMaxDiffWith();
                 if(absmax > threshold) return false;
             }
 
@@ -236,8 +237,8 @@ namespace HTLib2.Bioinfo
                 int br  = bc_br_bval.Item2;
                 var bv  = bc_br_bval.Item3;
                 var bv0 = left.GetBlock(bc, br);
-                if(bv0 == null) return false;
-                double absmax = (bv - bv0).HAbsMax();
+                if(bv0 == null) bv0 = zeros;
+                double absmax = (bv, bv0).HAbsMaxDiffWith();
                 if(absmax > threshold) return false;
             }
 
