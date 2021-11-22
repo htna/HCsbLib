@@ -29,6 +29,21 @@ namespace HTLib2
                     max = Math.Max(max, Math.Abs(values[i, j]));
             return max;
         }
+        public static double MaxAbs(this IVector<double> values)
+        {
+            double max = 0;
+            for(int i = 0; i < values.Size; i++)
+                max = Math.Max(max, Math.Abs(values[i]));
+            return max;
+        }
+        public static double MaxAbs(this IMatrix<double> values)
+        {
+            double max = 0;
+            for(int i = 0; i < values.ColSize; i++)
+                for(int j = 0; j < values.RowSize; j++)
+                    max = Math.Max(max, Math.Abs(values[i, j]));
+            return max;
+        }
         public static double HAbsMaxDiffWith(this IMatrix<double> mat, IMatrix<double> diff)
         {
             HDebug.Assert(mat.ColSize == diff.ColSize);
