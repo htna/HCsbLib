@@ -11,6 +11,8 @@ namespace HTLib2
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static double HAbsMaxDiffWith(this (IMatrix<double>, IMatrix<double>) pair) { return pair.Item1.HAbsMaxDiffWith(pair.Item2); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static double HAbsMaxDiffWith(this (IVector<double>, IVector<double>) pair) { return pair.Item1.HAbsMaxDiffWith(pair.Item2); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static double HAbsMaxSumWith (this (IMatrix<double>, IMatrix<double>) pair) { return pair.Item1.HAbsMaxSumWith (pair.Item2); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static double HAbsMaxSumWith (this (IVector<double>, IVector<double>) pair) { return pair.Item1.HAbsMaxSumWith (pair.Item2); }
 
         public static double MaxAbs(this double[] values)
         {
@@ -44,6 +46,26 @@ namespace HTLib2
             double absmax = -1;
             for(int i=0; i<a.Size; i++)
                 absmax = Math.Max(absmax, Math.Abs(a[i] - b[i]));
+            HDebug.Assert(absmax != -1);
+            return absmax;
+        }
+        public static double HAbsMaxSumWith(this IMatrix<double> mat, IMatrix<double> diff)
+        {
+            HDebug.Assert(mat.ColSize == diff.ColSize);
+            HDebug.Assert(mat.RowSize == diff.RowSize);
+            double absmax = -1;
+            for(int c=0; c<mat.ColSize; c++)
+                for(int r=0; r<mat.RowSize; r++)
+                    absmax = Math.Max(absmax, Math.Abs(mat[c, r] + diff[c, r]));
+            HDebug.Assert(absmax != -1);
+            return absmax;
+        }
+        public static double HAbsMaxSumWith(this IVector<double> a, IVector<double> b)
+        {
+            HDebug.Assert(a.Size == b.Size);
+            double absmax = -1;
+            for(int i=0; i<a.Size; i++)
+                absmax = Math.Max(absmax, Math.Abs(a[i] + b[i]));
             HDebug.Assert(absmax != -1);
             return absmax;
         }
