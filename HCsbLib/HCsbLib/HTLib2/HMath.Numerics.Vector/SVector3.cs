@@ -102,5 +102,59 @@ namespace HTLib2
             v1 += add.v1;
             v2 += add.v2;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static SVector3 operator+(SVector3 l, SVector3 r)
+		{
+			SVector3 result = default;
+            result.v0 = l.v0 + r.v0;
+            result.v1 = l.v1 + r.v1;
+            result.v2 = l.v2 + r.v2;
+			return result;
+		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static SVector3 operator-(SVector3 l, SVector3 r)
+		{
+			SVector3 result = default;
+            result.v0 = l.v0 - r.v0;
+            result.v1 = l.v1 - r.v1;
+            result.v2 = l.v2 - r.v2;
+			return result;
+		}
+  //      [MethodImpl(MethodImplOptions.AggressiveInlining)]
+		//public static SVector3 operator -(SVector3 v)
+		//{
+		//	int length = v.Length;
+		//	SVector3 result = new SVector3(length);
+		//	for(int i=0; i<length; i++)
+		//		result[i] = -1 * v[i];
+		//	return result;
+		//}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static SVector3 operator*(double l, SVector3 r)
+		{
+			SVector3 result = default;
+            result.v0 = l * r.v0;
+            result.v1 = l * r.v1;
+            result.v2 = l * r.v2;
+			return result;
+		}
+		public static SVector3 operator*(SVector3 l, double r)
+		{
+			SVector3 result = default;
+            result.v0 = l.v0 * r;
+            result.v1 = l.v1 * r;
+            result.v2 = l.v2 * r;
+			return result;
+		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static SVector3 operator/(SVector3 l, double r)
+		{
+			SVector3 result = default;
+            result.v0 = l.v0 / r;
+            result.v1 = l.v1 / r;
+            result.v2 = l.v2 / r;
+			return result;
+		}
     }
 }
