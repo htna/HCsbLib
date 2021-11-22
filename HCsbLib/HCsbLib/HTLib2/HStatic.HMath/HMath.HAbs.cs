@@ -49,14 +49,14 @@ namespace HTLib2
             HDebug.Assert(absmax != -1);
             return absmax;
         }
-        public static double HAbsMaxSumWith(this IMatrix<double> mat, IMatrix<double> diff)
+        public static double HAbsMaxSumWith(this IMatrix<double> a, IMatrix<double> b)
         {
-            HDebug.Assert(mat.ColSize == diff.ColSize);
-            HDebug.Assert(mat.RowSize == diff.RowSize);
+            HDebug.Assert(a.ColSize == b.ColSize);
+            HDebug.Assert(a.RowSize == b.RowSize);
             double absmax = -1;
-            for(int c=0; c<mat.ColSize; c++)
-                for(int r=0; r<mat.RowSize; r++)
-                    absmax = Math.Max(absmax, Math.Abs(mat[c, r] + diff[c, r]));
+            for(int c=0; c<a.ColSize; c++)
+                for(int r=0; r<a.RowSize; r++)
+                    absmax = Math.Max(absmax, Math.Abs(a[c, r] + b[c, r]));
             HDebug.Assert(absmax != -1);
             return absmax;
         }
