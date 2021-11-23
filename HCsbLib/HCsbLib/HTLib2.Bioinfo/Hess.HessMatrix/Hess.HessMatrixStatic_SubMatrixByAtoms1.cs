@@ -129,11 +129,11 @@ namespace HTLib2.Bioinfo
             {
                 Action<ValueTuple<int, int, MatrixByArr>> func = delegate(ValueTuple<int, int, MatrixByArr> bc_br_bval)
                 {
-                    int bc   = bc_br_bval.Item1; if(col_idx2nidx.ContainsKey(bc) == false) return;
-                    int br   = bc_br_bval.Item2; if(row_idx2nidx.ContainsKey(br) == false) return;
-                    var bval = bc_br_bval.Item3;
                     if(bCloneBlock)
                     {
+                        int bc   = bc_br_bval.Item1; if(col_idx2nidx.ContainsKey(bc) == false) return;
+                        int br   = bc_br_bval.Item2; if(row_idx2nidx.ContainsKey(br) == false) return;
+                        var bval = bc_br_bval.Item3;
                         foreach(int nbc in col_idx2nidx[bc])
                             foreach(int nbr in row_idx2nidx[br])
                                 lock(nhess)
@@ -141,6 +141,9 @@ namespace HTLib2.Bioinfo
                     }
                     else
                     {
+                        int bc   = bc_br_bval.Item1; if(col_idx2nidx.ContainsKey(bc) == false) return;
+                        int br   = bc_br_bval.Item2; if(row_idx2nidx.ContainsKey(br) == false) return;
+                        var bval = bc_br_bval.Item3;
                         foreach(int nbc in col_idx2nidx[bc])
                             foreach(int nbr in row_idx2nidx[br])
                                 lock(nhess)
