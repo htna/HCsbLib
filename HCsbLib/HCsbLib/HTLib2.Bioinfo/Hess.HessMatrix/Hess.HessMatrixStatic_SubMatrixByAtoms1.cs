@@ -150,9 +150,30 @@ namespace HTLib2.Bioinfo
                                     nhess.SetBlock(nbc, nbr, bval);
                     }
                 };
+                static void ForeachSetBlockCloneBlock(ValueTuple<int, int, MatrixByArr> bc_br_bval, HessMatrix nhess, Dictionary<int, int[]> col_idx2nidx, Dictionary<int, int[]> row_idx2nidx)
+                {
+                    int bc   = bc_br_bval.Item1; if(col_idx2nidx.ContainsKey(bc) == false) return;
+                    int br   = bc_br_bval.Item2; if(row_idx2nidx.ContainsKey(br) == false) return;
+                    var bval = bc_br_bval.Item3;
+                    foreach(int nbc in col_idx2nidx[bc])
+                        foreach(int nbr in row_idx2nidx[br])
+                            nhess.SetBlock(nbc, nbr, bval.CloneT());
+                };
+                static void ForeachSetBlock          (ValueTuple<int, int, MatrixByArr> bc_br_bval, HessMatrix nhess, Dictionary<int, int[]> col_idx2nidx, Dictionary<int, int[]> row_idx2nidx)
+                {
+                    int bc   = bc_br_bval.Item1; if(col_idx2nidx.ContainsKey(bc) == false) return;
+                    int br   = bc_br_bval.Item2; if(row_idx2nidx.ContainsKey(br) == false) return;
+                    var bval = bc_br_bval.Item3;
+                    foreach(int nbc in col_idx2nidx[bc])
+                        foreach(int nbr in row_idx2nidx[br])
+                            nhess.SetBlock(nbc, nbr, bval);
+                };
 
-                if(parallel)    Parallel.ForEach(         _this.EnumBlocksInCols(col_idxs.ToArray()), func           );
-                else            foreach(var bc_br_bval in _this.EnumBlocksInCols(col_idxs.ToArray())) func(bc_br_bval);
+                if(parallel)        Parallel.ForEach(         _this.EnumBlocksInCols(col_idxs.ToArray()), func           );
+                else {
+                    if(bCloneBlock) foreach(var bc_br_bval in _this.EnumBlocksInCols(col_idxs.ToArray())) ForeachSetBlockCloneBlock(bc_br_bval, nhess, col_idx2nidx, row_idx2nidx);
+                    else            foreach(var bc_br_bval in _this.EnumBlocksInCols(col_idxs.ToArray())) ForeachSetBlock          (bc_br_bval, nhess, col_idx2nidx, row_idx2nidx);
+                }
             
             }
             if(SubMatrixByAtomsImpl_selftest2)
