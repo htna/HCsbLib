@@ -156,5 +156,15 @@ namespace HTLib2
             result.v2 = l.v2 / r;
 			return result;
 		}
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SVector3 operator*(SMatrix3x3 mat, SVector3 vec)
+        {
+            return new SVector3
+                ( mat.v00*vec.v0  +  mat.v01*vec.v1  +  mat.v02*vec.v2
+                , mat.v10*vec.v0  +  mat.v11*vec.v1  +  mat.v12*vec.v2
+                , mat.v20*vec.v0  +  mat.v21*vec.v1  +  mat.v22*vec.v2
+                );
+        }
     }
 }
