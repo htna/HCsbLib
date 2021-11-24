@@ -36,5 +36,28 @@ namespace HTLib2
                 base.Dispose();
             }
         }
+
+        //  bool useMatlabLock = false;
+        //  {
+        //      HFile.FileLock matlablock = null;
+        //      if(useMatlabLock)
+        //      {
+        //          while(true)
+        //          {
+        //              matlablock = HFile.LockFile(@"c:\temp\matlablock");
+        //              if(matlablock != null)
+        //                  break;
+        //              System.Threading.Thread.Sleep(100);
+        //          }
+        //      }
+        //
+        //      ...
+        //
+        //      if(matlablock != null)
+        //      {
+        //          matlablock.Release();
+        //          matlablock = null;
+        //      }
+        //  }
 	}
 }
