@@ -20,5 +20,14 @@ namespace HTLib2
                 , mat[2,0], mat[2,1], mat[2,2]
                 );
         }
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsComputable      (this SMatrix3x3 mat              ) { return ((mat.IsNaN() == false) && (mat.IsInfinity() == false)); }
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsNaN             (this SMatrix3x3 mat              ) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(double.IsNaN             (mat[c, r])) return true; return false; }
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsInfinity        (this SMatrix3x3 mat              ) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(double.IsInfinity        (mat[c, r])) return true; return false; }
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsPositiveInfinity(this SMatrix3x3 mat              ) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(double.IsPositiveInfinity(mat[c, r])) return true; return false; }
+		[MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsNegativeInfinity(this SMatrix3x3 mat              ) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(double.IsNegativeInfinity(mat[c, r])) return true; return false; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsZeros           (this SMatrix3x3 mat              ) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(mat[c, r] != 0    ) return false; return true; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsOnes            (this SMatrix3x3 mat              ) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(mat[c, r] != 1    ) return false; return true; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsValues          (this SMatrix3x3 mat, double value) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(mat[c, r] != value) return false; return true; }
     }
 }
