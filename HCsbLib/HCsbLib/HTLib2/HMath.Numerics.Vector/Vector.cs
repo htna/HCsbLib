@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
@@ -75,6 +76,7 @@ namespace HTLib2
         //}
         public long SizeLong
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return _data.Length;
@@ -82,6 +84,7 @@ namespace HTLib2
         }
         public int Size
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return _data.Length;
@@ -89,11 +92,13 @@ namespace HTLib2
         }
         public double this[int i]
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 HDebug.Assert(i >= 0 && i < Size);
                 return _data[i];
             }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 HDebug.Assert(i >= 0 && i < Size);
@@ -102,11 +107,13 @@ namespace HTLib2
         }
         public double this[long i]
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 HDebug.Assert(i >= 0 && i < Size);
                 return _data[i];
             }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 HDebug.Assert(i >= 0 && i < Size);
@@ -114,18 +121,18 @@ namespace HTLib2
             }
         }
 
-        public bool IsNaN              { get { for(int i=0; i<Size; i++) if(double.IsNaN             (this[i])) return true; return false; } }
-        public bool IsInfinity         { get { for(int i=0; i<Size; i++) if(double.IsInfinity        (this[i])) return true; return false; } }
-        public bool IsPositiveInfinity { get { for(int i=0; i<Size; i++) if(double.IsPositiveInfinity(this[i])) return true; return false; } }
-        public bool IsNegativeInfinity { get { for(int i=0; i<Size; i++) if(double.IsNegativeInfinity(this[i])) return true; return false; } }
-        public bool IsComputable       { get { return ((IsNaN == false) && (IsInfinity == false)); } }
+        public bool IsNaN              { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { for(int i=0; i<Size; i++) if(double.IsNaN             (this[i])) return true; return false; } }
+        public bool IsInfinity         { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { for(int i=0; i<Size; i++) if(double.IsInfinity        (this[i])) return true; return false; } }
+        public bool IsPositiveInfinity { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { for(int i=0; i<Size; i++) if(double.IsPositiveInfinity(this[i])) return true; return false; } }
+        public bool IsNegativeInfinity { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { for(int i=0; i<Size; i++) if(double.IsNegativeInfinity(this[i])) return true; return false; } }
+        public bool IsComputable       { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return ((IsNaN == false) && (IsInfinity == false)); } }
 
-        public void SetZero()              { for(int i=0; i<Size; i++) this[i] = 0; }
-        public void SetOne ()              { for(int i=0; i<Size; i++) this[i] = 1; }
-        public void SetValue(double value) { for(int i=0; i<Size; i++) this[i] = value; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void SetZero()              { for(int i=0; i<Size; i++) this[i] = 0; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void SetOne ()              { for(int i=0; i<Size; i++) this[i] = 1; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void SetValue(double value) { for(int i=0; i<Size; i++) this[i] = value; }
 
-        public static Vector Zeros(int size) { return new Vector(size, 0); }
-        public static Vector Ones (int size) { return new Vector(size, 1); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static Vector Zeros(int size) { return new Vector(size, 0); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static Vector Ones (int size) { return new Vector(size, 1); }
 
         ////////////////////////////////////////////////////////////////////////////////////
         // ToMatrix
