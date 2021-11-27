@@ -26,5 +26,14 @@ namespace HTLib2
         public static bool IsZeros (this IMatrix<double> mat              ) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(mat[c, r] != 0    ) return false; return true; }
         public static bool IsOnes  (this IMatrix<double> mat              ) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(mat[c, r] != 1    ) return false; return true; }
         public static bool IsValues(this IMatrix<double> mat, double value) { for(int c=0; c<mat.ColSize; c++) for(int r=0; r<mat.RowSize; r++) if(mat[c, r] != value) return false; return true; }
+
+		public static bool IsComputable      (this IVector<double> vec    ) { return ((vec.IsNaN() == false) && (vec.IsInfinity() == false)); }
+		public static bool IsNaN             (this IVector<double> vec    ) { for(int i=0; i<vec.Size; i++) if(double.IsNaN             (vec[i])) return true; return false; }
+		public static bool IsInfinity        (this IVector<double> vec    ) { for(int i=0; i<vec.Size; i++) if(double.IsInfinity        (vec[i])) return true; return false; }
+		public static bool IsPositiveInfinity(this IVector<double> vec    ) { for(int i=0; i<vec.Size; i++) if(double.IsPositiveInfinity(vec[i])) return true; return false; }
+		public static bool IsNegativeInfinity(this IVector<double> vec    ) { for(int i=0; i<vec.Size; i++) if(double.IsNegativeInfinity(vec[i])) return true; return false; }
+        public static bool IsZeros (this IVector<double> vec              ) { for(int i=0; i<vec.Size; i++) if(vec[i] != 0                      ) return false; return true; }
+        public static bool IsOnes  (this IVector<double> vec              ) { for(int i=0; i<vec.Size; i++) if(vec[i] != 1                      ) return false; return true; }
+        public static bool IsValues(this IVector<double> vec, double value) { for(int i=0; i<vec.Size; i++) if(vec[i] != value                  ) return false; return true; }
     }
 }
