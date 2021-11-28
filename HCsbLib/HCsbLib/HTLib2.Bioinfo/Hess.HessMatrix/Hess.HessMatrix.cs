@@ -278,7 +278,23 @@ namespace HTLib2.Bioinfo
         }
         public Matrix ToMatrix()
         {
-            return ToArray();
+            Matrix mat = Matrix.Zeros(ColSize, RowSize);
+            foreach(ValueTuple<int, int, double[,]> bc_br_bval in _EnumBlocks())
+            {
+                int bc3  = bc_br_bval.Item1 * 3;
+                int br3  = bc_br_bval.Item2 * 3;
+                var bval = bc_br_bval.Item3;
+                mat[bc3+0, br3+0] = bval[0, 0];
+                mat[bc3+0, br3+1] = bval[0, 1];
+                mat[bc3+0, br3+2] = bval[0, 2];
+                mat[bc3+1, br3+0] = bval[1, 0];
+                mat[bc3+1, br3+1] = bval[1, 1];
+                mat[bc3+1, br3+2] = bval[1, 2];
+                mat[bc3+2, br3+0] = bval[2, 0];
+                mat[bc3+2, br3+1] = bval[2, 1];
+                mat[bc3+2, br3+2] = bval[2, 2];
+            }
+            return mat;
         }
         public static void SelfTest()
         {
