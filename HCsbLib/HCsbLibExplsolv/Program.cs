@@ -8,6 +8,7 @@ using HTLib2.Bioinfo;
 
 namespace HCsbLibExplsolv
 {
+    using HessForcInfo = HessForc.HessForcInfo;
     class Program
     {
         public static HessMatrix LoadHess(string hesspath)
@@ -236,7 +237,7 @@ namespace HCsbLibExplsolv
 
             //////////////////////////////////////////////////////////////////////
             // Hess/Force info class
-            HessForc.HessForcInfo hessforcinfo_prot_solv = new HessForc.HessForcInfo
+            HessForcInfo hessforcinfo_prot_solv = new HessForcInfo
             {
                 atoms  = xyz.atoms,
                 mass   = null,
@@ -247,7 +248,7 @@ namespace HCsbLibExplsolv
 
             //////////////////////////////////////////////////////////////////////
             // coarse-graining Hess/Force
-            HessForc.HessForcInfo hessforcinfo_prot_exsolv;
+            HessForcInfo hessforcinfo_prot_exsolv;
             hessforcinfo_prot_exsolv = HessForc.Coarse.GetCoarseHessForc
             (hessforcinfo_prot_solv
             , coords: hessforcinfo_prot_solv.coords
