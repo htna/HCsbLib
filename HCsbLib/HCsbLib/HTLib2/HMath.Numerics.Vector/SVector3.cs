@@ -102,6 +102,22 @@ namespace HTLib2
             v1 += add.v1;
             v2 += add.v2;
         }
+        public void UpdateByAdd(IVector<double> add)
+        {
+            if(add.Size != 3)
+                throw new Exception();
+            v0 += add[0];
+            v1 += add[1];
+            v2 += add[2];
+        }
+        public void UpdateByAdd(IVector<double> add, double add_mul)
+        {
+            if(add.Size != 3)
+                throw new Exception();
+            v0 += (add[0] * add_mul);
+            v1 += (add[1] * add_mul);
+            v2 += (add[2] * add_mul);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static SVector3 operator+(SVector3 l, SVector3 r)
