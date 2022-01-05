@@ -35,9 +35,10 @@ namespace HTLib2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void UpdateAdd(this IVector<double> _this, IVector<double> other, double other_mul)
+        public static void UpdateAdd<THIS>(this THIS _this, IVector<double> other, double other_mul)
+            where THIS : class, IVector<double>
         {
-            if(_this.GetType().IsValueType) throw new Exception("_this should NOT be struct type. If _this is struct type, the returned value will not be changed at all.");
+            //if(_this.GetType().IsValueType) throw new Exception("_this should NOT be struct type. If _this is struct type, the returned value will not be changed at all.");
             if(_this.Size != other.Size   ) throw new Exception("(_this.Size != other.Size   )");
             if(other_mul == 1)
             {
@@ -56,9 +57,10 @@ namespace HTLib2
             }
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void UpdateMul(this IVector<double> _this, double other)
+        public static void UpdateMul<THIS>(this THIS _this, double other)
+            where THIS : class, IVector<double>
         {
-            if(_this.GetType().IsValueType) throw new Exception("_this should NOT be struct type. If _this is struct type, the returned value will not be changed at all.");
+            //if(_this.GetType().IsValueType) throw new Exception("_this should NOT be struct type. If _this is struct type, the returned value will not be changed at all.");
             for(int i=0; i<_this.Size; i++)
                 _this[i] *= other;
         }
