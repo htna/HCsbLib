@@ -612,6 +612,7 @@
     <Compile Include="HTLib2\External.dnAnalytics\daSparseVector.cs" />
     <Compile Include="HTLib2\External.dnAnalytics\daVector.cs" />
     <Compile Include="HTLib2\External.dnAnalytics\dnAnalytics.cs" />
+    <Compile Include="HTLib2\External.FileLock\FileLock.cs" />
     <Compile Include="HTLib2\External.KDTree\HPoint.cs" />
     <Compile Include="HTLib2\External.KDTree\HRect.cs" />
     <Compile Include="HTLib2\External.KDTree\HStaticKDTree.cs" />
