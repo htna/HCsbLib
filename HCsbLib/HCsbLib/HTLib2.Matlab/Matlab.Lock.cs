@@ -59,5 +59,31 @@ namespace HTLib2
         //          matlablock = null;
         //      }
         //  }
+        //
+        //
+        /// HFile.FileLock matlablock = GetLockFile();
+        /// ...
+        /// if(matlablock != null)
+        /// {
+        ///     matlablock.Release();
+        ///     matlablock = null;
+        /// }
+        public static HFile.FileLock GetLockFile(int numprocesss=1, string lockpathbase=@"c:\temp\matlablock_$$lockcount$$")
+        {
+            HFile.FileLock matlablock = null;
+            //if(useMatlabLock)
+            {
+                int lockcount = 0;
+                while(true)
+                {
+                    matlablock = HFile.LockFile(@"c:\temp\matlablock"+lockcount);
+                    if(matlablock != null)
+                        break;
+                    System.Threading.Thread.Sleep(500);
+                    lockcount = (lockcount + 1) % numprocesss;
+                }
+            }
+            return matlablock;
+        }
 	}
 }
