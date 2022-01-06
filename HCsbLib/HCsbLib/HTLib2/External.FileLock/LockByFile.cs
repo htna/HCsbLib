@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace HTLib2
 {
-    public partial class FileLock : IDisposable
+    public partial class LockByFile : IDisposable
     {
         /// using(new FileLock(500, 2, @"c:\temp\filelock"))
         /// {
@@ -13,7 +13,7 @@ namespace HTLib2
         /// }
 
         HFile.FileLock lockedfile = null;
-        public FileLock(int sleepInMilliseconds=500, int numprocesss=1, string lockpathbase=@"c:\temp\filelock")
+        public LockByFile(int sleepInMilliseconds=500, int numprocesss=1, string lockpathbase=@"c:\temp\filelock")
         {
             lockedfile = GetLockedFile(sleepInMilliseconds, numprocesss, lockpathbase);
             if(lockedfile == null)
