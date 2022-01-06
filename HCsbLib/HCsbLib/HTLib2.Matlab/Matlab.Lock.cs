@@ -59,31 +59,49 @@ namespace HTLib2
         //          matlablock = null;
         //      }
         //  }
-        //
-        //
-        /// HFile.FileLock matlablock = GetLockFile();
-        /// ...
-        /// if(matlablock != null)
+
+        /// var matlablock = new Matlab.FileLock();
         /// {
-        ///     matlablock.Release();
-        ///     matlablock = null;
+        ///     ...
         /// }
-        public static HFile.FileLock GetLockFile(int numprocesss=1, string lockpathbase=@"c:\temp\matlablock_$$lockcount$$")
+        /// matlablock.Release();
+        /// matlablock = null;
+        /// 
+        /// using(new Matlab.FileLock())
+        /// {
+        ///     ...
+        /// }
+        public class LockByFile : HTLib2.LockByFile
         {
-            HFile.FileLock matlablock = null;
-            //if(useMatlabLock)
+            public LockByFile(int sleepInMilliseconds=500, int numprocesss=1, string lockpathbase=@"c:\temp\matlablock")
+                : base(sleepInMilliseconds, numprocesss, lockpathbase)
             {
-                int lockcount = 0;
-                while(true)
-                {
-                    matlablock = HFile.LockFile(@"c:\temp\matlablock"+lockcount);
-                    if(matlablock != null)
-                        break;
-                    System.Threading.Thread.Sleep(500);
-                    lockcount = (lockcount + 1) % numprocesss;
-                }
             }
-            return matlablock;
+            public override void Dispose()
+            {
+                base.Dispose();
+            }
+        }
+
+        public static HFile.FileLock GetLockFile(int sleepInMilliseconds=500, int numprocesss=1, string lockpathbase=@"c:\temp\matlablock")
+        {
+            return HTLib2.LockByFile.GetLockedFile(sleepInMilliseconds, numprocesss, lockpathbase);
+
+            //  HFile.FileLock matlablock = null;
+            //  //if(useMatlabLock)
+            //  {
+            //      int lockcount = 0;
+            //      while(true)
+            //      {
+            //          string filename = lockpathbase + "_" + lockcount;
+            //          matlablock = HFile.LockFile(@"c:\temp\matlablock"+lockcount);
+            //          if(matlablock != null)
+            //              break;
+            //          System.Threading.Thread.Sleep(sleepInMilliseconds);
+            //          lockcount = (lockcount + 1) % numprocesss;
+            //      }
+            //  }
+            //  return matlablock;
         }
 	}
 }
