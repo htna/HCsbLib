@@ -98,7 +98,9 @@ namespace HTLib2
             double absmax = -1;
             for(int c=0; c<mat.ColSize; c++)
                 for(int r=0; r<mat.RowSize; r++)
+                {
                     absmax = Math.Max(absmax, Math.Abs(mat[c, r]));
+                }
             HDebug.Assert(absmax != -1);
             return absmax;
         }
