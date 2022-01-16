@@ -66,6 +66,26 @@ namespace HTLib2
             this.v1 = v1;
             this.v2 = v2;
         }
+        public double Dist2
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                double result = 0;
+                for(int i=0; i<Size; i++)
+                    result += this[i] * this[i];
+                return result;
+            }
+        }
+        public double Dist
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                double dist = Math.Sqrt(Dist2);
+                return dist;
+            }
+        }
         public static SVector3 Zeros()
         {
             return new SVector3();
