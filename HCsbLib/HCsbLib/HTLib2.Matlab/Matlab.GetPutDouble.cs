@@ -131,6 +131,15 @@ namespace HTLib2
         public static IMATRIX GetMatrix<IMATRIX>(string name, Func<int, int, IMATRIX> Zeros, bool bUseFile, bool clear_var)
             where IMATRIX : IMatrix<double>
         {
+            int colsize = GetValueInt("size("+name+", 1)");
+            int rowsize = GetValueInt("size("+name+", 2)");
+            IMATRIX matrix = Zeros(colsize, rowsize);
+            GetMatrix(name, matrix, bUseFile, clear_var);
+            return matrix;
+        }
+        public static void GetMatrix<IMATRIX>(string name, IMATRIX matrix, bool bUseFile, bool clear_var)
+            where IMATRIX : IMatrix<double>
+        {
             if((bUseFile == false) || (_path_temporary == null))
             {
                 System.Array real;
@@ -143,13 +152,13 @@ namespace HTLib2
                 imag = new double[colsize, rowsize];
                 matlab.GetFullMatrix("htlib2_matlab_GetGetMatrix", "base", ref real, ref imag);
                 Execute("clear htlib2_matlab_GetGetMatrix;");
-                IMATRIX matrix = Zeros(colsize, rowsize);
+                if((matrix.ColSize != colsize) || (matrix.RowSize != rowsize))
+                    throw new Exception("((mat.ColSize != colsize) || (mat.RowSize != rowsize))");
                 for(int c=0; c<colsize; c++)
                     for(int r=0; r<rowsize; r++)
                         matrix[c, r] = (double)real.GetValue(c, r);
                 real = null;
                 imag = null;
-                return matrix;
             }
             else
             {
@@ -168,7 +177,8 @@ namespace HTLib2
                 }
                 if(clear_var)
                     Execute("clear "+name+";");
-                IMATRIX matrix = Zeros(colsize, rowsize);
+                if((matrix.ColSize != colsize) || (matrix.RowSize != rowsize))
+                    throw new Exception("((mat.ColSize != colsize) || (mat.RowSize != rowsize)) in using file");
                 {
                     System.IO.BinaryReader reader = new System.IO.BinaryReader(new System.IO.FileStream(tmppath, System.IO.FileMode.Open));
                     for(int c=0; c<colsize; c++)
@@ -177,7 +187,6 @@ namespace HTLib2
                     reader.Close();
                 }
                 HFile.Delete(tmppath);
-                return matrix;
             }
         }
         public static void GetMatrix(string name, out List<Vector> matrix)
