@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HTLib2;
 using HTLib2.Bioinfo;
+using System.Runtime.CompilerServices;
 
 namespace HTLib2.Bioinfo
 {
@@ -27,7 +28,7 @@ namespace HTLib2.Bioinfo
     {
         public class HessForcInfo : IBinarySerializable
         {
-            public const int    SerializeVersion = 2;
+            public int          SerializeVersion { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return 2; } }
             public object[]     atoms   = null;
             public Vector       mass    = null;
             public Vector[]     coords  = null;
