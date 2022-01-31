@@ -512,7 +512,7 @@ namespace HTLib2.Bioinfo
                 for(int br=0; br<RowBlockSize; br++)
                 {
                     if(bc == br) continue;
-                    var blk = GetBlock(bc, br);
+                    MatrixByArr blk = GetBlock(bc, br);
                     if(blk == null) continue;
                     if(blk.MaxAbs() == 0)
                         SetBlock(bc, br, null);
