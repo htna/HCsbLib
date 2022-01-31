@@ -506,6 +506,18 @@ namespace HTLib2.Bioinfo
             HessMatrix mat = new HessMatrix(colsize, rowsize, layersize);
             return mat;
         }
+        public void MakeSparse()
+        {
+            for(int bc=0; bc<ColBlockSize; bc++)
+                for(int br=0; br<RowBlockSize; br++)
+                {
+                    if(bc == br) continue;
+                    var blk = GetBlock(bc, br);
+                    if(blk == null) continue;
+                    if(blk.MaxAbs() == 0)
+                        SetBlock(bc, br, null);
+                }
+        }
         public HessMatrix(SerializationInfo info, StreamingContext ctxt)
         {
             this.colblksize            = info.GetInt32("colblksize"           );
