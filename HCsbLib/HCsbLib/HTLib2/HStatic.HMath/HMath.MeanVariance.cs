@@ -15,7 +15,7 @@ namespace HTLib2
         }
         public static double MeanInRange(this IEnumerable<double> values, double range_min, double range_max)
         {
-            HDebug.Assert(range_min <= range_max);
+            HDebug.Assert(range_min <= range_max + 1.0E-20);
             double mean = 0;
             int    cont = 0;
             foreach(var value in values)
