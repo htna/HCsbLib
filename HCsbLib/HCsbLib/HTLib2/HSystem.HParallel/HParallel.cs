@@ -45,6 +45,15 @@ namespace HTLib2
         public static void Invoke(params Action[] actions)                                                                                                                                                                                                         {        System.Threading.Tasks.Parallel.Invoke(actions); }
         public static void Invoke(ParallelOptions parallelOptions, params Action[] actions)                                                                                                                                                                        {        System.Threading.Tasks.Parallel.Invoke(parallelOptions, actions); }
 
+        public static void Invoke(int MaxDegreeOfParallelism, params Action[] actions)
+        {
+            ParallelOptions parallelOptions = new ParallelOptions
+            {
+                MaxDegreeOfParallelism = MaxDegreeOfParallelism,
+            };
+            Invoke(parallelOptions, actions);
+        }
+
         public static ParallelLoopResult ForEach<TSource>(IEnumerable<TSource> source, int optionMaxDegreeOfParallelism, Action<TSource> body)
         {
             return System.Threading.Tasks.Parallel.ForEach<TSource>
