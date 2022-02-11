@@ -15,6 +15,8 @@ namespace HTLib2
         public static void EndCriticalRegion()            { System.Threading.Thread.EndCriticalRegion()       ; }
         public static void EndThreadAffinity()            { System.Threading.Thread.EndThreadAffinity()       ; }
         public static void Sleep(int millisecondsTimeout) { System.Threading.Thread.Sleep(millisecondsTimeout); }
+        public static void Sleep(TimeSpan        timeout) { System.Threading.Thread.Sleep(            timeout); }
+
 
         public static ParallelLoopResult For(int  fromInclusive, int  toExclusive, Action<int, ParallelLoopState> body)                                                                                                                                            { return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, body); }
         public static ParallelLoopResult For(int  fromInclusive, int  toExclusive, Action<int> body)                                                                                                                                                               { return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, body); }
@@ -131,9 +133,6 @@ namespace HTLib2
             };
             return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, lbody);
         }
-
-        public static void Sleep(int millisecondsTimeout) { System.Threading.Thread.Sleep(millisecondsTimeout); }
-        public static void Sleep(TimeSpan        timeout) { System.Threading.Thread.Sleep(            timeout); }
 
         static List<Task> lstInvokeTask = new List<Task>();
         public static int NumInvokeTask { get { return lstInvokeTask.Count; } }
