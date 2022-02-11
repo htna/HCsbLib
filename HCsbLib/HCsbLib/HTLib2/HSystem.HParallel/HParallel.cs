@@ -10,6 +10,12 @@ namespace HTLib2
 {
     public static class HParallel
 	{
+        public static void BeginCriticalRegion()          { System.Threading.Thread.BeginCriticalRegion()     ; }
+        public static void BeginThreadAffinity()          { System.Threading.Thread.BeginThreadAffinity()     ; }
+        public static void EndCriticalRegion()            { System.Threading.Thread.EndCriticalRegion()       ; }
+        public static void EndThreadAffinity()            { System.Threading.Thread.EndThreadAffinity()       ; }
+        public static void Sleep(int millisecondsTimeout) { System.Threading.Thread.Sleep(millisecondsTimeout); }
+
         public static ParallelLoopResult For(int  fromInclusive, int  toExclusive, Action<int, ParallelLoopState> body)                                                                                                                                            { return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, body); }
         public static ParallelLoopResult For(int  fromInclusive, int  toExclusive, Action<int> body)                                                                                                                                                               { return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, body); }
         public static ParallelLoopResult For(long fromInclusive, long toExclusive, Action<long, ParallelLoopState> body)                                                                                                                                           { return System.Threading.Tasks.Parallel.For(fromInclusive, toExclusive, body); }
