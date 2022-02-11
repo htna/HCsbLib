@@ -17,6 +17,16 @@ namespace HTLib2
             _ToString2(text, obj, null, null, null);
             return text.ToString();
         }
+        public static void ToString2
+            ( object obj
+            , StringBuilder text
+            , string formatInt      // null (default) or "{0,3}"
+            , string formatDouble   // null (default) or "{0,8:0.0000}"
+            , string formatString   // null (default) or "{0,10}"
+            )
+        {
+            _ToString2(text, obj, null, null, null);
+        }
         public static string ToString2
             ( string formatInt      // null (default) or "{0,3}"
             , string formatDouble   // null (default) or "{0,8:0.0000}"
