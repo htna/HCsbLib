@@ -9,11 +9,13 @@ namespace HTLib2
 	public static partial class HMath
 	{
         /// source https://stackoverflow.com/questions/8137391/percentile-calculation
+        public static double HQuantile(this IEnumerable<double> seq, double quantile) { return Quantile(seq, quantile); }
         public static double Quantile(IEnumerable<double> seq, double quantile)
         {
             List<double> sortedseq;
             return Quantile(seq, quantile, out sortedseq);
         }
+        public static double HQuantile(this IEnumerable<double> seq, double quantile, out List<double> sortedseq) { return Quantile(seq, quantile, out sortedseq); }
         public static double Quantile(IEnumerable<double> seq, double quantile, out List<double> sortedseq)
         {
             sortedseq=seq.ToList();
@@ -26,11 +28,13 @@ namespace HTLib2
             else
                 return sortedseq[index];
         }
+        public static void HQuantile(this IEnumerable<double> seq, double[] quantiles, double[] rets) { Quantile(seq, quantiles, rets); }
         public static void Quantile(IEnumerable<double> seq, double[] quantiles, double[] rets)
         {
             List<double> sortedseq;
             Quantile(seq, quantiles, rets, out sortedseq);
         }
+        public static void HQuantile(this IEnumerable<double> seq, double[] quantiles, double[] rets, out List<double> sortedseq) { Quantile(seq, quantiles, rets, out sortedseq); }
         public static void Quantile(IEnumerable<double> seq, double[] quantiles, double[] rets, out List<double> sortedseq)
         {
             sortedseq = seq.ToList();
@@ -57,6 +61,7 @@ namespace HTLib2
                 rets[i] = ret;
             }
         }
+        public static double[] HQuantile(this IEnumerable<double> seq, params double[] quantiles) { return Quantile(seq, quantiles); }
         public static double[] Quantile(IEnumerable<double> seq, params double[] quantiles)
         {
             List<double> sortedseq;
@@ -64,6 +69,7 @@ namespace HTLib2
             Quantile(seq, quantiles, rets, out sortedseq);
             return rets;
         }
+        public static double[] HQuantile(this IEnumerable<double> seq, out List<double> sortedseq, params double[] quantiles) { return Quantile(seq, out sortedseq, quantiles); }
         public static double[] Quantile(IEnumerable<double> seq, out List<double> sortedseq, params double[] quantiles)
         {
             double[] rets = new double[quantiles.Length];
