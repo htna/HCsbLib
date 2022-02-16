@@ -33,6 +33,8 @@ namespace HTLib2
             double[] x = new double[xx.Length];
             for(int i=0; i<xx.Length; i++)
                 x[i] = -1 * xx[i];
+
+            return x;
         }
         public static double[] NonPositiveLeastSquares_AA_Ab
             ( double[,] AA
