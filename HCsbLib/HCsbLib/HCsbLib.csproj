@@ -590,6 +590,7 @@
     <Compile Include="HTLib2\Algorithm.KDTree\KDTreeDLL\PriorityQueue.cs" />
     <Compile Include="HTLib2\Algorithm.LCS\LCS.LongestCommonSubsequence.cs" />
     <Compile Include="HTLib2\Algorithm.LCS\LCS.LongestCommonSubstring.cs" />
+    <Compile Include="HTLib2\External.alglib381\Alglib-NonPositiveLeastSquares.cs" />
     <Compile Include="HTLib2\External.alglib381\Alglib-NonNegativeLeastSquares.cs" />
     <Compile Include="HTLib2\External.alglib381\Alglib-ConstrainedQuadraticProgramming.cs" />
     <Compile Include="HTLib2\External.alglib381\Alglib.cs" />
