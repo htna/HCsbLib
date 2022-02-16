@@ -180,7 +180,8 @@ namespace HTLib2.Bioinfo
             public static Prm FromFile(string filepath)
             {
                 List<string> lines = HFile.ReadLines(filepath).ToList();
-                return FromLines(lines);
+                Prm prm = FromLines(lines);
+                return prm;
             }
             public void ToFile(string filepath)
             {
