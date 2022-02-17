@@ -72,7 +72,7 @@ namespace HTLib2
             {
                 x0    [i] = 1;
                 x_bndl[i] = 0;
-                x_bndu[i] = double.PositiveInfinity;
+                x_bndu[i] = 1000000000;
             }
 
             double[] x = ConstrainedQuadraticProgramming(Q, c, x0, x_bndl, x_bndu, null);

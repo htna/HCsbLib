@@ -94,7 +94,7 @@ namespace HTLib2
             alglib.minqpreport rep;
 
             // create solver, set quadratic/linear terms
-            alglib.minqpcreate(2, out state);
+            alglib.minqpcreate(4, out state);
             alglib.minqpsetquadraticterm(state, A);
             alglib.minqpsetlinearterm(state, b);
             alglib.minqpsetstartingpoint(state, x0);
@@ -109,10 +109,9 @@ namespace HTLib2
 
             switch(option)
             {
-                case null:
                 case "Cholesky-based QP solver":
                     // solve problem with Cholesky-based QP solver
-                    alglib.minqpsetalgocholesky(state);
+                    //alglib.minqpsetalgocholesky(state);
                     alglib.minqpoptimize(state);
                     alglib.minqpresults(state, out x, out rep);
                     if(rep.terminationtype == 4)
@@ -120,6 +119,7 @@ namespace HTLib2
                     //System.Console.WriteLine("{0}", rep.terminationtype); // EXPECTED: 4
                     //System.Console.WriteLine("{0}", alglib.ap.format(x,2)); // EXPECTED: [2.5,2]
                     break;
+                case null:
                 case "BLEIC-based QP solver":
                     // solve problem with BLEIC-based QP solver
                     // default stopping criteria are used.
@@ -127,7 +127,7 @@ namespace HTLib2
                     alglib.minqpoptimize(state);
                     alglib.minqpresults(state, out x, out rep);
                     //System.Console.WriteLine("{0}", alglib.ap.format(x,2)); // EXPECTED: [2.5,2]
-                    if(rep.terminationtype == 4)
+                    if(rep.terminationtype > 0)
                         return x;
                     break;
             }

@@ -53,7 +53,7 @@ namespace HTLib2
             HDebug.Assert(n == AA.GetLength(1));
             HDebug.Assert(n == Ab.Length      );
 
-            double[,] Q = AA;
+            double[,] Q = new double[n,n];  for(int i=0; i<n; i++) for(int j=0; j<n; j++) Q[i,j] = AA[i,j] / 2;
             double[]  c = Ab;
 
             double[] x0     = new double[n];
