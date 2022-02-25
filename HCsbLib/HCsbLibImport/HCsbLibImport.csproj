@@ -7,8 +7,8 @@
     <ProjectGuid>{075D6C9D-51DF-4C57-8EEB-04B7E20D4889}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HCsbLibExplsolv</RootNamespace>
-    <AssemblyName>HCsbLibExplsolv</AssemblyName>
+    <RootNamespace>HCsbLibImport</RootNamespace>
+    <AssemblyName>HCsbLibImport</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>HCsbLibExplsolv.Program</StartupObject>
+    <StartupObject>HCsbLibImport.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,12 +46,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HCsbLib\HCsbLib.csproj">
-      <Project>{0264d6b8-7241-428d-a6fa-74c2dcb4713d}</Project>
-      <Name>HCsbLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="HTLib2.Bioinfo\" />
