@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B15969D8-DD16-4766-8B8C-1264EB2448E7}</ProjectGuid>
+    <ProjectGuid>{075D6C9D-51DF-4C57-8EEB-04B7E20D4889}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HCsbLibExplsolv</RootNamespace>
