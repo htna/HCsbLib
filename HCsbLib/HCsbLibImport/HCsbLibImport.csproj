@@ -44,6 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="alglib\Alglib-ConstrainedQuadraticProgramming.cs" />
+    <Compile Include="alglib\Alglib-NonNegativeLeastSquares.cs" />
+    <Compile Include="alglib\Alglib-NonPositiveLeastSquares.cs" />
+    <Compile Include="alglib\Alglib.cs" />
+    <Compile Include="alglib\src\alglibinternal.cs" />
+    <Compile Include="alglib\src\alglibmisc.cs" />
+    <Compile Include="alglib\src\ap.cs" />
+    <Compile Include="alglib\src\dataanalysis.cs" />
+    <Compile Include="alglib\src\diffequations.cs" />
+    <Compile Include="alglib\src\fasttransforms.cs" />
+    <Compile Include="alglib\src\integration.cs" />
+    <Compile Include="alglib\src\interpolation.cs" />
+    <Compile Include="alglib\src\linalg.cs" />
+    <Compile Include="alglib\src\optimization.cs" />
+    <Compile Include="alglib\src\solvers.cs" />
+    <Compile Include="alglib\src\specialfunctions.cs" />
+    <Compile Include="alglib\src\statistics.cs" />
+    <Compile Include="HDebug.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

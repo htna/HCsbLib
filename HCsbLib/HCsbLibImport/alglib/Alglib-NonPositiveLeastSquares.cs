@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 
-namespace HTLib2
+namespace HCsbLibImport
 {
     public static partial class Alglib
     {
