@@ -22,8 +22,8 @@ namespace HTLib2
         {
             static private bool _addpath = true;
             static public void RegisterMathLinkFactory
-                ( string dir_ml64_dll = @"C:\Program Files\Wolfram Research\Mathematica\11.3\SystemFiles\Links\MathLink\DeveloperKit\Windows-x86-64\SystemAdditions\"
-                , string dir_ml32_dll = @"C:\Program Files\Wolfram Research\Mathematica\11.3\SystemFiles\Links\MathLink\DeveloperKit\Windows\SystemAdditions\"
+                ( string dir_ml64_dll = @"C:\Program Files\Wolfram Research\Mathematica\10.3\SystemFiles\Links\MathLink\DeveloperKit\Windows-x86-64\SystemAdditions\"
+                , string dir_ml32_dll = @"C:\Program Files\Wolfram Research\Mathematica\10.3\SystemFiles\Links\MathLink\DeveloperKit\Windows\SystemAdditions\"
                 )
             {
                 if(_addpath == false)
