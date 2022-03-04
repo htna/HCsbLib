@@ -8,6 +8,8 @@ namespace HTLib2
 {
     public static partial class HStatic
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool HEquals(int a, int b) { return (a == b); }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool HEquals(double a, double b)
         {
@@ -54,6 +56,19 @@ namespace HTLib2
             if(a.Count != b.Count    ) return false;
             for(int i=0; i<a.Count; i++)
                 if(a[i].Equals(b[i]) == false)
+                    return false;
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HEquals<T>(List<T> a, List<T> b, Func<T,T,bool> Equals)
+        {
+            if(a == null && b == null) return true;
+            if(a == null && b != null) return false;
+            if(a != null && b == null) return false;
+            if(a.Count != b.Count    ) return false;
+            for(int i=0; i<a.Count; i++)
+                if(Equals(a[i], b[i]) == false)
                     return false;
             return true;
         }
