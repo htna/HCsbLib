@@ -43,5 +43,19 @@ namespace HTLib2
                     return false;
             return true;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HEquals<T>(List<T> a, List<T> b)
+            where T : IEquatable<T>
+        {
+            if(a == null && b == null) return true;
+            if(a == null && b != null) return false;
+            if(a != null && b == null) return false;
+            if(a.Count != b.Count    ) return false;
+            for(int i=0; i<a.Count; i++)
+                if(a[i].Equals(b[i]) == false)
+                    return false;
+            return true;
+        }
     }
 }
