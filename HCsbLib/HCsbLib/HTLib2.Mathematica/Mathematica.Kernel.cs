@@ -10,7 +10,7 @@ namespace HTLib2
 	public partial class Mathematica
 	{
         public static void RegisterMathLinkFactory
-            ( string dir_ml64_dll = @"C:\Program Files\Wolfram Research\Mathematica\11.3\SystemFiles\Links\MathLink\DeveloperKit\Windows-x86-64\SystemAdditions\"
+            ( string dir_ml64_dll = @"C:\Program Files\Wolfram Research\Mathematica\10.3\SystemFiles\Links\MathLink\DeveloperKit\Windows-x86-64\SystemAdditions\"
             )
         {
             HMathLinkFactory.RegisterMathLinkFactory
