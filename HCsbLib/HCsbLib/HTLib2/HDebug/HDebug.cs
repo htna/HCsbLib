@@ -373,9 +373,11 @@ namespace HTLib2
         //    }
         //}
 #if DEBUG
-        public const bool IsDebuggerAttached = true;
+        public static bool IsDebuggerAttached { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return true; } }
+        //public const bool IsDebuggerAttached = true;
 #else
-        public const bool IsDebuggerAttached = false;
+        public static bool IsDebuggerAttached { [MethodImpl(MethodImplOptions.AggressiveInlining)] get { return false; } }
+        //public const bool IsDebuggerAttached = false;
 #endif
 
         static public bool IsDebuggerAttachedWithProb(double prob)
