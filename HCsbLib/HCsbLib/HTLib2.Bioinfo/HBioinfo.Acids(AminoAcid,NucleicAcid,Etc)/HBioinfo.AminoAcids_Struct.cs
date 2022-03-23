@@ -230,52 +230,51 @@ RESI SER
 !        │              
 
 RESI THR
-!  *     *     *     *     *     *     *     *     *     *     *     *
-!  *     *     *   *     *     *     *     *     *     *     *     *
 !        │     
 !  *HN───*N    
 !        │         *OG1──*HG1
-!        │        ╱
+!        │       ╱
 !  *HA───*CA───*CB───*HB  
-!        │        ╲     
+!        │       ╲     
 !        │         *CG2──*HG21
-!  *O════*C        ╱  ╲    
-!        │      HG21   *HG22 
+!  *O════*C      ╱   ╲    
+!        │     *HG21   *HG22 
 
 RESI TRP
-!        │                   HE3
-!  *HN───*N                   │
-!        │    HB1            CE3
-!        │    │             ╱  ╲╲
-!  *HA───*CA──CB───CG─────CD2   CZ3─HZ3
-!        │    │    ║      ║      │
-!        │    HB2  CD1    CE2   CH2─HH2
-!  *O════*C       ╱   ╲   ╱ ╲  ╱╱
-!        │      HD1    NE1   CZ2
-!                       │     │
-!                      HE1   HZ2
+!        │                    *HE3
+!  *HN───*N                   │   
+!        │     *HB1           *CE3
+!        │     │             ╱ ╲╲
+!  *HA───*CA───*CB───*CG───*CD2  *CZ3──*HZ3
+!        │     │     ║     ║     │  
+!        │     *HB2  *CD1  *CE2  *CH2──*HH2
+!  *O════*C        ╱   ╲ ╱   ╲ ╱╱
+!        │       *HD1   *NE1  * CZ2
+!                       │     │  
+!                       *HE1  *HZ2
 
 RESI TYR
-!        │         HD1  HE1    
-!  *HN───*N         │    │   
-!        │    HB1  CD1──CE1
-!        │    │   ╱╱      ╲╲
-!  *HA───*CA──CB──CG      CZ──OH
-!        │    │    ╲      ╱     ╲
-!        │    HB2  CD2══CE2     HH
-!  *O════*C         │    │  
-!        │         HD2  HE2   
+!        │              *HD1  *HE1    
+!  *HN───*N             │     │   
+!        │     *HB1     *CD1──*CE1
+!        │      │     ╱╱       ╲╲
+!  *HA───*CA───*CB───*CG         *CZ───*OH
+!        │      │      ╲       ╱         ╲
+!        │     *HB2     *CD2══*CE2        *HH
+!  *O════*C             │     │  
+!        │              *HD2  *HE2   
 
 RESI VAL
-!        │     HG11 HG12
-!  *HN───*N      │ ╱ 
-!        │      CG1──HG13
-!        │     ╱
-!  *HA───*CA──CB─HB  
-!        │     ╲     
-!        │      CG2──HG21
-!  *O════*C    ╱ ╲   
-!        │  HG21 HG22
+!  *     *     *     *     *     *     *     *     *     *     *     *
+!        │     *HG11 *HG12
+!  *HN───*N     ╲   ╱ 
+!        │        *CG1──*HG13
+!        │       ╱
+!  *HA───*CA───*CB─HB  
+!        │       ╲     
+!        │        *CG2──*HG21
+!  *O════*C     ╱   ╲   
+!        │     *HG21 *HG22
 
 ";
 
