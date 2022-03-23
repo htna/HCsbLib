@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace HTLib2.Bioinfo
+﻿namespace HTLib2.Bioinfo
 {
-    using Acid = HBioinfo.Acid;
     public static partial class HStaticBioinfo
     {
         public static partial class HBioinfo
         {
-            public class Acid
+            public partial class Acid
             {
                 // https://www.i2symbol.com/symbols/arrows
                 // https://en.wikibooks.org/wiki/Unicode/List_of_useful_symbols
@@ -20,7 +14,7 @@ namespace HTLib2.Bioinfo
                 // ═║
                 // ╱╲⇖⇗⇘⇙
                 // ␥⑊ ╔╗╚╝
-                public static string[] strucdata =
+                public static string[] struct_shape_2d_data =
 {
 "RESI ALA                                                            ",
 "!         │                                                         ",
@@ -33,7 +27,7 @@ namespace HTLib2.Bioinfo
 "!  *O════*C                                                         ",
 "!         │                                                         ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI ARG                                                            ",
@@ -47,7 +41,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                                          │             ",
 "!         │                                           *HH21         ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI ASN                                                            ",
@@ -61,7 +55,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                                                        ",
 "!         │                                                         ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI ASP                                                            ",
@@ -75,7 +69,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                                                        ",
 "!         │                                                         ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI CYS                                                            ",
@@ -89,7 +83,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                                                        ",
 "!         │                                                         ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI GLN                                                            ",
@@ -103,7 +97,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                                                        ",
 "!         │                                                         ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI GLU                                                            ",
@@ -117,7 +111,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                                                        ",
 "!         │                                                         ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI GLY                                                            ",
@@ -131,7 +125,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                                                        ",
 "!         │                                                         ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI HSD                                                            ",
@@ -145,7 +139,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                  │                                     ",
 "!         │                   *HD2                                  ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI HSE                                                            ",
@@ -159,7 +153,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                  │         ╲                           ",
 "!         │                   *HD2        *HE2                      ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI HSP                                                            ",
@@ -173,7 +167,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                  │         ╲                           ",
 "!         │                   *HD2        *HE2                      ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI ILE                                                            ",
@@ -187,7 +181,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C        ╱   ╲       ╲                                   ",
 "!         │       *HG11   *HG12   *HD3                              ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI LEU                                                            ",
@@ -201,7 +195,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                ╱   ╲                                   ",
 "!         │               *HD21   *HD22                             ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI LYS                                                            ",
@@ -215,7 +209,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                                                        ",
 "!         │                                                         ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI MET                                                            ",
@@ -229,7 +223,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                                                        ",
 "!         │                                                         ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI PHE                                                            ",
@@ -243,7 +237,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                  │       │                             ",
 "!         │                   *HD2    *HE2                          ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI PRO                                                            ",
@@ -259,7 +253,7 @@ namespace HTLib2.Bioinfo
 "!  *O════*C                                                         ",
 "!         │                                                         ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI SER                                                            ",
@@ -273,7 +267,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                                                        ",
 "!         │                                                         ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI THR                                                            ",
@@ -287,7 +281,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C        ╱   ╲                                           ",
 "!         │       *HG21   *HG22                                     ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI TRP                                                            ",
@@ -303,7 +297,7 @@ namespace HTLib2.Bioinfo
 "!                             │       │                             ",
 "!                             *HE1    *HZ2                          ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI TYR                                                            ",
@@ -317,7 +311,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C                  │       │                             ",
 "!         │                   *HD2    *HE2                          ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 "                                                                    ",
 "                                                                    ",
 "RESI VAL                                                            ",
@@ -331,7 +325,7 @@ namespace HTLib2.Bioinfo
 "! *O══════*C        ╱   ╲                                           ",
 "!         │       *HG21   *HG22                                     ",
 "!                                                                   ",
-"! *       *       *       *       *       *       *       *       * ",
+"  *       *       *       *       *       *       *       *       * ",
 };
             }
         }
