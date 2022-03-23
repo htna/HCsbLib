@@ -47,7 +47,7 @@ namespace HTLib2.Bioinfo
     }
     public static partial class HBioinfo
     {
-        public class Acid
+        public partial class Acid
         {
             public readonly string name;                            // full name
             public readonly char?  name1;                           // 1 letter
