@@ -14,7 +14,7 @@ namespace HTLib2.Bioinfo
             {
                 public static object ReadStructShape2D(string resi)
                 {
-
+                    return null;
                 }
             }
         }
