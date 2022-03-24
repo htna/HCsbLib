@@ -14,10 +14,18 @@ namespace HTLib2.Bioinfo
             {
                 public static object ReadStructShape2D(string resi)
                 {
-                    return Struct2D.GetStruct2D(resi);
+                    var graph = Struct2D.GetStruct2D(resi);
+
+                    string strVertCoords   = "VertexCoordinates -> " + graph.GetMathematicaString_VertexCoordinates(0.25, 1);
+                    string strVertexLabels = "VertexLabels -> "      + graph.GetMathematicaString_VertexLabels();
+                    string strEdges        =                           graph.GetMathematicaString_Edges();
+
+
+                    return null;
                 }
                 public partial class Struct2D
                 {
+                    public Dictionary<string, int>           name2vert;
                     public List<(int x, int y, string name)> verts;
                     public List<(string edgetype, int v1, string v1name, int v2, string v2name)> edges;
 
@@ -30,40 +38,42 @@ namespace HTLib2.Bioinfo
                         verts = FindVerts(lines);
                         edges = FindEdges(lines, verts);
 
+                        //Dictionary<string, int> name2vert = new Dictionary<string, int>(verts.Count);
+                        //for(int)
+
                         return new Struct2D
                         {
                             verts = verts,
                             edges = edges,
                         };
-
-                        string strVertCoords   = "VertexCoordinates -> " + ToMathematicaStringVertexCoordinates(verts);
-                        string strVertexLabels = "VertexLabels -> "      + ToMathematicaStringVertexLabels(verts);
-                        string strEdges        = Mathematica.ToString2(    ToMathematicaStringEdges(edges)).Replace("\"","");
-
-                        return null;
                     }
 
-                    public static string ToMathematicaStringVertexCoordinates(List<(int x, int y, string name)> verts)
+                    public string GetMathematicaString_VertexCoordinates(double scale_x = 1, double scale_y = 1, int round_digit = 2)
                     {
                         string str = "";
                         for(int i=0; i<verts.Count; i++)
                         {
-                            str += "," + (i+1) + "->" + Mathematica.ToString2((verts[i].x, verts[i].y));
+                            double x = Math.Round(verts[i].x * scale_x, round_digit); 
+                            double y = Math.Round(verts[i].y * scale_y, round_digit);
+                            str += "," + (i+1) + "->" + Mathematica.ToString2((x,y));
                         }
-                        str = str.Substring(1);
+                        str = str.Substring(1).Replace(" ","");
                         return "{"+str+"}";
                     }
-                    public static string ToMathematicaStringVertexLabels(List<(int x, int y, string name)> verts)
+
+                    public string GetMathematicaString_VertexLabels()
                     {
                         string str = "";
                         for(int i=0; i<verts.Count; i++)
                         {
-                            str += string.Format(",{0}->\"{1}\"", (i+1), (verts[i].name.Trim()));
+                            str += ",{" + (i+1) + ",\"" + verts[i].name.Trim() + "\"}";
                         }
-                        str = str.Substring(1);
-                        return "{"+str+"}";
+                        str = "{" + str.Substring(1) + "}";
+                        str = "Table[item[[1]]->Placed[item[[2]],Center], {item,"+str+"}]";
+                        return str;
                     }
-                    public static string ToMathematicaStringEdges(List<(string edgetype, int v1, string v1name, int v2, string v2name)> edges)
+
+                    public string GetMathematicaString_Edges()
                     {
                         string str = "";
                         foreach(var edge in edges)
