@@ -16,16 +16,16 @@ namespace HTLib2.Bioinfo
                 {
                     var graph = Struct2D.GetStruct2D(resi);
 
-                    string strVertCoords   = "VertexCoordinates -> " + graph.GetMathematicaString_VertexCoordinates(0.25, 1);
-                    string strVertexLabels = "VertexLabels -> "      + graph.GetMathematicaString_VertexLabels();
-                    string strEdges        =                           graph.GetMathematicaString_Edges();
-
+                    var lines = graph.GetMathematicaString_Graph
+                        ( style:"Yellow"
+                        , size:"0.5"
+                        );
 
                     return null;
                 }
                 public partial class Struct2D
                 {
-                    public Dictionary<string, int>           name2vert;
+                    public Dictionary<string, int>           name_ivert;
                     public List<(int x, int y, string name)> verts;
                     public List<(string edgetype, int v1, string v1name, int v2, string v2name)> edges;
 
@@ -38,14 +38,76 @@ namespace HTLib2.Bioinfo
                         verts = FindVerts(lines);
                         edges = FindEdges(lines, verts);
 
-                        //Dictionary<string, int> name2vert = new Dictionary<string, int>(verts.Count);
-                        //for(int)
+                        Dictionary<string, int> name_ivert = new Dictionary<string, int>(verts.Count);
+                        for(int i=0; i<verts.Count; i++)
+                            if(verts[i].name != "")
+                                name_ivert.Add(verts[i].name, i);
 
                         return new Struct2D
                         {
                             verts = verts,
                             edges = edges,
+                            name_ivert = name_ivert,
                         };
+                    }
+
+                    public string[] GetMathematicaString_Graph(object style=null, object size=null)
+                    {
+                        List<string> lines = new List<string>();
+                        lines.Add("Graph[");
+                        lines.Add(                            GetMathematicaString_Edges()                  );
+                        lines.Add(", VertexCoordinates -> " + GetMathematicaString_VertexCoordinates(0.3, 1));
+                        lines.Add(", VertexLabels -> "      + GetMathematicaString_VertexLabels()           );
+                        lines.Add(", VertexSize -> "        + GetMathematicaString_VertexSize(size)         );
+                        lines.Add(", VertexStyle -> "       + GetMathematicaString_VertexStyle(style)       );
+                        lines.Add("]");
+                        return lines.ToArray();
+                    }
+                    public string GetMathematicaString_VertexStyle(object style)                                { return GetMathematicaString_VertexValue(style); }
+                    public string GetMathematicaString_VertexStyle(string style = "Yellow")                     { return GetMathematicaString_VertexValue(style); }
+                    public string GetMathematicaString_VertexStyle(Dictionary<string,string> name_style = null) { return GetMathematicaString_VertexValue(name_style); }
+                    public string GetMathematicaString_VertexSize(object size)                                  { return GetMathematicaString_VertexValue(size); }
+                    public string GetMathematicaString_VertexSize(string size = "0.5")                          { return GetMathematicaString_VertexValue(size); }
+                    public string GetMathematicaString_VertexSize(Dictionary<string,string> name_size = null)   { return GetMathematicaString_VertexValue(name_size); }
+                    public string GetMathematicaString_VertexValue(object value)
+                    {
+                        switch(value)
+                        {
+                            case string strvalue:
+                                return GetMathematicaString_VertexValue(strvalue);
+                            case Dictionary<string, string> name_value:
+                                return GetMathematicaString_VertexValue(name_value);
+                            default:
+                                throw new Exception();
+                        }
+                    }
+                    public string GetMathematicaString_VertexValue(string value)
+                    {
+                        Dictionary<string,string> name_size = new Dictionary<string, string>(verts.Count);
+                        for(int i=0; i<verts.Count; i++)
+                        {
+                            string name = verts[i].name;
+                            if(name == "")
+                                continue;
+                            name_size.Add(name, value);
+                        }
+                        return GetMathematicaString_VertexValue(name_size);
+                    }
+                    public string GetMathematicaString_VertexValue(Dictionary<string,string> name_value)
+                    {
+                        if(name_value == null)
+                            name_value = new Dictionary<string,string>();
+                        string str = "";
+                        for(int i=0; i<verts.Count; i++)
+                        {
+                            string name = verts[i].name;
+                            if(name_value.ContainsKey(name) == false)
+                                continue;
+                            string value = name_value[name];
+                            str += "," + (i+1) + "->" + value;
+                        }
+                        str = str.Substring(1).Replace(" ","");
+                        return "{"+str+"}";
                     }
 
                     public string GetMathematicaString_VertexCoordinates(double scale_x = 1, double scale_y = 1, int round_digit = 2)
@@ -61,12 +123,24 @@ namespace HTLib2.Bioinfo
                         return "{"+str+"}";
                     }
 
-                    public string GetMathematicaString_VertexLabels()
+                    public string GetMathematicaString_VertexLabels(Dictionary<string,string> name_label = null)
                     {
+                        if(name_label == null)
+                        {
+                            name_label = new Dictionary<string, string>(verts.Count);
+                            foreach(var vert in verts)
+                                if(vert.name != "")
+                                    name_label.Add(vert.name, vert.name);
+                        }
                         string str = "";
                         for(int i=0; i<verts.Count; i++)
                         {
-                            str += ",{" + (i+1) + ",\"" + verts[i].name.Trim() + "\"}";
+                            string name  = verts[i].name;
+                            if(name_label.ContainsKey(name) == false)
+                                continue;
+
+                            string label = name_label[name];
+                            str += ",{" + (i+1) + ",\"" + label + "\"}";
                         }
                         str = "{" + str.Substring(1) + "}";
                         str = "Table[item[[1]]->Placed[item[[2]],Center], {item,"+str+"}]";
