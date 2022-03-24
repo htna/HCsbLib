@@ -56,11 +56,14 @@ namespace HTLib2.Bioinfo
                         , int    round_digit = 2
                         , object vertexstyle = null
                         , object vertexsize  = null
-                        , string singlebond  = "Directive[Darker[Gray],Thickness[0.008]]"
-                        , string doublebond  = "Directive[Darker[Gray],Thickness[0.016],Black]"
+                        , string singlebond  = "Directive[Thickness[0.008],Lighter[Gray]]"
+                        , string doublebond  = "Directive[Thickness[0.016],Black]"
                         , string[] options   = null
                         )
                     {
+                        if(vertexstyle == null) vertexstyle = "Yellow";
+                        if(vertexsize  == null) vertexsize  = "0.7";
+
                         List<string> lines = new List<string>();
                         lines.Add("Graph[");
                         lines.Add(                            GetMathematicaString_Edges()                                          );
