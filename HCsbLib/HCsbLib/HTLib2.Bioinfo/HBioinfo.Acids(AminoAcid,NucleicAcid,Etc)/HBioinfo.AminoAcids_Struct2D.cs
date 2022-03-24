@@ -51,24 +51,87 @@ namespace HTLib2.Bioinfo
                         };
                     }
 
-                    public string[] GetMathematicaString_Graph(object style=null, object size=null)
+                    public string[] GetMathematicaString_Graph
+                        ( object style=null
+                        , object size=null
+                        )
                     {
                         List<string> lines = new List<string>();
                         lines.Add("Graph[");
                         lines.Add(                            GetMathematicaString_Edges()                  );
-                        lines.Add(", VertexCoordinates -> " + GetMathematicaString_VertexCoordinates(0.3, 1));
+                        lines.Add(", VertexCoordinates -> " + GetMathematicaString_VertexCoordinates(0.4, 1));
                         lines.Add(", VertexLabels -> "      + GetMathematicaString_VertexLabels()           );
                         lines.Add(", VertexSize -> "        + GetMathematicaString_VertexSize(size)         );
                         lines.Add(", VertexStyle -> "       + GetMathematicaString_VertexStyle(style)       );
+                        lines.Add(", EdgeStyle -> "         + GetMathematicaString_EdgeStyle("Directive[Darker[Gray],Thickness[0.008]]", "Directive[Darker[Gray],Thickness[0.016],Black]"));
                         lines.Add("]");
                         return lines.ToArray();
                     }
+
+                    public string GetMathematicaString_EdgeStyle
+                        ( string singlebond //"Directive[Darker[Gray],Thickness[0.008]]"
+                        , string doublebond //"Directive[Darker[Gray],Thickness[0.016]]"
+                        )
+                    {
+                        Dictionary<(int,int),string> edge_style = new Dictionary<(int,int),string>();
+                        foreach(var edge in edges)
+                        {
+                            switch(edge.edgetype)
+                            {
+                                case "║": case "═": case "╲╲": case "╱╱":
+                                    edge_style.Add((edge.v1,edge.v2), doublebond);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        return GetMathematicaString_EdgeValue
+                            ( default_value: singlebond
+                            ,    edge_value: edge_style
+                            );
+                    }
+                    public string GetMathematicaString_EdgeValue
+                        ( string                    default_value = null
+                        , Dictionary<(int,int),string> edge_value = null
+                        )
+                    {
+                        if((default_value == null) && (edge_value == null))
+                            throw new Exception();
+
+                        if(edge_value == null)
+                           edge_value = new Dictionary<(int,int),string>();
+
+                        string str = "";
+                        foreach(var edge in edges)
+                        {
+                            (int,int) v12 = (edge.v1, edge.v2); string sval12 = null; if(edge_value.ContainsKey(v12)) sval12 = edge_value[v12];
+                            (int,int) v21 = (edge.v2, edge.v1); string sval21 = null; if(edge_value.ContainsKey(v21)) sval21 = edge_value[v21];
+                            
+                            if((sval12 == null) && (sval21 == null)) continue;
+                            if((sval12 != null) && (sval21 != null) && (sval12 != sval21)) throw new Exception();
+
+                            string sval = null;
+                            if(sval12 != null) sval = sval12;
+                            if(sval21 != null) sval = sval21;
+
+                            v12 = v12.HSort();
+                            str += "," + (v12.Item1+1) + "<->" + (v12.Item2+1) + "->" + sval;
+                        }
+
+                        str = str.Substring(1).Replace(" ","");
+                        if(default_value != null) str = "{" + default_value + "," + str + "}";
+                        else                      str = "{" +                       str + "}";
+                        return str;
+                    }
+
                     public string GetMathematicaString_VertexStyle(object style)                                { return GetMathematicaString_VertexValue(style); }
                     public string GetMathematicaString_VertexStyle(string style = "Yellow")                     { return GetMathematicaString_VertexValue(style); }
                     public string GetMathematicaString_VertexStyle(Dictionary<string,string> name_style = null) { return GetMathematicaString_VertexValue(name_style); }
+                    
                     public string GetMathematicaString_VertexSize(object size)                                  { return GetMathematicaString_VertexValue(size); }
                     public string GetMathematicaString_VertexSize(string size = "0.5")                          { return GetMathematicaString_VertexValue(size); }
                     public string GetMathematicaString_VertexSize(Dictionary<string,string> name_size = null)   { return GetMathematicaString_VertexValue(name_size); }
+
                     public string GetMathematicaString_VertexValue(object value)
                     {
                         switch(value)
