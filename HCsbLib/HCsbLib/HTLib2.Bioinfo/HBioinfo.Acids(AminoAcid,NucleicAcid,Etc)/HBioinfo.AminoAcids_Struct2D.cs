@@ -17,8 +17,8 @@ namespace HTLib2.Bioinfo
                     var graph = Struct2D.GetStruct2D(resi);
 
                     var lines = graph.GetMathematicaString_Graph
-                        ( style:"Yellow"
-                        , size:"0.5"
+                        ( vertexstyle:"Yellow"
+                        , vertexsize:"0.5"
                         );
 
                     return null;
@@ -52,18 +52,29 @@ namespace HTLib2.Bioinfo
                     }
 
                     public string[] GetMathematicaString_Graph
-                        ( object style=null
-                        , object size=null
+                        ( double scale_x     = 0.4
+                        , double scale_y     = 1
+                        , int    round_digit = 2
+                        , object vertexstyle = null
+                        , object vertexsize  = null
+                        , string singlebond  = "Directive[Darker[Gray],Thickness[0.008]]"
+                        , string doublebond  = "Directive[Darker[Gray],Thickness[0.016],Black]"
+                        , string[] options   = null
                         )
                     {
                         List<string> lines = new List<string>();
                         lines.Add("Graph[");
-                        lines.Add(                            GetMathematicaString_Edges()                  );
-                        lines.Add(", VertexCoordinates -> " + GetMathematicaString_VertexCoordinates(0.4, 1));
-                        lines.Add(", VertexLabels -> "      + GetMathematicaString_VertexLabels()           );
-                        lines.Add(", VertexSize -> "        + GetMathematicaString_VertexSize(size)         );
-                        lines.Add(", VertexStyle -> "       + GetMathematicaString_VertexStyle(style)       );
-                        lines.Add(", EdgeStyle -> "         + GetMathematicaString_EdgeStyle("Directive[Darker[Gray],Thickness[0.008]]", "Directive[Darker[Gray],Thickness[0.016],Black]"));
+                        lines.Add(                            GetMathematicaString_Edges()                                          );
+                        lines.Add(", VertexCoordinates -> " + GetMathematicaString_VertexCoordinates(scale_x, scale_y, round_digit) );
+                        lines.Add(", VertexLabels -> "      + GetMathematicaString_VertexLabels()                                   );
+                        lines.Add(", VertexSize -> "        + GetMathematicaString_VertexSize (vertexsize)                          );
+                        lines.Add(", VertexStyle -> "       + GetMathematicaString_VertexStyle(vertexstyle)                         );
+                        lines.Add(", EdgeStyle -> "         + GetMathematicaString_EdgeStyle(singlebond, doublebond)                );
+                        if(options != null)
+                        {
+                            foreach(string option in options)
+                                lines.Add(", " + option);
+                        }
                         lines.Add("]");
                         return lines.ToArray();
                     }
