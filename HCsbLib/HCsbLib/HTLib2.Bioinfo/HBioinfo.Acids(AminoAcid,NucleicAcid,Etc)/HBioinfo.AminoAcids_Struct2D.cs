@@ -12,16 +12,15 @@ namespace HTLib2.Bioinfo
         {
             public partial class Acid
             {
-                public static object ReadStructShape2D(string resi)
+                public static Struct2D GetStruct2D(string resi)
                 {
-                    var graph = Struct2D.GetStruct2D(resi);
+                    Struct2D aastruct2d = Struct2D.GetStruct2D(resi);
+                    return aastruct2d;
 
-                    var lines = graph.GetMathematicaString_Graph
+                    var lines = aastruct2d.GetMathematicaString_Graph
                         ( vertexstyle:"Yellow"
                         , vertexsize:"0.5"
                         );
-
-                    return null;
                 }
                 public partial class Struct2D
                 {
