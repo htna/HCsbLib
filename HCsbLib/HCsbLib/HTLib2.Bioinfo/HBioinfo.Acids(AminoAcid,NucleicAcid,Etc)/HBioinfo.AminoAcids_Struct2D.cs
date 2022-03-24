@@ -65,7 +65,7 @@ namespace HTLib2.Bioinfo
                         if(vertexsize  == null) vertexsize  = "0.7";
 
                         List<string> lines = new List<string>();
-                        lines.Add("Graph[");
+                        lines.Add("p = Graph[");
                         lines.Add(                            GetMathematicaString_Edges()                                          );
                         lines.Add(", VertexCoordinates -> " + GetMathematicaString_VertexCoordinates(scale_x, scale_y, round_digit) );
                         lines.Add(", VertexLabels -> "      + GetMathematicaString_VertexLabels()                                   );
@@ -77,7 +77,7 @@ namespace HTLib2.Bioinfo
                             foreach(string option in options)
                                 lines.Add(", " + option);
                         }
-                        lines.Add("]");
+                        lines.Add("];");
                         return lines.ToArray();
                     }
 
