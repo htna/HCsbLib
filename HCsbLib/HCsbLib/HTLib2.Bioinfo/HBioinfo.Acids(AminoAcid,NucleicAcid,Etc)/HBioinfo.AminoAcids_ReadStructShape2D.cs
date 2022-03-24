@@ -14,19 +14,66 @@ namespace HTLib2.Bioinfo
             {
                 public static object ReadStructShape2D(string resi)
                 {
-                    return CReadStructShape2D.ReadStructShape2D(resi);
+                    return Struct2D.GetStruct2D(resi);
                 }
-                public class CReadStructShape2D
+                public partial class Struct2D
                 {
-                    public static object ReadStructShape2D(string resn)
+                    public List<(int x, int y, string name)> verts;
+                    public List<(string edgetype, int v1, string v1name, int v2, string v2name)> edges;
+
+                    public static Struct2D GetStruct2D(string resn)
                     {
+                        List<(int x, int y, string name)> verts;
+                        List<(string edgetype, int v1, string v1name, int v2, string v2name)> edges;
+
                         string[] lines = GetStructShape2DDataLines(resn);
-                        //ColumnToPtX(lines[0]);
-                        char[,] map = LinesToMap(lines);
-                        List<(int x, int y, string name)> verts = FindVerts(lines);
-                        List<(string edgetype, int v1, string v1name, int v2, string v2name)> edges = FindEdges(lines, verts);
+                        verts = FindVerts(lines);
+                        edges = FindEdges(lines, verts);
+
+                        return new Struct2D
+                        {
+                            verts = verts,
+                            edges = edges,
+                        };
+
+                        string strVertCoords   = "VertexCoordinates -> " + ToMathematicaStringVertexCoordinates(verts);
+                        string strVertexLabels = "VertexLabels -> "      + ToMathematicaStringVertexLabels(verts);
+                        string strEdges        = Mathematica.ToString2(    ToMathematicaStringEdges(edges)).Replace("\"","");
+
                         return null;
                     }
+
+                    public static string ToMathematicaStringVertexCoordinates(List<(int x, int y, string name)> verts)
+                    {
+                        string str = "";
+                        for(int i=0; i<verts.Count; i++)
+                        {
+                            str += "," + (i+1) + "->" + Mathematica.ToString2((verts[i].x, verts[i].y));
+                        }
+                        str = str.Substring(1);
+                        return "{"+str+"}";
+                    }
+                    public static string ToMathematicaStringVertexLabels(List<(int x, int y, string name)> verts)
+                    {
+                        string str = "";
+                        for(int i=0; i<verts.Count; i++)
+                        {
+                            str += string.Format(",{0}->\"{1}\"", (i+1), (verts[i].name.Trim()));
+                        }
+                        str = str.Substring(1);
+                        return "{"+str+"}";
+                    }
+                    public static string ToMathematicaStringEdges(List<(string edgetype, int v1, string v1name, int v2, string v2name)> edges)
+                    {
+                        string str = "";
+                        foreach(var edge in edges)
+                        {
+                            str += "," + (edge.v1+1) + "<->" + (edge.v2+1);
+                        }
+                        str = str.Substring(1);
+                        return "{"+str+"}";
+                    }
+
 
                     public static Dictionary<string, List<string>> _resn_StructShape2DDataLines = null;
                     public static string[] GetStructShape2DDataLines(string resn)
@@ -62,30 +109,30 @@ namespace HTLib2.Bioinfo
                         return _resn_StructShape2DDataLines[resn].ToArray();
                     }
 
-                    public static char[,] LinesToMap(string[] lines)
-                    {
-                        int max_line_length = -1;
-                        foreach(var line in lines)
-                            max_line_length = Math.Max(max_line_length, line.Length);
-                    
-                        char[,] map = new char[max_line_length, lines.Length];
-                        for(int x=0; x<map.GetLength(0); x++)
-                            for(int y=0; y<map.GetLength(1); y++)
-                                map[x,y] = ' ';
-                    
-                        for(int y=0; y<lines.Length; y++)
-                        {
-                            string line = lines[y];
-                            for(int x=0; x<line.Length; x++)
-                            {
-                                char ch = line[x];
-                                if(ch == '!') ch = ' ';
-                                map[x,y] = ch;
-                            }
-                        }
-                    
-                        return map;
-                    }
+                    //  public static char[,] LinesToMap(string[] lines)
+                    //  {
+                    //      int max_line_length = -1;
+                    //      foreach(var line in lines)
+                    //          max_line_length = Math.Max(max_line_length, line.Length);
+                    //  
+                    //      char[,] map = new char[max_line_length, lines.Length];
+                    //      for(int x=0; x<map.GetLength(0); x++)
+                    //          for(int y=0; y<map.GetLength(1); y++)
+                    //              map[x,y] = ' ';
+                    //  
+                    //      for(int y=0; y<lines.Length; y++)
+                    //      {
+                    //          string line = lines[y];
+                    //          for(int x=0; x<line.Length; x++)
+                    //          {
+                    //              char ch = line[x];
+                    //              if(ch == '!') ch = ' ';
+                    //              map[x,y] = ch;
+                    //          }
+                    //      }
+                    //  
+                    //      return map;
+                    //  }
 
                     public static List<(int x, int y, string name)> FindVerts(string[] lines)
                     {

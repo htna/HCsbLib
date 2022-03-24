@@ -6,15 +6,17 @@
         {
             public partial class Acid
             {
-                // https://www.i2symbol.com/symbols/arrows
-                // https://en.wikibooks.org/wiki/Unicode/List_of_useful_symbols
-                // https://w3c.github.io/xml-entities/025.html
-                // https://www.ssec.wisc.edu/~tomw/java/unicode.html
-                // ─│
-                // ═║
-                // ╱╲⇖⇗⇘⇙
-                // ␥⑊ ╔╗╚╝
-                public static string[] struct_shape_2d_data =
+                public partial class Struct2D
+                {
+                    // https://www.i2symbol.com/symbols/arrows
+                    // https://en.wikibooks.org/wiki/Unicode/List_of_useful_symbols
+                    // https://w3c.github.io/xml-entities/025.html
+                    // https://www.ssec.wisc.edu/~tomw/java/unicode.html
+                    // ─│
+                    // ═║
+                    // ╱╲⇖⇗⇘⇙
+                    // ␥⑊ ╔╗╚╝
+                    public static string[] struct_shape_2d_data =
 {
 "!!*       *       *       *       *       *       *       *       * ",
 "RESI ALA                                                            ",
@@ -329,6 +331,7 @@
 "!         │       *HG21   *HG22                                     ",
 "!         *                                                         ",
 };
+                }
             }
         }
     }
