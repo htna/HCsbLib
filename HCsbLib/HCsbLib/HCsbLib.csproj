@@ -250,6 +250,8 @@
     <Compile Include="HTLib2.Bioinfo\ForceField\ForceField.Pw\ForceField.PwImproper.cs" />
     <Compile Include="HTLib2.Bioinfo\ForceField\ForceField.Pw\ForceField.PwVdw.cs" />
     <Compile Include="HTLib2.Bioinfo\ForceField\ForceField.Rigidbody.cs" />
+    <Compile Include="HTLib2.Bioinfo\HBioinfo.Acids%28AminoAcid,NucleicAcid,Etc%29\HBioinfo.AminoAcids_Struct2D.cs" />
+    <Compile Include="HTLib2.Bioinfo\HBioinfo.Acids%28AminoAcid,NucleicAcid,Etc%29\HBioinfo.AminoAcids_Struct2D_Data.cs" />
     <Compile Include="HTLib2.Bioinfo\HBioinfo.Acids%28AminoAcid,NucleicAcid,Etc%29\HBioinfo.AminoAcids.cs" />
     <Compile Include="HTLib2.Bioinfo\HBioinfo.BFactor\BFactor.cs" />
     <Compile Include="HTLib2.Bioinfo\HBioinfo.BFactor\BFactor.ModeContribToBFactorCorr.cs" />
