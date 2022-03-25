@@ -37,6 +37,8 @@ namespace HTLib2.Bioinfo
                         verts = FindVerts(lines);
                         edges = FindEdges(lines, verts);
 
+                        VertsUpSideDown(verts);
+
                         Dictionary<string, int> name_ivert = new Dictionary<string, int>(verts.Count);
                         for(int i=0; i<verts.Count; i++)
                             if(verts[i].name != "")
@@ -50,6 +52,49 @@ namespace HTLib2.Bioinfo
                         };
                     }
 
+                    public (string strverts, string stredges) GetMathematicaStringGraphInfo(Dictionary<string,string[]> name_infos = null)
+                    {
+                        if(name_infos == null)
+                            name_infos = new Dictionary<string, string[]>();
+                        ///////////////////////////////////////////////////////////////////////////////
+                        string strverts = "";
+                        for(int v=0; v<verts.Count; v++)
+                        {
+                            var vert = verts[v];
+                            string name    = vert.name;
+
+                            string str;
+
+                            str = "" + (v+1) + "->"
+                                + "{"
+                                + string.Format("{0},{1},'{2}'", vert.x, vert.y, name).Replace("'","\"");
+                            if(name != "")
+                            {
+                                if(name_infos.ContainsKey(name))
+                                    foreach(string info in name_infos[name])
+                                        str += "," + info;
+                                else
+                                    throw new Exception();
+                            }
+                            str += "}";
+
+                            strverts += "," + str;
+                        }
+                        strverts = "{" + strverts.Substring(1) + "}";
+                        ///////////////////////////////////////////////////////////////////////////////
+                        string stredges = "";
+                        foreach(var edge in edges)
+                        {
+                            string stredge = string.Format("{0}<->{1}->['{2}']", (edge.v1+1), (edge.v2+1), edge.edgetype)
+                                .Replace("'","\"")
+                                .Replace("[","{")
+                                .Replace("]","}");
+                            stredges += "," + stredge;
+                        }
+                        stredges = "{" + stredges.Substring(1) + "}";
+                        ///////////////////////////////////////////////////////////////////////////////
+                        return (strverts, stredges);
+                    }
                     public ( string strEdges            
                            , string strVertexCoordinates
                            , string strVertexLabels     
@@ -318,6 +363,16 @@ namespace HTLib2.Bioinfo
                     //      return map;
                     //  }
 
+                    public static void VertsUpSideDown(List<(int x, int y, string name)> verts)
+                    {
+                        int max_y = verts.HEnumItem2().Max();
+                        for(int i=0; i<verts.Count; i++)
+                        {
+                            var  vert = verts[i];
+                            var nvert = (vert.x, max_y-vert.y, vert.name);
+                            verts[i] = nvert;
+                        }
+                    }
                     public static List<(int x, int y, string name)> FindVerts(string[] lines)
                     {
                         List<(int x, int y, string name)> verts = new List<(int x, int y, string name)>();
@@ -366,19 +421,19 @@ namespace HTLib2.Bioinfo
                                     case '!':
                                     case ' ':
                                         break;
-                                    case '│': { (v1,v2) = FindEdge_Up_Down   (lines, verts, x, y); edgeset.Add((v1,v2,"│")); } break;
-                                    case '║': { (v1,v2) = FindEdge_Up_Down   (lines, verts, x, y); edgeset.Add((v1,v2,"║")); } break;
-                                    case '─': { (v1,v2) = FindEdge_Left_Right(lines, verts, x, y); edgeset.Add((v1,v2,"─")); } break;
-                                    case '═': { (v1,v2) = FindEdge_Left_Right(lines, verts, x, y); edgeset.Add((v1,v2,"═")); }  break;
+                                    case '│': { (v1,v2) = FindEdge_Up_Down   (lines, verts, x, y); edgeset.Add((v1,v2,"single")); } break;
+                                    case '║': { (v1,v2) = FindEdge_Up_Down   (lines, verts, x, y); edgeset.Add((v1,v2,"double")); } break;
+                                    case '─': { (v1,v2) = FindEdge_Left_Right(lines, verts, x, y); edgeset.Add((v1,v2,"single")); } break;
+                                    case '═': { (v1,v2) = FindEdge_Left_Right(lines, verts, x, y); edgeset.Add((v1,v2,"double")); }  break;
                                     case '╲':
                                         (v1,v2) = FindEdge_UpLeft_DownRight(lines, verts, x, y);
-                                        if(line[x+1] == '╲') { edgeset.Add((v1,v2,"╲╲")); x++; }
-                                        else                 { edgeset.Add((v1,v2,"╲" ));      }
+                                        if(line[x+1] == '╲') { edgeset.Add((v1,v2,"double")); x++; }
+                                        else                 { edgeset.Add((v1,v2,"single" ));      }
                                         break;
                                     case '╱':
                                         (v1,v2) = FindEdge_UpRight_DownLeft(lines, verts, x, y);
-                                        if(line[x+1] == '╱') { edgeset.Add((v1,v2,"╱╱")); x++; }
-                                        else                 { edgeset.Add((v1,v2,"╱" ));      }
+                                        if(line[x+1] == '╱') { edgeset.Add((v1,v2,"double")); x++; }
+                                        else                 { edgeset.Add((v1,v2,"single" ));      }
                                         break;
                                 }
                             }
