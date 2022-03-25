@@ -17,10 +17,10 @@ namespace HTLib2.Bioinfo
                     Struct2D aastruct2d = Struct2D.GetStruct2D(resi);
                     return aastruct2d;
 
-                    var lines = aastruct2d.GetMathematicaString_Graph
-                        ( vertexstyle:"Yellow"
-                        , vertexsize:"0.5"
-                        );
+                    //var lines = aastruct2d.GetMathematicaString_Graph
+                    //    ( vertexstyle:"Yellow"
+                    //    , vertexsize:"0.5"
+                    //    );
                 }
                 public partial class Struct2D
                 {
@@ -50,8 +50,16 @@ namespace HTLib2.Bioinfo
                         };
                     }
 
-                    public string[] GetMathematicaString_Graph
-                        ( double scale_x     = 0.4
+                    public ( string strEdges            
+                           , string strVertexCoordinates
+                           , string strVertexLabels     
+                           , string strVertexSize       
+                           , string strVertexStyle      
+                           , string strEdgeStyle        
+                           )
+                        GetMathematicaString_Graph
+                        ( List<string> lines
+                        , double scale_x     = 0.4
                         , double scale_y     = 1
                         , int    round_digit = 2
                         , object vertexstyle = null
@@ -64,21 +72,38 @@ namespace HTLib2.Bioinfo
                         if(vertexstyle == null) vertexstyle = "Yellow";
                         if(vertexsize  == null) vertexsize  = "0.7";
 
-                        List<string> lines = new List<string>();
-                        lines.Add("p = Graph[");
-                        lines.Add(                            GetMathematicaString_Edges()                                          );
-                        lines.Add(", VertexCoordinates -> " + GetMathematicaString_VertexCoordinates(scale_x, scale_y, round_digit) );
-                        lines.Add(", VertexLabels -> "      + GetMathematicaString_VertexLabels()                                   );
-                        lines.Add(", VertexSize -> "        + GetMathematicaString_VertexSize (vertexsize)                          );
-                        lines.Add(", VertexStyle -> "       + GetMathematicaString_VertexStyle(vertexstyle)                         );
-                        lines.Add(", EdgeStyle -> "         + GetMathematicaString_EdgeStyle(singlebond, doublebond)                );
-                        if(options != null)
+                        string strEdges             = GetMathematicaString_Edges()                                         ;
+                        string strVertexCoordinates = GetMathematicaString_VertexCoordinates(scale_x, scale_y, round_digit);
+                        string strVertexLabels      = GetMathematicaString_VertexLabels()                                  ;
+                        string strVertexSize        = GetMathematicaString_VertexSize (vertexsize)                         ;
+                        string strVertexStyle       = GetMathematicaString_VertexStyle(vertexstyle)                        ;
+                        string strEdgeStyle         = GetMathematicaString_EdgeStyle(singlebond, doublebond)               ;
+
+                        if(lines != null)
                         {
-                            foreach(string option in options)
-                                lines.Add(", " + option);
+                            lines.Add("p = Graph[");
+                            lines.Add(                            strEdges             );
+                            lines.Add(", VertexCoordinates -> " + strVertexCoordinates );
+                            lines.Add(", VertexLabels -> "      + strVertexLabels      );
+                            lines.Add(", VertexSize -> "        + strVertexSize        );
+                            lines.Add(", VertexStyle -> "       + strVertexStyle       );
+                            lines.Add(", EdgeStyle -> "         + strEdgeStyle         );
+                            if(options != null)
+                            {
+                                foreach(string option in options)
+                                    lines.Add(", " + option);
+                            }
+                            lines.Add("];");
                         }
-                        lines.Add("];");
-                        return lines.ToArray();
+
+                        return 
+                        ( strEdges
+                        , strVertexCoordinates
+                        , strVertexLabels
+                        , strVertexSize
+                        , strVertexStyle
+                        , strEdgeStyle
+                        );
                     }
 
                     public string GetMathematicaString_EdgeStyle
