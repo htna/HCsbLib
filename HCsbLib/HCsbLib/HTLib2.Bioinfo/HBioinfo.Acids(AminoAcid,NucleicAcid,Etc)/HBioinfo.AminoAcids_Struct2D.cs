@@ -84,7 +84,7 @@ namespace HTLib2.Bioinfo
                             lines.Add("p = Graph[");
                             lines.Add(                            strEdges             );
                             lines.Add(", VertexCoordinates -> " + strVertexCoordinates );
-                            lines.Add(", VertexLabels -> "      + strVertexLabels      );
+                            lines.Add(", VertexLabels -> Table[item[[1]]->Placed[item[[2]],Center], {item,"+strVertexLabels+"}]");
                             lines.Add(", VertexSize -> "        + strVertexSize        );
                             lines.Add(", VertexStyle -> "       + strVertexStyle       );
                             lines.Add(", EdgeStyle -> "         + strEdgeStyle         );
@@ -244,7 +244,6 @@ namespace HTLib2.Bioinfo
                             str += ",{" + (i+1) + ",\"" + label + "\"}";
                         }
                         str = "{" + str.Substring(1) + "}";
-                        str = "Table[item[[1]]->Placed[item[[2]],Center], {item,"+str+"}]";
                         return str;
                     }
 
