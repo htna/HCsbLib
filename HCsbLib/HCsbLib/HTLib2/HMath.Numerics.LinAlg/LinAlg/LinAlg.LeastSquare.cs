@@ -216,7 +216,6 @@ namespace HTLib2
                             }
                             throw new NotImplementedException();
                     }
-                    break;
             }
         }
         public static CLeastSquare LeastSquare
