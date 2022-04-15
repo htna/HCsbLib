@@ -138,15 +138,15 @@ namespace HTLib2
             }
             return mat;
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static MatrixSymmetric<T> FromMatrix  <T  >(IMatrix<T> mat) { return _FromMatrix<T,T>(mat); }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static MatrixSymmetric<T> FromMatrixTU<T,U>(IMatrix<U> mat) { return _FromMatrix<T,U>(mat); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static MatrixSymmetric<T1> FromMatrix  <T1   >(IMatrix<T1> mat) { return _FromMatrix<T1,T1>(mat); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static MatrixSymmetric<T1> FromMatrixTU<T1,U1>(IMatrix<U1> mat) { return _FromMatrix<T1,U1>(mat); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static MatrixSymmetric<T> _FromMatrix<T,U>(IMatrix<U> mat)
+        public static MatrixSymmetric<T1> _FromMatrix<T1,U1>(IMatrix<U1> mat)
         {
             if(mat.ColSize != mat.RowSize)
                 throw new Exception("(mat.ColSize != mat.RowSize)");
             int size = mat.ColSize;
-            MatrixSymmetric<T> smat = MatrixSymmetric<T>.Zeros(size);
+            MatrixSymmetric<T1> smat = MatrixSymmetric<T1>.Zeros(size);
             for(int c=0; c<size; c++)
             {
                 for(int r=0; r<=c; r++)
@@ -154,7 +154,7 @@ namespace HTLib2
                     dynamic cr_val = mat[c,r];
                     dynamic rc_val = mat[r,c];
                     dynamic val = (cr_val + rc_val)/2;
-                    smat[c,r] = (T)val;
+                    smat[c,r] = (T1)val;
                 }
             }
             return smat;
