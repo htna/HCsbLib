@@ -18,9 +18,7 @@ namespace HTLib2
         public static bool Check(bool istrue)
         {
             if(IsDebuggerAttached == false)
-                #pragma warning disable CS0162
                 return false;
-                #pragma warning restore CS0162
             return istrue;
         }
 
