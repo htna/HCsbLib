@@ -9,8 +9,8 @@ namespace HTLib2
     public partial class HDebug
 	{
 #if DEBUG
-        public static bool True  { get { return true ; } }
-        public static bool False { get { return false; } }
+        public static bool True  { get { return _True ; } }  static bool _True  = true ;
+        public static bool False { get { return _False; } }  static bool _False = false;
 #else
         public const bool True  = true ;
         public const bool False = false;
