@@ -45,6 +45,7 @@ namespace HTLib2.Bioinfo
                 , double[] coordj, Tinker.Prm.Charge chgj
                 )
             {
+#pragma warning disable CS0162 // Rethrow to preserve stack details
                 throw new NotImplementedException();
                                                         /// unit.i
                 const double coulomb = 332.063714;      //        parameter (coulomb=332.063714d0)

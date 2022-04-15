@@ -45,6 +45,7 @@ namespace HTLib2.Bioinfo
                 )
             {
                 throw new NotImplementedException();
+#pragma warning disable CS0162 // Rethrow to preserve stack details
                                                         /// unit.i
                 const double coulomb = 332.063714;      //        parameter (coulomb=332.063714d0)
                                                         /// initprm.f

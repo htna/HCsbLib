@@ -45,6 +45,7 @@ namespace HTLib2.Bioinfo
                 , double[] coordj, Tinker.Prm.Vdw vdwj
                 )
             {
+#pragma warning disable CS0162 // Rethrow to preserve stack details
                 throw new NotImplementedException();
                                                                                 /// c
                                                                                 /// c

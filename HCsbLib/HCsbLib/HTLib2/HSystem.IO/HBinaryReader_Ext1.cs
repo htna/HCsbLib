@@ -117,6 +117,7 @@ namespace HTLib2
                     return values;
                 case 2:
                     throw new NotImplementedException();
+#pragma warning disable CS0162 // Rethrow to preserve stack details
                     HDebug.ToDo("check");
                     int leng0 = reader.ReadInt32();
                     int leng1 = reader.ReadInt32();
@@ -128,6 +129,7 @@ namespace HTLib2
                         values.SetValue(value, i0, i1);
                     }
                     return values;
+#pragma warning restore CS0162 // Rethrow to preserve stack details
                 default:
                     throw new NotImplementedException();
             }
