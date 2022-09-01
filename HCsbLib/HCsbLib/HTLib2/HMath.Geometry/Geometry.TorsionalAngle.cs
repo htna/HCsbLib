@@ -48,7 +48,7 @@ namespace HTLib2
                 double d3 = LinAlg.DotProd(n2, n3);     double a3 = Math.Sign(Math.Sin(d3)) * Math.Acos(d3);
               //double d4 = LinAlg.DotProd(n3, n4);     double a4 = Math.Sign(Math.Sin(d4)) * Math.Acos(d4);
 
-                HDebug.Assert(Math.Abs(d3 - angle) < 0.00000001);
+                HDebug.Assert(Math.Abs(a3 - angle) < 0.00000001);
             }
             return angle;
         }
