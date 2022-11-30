@@ -55,8 +55,8 @@ namespace HTLib2.Bioinfo
                 extre["scale1"] = x[0];
                 extre["shift1"] = x[1];
                 extre["info2"] = "approx (bfactor_input * scale2 = bfactor_pdb)";
-                extre["scale2"] = LinAlg.VtV(bfactor_input.ToArray(), bfactor_pdb.ToArray())    // x = (A' * A)^-1 * (A' * b)  <= a,b: column vector
-                                / LinAlg.VtV(bfactor_input.ToArray(), bfactor_input.ToArray()); //     (a' * a) / (a' * a)     <= A  : matrix
+                extre["scale2"] = LinAlg.VtV(bfactor_input.HToVectorT(), bfactor_pdb.HToVectorT())    // x = (A' * A)^-1 * (A' * b)  <= a,b: column vector
+                                / LinAlg.VtV(bfactor_input.HToVectorT(), bfactor_input.HToVectorT()); //     (a' * a) / (a' * a)     <= A  : matrix
             }
             return corr;
         }

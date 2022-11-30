@@ -4,6 +4,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
@@ -422,6 +423,7 @@ namespace HTLib2
             //  //Debug.AssertToleranceIf(lvec.Size<100, 0.00000001, Vector.VtV(lvec, Vector.MV(mat, rvec)) - VMV);
             //  return VMV;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MatrixByArr M_Mt(MatrixByArr lmat, MatrixByArr rmat)
         {
             // M + Mt
@@ -433,7 +435,8 @@ namespace HTLib2
                     MMt[c, r] += rmat[r, c];
             return MMt;
         }
-        public static double VtV(Vector l, Vector r)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double VtV(IVector<double> l, IVector<double> r)
         {
             HDebug.Assert(l.Size == r.Size);
             int size = l.Size;
@@ -442,6 +445,7 @@ namespace HTLib2
                 result += l[i] * r[i];
             return result;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double[] ListVtV(Vector l, IList<Vector> rs)
         {
             double[] listvtv = new double[rs.Count];
