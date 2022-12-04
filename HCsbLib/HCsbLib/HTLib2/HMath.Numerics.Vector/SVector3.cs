@@ -121,12 +121,20 @@ namespace HTLib2
         {
             return new SVector3();
         }
-        public static bool EqualContents(SVector3 a, SVector3 b)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Equals(ref SVector3 a, ref SVector3 b)
         {
-            if(a.v0 != b.v0) return false;
-            if(a.v1 != b.v1) return false;
-            if(a.v2 != b.v2) return false;
+            if(EqualsDouble(a.v0, b.v0) == false) return false;
+            if(EqualsDouble(a.v1, b.v1) == false) return false;
+            if(EqualsDouble(a.v2, b.v2) == false) return false;
             return true;
+            static bool EqualsDouble(double a, double b)
+            {
+                if(double.IsNaN             (a) && double.IsNaN             (b)) return true;
+                if(double.IsPositiveInfinity(a) && double.IsPositiveInfinity(b)) return true;
+                if(double.IsNegativeInfinity(a) && double.IsNegativeInfinity(b)) return true;
+                return (a == b);
+            }
         }
         public override string ToString()
         {
@@ -135,24 +143,28 @@ namespace HTLib2
             HStatic.HToString(this, sb, "0.00000", null, "{", "}", ", ");
             return sb.ToString();
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateByMul(double mul)
         {
             v0 *= mul;
             v1 *= mul;
             v2 *= mul;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateByAdd(double add)
         {
             v0 += add;
             v1 += add;
             v2 += add;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateByAdd(SVector3 add)
         {
             v0 += add.v0;
             v1 += add.v1;
             v2 += add.v2;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateByAdd(IVector<double> add)
         {
             if(add.Size != 3)
@@ -161,6 +173,7 @@ namespace HTLib2
             v1 += add[1];
             v2 += add[2];
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateByAdd(IVector<double> add, double add_mul)
         {
             if(add.Size != 3)
@@ -206,6 +219,7 @@ namespace HTLib2
             result.v2 = l * r.v2;
 			return result;
 		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static SVector3 operator*(SVector3 l, double r)
 		{
 			SVector3 result = default;
