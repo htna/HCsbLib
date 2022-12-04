@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
-    public struct SVector3 : IVector<double>
+    public struct SVector3 : IVector<double>, IBinarySerializable
     {
         public double v0, v1, v2;
         ///////////////////////////////////////////////////
@@ -58,7 +58,38 @@ namespace HTLib2
             return new double[] { v0, v1, v2 };
         }
         // IVector<double>
-        ///////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
+        // IBinarySerializable
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void BinarySerialize(HBinaryWriter writer)
+        {
+            writer.Write(v0);
+            writer.Write(v1);
+            writer.Write(v2);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SVector3(HBinaryReader reader)
+        {
+            reader.Read(out v0);
+            reader.Read(out v1);
+            reader.Read(out v2);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void BinarySerialize(ref SVector3 vec, HBinaryWriter writer)
+        {
+            writer.Write(vec.v0);
+            writer.Write(vec.v1);
+            writer.Write(vec.v2);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void BinaryDeserialize(out SVector3 vec, HBinaryReader reader)
+        {
+            reader.Read(out vec.v0);
+            reader.Read(out vec.v1);
+            reader.Read(out vec.v2);
+        }
+        // IBinarySerializable
+        ////////////////////////////////////////////////////////////////////////////////////
 
         public SVector3( double v0, double v1, double v2 )
         {
