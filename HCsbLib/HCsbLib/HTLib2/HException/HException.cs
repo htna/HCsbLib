@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Security;
+using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
@@ -13,24 +14,55 @@ namespace HTLib2
     [ComVisible(true)]
     public class HException : Exception
     {
-        public HException()
+        int    line;
+        string path;
+        public HException
+            ( [CallerLineNumber] int    line = 0
+            , [CallerFilePath  ] string path = null
+            )
         {
+            this.line = line;
+            this.path = path    ;
             HDebug.Assert(false);
         }
-        public HException(string message)
+        public HException(string message
+            , [CallerLineNumber] int    line = 0
+            , [CallerFilePath  ] string path = null
+            )
             : base(message)
         {
+            this.line = line;
+            this.path = path;
             HDebug.Assert(false);
         }
-        protected HException(SerializationInfo info, StreamingContext context)
+        protected HException(SerializationInfo info, StreamingContext context
+            , [CallerLineNumber] int    line = 0
+            , [CallerFilePath  ] string path = null
+            )
             : base(info, context)
         {
+            this.line = line;
+            this.path = path;
             HDebug.Assert(false);
         }
-        public HException(string message, Exception innerException)
+        public HException(string message, Exception innerException
+            , [CallerLineNumber] int    line = 0
+            , [CallerFilePath  ] string path = null
+            )
             : base(message, innerException)
         {
+            this.line = line;
+            this.path = path;
             HDebug.Assert(false);
+        }
+        public override string Message
+        {
+            get
+            {
+                string msg = base.Message;
+                msg += string.Format(" [line {0} in {1}]", line, path);
+                return msg;
+            }
         }
     }
     public partial class HDebug
