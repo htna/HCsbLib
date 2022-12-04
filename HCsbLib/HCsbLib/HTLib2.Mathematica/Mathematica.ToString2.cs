@@ -210,6 +210,17 @@ namespace HTLib2
             }
             text.Append("}");
         }
+        protected static void _ToString2<T>(StringBuilder text, IVector<T> obj, string formatInt, string formatDouble, string formatString)
+        //protected static void _ToString2(StringBuilder text, string format, IMatrix<double> obj)
+        {
+            text.Append("{");
+            for(int i=0; i<obj.Size; i++)
+            {
+                if(i != 0) text.Append(",");
+                _ToString2(text, obj[i], formatInt, formatDouble, formatString);
+            }
+            text.Append("}");
+        }
         protected static void _ToString2(StringBuilder text, object obj, string formatInt, string formatDouble, string formatString)
         {
             try
@@ -222,6 +233,12 @@ namespace HTLib2
                 {
                     Vector data = (Vector)obj;
                     _ToString2(text, data._data, formatInt, formatDouble, formatString);
+                    return;
+                }
+                if(name == typeof(SVector3).FullName)
+                {
+                    SVector3 data = (SVector3)obj;
+                    _ToString2(text, data, formatInt, formatDouble, formatString);
                     return;
                 }
                 if(name == typeof(int).FullName)
