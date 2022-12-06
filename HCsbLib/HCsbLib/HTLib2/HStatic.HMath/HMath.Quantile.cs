@@ -18,7 +18,13 @@ namespace HTLib2
         public static double HQuantile(this IEnumerable<double> seq, double quantile, out List<double> sortedseq) { return Quantile(seq, quantile, out sortedseq); }
         public static double Quantile(IEnumerable<double> seq, double quantile, out List<double> sortedseq)
         {
-            sortedseq=seq.ToList();
+            sortedseq = null;
+            return _Quantile(seq, quantile, ref sortedseq);
+        }
+        public static double _Quantile(IEnumerable<double> seq, double quantile, ref List<double> sortedseq)
+        {
+            if(sortedseq == null) { sortedseq = seq.ToList(); }
+            else                  { sortedseq.Clear(); sortedseq.AddRange(seq); }
             sortedseq.Sort();
             double realIndex=quantile*(sortedseq.Count-1);
             int index=(int)realIndex;
@@ -37,7 +43,13 @@ namespace HTLib2
         public static void HQuantile(this IEnumerable<double> seq, double[] quantiles, double[] rets, out List<double> sortedseq) { Quantile(seq, quantiles, rets, out sortedseq); }
         public static void Quantile(IEnumerable<double> seq, double[] quantiles, double[] rets, out List<double> sortedseq)
         {
-            sortedseq = seq.ToList();
+            sortedseq = null;
+            _Quantile(seq, quantiles, rets, ref sortedseq);
+        }
+        public static void _Quantile(IEnumerable<double> seq, double[] quantiles, double[] rets, ref List<double> sortedseq)
+        {
+            if(sortedseq == null) { sortedseq = seq.ToList(); }
+            else                  { sortedseq.Clear(); sortedseq.AddRange(seq); }
             sortedseq.Sort();
             
             HDebug.Assert(quantiles.Length == rets.Length);
