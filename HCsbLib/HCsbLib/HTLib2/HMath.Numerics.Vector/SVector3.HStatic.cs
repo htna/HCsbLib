@@ -23,5 +23,9 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsZeros           (this SVector3 vec          ) { return ((vec.v0 == 0) && (vec.v1 == 0) && (vec.v2 == 0)); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsOnes            (this SVector3 vec          ) { return ((vec.v0 == 1) && (vec.v1 == 1) && (vec.v2 == 1)); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static bool IsValues          (this SVector3 vec, double v) { return ((vec.v0 == v) && (vec.v1 == v) && (vec.v2 == v)); }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static IEnumerable<double> HEnumV0(this IEnumerable<SVector3> vecs) { foreach(var vec in vecs) yield return vec.v0; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static IEnumerable<double> HEnumV1(this IEnumerable<SVector3> vecs) { foreach(var vec in vecs) yield return vec.v1; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static IEnumerable<double> HEnumV2(this IEnumerable<SVector3> vecs) { foreach(var vec in vecs) yield return vec.v2; }
     }
 }
