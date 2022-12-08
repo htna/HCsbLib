@@ -134,5 +134,92 @@ namespace HTLib2
             double corr = cov / Math.Sqrt(var1 * var2);
             return corr;
         }
+        public static double HCov(IEnumerable<double> list1, IEnumerable<double> list2)
+        {
+            throw new HException("selftest");
+            IEnumerator<double> enum1 = list1.GetEnumerator();
+            IEnumerator<double> enum2 = list2.GetEnumerator();
+            enum1.Reset();
+            enum2.Reset();
+            int    cnt = 0;
+            double E12 = 0;
+            double E1  = 0;
+            double E2  = 0;
+            while(true)
+            {
+                bool mn1 = enum1.MoveNext();
+                bool mn2 = enum2.MoveNext();
+                if(mn1 == false && mn2 == false)
+                    break;
+                if(mn1 == true && mn2 == true)
+                {
+                    double v1 = enum1.Current;
+                    double v2 = enum2.Current;
+                    E1  += v1;
+                    E2  += v2;
+                    E12 += v1*v2;
+                    cnt ++;
+                    continue;
+                }
+                throw new HException("count mismatch in HCov(IEnumerable<double>,IEnumerable<double>)");
+            }
+            E12 /= cnt;
+            E1  /= cnt;
+            E2  /= cnt;
+            double cov = E12 - E1*E2;
+            return cov;
+        }
+        public static double HCorr(IEnumerable<double> list1, IEnumerable<double> list2)
+        {
+            throw new HException("selftest");
+            if(HDebug.Selftest())
+            {
+                // check with mathematica
+                IEnumerable<double> tlist1 = new double[] { 1, 2, 3 };
+                IEnumerable<double> tlist2 = new double[] { 3, 7, 4 };
+
+                double tcorr = HCorr(tlist1, tlist2);
+                double terr = 0.2401922307076307 - tcorr;
+                HDebug.AssertTolerance(0.00000001, terr);
+            }
+
+            IEnumerator<double> enum1 = list1.GetEnumerator();
+            IEnumerator<double> enum2 = list2.GetEnumerator();
+            enum1.Reset();
+            enum2.Reset();
+            int    cnt = 0;
+            double E12 = 0;
+            double E1  = 0;
+            double E2  = 0;
+            double E11 = 0;
+            double E22 = 0;
+            while(true)
+            {
+                bool mn1 = enum1.MoveNext();
+                bool mn2 = enum2.MoveNext();
+                if(mn1 == false && mn2 == false)
+                    break;
+                if(mn1 == true && mn2 == true)
+                {
+                    double v1 = enum1.Current;
+                    double v2 = enum2.Current;
+                    E1  += v1;
+                    E2  += v2;
+                    E12 += v1*v2;
+                    E11 += v1*v1;
+                    E22 += v2*v2;
+                    cnt ++;
+                    continue;
+                }
+                throw new HException("count mismatch in HCov(IEnumerable<double>,IEnumerable<double>)");
+            }
+            E12 /= cnt;
+            E1  /= cnt;
+            E2  /= cnt;
+            E11 /= cnt;
+            E22 /= cnt;
+            double corr = (E12 - E1*E2) / (Math.Sqrt(E11 - E1*E1)*Math.Sqrt(E22 - E2*E2));
+            return corr;
+        }
     }
 }
