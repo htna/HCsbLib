@@ -506,6 +506,26 @@ namespace HTLib2.Bioinfo
 
                         return null;
                     }
+
+                    static Dictionary<(string resn, string name), (int prmid, int prmcls)> resn_name_prmid_prmcls = null;
+                    public static (int prmid, int prmcls) GetPrmIdCls(string resn, string name)
+                    {
+                        (string resn, string name) resn_name;
+                        (int prmid, int prmcls) prmid_prmcls;
+                        if(resn_name_prmid_prmcls == null)
+                        {
+                            foreach(var item in prmid_prmcls_resn_name)
+                            {
+                                resn_name    = (item.resn , item.name  );
+                                prmid_prmcls = (item.prmid, item.prmcls);
+                                resn_name_prmid_prmcls.Add(resn_name, prmid_prmcls);
+                            }
+                        }
+
+                        resn_name = (resn,name);
+                        prmid_prmcls = resn_name_prmid_prmcls[resn_name];
+                        return prmid_prmcls;
+                    }
                 }
             }
         }
