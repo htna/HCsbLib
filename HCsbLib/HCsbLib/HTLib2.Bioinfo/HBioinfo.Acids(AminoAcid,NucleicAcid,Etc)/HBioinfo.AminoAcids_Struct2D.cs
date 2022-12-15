@@ -517,8 +517,8 @@ namespace HTLib2.Bioinfo
                             resn_name_prmid_prmcls = new Dictionary<(string resn, string name), (int prmid, int prmcls)>();
                             foreach(var item in prmid_prmcls_resn_name)
                             {
-                                resn_name    = (item.resn , item.name  );
-                                prmid_prmcls = (item.prmid, item.prmcls);
+                                resn_name    = (item.resn.Trim(), item.name.Trim());
+                                prmid_prmcls = (item.prmid      , item.prmcls     );
                                 resn_name_prmid_prmcls.Add(resn_name, prmid_prmcls);
                             }
                         }
