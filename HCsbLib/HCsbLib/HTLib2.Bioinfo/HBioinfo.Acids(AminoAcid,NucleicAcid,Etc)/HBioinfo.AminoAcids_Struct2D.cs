@@ -514,6 +514,7 @@ namespace HTLib2.Bioinfo
                         (int prmid, int prmcls) prmid_prmcls;
                         if(resn_name_prmid_prmcls == null)
                         {
+                            resn_name_prmid_prmcls = new Dictionary<(string resn, string name), (int prmid, int prmcls)>();
                             foreach(var item in prmid_prmcls_resn_name)
                             {
                                 resn_name    = (item.resn , item.name  );
