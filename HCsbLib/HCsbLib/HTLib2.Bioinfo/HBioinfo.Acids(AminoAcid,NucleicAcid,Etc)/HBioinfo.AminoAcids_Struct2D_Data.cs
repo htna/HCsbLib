@@ -331,7 +331,7 @@
 "!         *                                                         ",
 };
 
-                    public static (int,int,string,string)[] prmid_prmcls_resn_name =
+                    public static (int prmid, int prmcls, string resn, string name)[] prmid_prmcls_resn_name =
 {
 /// RESI ALA
 (63,24,"ALA"," N  "),(23,13,"ALA"," CA "),(20,10,"ALA"," C  "),(74,34,"ALA"," O  "),( 3, 3,"ALA"," HN "),( 4, 4,"ALA"," HA "),
