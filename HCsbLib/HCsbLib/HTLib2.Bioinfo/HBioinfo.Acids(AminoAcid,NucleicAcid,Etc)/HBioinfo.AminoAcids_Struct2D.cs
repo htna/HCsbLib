@@ -508,7 +508,7 @@ namespace HTLib2.Bioinfo
                     }
 
                     static Dictionary<(string resn, string name), (int prmid, int prmcls)> resn_name_prmid_prmcls = null;
-                    public static (int prmid, int prmcls) GetPrmIdCls(string resn, string name)
+                    public static (int prmid, int prmcls)? GetPrmIdCls(string resn, string name)
                     {
                         (string resn, string name) resn_name;
                         (int prmid, int prmcls) prmid_prmcls;
@@ -523,6 +523,8 @@ namespace HTLib2.Bioinfo
                         }
 
                         resn_name = (resn,name);
+                        if(resn_name_prmid_prmcls.ContainsKey(resn_name) == false)
+                            return null;
                         prmid_prmcls = resn_name_prmid_prmcls[resn_name];
                         return prmid_prmcls;
                     }
