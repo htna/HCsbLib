@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
-    public partial class HDebug
+    public partial class HObject
 	{
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool EqualsDouble(double a, double b)
