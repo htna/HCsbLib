@@ -10,7 +10,7 @@ namespace HTLib2
     public partial class HObject
 	{
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static bool EqualsDouble(double a, double b)
+        public static bool EqualsDouble(double a, double b)
         {
             if(double.IsNaN             (a) && double.IsNaN             (b)) return true;
             if(double.IsPositiveInfinity(a) && double.IsPositiveInfinity(b)) return true;
@@ -19,7 +19,7 @@ namespace HTLib2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static bool EqualsFloat(float a, float b)
+        public static bool EqualsFloat(float a, float b)
         {
             if(float.IsNaN             (a) && float.IsNaN             (b)) return true;
             if(float.IsPositiveInfinity(a) && float.IsPositiveInfinity(b)) return true;
