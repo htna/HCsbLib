@@ -26,5 +26,17 @@ namespace HTLib2
             if(float.IsNegativeInfinity(a) && float.IsNegativeInfinity(b)) return true;
             return (a == b);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool EqualsVector(Vector a, Vector b)
+        {
+            if(a == null && b != null) return false;
+            if(a != null && b == null) return false;
+            if(a == null && b == null) return true;
+            if(a.Size != b.Size) return false;
+            for(int i=0; i<a.Size; i++)
+                if(EqualsDouble(a[i], b[i]) == false) return false;
+            return true;
+        }
     }
 }
