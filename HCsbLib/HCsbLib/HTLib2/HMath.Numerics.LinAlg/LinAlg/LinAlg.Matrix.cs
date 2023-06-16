@@ -11,6 +11,7 @@ namespace HTLib2
     public static partial class LinAlg
 	{
                static bool   Eye_SelfTest = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static MatrixByArr Eye(int size, double diagval=1)
 		{
             if(Eye_SelfTest)
@@ -26,6 +27,7 @@ namespace HTLib2
 			return mat;
 		}
                static bool   Tr_SelfTest = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix Tr(this Matrix M)
         {
             if(Tr_SelfTest)
@@ -43,6 +45,7 @@ namespace HTLib2
             return tr;
         }
                static bool   Diagd_SelfTest = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MatrixByArr Diag(this Vector d)
         {
             if(Diagd_SelfTest)
@@ -60,6 +63,7 @@ namespace HTLib2
             return D;
         }
                static bool   DiagD_SelfTest = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector Diag(this Matrix D)
         {
             if(DiagD_SelfTest)
@@ -78,6 +82,7 @@ namespace HTLib2
             return d;
         }
                static bool   DV_SelfTest1 = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector DV(Matrix D, Vector V, bool assertDiag = true)
         {
             if(DV_SelfTest1)
@@ -101,6 +106,7 @@ namespace HTLib2
             return diagDV;
         }
                static bool   DV_SelfTest2 = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector DV(Vector D, Vector V, bool assertDiag = true)
         {
             if(DV_SelfTest2)
@@ -123,6 +129,7 @@ namespace HTLib2
             return dv;
         }
                static bool   MD_SelfTest = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MatrixByArr MD(MatrixByArr M, Vector D)
         {   // M * Diag(D)
             if(MD_SelfTest)
@@ -149,6 +156,7 @@ namespace HTLib2
         }
                static bool   MV_SelfTest = HDebug.IsDebuggerAttached;
                static bool   MV_SelfTest_lmat_rvec = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector MV<MATRIX>(MATRIX lmat, Vector rvec, string options="")
             where MATRIX : IMatrix<double>
         {
@@ -166,6 +174,7 @@ namespace HTLib2
             }
             return result;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void MV<MATRIX>(MATRIX lmat, Vector rvec, Vector result, string options="")
             where MATRIX : IMatrix<double>
         {
@@ -201,6 +210,7 @@ namespace HTLib2
             }
         }
                //static bool   MtM_SelfTest = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix MtM(Matrix lmat, Matrix rmat)
         {
             bool MtM_SelfTest = false;//HDebug.IsDebuggerAttached;
@@ -239,6 +249,7 @@ namespace HTLib2
             return result;
         }
                //static bool   MMt_SelfTest = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix MMt(Matrix lmat, Matrix rmat)
         {
             bool MMt_SelfTest = false;//HDebug.IsDebuggerAttached;
@@ -282,6 +293,7 @@ namespace HTLib2
             return result;
         }
                static bool   MtV_SelfTest = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector MtV(Matrix lmat, Vector rvec)
         {
             if(MtV_SelfTest)
@@ -312,6 +324,7 @@ namespace HTLib2
             return result;
         }
         public static bool V1tD2V3_SelfTest = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double V1tD2V3(Vector V1, Matrix D2, Vector V3, bool assertDiag=true)
         {
             if(V1tD2V3_SelfTest)
@@ -335,12 +348,14 @@ namespace HTLib2
             double lV1tD2V3 = VtV(V1, lD2V3);
             return lV1tD2V3;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MatrixByArr VVt(Vector lvec, Vector rvec)
         {
             MatrixByArr outmat = new MatrixByArr(lvec.Size, rvec.Size);
             VVt(lvec, rvec, outmat);
             return outmat;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void VVt(Vector lvec, Vector rvec, MatrixByArr outmat)
         {
             HDebug.Exception(outmat.ColSize == lvec.Size);
@@ -350,6 +365,7 @@ namespace HTLib2
                 for(int r = 0; r < rvec.Size; r++)
                     outmat[c, r] = lvec[c] * rvec[r];
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void VVt_AddTo(Vector lvec, Vector rvec, MatrixByArr mat)
         {
             HDebug.Exception(mat.ColSize == lvec.Size);
@@ -358,6 +374,7 @@ namespace HTLib2
                 for(int r = 0; r < rvec.Size; r++)
                     mat[c, r] += lvec[c] * rvec[r];
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void sVVt_AddTo(double scale, Vector lvec, Vector rvec, MatrixByArr mat)
         {
             HDebug.Exception(mat.ColSize == lvec.Size);
@@ -366,7 +383,15 @@ namespace HTLib2
                 for(int r = 0; r < rvec.Size; r++)
                     mat[c, r] += lvec[c] * rvec[r] * scale;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static void sV_AddTo(double scale, Vector vec, Vector addto)
+        {
+            HDebug.Exception(vec.Size == addto.Size);
+            for(int i=0; i<vec.Size; i++)
+                addto[i] += scale * vec[i];
+        }
         public static bool   DMD_selftest = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static MATRIX DMD<MATRIX>(Vector diagmat1, MATRIX mat,Vector diagmat2, Func<int,int,MATRIX> Zeros)
             where MATRIX : IMatrix<double>
         {
@@ -396,6 +421,7 @@ namespace HTLib2
             return DMD;
         }
         //public static bool VtMV_selftest = HDebug.IsDebuggerAttached;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double VtMV(Vector lvec, IMatrix<double> mat, Vector rvec) //, string options="")
         {
             if(HDebug.Selftest())
@@ -453,6 +479,7 @@ namespace HTLib2
                 listvtv[i] = VtV(l, rs[i]);
             return listvtv;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double VtV(Vector l, Vector r, IList<int> idxsele)
         {
             HDebug.Assert(l.Size == r.Size);
@@ -460,6 +487,7 @@ namespace HTLib2
             Vector rs = r.ToArray().HSelectByIndex(idxsele);
             return VtV(ls, rs);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector VtMM(Vector v1, Matrix m2, Matrix m3)
         {
             Vector v12 = VtM(v1, m2);
@@ -468,6 +496,7 @@ namespace HTLib2
 
         public static class AddToM
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static void VVt(Matrix M, Vector V)
             {
                 HDebug.Assert(M.ColSize == V.Size);
@@ -479,6 +508,7 @@ namespace HTLib2
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Vector VtM<MATRIX>(Vector lvec, MATRIX rmat)
             where MATRIX : IMatrix<double>
         {
