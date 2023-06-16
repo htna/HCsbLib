@@ -384,7 +384,7 @@ namespace HTLib2
                     mat[c, r] += lvec[c] * rvec[r] * scale;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void sV_AddTo(double scale, Vector vec, Vector addto)
+        public static void sV_AddTo(double scale, Vector vec, Vector addto)
         {
             HDebug.Exception(vec.Size == addto.Size);
             for(int i=0; i<vec.Size; i++)
