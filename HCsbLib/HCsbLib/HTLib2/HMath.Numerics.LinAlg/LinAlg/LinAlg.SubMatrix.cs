@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
@@ -28,6 +29,20 @@ namespace HTLib2
 					submat[c, r] = _this[c+_colfrom, r+_rowfrom];
 			return submat;
 		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Matrix SubMatrix(this IMatrix<double> _this, params int[] idxs)
+        {
+            Matrix submat = Matrix.Zeros(idxs.Length, idxs.Length);
+            SubMatrix(_this, idxs, idxs, ref submat);
+            return submat;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Matrix SubMatrix(this IMatrix<double> _this, IList<int> idxs)
+        {
+            Matrix submat = Matrix.Zeros(idxs.Count, idxs.Count);
+            SubMatrix(_this, idxs, idxs, ref submat);
+            return submat;
+        }
         public static Matrix SubMatrix(this IMatrix<double> _this, IList<int> idxcols, IList<int> idxrows)
         {
             Matrix submat = Matrix.Zeros(idxcols.Count, idxrows.Count);
