@@ -53,10 +53,19 @@ namespace HCsbLibImport
             return x;
         }
         public static double[] NonNegativeLeastSquares_AA_Ab
-            ( double[,] AA // argmin || A x - b ||_2^2  =>  AA = A' A = Q
-            , double[]  Ab // subjto x >= 0                 Ab = A' b = -c
+            ( double[,] AA // argmin || A x - b ||_2^2 == argmin (x' A' A x - 2 b' A x + b' b) == argmin 2 (0.5 x' Q x  =>  AA = A' A = Q
+            , double[]  Ab // subjto x >= 0               subjto x >= 0                              Ab = A' b = -c
+            , double[]  x0 = null
             )
         {
+            // argmin || A x - b ||_2^2  =>  argmin (x' A' A x - 2 b' A x + b' b)  =>  argmin 2 (0.5 x' (A' A) x + (- A' b)' x + 0.5 b' b)
+            // subjto x >= 0                 subjto x >= 0                             subjto x >= 0
+            //
+            // argmin ( 0.5 x' Q x   +   c' x )  <=  Q =   A' A
+            // subjto x_bndl < x < x_bndu            c = - A' b
+            //                                       x_bndl = 0
+            //                                       x_bndu = double.PositiveInfinity
+
             /// https://en.wikipedia.org/wiki/Non-negative_least_squares
             int n = AA.GetLength(0);
             HDebug.Assert(n == AA.GetLength(1));
@@ -65,17 +74,27 @@ namespace HCsbLibImport
             double[,] Q = AA;
             double[]  c = new double[n];    for(int i=0; i<n; i++) c[i] = -1 * Ab[i];
 
-            double[] x0     = new double[n];
+            if(x0 != null) {
+                HDebug.Assert(n == x0.Length);
+            } else {
+                x0 = new double[n];
+                for(int i=0; i<x0.Length; i++)
+                    x0[i] = 1;
+            }
             double[] x_bndl = new double[n];
             double[] x_bndu = new double[n];
             for(int i=0; i<x0.Length; i++)
             {
                 x0    [i] = 1;
                 x_bndl[i] = 0;
-                x_bndu[i] = 1000000000;
+                x_bndu[i] = double.PositiveInfinity;
             }
 
+            // argmin || A x - b ||_2^2  =>  argmin (x' A' A x - 2 b' A x + b' b)  =>  argmin 2 (0.5 x' (A' A) x + (- A' b)' x + 0.5 b' b)
+            // subjto x >= 0                 subjto x >= 0                             subjto x >= 0
             double[] x = ConstrainedQuadraticProgramming(Q, c, x0, x_bndl, x_bndu, null);
+            // argmin ( 0.5 x' Q x   +   c' x )
+            // subjto x_bndl < x < x_bndu
             HDebug.Assert(x != null);
 
             return x;
