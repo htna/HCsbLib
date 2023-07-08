@@ -11,9 +11,10 @@ namespace HCsbLibImport
         public static double[] ConstrainedLeastSquares
             ( double[,] A // argmin || A x - b ||_2^2
             , double[]  b // subjto x >= 0
-            , double[] x_bndl
-            , double[] x_bndu
-            , double[] x0 = null
+            , double[]  x_bndl
+            , double[]  x_bndu
+            , double[]  x0 = null
+            , string    option = null
             )
         {
             /// https://en.wikipedia.org/wiki/Non-negative_least_squares
@@ -62,7 +63,7 @@ namespace HCsbLibImport
                 }
             }
 
-            double[] x = ConstrainedQuadraticProgramming(Q, c, x0, x_bndl, x_bndu, null);
+            double[] x = ConstrainedQuadraticProgramming(Q, c, x0, x_bndl, x_bndu, null, option);
             HDebug.Assert(x != null);
 
             return x;
@@ -70,9 +71,10 @@ namespace HCsbLibImport
         public static double[] ConstrainedLeastSquares_AA_Ab
             ( double[,] AA // argmin || A x - b ||_2^2 == argmin (x' A' A x - 2 b' A x + b' b) == argmin 2 (0.5 x' Q x  =>  AA = A' A = Q
             , double[]  Ab // subjto x >= 0               subjto x >= 0                              Ab = A' b = -c
-            , double[] x_bndl
-            , double[] x_bndu
-            , double[] x0 = null
+            , double[]  x_bndl
+            , double[]  x_bndu
+            , double[]  x0 = null
+            , string    option = null
             )
         {
             // argmin || A x - b ||_2^2  =>  argmin (x' A' A x - 2 b' A x + b' b)  =>  argmin 2 (0.5 x' (A' A) x + (- A' b)' x + 0.5 b' b)
@@ -115,7 +117,7 @@ namespace HCsbLibImport
 
             // argmin || A x - b ||_2^2  =>  argmin (x' A' A x - 2 b' A x + b' b)  =>  argmin 2 (0.5 x' (A' A) x + (- A' b)' x + 0.5 b' b)
             // subjto x >= 0                 subjto x >= 0                             subjto x >= 0
-            double[] x = ConstrainedQuadraticProgramming(Q, c, x0, x_bndl, x_bndu, null);
+            double[] x = ConstrainedQuadraticProgramming(Q, c, x0, x_bndl, x_bndu, null, option);
             // argmin ( 0.5 x' Q x   +   c' x )
             // subjto x_bndl < x < x_bndu
             HDebug.Assert(x != null);
