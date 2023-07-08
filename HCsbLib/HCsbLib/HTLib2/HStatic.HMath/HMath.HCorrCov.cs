@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace HTLib2
 {
@@ -218,6 +219,44 @@ namespace HTLib2
             E2  /= cnt;
             E11 /= cnt;
             E22 /= cnt;
+            double corr = (E12 - E1*E2) / (Math.Sqrt(E11 - E1*E1)*Math.Sqrt(E22 - E2*E2));
+            return corr;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void HCorrIter_Init(out (double E1, double E2, double E11, double E22, double E12, double cnt) corrinfo)
+        {
+            corrinfo.E1  = 0;
+            corrinfo.E2  = 0;
+            corrinfo.E11 = 0;
+            corrinfo.E22 = 0;
+            corrinfo.E12 = 0;
+            corrinfo.cnt = 0;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static (double E1, double E2, double E11, double E22, double E12, double cnt) HCorrIter_Init()
+        {
+            (double E1, double E2, double E11, double E22, double E12, double cnt) corrinfo;
+            HCorrIter_Init(out corrinfo);
+            return corrinfo;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void HCorrIter_Accuum(ref (double E1, double E2, double E11, double E22, double E12, double cnt) corrinfo, double v1, double v2)
+        {
+            corrinfo.E1  += v1;
+            corrinfo.E2  += v2;
+            corrinfo.E11 += v1*v1;
+            corrinfo.E22 += v2*v2;
+            corrinfo.E12 += v1*v2;
+            corrinfo.cnt ++;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double HCorrIter_GetCorr(in (double E1, double E2, double E11, double E22, double E12, double cnt) corrinfo)
+        {
+            double E1  = corrinfo.E1  / corrinfo.cnt;
+            double E2  = corrinfo.E2  / corrinfo.cnt;
+            double E11 = corrinfo.E11 / corrinfo.cnt;
+            double E22 = corrinfo.E22 / corrinfo.cnt;
+            double E12 = corrinfo.E12 / corrinfo.cnt;
             double corr = (E12 - E1*E2) / (Math.Sqrt(E11 - E1*E1)*Math.Sqrt(E22 - E2*E2));
             return corr;
         }
