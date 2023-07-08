@@ -223,7 +223,7 @@ namespace HTLib2
             return corr;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void HCorrIter_Init(out (double E1, double E2, double E11, double E22, double E12, double cnt) corrinfo)
+        public static void HCorrIter_Init(out (double E1, double E2, double E11, double E22, double E12, int cnt) corrinfo)
         {
             corrinfo.E1  = 0;
             corrinfo.E2  = 0;
@@ -233,14 +233,14 @@ namespace HTLib2
             corrinfo.cnt = 0;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static (double E1, double E2, double E11, double E22, double E12, double cnt) HCorrIter_Init()
+        public static (double E1, double E2, double E11, double E22, double E12, int cnt) HCorrIter_Init()
         {
-            (double E1, double E2, double E11, double E22, double E12, double cnt) corrinfo;
+            (double E1, double E2, double E11, double E22, double E12, int cnt) corrinfo;
             HCorrIter_Init(out corrinfo);
             return corrinfo;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void HCorrIter_Accuum(ref (double E1, double E2, double E11, double E22, double E12, double cnt) corrinfo, double v1, double v2)
+        public static void HCorrIter_Accuum(ref (double E1, double E2, double E11, double E22, double E12, int cnt) corrinfo, double v1, double v2)
         {
             corrinfo.E1  += v1;
             corrinfo.E2  += v2;
@@ -250,7 +250,7 @@ namespace HTLib2
             corrinfo.cnt ++;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double HCorrIter_GetCorr(in (double E1, double E2, double E11, double E22, double E12, double cnt) corrinfo)
+        public static double HCorrIter_GetCorr(in (double E1, double E2, double E11, double E22, double E12, int cnt) corrinfo)
         {
             double E1  = corrinfo.E1  / corrinfo.cnt;
             double E2  = corrinfo.E2  / corrinfo.cnt;
