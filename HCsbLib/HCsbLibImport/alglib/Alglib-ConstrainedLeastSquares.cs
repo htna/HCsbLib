@@ -67,7 +67,7 @@ namespace HCsbLibImport
 
             return x;
         }
-        public static double[] NonNegativeLeastSquares_AA_Ab
+        public static double[] ConstrainedLeastSquares_AA_Ab
             ( double[,] AA // argmin || A x - b ||_2^2 == argmin (x' A' A x - 2 b' A x + b' b) == argmin 2 (0.5 x' Q x  =>  AA = A' A = Q
             , double[]  Ab // subjto x >= 0               subjto x >= 0                              Ab = A' b = -c
             , double[] x_bndl
