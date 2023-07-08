@@ -171,7 +171,7 @@ namespace HTLib2
         }
         public static double HCorr(IEnumerable<double> list1, IEnumerable<double> list2)
         {
-            throw new HException("selftest");
+            //throw new HException("selftest");
             if(HDebug.Selftest())
             {
                 // check with mathematica
