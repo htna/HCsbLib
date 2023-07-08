@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="alglib\Alglib-ConstrainedQuadraticProgramming.cs" />
+    <Compile Include="alglib\Alglib-ConstrainedLeastSquares.cs" />
     <Compile Include="alglib\Alglib-NonNegativeLeastSquares.cs" />
     <Compile Include="alglib\Alglib-NonPositiveLeastSquares.cs" />
     <Compile Include="alglib\Alglib.cs" />
