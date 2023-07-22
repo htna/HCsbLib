@@ -82,10 +82,11 @@ namespace HCsbLibImport
             #endregion
             ///////////////////////////////////////////////////////////////////////////////////////
 
+            int n = x0.Length;
             if(s == null)
             {
-                s = new double[x0.Length];
-                for(int i=0; i<s.Length; i++)
+                s = new double[n];
+                for(int i=0; i<n; i++)
                     s[i] = 1;
             }
 
@@ -94,7 +95,7 @@ namespace HCsbLibImport
             alglib.minqpreport rep;
 
             // create solver, set quadratic/linear terms
-            alglib.minqpcreate(4, out state);
+            alglib.minqpcreate(n, out state);
             alglib.minqpsetquadraticterm(state, A);
             alglib.minqpsetlinearterm(state, b);
             alglib.minqpsetstartingpoint(state, x0);
