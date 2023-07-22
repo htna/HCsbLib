@@ -53,7 +53,7 @@ namespace HTLib2
             lines.Add("  ];"                                                                                );
             lines.Add(""                                                                                    );
             lines.Add(""                                                                                    );
-            lines.Add("ArrayPlot[map3]"                                                                     );
+            lines.Add("ArrayPlot[Transpose[map3], FrameLabel->{\"y\",\"x\"}]"                               );
             lines.Add(""                                                                                    );
             lines.Add(""                                                                                    );
             lines.Add("ListPointPlot3D[map1, PlotRange->All]"                                               );
