@@ -30,9 +30,9 @@ namespace HTLib2
             }
 
             List<string> lines = new List<string>();
-            lines.Add("hist = "+Mathematica.ToString2(ixy_cnt) + ";"                                        );
-            lines.Add("xgap = "+Mathematica.ToString2(x_gap  ) + ";"                                        );
-            lines.Add("ygap = "+Mathematica.ToString2(y_gap  ) + ";"                                        );
+            lines.Add("ixycnt = "+Mathematica.ToString2(ixy_cnt) + ";"                                      );
+            lines.Add("xgap   = "+Mathematica.ToString2(x_gap  ) + ";"                                      );
+            lines.Add("ygap   = "+Mathematica.ToString2(y_gap  ) + ";"                                      );
             lines.Add(""                                                                                    );
             lines.Add(""                                                                                    );
             lines.Add("xmin = Min[Keys[ixycnt][[All,1]]]"                                                   );
@@ -47,7 +47,7 @@ namespace HTLib2
             lines.Add(""                                                                                    );
             lines.Add("map3 = Table[0, {x,1,xmax-xmin+1},{y,1,ymax-ymin+1}];"                               );
             lines.Add("Dimensions[map3]"                                                                    );
-            lines.Add("For[i=1,i<=Length[map2],i++,v"                                                       );
+            lines.Add("For[i=1,i<=Length[map2],i++,"                                                        );
             lines.Add("  xyc = map2[[i]];"                                                                  );
             lines.Add("  map3[[ xyc[[1]], xyc[[2]] ]] = xyc[[3]];"                                          );
             lines.Add("  ];"                                                                                );
@@ -56,7 +56,7 @@ namespace HTLib2
             lines.Add("ArrayPlot[map3]"                                                                     );
             lines.Add(""                                                                                    );
             lines.Add(""                                                                                    );
-            lines.Add("ListPlot3D[map1, PlotRange->All]"                                                    );
+            lines.Add("ListPointPlot3D[map1, PlotRange->All]"                                               );
 
             return lines;
         }
