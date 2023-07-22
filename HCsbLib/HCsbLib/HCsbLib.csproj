@@ -529,9 +529,11 @@
     <Compile Include="HTLib2.Bioinfo\[obsolete]\Topol\Topol.Pres.cs" />
     <Compile Include="HTLib2.Bioinfo\[obsolete]\Topol\Topol.Resi.cs" />
     <Compile Include="HTLib2.Bioinfo\[obsolete]\Topol\Topol.top_all27_prot_lipid.inp.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.ToString2.Plot.cs" />
     <Compile Include="HTLib2.Mathematica\Mathematica.Kernel.KernelLinkDelegate.cs" />
     <Compile Include="HTLib2.Mathematica\Mathematica.Kernel.Expr.cs" />
     <Compile Include="HTLib2.Mathematica\Mathematica.Kernel.cs" />
+    <Compile Include="HTLib2.Mathematica\Mathematica.cs" />
     <Compile Include="HTLib2.Mathematica\Mathematica.Run.cs" />
     <Compile Include="HTLib2.Mathematica\Mathematica.EnumString.cs" />
     <Compile Include="HTLib2.Mathematica\Mathematica.ToString2.cs" />
