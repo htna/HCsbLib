@@ -28,7 +28,14 @@ namespace HTLib2
                     ixy_cnt.Add(key, 0);
                 ixy_cnt[key] ++;
             }
-
+            return ToString2_PlotHist2D(ixy_cnt, x_gap, y_gap);
+        }
+		public static List<string> ToString2_PlotHist2D
+            ( Dictionary<(int ix, int iy), int> ixy_cnt
+            , double x_gap
+            , double y_gap
+            )
+	    {
             List<string> lines = new List<string>();
             lines.Add("ixycnt = "+Mathematica.ToString2(ixy_cnt) + ";"                                      );
             lines.Add("xgap   = "+Mathematica.ToString2(x_gap  ) + ";"                                      );
