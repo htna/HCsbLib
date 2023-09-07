@@ -30,7 +30,7 @@ namespace HTLib2
             }
             return ToString2_PlotHist2D(ixy_cnt, x_gap, y_gap);
         }
-		static List<string> ToString2_PlotHist2D
+		public static List<string> ToString2_PlotHist2D
             ( IEnumerable<KeyValuePair<(double x, double y), int>> values
             , double x_gap
             , double y_gap
