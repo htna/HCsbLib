@@ -30,6 +30,27 @@ namespace HTLib2
             }
             return ToString2_PlotHist2D(ixy_cnt, x_gap, y_gap);
         }
+		static List<string> ToString2_PlotHist2D
+            ( IEnumerable<KeyValuePair<(double x, double y), int>> values
+            , double x_gap
+            , double y_gap
+            )
+	    {
+            Dictionary<(int ix, int iy), int> ixy_cnt = new Dictionary<(int ix, int iy), int>();
+            foreach(var item in values)
+            {
+                (int ix, int iy) key =
+                    ( (int)Math.Round(item.Key.x / x_gap)
+                    , (int)Math.Round(item.Key.y / y_gap)
+                    );
+        
+                if(ixy_cnt.ContainsKey(key) == false)
+                    ixy_cnt.Add(key, 0);
+                ixy_cnt[key] += item.Value;
+            }
+        
+            return ToString2_PlotHist2D(ixy_cnt, x_gap, y_gap);
+        }
 		public static List<string> ToString2_PlotHist2D
             ( Dictionary<(int ix, int iy), int> ixy_cnt
             , double x_gap
