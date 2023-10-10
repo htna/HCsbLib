@@ -101,6 +101,9 @@ namespace HTLib2.Bioinfo
                     KDTreeDLL.KDTree<Pdb.Atom> kdtree = new KDTreeDLL.KDTree<Pdb.Atom>(3);
                     foreach(var atom in pdb0.atoms)
                         kdtree.insert(atom.coord, atom);
+                    KDTreeDLL.KDTree<Pdb.Hetatm> kdtree_hetatm = new KDTreeDLL.KDTree<Pdb.Hetatm>(3);
+                    foreach(var hetatm in pdb0.hetatms)
+                        kdtree_hetatm.insert(hetatm.coord, hetatm);
 
                     Dictionary<int, Tinker.Xyz.Atom> xyzid_xyzatom = new Dictionary<int, Tinker.Xyz.Atom>();
                     foreach(var atom in xyz0.atoms)
@@ -110,11 +113,20 @@ namespace HTLib2.Bioinfo
                     {
                         var near = kdtree.nearest(atom.Coord);
                         var dist = (near.coord - atom.Coord).Dist;
+                        var hetatm_near = kdtree_hetatm.nearest(atom.Coord);
+                        var hetatm_dist = (hetatm_near.coord - atom.Coord).Dist;
+
                         if(dist < 0.1)
                         {
                             xyzid_NearResi_NearAtom_NearConnAtom.Add(new GetResiPdbatomItem(atom, near.resSeq, near, null));
+                            continue;
                         }
-                        else
+                        if(hetatm_dist < 0.1)
+                        {
+                            // skip hetatms
+                            continue;
+                        }
+                        if(dist < hetatm_dist)
                         {
                             // atom must be hydrogen
                             HDebug.Assert(atom.BondedIds.Length == 1);
@@ -124,7 +136,14 @@ namespace HTLib2.Bioinfo
                             HDebug.Assert(conndist < 0.1);
 
                             xyzid_NearResi_NearAtom_NearConnAtom.Add(new GetResiPdbatomItem(atom, connnear.resSeq, null, connnear));
+                            continue;
                         }
+                        if(hetatm_dist < dist)
+                        {
+                            // skip atoms connected to hetatms
+                            continue;
+                        }
+                        HDebug.Assert(false);
                     }
                 }
             }
