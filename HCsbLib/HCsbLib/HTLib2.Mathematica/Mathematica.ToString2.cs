@@ -25,7 +25,7 @@ namespace HTLib2
             , string formatString   // null (default) or "{0,10}"
             )
         {
-            _ToString2(text, obj, null, null, null);
+            _ToString2(text, obj, formatInt, formatDouble, formatString);
         }
         public static string ToString2
             ( string formatInt      // null (default) or "{0,3}"
