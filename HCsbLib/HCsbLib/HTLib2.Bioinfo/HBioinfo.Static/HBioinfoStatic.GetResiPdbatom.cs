@@ -113,8 +113,8 @@ namespace HTLib2.Bioinfo
                     {
                         var near = kdtree.nearest(atom.Coord);
                         var dist = (near.coord - atom.Coord).Dist;
-                        var hetatm_near = kdtree_hetatm.nearest(atom.Coord);
-                        var hetatm_dist = (hetatm_near.coord - atom.Coord).Dist;
+                        Pdb.Hetatm hetatm_near = null                   ; if(pdb0.hetatms.Count() != 0) hetatm_near = kdtree_hetatm.nearest(atom.Coord);
+                        double     hetatm_dist = double.PositiveInfinity; if(hetatm_near       != null) hetatm_dist = (hetatm_near.coord - atom.Coord).Dist;
 
                         if(dist < 0.1)
                         {
@@ -140,6 +140,7 @@ namespace HTLib2.Bioinfo
                         }
                         if(hetatm_dist < dist)
                         {
+                            HDebug.Assert(double.IsPositiveInfinity(hetatm_dist) == false);
                             // skip atoms connected to hetatms
                             continue;
                         }
