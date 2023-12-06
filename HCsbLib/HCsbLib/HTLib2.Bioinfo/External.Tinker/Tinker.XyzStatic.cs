@@ -79,6 +79,18 @@ namespace HTLib2.Bioinfo
                 dict.Add(atom.Id, atom);
             return dict;
         }
+        public static Dictionary<int, int> HToDictionaryIdIndex
+            ( this IList<Tinker.Xyz.Atom> atoms
+            )
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for(int idx=0; idx<atoms.Count(); idx++)
+            {
+                int id = atoms[idx].Id;
+                dict.Add(id, idx);
+            }
+            return dict;
+        }
         public class CDivideHeavyHydro
         {
             public IList<Tuple<int,Tinker.Xyz.Atom,Tinker.Prm.Atom>> lstHydrogenIdxAtmPrm;
