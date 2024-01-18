@@ -16,8 +16,14 @@ namespace HTLib2
             public void Release()
             {
                 file.Close();
-                HFile.Delete(path);
                 file = null;
+                try
+                {
+                    HFile.Delete(path);
+                }
+                catch
+                {
+                }
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////
@@ -50,6 +56,15 @@ namespace HTLib2
             catch
             {
                 return null;
+            }
+        }
+        public static FileLock WaitUntilLockFile(string path, FileMode mode=FileMode.OpenOrCreate, FileAccess access=FileAccess.ReadWrite)
+        {
+            while(true)
+            {
+                FileLock filelock = LockFile(path, mode, access);
+                if(filelock != null)
+                    return filelock;
             }
         }
 
