@@ -92,8 +92,9 @@ namespace HTLib2.Bioinfo
                     int leng=idx[1]-idx[0]+1;
                     return line.Substring(idx[0], leng);
                 }
-                public int?    GetInt   (params int[] idx) { string str=GetString(idx); if(str == null) return null; int    val; if(int   .TryParse(str, out val) == false) return null; return val; }
-                public double? GetDouble(params int[] idx) { string str=GetString(idx); if(str == null) return null; double val; if(double.TryParse(str, out val) == false) return null; return val; }
+                public int?    GetInt      (params int[] idx) { string str=GetString(idx); if(str == null) return null;                                              int    val; if(int   .TryParse(str, out val) == false) return null; return val; }
+                public double? GetDouble   (params int[] idx) { string str=GetString(idx); if(str == null) return null;                                              double val; if(double.TryParse(str, out val) == false) return null; return val; }
+                public double? GetDoubleExp(params int[] idx) { string str=GetString(idx); if(str == null) return null; str = str.Replace("D","E").Replace("d","e"); double val; if(double.TryParse(str, out val) == false) return null; return val; }
 
                 public static string UpdateLine<T>(string line, T value, string format, params int[] idx)
                 {
