@@ -146,7 +146,7 @@ namespace HTLib2.Bioinfo
 
                 string formatId       = "                                            {0}";  // HSubEndStringCount
                 string formatAtomType = "{0}                                            ";  // Substring
-                string formatDXDYDZ   = "                               {0:0."; for(int i=0; i<nDecimalPlaces; i++) formatDXDYDZ += "0"; formatDXDYDZ+="}";
+                string formatDXDYDZ   = "                               {0:0.######E+00}";//"                               {0:0."; for(int i=0; i<nDecimalPlaces; i++) formatDXDYDZ += "0"; formatDXDYDZ+="}";
 
                 Atom.Format format = new Atom.Format
                 {
@@ -340,9 +340,9 @@ namespace HTLib2.Bioinfo
                 {
                     public int[] idxId       = new int[]{ 0, 5};    public string formatId       = "                     {0}";  // HSubEndStringCount
                     public int[] idxAtomType = new int[]{ 8,10};    public string formatAtomType = "{0}                     ";  // Substring
-                    public int[] idxDX       = new int[]{11,22};    public string formatDX       = "            {0:0.000000}";  // HSubEndStringCount
-                    public int[] idxDY       = new int[]{23,34};    public string formatDY       = "            {0:0.000000}";  // HSubEndStringCount
-                    public int[] idxDZ       = new int[]{35,46};    public string formatDZ       = "            {0:0.000000}";  // HSubEndStringCount
+                    public int[] idxDX       = new int[]{11,22};    public string formatDX       = "        {0:0.######E+00}";  // HSubEndStringCount
+                    public int[] idxDY       = new int[]{23,34};    public string formatDY       = "        {0:0.######E+00}";  // HSubEndStringCount
+                    public int[] idxDZ       = new int[]{35,46};    public string formatDZ       = "        {0:0.######E+00}";  // HSubEndStringCount
 
                     public int IdSize    { get { return (idxId[1] - idxId[0]); } }
                     public int CoordSize { get { return (idxDX[1] - idxDX[0]); } }
@@ -440,21 +440,33 @@ namespace HTLib2.Bioinfo
                     {
                         FromData_Selftest = false;
                         string line0, line1;
+                        Format tformat = new Format
+                        {
+                            idxId       = new int[]{ 0, 5},  formatId       = "                     {0}",
+                            idxAtomType = new int[]{ 8,10},  formatAtomType = "{0}                     ",
+                            idxDX       = new int[]{11,26},  formatDX       = "        {0:0.######E+00}",
+                            idxDY       = new int[]{27,42},  formatDY       = "        {0:0.######E+00}",
+                            idxDZ       = new int[]{43,58},  formatDZ       = "        {0:0.######E+00}",
+                        };
                         ///  012345678901234567890123456789012345678901234567890123456789012345678901234567890
                         ///  ================================================================================
                         /// "     1  NH3   -0.668723D+01   -0.405234D+00   -0.331187D+01"
                         /// "     2  CT1    0.353263D+01   -0.436092D+01   -0.106154D+02"
                         /// "     3  C      0.176526D+01    0.125528D+01    0.969232D+01"
-                        line0 =            "     1  NH3   -0.668723D+01   -0.405234D+00   -0.331187D+01";
-                        line1 = FromData(format, 1,"NH3", -0.668723E+01,  -0.405234E+00,  -0.331187E+01 ).line;
+                        line0 =             "     1  NH3   -0.668723D+01   -0.405234D+00   -0.331187D+01";
+                        line1 = FromData(tformat, 1,"NH3", -0.668723E+01,  -0.405234E+00,  -0.331187E+01 ).line;
                         HDebug.Exception(line0 == line1);
 
-                        line0 =            "     2  CT1    0.353263D+01   -0.436092D+01   -0.106154D+02";
-                        line1 = FromData(format, 2,"CT1",  0.353263E+01,  -0.436092E+01,  -0.106154E+02 ).line;
+                        line0 =             "     2  CT1    0.353263D-12   -0.436092D+12    0.106154D-01";
+                        line1 = FromData(tformat, 2,"CT1",  0.353263E-12,  -0.436092E+12,   0.106154E-01 ).line;
                         HDebug.Exception(line0 == line1);
 
-                        line0 =            "     3  C      0.176526D+01    0.125528D+01    0.969232D+01";
-                        line1 = FromData(format, 3,"C",    0.176526E+01,   0.125528E+01,   0.969232E+01 ).line;
+                        line0 =             "     3  C      0.176526D+01    0.125528D+01    0.969232D+01";
+                        line1 = FromData(tformat, 3,"C",    0.176526E+01,   0.125528E+01,   0.969232E+01 ).line;
+                        HDebug.Exception(line0 == line1);
+
+                        line0 =             "     4  O     -0.618584D+01    0.435150D+00   -0.112307D+01";
+                        line1 = FromData(tformat, 4,"O",   -0.618584E+01,   0.435150E+00,  -0.112307E+01 ).line;
                         HDebug.Exception(line0 == line1);
                     }
 
@@ -462,9 +474,9 @@ namespace HTLib2.Bioinfo
                     line += string.Format(format.formatId      ,       id).HSubEndStringCount(format.idxId      [1]-format.idxId      [0]+1);
                     line += "  ";
                     line += string.Format(format.formatAtomType, atomtype).Substring       (0,format.idxAtomType[1]-format.idxAtomType[0]+1);
-                    line += string.Format(format.formatDX      ,       dx).HSubEndStringCount(format.idxDX      [1]-format.idxDX      [0]+1);
-                    line += string.Format(format.formatDY      ,       dy).HSubEndStringCount(format.idxDY      [1]-format.idxDY      [0]+1);
-                    line += string.Format(format.formatDZ      ,       dz).HSubEndStringCount(format.idxDZ      [1]-format.idxDZ      [0]+1);
+                    line += FormatDXYZ   (format.formatDX      ,       dx).HSubEndStringCount(format.idxDX      [1]-format.idxDX      [0]+1);
+                    line += FormatDXYZ   (format.formatDY      ,       dy).HSubEndStringCount(format.idxDY      [1]-format.idxDY      [0]+1);
+                    line += FormatDXYZ   (format.formatDZ      ,       dz).HSubEndStringCount(format.idxDZ      [1]-format.idxDZ      [0]+1);
 
                     Atom atom = new Atom(format, line);
                     HDebug.Assert(id              == atom.Id              );
@@ -474,6 +486,42 @@ namespace HTLib2.Bioinfo
                     //if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, y-atom.Y); } else { if(Math.Abs(y-atom.Y) > 0.000001) return FromData(format, id, atomtype, x, y/2, z, atomid, bondedids, autoAdjustCoord); }
                     //if(autoAdjustCoord == false) { HDebug.AssertTolerance(0.000001, z-atom.Z); } else { if(Math.Abs(z-atom.Z) > 0.000001) return FromData(format, id, atomtype, x, y, z/2, atomid, bondedids, autoAdjustCoord); }
                     return atom;
+                    static string FormatDXYZ(string format, double dv)
+                    {
+                        int format_blanks = 0;
+                        while(format[0] == ' ')
+                        {
+                            format = format.Substring(1);
+                            format_blanks++;
+                        }
+                        string str = string.Format(format, dv);
+                        string[] tokens = str.Split('E');
+
+                        int exp = int.Parse(tokens[1]);
+                        string expstr = string.Format("{0:00}",exp); if(exp>=0) expstr = "+"+expstr;
+                        HDebug.Assert(tokens[1] == expstr);
+
+                        string nfrastr = tokens[0];
+                        while(nfrastr.Length < 7)
+                            nfrastr = nfrastr + "0";
+                        for(int i=0; i<format_blanks; i++)
+                            nfrastr = " " + nfrastr;
+                        HDebug.Assert(nfrastr.Contains("0.") == false);
+
+                        if(nfrastr.Contains("1.")) { nfrastr = nfrastr.Replace("1.","0.1"); exp++; }
+                        if(nfrastr.Contains("2.")) { nfrastr = nfrastr.Replace("2.","0.2"); exp++; }
+                        if(nfrastr.Contains("3.")) { nfrastr = nfrastr.Replace("3.","0.3"); exp++; }
+                        if(nfrastr.Contains("4.")) { nfrastr = nfrastr.Replace("4.","0.4"); exp++; }
+                        if(nfrastr.Contains("5.")) { nfrastr = nfrastr.Replace("5.","0.5"); exp++; }
+                        if(nfrastr.Contains("6.")) { nfrastr = nfrastr.Replace("6.","0.6"); exp++; }
+                        if(nfrastr.Contains("7.")) { nfrastr = nfrastr.Replace("7.","0.7"); exp++; }
+                        if(nfrastr.Contains("8.")) { nfrastr = nfrastr.Replace("8.","0.8"); exp++; }
+                        if(nfrastr.Contains("9.")) { nfrastr = nfrastr.Replace("9.","0.9"); exp++; }
+                        string nexpstr = string.Format("{0:00}",exp); if(exp>=0) nexpstr = "+"+nexpstr;
+
+                        string nstr = nfrastr + "D" + nexpstr;
+                        return nstr;
+                    }
                 }
                 public static Atom FromCoord(Format format, Atom src, Vector vel)
                 {
