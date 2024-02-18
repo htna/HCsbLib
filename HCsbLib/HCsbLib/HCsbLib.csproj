@@ -202,6 +202,7 @@
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.CalcEnergy.elj2.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Vel.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.Xyz.SockInSolv.cs" />
+    <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.VelStatic.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.XyzStatic.Prm.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.XyzStatic.Inter1x.cs" />
     <Compile Include="HTLib2.Bioinfo\External.Tinker\Tinker.XyzStatic.cs" />
