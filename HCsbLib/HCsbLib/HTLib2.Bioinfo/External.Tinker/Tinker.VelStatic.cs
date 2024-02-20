@@ -57,7 +57,14 @@ namespace HTLib2.Bioinfo
                     int    idxVelAtomType = vel.line.IndexOf(vel.AtomType);
                     string substrVel      = vel     .line.Substring(idxVelAtomType);
                     string substrVeltosel = veltosel.line.Substring(idxVelAtomType);
-                    HDebug.Assert(substrVel == substrVeltosel);
+                    if(substrVel != substrVeltosel)
+                    {
+                        //HDebug.Assert(vel.Id       == veltosel.Id      );
+                        HDebug.Assert(vel.AtomType == veltosel.AtomType);
+                        HDebug.Assert(vel.DX       == veltosel.DX      );
+                        HDebug.Assert(vel.DY       == veltosel.DY      );
+                        HDebug.Assert(vel.DZ       == veltosel.DZ      );
+                    }
                 }
                 velstosel.Add(veltosel);
             }

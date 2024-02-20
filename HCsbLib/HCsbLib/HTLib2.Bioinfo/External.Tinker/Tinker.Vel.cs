@@ -146,7 +146,7 @@ namespace HTLib2.Bioinfo
 
                 string formatId       = "                                            {0}";  // HSubEndStringCount
                 string formatAtomType = "{0}                                            ";  // Substring
-                string formatDXDYDZ   = "                               {0:0.######E+00}";//"                               {0:0."; for(int i=0; i<nDecimalPlaces; i++) formatDXDYDZ += "0"; formatDXDYDZ+="}";
+                string formatDXDYDZ   = "                                {0:0.00000E+00}";//"                               {0:0."; for(int i=0; i<nDecimalPlaces; i++) formatDXDYDZ += "0"; formatDXDYDZ+="}";
 
                 Atom.Format format = new Atom.Format
                 {
@@ -340,9 +340,9 @@ namespace HTLib2.Bioinfo
                 {
                     public int[] idxId       = new int[]{ 0, 5};    public string formatId       = "                     {0}";  // HSubEndStringCount
                     public int[] idxAtomType = new int[]{ 8,10};    public string formatAtomType = "{0}                     ";  // Substring
-                    public int[] idxDX       = new int[]{11,22};    public string formatDX       = "        {0:0.######E+00}";  // HSubEndStringCount
-                    public int[] idxDY       = new int[]{23,34};    public string formatDY       = "        {0:0.######E+00}";  // HSubEndStringCount
-                    public int[] idxDZ       = new int[]{35,46};    public string formatDZ       = "        {0:0.######E+00}";  // HSubEndStringCount
+                    public int[] idxDX       = new int[]{11,22};    public string formatDX       = "         {0:0.00000E+00}";  // HSubEndStringCount
+                    public int[] idxDY       = new int[]{23,34};    public string formatDY       = "         {0:0.00000E+00}";  // HSubEndStringCount
+                    public int[] idxDZ       = new int[]{35,46};    public string formatDZ       = "         {0:0.00000E+00}";  // HSubEndStringCount
 
                     public int IdSize    { get { return (idxId[1] - idxId[0]); } }
                     public int CoordSize { get { return (idxDX[1] - idxDX[0]); } }
@@ -444,9 +444,9 @@ namespace HTLib2.Bioinfo
                         {
                             idxId       = new int[]{ 0, 5},  formatId       = "                     {0}",
                             idxAtomType = new int[]{ 8,10},  formatAtomType = "{0}                     ",
-                            idxDX       = new int[]{11,26},  formatDX       = "        {0:0.######E+00}",
-                            idxDY       = new int[]{27,42},  formatDY       = "        {0:0.######E+00}",
-                            idxDZ       = new int[]{43,58},  formatDZ       = "        {0:0.######E+00}",
+                            idxDX       = new int[]{11,26},  formatDX       = "         {0:0.00000E+00}",
+                            idxDY       = new int[]{27,42},  formatDY       = "         {0:0.00000E+00}",
+                            idxDZ       = new int[]{43,58},  formatDZ       = "         {0:0.00000E+00}",
                         };
                         ///  012345678901234567890123456789012345678901234567890123456789012345678901234567890
                         ///  ================================================================================
