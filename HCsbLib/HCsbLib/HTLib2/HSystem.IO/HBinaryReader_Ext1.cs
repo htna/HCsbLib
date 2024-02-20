@@ -35,6 +35,8 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out long   value) { value = reader.ReadInt64  (); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out string value) { value = reader.ReadString (); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out bool   value) { value = reader.ReadBoolean(); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out sbyte  value) { value = reader.ReadSByte()  ; }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out byte   value) { value = reader.ReadByte()   ; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out double? value) { if(_ReadBool()) { value = reader.ReadDouble (); } else { value = null; } }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public void Read (out int   ? value) { if(_ReadBool()) { value = reader.ReadInt32  (); } else { value = null; } }
@@ -169,6 +171,8 @@ namespace HTLib2
             string type_name = type.FullName;
             if(type_name == typeof(double              ).FullName) return _ReadDouble            ();
             if(type_name == typeof(float               ).FullName) return reader.ReadSingle      ();
+            if(type_name == typeof(byte                ).FullName) return reader.ReadByte        ();
+            if(type_name == typeof(sbyte               ).FullName) return reader.ReadSByte       ();
             if(type_name == typeof(int                 ).FullName) return _ReadInt               ();
             if(type_name == typeof(long                ).FullName) return _ReadLong              ();
             if(type_name == typeof(string              ).FullName) return _ReadString            ();

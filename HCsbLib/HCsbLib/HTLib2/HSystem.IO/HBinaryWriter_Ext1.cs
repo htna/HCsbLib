@@ -133,6 +133,8 @@ namespace HTLib2
             //string type_name = value.GetType()AssemblyQualifiedName;
             if(type == typeof(double                        )) { _WriteDouble            (      value               ); return; }
             if(type == typeof(float                         )) { writer.Write((float)           value               ); return; }
+            if(type == typeof(byte                          )) { writer.Write((byte )           value               ); return; }
+            if(type == typeof(sbyte                         )) { writer.Write((sbyte)           value               ); return; }
             if(type == typeof(int                           )) { _WriteInt               (      value               ); return; }
             if(type == typeof(long                          )) { _WriteLong              (      value               ); return; }
             if(type == typeof(string                        )) { _WriteString            (      value               ); return; }
