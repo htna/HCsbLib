@@ -502,7 +502,7 @@ namespace HTLib2.Bioinfo
                         HDebug.Assert(tokens[1] == expstr);
 
                         string nfrastr = tokens[0];
-                        while(nfrastr.Length < 7)
+                        while(nfrastr.Replace("-","").Length < 7)
                             nfrastr = nfrastr + "0";
                         for(int i=0; i<format_blanks; i++)
                             nfrastr = " " + nfrastr;
