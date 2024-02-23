@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Runtime.CompilerServices;
 
 namespace HTLib2.Bioinfo
 {
@@ -36,6 +36,7 @@ namespace HTLib2.Bioinfo
 
             return (headers, atoms, unknowns);
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Dictionary<int, Tinker.Xyz.Atom> ToIdDictionary(this IEnumerable<Tinker.Xyz.Atom> atoms)
         {
             Dictionary<int, Tinker.Xyz.Atom> dict = new Dictionary<int, Tinker.Xyz.Atom>();
@@ -43,6 +44,7 @@ namespace HTLib2.Bioinfo
                 dict.Add(atom.Id, atom);
             return dict;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Tinker.Xyz.Atom[] HSelectCorrectAtomType(this IList<Tinker.Xyz.Atom> atoms)
         {
             List<Tinker.Xyz.Atom> sels = new List<Tinker.Xyz.Atom>();
@@ -51,6 +53,7 @@ namespace HTLib2.Bioinfo
                     sels.Add(atom);
             return sels.ToArray();
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector[] HListCoords(this IList<Tinker.Xyz.Atom> atoms)
         {
             Vector[] coords = new Vector[atoms.Count];
@@ -58,6 +61,7 @@ namespace HTLib2.Bioinfo
                 coords[i] = atoms[i].Coord;
             return coords;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IList<int> HListId(this IList<Tinker.Xyz.Atom> atoms)
         {
             int[] ids = new int[atoms.Count];
@@ -65,11 +69,13 @@ namespace HTLib2.Bioinfo
                 ids[i] = atoms[i].Id;
             return ids;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<int> HEnumId(this IEnumerable<Tinker.Xyz.Atom> atoms)
         {
             foreach(var atom in atoms)
                 yield return atom.Id;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Dictionary<int, Tinker.Xyz.Atom> HToDictionaryIdAtom
             ( this IEnumerable<Tinker.Xyz.Atom> atoms
             )
@@ -79,6 +85,7 @@ namespace HTLib2.Bioinfo
                 dict.Add(atom.Id, atom);
             return dict;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Dictionary<int, int> HToDictionaryIdIndex
             ( this IList<Tinker.Xyz.Atom> atoms
             )
@@ -123,6 +130,24 @@ namespace HTLib2.Bioinfo
                 lstHeavyIdxAtmPrm    = lstHeavyIdxAtmPrm   
             };
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HIsHydrogen(this Tinker.Xyz.Atom atom, Tinker.Prm prm)
+        {
+            return HIsHydrogen(atom, prm.atoms);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HIsHydrogen(this Tinker.Xyz.Atom atom, Tinker.Prm.Atom[] prm_atoms)
+        {
+            Dictionary<int,Tinker.Prm.Atom> prm_id2atom = prm_atoms.ToIdDictionary();
+            return HIsHydrogen(atom, prm_id2atom);
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HIsHydrogen(this Tinker.Xyz.Atom atom, Dictionary<int, Tinker.Prm.Atom> prm_id2atom)
+        {
+            Tinker.Prm.Atom prm_atom = prm_id2atom[atom.AtomId];
+            return prm_atom.IsHydrogen;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KDTree.KDTree<Tinker.Xyz.Atom> HToKDTree(this IList<Tinker.Xyz.Atom> atoms)
         {
             KDTree.KDTree<Tinker.Xyz.Atom> kdtree = new KDTree.KDTree<Tinker.Xyz.Atom>(3);
@@ -130,11 +155,13 @@ namespace HTLib2.Bioinfo
                 kdtree.insert(atom.Coord, atom);
             return kdtree;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<string> EnumLine(this IEnumerable<Element> elems)
         {
             foreach(var elem in elems)
                 yield return elem.line;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<Tinker.Xyz.Atom> HSelectByAtomType(this IEnumerable<Tinker.Xyz.Atom> atoms, string AtomType)
         {
             foreach(var atom in atoms)
@@ -143,6 +170,7 @@ namespace HTLib2.Bioinfo
                     yield return atom;
             }
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static KDTreeDLL.KDTree<Tinker.Xyz.Atom> HToKDTreeByCoord(this IEnumerable<Tinker.Xyz.Atom> atoms)
         {
             KDTreeDLL.KDTree<Tinker.Xyz.Atom> kdtree = new KDTreeDLL.KDTree<Tinker.Xyz.Atom>(3);
