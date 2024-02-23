@@ -699,18 +699,22 @@ namespace HTLib2.Bioinfo
                 }
 
                 public Vector Coord    { get { return new double[3]{ X, Y, Z }; } }
-                public void GetBondedIds(ref List<int> bondeds)
+                public IEnumerable<int> EnumBondedId()
                 {
                     {
-                        bondeds.Clear();
                         for(int idx=1; idx<20; idx++)
                         {
                             int? bonded = GetBondedId(idx);
                             if(bonded == null)
                                 break;
-                            bondeds.Add(bonded.Value);
+                            yield return bonded.Value;
                         }
                     }
+                }
+                public void GetBondedIds(ref List<int> bondeds)
+                {
+                    bondeds.Clear();
+                    bondeds.AddRange(EnumBondedId());
                 }
                 public int[]  BondedIds
                 {
