@@ -86,7 +86,7 @@ namespace HTLib2.Bioinfo
             ///   3  C    -12.800000  -14.020000  -23.500000    20     2     4    25
             public static Vel FromFile(string path, bool loadLatest)
             {
-                Atom.Format format = new Atom.Format();
+                Atom.Format format = null; //new Atom.Format();
                 return FromFile(path, loadLatest, format);
             }
             public static Atom.Format DetermineFormat(string path, bool loadLatest)
