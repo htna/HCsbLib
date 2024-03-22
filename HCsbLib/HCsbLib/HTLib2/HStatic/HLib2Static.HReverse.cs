@@ -9,11 +9,25 @@ namespace HTLib2
     public static partial class HLib2Static
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T[] HReverse<T>(this IList<T> values)
+        public static T[] HReverse<T>(this T[] values)
         {
             List<T> list = new List<T>(values);
             list.Reverse();
             return list.ToArray();
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static List<T> HReverse<T>(this List<T> values)
+        {
+            List<T> list = new List<T>(values);
+            list.Reverse();
+            return list;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static IList<T> HReverse<T>(this IList<T> values)
+        {
+            List<T> list = new List<T>(values);
+            list.Reverse();
+            return list;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]  public static Tuple<         T2,T1> HReverse<T1,T2         >(this Tuple<T1,T2         > val) { return new Tuple<         T2,T1>(                              val.Item2,val.Item1); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]  public static Tuple<      T3,T2,T1> HReverse<T1,T2,T3      >(this Tuple<T1,T2,T3      > val) { return new Tuple<      T3,T2,T1>(                    val.Item3,val.Item2,val.Item1); }
