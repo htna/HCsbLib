@@ -18,28 +18,14 @@ namespace HTLib2
             return text;
         }
         public static StringBuilder ToStringBuilder2
-            ( string formatInt      // null (default) or "{0,3}"
+            ( object obj
+            , string formatInt      // null (default) or "{0,3}"
             , string formatDouble   // null (default) or "{0,8:0.0000}"
             , string formatString   // null (default) or "{0,10}"
-            , object obj
             )
         {
             StringBuilder text = new StringBuilder();
             _ToString2(text, obj, formatInt, formatDouble, formatString);
-            return text;
-        }
-        public static StringBuilder ToStringBuilder2
-            ( string formatInt      // null (default) or "{0,3}"
-            , string formatDouble   // null (default) or "{0,8:0.0000}"
-            , string formatString   // null (default) or "{0,10}"
-            , object obj, params object[] objs
-            )
-        {
-            StringBuilder text = new StringBuilder();
-            List<object> list = new List<object>(objs.Length+1);
-            list.Add(obj);
-            list.AddRange(objs);
-            _ToString2(text, list, formatInt, formatDouble, formatString);
             return text;
         }
 
