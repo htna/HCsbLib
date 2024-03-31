@@ -14,5 +14,22 @@ namespace HTLib2
             double rvalue = Math.Round(value / resolution) * resolution;
             return rvalue;
         }
+
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] 
+        public static double[] HRound(double[] values, double resolution)
+        {
+            double[] nvalues = new double[values.Length];
+            for(int i=0; i<values.Length; i++)
+                nvalues[i] = HRound(values[i], resolution);
+            return nvalues;
+        }
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] 
+        public static (double,double)[] HRound((double,double)[] values, double resolution)
+        {
+            (double,double)[] nvalues = new (double,double)[values.Length];
+            for(int i=0; i<values.Length; i++)
+                nvalues[i] = ( HRound(values[i].Item1, resolution), HRound(values[i].Item2, resolution) );
+            return nvalues;
+        }
     }
 }
