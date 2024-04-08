@@ -102,10 +102,11 @@ namespace HTLib2
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                double result = 0;
-                for(int i=0; i<Size; i++)
-                    result += this[i] * this[i];
-                return result;
+                //double result = 0;
+                //for(int i=0; i<Size; i++)
+                //    result += this[i] * this[i];
+                //return result;
+                return (v0*v0 + v1*v1 + v2*v2);
             }
         }
         public double Dist

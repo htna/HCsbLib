@@ -27,5 +27,25 @@ namespace HTLib2
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static IEnumerable<double> HEnumV0(this IEnumerable<SVector3> vecs) { foreach(var vec in vecs) yield return vec.v0; }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static IEnumerable<double> HEnumV1(this IEnumerable<SVector3> vecs) { foreach(var vec in vecs) yield return vec.v1; }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static IEnumerable<double> HEnumV2(this IEnumerable<SVector3> vecs) { foreach(var vec in vecs) yield return vec.v2; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void MakeUnitVector(this SVector3 vec)
+        {
+            double dist = vec.Dist;
+            vec.v0 = vec.v0 / dist;
+            vec.v1 = vec.v1 / dist;
+            vec.v2 = vec.v2 / dist;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SVector3 UnitVector(this SVector3 vec)
+        {
+            double dist = vec.Dist;
+            return new SVector3
+            {
+                v0 = vec.v0 / dist,
+                v1 = vec.v1 / dist,
+                v2 = vec.v2 / dist,
+            };
+        }
     }
 }
