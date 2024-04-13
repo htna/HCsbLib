@@ -867,6 +867,7 @@
     <Compile Include="HTLib2\HStatic\HStatic.HContainsObject.cs" />
     <Compile Include="HTLib2\HStatic\HStatic.HCopyIdx.cs" />
     <Compile Include="HTLib2\HStatic\HStatic.HDyn.cs" />
+    <Compile Include="HTLib2\HStatic\HStatic.HHist.cs" />
     <Compile Include="HTLib2\HStatic\HStatic.HGroupByBins.cs" />
     <Compile Include="HTLib2\HStatic\HStatic.HInsert.cs" />
     <Compile Include="HTLib2\HStatic\HStatic.HIsComputable.cs" />

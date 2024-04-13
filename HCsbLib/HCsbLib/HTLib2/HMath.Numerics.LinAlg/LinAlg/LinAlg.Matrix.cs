@@ -422,7 +422,7 @@ namespace HTLib2
         }
         //public static bool VtMV_selftest = HDebug.IsDebuggerAttached;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double VtMV(Vector lvec, IMatrix<double> mat, Vector rvec) //, string options="")
+        public static double VtMV(IVector<double> lvec, IMatrix<double> mat, IVector<double> rvec) //, string options="")
         {
             if(HDebug.Selftest())
             {
