@@ -131,20 +131,20 @@ namespace HTLib2
         void _Write(Type type, object value)
         {
             //string type_name = value.GetType()AssemblyQualifiedName;
-            if(type == typeof(double                        )) { _WriteDouble            (      value               ); return; }
-            if(type == typeof(float                         )) { writer.Write((float)           value               ); return; }
-            if(type == typeof(byte                          )) { writer.Write((byte )           value               ); return; }
-            if(type == typeof(sbyte                         )) { writer.Write((sbyte)           value               ); return; }
-            if(type == typeof(int                           )) { _WriteInt               (      value               ); return; }
-            if(type == typeof(long                          )) { _WriteLong              (      value               ); return; }
-            if(type == typeof(string                        )) { _WriteString            (      value               ); return; }
-            if(type == typeof(bool                          )) { _WriteBool              (      value               ); return; }
-            if(type == typeof(Matrix                        )) { ((Matrix)value).BinarySerialize(this               ); return; }
-            if(type == typeof(Vector                        )) { ((Vector)value).BinarySerialize(this               ); return; }
-            if(value is IBinarySerializable                  ) { _WriteBinarySerializable(type, value               ); return; }
-            if(value is Array                                ) { _WriteArray             (type, value as Array      ); return; }
-            if(value is IList                                ) { _WriteList              (type, value as IList      ); return; }
-            if(value is IDictionary                          ) { _WriteDictionary        (type, value as IDictionary); return; }
+            if(type == typeof(double                            )) { _WriteDouble            (      value               ); return; }
+            if(type == typeof(float                             )) { writer.Write((float)           value               ); return; }
+            if(type == typeof(byte                              )) { writer.Write((byte )           value               ); return; }
+            if(type == typeof(sbyte                             )) { writer.Write((sbyte)           value               ); return; }
+            if(type == typeof(int                               )) { _WriteInt               (      value               ); return; }
+            if(type == typeof(long                              )) { _WriteLong              (      value               ); return; }
+            if(type == typeof(string                            )) { _WriteString            (      value               ); return; }
+            if(type == typeof(bool                              )) { _WriteBool              (      value               ); return; }
+            if(type == typeof(Matrix                            )) { ((Matrix)value).BinarySerialize(this               ); return; }
+            if(type == typeof(Vector                            )) { ((Vector)value).BinarySerialize(this               ); return; }
+            if(typeof(IBinarySerializable).IsAssignableFrom(type)) { _WriteBinarySerializable(type, value               ); return; }
+            if(typeof(Array              ).IsAssignableFrom(type)) { _WriteArray             (type, value as Array      ); return; }
+            if(typeof(IList              ).IsAssignableFrom(type)) { _WriteList              (type, value as IList      ); return; }
+            if(typeof(IDictionary        ).IsAssignableFrom(type)) { _WriteDictionary        (type, value as IDictionary); return; }
             throw new Exception();
         }
     }
