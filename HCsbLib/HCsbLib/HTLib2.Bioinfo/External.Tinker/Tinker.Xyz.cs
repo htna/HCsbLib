@@ -494,6 +494,7 @@ namespace HTLib2.Bioinfo
                     }
                     public static bool Equals(Format a, Format b)
                     {
+                        throw new NotImplementedException(); // check the below
                         if(a.idxId      [0] != b.idxId      [0]) return false;      if(a.idxId      [1] != b.idxId      [1]) return false;
                         if(a.idxAtomType[0] != b.idxAtomType[0]) return false;      if(a.idxAtomType[1] != b.idxAtomType[1]) return false;
                         if(a.idxX       [0] != b.idxX       [0]) return false;      if(a.idxX       [1] != b.idxX       [1]) return false;
