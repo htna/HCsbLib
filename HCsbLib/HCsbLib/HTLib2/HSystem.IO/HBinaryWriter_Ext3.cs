@@ -9,5 +9,10 @@ namespace HTLib2
 {
     public partial struct HBinaryWriter
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Write(IBinarySerializeDeserialize data)
+        {
+            data.BinarySerialize(this);
+        }
     }
 }

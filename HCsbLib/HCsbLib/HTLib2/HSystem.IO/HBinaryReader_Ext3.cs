@@ -9,5 +9,10 @@ namespace HTLib2
 {
     public partial struct HBinaryReader
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Read(IBinarySerializeDeserialize data)
+        {
+            data.BinaryDeserialize(this);
+        }
     }
 }

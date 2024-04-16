@@ -39,4 +39,8 @@ namespace HTLib2
         void BinarySerialize(HBinaryWriter writer);
         //[Obsolete] void BinaryDeserialize(HBinaryReader reader);
     }
+    public interface IBinarySerializeDeserialize
+    {
+        void BinaryDeserialize(HBinaryReader reader);
+    }
 }
