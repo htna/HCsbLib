@@ -462,7 +462,7 @@ namespace HTLib2.Bioinfo
             public class Atom : Element, IBinarySerializable, ICloneable
             {
                 //[Serializable]
-                public class Format : IBinarySerializable, IBinarySerializeDeserialize
+                public class Format : IBinarySerializable
                 {
                     public int[] idxId       = new int[]{ 0, 5};    public string formatId       = "                     {0}";  // HSubEndStringCount
                     public int[] idxAtomType = new int[]{ 8,10};    public string formatAtomType = "{0}                     ";  // Substring
@@ -505,10 +505,6 @@ namespace HTLib2.Bioinfo
                         writer.Write(idxBondedId);
                     }
                     public Format(HBinaryReader reader)
-                    {
-                        BinaryDeserialize(reader);
-                    }
-                    public void BinaryDeserialize(HBinaryReader reader)
                     {
                         reader.Read(out idxId      );
                         reader.Read(out idxAtomType);

@@ -32,6 +32,10 @@ namespace HTLib2
     //          // IBinarySerializable
     //          ///////////////////////////////////////////////////
     //      }
+    // Example:
+    //      Data data;
+    //      writer.Write(data);
+    //      reader.Read(out data);
 
     public interface IBinarySerializable
     {
@@ -39,9 +43,9 @@ namespace HTLib2
         void BinarySerialize(HBinaryWriter writer);
         //[Obsolete] void BinaryDeserialize(HBinaryReader reader);
     }
-    public interface IBinarySerializeDeserialize
-    {
-        void BinarySerialize(HBinaryWriter writer);
-        void BinaryDeserialize(HBinaryReader reader);
-    }
+    //public interface IBinarySerializeDeserialize
+    //{
+    //    void BinarySerialize(HBinaryWriter writer);
+    //    void BinaryDeserialize(HBinaryReader reader);
+    //}
 }
