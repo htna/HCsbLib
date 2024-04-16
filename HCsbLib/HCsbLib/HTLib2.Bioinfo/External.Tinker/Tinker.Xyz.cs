@@ -506,6 +506,10 @@ namespace HTLib2.Bioinfo
                     }
                     public Format(HBinaryReader reader)
                     {
+                        BinaryDeserialize(reader);
+                    }
+                    public void BinaryDeserialize(HBinaryReader reader)
+                    {
                         reader.Read(out idxId      );
                         reader.Read(out idxAtomType);
                         reader.Read(out idxX       );
