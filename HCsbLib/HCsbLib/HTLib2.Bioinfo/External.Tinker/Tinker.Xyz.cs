@@ -492,6 +492,17 @@ namespace HTLib2.Bioinfo
                         idxAtomId   = new int[]{ i, i+5         };    i+=6          ;    formatAtomId   = "                     {0}";  // HSubEndStringCount
                         idxBondedId = new int[]{ i, i+IdSize    };    i+=1+CoordSize;    formatBondedId = "                     {0}";  // HSubEndStringCount
                     }
+                    public static bool Equals(Format a, Format b)
+                    {
+                        if(a.idxId      [0] != b.idxId      [0]) return false;      if(a.idxId      [1] != b.idxId      [1]) return false;
+                        if(a.idxAtomType[0] != b.idxAtomType[0]) return false;      if(a.idxAtomType[1] != b.idxAtomType[1]) return false;
+                        if(a.idxX       [0] != b.idxX       [0]) return false;      if(a.idxX       [1] != b.idxX       [1]) return false;
+                        if(a.idxY       [0] != b.idxY       [0]) return false;      if(a.idxY       [1] != b.idxY       [1]) return false;
+                        if(a.idxZ       [0] != b.idxZ       [0]) return false;      if(a.idxZ       [1] != b.idxZ       [1]) return false;
+                        if(a.idxAtomId  [0] != b.idxAtomId  [0]) return false;      if(a.idxAtomId  [1] != b.idxAtomId  [1]) return false;
+                        if(a.idxBondedId[0] != b.idxBondedId[0]) return false;      if(a.idxBondedId[1] != b.idxBondedId[1]) return false;
+                        return true;
+                    }
                     ///////////////////////////////////////////////////
                     // IBinarySerializable
                     public void BinarySerialize(HBinaryWriter writer)
