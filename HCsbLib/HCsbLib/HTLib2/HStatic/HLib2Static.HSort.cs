@@ -77,11 +77,112 @@ namespace HTLib2
                 return new Tuple<T, T>(v1, v2);
             return new Tuple<T, T>(v2, v1);
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static Tuple<T,T,T    > HSort<T>(this Tuple<T,T,T    > values) where T : IComparable<T> { IList<T> sort = values.HToArray().HSort(); return new Tuple<T,T,T    >(sort[0], sort[1], sort[2]                  ); }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Tuple<T,T,T> HSort<T>(this Tuple<T,T,T> values)
+            where T : IComparable<T>
+        {
+            T v1 = values.Item1;
+            T v2 = values.Item2;
+            T v3 = values.Item3;
+            if(v1.CompareTo(v2) <= 0)
+            {   // v1 <= v2
+                if(v2.CompareTo(v3) <= 0)
+                {   // v2 <= v3
+                    HDebug.Assert(CheckCond(v1,v2,v3));
+                    return new Tuple<T,T,T>(v1,v2,v3);
+                } else {
+                    // v3 < v2
+                    if(v1.CompareTo(v3) <= 0)
+                    {   // v1 <= v3
+                        HDebug.Assert(CheckCond(v1,v3,v2));
+                        return new Tuple<T,T,T>(v1,v3,v2);
+                    } else {
+                        // v3 < v1
+                        HDebug.Assert(CheckCond(v3,v1,v2));
+                        return new Tuple<T,T,T>(v3,v1,v2);
+                    }
+                }
+            }
+            else
+            {   // v2 < v1
+                if(v1.CompareTo(v3) <= 0)
+                {   // v1 <= v3
+                    HDebug.Assert(CheckCond(v2,v1,v3));
+                    return new Tuple<T,T,T>(v2,v1,v3);
+                } else {
+                    // v3 < v1
+                    if(v2.CompareTo(v3) <= 0)
+                    {   // v2 <= v3
+                        HDebug.Assert(CheckCond(v2,v3,v1));
+                        return new Tuple<T,T,T>(v2,v3,v1);
+                    } else {
+                        // v3 < v2
+                        HDebug.Assert(CheckCond(v3,v2,v1));
+                        return new Tuple<T,T,T>(v3,v2,v1);
+                    }
+                }
+            }
+            ////////////////////////////////////////
+            static bool CheckCond(T v1, T v2, T v3)
+            {
+                return (v1.CompareTo(v2) <= 0 && v2.CompareTo(v3) <= 0);
+            }
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ValueTuple<T,T,T> HSort<T>(this ValueTuple<T,T,T> values)
+            where T : IComparable<T>
+        {
+            T v1 = values.Item1;
+            T v2 = values.Item2;
+            T v3 = values.Item3;
+            if(v1.CompareTo(v2) <= 0)
+            {   // v1 <= v2
+                if(v2.CompareTo(v3) <= 0)
+                {   // v2 <= v3
+                    HDebug.Assert(CheckCondition(v1,v2,v3));
+                    return new ValueTuple<T,T,T>(v1,v2,v3);
+                } else {
+                    // v3 < v2
+                    if(v1.CompareTo(v3) <= 0)
+                    {   // v1 <= v3
+                        HDebug.Assert(CheckCondition(v1,v3,v2));
+                        return new ValueTuple<T,T,T>(v1,v3,v2);
+                    } else {
+                        // v3 < v1
+                        HDebug.Assert(CheckCondition(v3,v1,v2));
+                        return new ValueTuple<T,T,T>(v3,v1,v2);
+                    }
+                }
+            }
+            else
+            {   // v2 < v1
+                if(v1.CompareTo(v3) <= 0)
+                {   // v1 <= v3
+                    HDebug.Assert(CheckCondition(v2,v1,v3));
+                    return new ValueTuple<T,T,T>(v2,v1,v3);
+                } else {
+                    // v3 < v1
+                    if(v2.CompareTo(v3) <= 0)
+                    {   // v2 <= v3
+                        HDebug.Assert(CheckCondition(v2,v3,v1));
+                        return new ValueTuple<T,T,T>(v2,v3,v1);
+                    } else {
+                        // v3 < v2
+                        HDebug.Assert(CheckCondition(v3,v2,v1));
+                        return new ValueTuple<T,T,T>(v3,v2,v1);
+                    }
+                }
+            }
+            ////////////////////////////////////////
+            static bool CheckCondition(T v1, T v2, T v3)
+            {
+                return (v1.CompareTo(v2) <= 0 && v2.CompareTo(v3) <= 0);
+            }
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static Tuple<T,T,T,T  > HSort<T>(this Tuple<T,T,T,T  > values) where T : IComparable<T> { IList<T> sort = values.HToArray().HSort(); return new Tuple<T,T,T,T  >(sort[0], sort[1], sort[2], sort[3]         ); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static Tuple<T,T,T,T,T> HSort<T>(this Tuple<T,T,T,T,T> values) where T : IComparable<T> { IList<T> sort = values.HToArray().HSort(); return new Tuple<T,T,T,T,T>(sort[0], sort[1], sort[2], sort[3], sort[4]); }
         
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] public static ValueTuple<T,T,T    > HSort<T>(this ValueTuple<T,T,T    > values) where T : IComparable<T> { IList<T> sort = values.HToArray().HSort(); return new ValueTuple<T,T,T    >(sort[0], sort[1], sort[2]                  ); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static ValueTuple<T,T,T,T  > HSort<T>(this ValueTuple<T,T,T,T  > values) where T : IComparable<T> { IList<T> sort = values.HToArray().HSort(); return new ValueTuple<T,T,T,T  >(sort[0], sort[1], sort[2], sort[3]         ); }
         [MethodImpl(MethodImplOptions.AggressiveInlining)] public static ValueTuple<T,T,T,T,T> HSort<T>(this ValueTuple<T,T,T,T,T> values) where T : IComparable<T> { IList<T> sort = values.HToArray().HSort(); return new ValueTuple<T,T,T,T,T>(sort[0], sort[1], sort[2], sort[3], sort[4]); }
 
