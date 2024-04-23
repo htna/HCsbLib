@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 namespace HTLib2
 {
     [Serializable]
-    public partial class Vector : IVector<double>, ICloneable, IBinarySerializable
+    public partial class Vector : IVector<double>, ICloneable, IBinarySerializable, IEquatable<Vector>
     {
         public double[] _data;
 
@@ -149,7 +149,7 @@ namespace HTLib2
             return vec.ToColMatrix();
         }
         static bool operator_Equal_SelfTest = HDebug.IsDebuggerAttached;
-        public static bool operator==(Vector lvec, Vector rvec)
+        public static bool Equals(Vector lvec, Vector rvec)
         {
             if(operator_Equal_SelfTest)
                 #region self test
@@ -179,9 +179,17 @@ namespace HTLib2
                     return false;
             return true;
         }
+        public bool Equals(Vector other)
+        {
+            return Equals(this, other);
+        }
+        public static bool operator==(Vector lvec, Vector rvec)
+        {
+            return Equals(lvec, rvec);
+        }
         public static bool operator!=(Vector lvec, Vector rvec)
         {
-            return !(lvec == rvec);
+            return !Equals(lvec, rvec);;
         }
         public static Vector operator+(Vector l, Vector r)
         {
