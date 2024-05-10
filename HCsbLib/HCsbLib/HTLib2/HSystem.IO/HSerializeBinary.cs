@@ -81,10 +81,9 @@ namespace HTLib2
         }
         public static void _SerializeBinary(string filename, params IOBS[] objBinSerializers)
 		{
+            HFile.FileLock writelock = null;
             if(_SerializeBinary_filelockpath != null)
-            {
-                var writelock = HFile.WaitUntilLockFile(_SerializeBinary_filelockpath);
-            }
+                writelock = HFile.WaitUntilLockFile(_SerializeBinary_filelockpath);
 
             string lockname = "Serializer: "+filename.Replace("\\", "@");
             using(new NamedLock(lockname))
@@ -102,6 +101,9 @@ namespace HTLib2
                 stream.Flush();
                 stream.Close();
             }
+
+            if(writelock != null)
+                writelock.Release();
 		}
         // OBD : Object Binary Deserializer
         public static IOBD GetOBD<T>()
@@ -131,10 +133,9 @@ namespace HTLib2
         }
         public static object[] _DeserializeBinary(string filename, params IOBD[] objBinDeserializers)
         {
+            HFile.FileLock readlock = null;
             if(_DeserializeBinary_filelockpath != null)
-            {
-                var writelock = HFile.WaitUntilLockFile(_DeserializeBinary_filelockpath);
-            }
+                readlock = HFile.WaitUntilLockFile(_DeserializeBinary_filelockpath);
 
             string lockname = "Serializer: "+filename.Replace("\\", "@");
             using(new NamedLock(lockname))
@@ -162,6 +163,8 @@ namespace HTLib2
                     throw new FileFormatException("catch");
                 }
                 stream.Close();
+                if(readlock != null)
+                    readlock.Release();
                 return objs;
             }
         }
