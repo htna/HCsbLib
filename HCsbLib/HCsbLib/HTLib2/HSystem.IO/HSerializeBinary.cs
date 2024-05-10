@@ -74,8 +74,18 @@ namespace HTLib2
                 obj.BinarySerialize(writer);
             }
         }
+        static string _SerializeBinary_filelockpath = null;
+        public static void SerializeBinary_SetFilelockPath(string filelockpath = null)
+        {
+            _SerializeBinary_filelockpath = filelockpath;
+        }
         public static void _SerializeBinary(string filename, params IOBS[] objBinSerializers)
 		{
+            if(_SerializeBinary_filelockpath != null)
+            {
+                var writelock = HFile.WaitUntilLockFile(_SerializeBinary_filelockpath);
+            }
+
             string lockname = "Serializer: "+filename.Replace("\\", "@");
             using(new NamedLock(lockname))
             {
@@ -114,8 +124,18 @@ namespace HTLib2
                 return obj;
             }
         }
+        static string _DeserializeBinary_filelockpath = null;
+        public static void DeserializeBinary_SetFilelockPath(string filelockpath = null)
+        {
+            _DeserializeBinary_filelockpath = filelockpath;
+        }
         public static object[] _DeserializeBinary(string filename, params IOBD[] objBinDeserializers)
         {
+            if(_DeserializeBinary_filelockpath != null)
+            {
+                var writelock = HFile.WaitUntilLockFile(_DeserializeBinary_filelockpath);
+            }
+
             string lockname = "Serializer: "+filename.Replace("\\", "@");
             using(new NamedLock(lockname))
             {
