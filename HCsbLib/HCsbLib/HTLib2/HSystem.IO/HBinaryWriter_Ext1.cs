@@ -146,7 +146,7 @@ namespace HTLib2
             if(typeof(IList              ).IsAssignableFrom(type)) { _WriteList              (type, value as IList      ); return; }
             if(typeof(IDictionary        ).IsAssignableFrom(type)) { _WriteDictionary        (type, value as IDictionary); return; }
             //HDebug.Assert(false); // TODO
-            //if(type == typeof(ValueTuple<int   ,int   >            )) { Write((ValueTuple<int   ,int   >          )value); return; }
+            if(type == typeof(ValueTuple<int   ,int   >            )) { Write((ValueTuple<int   ,int   >          )value); return; }
             if(type == typeof(ValueTuple<int   ,double>            )) { Write((ValueTuple<int   ,double>          )value); return; }
             //if(type == typeof(ValueTuple<double,int   >            )) { Write((ValueTuple<double,int   >          )value); return; }
             //if(type == typeof(ValueTuple<double,double>            )) { Write((ValueTuple<double,double>          )value); return; }

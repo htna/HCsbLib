@@ -184,7 +184,7 @@ namespace HTLib2
             if(typeof(IList              ).IsAssignableFrom(type)) return _ReadList              (type);
             if(typeof(IDictionary        ).IsAssignableFrom(type)) return _ReadDictionary        (type);
             //HDebug.Assert(false); // TODO
-            //if(type_name == typeof(ValueTuple<int   ,int   >).FullName) { ValueTuple<int   ,int   > tuple; Read(out tuple); return tuple; }
+            if(type_name == typeof(ValueTuple<int   ,int   >).FullName) { ValueTuple<int   ,int   > tuple; Read(out tuple); return tuple; }
             if(type_name == typeof(ValueTuple<int   ,double>).FullName) { ValueTuple<int   ,double> tuple; Read(out tuple); return tuple; }
             //if(type_name == typeof(ValueTuple<double,int   >).FullName) { ValueTuple<double,int   > tuple; Read(out tuple); return tuple; }
             //if(type_name == typeof(ValueTuple<double,double>).FullName) { ValueTuple<double,double> tuple; Read(out tuple); return tuple; }
