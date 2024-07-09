@@ -197,5 +197,16 @@ namespace HTLib2
             , v02, v12, v22
             );
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SMatrix3x3 From(Matrix mat)
+        {
+            if(mat.ColSize != 3 || mat.RowSize != 3)
+                throw new HException();
+            return new SMatrix3x3
+            ( mat[0,0], mat[1,0], mat[2,0]
+            , mat[0,1], mat[1,1], mat[2,1]
+            , mat[0,2], mat[1,2], mat[2,2]
+            );
+        }
     }
 }
