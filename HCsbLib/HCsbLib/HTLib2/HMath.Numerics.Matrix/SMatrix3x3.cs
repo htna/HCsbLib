@@ -208,5 +208,16 @@ namespace HTLib2
             , mat[0,2], mat[1,2], mat[2,2]
             );
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SMatrix3x3 From(double[,] arr)
+        {
+            if(arr.GetLength(0) != 3 || arr.GetLength(1) != 3)
+                throw new HException();
+            return new SMatrix3x3
+            ( arr[0,0], arr[1,0], arr[2,0]
+            , arr[0,1], arr[1,1], arr[2,1]
+            , arr[0,2], arr[1,2], arr[2,2]
+            );
+        }
     }
 }
