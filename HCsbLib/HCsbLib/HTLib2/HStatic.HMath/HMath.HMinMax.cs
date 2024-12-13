@@ -37,15 +37,49 @@ namespace HTLib2
                     idxmax = i;
             return idxmax;
         }
+        public static int HIdxMax<T>(this IEnumerable<T> values)
+            where T : IComparable<T>
+        {
+            int max_idx = -1;
+            T   max_val = default;
+            int idx    = -1;
+            foreach(T value in values)
+            {
+                idx ++;
+                if((max_idx == -1) || (value.CompareTo(max_val) > 0))
+                {
+                    max_idx = idx;
+                    max_val = value;
+                }
+            }
+            return max_idx;
+        }
         public static int HIdxMin<T>(this IList<T> values)
             where T : IComparable<T>
         {
             HDebug.Assert(values.Count > 0);
-            int idxmax = 0;
+            int idxmin = 0;
             for(int i=1; i<values.Count; i++)
-                if(values[idxmax].CompareTo(values[i]) > 0)
-                    idxmax = i;
-            return idxmax;
+                if(values[idxmin].CompareTo(values[i]) > 0)
+                    idxmin = i;
+            return idxmin;
+        }
+        public static int HIdxMin<T>(this IEnumerable<T> values)
+            where T : IComparable<T>
+        {
+            int min_idx = -1;
+            T   min_val = default;
+            int idx    = -1;
+            foreach(T value in values)
+            {
+                idx ++;
+                if((min_idx == -1) || (value.CompareTo(min_val) < 0))
+                {
+                    min_idx = idx;
+                    min_val = value;
+                }
+            }
+            return min_idx;
         }
         public static int[] HIdxMax<T>(this T[,] values)
             where T : IComparable<T>
