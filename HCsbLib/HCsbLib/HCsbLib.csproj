@@ -705,6 +705,7 @@
     <Compile Include="HTLib2\HMath.HSolver.HRoot\HRoots.RegulaFalsi.cs" />
     <Compile Include="HTLib2\HMath.HSolver.HRoot\HRoots.Secant.cs" />
     <Compile Include="HTLib2\HMath.HSolver.HRoot\HRootsNewton.cs" />
+    <Compile Include="HTLib2\HMath.Numerics.Derivative\Numerics.Derivative.cs" />
     <Compile Include="HTLib2\HMath.Numerics.LinAlgSparse\LinAlgSparse.cs" />
     <Compile Include="HTLib2\HMath.Numerics.LinAlg\ILinAlg.cs" />
     <Compile Include="HTLib2\HMath.Numerics.LinAlg\ILinAlg.Extensions.cs" />
