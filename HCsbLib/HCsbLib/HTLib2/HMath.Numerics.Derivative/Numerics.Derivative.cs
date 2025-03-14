@@ -120,5 +120,17 @@ namespace HTLib2
                 }
             }
         }
+        public static double[,] Derivative2(Func<double, double, double> func, double x, double y, double h)
+        {
+            double ddFunc_dxdx = (func(x+h,y) - 2*func(x,y) + func(x-h,y))/(h*h);
+            double ddFunc_dydy = (func(x,y+h) - 2*func(x,y) + func(x,h-h))/(h*h);
+            double ddFunc_dxdy = (func(x+h,y+h) - func(x+h,y-h) - func(x-h,y+h) + func(x-h,y-h))/(4*h*h);
+            double ddFunc_dydx = ddFunc_dxdy;
+            return new double[2,2]
+            {
+                { ddFunc_dxdx, ddFunc_dxdy },
+                { ddFunc_dydx, ddFunc_dydy },
+            };
+        }
     }
 }
