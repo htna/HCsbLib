@@ -26,14 +26,44 @@ namespace HTLib2
             HDebug.ToDo("implement");
             return null;
         }
+        public static double[,] Derivative2(Func<double, double, double> func, double x, double y, double h)
+        {
+            double ddFunc_dxdx = (func(x+h,y) - 2*func(x,y) + func(x-h,y))/(h*h);
+            double ddFunc_dydy = (func(x,y+h) - 2*func(x,y) + func(x,h-h))/(h*h);
+            double ddFunc_dxdy = (func(x+h,y+h) - func(x+h,y-h) - func(x-h,y+h) + func(x-h,y-h))/(4*h*h);
+            double ddFunc_dydx = ddFunc_dxdy;
+            return new double[2,2]
+            {
+                { ddFunc_dxdx, ddFunc_dxdy },
+                { ddFunc_dydx, ddFunc_dydy },
+            };
+        }
         public static MatrixByArr Derivative2(Func<Vector, double> func, Vector x, double dx)
+        {
+            double _func(Vector xx, object info)
+            {
+                HDebug.Assert(info == null);
+                return func(x);
+            }
+            return Derivative2<object>(_func, x, dx, null);
+        }
+        public static MatrixByArr Derivative2<INFO>(Func<Vector, INFO, double> func, Vector x, double dx, INFO info)
         {
             int size = x.Size;
             MatrixByArr dy2 = new double[size, size];
-            Derivative2(func, x, dx, ref dy2);
+            Derivative2<INFO>(func, x, dx, info, ref dy2);
             return dy2;
         }
         public static void Derivative2(Func<Vector, double> func, Vector x, double dx, ref MatrixByArr dy2)
+        {
+            double _func(Vector xx, object info)
+            {
+                HDebug.Assert(info == null);
+                return func(x);
+            }
+            Derivative2<object>(_func, x, dx, null, ref dy2);
+        }
+        public static void Derivative2<INFO>(Func<Vector, INFO, double> func, Vector x, double dx, INFO info, ref MatrixByArr dy2)
         {
             // [df/dxdx,  df/dxdy]
             // [df/dydx,  df/dydy]
@@ -65,10 +95,10 @@ namespace HTLib2
             {
                 for(int j=0; j<size; j++)
                 {
-                    Vector x0 = x.Clone(); x0[i] += dx; x0[j] += dx; double y0 = func(x0);
-                    Vector x1 = x.Clone(); x1[i] -= dx; x1[j] += dx; double y1 = func(x1);
-                    Vector x2 = x.Clone(); x2[i] += dx; x2[j] -= dx; double y2 = func(x2);
-                    Vector x3 = x.Clone(); x3[i] -= dx; x3[j] -= dx; double y3 = func(x3);
+                    Vector x0 = x.Clone(); x0[i] += dx; x0[j] += dx; double y0 = func(x0, info);
+                    Vector x1 = x.Clone(); x1[i] -= dx; x1[j] += dx; double y1 = func(x1, info);
+                    Vector x2 = x.Clone(); x2[i] += dx; x2[j] -= dx; double y2 = func(x2, info);
+                    Vector x3 = x.Clone(); x3[i] -= dx; x3[j] -= dx; double y3 = func(x3, info);
                     double d2f_didj = (y0 - y1 - y2 + y3) / (4*dx2);
                     dy2[i, j] = d2f_didj;
                 }
@@ -119,18 +149,6 @@ namespace HTLib2
                     dy2[i,j][di,dj] = d2f_didj;
                 }
             }
-        }
-        public static double[,] Derivative2(Func<double, double, double> func, double x, double y, double h)
-        {
-            double ddFunc_dxdx = (func(x+h,y) - 2*func(x,y) + func(x-h,y))/(h*h);
-            double ddFunc_dydy = (func(x,y+h) - 2*func(x,y) + func(x,h-h))/(h*h);
-            double ddFunc_dxdy = (func(x+h,y+h) - func(x+h,y-h) - func(x-h,y+h) + func(x-h,y-h))/(4*h*h);
-            double ddFunc_dydx = ddFunc_dxdy;
-            return new double[2,2]
-            {
-                { ddFunc_dxdx, ddFunc_dxdy },
-                { ddFunc_dydx, ddFunc_dydy },
-            };
         }
     }
 }
