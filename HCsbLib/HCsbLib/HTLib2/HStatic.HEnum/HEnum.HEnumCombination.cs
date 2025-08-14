@@ -33,7 +33,7 @@ namespace HTLib2
             foreach(var comb in HEnumCombination3(values))
                 yield return comb.HToArray();
         }
-        public static IEnumerable<Tuple<T1,T2>> HEnumCombination2<T1,T2>(IList<T1> values1, IList<T2> values2)
+        public static IEnumerable<Tuple<T1,T2>> HEnumCombination<T1,T2>(IList<T1> values1, IList<T2> values2)
         {
             foreach(T1 val1 in values1)
                 foreach(T2 val2 in values2)
