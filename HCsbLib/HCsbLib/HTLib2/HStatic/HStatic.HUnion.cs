@@ -29,6 +29,14 @@ namespace HTLib2
             var union = new List<T>(values.Union(with));
             return union.ToArray();
         }
+        public static T[] HUnionWith<T>(this (T[] values1, T[] values2) values, bool treatnull=false)
+        {
+            return values.values1.HUnionWith(values.values2, treatnull);
+        }
+        public static List<T> HUnionWith<T>(this (List<T> values1, List<T> values2) values, bool treatnull=false)
+        {
+            return values.values1.HUnionWith(values.values2.ToArray(), treatnull).ToList();
+        }
         public static T[] HUnionAll<T>(this IList<T[]> valuess)
         {
             var union = new HashSet<T>();
