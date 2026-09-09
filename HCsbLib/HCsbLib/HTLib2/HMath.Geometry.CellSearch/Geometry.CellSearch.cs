@@ -33,7 +33,7 @@ namespace HTLib2
 
             private void Add(double[] point)
             {
-                HDebug.Assert((point == null || point.Length != 3)); // "point must be a double array of length 3.");
+                HDebug.Assert(point != null && point.Length == 3); // "point must be a double array of length 3.");
 
                 var cell = GetCellIndex(point);
                 if (cells.TryGetValue(cell, out List<(double,double,double)> list) == false)
@@ -59,9 +59,8 @@ namespace HTLib2
             // ============================================================
             public IEnumerable<(double x, double y, double z)> Search(double[] point, double cutoff)
             {
-                if (point == null || point.Length != 3)
-                    throw new ArgumentException(
-                        "point must be a double array of length 3.");
+                HDebug.Assert(point != null && point.Length == 3);  // "point must be a double array of length 3.";
+                HDebug.Assert(cutoff > 0);                          // "cutoff must be non-negative.";
 
                 double cutoff2 = cutoff * cutoff;
 
