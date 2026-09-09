@@ -661,6 +661,7 @@
     <Compile Include="HTLib2\HDataStruc.Tree\TreeT.cs" />
     <Compile Include="HTLib2\HDataStruc\HDataStruc.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.cs" />
+    <Compile Include="HTLib2\HMath.Geometry.CellSearch\Geometry.CellSearch.cs" />
     <Compile Include="HTLib2\HObject\HObject.Equals.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.Selftest.cs" />
     <Compile Include="HTLib2\HDebug\HDebug.Static.cs" />
