@@ -16,7 +16,13 @@ namespace HTLib2
             private (int x, int y, int z) basecell; // Absolute cell index corresponding to cells[0,0,0].
             private List<(double x, double y, double z)>[,,] cells;
 
-            public static CellSearch FromPoints(double[][] points, double cellSize)
+            // ============================================================
+            // Build CellSearch data structure
+            // ============================================================
+            public static CellSearch FromPoints
+                ( double[][] points
+                , double cellSize = 4 // 4A could be a good choice for a proteins with hydrogens
+                )
             {
                 HDebug.Exception(points == null, "points must not be null.");
                 HDebug.Exception(cellSize <= 0, "cellSize must be positive.");
@@ -86,6 +92,57 @@ namespace HTLib2
                 return cellsearch;
             }
 
+            // ============================================================
+            // Enumerate stored points within cutoff.
+            // ============================================================
+            private Dictionary<double, (int dx, int dy, int dz)[]> cutoff_searchcells = new Dictionary<double, (int dx, int dy, int dz)[]>();
+            public IEnumerable<(double x, double y, double z)> Search(double[] point, double cutoff)
+            {
+                HDebug.Assert(point != null && point.Length == 3);
+                HDebug.Assert(cutoff > 0);
+
+                var icell = GetCellIndex(point);
+
+                if(cutoff_searchcells.ContainsKey(cutoff) == false)
+                    cutoff_searchcells.Add(cutoff, GetSearchCellIndices(cutoff).ToArray());
+                (int dx, int dy, int dz)[] searchcells = cutoff_searchcells[cutoff];
+
+                double cutoff2 = cutoff * cutoff;
+
+                foreach(var dcell in searchcells)
+                {
+                    int cellx = icell.x + dcell.dx;
+                    int celly = icell.y + dcell.dy;
+                    int cellz = icell.z + dcell.dz;
+
+                    // The search point can be outside the bounding box.
+                    if(cellx < 0 || cells.GetLength(0) <= cellx) continue;
+                    if(celly < 0 || cells.GetLength(1) <= celly) continue;
+                    if(cellz < 0 || cells.GetLength(2) <= cellz) continue;
+
+                    List<(double x, double y, double z)> cellpoints = cells[cellx, celly, cellz];
+
+                    if(cellpoints == null)
+                        continue;
+
+                    foreach(var neighbor in cellpoints)
+                    {
+                        double dx = neighbor.x - point[0];
+                        double dy = neighbor.y - point[1];
+                        double dz = neighbor.z - point[2];
+
+                        double dist2 = dx*dx + dy*dy + dz*dz;
+
+                        if(dist2 <= cutoff2)
+                            yield return neighbor;
+                    }
+                }
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////
+
             private void Add(double[] point)
             {
                 HDebug.Assert(point != null && point.Length == 3);
@@ -151,57 +208,6 @@ namespace HTLib2
 
                     if(dist2 <= cutoff2)
                         yield return (dx,dy,dz);
-                }
-            }
-
-
-            // ============================================================
-            // Enumerate stored points within cutoff.
-            // ============================================================
-            private Dictionary<double, (int dx, int dy, int dz)[]> cutoff_searchcells = new Dictionary<double, (int dx, int dy, int dz)[]>();
-            public IEnumerable<(double x, double y, double z)> Search
-                ( double[] point
-                , double cutoff
-                )
-            {
-                HDebug.Assert(point != null && point.Length == 3);
-                HDebug.Assert(cutoff > 0);
-
-                var icell = GetCellIndex(point);
-
-                if(cutoff_searchcells.ContainsKey(cutoff) == false)
-                    cutoff_searchcells.Add(cutoff, GetSearchCellIndices(cutoff).ToArray());
-                (int dx, int dy, int dz)[] searchcells = cutoff_searchcells[cutoff];
-
-                double cutoff2 = cutoff * cutoff;
-
-                foreach(var dcell in searchcells)
-                {
-                    int cellx = icell.x + dcell.dx;
-                    int celly = icell.y + dcell.dy;
-                    int cellz = icell.z + dcell.dz;
-
-                    // The search point can be outside the bounding box.
-                    if(cellx < 0 || cells.GetLength(0) <= cellx) continue;
-                    if(celly < 0 || cells.GetLength(1) <= celly) continue;
-                    if(cellz < 0 || cells.GetLength(2) <= cellz) continue;
-
-                    List<(double x, double y, double z)> cellpoints = cells[cellx, celly, cellz];
-
-                    if(cellpoints == null)
-                        continue;
-
-                    foreach(var neighbor in cellpoints)
-                    {
-                        double dx = neighbor.x - point[0];
-                        double dy = neighbor.y - point[1];
-                        double dz = neighbor.z - point[2];
-
-                        double dist2 = dx*dx + dy*dy + dz*dz;
-
-                        if(dist2 <= cutoff2)
-                            yield return neighbor;
-                    }
                 }
             }
         }
