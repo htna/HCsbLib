@@ -141,7 +141,7 @@ namespace HTLib2.Bioinfo
     }
     public partial class Pdb
     {
-        public abstract partial class IAtom : Element, IComparable<IAtom>, IBinarySerializable
+        public abstract partial class IAtom : Element, IComparable<IAtom>, IBinarySerializable, HTLib2.IAtom
         {
             /// http://www.wwpdb.org/documentation/format32/sect9.html                                  | http://www.wwpdb.org/documentation/format32/sect9.html#HETATM
             ///                                                                                         | 
@@ -178,6 +178,16 @@ namespace HTLib2.Bioinfo
             /// ATOM     38  O  AARG A  -3      13.753  87.471  95.270  0.50 37.74           O          | HETATM 8241  O3  SO4 A2001      11.995 -16.703 -14.431  1.00 49.88           O  
             /// ATOM     39  O  BARG A  -3      12.924  87.757  96.420  0.50 37.26           O          | HETATM 8242  O4  SO4 A2001      10.932 -15.073 -13.100  1.00 49.91           O  
             /// ATOM    145  N   VAL A  25      32.433  16.336  57.540  1.00 11.92      A1   N
+
+            // interface IAtom
+            double   HTLib2.IAtom.x     { get { return x; } }
+            double   HTLib2.IAtom.y     { get { return y; } }
+            double   HTLib2.IAtom.z     { get { return z; } }
+            double[] HTLib2.IAtom.coord { get { return coord; } }
+            string   HTLib2.IAtom.type  { get { HDebug.Assert(false); return null; } }
+            double?  HTLib2.IAtom.pch   { get { HDebug.Assert(false); return null; } }
+            double?  HTLib2.IAtom.rmin2 { get { HDebug.Assert(false); return null; } }
+            double?  HTLib2.IAtom.eps   { get { HDebug.Assert(false); return null; } }
 
             public bool hexserial = false;
             public IAtom(string line)
