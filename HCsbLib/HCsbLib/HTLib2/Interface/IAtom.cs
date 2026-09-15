@@ -14,7 +14,7 @@ namespace HTLib2
         double z { get; }
         double[] coord { get; }
 
-        string? atom { get; }
+        string  type { get; }
         double? pch  { get; }
         double? rmin2{ get; }
         double? eps  { get; }
