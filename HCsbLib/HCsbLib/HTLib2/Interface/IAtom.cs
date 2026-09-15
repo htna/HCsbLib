@@ -9,5 +9,14 @@ namespace HTLib2
 {
     public interface IAtom
     {
+        double x { get; }
+        double y { get; }
+        double z { get; }
+        double[] coord { get; }
+
+        string? atom { get; }
+        double? pch  { get; }
+        double? rmin2{ get; }
+        double? eps  { get; }
     }
 }
