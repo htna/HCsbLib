@@ -12,26 +12,9 @@ namespace HTLib2
     {
         public partial class CellSearch
         {
-            public double cellsize;
-
-            // Absolute cell index corresponding to cells[0,0,0].
-            private (int x, int y, int z) basecell;
+            private double cellsize;
+            private (int x, int y, int z) basecell; // Absolute cell index corresponding to cells[0,0,0].
             private List<(double x, double y, double z)>[,,] cells;
-
-            //private CellSearch
-            //    ( double cellSize
-            //    , (int x, int y, int z) basecell
-            //    , int sizex
-            //    , int sizey
-            //    , int sizez
-            //    )
-            //{
-            //    HDebug.Exception(cellSize <= 0, "cellSize must be positive.");
-            //
-            //    CellSize = cellSize;
-            //    BaseCell = basecell;
-            //    cells    = new List<(double x, double y, double z)>[sizex, sizey, sizez];
-            //}
 
             public static CellSearch FromPoints(double[][] points, double cellSize)
             {
@@ -156,8 +139,6 @@ namespace HTLib2
                 int    range   = (int)Math.Floor(cutoff / cellsize) + 1;
                 double cutoff2 = cutoff * cutoff;
 
-                List<(int dx, int dy, int dz)> searchcells = new List<(int dx, int dy, int dz)>();
-
                 for(int dx=-range; dx<=range; dx++)
                 for(int dy=-range; dy<=range; dy++)
                 for(int dz=-range; dz<=range; dz++)
@@ -177,11 +158,10 @@ namespace HTLib2
             // ============================================================
             // Enumerate stored points within cutoff.
             // ============================================================
-
+            private Dictionary<double, (int dx, int dy, int dz)[]> cutoff_searchcells = new Dictionary<double, (int dx, int dy, int dz)[]>();
             public IEnumerable<(double x, double y, double z)> Search
                 ( double[] point
                 , double cutoff
-                , Dictionary<double, (int dx, int dy, int dz)[]> buff_cutoff_searchcells = null
                 )
             {
                 HDebug.Assert(point != null && point.Length == 3);
@@ -189,11 +169,9 @@ namespace HTLib2
 
                 var icell = GetCellIndex(point);
 
-                (int dx, int dy, int dz)[] searchcells;
-                if(buff_cutoff_searchcells != null && buff_cutoff_searchcells.ContainsKey(cutoff))
-                    searchcells = buff_cutoff_searchcells[cutoff];
-                else
-                    searchcells = GetSearchCellIndices(cutoff).ToArray();
+                if(cutoff_searchcells.ContainsKey(cutoff) == false)
+                    cutoff_searchcells.Add(cutoff, GetSearchCellIndices(cutoff).ToArray());
+                (int dx, int dy, int dz)[] searchcells = cutoff_searchcells[cutoff];
 
                 double cutoff2 = cutoff * cutoff;
 
