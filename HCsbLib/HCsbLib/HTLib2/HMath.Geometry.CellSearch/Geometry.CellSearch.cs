@@ -13,7 +13,7 @@ namespace HTLib2
         public partial class CellSearch
         {
             public readonly double CellSize;
-            private readonly Dictionary<(int x, int y, int z), List<(double,double,double)>> cells;
+            private readonly Dictionary<(int x, int y, int z), List<(double x,double y,double z)>> cells;
 
             private CellSearch(double cellSize)
             {
@@ -55,44 +55,73 @@ namespace HTLib2
             }
 
             // ============================================================
-            // Enumerate all points within Cutoff
+            // Get cells that can contain points within cutoff
             // ============================================================
-            public IEnumerable<(double x, double y, double z)> Search(double[] point, double cutoff)
+            private (int dx, int dy, int dz)[] GetSearchCellIndices(double cutoff)
             {
-                HDebug.Assert(point != null && point.Length == 3);  // "point must be a double array of length 3.";
-                HDebug.Assert(cutoff > 0);                          // "cutoff must be non-negative.";
+                HDebug.Assert(cutoff > 0);
+
+                int    range   = (int)Math.Ceiling(cutoff / CellSize);
+                double cutoff2 = cutoff * cutoff;
+
+                List<(int dx, int dy, int dz)> searchcells = new List<(int dx, int dy, int dz)>();
+
+                for(int dx=-range; dx<=range; dx++)
+                for(int dy=-range; dy<=range; dy++)
+                for(int dz=-range; dz<=range; dz++)
+                {
+                    // minimum possible distance between cell (0,0,0)
+                    // and cell (dx,dy,dz)
+
+                    double vx = Math.Max(0, Math.Abs(dx)-1) * CellSize;
+                    double vy = Math.Max(0, Math.Abs(dy)-1) * CellSize;
+                    double vz = Math.Max(0, Math.Abs(dz)-1) * CellSize;
+
+                    double dist2 = vx*vx + vy*vy + vz*vz;
+
+                    if(dist2 <= cutoff2)
+                        searchcells.Add((dx,dy,dz));
+                }
+
+                return searchcells.ToArray();
+            }
+            // ============================================================
+            // Enumerate all points within cutoff
+            // ============================================================
+            public IEnumerable<(double x, double y, double z)> Search
+                (double[] point, double cutoff)
+            {
+                HDebug.Assert(point != null && point.Length == 3);
+                HDebug.Assert(cutoff > 0);
+
+                var icell = GetCellIndex(point);
+
+                var searchcells = GetSearchCellIndices(cutoff);
 
                 double cutoff2 = cutoff * cutoff;
 
-                var icenter = GetCellIndex(point);
-                int range   = (int)Math.Ceiling(cutoff / CellSize);
-
-                for (int dx=-range; dx<=range; dx++)
+                foreach(var dcell in searchcells)
                 {
-                    for (int dy=-range; dy<=range; dy++)
+                    var cell =
+                    (
+                        icell.x + dcell.dx,
+                        icell.y + dcell.dy,
+                        icell.z + dcell.dz
+                    );
+
+                    if(cells.TryGetValue(cell, out var cellpoints) == false)
+                        continue;
+
+                    foreach(var neighbor in cellpoints)
                     {
-                        for (int dz=-range; dz<=range; dz++)
-                        {
-                            var cell = ( icenter.x + dx, icenter.y + dy, icenter.z + dz );
+                        double dx = neighbor.x - point[0];
+                        double dy = neighbor.y - point[1];
+                        double dz = neighbor.z - point[2];
 
-                            if (cells.TryGetValue(cell, out List<(double,double,double)> points) == false)
-                                continue;
+                        double dist2 = dx*dx + dy*dy + dz*dz;
 
-                            foreach ((double x, double y, double z) neighbor in points)
-                            {
-                                double vx = neighbor.x - point[0];
-                                double vy = neighbor.y - point[1];
-                                double vz = neighbor.z - point[2];
-
-                                double dist2 =
-                                    vx * vx +
-                                    vy * vy +
-                                    vz * vz;
-
-                                if (dist2 <= cutoff2)
-                                    yield return neighbor;
-                            }
-                        }
+                        if(dist2 <= cutoff2)
+                            yield return neighbor;
                     }
                 }
             }
