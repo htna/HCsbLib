@@ -5,14 +5,12 @@ using System.Text;
 
 namespace HTLib2.Bioinfo
 {
-    using Atom = Pdb.Atom;
-    using IAtom = Pdb.IAtom;
     public static partial class PdbStatic
     {
         public static List<Atom> ListCommon<Atom>( this IList<Atom> atoms, IList<Atom> atomsToCompare
                                            , HPack<List<int>> outAtomIdx=null // index for the returned list
                                            )
-            where Atom : IAtom
+            where Atom : Pdb.IAtom
         {
             List<Atom> list = new List<Atom>();
             if(outAtomIdx != null)
@@ -30,7 +28,7 @@ namespace HTLib2.Bioinfo
         }
 
         public static bool CheckCommonAtoms<Atom>(params List<Atom>[] atomss)
-            where Atom : IAtom
+            where Atom : Pdb.IAtom
         {
             for(int k=0; k<atomss.Length; k++) if(atomss[0].Count != atomss[k].Count) return false;
             for(int i=0; i<atomss[0].Count; i++)
@@ -42,7 +40,7 @@ namespace HTLib2.Bioinfo
             return true;
         }
         public static void SelectCommonAtoms<Atom>(ref List<Atom>[] atomss)
-            where Atom : IAtom
+            where Atom : Pdb.IAtom
         {
             if(CheckCommonAtoms(atomss))
                 return;
@@ -72,8 +70,8 @@ namespace HTLib2.Bioinfo
             HDebug.Assert(CheckCommonAtoms(latomss));
             atomss = latomss;
         }
-        public static void SelectCommonAtoms(Pdb pdb1, string ChainIDs1, out List<Atom> atoms1
-                                            ,Pdb pdb2, string ChainIDs2, out List<Atom> atoms2
+        public static void SelectCommonAtoms(Pdb pdb1, string ChainIDs1, out List<Pdb.Atom> atoms1
+                                            ,Pdb pdb2, string ChainIDs2, out List<Pdb.Atom> atoms2
                                             )
         {
             SelectCommonAtoms( pdb1.atoms, ChainIDs1, out atoms1
@@ -83,7 +81,7 @@ namespace HTLib2.Bioinfo
         public static void SelectCommonAtoms<Atom>(IList<Atom> pdb1_atoms, string ChainIDs1, out List<Atom> atoms1
                                                   ,IList<Atom> pdb2_atoms, string ChainIDs2, out List<Atom> atoms2
                                                   )
-            where Atom : IAtom
+            where Atom : Pdb.IAtom
         {
             HDebug.Assert(ChainIDs1.Length == ChainIDs2.Length);
 
@@ -102,7 +100,7 @@ namespace HTLib2.Bioinfo
             }
         }
         public static void SelectCommonAtoms<Atom>(ref List<Atom> atoms1, ref List<Atom> atoms2)
-            where Atom : IAtom
+            where Atom : Pdb.IAtom
         {
             List<Atom> _atoms1 = new List<Atom>(atoms1);
             List<Atom> _atoms2 = new List<Atom>(atoms2);
@@ -136,20 +134,20 @@ namespace HTLib2.Bioinfo
             atoms2 = _atoms2;
         }
         public static void SelectCommonAtoms<Atom>(ref List<Atom> atoms1, ref List<Atom> atoms2, ref List<Atom> atoms3)
-            where Atom : IAtom
+            where Atom : Pdb.IAtom
         {
             List<Atom> atoms4 = new List<Atom>(atoms1);
             List<Atom> atoms5 = new List<Atom>(atoms1);
             SelectCommonAtoms(ref atoms1, ref atoms2, ref atoms3, ref atoms4, ref atoms5);
         }
         public static void SelectCommonAtoms<Atom>(ref List<Atom> atoms1, ref List<Atom> atoms2, ref List<Atom> atoms3, ref List<Atom> atoms4)
-            where Atom : IAtom
+            where Atom : Pdb.IAtom
         {
             List<Atom> atoms5 = new List<Atom>(atoms1);
             SelectCommonAtoms(ref atoms1, ref atoms2, ref atoms3, ref atoms4, ref atoms5);
         }
         public static void SelectCommonAtoms<Atom>(ref List<Atom> atoms1, ref List<Atom> atoms2, ref List<Atom> atoms3, ref List<Atom> atoms4, ref List<Atom> atoms5)
-            where Atom : IAtom
+            where Atom : Pdb.IAtom
         {
             List<Atom> _atoms1 = new List<Atom>(atoms1);
             List<Atom> _atoms2 = new List<Atom>(atoms2);

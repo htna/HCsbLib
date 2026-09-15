@@ -6,31 +6,29 @@ using System.Runtime.Serialization;
 
 namespace HTLib2.Bioinfo
 {
-    using Sheet = Pdb.Sheet;
-    using IAtom = Pdb.IAtom;
     public static partial class PdbStatic
     {
-        public static Dictionary<string,Sheet[]> HGroupBySheetID(this IList<Sheet> sheets)
+        public static Dictionary<string,Pdb.Sheet[]> HGroupBySheetID(this IList<Pdb.Sheet> sheets)
         {
-            Dictionary<string, List<Sheet>> id_sheet = new Dictionary<string, List<Sheet>>();
+            Dictionary<string, List<Pdb.Sheet>> id_sheet = new Dictionary<string, List<Pdb.Sheet>>();
             foreach(var sheet in sheets)
             {
                 if(id_sheet.ContainsKey(sheet.sheetID) == false)
-                    id_sheet.Add(sheet.sheetID, new List<Sheet>());
+                    id_sheet.Add(sheet.sheetID, new List<Pdb.Sheet>());
                 id_sheet[sheet.sheetID].Add(sheet);
             }
             return id_sheet.HToArray();
         }
-        public static Tuple<Sheet[], Atom[]>[] HSelectAtoms<Atom>(this IList<Sheet> sheets, IList<Atom> atoms)
-            where Atom : IAtom
+        public static Tuple<Pdb.Sheet[], Atom[]>[] HSelectAtoms<Atom>(this IList<Pdb.Sheet> sheets, IList<Atom> atoms)
+            where Atom : Pdb.IAtom
         {
             var chain_resi_atoms = atoms.GroupChainIDResSeq();
             var id_sheets = sheets.HGroupBySheetID();
 
-            List<Tuple<Sheet[], Atom[]>> list = new List<Tuple<Sheet[], Atom[]>>();
+            List<Tuple<Pdb.Sheet[], Atom[]>> list = new List<Tuple<Pdb.Sheet[], Atom[]>>();
             foreach(string id in id_sheets.Keys)
             {
-                Sheet[] idsheets = id_sheets[id];
+                Pdb.Sheet[] idsheets = id_sheets[id];
 
                 List<Atom> idsheets_atoms = new List<Atom>();
                 foreach(var sheet in idsheets)
@@ -54,7 +52,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
-                list.Add(new Tuple<Sheet[], Atom[]>
+                list.Add(new Tuple<Pdb.Sheet[], Atom[]>
                 (
                     idsheets,
                     idsheets_atoms.ToArray()

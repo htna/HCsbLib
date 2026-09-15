@@ -141,7 +141,7 @@ namespace HTLib2.Bioinfo
     }
     public partial class Pdb
     {
-        public abstract partial class IAtom : Element, IComparable<IAtom>, IBinarySerializable, HTLib2.IAtom
+        public abstract partial class IAtom : Element, IComparable<IAtom>, IBinarySerializable, HTLib2.Bioinfo.IAtom
         {
             /// http://www.wwpdb.org/documentation/format32/sect9.html                                  | http://www.wwpdb.org/documentation/format32/sect9.html#HETATM
             ///                                                                                         | 
@@ -180,14 +180,14 @@ namespace HTLib2.Bioinfo
             /// ATOM    145  N   VAL A  25      32.433  16.336  57.540  1.00 11.92      A1   N
 
             // interface IAtom
-            double   HTLib2.IAtom.x     { get { return x; } }
-            double   HTLib2.IAtom.y     { get { return y; } }
-            double   HTLib2.IAtom.z     { get { return z; } }
-            double[] HTLib2.IAtom.coord { get { return coord; } }
-            string   HTLib2.IAtom.type  { get { HDebug.Assert(false); return null; } }
-            double?  HTLib2.IAtom.pch   { get { HDebug.Assert(false); return null; } }
-            double?  HTLib2.IAtom.rmin2 { get { HDebug.Assert(false); return null; } }
-            double?  HTLib2.IAtom.eps   { get { HDebug.Assert(false); return null; } }
+            double   HTLib2.Bioinfo.IAtom.x     { get { return x; } }
+            double   HTLib2.Bioinfo.IAtom.y     { get { return y; } }
+            double   HTLib2.Bioinfo.IAtom.z     { get { return z; } }
+            double[] HTLib2.Bioinfo.IAtom.coord { get { return coord; } }
+            string   HTLib2.Bioinfo.IAtom.type  { get { HDebug.Assert(false); return null; } }
+            double?  HTLib2.Bioinfo.IAtom.pch   { get { HDebug.Assert(false); return null; } }
+            double?  HTLib2.Bioinfo.IAtom.rmin2 { get { HDebug.Assert(false); return null; } }
+            double?  HTLib2.Bioinfo.IAtom.eps   { get { HDebug.Assert(false); return null; } }
 
             public bool hexserial = false;
             public IAtom(string line)

@@ -6,16 +6,14 @@ using System.Runtime.Serialization;
 
 namespace HTLib2.Bioinfo
 {
-    using Helix = Pdb.Helix;
-    using IAtom = Pdb.IAtom;
     public static partial class PdbStatic
     {
-        public static Tuple<Helix[], Atom[]>[] HSelectAtoms<Atom>(this IList<Helix> helixs, IList<Atom> atoms)
-            where Atom : IAtom
+        public static Tuple<Pdb.Helix[], Atom[]>[] HSelectAtoms<Atom>(this IList<Pdb.Helix> helixs, IList<Atom> atoms)
+            where Atom : Pdb.IAtom
         {
             var chain_resi_atoms = atoms.GroupChainIDResSeq();
 
-            List<Tuple<Helix[], Atom[]>> list = new List<Tuple<Helix[], Atom[]>>();
+            List<Tuple<Pdb.Helix[], Atom[]>> list = new List<Tuple<Pdb.Helix[], Atom[]>>();
             foreach(var helix in helixs)
             {
                 HDebug.Exception(helix.initChainID == helix.endChainID);
@@ -37,9 +35,9 @@ namespace HTLib2.Bioinfo
                     helix_atoms.AddRange(chainresi_atoms[resi]);
                 }
 
-                list.Add(new Tuple<Helix[], Atom[]>
+                list.Add(new Tuple<Pdb.Helix[], Atom[]>
                 (
-                    new Helix[] { helix },
+                    new Pdb.Helix[] { helix },
                     helix_atoms.ToArray()
                 ));
             }
