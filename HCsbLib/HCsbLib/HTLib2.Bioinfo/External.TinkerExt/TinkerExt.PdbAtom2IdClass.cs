@@ -7,7 +7,7 @@ namespace HTLib2.Bioinfo
     using Prm = Tinker.Prm;
     public static partial class TinkerExt
     {
-        public static class PdbIdClass
+        public static class PdbAtom2IdClass
         {
             public static (int id, int cls)[] FromFile
                 ( string pdbpath
@@ -21,7 +21,7 @@ namespace HTLib2.Bioinfo
 
                 return FromPdbPrm
                 (
-                    pdb,
+                    pdb.atoms,
                     prm,
                     defaultHistidine,
                     disulfideCutoff
@@ -30,17 +30,15 @@ namespace HTLib2.Bioinfo
 
 
             public static (int id, int cls)[] FromPdbPrm
-                ( Pdb pdb
+                ( Pdb.Atom[] atoms
                 , Prm prm
                 , string defaultHistidine = "Histidine (HE)"
                 , double disulfideCutoff = 2.5
                 )
             {
-                HDebug.Assert(pdb != null);
-                HDebug.Assert(prm != null);
+                HDebug.Assert(atoms != null);
+                HDebug.Assert(prm   != null);
                 HDebug.Assert(disulfideCutoff > 0);
-
-                Pdb.Atom[] atoms = pdb.atoms;
 
                 ////////////////////////////////////////////////////////////
                 // biotype:
@@ -141,7 +139,7 @@ namespace HTLib2.Bioinfo
 
                     HDebug.Exception
                     (
-                        id == null,
+                        id != null,
                         string.Format
                         (
                             "Cannot find Tinker biotype: " +
@@ -303,6 +301,7 @@ namespace HTLib2.Bioinfo
                     }
                 }
 
+                HDebug.Assert(false);
                 return pdbResName.Trim();
             }
 
@@ -358,6 +357,7 @@ namespace HTLib2.Bioinfo
                         return biotype_id[key];
                 }
 
+                HDebug.Assert(false);
                 return null;
             }
         }

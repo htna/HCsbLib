@@ -24,8 +24,8 @@ namespace HTLib2
                 , double cellSize = 4 // 4A could be a good choice for a proteins with hydrogens
                 )
             {
-                HDebug.Exception(points == null, "points must not be null.");
-                HDebug.Exception(cellSize <= 0, "cellSize must be positive.");
+                HDebug.Exception(points != null, "points must not be null.");
+                HDebug.Exception(cellSize > 0, "cellSize must be positive.");
 
                 if(points.Length == 0)
                 {
