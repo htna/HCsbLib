@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace HTLib2.Bioinfo
 {
@@ -11,33 +10,43 @@ namespace HTLib2.Bioinfo
         public static class PdbIdClass
         {
             public static (int id, int cls)[] FromFile
-                (string pdbpath, string prmpath)
+                ( string pdbpath
+                , string prmpath
+                , string defaultHistidine = "Histidine (HE)"
+                , double disulfideCutoff = 2.5
+                )
             {
                 Pdb pdb = Pdb.FromFile(pdbpath);
                 Prm prm = Prm.FromFile(prmpath);
 
-                return FromPdbPrm(pdb, prm);
+                return FromPdbPrm
+                (
+                    pdb,
+                    prm,
+                    defaultHistidine,
+                    disulfideCutoff
+                );
             }
 
 
             public static (int id, int cls)[] FromPdbPrm
-                (Pdb pdb, Prm prm)
+                ( Pdb pdb
+                , Prm prm
+                , string defaultHistidine = "Histidine (HE)"
+                , double disulfideCutoff = 2.5
+                )
             {
                 HDebug.Assert(pdb != null);
                 HDebug.Assert(prm != null);
+                HDebug.Assert(disulfideCutoff > 0);
 
                 Pdb.Atom[] atoms = pdb.atoms;
 
-                // --------------------------------------------------------
+                ////////////////////////////////////////////////////////////
                 // biotype:
-                //
-                //     (atom name, residue name) -> Tinker atom id
-                //
-                // --------------------------------------------------------
-
-                Dictionary<(string name, string resn), int> biotype_id
-                    = new Dictionary<(string name, string resn), int>();
-
+                //     (atom name, Tinker residue name) -> Tinker atom id
+                ////////////////////////////////////////////////////////////
+                Dictionary<(string name, string resn), int> biotype_id = new Dictionary<(string name, string resn), int>();
                 foreach(Prm.Biotype biotype in prm.biotypes)
                 {
                     var key =
@@ -51,85 +60,102 @@ namespace HTLib2.Bioinfo
                     biotype_id.Add(key, biotype.Id);
                 }
 
+                ////////////////////////////////////////////////////////////
+                // Group atoms into residues
+                ////////////////////////////////////////////////////////////
+                Dictionary<(char chain, int resSeq, char iCode), Pdb.Atom[]> residues
+                    = atoms
+                    .GroupBy     (atom  => (atom.chainID, atom.resSeq, atom.iCode))
+                    .ToDictionary(group => group.Key, group => group.ToArray()    );
 
-                // --------------------------------------------------------
-                // Determine first and last residue of each chain.
-                // --------------------------------------------------------
+                ////////////////////////////////////////////////////////////
+                // Detect disulfide Cys residues
+                ////////////////////////////////////////////////////////////
+                HashSet<(char chain, int resSeq, char iCode)> disulfides = GetDisulfideResidues(residues, disulfideCutoff);
 
-                Dictionary<char, (int resSeq, char iCode)> nterminal
-                    = new Dictionary<char, (int resSeq, char iCode)>();
-
-                Dictionary<char, (int resSeq, char iCode)> cterminal
-                    = new Dictionary<char, (int resSeq, char iCode)>();
+                ////////////////////////////////////////////////////////////
+                // N/C terminal residue for each chain
+                ////////////////////////////////////////////////////////////
+                Dictionary<char, (int resSeq, char iCode)> nterminal = new Dictionary<char, (int resSeq, char iCode)>();
+                Dictionary<char, (int resSeq, char iCode)> cterminal = new Dictionary<char, (int resSeq, char iCode)>();
 
                 foreach(Pdb.Atom atom in atoms)
                 {
                     char chain = atom.chainID;
-                    var res = (atom.resSeq, atom.iCode);
+
+                    var resid = ( resSeq: atom.resSeq
+                                , iCode : atom.iCode
+                                );
 
                     if(nterminal.ContainsKey(chain) == false)
-                        nterminal.Add(chain, res);
+                        nterminal.Add(chain, resid);
 
-                    cterminal[chain] = res;
+                    cterminal[chain] = resid;
                 }
 
-
-                // --------------------------------------------------------
-                // Assign Tinker (id,class) to each PDB atom.
-                // --------------------------------------------------------
-
-                (int id, int cls)[] idclass
-                    = new (int id, int cls)[atoms.Length];
-
+                ////////////////////////////////////////////////////////////
+                // Assign Tinker id/class
+                ////////////////////////////////////////////////////////////
+                (int id, int cls)[] idclass = new (int id, int cls)[atoms.Length];
 
                 for(int i=0; i<atoms.Length; i++)
                 {
                     Pdb.Atom atom = atoms[i];
 
-                    bool isNterminal =
-                        (atom.resSeq == nterminal[atom.chainID].resSeq &&
-                         atom.iCode  == nterminal[atom.chainID].iCode);
-
-                    bool isCterminal =
-                        (atom.resSeq == cterminal[atom.chainID].resSeq &&
-                         atom.iCode  == cterminal[atom.chainID].iCode);
-
-
-                    string resn =
-                        GetTinkerResidueName(atom.resName);
-
-
-                    int? id =
-                        FindBiotypeId
+                    var resid =
                         (
-                            atom,
-                            resn,
-                            isNterminal,
-                            isCterminal,
-                            biotype_id
+                            chain : atom.chainID,
+                            resSeq: atom.resSeq,
+                            iCode : atom.iCode
                         );
 
+                    Pdb.Atom[] resatoms = residues[resid];
+
+                    string tinkerResn =
+                        GetTinkerResidueName
+                        ( atom.resName
+                        , resatoms
+                        , disulfides.Contains(resid)
+                        , defaultHistidine
+                        );
+
+                    bool isNterminal =
+                        (
+                            atom.resSeq == nterminal[atom.chainID].resSeq &&
+                            atom.iCode  == nterminal[atom.chainID].iCode
+                        );
+
+                    bool isCterminal =
+                        (
+                            atom.resSeq == cterminal[atom.chainID].resSeq &&
+                            atom.iCode  == cterminal[atom.chainID].iCode
+                        );
+
+                    int? id = FindBiotypeId
+                              ( atom
+                              , tinkerResn
+                              , isNterminal
+                              , isCterminal
+                              , biotype_id
+                              );
 
                     HDebug.Exception
                     (
                         id == null,
                         string.Format
                         (
-                            "Cannot find Tinker biotype: {0} {1} {2} {3}",
+                            "Cannot find Tinker biotype: " +
+                            "{0} {1} {2}{3} {4} [{5}]",
                             atom.chainID,
                             atom.resName.Trim(),
                             atom.resSeq,
-                            atom.name.Trim()
+                            atom.iCode,
+                            atom.name.Trim(),
+                            tinkerResn
                         )
                     );
 
-
-                    Prm.Atom prmatom =
-                        prm.IdToAtom(id.Value);
-
-
-                    HDebug.Assert(prmatom.Id == id.Value);
-
+                    Prm.Atom prmatom = prm.IdToAtom(id.Value);
 
                     idclass[i] =
                     (
@@ -138,92 +164,84 @@ namespace HTLib2.Bioinfo
                     );
                 }
 
-
                 return idclass;
             }
 
-
-            private static int? FindBiotypeId
-            (
-                Pdb.Atom atom,
-                string resn,
-                bool isNterminal,
-                bool isCterminal,
-                Dictionary<(string name, string resn), int> biotype_id
-            )
+            ////////////////////////////////////////////////////////////////
+            // Detect cystines from SG-SG distance
+            ////////////////////////////////////////////////////////////////
+            private static HashSet<(char chain, int resSeq, char iCode)>
+                GetDisulfideResidues
+                ( Dictionary<(char chain, int resSeq, char iCode), Pdb.Atom[]> residues
+                , double cutoff
+                )
             {
-                string atomname =
-                    atom.name.Trim().ToUpper();
+                List<((char chain, int resSeq, char iCode) resid, Pdb.Atom sg)> cys_sg = new List<((char chain, int resSeq, char iCode) resid, Pdb.Atom sg)>();
 
-
-                // --------------------------------------------------------
-                // Candidate atom names.
-                //
-                // Usually the PDB name and Tinker biotype name are
-                // identical. H/H1/H2/H3 -> HN is useful for protein
-                // backbone hydrogens in some Tinker parameter sets.
-                // --------------------------------------------------------
-
-                List<string> atomnames =
-                    new List<string>();
-
-                atomnames.Add(atomname);
-
-                if(atomname == "H"  ||
-                   atomname == "H1" ||
-                   atomname == "H2" ||
-                   atomname == "H3")
+                foreach(var residue in residues)
                 {
-                    atomnames.Add("HN");
+                    string resname = residue.Value[0].resName.Trim().ToUpper();
+
+                    if(resname != "CYS" &&
+                       resname != "CYX" &&
+                       resname != "CYM")
+                        continue;
+
+                    Pdb.Atom sg = null;
+                    foreach(Pdb.Atom atom in residue.Value)
+                    {
+                        if(atom.name.Trim().ToUpper() == "SG")
+                        {
+                            sg = atom;
+                            break;
+                        }
+                    }
+                    if(sg != null)
+                        cys_sg.Add((residue.Key, sg));
                 }
 
+                HashSet<(char chain, int resSeq, char iCode)> disulfides = new HashSet<(char chain, int resSeq, char iCode)>();
 
-                // --------------------------------------------------------
-                // Candidate residue names.
-                //
-                // Try terminal biotypes first, followed by the ordinary
-                // residue biotype. This is important because side-chain
-                // atoms of terminal residues may still use the ordinary
-                // residue biotype.
-                // --------------------------------------------------------
-
-                List<string> resnames =
-                    new List<string>();
-
-                if(isNterminal)
-                    resnames.Add("N-TERMINAL " + resn.ToUpper());
-
-                if(isCterminal)
-                    resnames.Add("C-TERMINAL " + resn.ToUpper());
-
-                resnames.Add(resn.ToUpper());
-
-
-                foreach(string resname in resnames)
-                foreach(string name    in atomnames)
+                double cutoff2 = cutoff * cutoff;
+                for(int i=0; i<cys_sg.Count; i++)
+                for(int j=i+1; j<cys_sg.Count; j++)
                 {
-                    var key = (name, resname);
+                    var cys1 = cys_sg[i];
+                    var cys2 = cys_sg[j];
 
-                    if(biotype_id.ContainsKey(key))
-                        return biotype_id[key];
+                    double dx = cys1.sg.x - cys2.sg.x;
+                    double dy = cys1.sg.y - cys2.sg.y;
+                    double dz = cys1.sg.z - cys2.sg.z;
+
+                    double dist2 = dx*dx + dy*dy + dz*dz;
+                    if(dist2 <= cutoff2)
+                    {
+                        disulfides.Add(cys1.resid);
+                        disulfides.Add(cys2.resid);
+                    }
                 }
 
-
-                return null;
+                return disulfides;
             }
 
-
-            private static string GetTinkerResidueName(string pdbresname)
+            ////////////////////////////////////////////////////////////////
+            // Determine Tinker residue name
+            ////////////////////////////////////////////////////////////////
+            private static string GetTinkerResidueName
+                ( string pdbResName
+                , Pdb.Atom[] residueAtoms
+                , bool isDisulfide
+                , string defaultHistidine
+                )
             {
-                pdbresname = pdbresname.Trim().ToUpper();
+                string resn = pdbResName.Trim().ToUpper();
 
-                switch(pdbresname)
+                switch(resn)
                 {
                     case "ALA": return "Alanine";
                     case "ARG": return "Arginine";
                     case "ASN": return "Asparagine";
                     case "ASP": return "Aspartic Acid";
-                    case "CYS": return "Cysteine (SH)";
                     case "GLN": return "Glutamine";
                     case "GLU": return "Glutamic Acid";
                     case "GLY": return "Glycine";
@@ -239,8 +257,20 @@ namespace HTLib2.Bioinfo
                     case "TYR": return "Tyrosine";
                     case "VAL": return "Valine";
 
+                    ////////////////////////////////////////////////////////
+                    // Cysteine
+                    ////////////////////////////////////////////////////////
 
-                    // Histidine protonation states
+                    case "CYX": return "Cystine (SS)";
+                    case "CYM": return "Cysteine (S-)";
+                    case "CYS":
+                        if(isDisulfide) return "Cystine (SS)";
+                        else            return "Cysteine (SH)";
+
+                    ////////////////////////////////////////////////////////
+                    // Explicit histidine naming
+                    ////////////////////////////////////////////////////////
+
                     case "HSD":
                     case "HID":
                         return "Histidine (HD)";
@@ -253,16 +283,82 @@ namespace HTLib2.Bioinfo
                     case "HIP":
                         return "Histidine (+)";
 
+                    ////////////////////////////////////////////////////////
+                    // Generic HIS:
+                    // infer state from explicit ring hydrogens.
+                    ////////////////////////////////////////////////////////
 
-                    // Other common protonation/state names
-                    case "CYX": return "Cystine (SS)";
-                    case "ASH": return "Aspartic Acid (COOH)";
-                    case "GLH": return "Glutamic Acid (COOH)";
-                    case "LYN": return "Lysine (NH2)";
+                    case "HIS":
+                    {
+                        bool hasHD1 = HasAtom(residueAtoms, "HD1");
+                        bool hasHE2 = HasAtom(residueAtoms, "HE2");
 
-                    default:
-                        return pdbresname;
+                        if(hasHD1 && hasHE2) return "Histidine (+)";
+                        if(hasHD1          ) return "Histidine (HD)";
+                        if(hasHE2          ) return "Histidine (HE)";
+
+                        // A hydrogen-free PDB does not contain enough
+                        // information to distinguish HID from HIE.
+                        return defaultHistidine;
+                    }
                 }
+
+                return pdbResName.Trim();
+            }
+
+            private static bool HasAtom(Pdb.Atom[] atoms, string atomname)
+            {
+                atomname = atomname.Trim().ToUpper();
+
+                foreach(Pdb.Atom atom in atoms)
+                {
+                    if(atom.name.Trim().ToUpper() == atomname)
+                        return true;
+                }
+                return false;
+            }
+
+            ////////////////////////////////////////////////////////////////
+            // Find biotype
+            ////////////////////////////////////////////////////////////////
+            private static int? FindBiotypeId
+                ( Pdb.Atom atom
+                , string resn
+                , bool isNterminal
+                , bool isCterminal
+                , Dictionary<(string name, string resn), int> biotype_id
+                )
+            {
+                string atomname = atom.name.Trim().ToUpper();
+
+                List<string> atomnames = new List<string>();
+                atomnames.Add(atomname);
+
+                // Tinker CHARMM biotypes normally use HN for
+                // peptide/N-terminal backbone hydrogens.
+                if(atomname == "H"  ||
+                   atomname == "H1" ||
+                   atomname == "H2" ||
+                   atomname == "H3")
+                {
+                    atomnames.Add("HN");
+                }
+
+                List<string> resnames = new List<string>();
+                if(isNterminal) resnames.Add( ("N-Terminal "+resn).ToUpper() );
+                if(isCterminal) resnames.Add( ("C-Terminal "+resn).ToUpper() );
+                resnames.Add(resn.ToUpper());
+
+                foreach(string residuename in resnames)
+                foreach(string name        in atomnames)
+                {
+                    var key = ( name, residuename );
+
+                    if(biotype_id.ContainsKey(key))
+                        return biotype_id[key];
+                }
+
+                return null;
             }
         }
     }
