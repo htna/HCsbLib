@@ -330,18 +330,34 @@ namespace HTLib2.Bioinfo
             {
                 string atomname = atom.name.Trim().ToUpper();
 
-                List<string> atomnames = GetTinkerAtomNameCandidates(atomname);
+                List<string> atomnames = GetTinkerAtomNameCandidates(atomname, isCterminal);
 
+                ////////////////////////////////////////////////////////////
+                // Normal residue name
+                ////////////////////////////////////////////////////////////
+                string normalresn = resn.ToUpper();
+
+                ////////////////////////////////////////////////////////////
+                // Terminal residue name
+                ////////////////////////////////////////////////////////////
+                string terminalresn = GetTinkerTerminalResidueName(atom.resName, resn);
 
                 List<string> resnames = new List<string>();
-                if(isNterminal) resnames.Add( ("N-Terminal "+resn).ToUpper() );
-                if(isCterminal) resnames.Add( ("C-Terminal "+resn).ToUpper() );
-                resnames.Add(resn.ToUpper());
+                if(isNterminal) resnames.Add(("N-Terminal "+terminalresn).ToUpper());
+                if(isCterminal) resnames.Add(("C-Terminal "+terminalresn).ToUpper());
 
+                // Side-chain atoms generally continue to use
+                // the ordinary residue biotype.
+                resnames.Add(normalresn);
+
+                ////////////////////////////////////////////////////////////
+                // Exact atom name is always tried before progressively
+                // simplified names.
+                ////////////////////////////////////////////////////////////
                 foreach(string residuename in resnames)
                 foreach(string name        in atomnames)
                 {
-                    var key = ( name, residuename );
+                    var key = (name, residuename);
 
                     if(biotype_id.ContainsKey(key))
                         return biotype_id[key];
@@ -351,62 +367,148 @@ namespace HTLib2.Bioinfo
                 return null;
             }
 
-            private static List<string> GetTinkerAtomNameCandidates(string atomname)
+            private static List<string> GetTinkerAtomNameCandidates(string atomname, bool isCterminal)
             {
                 atomname = atomname.Trim().ToUpper();
                 List<string> names = new List<string>();
 
                 ////////////////////////////////////////////////////////////
-                // Always try the original PDB name first.
+                // Exact PDB atom name first.
                 ////////////////////////////////////////////////////////////
                 names.Add(atomname);
 
                 ////////////////////////////////////////////////////////////
-                // Backbone hydrogen
+                // Peptide nitrogen hydrogen.
+                //
+                // PDB:
+                //     H
+                //     H1, H2, H3 at N-terminus
+                //
+                // Tinker biotype:
+                //     HN
                 ////////////////////////////////////////////////////////////
                 if(atomname == "H"  ||
-                    atomname == "H1" ||
-                    atomname == "H2" ||
-                    atomname == "H3")
+                   atomname == "H1" ||
+                   atomname == "H2" ||
+                   atomname == "H3")
                 {
-                    names.Add("HN");
+                    if(names.Contains("HN") == false)
+                        names.Add("HN");
                 }
 
                 ////////////////////////////////////////////////////////////
-                // PDB versus Tinker/CHARMM hydrogen numbering
+                // C-terminal oxygen.
                 //
-                // PDB commonly uses:
+                // pdbxyz accepts:
                 //
-                //     HB2, HB3
+                //     OXT
+                //     OT2
                 //
-                // while some Tinker biotype tables use:
-                //
-                //     HB1, HB2
-                //
-                // Similar cases occur for HG, HD, HE, etc.
-                //
-                // Exact name is always tested first.
+                // Tinker terminal biotype is OXT.
                 ////////////////////////////////////////////////////////////
-                if(atomname.Length >= 3 && atomname[0] == 'H')
+                if(isCterminal)
                 {
-                    char last = atomname[atomname.Length-1];
-
-                    if(last == '2')
+                    if(atomname == "O"   ||
+                       atomname == "OXT" ||
+                       atomname == "OT2")
                     {
-                        string alt = atomname.Substring(0, atomname.Length-1) + "1";
-                        if(names.Contains(alt) == false)
-                            names.Add(alt);
+                        if(names.Contains("OXT") == false)
+                            names.Add("OXT");
                     }
+                }
 
-                    if(last == '3')
-                    {
-                        string alt = atomname.Substring(0, atomname.Length-1) + "2";
-                        if(names.Contains(alt) == false)
-                            names.Add(alt);
-                    }
+                ////////////////////////////////////////////////////////////
+                // Progressively remove trailing numbers.
+                //
+                // Examples:
+                //
+                // HB2  -> HB
+                // HD11 -> HD1 -> HD
+                // CD1  -> CD
+                // NH1  -> NH
+                //
+                // This is attempted only AFTER the exact atom name.
+                //
+                // Therefore:
+                //
+                // TRP CD1 -> CD1        (exact match)
+                // LEU CD1 -> CD1        (exact match)
+                // ILE CD1 -> CD         (fallback)
+                // PHE CD1 -> CD         (fallback)
+                ////////////////////////////////////////////////////////////
+                string name = atomname;
+                while(name.Length > 1 && char.IsDigit(name[name.Length-1]))
+                {
+                    name = name.Substring(0, name.Length-1);
+                    if(names.Contains(name) == false)
+                        names.Add(name);
                 }
 
                 return names;
+            }
+
+            private static string GetTinkerTerminalResidueName
+                ( string pdbresname
+                , string tinkerResn
+                )
+            {
+                string resn = pdbresname.Trim().ToUpper();
+
+                switch(resn)
+                {
+                    case "ALA": return "ALA";
+                    case "ARG": return "ARG";
+                    case "ASN": return "ASN";
+                    case "ASP": return "ASP";
+                    case "GLN": return "GLN";
+                    case "GLU": return "GLU";
+                    case "GLY": return "GLY";
+                    case "ILE": return "ILE";
+                    case "LEU": return "LEU";
+                    case "LYS": return "LYS";
+                    case "MET": return "MET";
+                    case "PHE": return "PHE";
+                    case "PRO": return "PRO";
+                    case "SER": return "SER";
+                    case "THR": return "THR";
+                    case "TRP": return "TRP";
+                    case "TYR": return "TYR";
+                    case "VAL": return "VAL";
+
+                    // Cysteine states used by Tinker
+                    case "CYS":
+                        if(tinkerResn == "Cystine (SS)")
+                            return "CYX (SS)";
+                        if(tinkerResn == "Cysteine (S-)")
+                            return "CYD (S-)";
+                        return "CYS (SH)";
+
+                    case "CYX":
+                        return "CYX (SS)";
+
+                    case "CYM":
+                    case "CYD":
+                        return "CYD (S-)";
+
+                    // Histidine states
+                    case "HIS":
+                    case "HID":
+                    case "HSD":
+                    case "HIE":
+                    case "HSE":
+                    case "HIP":
+                    case "HSP":
+                        if(tinkerResn == "Histidine (+)")
+                            return "HIS (+)";
+                        if(tinkerResn == "Histidine (HD)")
+                            return "HIS (HD)";
+                        if(tinkerResn == "Histidine (HE)")
+                            return "HIS (HE)";
+                        break;
+                }
+
+                HDebug.Assert(false);
+                return resn;
             }
         }
     }
