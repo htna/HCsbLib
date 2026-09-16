@@ -330,18 +330,8 @@ namespace HTLib2.Bioinfo
             {
                 string atomname = atom.name.Trim().ToUpper();
 
-                List<string> atomnames = new List<string>();
-                atomnames.Add(atomname);
+                List<string> atomnames = GetTinkerAtomNameCandidates(atomname);
 
-                // Tinker CHARMM biotypes normally use HN for
-                // peptide/N-terminal backbone hydrogens.
-                if(atomname == "H"  ||
-                   atomname == "H1" ||
-                   atomname == "H2" ||
-                   atomname == "H3")
-                {
-                    atomnames.Add("HN");
-                }
 
                 List<string> resnames = new List<string>();
                 if(isNterminal) resnames.Add( ("N-Terminal "+resn).ToUpper() );
@@ -359,6 +349,64 @@ namespace HTLib2.Bioinfo
 
                 HDebug.Assert(false);
                 return null;
+            }
+
+            private static List<string> GetTinkerAtomNameCandidates(string atomname)
+            {
+                atomname = atomname.Trim().ToUpper();
+                List<string> names = new List<string>();
+
+                ////////////////////////////////////////////////////////////
+                // Always try the original PDB name first.
+                ////////////////////////////////////////////////////////////
+                names.Add(atomname);
+
+                ////////////////////////////////////////////////////////////
+                // Backbone hydrogen
+                ////////////////////////////////////////////////////////////
+                if(atomname == "H"  ||
+                    atomname == "H1" ||
+                    atomname == "H2" ||
+                    atomname == "H3")
+                {
+                    names.Add("HN");
+                }
+
+                ////////////////////////////////////////////////////////////
+                // PDB versus Tinker/CHARMM hydrogen numbering
+                //
+                // PDB commonly uses:
+                //
+                //     HB2, HB3
+                //
+                // while some Tinker biotype tables use:
+                //
+                //     HB1, HB2
+                //
+                // Similar cases occur for HG, HD, HE, etc.
+                //
+                // Exact name is always tested first.
+                ////////////////////////////////////////////////////////////
+                if(atomname.Length >= 3 && atomname[0] == 'H')
+                {
+                    char last = atomname[atomname.Length-1];
+
+                    if(last == '2')
+                    {
+                        string alt = atomname.Substring(0, atomname.Length-1) + "1";
+                        if(names.Contains(alt) == false)
+                            names.Add(alt);
+                    }
+
+                    if(last == '3')
+                    {
+                        string alt = atomname.Substring(0, atomname.Length-1) + "2";
+                        if(names.Contains(alt) == false)
+                            names.Add(alt);
+                    }
+                }
+
+                return names;
             }
         }
     }
