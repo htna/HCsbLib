@@ -137,29 +137,36 @@ namespace HTLib2.Bioinfo
                               , biotype_id
                               );
 
-                    HDebug.Exception
-                    (
-                        id != null,
-                        string.Format
+                    if(id == null)
+                    {
+                        HDebug.Assert(false);
+                        idclass[i] = (0,0);
+                        // HDebug.Exception
+                        // (
+                        //     id != null,
+                        //     string.Format
+                        //     (
+                        //         "Cannot find Tinker biotype: " +
+                        //         "{0} {1} {2}{3} {4} [{5}]",
+                        //         atom.chainID,
+                        //         atom.resName.Trim(),
+                        //         atom.resSeq,
+                        //         atom.iCode,
+                        //         atom.name.Trim(),
+                        //         tinkerResn
+                        //     )
+                        // );
+                    }
+                    else
+                    {
+                        Prm.Atom prmatom = prm.IdToAtom(id.Value);
+
+                        idclass[i] =
                         (
-                            "Cannot find Tinker biotype: " +
-                            "{0} {1} {2}{3} {4} [{5}]",
-                            atom.chainID,
-                            atom.resName.Trim(),
-                            atom.resSeq,
-                            atom.iCode,
-                            atom.name.Trim(),
-                            tinkerResn
-                        )
-                    );
-
-                    Prm.Atom prmatom = prm.IdToAtom(id.Value);
-
-                    idclass[i] =
-                    (
-                        prmatom.Id,
-                        prmatom.Class
-                    );
+                            prmatom.Id,
+                            prmatom.Class
+                        );
+                    }
                 }
 
                 return idclass;
