@@ -333,7 +333,7 @@ namespace HTLib2.Bioinfo
         public double[] CalcSurfaceAreaOfAtoms(Vector[] atoms, double[] radius, double probe, int isurface = 0)
         {
             /// determine surface area of atom,
-            /// when the surface points are determined using atom_radius+probe
+            /// double chedk if the surface points are determined using atom_radius+probe
             ///
             if(this.atoms.Length != atoms.Length)
                 throw new ArgumentException();
@@ -345,7 +345,7 @@ namespace HTLib2.Bioinfo
                     throw new ArgumentException();
             }
             // assume surfaces[0] has the largest surface (having the largest points)
-            return surfaces[isurface].CalcSurfaceAreaOfAtoms(atoms, radius);
+            return surfaces[isurface].CalcSurfaceAreaOfAtoms(atoms, this.radius);
         }
 
         // use the interface as Tuple<Vector,int>[] getSurfacePoints(IList<Vector> atoms, IList<double> radius, int start, int end)
