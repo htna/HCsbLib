@@ -405,6 +405,9 @@ namespace HTLib2.Bioinfo
                     bool bsurfpt = true;
                     foreach(int near in range)
                     {
+                        if(near == ia)
+                            continue;
+
                         Vector near_coord = atoms[near];
                         double near_rad   = radius[near];
                         double dist_near_surfpt = (near_coord, surfpt).Dist();
