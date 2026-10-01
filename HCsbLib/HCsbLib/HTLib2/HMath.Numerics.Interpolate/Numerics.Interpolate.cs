@@ -7,6 +7,20 @@ namespace HTLib2
 {
     public abstract partial class Numerics
     {
+        /// var inter = Interpolator(new double[] {1,2,3,4} , new double[] {1,3,5,7});
+        /// double val = inter(2.5);
+        public static Func<double, double> Interpolator(double[] xs, double[] ys)
+        {
+            var pchip = new LinearInterpolator(xs, ys);
+            return pchip.Interpolate;
+        }
+        public class LinearInterpolator
+        {
+            private readonly double[] xs;
+            private readonly double[] ys;
+            public LinearInterpolator(double[] xs, double[] ys) { this.xs = xs; this.ys = ys; }
+            public double Interpolate(double x) { return Numerics.Interpolate(xs, ys, x); }
+        }
         public static double Interpolate(double[] xs, double[] ys, double x)
         {
             if (xs.Length != ys.Length || xs.Length < 2)
@@ -31,7 +45,7 @@ namespace HTLib2
         }
 
         /// https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.PchipInterpolator.html
-        public static double Interpolator_Pchip(double[] xs, double[] ys, double x)
+        public static double Interpolate_Pchip(double[] xs, double[] ys, double x)
         {
             var pchip = new PchipInterpolator(xs, ys);
             return pchip.Interpolate(x);
